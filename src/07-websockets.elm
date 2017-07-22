@@ -1,22 +1,23 @@
+module Main exposing (..)
+
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import WebSocket
 
 
-
 main =
-  Html.program
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    }
+    Html.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
 
 
 echoServer : String
 echoServer =
-  "ws://echo.websocket.org"
+    "ws://echo.websocket.org"
 
 
 
@@ -24,14 +25,14 @@ echoServer =
 
 
 type alias Model =
-  { input : String
-  , messages : List String
-  }
+    { input : String
+    , messages : List String
+    }
 
 
-init : (Model, Cmd Msg)
+init : ( Model, Cmd Msg )
 init =
-  (Model "" [], Cmd.none)
+    ( Model "" [], Cmd.none )
 
 
 
@@ -39,22 +40,22 @@ init =
 
 
 type Msg
-  = Input String
-  | Send
-  | NewMessage String
+    = Input String
+    | Send
+    | NewMessage String
 
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg {input, messages} =
-  case msg of
-    Input newInput ->
-      (Model newInput messages, Cmd.none)
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg { input, messages } =
+    case msg of
+        Input newInput ->
+            ( Model newInput messages, Cmd.none )
 
-    Send ->
-      (Model "" messages, WebSocket.send echoServer input)
+        Send ->
+            ( Model "" messages, WebSocket.send echoServer input )
 
-    NewMessage str ->
-      (Model input (str :: messages), Cmd.none)
+        NewMessage str ->
+            ( Model input (str :: messages), Cmd.none )
 
 
 
@@ -63,7 +64,7 @@ update msg {input, messages} =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  WebSocket.listen echoServer NewMessage
+    WebSocket.listen echoServer NewMessage
 
 
 
@@ -72,13 +73,13 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ input [onInput Input] []
-    , button [onClick Send] [text "Send"]
-    , div [] (List.map viewMessage (List.reverse model.messages))
-    ]
+    div []
+        [ input [ onInput Input ] []
+        , button [ onClick Send ] [ text "Send" ]
+        , div [] (List.map viewMessage (List.reverse model.messages))
+        ]
 
 
 viewMessage : String -> Html msg
 viewMessage msg =
-  div [] [ text msg ]
+    div [] [ text msg ]
