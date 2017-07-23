@@ -1,4 +1,4 @@
-/elm-stuff/*
+/elm-stuff/build-artifacts/*
+/elm-stuff/packages/*
 
-/elm.js
 /index.html
