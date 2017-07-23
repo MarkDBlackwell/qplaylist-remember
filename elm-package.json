@@ -2,7 +2,7 @@
     "version": "1.0.0",
     "summary": "Capture Songs from QPlaylist",
     "repository": "https://github.com/markdblackwell/capture-songs.git",
-    "license": "BSD3",
+    "license": "GPL3",
     "source-directories": [
         "frontend"
     ],
