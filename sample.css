@@ -20,6 +20,9 @@ div.songs-captured-or-played:before {
     font-size: 12px;
     font-style: italic;
 }
+div#songs-captured {
+    overflow-y: scroll;
+}
 div#songs-captured:before {
     content: "Captured:";
 }
