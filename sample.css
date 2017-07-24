@@ -1,0 +1,111 @@
+/* Styling for Capture Songs elements (for QPlaylist),
+   by Mark D. Blackwell 7/24/2017 */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
+    font-size: 0;
+    line-height: 0;
+    color: White;
+    background: #242424;
+}
+div.songs-captured-or-played {
+    margin: 0;
+    padding: 0;
+}
+div.songs-captured-or-played:before {
+    margin-left: 140px;
+    line-height: 1.5;
+    font-size: 12px;
+    font-style: italic;
+}
+div#songs-captured:before {
+    content: "Captured:";
+}
+div#songs-played:before {
+    content: "Played:";
+}
+div.songs-captured-or-played > div {
+    margin: 0 0 0 8px;
+    padding: 5px 10px 4px 6px;
+    border-bottom: 1px solid #63686d;
+}
+div.songs-captured-or-played > div:first-of-type {
+    padding-top: 8px;
+}
+/* To remove striping, use same background as plain <div>. */
+div.songs-captured-or-played > div:nth-of-type(odd) {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background: #111111;
+}
+div.songs-captured-or-played > div:last-of-type {
+    border-bottom-style: none;
+}
+div.songs-captured-or-played > div > p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+div#songs-captured > div > p {
+    font-size: 15px;
+}
+div#songs-played > div > p {
+    font-size: 13px;
+}
+/* start time, and link to buy song */
+div.songs-captured-or-played > div > p:first-of-type {
+    padding-bottom: 1.6px;
+}
+div#songs-captured > div > p:first-of-type {
+    font-size: 11px;
+}
+div#songs-played > div > p:first-of-type {
+    font-size: 9px;
+}
+/* Contain all floated elements:
+   see: https://developer.mozilla.org/en-US/docs/Web/CSS/clear
+*/
+div.songs-captured-or-played > div > p:first-of-type:after {
+    display: block;
+    clear: both;
+    content: "";
+}
+/* link to buy song */
+div.songs-captured-or-played > div > p:first-of-type > a {
+    float: right;
+    font-weight: bold;
+    text-decoration: underline;
+    color: White;
+}
+div.songs-captured-or-played > div > p:first-of-type > a:hover {
+    color: #ee7500;
+}
+div.songs-captured-or-played > div > p:first-of-type > a:after {
+    content: "Buy Song";
+}
+/* song title */
+div.songs-captured-or-played > div > p:nth-of-type(2):before {
+    content: "Title:";
+}
+div.songs-captured-or-played > div > p:nth-of-type(2):before {
+    padding-right: 4.3px;
+}
+div#songs-captured > div > p:nth-of-type(2):before {
+    font-size: 12px;
+}
+div#songs-played > div > p:nth-of-type(2):before {
+    font-size: 10px;
+}
+/* artist */
+div.songs-captured-or-played > div > p:last-of-type:before {
+    padding-right: 4.3px;
+    content: "Artist:";
+}
+div#songs-captured > div > p:last-of-type:before {
+    font-size: 12px;
+}
+div#songs-played > div > p:last-of-type:before {
+    font-size: 10px;
+}
