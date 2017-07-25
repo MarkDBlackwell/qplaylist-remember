@@ -11,9 +11,12 @@ html, body {
     background: #242424;
 }
 button#refresh {
-    margin: 0 2px 0 65px;
+    margin: 0 2px 0 40px;
     padding: 0 2px 0 2px;
     line-height: 1.3;
+}
+button#refresh:before {
+    content: "Refresh";
 }
 div.songs-remembered-or-played {
     margin: 0;
@@ -61,6 +64,12 @@ div.songs-remembered-or-played > div > p > button {
     padding: 0 2px 0 2px;
     line-height: 1.3;
 }
+div#songs-remembered > div > p > button:before {
+    content: "Drop";
+}
+div#songs-played > div > p > button:before {
+    content: "Add";
+}
 div#songs-remembered > div > p {
     font-size: 15px;
 }
@@ -95,15 +104,13 @@ div.songs-remembered-or-played > div > p:first-of-type > a {
 div.songs-remembered-or-played > div > p:first-of-type > a:hover {
     color: #ee7500;
 }
-div.songs-remembered-or-played > div > p:first-of-type > a:after {
+div.songs-remembered-or-played > div > p:first-of-type > a:before {
     content: "Buy Song";
 }
 /* song title */
 div.songs-remembered-or-played > div > p:nth-of-type(2):before {
-    content: "Title:";
-}
-div.songs-remembered-or-played > div > p:nth-of-type(2):before {
     padding-right: 4.3px;
+    content: "Title:";
 }
 div#songs-remembered > div > p:nth-of-type(2):before {
     font-size: 12px;
