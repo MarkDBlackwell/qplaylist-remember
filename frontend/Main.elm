@@ -6,6 +6,7 @@ import Html.Events exposing (..)
 import WebSocket
 
 
+main : Program Never Model Msg
 main =
     Html.program
         { init = init
