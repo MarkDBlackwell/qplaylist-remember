@@ -1,4 +1,4 @@
-### Capture songs
+### Remember songs (for QPlaylist)
 
 Copyright (c) 2017 Mark D. Blackwell.
 
