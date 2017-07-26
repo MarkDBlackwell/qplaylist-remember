@@ -17,9 +17,49 @@
 module Main exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
+-- import Html.Attributes exposing (..)
 import Html.Events exposing (..)
-import WebSocket
+
+
+type alias Artist =
+    String
+
+
+type alias Title =
+    String
+
+
+type alias Time =
+    String
+
+
+type alias SongInfo =
+    ( Artist, Title, Time )
+
+
+latestFive : List SongInfo
+latestFive =
+    [ ( "LP"
+      , "No Witness"
+      , "5:53 PM"
+      )
+    , ( "Outer Spaces"
+      , "Words"
+      , "5:49 PM"
+      )
+    , ( "Cage The Elephant"
+      , "Whole Wide World"
+      , "5:46 PM"
+      )
+    , ( "Robert Randolph and the Fami"
+      , "Deliver Me"
+      , "5:41 PM"
+      )
+    , ( "U2"
+      , "Bullet The Blue Sky"
+      , "5:31 PM"
+      )
+    ]
 
 
 main : Program Never Model Msg
@@ -30,11 +70,6 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
-
-
-echoServer : String
-echoServer =
-    "ws://echo.websocket.org"
 
 
 
@@ -69,7 +104,7 @@ update msg { input, messages } =
             ( Model newInput messages, Cmd.none )
 
         Send ->
-            ( Model "" messages, WebSocket.send echoServer input )
+            ( Model "" [], Cmd.none )
 
         NewMessage str ->
             ( Model input (str :: messages), Cmd.none )
@@ -81,7 +116,8 @@ update msg { input, messages } =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    WebSocket.listen echoServer NewMessage
+    Sub.batch
+      []
 
 
 
