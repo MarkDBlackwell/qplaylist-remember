@@ -26,72 +26,46 @@ type alias Artist =
     String
 
 
-type alias Title =
-    String
-
-
 type alias Time =
     String
 
 
-type alias SongInfoRecord =
+type alias Title =
+    String
+
+
+type alias SongInfo =
     { artist : Artist
     , title : Title
     , time : Time
     }
 
 
-type alias SongInfo =
-    ( Artist, Title, Time )
+songinfo : Artist -> Title -> Time -> SongInfo
+songinfo a b c =
+    { artist = a
+    , title = b
+    , time = c
+    }
 
 
-latestFiveRecord : List SongInfoRecord
+latestFiveRecord : List SongInfo
 latestFiveRecord =
-    [ { artist = "LP"
-      , title = "No Witness"
-      , time = "5:53 PM"
-      }
-    , { artist = "Outer Spaces"
-      , title = "Words"
-      , time = "5:49 PM"
-      }
-    , { artist = "Cage The Elephant"
-      , title = "Whole Wide World"
-      , time = "5:46 PM"
-      }
-    , { artist = "Robert Randolph and the Fami"
-      , title = "Deliver Me"
-      , time = "5:41 PM"
-      }
-    , { artist = "U2"
-      , title = "Bullet The Blue Sky"
-      , time = "5:31 PM"
-      }
-    ]
-
-
-latestFive : List SongInfo
-latestFive =
-    [ ( "LP"
-      , "No Witness"
-      , "5:53 PM"
-      )
-    , ( "Outer Spaces"
-      , "Words"
-      , "5:49 PM"
-      )
-    , ( "Cage The Elephant"
-      , "Whole Wide World"
-      , "5:46 PM"
-      )
-    , ( "Robert Randolph and the Fami"
-      , "Deliver Me"
-      , "5:41 PM"
-      )
-    , ( "U2"
-      , "Bullet The Blue Sky"
-      , "5:31 PM"
-      )
+    [ songinfo "LP"
+        "No Witness"
+        "5:53 PM"
+    , songinfo "Outer Spaces"
+        "Words"
+        "5:49 PM"
+    , songinfo "Cage The Elephant"
+        "Whole Wide World"
+        "5:46 PM"
+    , songinfo "Robert Randolph and the Fami"
+        "Deliver Me"
+        "5:41 PM"
+    , songinfo "U2"
+        "Bullet The Blue Sky"
+        "5:31 PM"
     ]
 
 
@@ -169,3 +143,70 @@ view model =
 viewMessage : String -> Html msg
 viewMessage msg =
     div [] [ text msg ]
+
+
+
+{-
+         type alias SongInfo =
+             ( Artist, Title, Time )
+
+
+         latestFive : List SongInfo
+         latestFive =
+             [ ( "LP"
+               , "No Witness"
+               , "5:53 PM"
+               )
+             , ( "Outer Spaces"
+               , "Words"
+               , "5:49 PM"
+               )
+             , ( "Cage The Elephant"
+               , "Whole Wide World"
+               , "5:46 PM"
+               )
+             , ( "Robert Randolph and the Fami"
+               , "Deliver Me"
+               , "5:41 PM"
+               )
+             , ( "U2"
+               , "Bullet The Blue Sky"
+               , "5:31 PM"
+               )
+             ]
+
+
+      songinfoTwo : a -> b -> c -> { artist : a, time : c, title : b }
+      songinfoTwo a b c =
+          { artist = a
+          , title = b
+          , time = c
+          }
+
+
+   latestFiveRecord : List SongInfo
+   latestFiveRecord =
+       [ { artist = "LP"
+         , title = "No Witness"
+         , time = "5:53 PM"
+         }
+       , { artist = "Outer Spaces"
+         , title = "Words"
+         , time = "5:49 PM"
+         }
+       , { artist = "Cage The Elephant"
+         , title = "Whole Wide World"
+         , time = "5:46 PM"
+         }
+       , { artist = "Robert Randolph and the Fami"
+         , title = "Deliver Me"
+         , time = "5:41 PM"
+         }
+       , { artist = "U2"
+         , title = "Bullet The Blue Sky"
+         , time = "5:31 PM"
+         }
+       ]
+
+
+-}
