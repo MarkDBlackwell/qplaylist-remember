@@ -16,8 +16,9 @@
 
 module Main exposing (..)
 
-import Html exposing (..)
 -- import Html.Attributes exposing (..)
+
+import Html exposing (..)
 import Html.Events exposing (..)
 
 
@@ -33,8 +34,40 @@ type alias Time =
     String
 
 
+type alias SongInfoRecord =
+    { artist : Artist
+    , title : Title
+    , time : Time
+    }
+
+
 type alias SongInfo =
     ( Artist, Title, Time )
+
+
+latestFiveRecord : List SongInfoRecord
+latestFiveRecord =
+    [ { artist = "LP"
+      , title = "No Witness"
+      , time = "5:53 PM"
+      }
+    , { artist = "Outer Spaces"
+      , title = "Words"
+      , time = "5:49 PM"
+      }
+    , { artist = "Cage The Elephant"
+      , title = "Whole Wide World"
+      , time = "5:46 PM"
+      }
+    , { artist = "Robert Randolph and the Fami"
+      , title = "Deliver Me"
+      , time = "5:41 PM"
+      }
+    , { artist = "U2"
+      , title = "Bullet The Blue Sky"
+      , time = "5:31 PM"
+      }
+    ]
 
 
 latestFive : List SongInfo
@@ -117,7 +150,7 @@ update msg { input, messages } =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-      []
+        []
 
 
 
