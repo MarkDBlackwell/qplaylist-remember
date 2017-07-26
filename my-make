@@ -1,2 +1,2 @@
 #/bin/sh
-elm-make --warn --output=RememberSongs.js frontend/Main.elm
+elm-make --warn --output=RememberSongs.js src/Main.elm
