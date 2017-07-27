@@ -39,8 +39,8 @@ type alias Title =
 
 type alias SongInfo =
     { artist : Artist
-    , title : Title
     , time : Time
+    , title : Title
     }
 
 
@@ -58,11 +58,11 @@ songinfo a b c =
 
 latestFewSongsInit : LatestFewSongs
 latestFewSongsInit =
-    [ songinfo "LP"
-        "No Witness"
+    [ songinfo "U2"
+        "Bullet The Blue Sky"
         "5:53 PM"
-    , songinfo "Outer Spaces"
-        "Words"
+    , songinfo "LP"
+        "No Witness"
         "5:49 PM"
     , songinfo "Cage The Elephant"
         "Whole Wide World"
@@ -70,8 +70,8 @@ latestFewSongsInit =
     , songinfo "Robert Randolph and the Fami"
         "Deliver Me"
         "5:41 PM"
-    , songinfo "U2"
-        "Bullet The Blue Sky"
+    , songinfo "Outer Spaces"
+        "Words"
         "5:31 PM"
     ]
 
