@@ -165,10 +165,12 @@ amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
-buttonMy : Html Msg
-buttonMy =
+buttonMy : Int -> Html Msg
+buttonMy index =
     button
-        [ type_ "button" ]
+        [ id ("button" ++ toString index)
+        , type_ "button"
+        ]
         []
 
 
@@ -178,7 +180,7 @@ songPlayedOrRemembered model index song =
         []
         [ p
             []
-            [ buttonMy
+            [ buttonMy index
             , text song.time
             , a
                 [ target "_blank"
