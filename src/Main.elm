@@ -116,13 +116,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { latestFew, messages } =
     case msg of
         Add ->
-            ( Model latestFewSongsInit [], Cmd.none )
+            ( Model latestFew [], Cmd.none )
 
         Refresh ->
-            ( Model latestFewSongsInit [], Cmd.none )
+            ( Model latestFew [], Cmd.none )
 
         Send ->
-            ( Model latestFewSongsInit [], Cmd.none )
+            ( Model latestFew [], Cmd.none )
 
 
 
@@ -174,8 +174,8 @@ someTitle =
             head.title
 
 
-songPlayed : Model -> Artist -> Time -> Title -> Html Msg
-songPlayed model someArtist someTime someTitle =
+songPlayed : Model -> SongInfo -> Html Msg
+songPlayed model song =
     div
         []
         [ p
@@ -183,27 +183,25 @@ songPlayed model someArtist someTime someTitle =
             [ button
                 [ type_ "button" ]
                 []
-            , text someTime
+            , text song.time
             , a
                 [ target "_blank"
-                , href (amazonConstant ++ someTitle ++ "+" ++ someArtist)
+                , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
                 ]
                 []
             ]
         , p
             []
-            [ text someTitle ]
+            [ text song.title ]
         , p
             []
-            [ text someArtist ]
+            [ text song.artist ]
         ]
 
 
 songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    [ songPlayed model someArtist someTime someTitle
-    , songPlayed model someArtist someTime someTitle
-    ]
+    List.map (songPlayed model) model.latestFew
 
 
 view : Model -> Html Msg
