@@ -26,6 +26,20 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 
+main : Program Never Model Msg
+main =
+    Html.program
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        }
+
+
+
+-- MODEL
+
+
 type alias Artist =
     String
 
@@ -49,32 +63,19 @@ type alias SongsList =
     List SongInfo
 
 
+type alias Model =
+    { remembered : SongsList
+    , latestFew : SongsList
+    , messages : List String
+    }
+
+
 songinfo : Artist -> Title -> Time -> SongInfo
 songinfo someArtist someTitle someTime =
     { artist = someArtist
     , time = someTime
     , title = someTitle
     }
-
-
-rememberedSongsInit : SongsList
-rememberedSongsInit =
-    [ songinfo "The Rosebuds"
-        "In My Teeth"
-        "4:54 PM"
-    , songinfo "T. Rex"
-        "King Of The Rumbling Spires"
-        "4:59 PM"
-    , songinfo "Tedeschi Trucks Band"
-        "I Pity The Fool - Live"
-        "5:07 PM"
-    , songinfo "Bobby \"Blue\" Bland"
-        "I Pity The Fool"
-        "5:14 PM"
-    , songinfo "Eddy Clearwater"
-        "Find You A Job"
-        "5:19 PM"
-    ]
 
 
 latestFewSongsInit : SongsList
@@ -97,25 +98,24 @@ latestFewSongsInit =
     ]
 
 
-main : Program Never Model Msg
-main =
-    Html.program
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
-
-
-
--- MODEL
-
-
-type alias Model =
-    { remembered : SongsList
-    , latestFew : SongsList
-    , messages : List String
-    }
+rememberedSongsInit : SongsList
+rememberedSongsInit =
+    [ songinfo "The Rosebuds"
+        "In My Teeth"
+        "4:54 PM"
+    , songinfo "T. Rex"
+        "King Of The Rumbling Spires"
+        "4:59 PM"
+    , songinfo "Tedeschi Trucks Band"
+        "I Pity The Fool - Live"
+        "5:07 PM"
+    , songinfo "Bobby \"Blue\" Bland"
+        "I Pity The Fool"
+        "5:14 PM"
+    , songinfo "Eddy Clearwater"
+        "Find You A Job"
+        "5:19 PM"
+    ]
 
 
 init : ( Model, Cmd Msg )
@@ -172,8 +172,8 @@ buttonMy =
         []
 
 
-songPlayed : Model -> SongInfo -> Html Msg
-songPlayed model song =
+songPlayedOrRemembered : Model -> SongInfo -> Html Msg
+songPlayedOrRemembered model song =
     div
         []
         [ p
@@ -193,6 +193,16 @@ songPlayed model song =
             []
             [ text song.artist ]
         ]
+
+
+songPlayed : Model -> SongInfo -> Html Msg
+songPlayed model song =
+    songPlayedOrRemembered model song
+
+
+songRemembered : Model -> SongInfo -> Html Msg
+songRemembered model song =
+    songPlayedOrRemembered model song
 
 
 songsPlayed : Model -> List (Html Msg)
