@@ -18,13 +18,11 @@ module Main exposing (main)
 
 -- import Html exposing (Html, button, div, input, text)
 -- import Html.Attributes exposing (class, id)
+-- import Html.Events exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Maybe exposing (..)
-
-
--- import Html.Events exposing (..)
 
 
 type alias Artist =
@@ -46,6 +44,10 @@ type alias SongInfo =
     }
 
 
+type alias LatestFewSongs =
+    List (Maybe SongInfo)
+
+
 songinfo : Artist -> Title -> Time -> Maybe SongInfo
 songinfo a b c =
     Just
@@ -55,12 +57,8 @@ songinfo a b c =
         }
 
 
-type alias LatestFiveInit =
-    List (Maybe SongInfo)
-
-
-latestFiveInit : LatestFiveInit
-latestFiveInit =
+latestFewSongsInit : LatestFewSongs
+latestFewSongsInit =
     [ songinfo "LP"
         "No Witness"
         "5:53 PM"
@@ -94,7 +92,7 @@ main =
 
 
 type alias Model =
-    { latestFive : LatestFiveInit
+    { latestFew : LatestFewSongs
     , input : String
     , messages : List String
     }
@@ -102,7 +100,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model latestFiveInit "" [], Cmd.none )
+    ( Model latestFewSongsInit "" [], Cmd.none )
 
 
 
@@ -114,10 +112,10 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { latestFive, input, messages } =
+update msg { latestFew, input, messages } =
     case msg of
         Send ->
-            ( Model latestFiveInit "" [], Cmd.none )
+            ( Model latestFewSongsInit "" [], Cmd.none )
 
 
 
@@ -203,8 +201,8 @@ viewMessage msg =
              ( Artist, Title, Time )
 
 
-         latestFive : List SongInfo
-         latestFive =
+         latestFew : List SongInfo
+         latestFew =
              [ ( "LP"
                , "No Witness"
                , "5:53 PM"
@@ -236,8 +234,8 @@ viewMessage msg =
           }
 
 
-   latestFive : List SongInfo
-   latestFive =
+   latestFew : List SongInfo
+   latestFew =
        [ { artist = "LP"
          , title = "No Witness"
          , time = "5:53 PM"
