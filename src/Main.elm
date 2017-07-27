@@ -20,10 +20,10 @@ module Main exposing (main)
 -- import Html.Attributes exposing (class, id)
 -- import Html.Events exposing (..)
 -- import List exposing (..)
+-- import Maybe exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Maybe exposing (..)
 
 
 type alias Artist =
@@ -142,36 +142,6 @@ subscriptions model =
 amazonConstant : String
 amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
-
-
-someArtist : Artist
-someArtist =
-    case List.head latestFewSongsInit of
-        Nothing ->
-            ""
-
-        Just head ->
-            head.artist
-
-
-someTime : Time
-someTime =
-    case List.head latestFewSongsInit of
-        Nothing ->
-            ""
-
-        Just head ->
-            head.time
-
-
-someTitle : Title
-someTitle =
-    case List.head latestFewSongsInit of
-        Nothing ->
-            ""
-
-        Just head ->
-            head.title
 
 
 songPlayed : Model -> SongInfo -> Html Msg

@@ -61,4 +61,32 @@
        ]
 
 
+   someArtist : Artist
+   someArtist =
+       case List.head latestFewSongsInit of
+           Nothing ->
+               ""
+
+           Just head ->
+               head.artist
+
+
+   someTime : Time
+   someTime =
+       case List.head latestFewSongsInit of
+           Nothing ->
+               ""
+
+           Just head ->
+               head.time
+
+
+   someTitle : Title
+   someTitle =
+       case List.head latestFewSongsInit of
+           Nothing ->
+               ""
+
+           Just head ->
+               head.title
 -}
