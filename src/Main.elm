@@ -29,11 +29,11 @@ type alias Artist =
     String
 
 
-type alias Title =
+type alias Time =
     String
 
 
-type alias Time =
+type alias Title =
     String
 
 
@@ -153,16 +153,6 @@ someArtist =
             head.artist
 
 
-someTitle : Title
-someTitle =
-    case List.head latestFewSongsInit of
-        Nothing ->
-            ""
-
-        Just head ->
-            head.title
-
-
 someTime : Time
 someTime =
     case List.head latestFewSongsInit of
@@ -173,8 +163,18 @@ someTime =
             head.time
 
 
-songsPlayed : Model -> Html Msg
-songsPlayed model =
+someTitle : Title
+someTitle =
+    case List.head latestFewSongsInit of
+        Nothing ->
+            ""
+
+        Just head ->
+            head.title
+
+
+songPlayed : Model -> Html Msg
+songPlayed model =
     div
         []
         [ p
@@ -196,6 +196,11 @@ songsPlayed model =
             []
             [ text someArtist ]
         ]
+
+
+songsPlayed : Model -> Html Msg
+songsPlayed model =
+    songPlayed model
 
 
 view : Model -> Html Msg
