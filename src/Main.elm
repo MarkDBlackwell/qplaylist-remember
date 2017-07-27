@@ -165,22 +165,22 @@ amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
-buttonMy : Int -> Html Msg
-buttonMy index =
+buttonMy : String -> Int -> Html Msg
+buttonMy group index =
     button
-        [ id ("button" ++ toString index)
+        [ id ("button" ++ group ++ toString index)
         , type_ "button"
         ]
         []
 
 
-songPlayedOrRemembered : Model -> Int -> SongInfo -> Html Msg
-songPlayedOrRemembered model index song =
+songPlayedOrRemembered : Model -> String -> Int -> SongInfo -> Html Msg
+songPlayedOrRemembered model group index song =
     div
         []
         [ p
             []
-            [ buttonMy index
+            [ buttonMy group index
             , text song.time
             , a
                 [ target "_blank"
@@ -199,12 +199,12 @@ songPlayedOrRemembered model index song =
 
 songPlayed : Model -> Int -> SongInfo -> Html Msg
 songPlayed model index song =
-    songPlayedOrRemembered model index song
+    songPlayedOrRemembered model "Add" index song
 
 
 songRemembered : Model -> Int -> SongInfo -> Html Msg
 songRemembered model index song =
-    songPlayedOrRemembered model index song
+    songPlayedOrRemembered model "Drop" index song
 
 
 songsPlayed : Model -> List (Html Msg)
