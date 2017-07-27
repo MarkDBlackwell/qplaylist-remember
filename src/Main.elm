@@ -21,6 +21,7 @@ module Main exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Maybe exposing (..)
 
 
 -- import Html.Events exposing (..)
@@ -45,16 +46,17 @@ type alias SongInfo =
     }
 
 
-type alias LatestFiveInit =
-    List SongInfo
-
-
-songinfo : Artist -> Title -> Time -> SongInfo
+songinfo : Artist -> Title -> Time -> Maybe SongInfo
 songinfo a b c =
-    { artist = a
-    , title = b
-    , time = c
-    }
+    Just
+        { artist = a
+        , title = b
+        , time = c
+        }
+
+
+type alias LatestFiveInit =
+    List (Maybe SongInfo)
 
 
 latestFiveInit : LatestFiveInit
