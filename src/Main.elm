@@ -144,15 +144,20 @@ amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
+buttonMy : Html Msg
+buttonMy =
+    button
+        [ type_ "button" ]
+        []
+
+
 songPlayed : Model -> SongInfo -> Html Msg
 songPlayed model song =
     div
         []
         [ p
             []
-            [ button
-                [ type_ "button" ]
-                []
+            [ buttonMy
             , text song.time
             , a
                 [ target "_blank"
@@ -174,6 +179,11 @@ songsPlayed model =
     List.map (songPlayed model) model.latestFew
 
 
+songsRemembered : Model -> List (Html Msg)
+songsRemembered model =
+    List.map (songPlayed model) model.latestFew
+
+
 view : Model -> Html Msg
 view model =
     section
@@ -182,7 +192,7 @@ view model =
             [ id "songs-remembered"
             , class "songs-played-or-remembered"
             ]
-            (songsPlayed model)
+            (songsRemembered model)
         , hr [] []
         , div
             [ id "songs-played"
