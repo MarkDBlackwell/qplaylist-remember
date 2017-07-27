@@ -173,6 +173,31 @@ someTime =
             head.time
 
 
+songsPlayed : Model -> Html Msg
+songsPlayed model =
+    div
+        []
+        [ p
+            []
+            [ button
+                [ type_ "button" ]
+                []
+            , text someTime
+            , a
+                [ target "_blank"
+                , href (amazonConstant ++ someTitle ++ "+" ++ someArtist)
+                ]
+                []
+            ]
+        , p
+            []
+            [ text someTitle ]
+        , p
+            []
+            [ text someArtist ]
+        ]
+
+
 view : Model -> Html Msg
 view model =
     section
@@ -186,27 +211,7 @@ view model =
                 , type_ "button"
                 ]
                 []
-            , div
-                []
-                [ p
-                    []
-                    [ button
-                        [ type_ "button" ]
-                        []
-                    , text someTime
-                    , a
-                        [ target "_blank"
-                        , href (amazonConstant ++ someTitle ++ "+" ++ someArtist)
-                        ]
-                        []
-                    ]
-                , p
-                    []
-                    [ text someTitle ]
-                , p
-                    []
-                    [ text someArtist ]
-                ]
+            , songsPlayed model
             ]
         ]
 
