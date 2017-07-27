@@ -45,16 +45,15 @@ type alias SongInfo =
 
 
 type alias LatestFewSongs =
-    List (Maybe SongInfo)
+    List SongInfo
 
 
-songinfo : Artist -> Title -> Time -> Maybe SongInfo
+songinfo : Artist -> Title -> Time -> SongInfo
 songinfo a b c =
-    Just
-        { artist = a
-        , title = b
-        , time = c
-        }
+    { artist = a
+    , title = b
+    , time = c
+    }
 
 
 latestFewSongsInit : LatestFewSongs
@@ -139,14 +138,24 @@ subscriptions model =
 -- VIEW
 
 
-amazonSteady : String
-amazonSteady =
+amazonConstant : String
+amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
 someArtist : Artist
 someArtist =
-    "Some artist t"
+    let
+        h : Maybe SongInfo
+        h =
+            List.head latestFewSongsInit
+    in
+    case h of
+        Nothing ->
+            ""
+
+        Just a ->
+            a.artist
 
 
 someTitle : Title
@@ -182,7 +191,7 @@ view model =
                     , text someTime
                     , a
                         [ target "_blank"
-                        , href (amazonSteady ++ someTitle ++ "+" ++ someArtist)
+                        , href (amazonConstant ++ someTitle ++ "+" ++ someArtist)
                         ]
                         []
                     ]
@@ -200,70 +209,3 @@ view model =
 viewMessage : String -> Html msg
 viewMessage msg =
     div [] [ text msg ]
-
-
-
-{-
-         type alias SongInfo =
-             ( Artist, Title, Time )
-
-
-         latestFew : List SongInfo
-         latestFew =
-             [ ( "LP"
-               , "No Witness"
-               , "5:53 PM"
-               )
-             , ( "Outer Spaces"
-               , "Words"
-               , "5:49 PM"
-               )
-             , ( "Cage The Elephant"
-               , "Whole Wide World"
-               , "5:46 PM"
-               )
-             , ( "Robert Randolph and the Fami"
-               , "Deliver Me"
-               , "5:41 PM"
-               )
-             , ( "U2"
-               , "Bullet The Blue Sky"
-               , "5:31 PM"
-               )
-             ]
-
-
-      songinfoTwo : a -> b -> c -> { artist : a, time : c, title : b }
-      songinfoTwo a b c =
-          { artist = a
-          , title = b
-          , time = c
-          }
-
-
-   latestFew : List SongInfo
-   latestFew =
-       [ { artist = "LP"
-         , title = "No Witness"
-         , time = "5:53 PM"
-         }
-       , { artist = "Outer Spaces"
-         , title = "Words"
-         , time = "5:49 PM"
-         }
-       , { artist = "Cage The Elephant"
-         , title = "Whole Wide World"
-         , time = "5:46 PM"
-         }
-       , { artist = "Robert Randolph and the Fami"
-         , title = "Deliver Me"
-         , time = "5:41 PM"
-         }
-       , { artist = "U2"
-         , title = "Bullet The Blue Sky"
-         , time = "5:31 PM"
-         }
-       ]
-
-
--}
