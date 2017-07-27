@@ -145,27 +145,32 @@ amazonConstant =
 
 someArtist : Artist
 someArtist =
-    let
-        h : Maybe SongInfo
-        h =
-            List.head latestFewSongsInit
-    in
-    case h of
+    case List.head latestFewSongsInit of
         Nothing ->
             ""
 
-        Just a ->
-            a.artist
+        Just head ->
+            head.artist
 
 
 someTitle : Title
 someTitle =
-    "Some title t"
+    case List.head latestFewSongsInit of
+        Nothing ->
+            ""
+
+        Just head ->
+            head.title
 
 
 someTime : Time
 someTime =
-    "Some time t"
+    case List.head latestFewSongsInit of
+        Nothing ->
+            ""
+
+        Just head ->
+            head.time
 
 
 view : Model -> Html Msg
