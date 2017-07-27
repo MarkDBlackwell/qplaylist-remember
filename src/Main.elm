@@ -45,7 +45,7 @@ type alias SongInfo =
     }
 
 
-type alias LatestFewSongs =
+type alias SongsList =
     List SongInfo
 
 
@@ -57,7 +57,27 @@ songinfo someArtist someTitle someTime =
     }
 
 
-latestFewSongsInit : LatestFewSongs
+rememberedSongsInit : SongsList
+rememberedSongsInit =
+    [ songinfo "The Rosebuds"
+        "In My Teeth"
+        "4:54 PM"
+    , songinfo "T. Rex"
+        "King Of The Rumbling Spires"
+        "4:59 PM"
+    , songinfo "Tedeschi Trucks Band"
+        "I Pity The Fool - Live"
+        "5:07 PM"
+    , songinfo "Bobby \"Blue\" Bland"
+        "I Pity The Fool"
+        "5:14 PM"
+    , songinfo "Eddy Clearwater"
+        "Find You A Job"
+        "5:19 PM"
+    ]
+
+
+latestFewSongsInit : SongsList
 latestFewSongsInit =
     [ songinfo "U2"
         "Bullet The Blue Sky"
@@ -92,14 +112,15 @@ main =
 
 
 type alias Model =
-    { latestFew : LatestFewSongs
+    { remembered : SongsList
+    , latestFew : SongsList
     , messages : List String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model latestFewSongsInit [], Cmd.none )
+    ( Model rememberedSongsInit latestFewSongsInit [], Cmd.none )
 
 
 
@@ -113,16 +134,16 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { latestFew, messages } =
+update msg { remembered, latestFew, messages } =
     case msg of
         Add ->
-            ( Model latestFew messages, Cmd.none )
+            ( Model remembered latestFew messages, Cmd.none )
 
         Refresh ->
-            ( Model latestFew messages, Cmd.none )
+            ( Model remembered latestFew messages, Cmd.none )
 
         Send ->
-            ( Model latestFew messages, Cmd.none )
+            ( Model remembered latestFew messages, Cmd.none )
 
 
 
@@ -181,7 +202,7 @@ songsPlayed model =
 
 songsRemembered : Model -> List (Html Msg)
 songsRemembered model =
-    List.map (songPlayed model) model.latestFew
+    List.map (songPlayed model) model.remembered
 
 
 view : Model -> Html Msg
