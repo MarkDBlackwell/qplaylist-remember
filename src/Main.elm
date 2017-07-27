@@ -173,8 +173,8 @@ someTitle =
             head.title
 
 
-songPlayed : Model -> Html Msg
-songPlayed model =
+songPlayed : Model -> Artist -> Time -> Title -> Html Msg
+songPlayed model someArtist someTime someTitle =
     div
         []
         [ p
@@ -200,7 +200,7 @@ songPlayed model =
 
 songsPlayed : Model -> Html Msg
 songsPlayed model =
-    songPlayed model
+    songPlayed model someArtist someTime someTitle
 
 
 view : Model -> Html Msg
