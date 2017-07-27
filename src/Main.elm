@@ -49,10 +49,10 @@ type alias LatestFewSongs =
 
 
 songinfo : Artist -> Title -> Time -> SongInfo
-songinfo a b c =
-    { artist = a
-    , title = b
-    , time = c
+songinfo someArtist someTitle someTime =
+    { artist = someArtist
+    , time = someTime
+    , title = someTitle
     }
 
 
