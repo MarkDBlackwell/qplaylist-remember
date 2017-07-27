@@ -14,11 +14,11 @@
 -}
 
 
-module Main exposing (..)
+module Main exposing (main)
 
 -- import Html.Attributes exposing (..)
 
-import Html exposing (..)
+import Html exposing (Html, button, div, input, text)
 import Html.Events exposing (..)
 
 
@@ -26,11 +26,11 @@ type alias Artist =
     String
 
 
-type alias Time =
+type alias Title =
     String
 
 
-type alias Title =
+type alias Time =
     String
 
 
@@ -41,6 +41,10 @@ type alias SongInfo =
     }
 
 
+type alias LatestFiveInit =
+    List SongInfo
+
+
 songinfo : Artist -> Title -> Time -> SongInfo
 songinfo a b c =
     { artist = a
@@ -49,8 +53,8 @@ songinfo a b c =
     }
 
 
-latestFiveRecord : List SongInfo
-latestFiveRecord =
+latestFiveInit : LatestFiveInit
+latestFiveInit =
     [ songinfo "LP"
         "No Witness"
         "5:53 PM"
@@ -84,14 +88,15 @@ main =
 
 
 type alias Model =
-    { input : String
+    { latestFive : LatestFiveInit
+    , input : String
     , messages : List String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" [], Cmd.none )
+    ( Model latestFiveInit "" [], Cmd.none )
 
 
 
@@ -105,16 +110,16 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { input, messages } =
+update msg { latestFive, input, messages } =
     case msg of
         Input newInput ->
-            ( Model newInput messages, Cmd.none )
+            ( Model latestFiveInit newInput messages, Cmd.none )
 
         Send ->
-            ( Model "" [], Cmd.none )
+            ( Model latestFiveInit "" [], Cmd.none )
 
         NewMessage str ->
-            ( Model input (str :: messages), Cmd.none )
+            ( Model latestFiveInit input (str :: messages), Cmd.none )
 
 
 
@@ -184,8 +189,8 @@ viewMessage msg =
           }
 
 
-   latestFiveRecord : List SongInfo
-   latestFiveRecord =
+   latestFive : List SongInfo
+   latestFive =
        [ { artist = "LP"
          , title = "No Witness"
          , time = "5:53 PM"
