@@ -116,13 +116,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { latestFew, messages } =
     case msg of
         Add ->
-            ( Model latestFew [], Cmd.none )
+            ( Model latestFew messages, Cmd.none )
 
         Refresh ->
-            ( Model latestFew [], Cmd.none )
+            ( Model latestFew messages, Cmd.none )
 
         Send ->
-            ( Model latestFew [], Cmd.none )
+            ( Model latestFew messages, Cmd.none )
 
 
 
@@ -179,6 +179,12 @@ view model =
     section
         []
         [ div
+            [ id "songs-remembered"
+            , class "songs-played-or-remembered"
+            ]
+            (songsPlayed model)
+        , hr [] []
+        , div
             [ id "songs-played"
             , class "songs-played-or-remembered"
             ]
