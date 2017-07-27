@@ -201,7 +201,9 @@ songPlayed model someArtist someTime someTitle =
 
 songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    [ songPlayed model someArtist someTime someTitle ]
+    [ songPlayed model someArtist someTime someTitle
+    , songPlayed model someArtist someTime someTitle
+    ]
 
 
 view : Model -> Html Msg
