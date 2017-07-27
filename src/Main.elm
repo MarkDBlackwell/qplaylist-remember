@@ -212,7 +212,7 @@ songsPlayed model =
 
 songsRemembered : Model -> List (Html Msg)
 songsRemembered model =
-    List.map (songPlayed model) model.remembered
+    List.map (songRemembered model) model.remembered
 
 
 view : Model -> Html Msg
