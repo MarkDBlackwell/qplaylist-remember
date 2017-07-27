@@ -16,7 +16,7 @@
 
 module Main exposing (main)
 
--- import Html exposing (Html, button, div, input, text)
+-- import Html exposing (Html, button, div, text)
 -- import Html.Attributes exposing (class, id)
 -- import Html.Events exposing (..)
 
@@ -93,14 +93,13 @@ main =
 
 type alias Model =
     { latestFew : LatestFewSongs
-    , input : String
     , messages : List String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model latestFewSongsInit "" [], Cmd.none )
+    ( Model latestFewSongsInit [], Cmd.none )
 
 
 
@@ -112,10 +111,10 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { latestFew, input, messages } =
+update msg { latestFew, messages } =
     case msg of
         Send ->
-            ( Model latestFewSongsInit "" [], Cmd.none )
+            ( Model latestFewSongsInit [], Cmd.none )
 
 
 
