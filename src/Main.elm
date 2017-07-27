@@ -137,6 +137,21 @@ amazonSteady =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
+someArtist : Artist
+someArtist =
+    "Some artist t"
+
+
+someTitle : Title
+someTitle =
+    "Some title t"
+
+
+someTime : Time
+someTime =
+    "Some time t"
+
+
 view : Model -> Html Msg
 view model =
     section
@@ -157,19 +172,19 @@ view model =
                     [ button
                         [ type_ "button" ]
                         []
-                    , text "Time t"
+                    , text someTime
                     , a
                         [ target "_blank"
-                        , href (amazonSteady ++ "Some title t+Some artist t")
+                        , href (amazonSteady ++ someTitle ++ "+" ++ someArtist)
                         ]
                         []
                     ]
                 , p
                     []
-                    [ text "Some title t" ]
+                    [ text someTitle ]
                 , p
                     []
-                    [ text "Some artist t" ]
+                    [ text someArtist ]
                 ]
             ]
         ]
