@@ -19,6 +19,7 @@ module Main exposing (main)
 -- import Html exposing (Html, button, div, text)
 -- import Html.Attributes exposing (class, id)
 -- import Html.Events exposing (..)
+-- import List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -198,9 +199,9 @@ songPlayed model someArtist someTime someTitle =
         ]
 
 
-songsPlayed : Model -> Html Msg
+songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    songPlayed model someArtist someTime someTitle
+    [ songPlayed model someArtist someTime someTitle ]
 
 
 view : Model -> Html Msg
@@ -211,13 +212,14 @@ view model =
             [ id "songs-played"
             , class "songs-played-or-remembered"
             ]
-            [ button
+            ([ button
                 [ id "refresh"
                 , type_ "button"
                 ]
                 []
-            , songsPlayed model
-            ]
+             ]
+                ++ songsPlayed model
+            )
         ]
 
 
