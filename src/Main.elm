@@ -16,10 +16,14 @@
 
 module Main exposing (main)
 
--- import Html.Attributes exposing (..)
+-- import Html exposing (Html, button, div, input, text)
+-- import Html.Attributes exposing (class, id)
 
-import Html exposing (Html, button, div, input, text)
-import Html.Events exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+
+
+-- import Html.Events exposing (..)
 
 
 type alias Artist =
@@ -104,22 +108,14 @@ init =
 
 
 type Msg
-    = Input String
-    | Send
-    | NewMessage String
+    = Send
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { latestFive, input, messages } =
     case msg of
-        Input newInput ->
-            ( Model latestFiveInit newInput messages, Cmd.none )
-
         Send ->
             ( Model latestFiveInit "" [], Cmd.none )
-
-        NewMessage str ->
-            ( Model latestFiveInit input (str :: messages), Cmd.none )
 
 
 
@@ -136,12 +132,46 @@ subscriptions model =
 -- VIEW
 
 
+amazonSteady : String
+amazonSteady =
+    "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
+
+
 view : Model -> Html Msg
 view model =
-    div []
-        [ input [ onInput Input ] []
-        , button [ onClick Send ] [ text "Send" ]
-        , div [] (List.map viewMessage (List.reverse model.messages))
+    section
+        []
+        [ div
+            [ id "songs-played"
+            , class "songs-played-or-remembered"
+            ]
+            [ button
+                [ id "refresh"
+                , type_ "button"
+                ]
+                []
+            , div
+                []
+                [ p
+                    []
+                    [ button
+                        [ type_ "button" ]
+                        []
+                    , text "Time t"
+                    , a
+                        [ target "_blank"
+                        , href (amazonSteady ++ "Some title t+Some artist t")
+                        ]
+                        []
+                    ]
+                , p
+                    []
+                    [ text "Some title t" ]
+                , p
+                    []
+                    [ text "Some artist t" ]
+                ]
+            ]
         ]
 
 
