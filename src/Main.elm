@@ -107,12 +107,20 @@ init =
 
 
 type Msg
-    = Send
+    = Add
+    | Refresh
+    | Send
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { latestFew, messages } =
     case msg of
+        Add ->
+            ( Model latestFewSongsInit [], Cmd.none )
+
+        Refresh ->
+            ( Model latestFewSongsInit [], Cmd.none )
+
         Send ->
             ( Model latestFewSongsInit [], Cmd.none )
 
