@@ -172,8 +172,8 @@ buttonMy =
         []
 
 
-songPlayedOrRemembered : Model -> SongInfo -> Html Msg
-songPlayedOrRemembered model song =
+songPlayedOrRemembered : Model -> Int -> SongInfo -> Html Msg
+songPlayedOrRemembered model index song =
     div
         []
         [ p
@@ -195,24 +195,24 @@ songPlayedOrRemembered model song =
         ]
 
 
-songPlayed : Model -> SongInfo -> Html Msg
-songPlayed model song =
-    songPlayedOrRemembered model song
+songPlayed : Model -> Int -> SongInfo -> Html Msg
+songPlayed model index song =
+    songPlayedOrRemembered model index song
 
 
-songRemembered : Model -> SongInfo -> Html Msg
-songRemembered model song =
-    songPlayedOrRemembered model song
+songRemembered : Model -> Int -> SongInfo -> Html Msg
+songRemembered model index song =
+    songPlayedOrRemembered model index song
 
 
 songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    List.map (songPlayed model) model.latestFew
+    List.indexedMap (songPlayed model) model.latestFew
 
 
 songsRemembered : Model -> List (Html Msg)
 songsRemembered model =
-    List.map (songRemembered model) model.remembered
+    List.indexedMap (songRemembered model) model.remembered
 
 
 view : Model -> Html Msg
