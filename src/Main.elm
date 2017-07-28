@@ -226,7 +226,7 @@ songView model songGroup index song =
 
         factor : Float
         factor =
-            1.0 - (0.25 * toFloat reversed)
+            0.8 ^ toFloat reversed
     in
     div
         []
