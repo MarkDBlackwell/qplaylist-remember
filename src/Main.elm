@@ -191,7 +191,7 @@ buttonMy songGroup index =
 styleCalc : SongGroup -> Float -> Float -> List (Attribute msg)
 styleCalc songGroup sizeFactor base =
     let
-        fontSize =
+        size =
             toString (sizeFactor * base) ++ "px"
     in
     case songGroup of
@@ -200,7 +200,7 @@ styleCalc songGroup sizeFactor base =
 
         Remembered ->
             [ style
-                [ ( "font-size", fontSize )
+                [ ( "font-size", size )
                 ]
             ]
 
