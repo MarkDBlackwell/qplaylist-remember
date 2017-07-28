@@ -238,24 +238,14 @@ songView model group index song =
         ]
 
 
-songPlayed : Model -> Int -> SongInfo -> Html Msg
-songPlayed model index song =
-    songView model Played index song
-
-
-songRemembered : Model -> Int -> SongInfo -> Html Msg
-songRemembered model index song =
-    songView model Remembered index song
-
-
 songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    List.indexedMap (songPlayed model) model.latestFew
+    List.indexedMap (songView model Played) model.latestFew
 
 
 songsRemembered : Model -> List (Html Msg)
 songsRemembered model =
-    List.indexedMap (songRemembered model) model.remembered
+    List.indexedMap (songView model Remembered) model.remembered
 
 
 view : Model -> Html Msg
