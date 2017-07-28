@@ -171,10 +171,10 @@ type SongGroup
 
 
 buttonMy : SongGroup -> Int -> Html Msg
-buttonMy group index =
+buttonMy songGroup index =
     let
         groupString =
-            case group of
+            case songGroup of
                 Played ->
                     "Add"
 
@@ -189,12 +189,12 @@ buttonMy group index =
 
 
 styleCalc : SongGroup -> Float -> Float -> List (Attribute msg)
-styleCalc group sizeFactor base =
+styleCalc songGroup sizeFactor base =
     let
         fontSize =
             toString (sizeFactor * base) ++ "px"
     in
-    case group of
+    case songGroup of
         Played ->
             []
 
@@ -206,7 +206,7 @@ styleCalc group sizeFactor base =
 
 
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
-songView model group index song =
+songView model songGroup index song =
     let
         length =
             List.length model.remembered
@@ -220,8 +220,8 @@ songView model group index song =
     div
         []
         [ p
-            (styleCalc group factor 15.0)
-            [ buttonMy group index
+            (styleCalc songGroup factor 15.0)
+            [ buttonMy songGroup index
             , text song.time
             , a
                 [ target "_blank"
@@ -230,10 +230,10 @@ songView model group index song =
                 []
             ]
         , p
-            (styleCalc group factor 12.0)
+            (styleCalc songGroup factor 12.0)
             [ text song.title ]
         , p
-            (styleCalc group factor 12.0)
+            (styleCalc songGroup factor 12.0)
             [ text song.artist ]
         ]
 
