@@ -267,19 +267,34 @@ songsRemembered model =
     List.indexedMap (songView model Remembered) list
 
 
+
+-- typeToString : a -> String
+
+
+songGroupToString : SongGroup -> String
+songGroupToString songGroup =
+    case songGroup of
+        Played ->
+            "played"
+
+        Remembered ->
+            "remembered"
+
+
 divAttributes : SongGroup -> List (Attribute msg)
 divAttributes songGroup =
     let
         idString : String
         idString =
             case songGroup of
-                Remembered ->
-                    "remembered"
-
                 Played ->
                     "played"
+
+                Remembered ->
+                    "remembered"
     in
-    [ id ("songs-" ++ idString)
+    --    [ id ("songs-" ++ idString)
+    [ id ("songs-" ++ songGroupToString songGroup)
     , class "songs-played-or-remembered"
     ]
 
