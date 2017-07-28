@@ -250,14 +250,18 @@ songView model songGroup index song =
 songsOfGroup : Model -> SongGroup -> List (Html Msg)
 songsOfGroup model songGroup =
     let
-        list : List SongInfo
-        list =
+        listBackward : List SongInfo
+        listBackward =
             case songGroup of
                 Played ->
                     model.latestFew
 
                 Remembered ->
                     model.remembered
+
+        list : List SongInfo
+        list =
+            List.reverse listBackward
     in
     List.indexedMap (songView model songGroup) list
 
@@ -298,8 +302,3 @@ view model =
                 ++ songsOfGroup model Played
             )
         ]
-
-
-viewMessage : String -> Html msg
-viewMessage msg =
-    div [] [ text msg ]
