@@ -274,12 +274,12 @@ divAttributes songGroup =
         idString =
             case songGroup of
                 Remembered ->
-                    "songs-remembered"
+                    "remembered"
 
                 Played ->
-                    "songs-played"
+                    "played"
     in
-    [ id idString
+    [ id ("songs-" ++ idString)
     , class "songs-played-or-remembered"
     ]
 
