@@ -165,32 +165,48 @@ amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
-buttonMy : String -> Int -> Html Msg
+type SongGroup
+    = Played
+    | Remembered
+
+
+buttonMy : SongGroup -> Int -> Html Msg
 buttonMy group index =
+    let
+        groupString =
+            case group of
+                Played ->
+                    "Add"
+
+                Remembered ->
+                    "Drop"
+    in
     button
-        [ id ("button" ++ group ++ toString index)
+        [ id ("button" ++ groupString ++ toString index)
         , type_ "button"
         ]
         []
 
 
-styleCalc : String -> Float -> Float -> List (Attribute msg)
+styleCalc : SongGroup -> Float -> Float -> List (Attribute msg)
 styleCalc group sizeFactor base =
     let
         fontSize =
             toString (sizeFactor * base) ++ "px"
     in
-    if "Drop" /= group then
-        []
-    else
-        [ style
-            [ ( "font-size", fontSize )
+    case group of
+        Played ->
+            []
+
+        Remembered ->
+            [ style
+                [ ( "font-size", fontSize )
+                ]
             ]
-        ]
 
 
-songPlayedOrRemembered : Model -> String -> Int -> SongInfo -> Html Msg
-songPlayedOrRemembered model group index song =
+songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
+songView model group index song =
     let
         length =
             List.length model.remembered
@@ -224,12 +240,12 @@ songPlayedOrRemembered model group index song =
 
 songPlayed : Model -> Int -> SongInfo -> Html Msg
 songPlayed model index song =
-    songPlayedOrRemembered model "Add" index song
+    songView model Played index song
 
 
 songRemembered : Model -> Int -> SongInfo -> Html Msg
 songRemembered model index song =
-    songPlayedOrRemembered model "Drop" index song
+    songView model Remembered index song
 
 
 songsPlayed : Model -> List (Html Msg)
