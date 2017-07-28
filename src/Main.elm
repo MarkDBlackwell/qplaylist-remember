@@ -160,14 +160,14 @@ subscriptions model =
 -- VIEW
 
 
-amazonConstant : String
-amazonConstant =
-    "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
-
-
 type SongGroup
     = Played
     | Remembered
+
+
+amazonConstant : String
+amazonConstant =
+    "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
 buttonMy : SongGroup -> Int -> Html Msg
@@ -222,7 +222,7 @@ songView model songGroup index song =
 
         reversed : Int
         reversed =
-            length - 1 - index
+            length - index - 1
 
         factor : Float
         factor =
