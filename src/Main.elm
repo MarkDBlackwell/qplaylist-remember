@@ -174,40 +174,37 @@ buttonMy group index =
         []
 
 
-sizeFactor : Model -> Int -> Float
-sizeFactor model index =
+styleCalc : String -> Float -> Float -> List (Attribute msg)
+styleCalc group sizeFactor base =
+    let
+        fontSize =
+            toString (sizeFactor * base) ++ "px"
+    in
+    if "Drop" /= group then
+        []
+    else
+        [ style
+            [ ( "font-size", fontSize )
+            ]
+        ]
+
+
+songPlayedOrRemembered : Model -> String -> Int -> SongInfo -> Html Msg
+songPlayedOrRemembered model group index song =
     let
         length =
             List.length model.remembered
 
         reversed =
             length - 1 - index
+
+        factor =
+            1.0 - (0.25 * toFloat reversed)
     in
-    1.0 - (0.25 * toFloat reversed)
-
-
-sizeCalc : Model -> Float -> Int -> String
-sizeCalc model base index =
-    toString (base * sizeFactor model index) ++ "px"
-
-
-styleCalc : Model -> String -> Float -> Int -> List ( String, String )
-styleCalc model group base index =
-    if "Drop" /= group then
-        []
-    else
-        [ ( "font-size", sizeCalc model base index )
-        ]
-
-
-songPlayedOrRemembered : Model -> String -> Int -> SongInfo -> Html Msg
-songPlayedOrRemembered model group index song =
     div
         []
         [ p
-            [ style
-                (styleCalc model group index 15.0)
-            ]
+            (styleCalc group factor 15.0)
             [ buttonMy group index
             , text song.time
             , a
@@ -217,14 +214,10 @@ songPlayedOrRemembered model group index song =
                 []
             ]
         , p
-            [ style
-                (styleCalc model group index 12.0)
-            ]
+            (styleCalc group factor 12.0)
             [ text song.title ]
         , p
-            [ style
-                (styleCalc model group index 12.0)
-            ]
+            (styleCalc group factor 12.0)
             [ text song.artist ]
         ]
 
