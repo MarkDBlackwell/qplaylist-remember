@@ -78,8 +78,8 @@ songinfo someArtist someTitle someTime =
     }
 
 
-latestFewSongsInit : SongsList
-latestFewSongsInit =
+songsLatestFewInit : SongsList
+songsLatestFewInit =
     [ songinfo "U2"
         "Bullet The Blue Sky"
         "5:53 PM"
@@ -98,29 +98,29 @@ latestFewSongsInit =
     ]
 
 
-rememberedSongsInit : SongsList
-rememberedSongsInit =
-    [ songinfo "The Rosebuds"
-        "In My Teeth"
-        "4:54 PM"
-    , songinfo "T. Rex"
-        "King Of The Rumbling Spires"
-        "4:59 PM"
-    , songinfo "Tedeschi Trucks Band"
-        "I Pity The Fool - Live"
-        "5:07 PM"
+songsRememberedInit : SongsList
+songsRememberedInit =
+    [ songinfo "Eddy Clearwater"
+        "Find You A Job"
+        "5:19 PM"
     , songinfo "Bobby \"Blue\" Bland"
         "I Pity The Fool"
         "5:14 PM"
-    , songinfo "Eddy Clearwater"
-        "Find You A Job"
-        "5:19 PM"
+    , songinfo "Tedeschi Trucks Band"
+        "I Pity The Fool - Live"
+        "5:07 PM"
+    , songinfo "T. Rex"
+        "King Of The Rumbling Spires"
+        "4:59 PM"
+    , songinfo "The Rosebuds"
+        "In My Teeth"
+        "4:54 PM"
     ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model rememberedSongsInit latestFewSongsInit [], Cmd.none )
+    ( Model songsRememberedInit songsLatestFewInit [], Cmd.none )
 
 
 
