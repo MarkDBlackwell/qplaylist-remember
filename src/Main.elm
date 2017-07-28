@@ -210,6 +210,12 @@ styleCalc songGroup sizeFactor base =
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model songGroup index song =
     let
+        buySong : List (Attribute msg)
+        buySong =
+            [ target "_blank"
+            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
+            ]
+
         length : Int
         length =
             List.length model.remembered
@@ -221,12 +227,6 @@ songView model songGroup index song =
         factor : Float
         factor =
             1.0 - (0.25 * toFloat reversed)
-
-        buySong : List (Attribute msg)
-        buySong =
-            [ target "_blank"
-            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
-            ]
     in
     div
         []
