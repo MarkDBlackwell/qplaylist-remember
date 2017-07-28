@@ -267,20 +267,33 @@ songsRemembered model =
     List.indexedMap (songView model Remembered) list
 
 
+divAttributes : SongGroup -> List (Attribute msg)
+divAttributes songGroup =
+    let
+        idString : String
+        idString =
+            case songGroup of
+                Remembered ->
+                    "songs-remembered"
+
+                Played ->
+                    "songs-played"
+    in
+    [ id idString
+    , class "songs-played-or-remembered"
+    ]
+
+
 view : Model -> Html Msg
 view model =
     section
         []
         [ div
-            [ id "songs-remembered"
-            , class "songs-played-or-remembered"
-            ]
+            (divAttributes Remembered)
             (songsRemembered model)
         , hr [] []
         , div
-            [ id "songs-played"
-            , class "songs-played-or-remembered"
-            ]
+            (divAttributes Played)
             ([ button
                 [ id "refresh"
                 , type_ "button"
