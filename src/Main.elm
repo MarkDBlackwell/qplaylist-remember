@@ -173,6 +173,7 @@ type SongGroup
 buttonMy : SongGroup -> Int -> Html Msg
 buttonMy songGroup index =
     let
+        groupString : String
         groupString =
             case songGroup of
                 Played ->
@@ -191,6 +192,7 @@ buttonMy songGroup index =
 styleCalc : SongGroup -> Float -> Float -> List (Attribute msg)
 styleCalc songGroup sizeFactor base =
     let
+        size : String
         size =
             toString (sizeFactor * base) ++ "px"
     in
@@ -208,14 +210,23 @@ styleCalc songGroup sizeFactor base =
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model songGroup index song =
     let
+        length : Int
         length =
             List.length model.remembered
 
+        reversed : Int
         reversed =
             length - 1 - index
 
+        factor : Float
         factor =
             1.0 - (0.25 * toFloat reversed)
+
+        buySong : List (Attribute msg)
+        buySong =
+            [ target "_blank"
+            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
+            ]
     in
     div
         []
@@ -224,9 +235,7 @@ songView model songGroup index song =
             [ buttonMy songGroup index
             , text song.time
             , a
-                [ target "_blank"
-                , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
-                ]
+                buySong
                 []
             ]
         , p
@@ -240,12 +249,22 @@ songView model songGroup index song =
 
 songsPlayed : Model -> List (Html Msg)
 songsPlayed model =
-    List.indexedMap (songView model Played) model.latestFew
+    let
+        list : List SongInfo
+        list =
+            model.latestFew
+    in
+    List.indexedMap (songView model Played) list
 
 
 songsRemembered : Model -> List (Html Msg)
 songsRemembered model =
-    List.indexedMap (songView model Remembered) model.remembered
+    let
+        list : List SongInfo
+        list =
+            model.remembered
+    in
+    List.indexedMap (songView model Remembered) list
 
 
 view : Model -> Html Msg
