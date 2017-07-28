@@ -24,10 +24,15 @@ html, body {
     color: White;
     background: #242424;
 }
+button:not(#refresh) {
+/* Override browser & user settings. */
+    font-style: italic;
+    font-size: 130%;
+    line-height: 1.2;
+}
 button#refresh {
     margin: 0 2px 0 40px;
     padding: 0 2px 0 2px;
-    line-height: 1.3;
 }
 button#refresh:before {
     content: "Refresh";
@@ -100,7 +105,7 @@ div#songs-remembered > div > p:first-of-type {
 div.songs-played-or-remembered > div > p > button {
     margin: 0 2px 0 0;
     padding: 0 2px 0 2px;
-    line-height: 1.3;
+/*  line-height: 1.3; */
 }
 div#songs-played > div > p > button:before {
     content: "Add";
