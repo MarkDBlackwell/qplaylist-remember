@@ -247,24 +247,19 @@ songView model songGroup index song =
         ]
 
 
-songsPlayed : Model -> List (Html Msg)
-songsPlayed model =
+songsOfGroup : Model -> SongGroup -> List (Html Msg)
+songsOfGroup model songGroup =
     let
         list : List SongInfo
         list =
-            model.latestFew
-    in
-    List.indexedMap (songView model Played) list
+            case songGroup of
+                Played ->
+                    model.latestFew
 
-
-songsRemembered : Model -> List (Html Msg)
-songsRemembered model =
-    let
-        list : List SongInfo
-        list =
-            model.remembered
+                Remembered ->
+                    model.remembered
     in
-    List.indexedMap (songView model Remembered) list
+    List.indexedMap (songView model songGroup) list
 
 
 songGroupToString : SongGroup -> String
@@ -290,7 +285,7 @@ view model =
         []
         [ div
             (divAttributes Remembered)
-            (songsRemembered model)
+            (songsOfGroup model Remembered)
         , hr [] []
         , div
             (divAttributes Played)
@@ -300,7 +295,7 @@ view model =
                 ]
                 []
              ]
-                ++ songsPlayed model
+                ++ songsOfGroup model Played
             )
         ]
 
