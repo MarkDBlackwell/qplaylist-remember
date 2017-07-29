@@ -57,7 +57,7 @@ section.songs-played-or-remembered > div {
     margin: 0 0 0 .8em;
     padding: .5em 1em .4em .6em;
     border-bottom: .1em solid #63686d;
-    font-size: 10px; /* basis for em calculations */
+    font-size: 10px; /* basis for em and percentage calculations */
 }
 section.songs-played-or-remembered > div:first-of-type {
     padding-top: .8em;
@@ -98,7 +98,7 @@ section#songs-remembered > div > p:first-of-type {
     font-size: 110%;
 }
 section.songs-played-or-remembered > div > p > button {
-    padding: 0 3px 1px 2px;
+    padding: 0 3px .0606062em .110193em;
     border-top-width: 1.6px;
     vertical-align: top;
 /* Override browser & user settings: */
