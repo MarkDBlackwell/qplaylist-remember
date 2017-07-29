@@ -62,13 +62,13 @@ section#songs-remembered:before {
     content: "Remembered:";
 }
 section.songs-played-or-remembered > div {
-    margin: 0 0 0 8px;
-    padding: 5px 10px 4px 6px;
-    border-bottom: 1px solid #63686d;
-    font-size: 10px;
+    margin: 0 0 0 .8em;
+    padding: .5em 1em .4em .6em;
+    border-bottom: .1em solid #63686d;
+    font-size: 10px; /* basis for em calculations */
 }
 section.songs-played-or-remembered > div:first-of-type {
-    padding-top: 8px;
+    padding-top: .8em;
 }
 /* To remove striping, use same background as plain <div>. */
 section.songs-played-or-remembered > div:nth-of-type(odd) {
@@ -91,9 +91,6 @@ section#songs-remembered > div > p {
 /*  font-size: 15px; */
 }
 /* start time, and link to buy song */
-section.songs-played-or-remembered > div > p:first-of-type {
-    padding-bottom: 1.6px;
-}
 section.songs-played-or-remembered > div > p:first-of-type:after {
     /* Contain all floated elements:
     see: https://developer.mozilla.org/en-US/docs/Web/CSS/clear
@@ -134,6 +131,9 @@ section.songs-played-or-remembered > div > p > a:before {
     content: "Buy Song";
 }
 /* song title */
+section.songs-played-or-remembered > div > p:nth-of-type(2) {
+    padding-top: .123077em;
+}
 section.songs-played-or-remembered > div > p:nth-of-type(2):before {
     padding-right: 4.3px;
     content: "Title:";
