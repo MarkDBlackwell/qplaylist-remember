@@ -81,6 +81,7 @@ section#songs-played > div > p {
 }
 section#songs-remembered > div > p {
     font-size: 150%;
+    font-size: 130%;
 }
 /* start time, and link to buy song */
 section.songs-played-or-remembered > div > p:first-of-type:after {
@@ -96,6 +97,7 @@ section#songs-played > div > p:first-of-type {
 }
 section#songs-remembered > div > p:first-of-type {
     font-size: 110%;
+    font-size: 100%;
 }
 section.songs-played-or-remembered > div > p > button {
     padding: 0 .165289em .0606062em .110193em;
@@ -143,6 +145,7 @@ section#songs-played > div > p:nth-of-type(2):before {
 }
 section#songs-remembered > div > p:nth-of-type(2):before {
     font-size: 80%;
+    font-size: 73.0769%;
 }
 /* artist */
 section.songs-played-or-remembered > div > p:last-of-type:before {
@@ -154,4 +157,5 @@ section#songs-played > div > p:last-of-type:before {
 }
 section#songs-remembered > div > p:last-of-type:before {
     font-size: 80%;
+    font-size: 73.0769%;
 }
