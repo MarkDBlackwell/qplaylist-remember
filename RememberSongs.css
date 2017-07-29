@@ -31,16 +31,18 @@ button:not(#refresh) {
     font-size: 110%;
     font-style: italic;
     font-weight: 100;
-    font-stretch: ultra-expanded;
     letter-spacing: 0.1em;
+    font-stretch: ultra-expanded;
     vertical-align: top;
 }
 button#refresh {
     margin: 0 2px 0 40px;
     padding: 0 2px 0 2px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
 }
 button#refresh:before {
-    content: "Refresh";
+    content: "refresh";
 }
 section.songs-played-or-remembered {
     margin: 0;
