@@ -98,11 +98,11 @@ section#songs-remembered > div > p:first-of-type {
     font-size: 110%;
 }
 section.songs-played-or-remembered > div > p > button {
-    padding: 0 3px .0606062em .110193em;
+    padding: 0 .165289em .0606062em .110193em;
     border-top-width: 1.6px;
     vertical-align: top;
 /* Override browser & user settings: */
-    margin: 0 3px 0 0;
+    margin: 0 .272727em 0 0;
     line-height: 0.9;
     font-size: 110%;
     font-style: italic;
@@ -150,7 +150,7 @@ section.songs-played-or-remembered > div > p:last-of-type:before {
     content: "Artist:";
 }
 section#songs-played > div > p:last-of-type:before {
-    font-size: 9.5px;
+    font-size: 73.0769%;
 }
 section#songs-remembered > div > p:last-of-type:before {
     font-size: 80%;

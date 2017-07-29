@@ -229,7 +229,7 @@ songView model songGroup index song =
             0.8 ^ toFloat reversed
     in
     div
-        (styleCalc songGroup factor 15.0)
+        (styleCalc songGroup factor 10.0)
         [ p
             []
             [ buttonMy songGroup index
