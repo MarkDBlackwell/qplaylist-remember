@@ -229,9 +229,9 @@ songView model songGroup index song =
             0.8 ^ toFloat reversed
     in
     div
-        []
+        (styleCalc songGroup factor 15.0)
         [ p
-            (styleCalc songGroup factor 15.0)
+            []
             [ buttonMy songGroup index
             , text song.time
             , a
@@ -239,10 +239,10 @@ songView model songGroup index song =
                 []
             ]
         , p
-            (styleCalc songGroup factor 12.0)
+            []
             [ text song.title ]
         , p
-            (styleCalc songGroup factor 12.0)
+            []
             [ text song.artist ]
         ]
 
