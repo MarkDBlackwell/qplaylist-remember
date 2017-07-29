@@ -38,6 +38,9 @@ section.songs-played-or-remembered {
     margin: 0;
     padding: 0;
 }
+section#songs-remembered {
+    overflow-y: scroll;
+}
 section.songs-played-or-remembered:before {
     margin-left: 140px;
     line-height: 1.5;
@@ -46,9 +49,6 @@ section.songs-played-or-remembered:before {
 }
 section#songs-played:before {
     content: "Played:";
-}
-section#songs-remembered {
-    overflow-y: scroll;
 }
 section#songs-remembered:before {
     content: "Remembered:";
@@ -75,14 +75,12 @@ section.songs-played-or-remembered > div > p {
     margin: 0;
     padding: 0;
     line-height: 1.5;
-}
-section#songs-played > div > p {
     font-size: 130%;
 }
-section#songs-remembered > div > p {
-    font-size: 150%;
-}
 /* start time, and link to buy song */
+section.songs-played-or-remembered > div > p:first-of-type {
+    font-size: 100%;
+}
 section.songs-played-or-remembered > div > p:first-of-type:after {
     /* Contain all floated elements:
     see: https://developer.mozilla.org/en-US/docs/Web/CSS/clear
@@ -90,12 +88,6 @@ section.songs-played-or-remembered > div > p:first-of-type:after {
     display: block;
     clear: both;
     content: "";
-}
-section#songs-played > div > p:first-of-type {
-    font-size: 100%;
-}
-section#songs-remembered > div > p:first-of-type {
-    font-size: 110%;
 }
 section.songs-played-or-remembered > div > p > button {
     padding: 0 .165289em .0606062em .110193em;
@@ -136,22 +128,12 @@ section.songs-played-or-remembered > div > p:nth-of-type(2) {
 }
 section.songs-played-or-remembered > div > p:nth-of-type(2):before {
     padding-right: .427691em;
-    content: "Title:";
-}
-section#songs-played > div > p:nth-of-type(2):before {
     font-size: 73.0769%;
-}
-section#songs-remembered > div > p:nth-of-type(2):before {
-    font-size: 80%;
+    content: "Title:";
 }
 /* artist */
 section.songs-played-or-remembered > div > p:last-of-type:before {
     padding-right: .427691em;
-    content: "Artist:";
-}
-section#songs-played > div > p:last-of-type:before {
     font-size: 73.0769%;
-}
-section#songs-remembered > div > p:last-of-type:before {
-    font-size: 80%;
+    content: "Artist:";
 }
