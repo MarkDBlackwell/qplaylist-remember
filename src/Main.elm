@@ -100,21 +100,21 @@ songsLatestFewInit =
 
 songsRememberedInit : SongsList
 songsRememberedInit =
-    [ songinfo "Eddy Clearwater"
-        "Find You A Job"
-        "5:19 PM"
-    , songinfo "Bobby \"Blue\" Bland"
-        "I Pity The Fool"
-        "5:14 PM"
-    , songinfo "Tedeschi Trucks Band"
-        "I Pity The Fool - Live"
-        "5:07 PM"
+    [ songinfo "The Rosebuds"
+        "In My Teeth"
+        "4:54 PM"
     , songinfo "T. Rex"
         "King Of The Rumbling Spires"
         "4:59 PM"
-    , songinfo "The Rosebuds"
-        "In My Teeth"
-        "4:54 PM"
+    , songinfo "Tedeschi Trucks Band"
+        "I Pity The Fool - Live"
+        "5:07 PM"
+    , songinfo "Bobby \"Blue\" Bland"
+        "I Pity The Fool"
+        "5:14 PM"
+    , songinfo "Eddy Clearwater"
+        "Find You A Job"
+        "5:19 PM"
     ]
 
 
@@ -250,20 +250,16 @@ songView model songGroup index song =
 songsOfGroup : Model -> SongGroup -> List (Html Msg)
 songsOfGroup model songGroup =
     let
-        listBackward : List SongInfo
-        listBackward =
+        songs : List SongInfo
+        songs =
             case songGroup of
                 Played ->
                     model.latestFew
 
                 Remembered ->
                     model.remembered
-
-        list : List SongInfo
-        list =
-            List.reverse listBackward
     in
-    List.indexedMap (songView model songGroup) list
+    List.indexedMap (songView model songGroup) songs
 
 
 songGroupToString : SongGroup -> String
