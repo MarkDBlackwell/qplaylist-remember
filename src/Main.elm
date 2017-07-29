@@ -285,13 +285,13 @@ divAttributes songGroup =
 
 view : Model -> Html Msg
 view model =
-    section
+    main_
         []
-        [ div
+        [ section
             (divAttributes Remembered)
             (songsOfGroup model Remembered)
         , hr [] []
-        , div
+        , section
             (divAttributes Played)
             ([ button
                 [ id "refresh"
