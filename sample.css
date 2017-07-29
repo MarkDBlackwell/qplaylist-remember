@@ -18,26 +18,16 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
     line-height: 0;
+    font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
     font-size: 0;
     color: White;
     background: #242424;
 }
-button:not(#refresh) {
-/* Override browser & user settings. */
-    border-top-width: 1.6px;
-    line-height: 0.9;
-    font-size: 110%;
-    font-style: italic;
-    font-weight: 100;
-    letter-spacing: 0.1em;
-    font-stretch: ultra-expanded;
-    vertical-align: top;
-}
 button#refresh {
-    margin: 0 2px 0 40px;
     padding: 0 2px 0 2px;
+/* Override browser & user settings: */
+    margin: 0 2px 0 40px;
     font-weight: 400;
     letter-spacing: 0.28em;
 }
@@ -108,9 +98,17 @@ section#songs-remembered > div > p:first-of-type {
     font-size: 11px;
 }
 section.songs-played-or-remembered > div > p > button {
-    margin: 0 3px 0 0;
     padding: 0 3px 1px 2px;
-    line-height: 1.3;
+    border-top-width: 1.6px;
+    vertical-align: top;
+/* Override browser & user settings: */
+    margin: 0 3px 0 0;
+    line-height: 0.9;
+    font-size: 110%;
+    font-style: italic;
+    font-weight: 100;
+    font-stretch: ultra-expanded;
+    letter-spacing: 0.1em;
 }
 section#songs-played > div > p > button:before {
     content: "ADD";
