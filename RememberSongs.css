@@ -22,14 +22,14 @@ html, body {
     font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
     font-size: 0;
     color: White;
-    background: #242424;
+    background: #111111;
 }
 button#refresh {
     padding: 0 2px 0 2px;
 /* Override browser & user settings: */
     margin: 0 2px 0 40px;
     font-weight: 400;
-    letter-spacing: 0.28em;
+    letter-spacing: .28em;
 }
 button#refresh:before {
     content: "refresh";
@@ -58,14 +58,13 @@ section.songs-played-or-remembered > div {
     border-bottom: .1em solid #63686d;
     font-size: 10px; /* basis for em and percentage calculations */
 }
-section.songs-played-or-remembered > div:first-of-type {
-    padding-top: .8em;
-}
-/* To remove striping, use same background as plain <div>. */
 section.songs-played-or-remembered > div:nth-of-type(odd) {
     border-bottom-right-radius: .5em;
     border-bottom-left-radius: .5em;
-    background: #111111;
+}
+/* To remove striping, use same background as plain <div>. */
+section.songs-played-or-remembered > div:nth-of-type(even) {
+    background: #242424;
 }
 section.songs-played-or-remembered > div:last-of-type {
     border-bottom-style: none;
@@ -94,12 +93,12 @@ section.songs-played-or-remembered > div > p > button {
     vertical-align: top;
 /* Override browser & user settings: */
     margin: 0 .272727em 0 0;
-    line-height: 0.9;
+    line-height: .9;
     font-size: 110%;
     font-style: italic;
     font-weight: 100;
     font-stretch: ultra-expanded;
-    letter-spacing: 0.1em;
+    letter-spacing: .1em;
 }
 section#songs-played > div > p > button:before {
     content: "ADD";
