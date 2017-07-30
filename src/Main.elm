@@ -207,6 +207,16 @@ styleCalc songGroup sizeFactor base =
             ]
 
 
+
+-- Golden ratio:
+-- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+
+
+goldenRatio : Float
+goldenRatio =
+    0.6180339887498949
+
+
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model songGroup index song =
     let
@@ -215,6 +225,10 @@ songView model songGroup index song =
             [ target "_blank"
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
+
+        visualEqualityFactor : Float
+        visualEqualityFactor =
+            0.97
 
         length : Int
         length =
@@ -226,7 +240,7 @@ songView model songGroup index song =
 
         factor : Float
         factor =
-            0.8 ^ toFloat reversed
+            (goldenRatio ^ toFloat (reversed - 1)) * visualEqualityFactor
     in
     div
         (styleCalc songGroup factor 10.0)
