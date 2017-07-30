@@ -22,7 +22,7 @@ html, body {
     font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
     font-size: 0;
     color: White;
-    background: #111111;
+    background-color: Black;
 }
 button#refresh {
     padding: 0 2px 0 2px;
@@ -38,8 +38,12 @@ section.songs-played-or-remembered {
     margin: 0;
     padding: 0;
 }
+section#songs-played {
+    background-color: rgb(17,17,17);
+}
 section#songs-remembered {
     overflow-y: scroll;
+    background-color: rgb(67,7,7);
 }
 section.songs-played-or-remembered:before {
     margin-left: 140px;
@@ -63,8 +67,8 @@ section.songs-played-or-remembered > div:nth-of-type(odd) {
     border-bottom-left-radius: .5em;
 }
 /* To remove striping, use same background as plain <div>. */
-section.songs-played-or-remembered > div:nth-of-type(even) {
-    background: #242424;
+section#songs-played > div:nth-of-type(even) {
+    background-color: rgb(36,36,36);
 }
 section.songs-played-or-remembered > div:last-of-type {
     border-bottom-style: none;
