@@ -54,7 +54,6 @@ section#songs-remembered:before {
     content: "Remembered:";
 }
 section.songs-played-or-remembered > div {
-    margin: 0 0 0 .8em;
     padding: .5em 1em .4em .6em;
     border-bottom: .1em solid #63686d;
     font-size: 10px; /* basis for em and percentage calculations */
