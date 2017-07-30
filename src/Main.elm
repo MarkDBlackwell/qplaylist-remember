@@ -189,9 +189,13 @@ buttonMy songGroup index =
         []
 
 
-styleCalc : SongGroup -> Float -> Float -> List (Attribute msg)
-styleCalc songGroup sizeFactor base =
+styleCalc : SongGroup -> Float -> List (Attribute msg)
+styleCalc songGroup sizeFactor =
     let
+        base : Float
+        base =
+            10.0
+
         size : String
         size =
             toString (sizeFactor * base) ++ "px"
@@ -243,7 +247,7 @@ songView model songGroup index song =
             (goldenRatio ^ toFloat (reversed - 1)) * visualEqualityFactor
     in
     div
-        (styleCalc songGroup factor 10.0)
+        (styleCalc songGroup factor)
         [ p
             []
             [ buttonMy songGroup index
