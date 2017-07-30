@@ -43,7 +43,6 @@ section#songs-played {
 }
 section#songs-remembered {
     overflow-y: scroll;
-    background-color: rgb(67,7,7);
 }
 section.songs-played-or-remembered:before {
     margin-left: 140px;
