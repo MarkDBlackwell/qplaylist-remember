@@ -192,17 +192,15 @@ buttonMy songGroup index =
 styleCalc : SongGroup -> Float -> List (Attribute msg)
 styleCalc songGroup sizeFactor =
     let
-        hue : Float
-        hue =
-            0.0
-
         saturation : Float
         saturation =
             0.3 * sizeFactor
 
-        lightness : Float
-        lightness =
-            0.5
+        hsl : String
+        hsl =
+            "hsl(0,"
+                ++ toString (saturation * 100.0)
+                ++ "%,50%"
 
         base : Float
         base =
@@ -211,16 +209,6 @@ styleCalc songGroup sizeFactor =
         size : String
         size =
             toString (sizeFactor * base) ++ "px"
-
-        hsl : String
-        hsl =
-            "hsl("
-                ++ toString (degrees hue)
-                ++ ","
-                ++ toString (saturation * 100.0)
-                ++ "%,"
-                ++ toString (lightness * 100.0)
-                ++ "%)"
     in
     case songGroup of
         Played ->
