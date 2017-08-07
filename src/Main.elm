@@ -48,6 +48,10 @@ type alias Time =
     String
 
 
+type alias TimeStamp =
+    String
+
+
 type alias Title =
     String
 
@@ -55,6 +59,7 @@ type alias Title =
 type alias SongInfo =
     { artist : Artist
     , time : Time
+    , timeStamp : TimeStamp
     , title : Title
     }
 
@@ -70,10 +75,11 @@ type alias Model =
     }
 
 
-songinfo : Artist -> Title -> Time -> SongInfo
-songinfo someArtist someTitle someTime =
+songinfo : Artist -> Title -> Time -> TimeStamp -> SongInfo
+songinfo someArtist someTitle someTime someTimeStamp =
     { artist = someArtist
     , time = someTime
+    , timeStamp = someTimeStamp
     , title = someTitle
     }
 
@@ -83,18 +89,23 @@ songsLatestFewInit =
     [ songinfo "U2"
         "Bullet The Blue Sky"
         "5:53 PM"
+        "2017 08 07 17 53"
     , songinfo "LP"
         "No Witness"
         "5:49 PM"
+        "2017 08 07 17 49"
     , songinfo "Cage The Elephant"
         "Whole Wide World"
         "5:46 PM"
+        "2017 08 07 17 46"
     , songinfo "Robert Randolph and the Fami"
         "Deliver Me"
         "5:41 PM"
+        "2017 08 07 17 41"
     , songinfo "Outer Spaces"
         "Words"
         "5:31 PM"
+        "2017 08 07 17 31"
     ]
 
 
@@ -103,18 +114,23 @@ songsRememberedInit =
     [ songinfo "The Rosebuds"
         "In My Teeth"
         "4:54 PM"
+        "2017 08 07 16 54"
     , songinfo "T. Rex"
         "King Of The Rumbling Spires"
         "4:59 PM"
+        "2017 08 07 16 59"
     , songinfo "Tedeschi Trucks Band"
         "I Pity The Fool - Live"
         "5:07 PM"
+        "2017 08 07 17 07"
     , songinfo "Bobby \"Blue\" Bland"
         "I Pity The Fool"
         "5:14 PM"
+        "2017 08 07 17 14"
     , songinfo "Eddy Clearwater"
         "Find You A Job"
         "5:19 PM"
+        "2017 08 07 17 19"
     ]
 
 
