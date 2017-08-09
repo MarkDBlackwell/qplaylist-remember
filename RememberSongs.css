@@ -43,6 +43,9 @@ section.songs-group > div {
     border-radius: .5em;
     font-size: 10px; /* basis for em and percentage calculations */
 }
+section.songs-group > div:first-of-type {
+    padding-top: 0;
+}
 section.songs-group > div:last-of-type {
     border-bottom-style: none;
 }
