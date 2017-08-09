@@ -40,7 +40,7 @@ section#songs-played {
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-bottom: .1em solid #63686d;
-    border-radius: 0 0 .5em .5em;
+    border-radius: .5em;
     font-size: 10px; /* basis for em and percentage calculations */
 }
 section.songs-group > div:last-of-type {
