@@ -205,26 +205,22 @@ buttonSong songGroup index =
         []
 
 
-
--- Golden ratio:
--- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
-
-
-goldenRatio : Float
-goldenRatio =
-    0.6180339887498949
-
-
 styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
-styleCalc songGroup length index =
+styleCalc songGroup lengthSongGroup index =
     let
+        -- Golden ratio:
+        -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+        goldenRatio : Float
+        goldenRatio =
+            0.6180339887498949
+
         base : Float
         base =
             16.0
 
         reversed : Int
         reversed =
-            length - index - 1
+            lengthSongGroup - index - 1
 
         sizeFactor : Float
         sizeFactor =
@@ -235,38 +231,34 @@ styleCalc songGroup length index =
                 Remembered ->
                     goldenRatio ^ toFloat reversed
 
-        size : String
-        size =
+        fontSizeValue : String
+        fontSizeValue =
             toString (sizeFactor * base) ++ "px"
+
+        fontSizeStyling : List ( String, String )
+        fontSizeStyling =
+            [ ( "font-size", fontSizeValue ) ]
 
         saturation : Float
         saturation =
             sizeFactor * 0.5
 
-        hsl : String
-        hsl =
+        backgroundColorValue : String
+        backgroundColorValue =
             "hsl(0,"
                 ++ toString (saturation * 100.0)
                 ++ "%,50%"
 
-        backgroundColor : ( String, String )
-        backgroundColor =
+        backgroundColorStyling : List ( String, String )
+        backgroundColorStyling =
             case songGroup of
                 Played ->
-                    ( "", "" )
+                    []
 
                 Remembered ->
-                    ( "background-color", hsl )
-
-        fontSize : ( String, String )
-        fontSize =
-            ( "font-size", size )
+                    [ ( "background-color", backgroundColorValue ) ]
     in
-    [ style
-        [ fontSize
-        , backgroundColor
-        ]
-    ]
+    [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
