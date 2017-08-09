@@ -19,7 +19,7 @@ html {
     margin: 0;
     padding: 0;
     line-height: 0;
-    font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
+    font-family: 'PT Sans Narrow', 'Arial', 'Helvetica', sans-serif;
     font-size: 0;
     color: White;
     background-color: Black;
@@ -28,82 +28,84 @@ body {
 /* Override browser & user settings: */
     margin: 0;
 }
+button {
+/* Override browser & user settings: */
+    border-top-width: 1.6px;
+    font-family: inherit;
+    font-stretch: ultra-expanded;
+}
 section#songs-played {
     background-color: rgb(17,17,17);
 }
-section.songs-played-or-remembered > div {
+section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-bottom: .1em solid #63686d;
+    border-radius: 0 0 .5em .5em;
     font-size: 10px; /* basis for em and percentage calculations */
 }
-section.songs-played-or-remembered > div:nth-of-type(odd) {
-    border-radius: 0 0 .5em .5em;
-}
-section.songs-played-or-remembered > div:last-of-type {
+section.songs-group > div:last-of-type {
     border-bottom-style: none;
 }
 /* To remove striping, use same background as plain <div>. */
 section#songs-played > div:nth-of-type(even) {
     background-color: rgb(36,36,36);
 }
-section.songs-played-or-remembered > div > p {
-    margin: 0;
-    padding: 0;
+section.songs-group > div > p {
     line-height: 1.5;
     font-size: 130%;
+/* Override browser & user settings: */
+    margin: 0;
 }
 /* start time, and link to buy song */
-section.songs-played-or-remembered > div > p:first-of-type {
+section.songs-group > div > p:first-of-type {
     font-size: 100%;
 }
-section.songs-played-or-remembered > div > p:first-of-type:after {
-    /* Contain all floated elements:
-    see: https://developer.mozilla.org/en-US/docs/Web/CSS/clear
+section.songs-group > div > p:first-of-type:after {
+    /* Contain all floated elements, see:
+       https://developer.mozilla.org/en-US/docs/Web/CSS/clear
     */
     display: block;
     clear: both;
     content: "";
 }
 /* song title */
-section.songs-played-or-remembered > div > p:nth-of-type(2) {
+section.songs-group > div > p:nth-of-type(2) {
     padding-top: .123077em;
 }
-section.songs-played-or-remembered > div > p:nth-of-type(2):before {
+section.songs-group > div > p:nth-of-type(2):before {
     padding-right: .427691em;
     font-size: 73.0769%;
     content: "Title:";
 }
 /* artist */
-section.songs-played-or-remembered > div > p:last-of-type:before {
+section.songs-group > div > p:last-of-type:before {
     padding-right: .427691em;
     font-size: 73.0769%;
     content: "Artist:";
 }
 /* link to buy song */
-section.songs-played-or-remembered > div > p > a {
+section.songs-group > div > p > a {
     float: right;
     font-size: 90%;
     font-weight: bold;
     text-decoration: underline;
     color: White;
 }
-section.songs-played-or-remembered > div > p > a:hover {
+section.songs-group > div > p > a:hover {
     color: #ee7500;
 }
-section.songs-played-or-remembered > div > p > a:before {
+section.songs-group > div > p > a:before {
     content: "Buy Song";
 }
-section.songs-played-or-remembered > div > p > button {
-    padding: 0 .165289em .0606062em .110193em;
-    border-top-width: 1.6px;
+section.songs-group > div > p > button {
     vertical-align: top;
 /* Override browser & user settings: */
     margin: 0 .272727em 0 0;
+    padding: 0 .165289em .0606062em .110193em;
     line-height: .9;
     font-size: 110%;
     font-style: italic;
     font-weight: 100;
-    font-stretch: ultra-expanded;
     letter-spacing: .1em;
 }
 section#songs-played > div > p > button:before {
@@ -112,28 +114,29 @@ section#songs-played > div > p > button:before {
 section#songs-remembered > div > p > button:before {
     content: "DROP";
 }
-section.songs-played-or-remembered > p {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-section.songs-played-or-remembered > p:before {
+section.songs-group > p {
+    line-height: 1.1;
     font-size: 12px;
+    text-align: center;
     font-style: italic;
+/* Override browser & user settings: */
+    margin: 0;
 }
-section#songs-played > p:before {
+section#songs-played > p:after {
     content: "Latest:";
 }
-section#songs-remembered > p:before {
+section#songs-remembered > p:after {
     content: "Remembered:";
 }
-section.songs-played-or-remembered > p > button {
-    padding: 0 2px 0 2px;
+section.songs-group > p > button {
+    vertical-align: text-top;
 /* Override browser & user settings: */
-    margin: 0 2px 0 40px;
-    line-height: 1.1;
+    margin: 0 10px 0 0;
+    padding: 0 .5px 0 2px;
+    line-height: 1.2;
+    font-size: 11px;
     font-weight: 400;
-    letter-spacing: .28em;
+    letter-spacing: 2.5px;
 }
 section#songs-played > p > button:before {
     content: "refresh";
