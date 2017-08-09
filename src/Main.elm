@@ -74,9 +74,9 @@ type alias SongsList =
 
 
 type alias Model =
-    { remembered : SongsList
+    { shape : Shape
     , latestFew : SongsList
-    , shape : Shape
+    , remembered : SongsList
     , messages : List String
     }
 
@@ -142,7 +142,8 @@ songsRememberedInit =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model songsRememberedInit songsLatestFewInit Shrunk []
+    --    ( Model Shrunk songsLatestFewInit songsRememberedInit []
+    ( Model Expanded songsLatestFewInit songsRememberedInit []
     , Cmd.none
     )
 
@@ -158,20 +159,20 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { remembered, latestFew, shape, messages } =
+update msg { shape, latestFew, remembered, messages } =
     case msg of
         Add ->
-            ( Model remembered latestFew shape messages
+            ( Model shape latestFew remembered messages
             , Cmd.none
             )
 
         Refresh ->
-            ( Model remembered latestFew shape messages
+            ( Model shape latestFew remembered messages
             , Cmd.none
             )
 
         Send ->
-            ( Model remembered latestFew shape messages
+            ( Model shape latestFew remembered messages
             , Cmd.none
             )
 
