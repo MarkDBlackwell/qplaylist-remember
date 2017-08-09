@@ -186,8 +186,8 @@ amazonConstant =
     "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
 
 
-buttonMy : SongGroup -> Int -> Html Msg
-buttonMy songGroup index =
+buttonSong : SongGroup -> Int -> Html Msg
+buttonSong songGroup index =
     let
         groupString : String
         groupString =
@@ -275,19 +275,16 @@ songView model songGroup index song =
     in
     div
         (styleCalc songGroup factor)
-        [ p
-            []
-            [ buttonMy songGroup index
+        [ p []
+            [ buttonSong songGroup index
             , text song.time
             , a
                 buySong
                 []
             ]
-        , p
-            []
+        , p []
             [ text song.title ]
-        , p
-            []
+        , p []
             [ text song.artist ]
         ]
 
@@ -307,6 +304,16 @@ songsOfGroup model songGroup =
     List.indexedMap (songView model songGroup) songs
 
 
+buttonGroup : List (Html Msg)
+buttonGroup =
+    [ p []
+        [ button
+            [ type_ "button" ]
+            []
+        ]
+    ]
+
+
 songGroupToString : SongGroup -> String
 songGroupToString songGroup =
     case songGroup of
@@ -324,40 +331,15 @@ divAttributes songGroup =
     ]
 
 
-buttonEmpty : Html Msg
-buttonEmpty =
-    p []
-        [ button
-            [ type_ "button" ]
-            []
-        ]
-
-
 view : Model -> Html Msg
 view model =
     main_
         []
         [ section
             (divAttributes Remembered)
-            ([ p
-                []
-                [ button
-                    [ type_ "button" ]
-                    []
-                ]
-             ]
-                ++ songsOfGroup model Remembered
-            )
+            (buttonGroup ++ songsOfGroup model Remembered)
         , hr [] []
         , section
             (divAttributes Played)
-            ([ p
-                []
-                [ button
-                    [ type_ "button" ]
-                    []
-                ]
-             ]
-                ++ songsOfGroup model Played
-            )
+            (buttonGroup ++ songsOfGroup model Played)
         ]
