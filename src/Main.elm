@@ -205,9 +205,35 @@ buttonSong songGroup index =
         []
 
 
-styleCalc : SongGroup -> Float -> List (Attribute msg)
-styleCalc songGroup sizeFactor =
+
+-- Golden ratio:
+-- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+
+
+goldenRatio : Float
+goldenRatio =
+    0.6180339887498949
+
+
+styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
+styleCalc songGroup length index =
     let
+        base : Float
+        base =
+            16.0
+
+        reversed : Int
+        reversed =
+            length - index - 1
+
+        sizeFactor : Float
+        sizeFactor =
+            goldenRatio ^ toFloat reversed
+
+        size : String
+        size =
+            toString (sizeFactor * base) ++ "px"
+
         saturation : Float
         saturation =
             sizeFactor * 0.5
@@ -217,14 +243,6 @@ styleCalc songGroup sizeFactor =
             "hsl(0,"
                 ++ toString (saturation * 100.0)
                 ++ "%,50%"
-
-        base : Float
-        base =
-            16.0
-
-        size : String
-        size =
-            toString (sizeFactor * base) ++ "px"
     in
     case songGroup of
         Played ->
@@ -238,16 +256,6 @@ styleCalc songGroup sizeFactor =
             ]
 
 
-
--- Golden ratio:
--- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
-
-
-goldenRatio : Float
-goldenRatio =
-    0.6180339887498949
-
-
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model songGroup index song =
     let
@@ -257,20 +265,12 @@ songView model songGroup index song =
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
-        length : Int
-        length =
+        lengthRemembered : Int
+        lengthRemembered =
             List.length model.remembered
-
-        reversed : Int
-        reversed =
-            length - index - 1
-
-        factor : Float
-        factor =
-            goldenRatio ^ toFloat reversed
     in
     div
-        (styleCalc songGroup factor)
+        (styleCalc songGroup lengthRemembered index)
         [ p []
             [ buttonSong songGroup index
             , span []
