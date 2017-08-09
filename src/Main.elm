@@ -40,6 +40,11 @@ main =
 -- MODEL
 
 
+type Shape
+    = Expanded
+    | Shrunk
+
+
 type alias Artist =
     String
 
@@ -71,6 +76,7 @@ type alias SongsList =
 type alias Model =
     { remembered : SongsList
     , latestFew : SongsList
+    , shape : Shape
     , messages : List String
     }
 
@@ -136,7 +142,9 @@ songsRememberedInit =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model songsRememberedInit songsLatestFewInit [], Cmd.none )
+    ( Model songsRememberedInit songsLatestFewInit Shrunk []
+    , Cmd.none
+    )
 
 
 
@@ -150,16 +158,22 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { remembered, latestFew, messages } =
+update msg { remembered, latestFew, shape, messages } =
     case msg of
         Add ->
-            ( Model remembered latestFew messages, Cmd.none )
+            ( Model remembered latestFew shape messages
+            , Cmd.none
+            )
 
         Refresh ->
-            ( Model remembered latestFew messages, Cmd.none )
+            ( Model remembered latestFew shape messages
+            , Cmd.none
+            )
 
         Send ->
-            ( Model remembered latestFew messages, Cmd.none )
+            ( Model remembered latestFew shape messages
+            , Cmd.none
+            )
 
 
 
@@ -273,9 +287,18 @@ songView model songGroup index song =
         lengthRemembered : Int
         lengthRemembered =
             List.length model.remembered
+
+        groupAttributes : List (Attribute msg)
+        groupAttributes =
+            case model.shape of
+                Expanded ->
+                    []
+
+                Shrunk ->
+                    styleCalc songGroup lengthRemembered index
     in
     div
-        (styleCalc songGroup lengthRemembered index)
+        groupAttributes
         [ p []
             [ buttonSong songGroup index
             , span []
