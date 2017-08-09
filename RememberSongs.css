@@ -46,12 +46,12 @@ section.songs-group > div {
 section.songs-group > div:first-of-type {
     padding-top: 0;
 }
-section.songs-group > div:last-of-type {
-    border-bottom-style: none;
-}
 /* To remove striping, use same background as plain <div>. */
 section#songs-played > div:nth-of-type(even) {
     background-color: rgb(36,36,36);
+}
+section.songs-group > div:last-of-type {
+    border-bottom-style: none;
 }
 section.songs-group > div > p {
     line-height: 1.5;
@@ -59,9 +59,9 @@ section.songs-group > div > p {
 /* Override browser & user settings: */
     margin: 0;
 }
-/* start time, and link to buy song */
+/* Start time, and link to buy song */
 section.songs-group > div > p:first-of-type {
-    font-size: 100%;
+    font-size: 1%; /* Shrink spaces to almost nothing */
 }
 section.songs-group > div > p:first-of-type:after {
     /* Contain all floated elements, see:
@@ -71,7 +71,7 @@ section.songs-group > div > p:first-of-type:after {
     clear: both;
     content: "";
 }
-/* song title */
+/* Song title */
 section.songs-group > div > p:nth-of-type(2) {
     padding-top: .123077em;
 }
@@ -80,16 +80,16 @@ section.songs-group > div > p:nth-of-type(2):before {
     font-size: 73.0769%;
     content: "Title:";
 }
-/* artist */
+/* Artist */
 section.songs-group > div > p:last-of-type:before {
     padding-right: .427691em;
     font-size: 73.0769%;
     content: "Artist:";
 }
-/* link to buy song */
+/* Link to buy song */
 section.songs-group > div > p > a {
     float: right;
-    font-size: 90%;
+    font-size: 9000%;
     font-weight: bold;
     text-decoration: underline;
     color: White;
@@ -106,7 +106,7 @@ section.songs-group > div > p > button {
     margin: 0 .272727em 0 0;
     padding: 0 .165289em .0606062em .110193em;
     line-height: .9;
-    font-size: 110%;
+    font-size: 11000%;
     font-style: italic;
     font-weight: 100;
     letter-spacing: .1em;
@@ -116,6 +116,9 @@ section#songs-played > div > p > button:before {
 }
 section#songs-remembered > div > p > button:before {
     content: "DROP";
+}
+section.songs-group > div > p > span {
+    font-size: 10000%;
 }
 section.songs-group > p {
     line-height: 1.1;
