@@ -41,17 +41,17 @@ section.songs-played-or-remembered {
 section#songs-played {
     background-color: rgb(17,17,17);
 }
-section#songs-remembered {
-    overflow-y: scroll;
-}
 section.songs-played-or-remembered:before {
-    margin-left: 140px;
+    display: block;
+    width: 100%;
+/*  margin-left: 140px; */
     line-height: 1.5;
     font-size: 12px;
     font-style: italic;
+    text-align: center;
 }
 section#songs-played:before {
-    content: "Played:";
+    content: "Latest:";
 }
 section#songs-remembered:before {
     content: "Remembered:";
