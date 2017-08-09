@@ -142,8 +142,8 @@ songsRememberedInit =
 
 init : ( Model, Cmd Msg )
 init =
-    --    ( Model Shrunk songsLatestFewInit songsRememberedInit []
-    ( Model Expanded songsLatestFewInit songsRememberedInit []
+    --  ( Model Expanded songsLatestFewInit songsRememberedInit []
+    ( Model Shrunk songsLatestFewInit songsRememberedInit []
     , Cmd.none
     )
 
