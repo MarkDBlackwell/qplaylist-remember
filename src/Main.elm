@@ -320,8 +320,17 @@ songGroupToString songGroup =
 divAttributes : SongGroup -> List (Attribute msg)
 divAttributes songGroup =
     [ id ("songs-" ++ songGroupToString songGroup)
-    , class "songs-played-or-remembered"
+    , class "songs-group"
     ]
+
+
+buttonEmpty : Html Msg
+buttonEmpty =
+    p []
+        [ button
+            [ type_ "button" ]
+            []
+        ]
 
 
 view : Model -> Html Msg
@@ -330,15 +339,24 @@ view model =
         []
         [ section
             (divAttributes Remembered)
-            (songsOfGroup model Remembered)
+            ([ p
+                []
+                [ button
+                    [ type_ "button" ]
+                    []
+                ]
+             ]
+                ++ songsOfGroup model Remembered
+            )
         , hr [] []
         , section
             (divAttributes Played)
-            ([ button
-                [ id "refresh"
-                , type_ "button"
-                ]
+            ([ p
                 []
+                [ button
+                    [ type_ "button" ]
+                    []
+                ]
              ]
                 ++ songsOfGroup model Played
             )
