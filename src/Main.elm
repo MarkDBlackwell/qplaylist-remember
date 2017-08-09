@@ -210,7 +210,7 @@ styleCalc songGroup sizeFactor =
     let
         saturation : Float
         saturation =
-            0.3 * sizeFactor
+            sizeFactor * 0.5
 
         hsl : String
         hsl =
@@ -220,7 +220,7 @@ styleCalc songGroup sizeFactor =
 
         base : Float
         base =
-            10.0
+            16.0
 
         size : String
         size =
@@ -257,10 +257,6 @@ songView model songGroup index song =
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
-        visualEqualityFactor : Float
-        visualEqualityFactor =
-            0.97
-
         length : Int
         length =
             List.length model.remembered
@@ -271,7 +267,7 @@ songView model songGroup index song =
 
         factor : Float
         factor =
-            (goldenRatio ^ toFloat (reversed - 1)) * visualEqualityFactor
+            goldenRatio ^ toFloat reversed
     in
     div
         (styleCalc songGroup factor)
