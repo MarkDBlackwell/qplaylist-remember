@@ -248,19 +248,25 @@ styleCalc songGroup length index =
             "hsl(0,"
                 ++ toString (saturation * 100.0)
                 ++ "%,50%"
-    in
-    case songGroup of
-        Played ->
-            [ style
-                [ ( "font-size", size ) ]
-            ]
 
-        Remembered ->
-            [ style
-                [ ( "font-size", size )
-                , ( "background-color", hsl )
-                ]
-            ]
+        backgroundColor : ( String, String )
+        backgroundColor =
+            case songGroup of
+                Played ->
+                    ( "", "" )
+
+                Remembered ->
+                    ( "background-color", hsl )
+
+        fontSize : ( String, String )
+        fontSize =
+            ( "font-size", size )
+    in
+    [ style
+        [ fontSize
+        , backgroundColor
+        ]
+    ]
 
 
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
