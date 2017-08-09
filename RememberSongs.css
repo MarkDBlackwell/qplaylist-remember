@@ -34,14 +34,17 @@ button {
     font-family: inherit;
     font-stretch: ultra-expanded;
 }
-section#songs-played {
-    background-color: rgb(17,17,17);
-}
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-bottom: .1em solid #63686d;
     border-radius: .5em;
     font-size: 10px; /* basis for em and percentage calculations */
+}
+section#songs-played > div {
+    background-color: rgb(17,17,17);
+}
+section#songs-remembered > div {
+    background-color: rgb(191,63,63);
 }
 section.songs-group > div:first-of-type {
     padding-top: 0;
