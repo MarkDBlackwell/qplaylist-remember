@@ -273,7 +273,8 @@ songView model songGroup index song =
         (styleCalc songGroup factor)
         [ p []
             [ buttonSong songGroup index
-            , text song.time
+            , span []
+                [ text song.time ]
             , a
                 buySong
                 []
@@ -329,8 +330,7 @@ divAttributes songGroup =
 
 view : Model -> Html Msg
 view model =
-    main_
-        []
+    main_ []
         [ section
             (divAttributes Remembered)
             (buttonGroup ++ songsOfGroup model Remembered)
