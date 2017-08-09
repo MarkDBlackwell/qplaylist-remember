@@ -18,12 +18,12 @@ module Main exposing (main)
 
 -- import Html exposing (Html, button, div, text)
 -- import Html.Attributes exposing (class, id)
--- import Html.Events exposing (..)
 -- import List exposing (..)
 -- import Maybe exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 
 
 main : Program Never Model Msg
@@ -142,7 +142,6 @@ songsRememberedInit =
 
 init : ( Model, Cmd Msg )
 init =
-    --  ( Model Expanded songsLatestFewInit songsRememberedInit []
     ( Model Shrunk songsLatestFewInit songsRememberedInit []
     , Cmd.none
     )
@@ -153,25 +152,29 @@ init =
 
 
 type Msg
-    = Add
+    = Morph
     | Refresh
-    | Send
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { shape, latestFew, remembered, messages } =
+    let
+        shapeNew : Shape
+        shapeNew =
+            case shape of
+                Expanded ->
+                    Shrunk
+
+                Shrunk ->
+                    Expanded
+    in
     case msg of
-        Add ->
-            ( Model shape latestFew remembered messages
+        Morph ->
+            ( Model shapeNew latestFew remembered messages
             , Cmd.none
             )
 
         Refresh ->
-            ( Model shape latestFew remembered messages
-            , Cmd.none
-            )
-
-        Send ->
             ( Model shape latestFew remembered messages
             , Cmd.none
             )
@@ -330,11 +333,13 @@ songsOfGroup model songGroup =
     List.indexedMap (songView model songGroup) songs
 
 
-buttonGroup : List (Html Msg)
-buttonGroup =
+buttonGroup : Msg -> List (Html Msg)
+buttonGroup action =
     [ p []
         [ button
-            [ type_ "button" ]
+            [ type_ "button"
+            , onClick action
+            ]
             []
         ]
     ]
@@ -362,9 +367,9 @@ view model =
     main_ []
         [ section
             (divAttributes Remembered)
-            (buttonGroup ++ songsOfGroup model Remembered)
+            (buttonGroup Morph ++ songsOfGroup model Remembered)
         , hr [] []
         , section
             (divAttributes Played)
-            (buttonGroup ++ songsOfGroup model Played)
+            (buttonGroup Refresh ++ songsOfGroup model Played)
         ]
