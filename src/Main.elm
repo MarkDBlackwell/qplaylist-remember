@@ -228,7 +228,12 @@ styleCalc songGroup length index =
 
         sizeFactor : Float
         sizeFactor =
-            goldenRatio ^ toFloat reversed
+            case songGroup of
+                Played ->
+                    goldenRatio ^ toFloat index
+
+                Remembered ->
+                    goldenRatio ^ toFloat reversed
 
         size : String
         size =
@@ -246,7 +251,9 @@ styleCalc songGroup length index =
     in
     case songGroup of
         Played ->
-            []
+            [ style
+                [ ( "font-size", size ) ]
+            ]
 
         Remembered ->
             [ style
