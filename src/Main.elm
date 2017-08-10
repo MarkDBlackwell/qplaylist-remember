@@ -16,13 +16,29 @@
 
 module Main exposing (main)
 
--- import Html exposing (Html, button, div, text)
--- import Html.Attributes exposing (class, id)
--- import List exposing (..)
--- import Maybe exposing (..)
-
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html
+    exposing
+        ( Attribute
+        , Html
+        , a
+        , button
+        , div
+        , hr
+        , main_
+        , p
+        , section
+        , span
+        , text
+        )
+import Html.Attributes
+    exposing
+        ( class
+        , href
+        , id
+        , style
+        , target
+        , type_
+        )
 import Html.Events exposing (onClick)
 
 
@@ -38,11 +54,6 @@ main =
 
 
 -- MODEL
-
-
-type Shape
-    = Expanded
-    | Shrunk
 
 
 type alias Artist =
@@ -73,21 +84,35 @@ type alias SongsList =
     List SongInfo
 
 
+type alias Messages =
+    List String
+
+
 type alias Model =
     { shape : Shape
     , latestFew : SongsList
     , remembered : SongsList
-    , messages : List String
+    , messages : Messages
     }
+
+
+type Shape
+    = Expanded
+    | Shrunk
 
 
 songinfo : Artist -> Title -> Time -> TimeStamp -> SongInfo
-songinfo someArtist someTitle someTime someTimeStamp =
-    { artist = someArtist
-    , time = someTime
-    , timeStamp = someTimeStamp
-    , title = someTitle
+songinfo artist title time timeStamp =
+    { artist = artist
+    , title = title
+    , time = time
+    , timeStamp = timeStamp
     }
+
+
+messagesInit : Messages
+messagesInit =
+    []
 
 
 songsLatestFewInit : SongsList
@@ -142,7 +167,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model Shrunk songsLatestFewInit songsRememberedInit []
+    ( Model Shrunk songsLatestFewInit songsRememberedInit messagesInit
     , Cmd.none
     )
 
