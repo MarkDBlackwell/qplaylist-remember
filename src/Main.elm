@@ -140,6 +140,11 @@ songsLatestFewInit =
     ]
 
 
+songsLatestFewInitEmpty : SongsList
+songsLatestFewInitEmpty =
+    []
+
+
 songsRememberedInit : SongsList
 songsRememberedInit =
     [ songinfo "The Rosebuds"
@@ -163,6 +168,11 @@ songsRememberedInit =
         "5:19 PM"
         "2017 08 07 17 19"
     ]
+
+
+songsRememberedInitEmpty : SongsList
+songsRememberedInitEmpty =
+    []
 
 
 init : ( Model, Cmd Msg )
