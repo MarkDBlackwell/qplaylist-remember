@@ -234,30 +234,6 @@ type SongGroup
     | Remembered
 
 
-amazonConstant : String
-amazonConstant =
-    "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
-
-
-buttonSong : SongGroup -> Int -> Html Msg
-buttonSong songGroup index =
-    let
-        groupString : String
-        groupString =
-            case songGroup of
-                Played ->
-                    "Add"
-
-                Remembered ->
-                    "Drop"
-    in
-    button
-        [ id ("button" ++ groupString ++ toString index)
-        , type_ "button"
-        ]
-        []
-
-
 styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
 styleCalc songGroup lengthSongGroup index =
     let
@@ -314,43 +290,21 @@ styleCalc songGroup lengthSongGroup index =
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
-songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
-songView model songGroup index song =
+songGroupAttributes : SongGroup -> List (Attribute msg)
+songGroupAttributes songGroup =
     let
-        buySong : List (Attribute msg)
-        buySong =
-            [ target "_blank"
-            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
-            ]
+        group : String
+        group =
+            case songGroup of
+                Played ->
+                    "played"
 
-        lengthRemembered : Int
-        lengthRemembered =
-            List.length model.remembered
-
-        groupAttributes : List (Attribute msg)
-        groupAttributes =
-            case model.shape of
-                Expanded ->
-                    []
-
-                Shrunk ->
-                    styleCalc songGroup lengthRemembered index
+                Remembered ->
+                    "remembered"
     in
-    div
-        groupAttributes
-        [ p []
-            [ buttonSong songGroup index
-            , span []
-                [ text song.time ]
-            , a
-                buySong
-                []
-            ]
-        , p []
-            [ text song.title ]
-        , p []
-            [ text song.artist ]
-        ]
+    [ id ("songs-" ++ group)
+    , class "songs-group"
+    ]
 
 
 songsOfGroup : Model -> SongGroup -> List (Html Msg)
@@ -380,31 +334,80 @@ buttonGroup action =
     ]
 
 
-songGroupToString : SongGroup -> String
-songGroupToString songGroup =
-    case songGroup of
-        Played ->
-            "played"
+buttonSong : SongGroup -> Int -> Html Msg
+buttonSong group index =
+    let
+        groupString : String
+        groupString =
+            case group of
+                Played ->
+                    "Add"
 
-        Remembered ->
-            "remembered"
+                Remembered ->
+                    "Drop"
+
+        buttonId : String
+        buttonId =
+            "button" ++ groupString ++ toString index
+    in
+    button
+        [ id buttonId
+        , type_ "button"
+        ]
+        []
 
 
-divAttributes : SongGroup -> List (Attribute msg)
-divAttributes songGroup =
-    [ id ("songs-" ++ songGroupToString songGroup)
-    , class "songs-group"
-    ]
+songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
+songView model songGroup index song =
+    let
+        amazonConstant : String
+        amazonConstant =
+            "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
+
+        buySong : List (Attribute msg)
+        buySong =
+            [ target "_blank"
+            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
+            ]
+
+        lengthRemembered : Int
+        lengthRemembered =
+            List.length model.remembered
+
+        songAttributes : List (Attribute msg)
+        songAttributes =
+            case model.shape of
+                Expanded ->
+                    []
+
+                Shrunk ->
+                    styleCalc songGroup lengthRemembered index
+    in
+    div
+        songAttributes
+        [ p []
+            [ buttonSong songGroup index
+            , span []
+                [ text song.time ]
+            , a
+                buySong
+                []
+            ]
+        , p []
+            [ text song.title ]
+        , p []
+            [ text song.artist ]
+        ]
 
 
 view : Model -> Html Msg
 view model =
     main_ []
         [ section
-            (divAttributes Remembered)
+            (songGroupAttributes Remembered)
             (buttonGroup Morph ++ songsOfGroup model Remembered)
         , hr [] []
         , section
-            (divAttributes Played)
+            (songGroupAttributes Played)
             (buttonGroup Refresh ++ songsOfGroup model Played)
         ]
