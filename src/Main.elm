@@ -235,7 +235,7 @@ type SongGroup
 
 
 styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
-styleCalc songGroup lengthSongGroup index =
+styleCalc group lengthSongGroup index =
     let
         -- Golden ratio:
         -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
@@ -253,7 +253,7 @@ styleCalc songGroup lengthSongGroup index =
 
         sizeFactor : Float
         sizeFactor =
-            case songGroup of
+            case group of
                 Played ->
                     goldenRatio ^ toFloat index
 
@@ -280,7 +280,7 @@ styleCalc songGroup lengthSongGroup index =
 
         backgroundColorStyling : List ( String, String )
         backgroundColorStyling =
-            case songGroup of
+            case group of
                 Played ->
                     []
 
@@ -290,36 +290,36 @@ styleCalc songGroup lengthSongGroup index =
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
-songGroupAttributes : SongGroup -> List (Attribute msg)
-songGroupAttributes songGroup =
+groupAttributes : SongGroup -> List (Attribute msg)
+groupAttributes group =
     let
-        group : String
-        group =
-            case songGroup of
+        groupString : String
+        groupString =
+            case group of
                 Played ->
                     "played"
 
                 Remembered ->
                     "remembered"
     in
-    [ id ("songs-" ++ group)
+    [ id ("songs-" ++ groupString)
     , class "songs-group"
     ]
 
 
 songsOfGroup : Model -> SongGroup -> List (Html Msg)
-songsOfGroup model songGroup =
+songsOfGroup model group =
     let
         songs : List SongInfo
         songs =
-            case songGroup of
+            case group of
                 Played ->
                     model.latestFew
 
                 Remembered ->
                     model.remembered
     in
-    List.indexedMap (songView model songGroup) songs
+    List.indexedMap (songView model group) songs
 
 
 buttonGroup : Msg -> List (Html Msg)
@@ -358,7 +358,7 @@ buttonSong group index =
 
 
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
-songView model songGroup index song =
+songView model group index song =
     let
         amazonConstant : String
         amazonConstant =
@@ -381,12 +381,12 @@ songView model songGroup index song =
                     []
 
                 Shrunk ->
-                    styleCalc songGroup lengthRemembered index
+                    styleCalc group lengthRemembered index
     in
     div
         songAttributes
         [ p []
-            [ buttonSong songGroup index
+            [ buttonSong group index
             , span []
                 [ text song.time ]
             , a
@@ -404,10 +404,10 @@ view : Model -> Html Msg
 view model =
     main_ []
         [ section
-            (songGroupAttributes Remembered)
+            (groupAttributes Remembered)
             (buttonGroup Morph ++ songsOfGroup model Remembered)
         , hr [] []
         , section
-            (songGroupAttributes Played)
+            (groupAttributes Played)
             (buttonGroup Refresh ++ songsOfGroup model Played)
         ]
