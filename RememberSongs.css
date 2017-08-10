@@ -106,21 +106,27 @@ section.songs-group > div > p > a:before {
 section.songs-group > div > p > button {
     vertical-align: top;
 /* Override browser & user settings: */
-    margin: 0 .272727em 0 0;
     padding: 0 .165289em .0606062em .110193em;
     line-height: .9;
     font-size: 11000%;
-    font-style: italic;
     font-weight: 100;
-    letter-spacing: .1em;
+    letter-spacing: .227273em;
+}
+section.songs-group > div > p > button:first-of-type {
+    font-style: italic;
+    letter-spacing: .0909091em;
 }
 section#songs-played > div > p > button:before {
     content: "ADD";
 }
-section#songs-remembered > div > p > button:before {
+section#songs-remembered > div > p > button:first-of-type:before {
     content: "DROP";
 }
+section#songs-remembered > div > p > button:last-of-type:before {
+    content: "Comment";
+}
 section.songs-group > div > p > span {
+    padding: 0 1.3em 0 .3em;
     font-size: 10000%;
 }
 section.songs-group > p {

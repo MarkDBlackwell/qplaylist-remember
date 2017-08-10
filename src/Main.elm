@@ -382,6 +382,15 @@ songView model group index song =
 
                 Shrunk ->
                     styleCalc group lengthRemembered index
+
+        commentButton : Html Msg
+        commentButton =
+            case group of
+                Played ->
+                    text ""
+
+                Remembered ->
+                    buttonSong group index
     in
     div
         songAttributes
@@ -389,6 +398,7 @@ songView model group index song =
             [ buttonSong group index
             , span []
                 [ text song.time ]
+            , commentButton
             , a
                 buySong
                 []
