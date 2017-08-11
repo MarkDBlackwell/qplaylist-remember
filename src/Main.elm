@@ -229,6 +229,18 @@ update msg model =
             let
                 song : Maybe SongInfo
                 song =
+                    case songPossibleDuplicate of
+                        Nothing ->
+                            Nothing
+
+                        Just songPossibleDuplicate ->
+                            if List.member songPossibleDuplicate model.songsRemembered then
+                                Nothing
+                            else
+                                Just songPossibleDuplicate
+
+                songPossibleDuplicate : Maybe SongInfo
+                songPossibleDuplicate =
                     Array.get index (Array.fromList model.songsLatestFew)
             in
             case song of
