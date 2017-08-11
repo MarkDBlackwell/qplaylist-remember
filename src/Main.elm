@@ -259,7 +259,7 @@ buttonGroup action =
         titleButton =
             case action of
                 Morph ->
-                    "Morph the page's shape"
+                    "Morph this page's shape"
 
                 Refresh ->
                     "Refresh the latest few songs"
@@ -341,6 +341,7 @@ songView model group index song =
         buySong : List (Attribute msg)
         buySong =
             [ target "_blank"
+            , title "Show this song on Amazon (in a new tab)"
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
@@ -351,16 +352,16 @@ songView model group index song =
                     text ""
 
                 Remembered ->
-                    buttonSong group index "Comment on this song"
+                    buttonSong group index "Share a comment (with the DJs) about this song"
 
         titleString : String
         titleString =
             case group of
                 Played ->
-                    "Add this song (to the remembered)"
+                    "Add this song (to remembered)"
 
                 Remembered ->
-                    "Drop this song (from the remembered)"
+                    "Drop this song (from remembered)"
 
         commentedIndicator : Html Msg
         commentedIndicator =
@@ -369,7 +370,7 @@ songView model group index song =
                     text ""
 
                 True ->
-                    em [ title "You have commented on this song" ]
+                    em [ title "You've left a comment about this song" ]
                         []
 
         lengthRemembered : Int
