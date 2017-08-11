@@ -16,6 +16,11 @@
 
 module Main exposing (main)
 
+import Array
+    exposing
+        ( fromList
+        , get
+        )
 import Html
     exposing
         ( Attribute
@@ -200,9 +205,9 @@ init =
 
 
 type Msg
-    = Add
+    = Add Int
     | Comment
-    | Drop
+    | Drop Int
     | Morph
     | Refresh
 
@@ -220,12 +225,24 @@ update msg model =
                     Expanded
     in
     case msg of
-        Add ->
-            ( { model
-                | pageShape = pageShapeMorphed
-              }
-            , Cmd.none
-            )
+        Add index ->
+            let
+                song : Maybe SongInfo
+                song =
+                    Array.get index (Array.fromList model.songsLatestFew)
+            in
+            case song of
+                Nothing ->
+                    ( model
+                    , Cmd.none
+                    )
+
+                Just song ->
+                    ( { model
+                        | songsRemembered = model.songsRemembered ++ [ song ]
+                      }
+                    , Cmd.none
+                    )
 
         Comment ->
             ( { model
@@ -234,7 +251,7 @@ update msg model =
             , Cmd.none
             )
 
-        Drop ->
+        Drop index ->
             ( { model
                 | pageShape = pageShapeMorphed
               }
@@ -288,10 +305,10 @@ buttonAddDrop group index =
         action =
             case group of
                 Played ->
-                    Add
+                    Add index
 
                 Remembered ->
-                    Drop
+                    Drop index
 
         buttonId : String
         buttonId =
