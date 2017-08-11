@@ -18,7 +18,8 @@ module Main exposing (main)
 
 import Array
     exposing
-        ( fromList
+        ( Array
+        , fromList
         , get
         )
 import Html
@@ -234,10 +235,21 @@ update msg model =
                             Nothing
 
                         Just songPossibleDuplicate ->
-                            if List.member songPossibleDuplicate model.songsRemembered then
-                                Nothing
-                            else
-                                Just songPossibleDuplicate
+                            case songAlreadyHave of
+                                True ->
+                                    Nothing
+
+                                False ->
+                                    Just songPossibleDuplicate
+
+                songAlreadyHave : Bool
+                songAlreadyHave =
+                    case songPossibleDuplicate of
+                        Nothing ->
+                            False
+
+                        Just songPossibleDuplicate ->
+                            List.member songPossibleDuplicate model.songsRemembered
 
                 songPossibleDuplicate : Maybe SongInfo
                 songPossibleDuplicate =
@@ -264,8 +276,14 @@ update msg model =
             )
 
         Drop index ->
+            let
+                droppedOne : SongsList
+                droppedOne =
+                    List.take index model.songsRemembered
+                        ++ List.drop (index + 1) model.songsRemembered
+            in
             ( { model
-                | pageShape = pageShapeMorphed
+                | songsRemembered = droppedOne
               }
             , Cmd.none
             )
