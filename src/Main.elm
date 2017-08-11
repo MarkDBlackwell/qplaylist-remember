@@ -73,11 +73,16 @@ type alias Title =
     String
 
 
+type alias Commented =
+    Bool
+
+
 type alias SongInfo =
     { artist : Artist
     , time : Time
     , timeStamp : TimeStamp
     , title : Title
+    , commented : Commented
     }
 
 
@@ -102,12 +107,13 @@ type Shape
     | Shrunk
 
 
-songinfo : Artist -> Title -> Time -> TimeStamp -> SongInfo
-songinfo artist title time timeStamp =
+songinfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
+songinfo artist title time timeStamp commented =
     { artist = artist
     , title = title
     , time = time
     , timeStamp = timeStamp
+    , commented = commented
     }
 
 
@@ -122,22 +128,27 @@ songsLatestFewInit =
         "Bullet The Blue Sky"
         "5:53 PM"
         "2017 08 07 17 53"
+        False
     , songinfo "LP"
         "No Witness"
         "5:49 PM"
         "2017 08 07 17 49"
+        False
     , songinfo "Cage The Elephant"
         "Whole Wide World"
         "5:46 PM"
         "2017 08 07 17 46"
+        False
     , songinfo "Robert Randolph and the Fami"
         "Deliver Me"
         "5:41 PM"
         "2017 08 07 17 41"
+        False
     , songinfo "Outer Spaces"
         "Words"
         "5:31 PM"
         "2017 08 07 17 31"
+        False
     ]
 
 
@@ -152,22 +163,27 @@ songsRememberedInit =
         "In My Teeth"
         "4:54 PM"
         "2017 08 07 16 54"
+        True
     , songinfo "T. Rex"
         "King Of The Rumbling Spires"
         "4:59 PM"
         "2017 08 07 16 59"
+        True
     , songinfo "Tedeschi Trucks Band"
         "I Pity The Fool - Live"
         "5:07 PM"
         "2017 08 07 17 07"
+        True
     , songinfo "Bobby \"Blue\" Bland"
         "I Pity The Fool"
         "5:14 PM"
         "2017 08 07 17 14"
+        False
     , songinfo "Eddy Clearwater"
         "Find You A Job"
         "5:19 PM"
         "2017 08 07 17 19"
+        True
     ]
 
 
@@ -392,6 +408,15 @@ songView model group index song =
 
                 Remembered ->
                     buttonSong group index
+
+        commentedIndicator : Html Msg
+        commentedIndicator =
+            case song.commented of
+                False ->
+                    text ""
+
+                True ->
+                    em [] []
     in
     div
         songAttributes
@@ -400,7 +425,7 @@ songView model group index song =
             , span []
                 [ text song.time ]
             , commentButton
-            , em [] []
+            , commentedIndicator
             , a
                 buySong
                 []
