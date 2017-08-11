@@ -228,12 +228,16 @@ update msg model =
             )
 
         Comment ->
-            ( model
+            ( { model
+                | pageShape = pageShapeMorphed
+              }
             , Cmd.none
             )
 
         Drop ->
-            ( model
+            ( { model
+                | pageShape = pageShapeMorphed
+              }
             , Cmd.none
             )
 
