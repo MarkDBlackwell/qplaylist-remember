@@ -71,7 +71,7 @@ type alias Messages =
 
 
 type alias Model =
-    { messages : Messages -- TODO: Do we need these messages?
+    { messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
@@ -205,11 +205,11 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { messages, pageShape, songsLatestFew, songsRemembered } =
+update msg model =
     let
         pageShapeMorphed : PageShape
         pageShapeMorphed =
-            case pageShape of
+            case model.pageShape of
                 Expanded ->
                     Shrunk
 
@@ -218,12 +218,12 @@ update msg { messages, pageShape, songsLatestFew, songsRemembered } =
     in
     case msg of
         Morph ->
-            ( Model messages pageShapeMorphed songsLatestFew songsRemembered
+            ( { model | pageShape = pageShapeMorphed }
             , Cmd.none
             )
 
         Refresh ->
-            ( Model messages pageShape songsLatestFew songsRemembered
+            ( model
             , Cmd.none
             )
 
