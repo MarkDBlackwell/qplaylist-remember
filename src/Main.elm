@@ -206,8 +206,8 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg { shape, latestFew, remembered, messages } =
     let
-        shapeNew : Shape
-        shapeNew =
+        shapeMorphed : Shape
+        shapeMorphed =
             case shape of
                 Expanded ->
                     Shrunk
@@ -217,7 +217,7 @@ update msg { shape, latestFew, remembered, messages } =
     in
     case msg of
         Morph ->
-            ( Model shapeNew latestFew remembered messages
+            ( Model shapeMorphed latestFew remembered messages
             , Cmd.none
             )
 
