@@ -200,7 +200,10 @@ init =
 
 
 type Msg
-    = Morph
+    = Add
+    | Comment
+    | Drop
+    | Morph
     | Refresh
 
 
@@ -217,6 +220,23 @@ update msg model =
                     Expanded
     in
     case msg of
+        Add ->
+            ( { model
+                | pageShape = pageShapeMorphed
+              }
+            , Cmd.none
+            )
+
+        Comment ->
+            ( model
+            , Cmd.none
+            )
+
+        Drop ->
+            ( model
+            , Cmd.none
+            )
+
         Morph ->
             ( { model
                 | pageShape = pageShapeMorphed
@@ -257,41 +277,18 @@ type SongGroup
     | Remembered
 
 
-buttonGroup : SongGroup -> List (Html Msg)
-buttonGroup group =
+buttonAddDrop : SongGroup -> Int -> Html Msg
+buttonAddDrop group index =
     let
         action : Msg
         action =
             case group of
                 Played ->
-                    Refresh
+                    Add
 
                 Remembered ->
-                    Morph
+                    Drop
 
-        titleButton : String
-        titleButton =
-            case group of
-                Played ->
-                    "Refresh the latest few songs"
-
-                Remembered ->
-                    "Morph this page's shape"
-    in
-    [ p []
-        [ button
-            [ type_ "button"
-            , title titleButton
-            , onClick action
-            ]
-            []
-        ]
-    ]
-
-
-buttonSong : SongGroup -> Int -> String -> Html Msg
-buttonSong group index titleString =
-    let
         buttonId : String
         buttonId =
             "button" ++ groupString ++ toString index
@@ -304,11 +301,80 @@ buttonSong group index titleString =
 
                 Remembered ->
                     "Drop"
+
+        titleString : String
+        titleString =
+            case group of
+                Played ->
+                    "Add (to remembered songs)"
+
+                Remembered ->
+                    "Drop (from remembered songs)"
     in
+    buttonMy buttonId titleString action
+
+
+buttonComment : SongGroup -> Int -> Html Msg
+buttonComment group index =
+    let
+        buttonId : String
+        buttonId =
+            "buttonComment" ++ toString index
+
+        titleString : String
+        titleString =
+            "Share a comment (with the DJs) about this song"
+    in
+    case group of
+        Played ->
+            text ""
+
+        Remembered ->
+            buttonMy buttonId titleString Comment
+
+
+buttonGroup : SongGroup -> List (Html Msg)
+buttonGroup group =
+    let
+        action : Msg
+        action =
+            case group of
+                Played ->
+                    Refresh
+
+                Remembered ->
+                    Morph
+
+        buttonId : String
+        buttonId =
+            case group of
+                Played ->
+                    "refresh"
+
+                Remembered ->
+                    "morph"
+
+        titleString : String
+        titleString =
+            case group of
+                Played ->
+                    "Refresh the latest few songs"
+
+                Remembered ->
+                    "Morph this page's shape"
+    in
+    [ p []
+        [ buttonMy buttonId titleString action ]
+    ]
+
+
+buttonMy : String -> String -> Msg -> Html Msg
+buttonMy buttonId titleString action =
     button
         [ id buttonId
         , type_ "button"
         , title titleString
+        , onClick action
         ]
         []
 
@@ -363,24 +429,6 @@ songView model group index song =
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
-        commentButton : Html Msg
-        commentButton =
-            case group of
-                Played ->
-                    text ""
-
-                Remembered ->
-                    buttonSong group index "Share a comment (with the DJs) about this song"
-
-        titleString : String
-        titleString =
-            case group of
-                Played ->
-                    "Add (to remembered songs)"
-
-                Remembered ->
-                    "Drop (from remembered songs)"
-
         commentedIndicator : Html Msg
         commentedIndicator =
             case song.commented of
@@ -407,10 +455,10 @@ songView model group index song =
     div
         songAttributes
         [ p []
-            [ buttonSong group index titleString
+            [ buttonAddDrop group index
             , span []
                 [ text song.time ]
-            , commentButton
+            , buttonComment group index
             , commentedIndicator
             , a
                 buySong
