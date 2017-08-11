@@ -23,8 +23,8 @@ import Html
         , a
         , button
         , div
+        , em
         , hr
-        , img
         , main_
         , p
         , section
@@ -400,7 +400,7 @@ songView model group index song =
             , span []
                 [ text song.time ]
             , commentButton
-            , img [] []
+            , em [] []
             , a
                 buySong
                 []

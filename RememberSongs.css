@@ -125,14 +125,15 @@ section#songs-remembered > div > p > button:first-of-type:before {
 section#songs-remembered > div > p > button:last-of-type:before {
     content: "Comment";
 }
-section#songs-remembered > div > p > img {
-    width: 1em;
-    height: 1em;
+section#songs-remembered > div > p > em {
     margin: 0 0 0 .4em;
-    font-size: 8400%;
-    border-radius: 100%; 
+    border-radius: 1em;
+    font-size: 8000%;
     color: Purple;
     background-color: Purple;
+}
+section#songs-remembered > div > p > em:before {
+    content: "mn";
 }
 section.songs-group > div > p > span {
     padding: 0 1.3em 0 .3em;
