@@ -273,13 +273,13 @@ update msg model =
 
         Drop index ->
             let
-                droppedOne : SongsList
-                droppedOne =
+                withoutOne : SongsList
+                withoutOne =
                     List.take index model.songsRemembered
                         ++ List.drop (index + 1) model.songsRemembered
             in
             ( { model
-                | songsRemembered = droppedOne
+                | songsRemembered = withoutOne
               }
             , Cmd.none
             )
