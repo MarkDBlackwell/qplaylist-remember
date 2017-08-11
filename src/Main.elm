@@ -61,20 +61,20 @@ type alias Artist =
     String
 
 
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
-
-
-type alias Title =
-    String
-
-
 type alias Commented =
     Bool
+
+
+type alias Messages =
+    List String
+
+
+type alias Model =
+    { shape : Shape
+    , latestFew : SongsList
+    , remembered : SongsList
+    , messages : Messages
+    }
 
 
 type alias SongInfo =
@@ -90,21 +90,21 @@ type alias SongsList =
     List SongInfo
 
 
-type alias Messages =
-    List String
+type alias Time =
+    String
 
 
-type alias Model =
-    { shape : Shape
-    , latestFew : SongsList
-    , remembered : SongsList
-    , messages : Messages
-    }
+type alias TimeStamp =
+    String
 
 
-type Shape
-    = Expanded
-    | Shrunk
+type alias Title =
+    String
+
+
+messagesInit : Messages
+messagesInit =
+    []
 
 
 songinfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
@@ -115,11 +115,6 @@ songinfo artist title time timeStamp commented =
     , timeStamp = timeStamp
     , commented = commented
     }
-
-
-messagesInit : Messages
-messagesInit =
-    []
 
 
 songsLatestFewInit : SongsList
@@ -244,6 +239,11 @@ subscriptions model =
 
 
 -- VIEW
+
+
+type Shape
+    = Expanded
+    | Shrunk
 
 
 type SongGroup
