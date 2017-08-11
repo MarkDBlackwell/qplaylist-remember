@@ -251,94 +251,6 @@ type SongGroup
     | Remembered
 
 
-styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
-styleCalc group lengthSongGroup index =
-    let
-        -- Golden ratio:
-        -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
-        goldenRatio : Float
-        goldenRatio =
-            0.6180339887498949
-
-        base : Float
-        base =
-            16.0
-
-        reversed : Int
-        reversed =
-            lengthSongGroup - index - 1
-
-        sizeFactor : Float
-        sizeFactor =
-            case group of
-                Played ->
-                    goldenRatio ^ toFloat index
-
-                Remembered ->
-                    goldenRatio ^ toFloat reversed
-
-        fontSizeValue : String
-        fontSizeValue =
-            toString (sizeFactor * base) ++ "px"
-
-        fontSizeStyling : List ( String, String )
-        fontSizeStyling =
-            [ ( "font-size", fontSizeValue ) ]
-
-        saturation : Float
-        saturation =
-            sizeFactor * 0.5
-
-        backgroundColorValue : String
-        backgroundColorValue =
-            "hsl(0,"
-                ++ toString (saturation * 100.0)
-                ++ "%,50%"
-
-        backgroundColorStyling : List ( String, String )
-        backgroundColorStyling =
-            case group of
-                Played ->
-                    []
-
-                Remembered ->
-                    [ ( "background-color", backgroundColorValue ) ]
-    in
-    [ style (backgroundColorStyling ++ fontSizeStyling) ]
-
-
-groupAttributes : SongGroup -> List (Attribute msg)
-groupAttributes group =
-    let
-        groupString : String
-        groupString =
-            case group of
-                Played ->
-                    "played"
-
-                Remembered ->
-                    "remembered"
-    in
-    [ id ("songs-" ++ groupString)
-    , class "songs-group"
-    ]
-
-
-songsOfGroup : Model -> SongGroup -> List (Html Msg)
-songsOfGroup model group =
-    let
-        songs : List SongInfo
-        songs =
-            case group of
-                Played ->
-                    model.latestFew
-
-                Remembered ->
-                    model.remembered
-    in
-    List.indexedMap (songView model group) songs
-
-
 buttonGroup : Msg -> List (Html Msg)
 buttonGroup action =
     [ p []
@@ -372,6 +284,38 @@ buttonSong group index =
         , type_ "button"
         ]
         []
+
+
+groupAttributes : SongGroup -> List (Attribute msg)
+groupAttributes group =
+    let
+        groupString : String
+        groupString =
+            case group of
+                Played ->
+                    "played"
+
+                Remembered ->
+                    "remembered"
+    in
+    [ id ("songs-" ++ groupString)
+    , class "songs-group"
+    ]
+
+
+songsOfGroup : Model -> SongGroup -> List (Html Msg)
+songsOfGroup model group =
+    let
+        songs : List SongInfo
+        songs =
+            case group of
+                Played ->
+                    model.latestFew
+
+                Remembered ->
+                    model.remembered
+    in
+    List.indexedMap (songView model group) songs
 
 
 songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
@@ -435,6 +379,62 @@ songView model group index song =
         , p []
             [ text song.artist ]
         ]
+
+
+styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
+styleCalc group lengthSongGroup index =
+    let
+        -- Golden ratio:
+        -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+        goldenRatio : Float
+        goldenRatio =
+            0.6180339887498949
+
+        base : Float
+        base =
+            16.0
+
+        reversed : Int
+        reversed =
+            lengthSongGroup - index - 1
+
+        sizeFactor : Float
+        sizeFactor =
+            case group of
+                Played ->
+                    goldenRatio ^ toFloat index
+
+                Remembered ->
+                    goldenRatio ^ toFloat reversed
+
+        fontSizeValue : String
+        fontSizeValue =
+            toString (sizeFactor * base) ++ "px"
+
+        fontSizeStyling : List ( String, String )
+        fontSizeStyling =
+            [ ( "font-size", fontSizeValue ) ]
+
+        saturation : Float
+        saturation =
+            sizeFactor * 0.5
+
+        backgroundColorValue : String
+        backgroundColorValue =
+            "hsl(0,"
+                ++ toString (saturation * 100.0)
+                ++ "%,50%"
+
+        backgroundColorStyling : List ( String, String )
+        backgroundColorStyling =
+            case group of
+                Played ->
+                    []
+
+                Remembered ->
+                    [ ( "background-color", backgroundColorValue ) ]
+    in
+    [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
 view : Model -> Html Msg
