@@ -16,15 +16,6 @@
 
 module Main exposing (main)
 
-{-
-   import Array
-       exposing
-           ( Array
-           , fromList
-           , get
-           )
--}
-
 import Html
     exposing
         ( Attribute
@@ -51,6 +42,10 @@ import Html.Attributes
         , type_
         )
 import Html.Events exposing (onClick)
+import Tuple
+    exposing
+        ( second
+        )
 
 
 main : Program Never Model Msg
@@ -235,14 +230,19 @@ update msg model =
                 songSelected =
                     List.head (List.drop index model.songsLatestFew)
 
-                ( _, songsDifferent ) =
-                    -- TODO: What type annotation can work, here?
+                songsDifferent : SongsList
+                songsDifferent =
                     case songSelected of
                         Nothing ->
-                            ( [], model.songsRemembered )
+                            model.songsRemembered
 
                         Just songSelected ->
-                            List.partition (\x -> x == songSelected) model.songsRemembered
+                            let
+                                partition : ( SongsList, SongsList )
+                                partition =
+                                    List.partition (\x -> x == songSelected) model.songsRemembered
+                            in
+                            Tuple.second partition
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
