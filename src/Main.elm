@@ -348,9 +348,9 @@ buttonAddDrop group index =
                 Remembered ->
                     Drop index
 
-        buttonId : String
+        buttonId : Maybe String
         buttonId =
-            "button" ++ groupString ++ toString index
+            Just ("button" ++ groupString ++ toString index)
 
         groupString : String
         groupString =
@@ -380,9 +380,9 @@ buttonComment group index =
         action =
             Comment index
 
-        buttonId : String
+        buttonId : Maybe String
         buttonId =
-            "buttonComment" ++ toString index
+            Just ("buttonComment" ++ toString index)
 
         titleString : String
         titleString =
@@ -408,14 +408,9 @@ buttonGroup group =
                 Remembered ->
                     Morph
 
-        buttonId : String
+        buttonId : Maybe String
         buttonId =
-            case group of
-                Played ->
-                    "refresh"
-
-                Remembered ->
-                    "morph"
+            Nothing
 
         titleString : String
         titleString =
@@ -431,14 +426,25 @@ buttonGroup group =
     ]
 
 
-buttonMy : String -> String -> Msg -> Html Msg
+buttonMy : Maybe String -> String -> Msg -> Html Msg
 buttonMy buttonId titleString action =
+    let
+        idMy : List (Attribute msg)
+        idMy =
+            case buttonId of
+                Nothing ->
+                    []
+
+                Just buttonId ->
+                    [ id buttonId ]
+    in
     button
-        [ id buttonId
-        , type_ "button"
-        , title titleString
-        , onClick action
-        ]
+        ([ type_ "button"
+         , title titleString
+         , onClick action
+         ]
+            ++ idMy
+        )
         []
 
 
@@ -570,8 +576,8 @@ styleCalc group lengthSongGroup index =
         goldenRatio =
             0.6180339887498949
 
-        reversed : Int
-        reversed =
+        indexReversed : Int
+        indexReversed =
             lengthSongGroup - index - 1
 
         saturation : Float
@@ -585,7 +591,7 @@ styleCalc group lengthSongGroup index =
                     goldenRatio ^ toFloat index
 
                 Remembered ->
-                    goldenRatio ^ toFloat reversed
+                    goldenRatio ^ toFloat indexReversed
     in
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
