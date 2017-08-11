@@ -38,6 +38,7 @@ import Html.Attributes
         , id
         , style
         , target
+        , title
         , type_
         )
 import Html.Events exposing (onClick)
@@ -253,9 +254,20 @@ type SongGroup
 
 buttonGroup : Msg -> List (Html Msg)
 buttonGroup action =
+    let
+        titleButton : String
+        titleButton =
+            case action of
+                Morph ->
+                    "Morph the page's shape"
+
+                Refresh ->
+                    "Refresh the latest few songs"
+    in
     [ p []
         [ button
             [ type_ "button"
+            , title titleButton
             , onClick action
             ]
             []
@@ -360,7 +372,8 @@ songView model group index song =
                     text ""
 
                 True ->
-                    em [] []
+                    em [ title "Commented" ]
+                        []
     in
     div
         songAttributes
