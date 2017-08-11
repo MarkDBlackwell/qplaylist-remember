@@ -71,7 +71,7 @@ type alias Messages =
 
 
 type alias Model =
-    { messages : Messages
+    { messages : Messages -- TODO: Do we need these messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
@@ -120,6 +120,11 @@ songinfo artist title time timeStamp commented =
 
 songsLatestFewInit : SongsList
 songsLatestFewInit =
+    []
+
+
+songsLatestFewInitFull : SongsList
+songsLatestFewInitFull =
     [ songinfo "U2"
         "Bullet The Blue Sky"
         "5:53 PM"
@@ -148,13 +153,13 @@ songsLatestFewInit =
     ]
 
 
-songsLatestFewInitEmpty : SongsList
-songsLatestFewInitEmpty =
+songsRememberedInit : SongsList
+songsRememberedInit =
     []
 
 
-songsRememberedInit : SongsList
-songsRememberedInit =
+songsRememberedInitFull : SongsList
+songsRememberedInitFull =
     [ songinfo "The Rosebuds"
         "In My Teeth"
         "4:54 PM"
@@ -183,14 +188,9 @@ songsRememberedInit =
     ]
 
 
-songsRememberedInitEmpty : SongsList
-songsRememberedInitEmpty =
-    []
-
-
-init : ( Model, Cmd Msg )
+init : ( Model, Cmd pageShape )
 init =
-    ( Model messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model messagesInit Shrunk songsLatestFewInitFull songsRememberedInitFull
     , Cmd.none
     )
 
