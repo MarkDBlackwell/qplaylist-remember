@@ -190,7 +190,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model messagesInit Shrunk songsLatestFewInitFull songsRememberedInitFull
+    ( Model messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -218,12 +218,17 @@ update msg model =
     in
     case msg of
         Morph ->
-            ( { model | pageShape = pageShapeMorphed }
+            ( { model
+                | pageShape = pageShapeMorphed
+              }
             , Cmd.none
             )
 
         Refresh ->
-            ( model
+            ( { model
+                | songsLatestFew = songsLatestFewInitFull
+                , songsRemembered = songsRememberedInitFull
+              }
             , Cmd.none
             )
 
@@ -344,8 +349,12 @@ songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model group index song =
     let
         amazonConstant : String
+        -- TODO: Is %3D the "equals" sign (=)?
         amazonConstant =
-            "http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords="
+            "http://www.amazon.com/s/ref=nb_sb_noss?"
+                ++ "tag=wtmdradio-20"
+                ++ "&url=search-alias%3Ddigital-music"
+                ++ "&field-keywords="
 
         buySong : List (Attribute msg)
         buySong =
