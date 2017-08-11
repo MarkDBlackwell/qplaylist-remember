@@ -275,9 +275,13 @@ buttonGroup action =
     ]
 
 
-buttonSong : SongGroup -> Int -> Html Msg
-buttonSong group index =
+buttonSong : SongGroup -> Int -> String -> Html Msg
+buttonSong group index titleString =
     let
+        buttonId : String
+        buttonId =
+            "button" ++ groupString ++ toString index
+
         groupString : String
         groupString =
             case group of
@@ -286,14 +290,11 @@ buttonSong group index =
 
                 Remembered ->
                     "Drop"
-
-        buttonId : String
-        buttonId =
-            "button" ++ groupString ++ toString index
     in
     button
         [ id buttonId
         , type_ "button"
+        , title titleString
         ]
         []
 
@@ -343,6 +344,34 @@ songView model group index song =
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
+        commentButton : Html Msg
+        commentButton =
+            case group of
+                Played ->
+                    text ""
+
+                Remembered ->
+                    buttonSong group index "Comment on this song"
+
+        titleString : String
+        titleString =
+            case group of
+                Played ->
+                    "Add this song (to the remembered)"
+
+                Remembered ->
+                    "Drop this song (from the remembered)"
+
+        commentedIndicator : Html Msg
+        commentedIndicator =
+            case song.commented of
+                False ->
+                    text ""
+
+                True ->
+                    em [ title "You have commented on this song" ]
+                        []
+
         lengthRemembered : Int
         lengthRemembered =
             List.length model.remembered
@@ -355,30 +384,11 @@ songView model group index song =
 
                 Shrunk ->
                     styleCalc group lengthRemembered index
-
-        commentButton : Html Msg
-        commentButton =
-            case group of
-                Played ->
-                    text ""
-
-                Remembered ->
-                    buttonSong group index
-
-        commentedIndicator : Html Msg
-        commentedIndicator =
-            case song.commented of
-                False ->
-                    text ""
-
-                True ->
-                    em [ title "Commented" ]
-                        []
     in
     div
         songAttributes
         [ p []
-            [ buttonSong group index
+            [ buttonSong group index titleString
             , span []
                 [ text song.time ]
             , commentButton
@@ -397,19 +407,46 @@ songView model group index song =
 styleCalc : SongGroup -> Int -> Int -> List (Attribute msg)
 styleCalc group lengthSongGroup index =
     let
+        backgroundColorStyling : List ( String, String )
+        backgroundColorStyling =
+            case group of
+                Played ->
+                    []
+
+                Remembered ->
+                    [ ( "background-color", backgroundColorValue ) ]
+
+        backgroundColorValue : String
+        backgroundColorValue =
+            "hsl(0,"
+                ++ toString (saturation * 100.0)
+                ++ "%,50%"
+
+        base : Float
+        base =
+            16.0
+
+        fontSizeStyling : List ( String, String )
+        fontSizeStyling =
+            [ ( "font-size", fontSizeValue ) ]
+
+        fontSizeValue : String
+        fontSizeValue =
+            toString (sizeFactor * base) ++ "px"
+
         -- Golden ratio:
         -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
         goldenRatio : Float
         goldenRatio =
             0.6180339887498949
 
-        base : Float
-        base =
-            16.0
-
         reversed : Int
         reversed =
             lengthSongGroup - index - 1
+
+        saturation : Float
+        saturation =
+            sizeFactor * 0.5
 
         sizeFactor : Float
         sizeFactor =
@@ -419,33 +456,6 @@ styleCalc group lengthSongGroup index =
 
                 Remembered ->
                     goldenRatio ^ toFloat reversed
-
-        fontSizeValue : String
-        fontSizeValue =
-            toString (sizeFactor * base) ++ "px"
-
-        fontSizeStyling : List ( String, String )
-        fontSizeStyling =
-            [ ( "font-size", fontSizeValue ) ]
-
-        saturation : Float
-        saturation =
-            sizeFactor * 0.5
-
-        backgroundColorValue : String
-        backgroundColorValue =
-            "hsl(0,"
-                ++ toString (saturation * 100.0)
-                ++ "%,50%"
-
-        backgroundColorStyling : List ( String, String )
-        backgroundColorStyling =
-            case group of
-                Played ->
-                    []
-
-                Remembered ->
-                    [ ( "background-color", backgroundColorValue ) ]
     in
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
