@@ -205,7 +205,7 @@ init =
 
 type Msg
     = Add Int
-    | Comment
+    | Comment Int
     | Drop Int
     | Morph
     | Refresh
@@ -264,9 +264,21 @@ update msg model =
             , Cmd.none
             )
 
-        Comment ->
+        Comment index ->
+            let
+                setCommented : Int -> SongInfo -> SongInfo
+                setCommented songIndex song =
+                    if index /= songIndex then
+                        song
+                    else
+                        { song | commented = True }
+
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    List.indexedMap setCommented model.songsRemembered
+            in
             ( { model
-                | pageShape = pageShapeMorphed
+                | songsRemembered = songsRememberedNew
               }
             , Cmd.none
             )
@@ -364,6 +376,10 @@ buttonAddDrop group index =
 buttonComment : SongGroup -> Int -> Html Msg
 buttonComment group index =
     let
+        action : Msg
+        action =
+            Comment index
+
         buttonId : String
         buttonId =
             "buttonComment" ++ toString index
@@ -377,7 +393,7 @@ buttonComment group index =
             text ""
 
         Remembered ->
-            buttonMy buttonId titleString Comment
+            buttonMy buttonId titleString action
 
 
 buttonGroup : SongGroup -> List (Html Msg)
