@@ -252,17 +252,26 @@ type SongGroup
     | Remembered
 
 
-buttonGroup : Msg -> List (Html Msg)
-buttonGroup action =
+buttonGroup : SongGroup -> List (Html Msg)
+buttonGroup group =
     let
+        action : Msg
+        action =
+            case group of
+                Played ->
+                    Refresh
+
+                Remembered ->
+                    Morph
+
         titleButton : String
         titleButton =
-            case action of
-                Morph ->
-                    "Morph this page's shape"
-
-                Refresh ->
+            case group of
+                Played ->
                     "Refresh the latest few songs"
+
+                Remembered ->
+                    "Morph this page's shape"
     in
     [ p []
         [ button
@@ -348,11 +357,11 @@ songView model group index song =
         commentButton : Html Msg
         commentButton =
             case group of
-                Played ->
-                    text ""
-
                 Remembered ->
                     buttonSong group index "Share a comment (with the DJs) about this song"
+
+                _ ->
+                    text ""
 
         titleString : String
         titleString =
@@ -366,12 +375,12 @@ songView model group index song =
         commentedIndicator : Html Msg
         commentedIndicator =
             case song.commented of
-                False ->
-                    text ""
-
                 True ->
                     em [ title "You've left a comment about this song" ]
                         []
+
+                _ ->
+                    text ""
 
         lengthRemembered : Int
         lengthRemembered =
@@ -466,9 +475,9 @@ view model =
     main_ []
         [ section
             (groupAttributes Remembered)
-            (buttonGroup Morph ++ songsOfGroup model Remembered)
+            (buttonGroup Remembered ++ songsOfGroup model Remembered)
         , hr [] []
         , section
             (groupAttributes Played)
-            (buttonGroup Refresh ++ songsOfGroup model Played)
+            (buttonGroup Played ++ songsOfGroup model Played)
         ]
