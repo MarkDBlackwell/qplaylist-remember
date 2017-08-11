@@ -231,74 +231,39 @@ update msg model =
     case msg of
         Add index ->
             let
-                song : Maybe SongInfo
-                song =
+                songSelected : Maybe SongInfo
+                songSelected =
                     List.head (List.drop index model.songsLatestFew)
 
-                ( _, partitioned ) =
-                    case song of
+                ( _, songsDifferent ) =
+                    -- TODO: What type annotation can work, here?
+                    case songSelected of
                         Nothing ->
-                            ( [], [] )
+                            ( [], model.songsRemembered )
 
-                        Just song ->
-                            List.partition (\x -> x == song) model.songsRemembered
+                        Just songSelected ->
+                            List.partition (\x -> x == songSelected) model.songsRemembered
 
-                songs : SongsList
-                songs =
-                    case song of
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    case songSelected of
                         Nothing ->
                             model.songsRemembered
 
-                        Just song ->
-                            partitioned ++ [ song ]
+                        Just songSelected ->
+                            case List.member songSelected model.songsRemembered of
+                                True ->
+                                    model.songsRemembered
+
+                                False ->
+                                    songsDifferent ++ [ songSelected ]
             in
             ( { model
-                | songsRemembered = songs
+                | songsRemembered = songsRememberedNew
               }
             , Cmd.none
             )
 
-        {-
-               song : Maybe SongInfo
-               song =
-                   case songPossibleDuplicate of
-                       Nothing ->
-                           Nothing
-
-                       Just songPossibleDuplicate ->
-                           case songAlreadyHave of
-                               True ->
-                                   Nothing
-
-                               False ->
-                                   Just songPossibleDuplicate
-
-               songAlreadyHave : Bool
-               songAlreadyHave =
-                   case songPossibleDuplicate of
-                       Nothing ->
-                           False
-
-                       Just songPossibleDuplicate ->
-                           List.member songPossibleDuplicate model.songsRemembered
-
-               songPossibleDuplicate : Maybe SongInfo
-               songPossibleDuplicate =
-                   Array.get index (Array.fromList model.songsLatestFew)
-           in
-           case song of
-               Nothing ->
-                   ( model
-                   , Cmd.none
-                   )
-
-               Just song ->
-                   ( { model
-                       | songsRemembered = model.songsRemembered ++ [ song ]
-                     }
-                   , Cmd.none
-                   )
-        -}
         Comment ->
             ( { model
                 | pageShape = pageShapeMorphed
