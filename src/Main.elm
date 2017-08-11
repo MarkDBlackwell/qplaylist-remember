@@ -376,10 +376,10 @@ songView model group index song =
         titleString =
             case group of
                 Played ->
-                    "Add this song (to remembered)"
+                    "Add (to remembered songs)"
 
                 Remembered ->
-                    "Drop this song (from remembered)"
+                    "Drop (from remembered songs)"
 
         commentedIndicator : Html Msg
         commentedIndicator =
