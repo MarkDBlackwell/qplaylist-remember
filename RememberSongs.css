@@ -30,13 +30,16 @@ body {
 }
 button {
 /* Override browser & user settings: */
-    border-top-width: 1.6px;
+    border-width: .19230769em;
     font-family: inherit;
     font-stretch: ultra-expanded;
+    outline-color: White;
 }
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
-    border-bottom: .1em solid #63686d;
+    border-width: .19230769em;
+    border-bottom-color: #63686d;
+    border-bottom-style: solid;
     border-radius: .5em;
     font-size: 10px; /* basis for em and percentage calculations */
 }
@@ -96,6 +99,7 @@ section.songs-group > div > p > a {
     font-weight: bold;
     text-decoration: underline;
     color: White;
+    outline-color: White;
 }
 section.songs-group > div > p > a:hover {
     color: #ee7500;
@@ -107,6 +111,7 @@ section.songs-group > div > p > button {
     vertical-align: top;
 /* Override browser & user settings: */
     padding: 0 .165289em .0606062em .110193em;
+    border-width: .19230769em;
     line-height: .9;
     font-size: 11000%;
     font-weight: 100;
@@ -141,7 +146,7 @@ section.songs-group > div > p > span {
 }
 section.songs-group > p {
     line-height: 1.1;
-    font-size: 12px;
+    font-size: 12px; /* basis for em and percentage calculations */
     text-align: center;
     font-style: italic;
 /* Override browser & user settings: */
@@ -156,12 +161,12 @@ section#songs-remembered > p:after {
 section.songs-group > p > button {
     vertical-align: text-top;
 /* Override browser & user settings: */
-    margin: 0 10px 0 0;
-    padding: 0 .5px 0 2px;
+    margin: 0 .90909091em 0 0;
+    padding: 0 .04545455em 0 .1818182em;
     line-height: 1.2;
-    font-size: 11px;
+    font-size: 11px; /* basis for em and percentage calculations */
     font-weight: 400;
-    letter-spacing: 2.5px;
+    letter-spacing: .227273em;
 }
 section#songs-played > p > button:before {
     content: "refresh";
