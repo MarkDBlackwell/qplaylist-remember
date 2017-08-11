@@ -71,10 +71,10 @@ type alias Messages =
 
 
 type alias Model =
-    { shape : Shape
-    , latestFew : SongsList
-    , remembered : SongsList
-    , messages : Messages
+    { messages : Messages
+    , pageShape : PageShape
+    , songsLatestFew : SongsList
+    , songsRemembered : SongsList
     }
 
 
@@ -190,7 +190,7 @@ songsRememberedInitEmpty =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model Shrunk songsLatestFewInit songsRememberedInit messagesInit
+    ( Model messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -205,11 +205,11 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg { shape, latestFew, remembered, messages } =
+update msg { messages, pageShape, songsLatestFew, songsRemembered } =
     let
-        shapeMorphed : Shape
-        shapeMorphed =
-            case shape of
+        pageShapeMorphed : PageShape
+        pageShapeMorphed =
+            case pageShape of
                 Expanded ->
                     Shrunk
 
@@ -218,12 +218,12 @@ update msg { shape, latestFew, remembered, messages } =
     in
     case msg of
         Morph ->
-            ( Model shapeMorphed latestFew remembered messages
+            ( Model messages pageShapeMorphed songsLatestFew songsRemembered
             , Cmd.none
             )
 
         Refresh ->
-            ( Model shape latestFew remembered messages
+            ( Model messages pageShape songsLatestFew songsRemembered
             , Cmd.none
             )
 
@@ -242,7 +242,7 @@ subscriptions model =
 -- VIEW
 
 
-type Shape
+type PageShape
     = Expanded
     | Shrunk
 
@@ -332,10 +332,10 @@ songsOfGroup model group =
         songs =
             case group of
                 Played ->
-                    model.latestFew
+                    model.songsLatestFew
 
                 Remembered ->
-                    model.remembered
+                    model.songsRemembered
     in
     List.indexedMap (songView model group) songs
 
@@ -384,11 +384,11 @@ songView model group index song =
 
         lengthRemembered : Int
         lengthRemembered =
-            List.length model.remembered
+            List.length model.songsRemembered
 
         songAttributes : List (Attribute msg)
         songAttributes =
-            case model.shape of
+            case model.pageShape of
                 Expanded ->
                     []
 
