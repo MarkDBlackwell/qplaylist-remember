@@ -24,6 +24,7 @@ import Html
         , button
         , div
         , hr
+        , img
         , main_
         , p
         , section
@@ -399,6 +400,7 @@ songView model group index song =
             , span []
                 [ text song.time ]
             , commentButton
+            , img [] []
             , a
                 buySong
                 []
