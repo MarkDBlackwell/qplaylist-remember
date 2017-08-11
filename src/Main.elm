@@ -16,12 +16,15 @@
 
 module Main exposing (main)
 
-import Array
-    exposing
-        ( Array
-        , fromList
-        , get
-        )
+{-
+   import Array
+       exposing
+           ( Array
+           , fromList
+           , get
+           )
+-}
+
 import Html
     exposing
         ( Attribute
@@ -230,44 +233,72 @@ update msg model =
             let
                 song : Maybe SongInfo
                 song =
-                    case songPossibleDuplicate of
+                    List.head (List.drop index model.songsLatestFew)
+
+                ( _, partitioned ) =
+                    case song of
                         Nothing ->
-                            Nothing
+                            ( [], [] )
 
-                        Just songPossibleDuplicate ->
-                            case songAlreadyHave of
-                                True ->
-                                    Nothing
+                        Just song ->
+                            List.partition (\x -> x == song) model.songsRemembered
 
-                                False ->
-                                    Just songPossibleDuplicate
-
-                songAlreadyHave : Bool
-                songAlreadyHave =
-                    case songPossibleDuplicate of
+                songs : SongsList
+                songs =
+                    case song of
                         Nothing ->
-                            False
+                            model.songsRemembered
 
-                        Just songPossibleDuplicate ->
-                            List.member songPossibleDuplicate model.songsRemembered
-
-                songPossibleDuplicate : Maybe SongInfo
-                songPossibleDuplicate =
-                    Array.get index (Array.fromList model.songsLatestFew)
+                        Just song ->
+                            partitioned ++ [ song ]
             in
-            case song of
-                Nothing ->
-                    ( model
-                    , Cmd.none
-                    )
+            ( { model
+                | songsRemembered = songs
+              }
+            , Cmd.none
+            )
 
-                Just song ->
-                    ( { model
-                        | songsRemembered = model.songsRemembered ++ [ song ]
-                      }
-                    , Cmd.none
-                    )
+        {-
+               song : Maybe SongInfo
+               song =
+                   case songPossibleDuplicate of
+                       Nothing ->
+                           Nothing
 
+                       Just songPossibleDuplicate ->
+                           case songAlreadyHave of
+                               True ->
+                                   Nothing
+
+                               False ->
+                                   Just songPossibleDuplicate
+
+               songAlreadyHave : Bool
+               songAlreadyHave =
+                   case songPossibleDuplicate of
+                       Nothing ->
+                           False
+
+                       Just songPossibleDuplicate ->
+                           List.member songPossibleDuplicate model.songsRemembered
+
+               songPossibleDuplicate : Maybe SongInfo
+               songPossibleDuplicate =
+                   Array.get index (Array.fromList model.songsLatestFew)
+           in
+           case song of
+               Nothing ->
+                   ( model
+                   , Cmd.none
+                   )
+
+               Just song ->
+                   ( { model
+                       | songsRemembered = model.songsRemembered ++ [ song ]
+                     }
+                   , Cmd.none
+                   )
+        -}
         Comment ->
             ( { model
                 | pageShape = pageShapeMorphed
