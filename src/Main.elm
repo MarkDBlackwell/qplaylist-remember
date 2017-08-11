@@ -350,18 +350,18 @@ songView model group index song =
         buySong : List (Attribute msg)
         buySong =
             [ target "_blank"
-            , title "Show this song on Amazon (in a new tab)"
+            , title "See song on Amazon (in new tab)"
             , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
         commentButton : Html Msg
         commentButton =
             case group of
+                Played ->
+                    text ""
+
                 Remembered ->
                     buttonSong group index "Share a comment (with the DJs) about this song"
-
-                _ ->
-                    text ""
 
         titleString : String
         titleString =
@@ -375,12 +375,12 @@ songView model group index song =
         commentedIndicator : Html Msg
         commentedIndicator =
             case song.commented of
+                False ->
+                    text ""
+
                 True ->
                     em [ title "You've left a comment about this song" ]
                         []
-
-                _ ->
-                    text ""
 
         lengthRemembered : Int
         lengthRemembered =
