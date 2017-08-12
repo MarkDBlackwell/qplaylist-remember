@@ -15,6 +15,23 @@
    Styling for Remember Songs elements (for QPlaylist).
 */
 
+/* Override browser & user settings: */
+body,
+form,
+p {
+    margin: 0;
+}
+button {
+    border-width: .19230769em;
+    font-family: inherit;
+    font-stretch: ultra-expanded;
+}
+button:focus {
+    outline-style: dotted;
+    outline-width: .21em;
+}
+/* (End of override browser & user settings.) */
+
 html {
     margin: 0;
     padding: 0;
@@ -24,16 +41,37 @@ html {
     color: White;
     background-color: Black;
 }
-body {
-/* Override browser & user settings: */
+/*
+    display: none;
+*/
+section#form {
+    display: block;
     margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-size: 15px; /* basis for em and percentage calculations */
+    background-color: rgb(190,255,190);
+    color: Black;
 }
-button {
-/* Override browser & user settings: */
-    border-width: .19230769em;
-    font-family: inherit;
-    font-stretch: ultra-expanded;
-    outline-color: White;
+section#form > form > button {
+    margin: 0;
+    padding: 0 .2em 0 .2em;
+    font-size: 100%;
+    border-width: 2.5px;
+    border-radius: 50%;
+}
+section#form > form > input {
+    display: block;
+    width: 100%;
+    height: 2em;
+    border-style: none;
+    outline-color: Red;
+}
+section#form > form > p:last-of-type:before {
+    content: "Type your comment here:";
+}
+section.songs-group {
+    background-color: Black;
 }
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
