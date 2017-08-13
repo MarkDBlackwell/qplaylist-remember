@@ -78,12 +78,17 @@ type alias Commented =
     Bool
 
 
+type alias Commenting =
+    Bool
+
+
 type alias Messages =
     List String
 
 
 type alias Model =
-    { messages : Messages -- TODO: Do we need messages?
+    { commenting : Commenting
+    , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
@@ -113,6 +118,11 @@ type alias TimeStamp =
 
 type alias Title =
     String
+
+
+commentingInit : Commenting
+commentingInit =
+    False
 
 
 messagesInit : Messages
@@ -202,7 +212,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentingInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -604,13 +614,12 @@ styleCalc group lengthSongGroup index =
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
-commentSection : Model -> Html Msg
-commentSection model =
+commentArea : Model -> Html Msg
+commentArea model =
     let
         toggleDisplay : Attribute msg
         toggleDisplay =
-            --            case model.commenting of
-            case False of
+            case model.commenting of
                 False ->
                     style [ ( "display", "none" ) ]
 
@@ -643,7 +652,7 @@ view : Model -> Html Msg
 view model =
     main_
         []
-        [ commentSection model
+        [ commentArea model
         , section
             (groupAttributes Remembered)
             (buttonGroup Remembered ++ songsOfGroup model Remembered)
