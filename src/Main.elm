@@ -24,6 +24,7 @@ import Html
         , button
         , div
         , em
+        , form
         , hr
         , main_
         , p
@@ -34,14 +35,21 @@ import Html
 import Html.Attributes
     exposing
         ( class
+        , enctype
         , href
         , id
+        , method
+        , novalidate
         , style
         , target
         , title
         , type_
         )
-import Html.Events exposing (onClick)
+import Html.Events
+    exposing
+        ( onClick
+        , onSubmit
+        )
 import Tuple
     exposing
         ( second
@@ -596,10 +604,41 @@ styleCalc group lengthSongGroup index =
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
+
+{-
+   , onSubmit "return false"
+   , input
+       [ type "text" ]
+       [ ]
+   , button
+       [ type "button" ]
+       [ ]
+   , button
+       [ type "button" ]
+       [ ]
+   , button [ type "button" ]
+            [ ]
+-}
+
+
 view : Model -> Html Msg
 view model =
-    main_ []
+    main_
+        []
         [ section
+            [ id "comment" ]
+            [ form
+                [ method "post"
+                , target "_self"
+                , enctype "text/plain"
+                , novalidate True
+                ]
+                [ p []
+                    [ text "Time e Some title e: Some artist e" ]
+                , p [] []
+                ]
+            ]
+        , section
             (groupAttributes Remembered)
             (buttonGroup Remembered ++ songsOfGroup model Remembered)
         , hr [] []
