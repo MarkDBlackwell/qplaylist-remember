@@ -46,7 +46,6 @@ html {
 */
 section#comment {
     line-height: 1.5;
-    font-size: 16px; /* basis for em and percentage calculations */
     background-color: rgb(190,255,190);
     color: Black;
 }
@@ -55,7 +54,7 @@ section#comment > button {
     border-width: 2.5px;
     border-radius: 50%;
 /* Override browser & user settings: */
-    font-size: 100%;
+    font-size: 16px; /* basis for em and percentage calculations */
 }
 section#comment > button:first-of-type:after {
     content: "OK";
@@ -67,12 +66,13 @@ section#comment > input {
     display: block;
     width: 100%;
     height: 2em;
-    font-size: 120%;
+    font-size: 19.2px; /* basis for em and percentage calculations */
     border-style: none;
     outline-width: .1em;
     outline-color: Black;
 }
 section#comment > p {
+    font-size: 16px; /* basis for em and percentage calculations */
     text-align: center;
 }
 section.songs-group {
