@@ -122,7 +122,7 @@ type alias Title =
 
 commentingInit : Commenting
 commentingInit =
-    False
+    True
 
 
 messagesInit : Messages
@@ -625,13 +625,31 @@ commentArea model =
 
                 True ->
                     style [ ( "display", "block" ) ]
+
+        songDetails : String
+        songDetails =
+            let
+                rememberedIndex : Int
+                rememberedIndex =
+                    4
+
+                song : Maybe SongInfo
+                song =
+                    List.head (List.drop rememberedIndex model.songsRemembered)
+            in
+            case song of
+                Nothing ->
+                    "Some artist e: Some title e (Time e)"
+
+                Just song ->
+                    song.artist ++ ": " ++ song.title ++ " (" ++ song.time ++ ")"
     in
     section
         [ id "comment"
         , sectionDisplayToggle
         ]
         [ p []
-            [ text "Time e Some title e: Some artist e" ]
+            [ text songDetails ]
         , input
             [ type_ "text"
             , placeholder "Type your comment here!"
