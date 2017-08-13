@@ -44,31 +44,44 @@ html {
 /*
     display: none;
 */
-section#form {
-    display: block;
-    margin: 0;
-    padding: 0;
+section#comment {
+}
+section#comment > form {
     line-height: 1.5;
-    font-size: 15px; /* basis for em and percentage calculations */
+    font-size: 16px; /* basis for em and percentage calculations */
     background-color: rgb(190,255,190);
     color: Black;
 }
-section#form > form > button {
-    margin: 0;
+section#comment > form > button {
     padding: 0 .2em 0 .2em;
-    font-size: 100%;
     border-width: 2.5px;
     border-radius: 50%;
+/* Override browser & user settings: */
+    font-size: 100%;
 }
-section#form > form > input {
+section#comment > form > button:first-of-type:after {
+    content: "OK";
+}
+section#comment > form > button:last-of-type:after {
+    content: "Cancel";
+}
+section#comment > form > input {
     display: block;
     width: 100%;
     height: 2em;
+    font-size: 120%;
     border-style: none;
-    outline-color: Red;
+    outline-width: .1em;
+    outline-color: Black;
 }
-section#form > form > p:last-of-type:before {
-    content: "Type your comment here:";
+section#comment > form > p:first-of-type {
+    text-align: center;
+}
+section#comment > form > p:last-of-type {
+    font-size: 80%;
+}
+section#comment > form > p:last-of-type:before {
+    content: "Type your comment here!";
 }
 section.songs-group {
     background-color: Black;
@@ -147,15 +160,16 @@ section.songs-group > div > p > a:before {
 }
 section.songs-group > div > p > button {
     vertical-align: top;
-/* Override browser & user settings: */
     padding: 0 .165289em .0606062em .110193em;
     border-width: .19230769em;
+/* Override browser & user settings: */
     line-height: .9;
     font-size: 11000%;
     font-weight: 100;
     letter-spacing: .227273em;
 }
 section.songs-group > div > p > button:first-of-type {
+/* Override browser & user settings: */
     font-style: italic;
     letter-spacing: .0909091em;
 }
@@ -198,9 +212,9 @@ section#songs-remembered > p:after {
 }
 section.songs-group > p > button {
     vertical-align: text-top;
+    padding: 0 .04545455em 0 .1818182em;
 /* Override browser & user settings: */
     margin: 0 .90909091em 0 0;
-    padding: 0 .04545455em 0 .1818182em;
     line-height: 1.2;
     font-size: 11px; /* basis for em and percentage calculations */
     font-weight: 400;
