@@ -617,6 +617,10 @@ styleCalc group lengthSongGroup index =
 commentArea : Model -> Html Msg
 commentArea model =
     let
+        rememberedIndex : Int
+        rememberedIndex =
+            4
+
         sectionDisplayToggle : Attribute msg
         sectionDisplayToggle =
             case model.commenting of
@@ -626,30 +630,30 @@ commentArea model =
                 True ->
                     style [ ( "display", "block" ) ]
 
-        songDetails : String
-        songDetails =
-            let
-                rememberedIndex : Int
-                rememberedIndex =
-                    4
+        song : Maybe SongInfo
+        song =
+            List.head (List.drop rememberedIndex model.songsRemembered)
 
-                song : Maybe SongInfo
-                song =
-                    List.head (List.drop rememberedIndex model.songsRemembered)
-            in
+        songHeader : String
+        songHeader =
             case song of
                 Nothing ->
                     "Some artist e: Some title e (Time e)"
 
                 Just song ->
-                    song.artist ++ ": " ++ song.title ++ " (" ++ song.time ++ ")"
+                    song.artist
+                        ++ ": "
+                        ++ song.title
+                        ++ " ("
+                        ++ song.time
+                        ++ ")"
     in
     section
         [ id "comment"
         , sectionDisplayToggle
         ]
         [ p []
-            [ text songDetails ]
+            [ text songHeader ]
         , input
             [ type_ "text"
             , placeholder "Type your comment here!"
