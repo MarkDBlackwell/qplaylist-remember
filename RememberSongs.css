@@ -45,27 +45,25 @@ html {
     display: none;
 */
 section#comment {
-}
-section#comment > form {
     line-height: 1.5;
     font-size: 16px; /* basis for em and percentage calculations */
     background-color: rgb(190,255,190);
     color: Black;
 }
-section#comment > form > button {
+section#comment > button {
     padding: 0 .2em 0 .2em;
     border-width: 2.5px;
     border-radius: 50%;
 /* Override browser & user settings: */
     font-size: 100%;
 }
-section#comment > form > button:first-of-type:after {
+section#comment > button:first-of-type:after {
     content: "OK";
 }
-section#comment > form > button:last-of-type:after {
+section#comment > button:last-of-type:after {
     content: "Cancel";
 }
-section#comment > form > input {
+section#comment > input {
     display: block;
     width: 100%;
     height: 2em;
@@ -74,14 +72,8 @@ section#comment > form > input {
     outline-width: .1em;
     outline-color: Black;
 }
-section#comment > form > p:first-of-type {
+section#comment > p {
     text-align: center;
-}
-section#comment > form > p:last-of-type {
-    font-size: 80%;
-}
-section#comment > form > p:last-of-type:before {
-    content: "Type your comment here!";
 }
 section.songs-group {
     background-color: Black;
