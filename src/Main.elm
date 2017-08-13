@@ -617,8 +617,8 @@ styleCalc group lengthSongGroup index =
 commentArea : Model -> Html Msg
 commentArea model =
     let
-        toggleDisplay : Attribute msg
-        toggleDisplay =
+        sectionDisplayToggle : Attribute msg
+        sectionDisplayToggle =
             case model.commenting of
                 False ->
                     style [ ( "display", "none" ) ]
@@ -628,7 +628,7 @@ commentArea model =
     in
     section
         [ id "comment"
-        , toggleDisplay
+        , sectionDisplayToggle
         ]
         [ p []
             [ text "Time e Some title e: Some artist e" ]
