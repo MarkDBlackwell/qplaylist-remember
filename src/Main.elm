@@ -34,9 +34,12 @@ import Html
         )
 import Html.Attributes
     exposing
-        ( class
+        ( autofocus
+        , class
         , href
         , id
+        , placeholder
+        , required
         , style
         , target
         , title
@@ -610,7 +613,11 @@ view model =
             [ p []
                 [ text "Time e Some title e: Some artist e" ]
             , input
-                [ type_ "text" ]
+                [ type_ "text"
+                , placeholder "Type your comment here!"
+                , autofocus True
+                , required True
+                ]
                 []
             , button
                 [ type_ "button" ]
