@@ -604,28 +604,46 @@ styleCalc group lengthSongGroup index =
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
 
 
+commentSection : Model -> Html Msg
+commentSection model =
+    let
+        toggleDisplay : Attribute msg
+        toggleDisplay =
+            --            case model.commenting of
+            case False of
+                False ->
+                    style [ ( "display", "none" ) ]
+
+                True ->
+                    style [ ( "display", "block" ) ]
+    in
+    section
+        [ id "comment"
+        , toggleDisplay
+        ]
+        [ p []
+            [ text "Time e Some title e: Some artist e" ]
+        , input
+            [ type_ "text"
+            , placeholder "Type your comment here!"
+            , autofocus True
+            , required True
+            ]
+            []
+        , button
+            [ type_ "button" ]
+            []
+        , button
+            [ type_ "button" ]
+            []
+        ]
+
+
 view : Model -> Html Msg
 view model =
     main_
         []
-        [ section
-            [ id "comment" ]
-            [ p []
-                [ text "Time e Some title e: Some artist e" ]
-            , input
-                [ type_ "text"
-                , placeholder "Type your comment here!"
-                , autofocus True
-                , required True
-                ]
-                []
-            , button
-                [ type_ "button" ]
-                []
-            , button
-                [ type_ "button" ]
-                []
-            ]
+        [ commentSection model
         , section
             (groupAttributes Remembered)
             (buttonGroup Remembered ++ songsOfGroup model Remembered)
