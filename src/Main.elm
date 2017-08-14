@@ -82,12 +82,17 @@ type alias Commenting =
     Bool
 
 
+type alias CommentingIndex =
+    Maybe Int
+
+
 type alias Messages =
     List String
 
 
 type alias Model =
     { commenting : Commenting
+    , commentingIndex : CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -123,6 +128,11 @@ type alias Title =
 commentingInit : Commenting
 commentingInit =
     True
+
+
+commentingIndexInit : CommentingIndex
+commentingIndexInit =
+    Just 4
 
 
 messagesInit : Messages
@@ -212,7 +222,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentingInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentingInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -286,10 +296,13 @@ update msg model =
             let
                 setCommented : Int -> SongInfo -> SongInfo
                 setCommented songIndex song =
-                    if index /= songIndex then
-                        song
-                    else
-                        { song | commented = True }
+                    case index == songIndex of
+                        False ->
+                            song
+
+                        -- TODO: make AJAX request.
+                        True ->
+                            { song | commented = True }
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -297,6 +310,7 @@ update msg model =
             in
             ( { model
                 | songsRemembered = songsRememberedNew
+                , commentingIndex = Just index
               }
             , Cmd.none
             )
