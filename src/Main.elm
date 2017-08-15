@@ -78,10 +78,6 @@ type alias Commented =
     Bool
 
 
-type alias Commenting =
-    Bool
-
-
 type alias CommentingIndex =
     Maybe Int
 
@@ -91,8 +87,7 @@ type alias Messages =
 
 
 type alias Model =
-    { commenting : Commenting
-    , commentingIndex : CommentingIndex
+    { commentingIndex : CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -123,11 +118,6 @@ type alias TimeStamp =
 
 type alias Title =
     String
-
-
-commentingInit : Commenting
-commentingInit =
-    False
 
 
 commentingIndexInit : CommentingIndex
@@ -222,7 +212,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentingInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -312,7 +302,6 @@ update msg model =
             in
             ( { model
                 | songsRemembered = songsRememberedNew
-                , commenting = True
                 , commentingIndex = Just index
               }
             , Cmd.none
@@ -320,8 +309,7 @@ update msg model =
 
         CommentCancel ->
             ( { model
-                | commenting = False
-                , commentingIndex = Nothing
+                | commentingIndex = Nothing
               }
             , Cmd.none
             )
@@ -510,11 +498,11 @@ commentArea model =
 
         sectionDisplayToggle : Attribute msg
         sectionDisplayToggle =
-            case model.commenting of
-                False ->
+            case model.commentingIndex of
+                Nothing ->
                     style [ ( "display", "none" ) ]
 
-                True ->
+                Just a ->
                     style [ ( "display", "block" ) ]
 
         song : Maybe SongInfo
