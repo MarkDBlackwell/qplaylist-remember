@@ -225,7 +225,7 @@ type Msg
     = Add Int
     | Comment Int
     | CommentCancel
-    | CommentSend
+    | CommentOk
     | Drop Int
     | Morph
     | Refresh
@@ -286,23 +286,17 @@ update msg model =
 
         Comment index ->
             let
-                setCommented : Int -> SongInfo -> SongInfo
-                setCommented songIndex song =
-                    case index == songIndex of
-                        False ->
-                            song
+                commentingIndexNew : Int
+                commentingIndexNew =
+                    case model.commentingIndex of
+                        Just i ->
+                            i
 
-                        -- TODO: make AJAX request.
-                        True ->
-                            { song | commented = True }
-
-                songsRememberedNew : SongsList
-                songsRememberedNew =
-                    List.indexedMap setCommented model.songsRemembered
+                        Nothing ->
+                            index
             in
             ( { model
-                | commentingIndex = Just index
-                , songsRemembered = songsRememberedNew
+                | commentingIndex = Just commentingIndexNew
               }
             , Cmd.none
             )
@@ -314,8 +308,30 @@ update msg model =
             , Cmd.none
             )
 
-        CommentSend ->
-            ( model
+        CommentOk ->
+            let
+                displayHasCommented : Int -> SongInfo -> SongInfo
+                displayHasCommented index song =
+                    case model.commentingIndex of
+                        Nothing ->
+                            song
+
+                        Just commentingIndex ->
+                            case index == commentingIndex of
+                                False ->
+                                    song
+
+                                -- TODO: make AJAX request.
+                                True ->
+                                    { song | commented = True }
+
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    List.indexedMap displayHasCommented model.songsRemembered
+            in
+            ( { model
+                | songsRemembered = songsRememberedNew
+              }
             , Cmd.none
             )
 
@@ -536,7 +552,7 @@ commentArea model =
             , required True
             ]
             []
-        , buttonMy (Just "commentOk") "Submit your comment" CommentSend
+        , buttonMy (Just "commentOk") "Submit your comment" CommentOk
         , buttonMy (Just "commentCancel") "Cancel your comment" CommentCancel
         ]
 
