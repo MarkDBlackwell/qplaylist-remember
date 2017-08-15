@@ -312,6 +312,7 @@ update msg model =
             in
             ( { model
                 | songsRemembered = songsRememberedNew
+                , commenting = True
                 , commentingIndex = Just index
               }
             , Cmd.none
