@@ -127,12 +127,12 @@ type alias Title =
 
 commentingInit : Commenting
 commentingInit =
-    True
+    False
 
 
 commentingIndexInit : CommentingIndex
 commentingIndexInit =
-    Just 4
+    Nothing
 
 
 messagesInit : Messages
@@ -501,7 +501,12 @@ commentArea model =
     let
         rememberedIndex : Int
         rememberedIndex =
-            4
+            case model.commentingIndex of
+                Nothing ->
+                    0
+
+                Just a ->
+                    a
 
         sectionDisplayToggle : Attribute msg
         sectionDisplayToggle =
