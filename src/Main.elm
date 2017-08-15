@@ -546,14 +546,15 @@ commentArea model =
         [ p []
             [ text songHeader ]
         , input
-            [ type_ "text"
+            [ id "input"
+            , type_ "text"
             , placeholder "Type your comment here!"
             , autofocus True
             , required True
             ]
             []
-        , buttonMy (Just "commentOk") "Submit your comment" CommentOk
-        , buttonMy (Just "commentCancel") "Cancel your comment" CommentCancel
+        , buttonMy Nothing "Submit your comment" CommentOk
+        , buttonMy Nothing "Cancel your comment" CommentCancel
         ]
 
 
