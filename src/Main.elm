@@ -480,6 +480,62 @@ buttonMy buttonId titleString action =
         []
 
 
+commentArea : Model -> Html Msg
+commentArea model =
+    let
+        rememberedIndex : Int
+        rememberedIndex =
+            4
+
+        sectionDisplayToggle : Attribute msg
+        sectionDisplayToggle =
+            case model.commenting of
+                False ->
+                    style [ ( "display", "none" ) ]
+
+                True ->
+                    style [ ( "display", "block" ) ]
+
+        song : Maybe SongInfo
+        song =
+            List.head (List.drop rememberedIndex model.songsRemembered)
+
+        songHeader : String
+        songHeader =
+            case song of
+                Nothing ->
+                    "Some artist e: Some title e (Time e)"
+
+                Just song ->
+                    song.artist
+                        ++ ": "
+                        ++ song.title
+                        ++ " ("
+                        ++ song.time
+                        ++ ")"
+    in
+    section
+        [ id "comment"
+        , sectionDisplayToggle
+        ]
+        [ p []
+            [ text songHeader ]
+        , input
+            [ type_ "text"
+            , placeholder "Type your comment here!"
+            , autofocus True
+            , required True
+            ]
+            []
+        , button
+            [ type_ "button" ]
+            []
+        , button
+            [ type_ "button" ]
+            []
+        ]
+
+
 groupAttributes : SongGroup -> List (Attribute msg)
 groupAttributes group =
     let
@@ -626,62 +682,6 @@ styleCalc group lengthSongGroup index =
                     goldenRatio ^ toFloat indexReversed
     in
     [ style (backgroundColorStyling ++ fontSizeStyling) ]
-
-
-commentArea : Model -> Html Msg
-commentArea model =
-    let
-        rememberedIndex : Int
-        rememberedIndex =
-            4
-
-        sectionDisplayToggle : Attribute msg
-        sectionDisplayToggle =
-            case model.commenting of
-                False ->
-                    style [ ( "display", "none" ) ]
-
-                True ->
-                    style [ ( "display", "block" ) ]
-
-        song : Maybe SongInfo
-        song =
-            List.head (List.drop rememberedIndex model.songsRemembered)
-
-        songHeader : String
-        songHeader =
-            case song of
-                Nothing ->
-                    "Some artist e: Some title e (Time e)"
-
-                Just song ->
-                    song.artist
-                        ++ ": "
-                        ++ song.title
-                        ++ " ("
-                        ++ song.time
-                        ++ ")"
-    in
-    section
-        [ id "comment"
-        , sectionDisplayToggle
-        ]
-        [ p []
-            [ text songHeader ]
-        , input
-            [ type_ "text"
-            , placeholder "Type your comment here!"
-            , autofocus True
-            , required True
-            ]
-            []
-        , button
-            [ type_ "button" ]
-            []
-        , button
-            [ type_ "button" ]
-            []
-        ]
 
 
 view : Model -> Html Msg
