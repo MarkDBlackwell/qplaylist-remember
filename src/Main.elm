@@ -234,6 +234,8 @@ init =
 type Msg
     = Add Int
     | Comment Int
+    | CommentCancel
+    | CommentSend
     | Drop Int
     | Morph
     | Refresh
@@ -312,6 +314,19 @@ update msg model =
                 | songsRemembered = songsRememberedNew
                 , commentingIndex = Just index
               }
+            , Cmd.none
+            )
+
+        CommentCancel ->
+            ( { model
+                | commenting = False
+                , commentingIndex = Nothing
+              }
+            , Cmd.none
+            )
+
+        CommentSend ->
+            ( model
             , Cmd.none
             )
 
@@ -527,12 +542,8 @@ commentArea model =
             , required True
             ]
             []
-        , button
-            [ type_ "button" ]
-            []
-        , button
-            [ type_ "button" ]
-            []
+        , buttonMy (Just "commentOk") "Submit your comment" CommentSend
+        , buttonMy (Just "commentCancel") "Cancel your comment" CommentCancel
         ]
 
 
