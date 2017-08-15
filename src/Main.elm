@@ -48,6 +48,7 @@ import Html.Attributes
 import Html.Events
     exposing
         ( onClick
+        , onInput
         , onSubmit
         )
 import Tuple
@@ -74,6 +75,10 @@ type alias Artist =
     String
 
 
+type alias CommentEntered =
+    Maybe String
+
+
 type alias Commented =
     Bool
 
@@ -87,7 +92,8 @@ type alias Messages =
 
 
 type alias Model =
-    { commentingIndex : CommentingIndex
+    { commentEntered : CommentEntered
+    , commentingIndex : CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -118,6 +124,11 @@ type alias TimeStamp =
 
 type alias Title =
     String
+
+
+commentEnteredInit : CommentEntered
+commentEnteredInit =
+    Nothing
 
 
 commentingIndexInit : CommentingIndex
@@ -212,7 +223,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentEnteredInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -223,7 +234,8 @@ init =
 
 type Msg
     = Add Int
-    | Comment Int
+    | ChangeInput String
+    | CommentButton Int
     | CommentCancel
     | CommentOk
     | Drop Int
@@ -284,7 +296,14 @@ update msg model =
             , Cmd.none
             )
 
-        Comment index ->
+        ChangeInput commentEntered ->
+            ( { model
+                | commentEntered = Just commentEntered
+              }
+            , Cmd.none
+            )
+
+        CommentButton index ->
             let
                 commentingIndexNew : Int
                 commentingIndexNew =
@@ -430,7 +449,7 @@ buttonComment group index =
     let
         action : Msg
         action =
-            Comment index
+            CommentButton index
 
         buttonId : Maybe String
         buttonId =
@@ -548,6 +567,7 @@ commentArea model =
         , input
             [ id "input"
             , type_ "text"
+            , onInput ChangeInput
             , placeholder "Type your comment here!"
             , autofocus True
             , required True
