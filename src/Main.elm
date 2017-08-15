@@ -196,17 +196,17 @@ songsRememberedInitFull =
         "In My Teeth"
         "4:54 PM"
         "2017 08 07 16 54"
-        True
+        False
     , songinfo "T. Rex"
         "King Of The Rumbling Spires"
         "4:59 PM"
         "2017 08 07 16 59"
-        True
+        False
     , songinfo "Tedeschi Trucks Band"
         "I Pity The Fool - Live"
         "5:07 PM"
         "2017 08 07 17 07"
-        True
+        False
     , songinfo "Bobby \"Blue\" Bland"
         "I Pity The Fool"
         "5:14 PM"
@@ -216,7 +216,7 @@ songsRememberedInitFull =
         "Find You A Job"
         "5:19 PM"
         "2017 08 07 17 19"
-        True
+        False
     ]
 
 
