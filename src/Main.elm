@@ -301,8 +301,8 @@ update msg model =
                     List.indexedMap setCommented model.songsRemembered
             in
             ( { model
-                | songsRemembered = songsRememberedNew
-                , commentingIndex = Just index
+                | commentingIndex = Just index
+                , songsRemembered = songsRememberedNew
               }
             , Cmd.none
             )
