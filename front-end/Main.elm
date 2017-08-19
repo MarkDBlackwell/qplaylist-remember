@@ -235,9 +235,9 @@ init =
 
 type Msg
     = CommentButton Int
-    | CommentCancel
+    | InputCancel
     | CommentCapture String
-    | CommentOk
+    | InputOk
     | Forget Int
     | Morph
     | Refresh
@@ -274,7 +274,7 @@ update msg model =
             , Cmd.none
             )
 
-        CommentCancel ->
+        InputCancel ->
             ( { model
                 | commentingSongsRememberedIndex = Nothing
               }
@@ -297,7 +297,7 @@ update msg model =
                     , Cmd.none
                     )
 
-        CommentOk ->
+        InputOk ->
             let
                 displayHasCommented : Int -> SongInfo -> SongInfo
                 displayHasCommented index song =
@@ -569,8 +569,8 @@ commentArea model =
                             , required True
                             ]
                             []
-                        , buttonMy Nothing "Submit your comment" CommentOk
-                        , buttonMy Nothing "Cancel your comment" CommentCancel
+                        , buttonMy Nothing "Submit your comment" InputOk
+                        , buttonMy Nothing "Cancel your comment" InputCancel
                         ]
 
 
