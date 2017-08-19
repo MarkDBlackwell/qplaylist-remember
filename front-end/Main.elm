@@ -234,7 +234,7 @@ init =
 
 
 type Msg
-    = CommentButton Int
+    = CommentOpen Int
     | CommentCapture String
     | Forget Int
     | InputCancel
@@ -257,7 +257,7 @@ update msg model =
                     Expanded
     in
     case msg of
-        CommentButton index ->
+        CommentOpen index ->
             let
                 commentingSongsRememberedIndexNew : Int
                 commentingSongsRememberedIndexNew =
@@ -421,7 +421,7 @@ buttonComment group index =
     let
         action : Msg
         action =
-            CommentButton index
+            CommentOpen index
 
         buttonId : Maybe String
         buttonId =
