@@ -234,8 +234,8 @@ init =
 
 
 type Msg
-    = CommentOpen Int
-    | CommentCapture String
+    = CommentCapture String
+    | CommentOpen Int
     | Forget Int
     | InputCancel
     | InputOk
@@ -257,6 +257,13 @@ update msg model =
                     Expanded
     in
     case msg of
+        CommentCapture commentText ->
+            ( { model
+                | commentText = commentText
+              }
+            , Cmd.none
+            )
+
         CommentOpen index ->
             let
                 commentingSongsRememberedIndexNew : Int
@@ -270,13 +277,6 @@ update msg model =
             in
             ( { model
                 | commentingSongsRememberedIndex = Just commentingSongsRememberedIndexNew
-              }
-            , Cmd.none
-            )
-
-        CommentCapture commentText ->
-            ( { model
-                | commentText = commentText
               }
             , Cmd.none
             )
