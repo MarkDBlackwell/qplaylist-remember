@@ -94,7 +94,7 @@ type alias Messages =
 
 type alias Model =
     { commentText : CommentText
-    , commentingIndex : CommentingIndex
+    , commentingSongsRememberedIndex : CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -132,8 +132,8 @@ commentTextInit =
     Nothing
 
 
-commentingIndexInit : CommentingIndex
-commentingIndexInit =
+commentingSongsRememberedIndexInit : CommentingIndex
+commentingSongsRememberedIndexInit =
     Nothing
 
 
@@ -224,7 +224,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentTextInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentTextInit commentingSongsRememberedIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -259,9 +259,9 @@ update msg model =
     case msg of
         CommentButton index ->
             let
-                commentingIndexNew : Int
-                commentingIndexNew =
-                    case model.commentingIndex of
+                commentingSongsRememberedIndexNew : Int
+                commentingSongsRememberedIndexNew =
+                    case model.commentingSongsRememberedIndex of
                         Just i ->
                             i
 
@@ -269,14 +269,14 @@ update msg model =
                             index
             in
             ( { model
-                | commentingIndex = Just commentingIndexNew
+                | commentingSongsRememberedIndex = Just commentingSongsRememberedIndexNew
               }
             , Cmd.none
             )
 
         CommentCancel ->
             ( { model
-                | commentingIndex = Nothing
+                | commentingSongsRememberedIndex = Nothing
               }
             , Cmd.none
             )
@@ -301,12 +301,12 @@ update msg model =
             let
                 displayHasCommented : Int -> SongInfo -> SongInfo
                 displayHasCommented index song =
-                    case model.commentingIndex of
+                    case model.commentingSongsRememberedIndex of
                         Nothing ->
                             song
 
-                        Just commentingIndex ->
-                            case index == commentingIndex of
+                        Just commentingSongsRememberedIndex ->
+                            case index == commentingSongsRememberedIndex of
                                 False ->
                                     song
 
@@ -319,7 +319,7 @@ update msg model =
                     List.indexedMap displayHasCommented model.songsRemembered
             in
             ( { model
-                | commentingIndex = Nothing
+                | commentingSongsRememberedIndex = Nothing
                 , songsRemembered = songsRememberedNew
               }
             , Cmd.none
@@ -535,7 +535,7 @@ commentArea model =
     let
         rememberedIndex : Int
         rememberedIndex =
-            case model.commentingIndex of
+            case model.commentingSongsRememberedIndex of
                 Nothing ->
                     0
 
@@ -544,7 +544,7 @@ commentArea model =
 
         sectionDisplayToggle : Attribute msg
         sectionDisplayToggle =
-            case model.commentingIndex of
+            case model.commentingSongsRememberedIndex of
                 Nothing ->
                     style [ ( "display", "none" ) ]
 
