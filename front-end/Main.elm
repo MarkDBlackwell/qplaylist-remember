@@ -234,14 +234,14 @@ init =
 
 
 type Msg
-    = Remember Int
-    | CommentButton Int
+    = CommentButton Int
     | CommentCancel
     | CommentCapture String
     | CommentOk
     | Forget Int
     | Morph
     | Refresh
+    | Remember Int
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -257,46 +257,6 @@ update msg model =
                     Expanded
     in
     case msg of
-        Remember index ->
-            let
-                songSelected : Maybe SongInfo
-                songSelected =
-                    List.head (List.drop index model.songsLatestFew)
-
-                songsDifferent : SongsList
-                songsDifferent =
-                    case songSelected of
-                        Nothing ->
-                            model.songsRemembered
-
-                        Just songSelected ->
-                            let
-                                partition : ( SongsList, SongsList )
-                                partition =
-                                    List.partition (\x -> x == songSelected) model.songsRemembered
-                            in
-                            Tuple.second partition
-
-                songsRememberedNew : SongsList
-                songsRememberedNew =
-                    case songSelected of
-                        Nothing ->
-                            model.songsRemembered
-
-                        Just songSelected ->
-                            case List.member songSelected model.songsRemembered of
-                                True ->
-                                    model.songsRemembered
-
-                                False ->
-                                    songsDifferent ++ [ songSelected ]
-            in
-            ( { model
-                | songsRemembered = songsRememberedNew
-              }
-            , Cmd.none
-            )
-
         CommentButton index ->
             let
                 commentingIndexNew : Int
@@ -392,6 +352,46 @@ update msg model =
             , Cmd.none
             )
 
+        Remember index ->
+            let
+                songSelected : Maybe SongInfo
+                songSelected =
+                    List.head (List.drop index model.songsLatestFew)
+
+                songsDifferent : SongsList
+                songsDifferent =
+                    case songSelected of
+                        Nothing ->
+                            model.songsRemembered
+
+                        Just songSelected ->
+                            let
+                                partition : ( SongsList, SongsList )
+                                partition =
+                                    List.partition (\x -> x == songSelected) model.songsRemembered
+                            in
+                            Tuple.second partition
+
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    case songSelected of
+                        Nothing ->
+                            model.songsRemembered
+
+                        Just songSelected ->
+                            case List.member songSelected model.songsRemembered of
+                                True ->
+                                    model.songsRemembered
+
+                                False ->
+                                    songsDifferent ++ [ songSelected ]
+            in
+            ( { model
+                | songsRemembered = songsRememberedNew
+              }
+            , Cmd.none
+            )
+
 
 
 -- SUBSCRIPTIONS
@@ -415,43 +415,6 @@ type PageShape
 type SongGroup
     = Played
     | Remembered
-
-
-buttonRememberForget : SongGroup -> Int -> Html Msg
-buttonRememberForget group index =
-    let
-        action : Msg
-        action =
-            case group of
-                Played ->
-                    Remember index
-
-                Remembered ->
-                    Forget index
-
-        buttonId : Maybe String
-        buttonId =
-            Just ("button" ++ groupString ++ toString index)
-
-        groupString : String
-        groupString =
-            case group of
-                Played ->
-                    "Remember"
-
-                Remembered ->
-                    "Forget"
-
-        titleString : String
-        titleString =
-            case group of
-                Played ->
-                    "Add (to remembered songs)"
-
-                Remembered ->
-                    "Drop (from remembered songs)"
-    in
-    buttonMy buttonId titleString action
 
 
 buttonComment : SongGroup -> Int -> Html Msg
@@ -527,6 +490,43 @@ buttonMy buttonId titleString action =
             ++ idMy
         )
         []
+
+
+buttonRememberForget : SongGroup -> Int -> Html Msg
+buttonRememberForget group index =
+    let
+        action : Msg
+        action =
+            case group of
+                Played ->
+                    Remember index
+
+                Remembered ->
+                    Forget index
+
+        buttonId : Maybe String
+        buttonId =
+            Just ("button" ++ groupString ++ toString index)
+
+        groupString : String
+        groupString =
+            case group of
+                Played ->
+                    "Remember"
+
+                Remembered ->
+                    "Forget"
+
+        titleString : String
+        titleString =
+            case group of
+                Played ->
+                    "Add (to remembered songs)"
+
+                Remembered ->
+                    "Drop (from remembered songs)"
+    in
+    buttonMy buttonId titleString action
 
 
 commentArea : Model -> Html Msg
