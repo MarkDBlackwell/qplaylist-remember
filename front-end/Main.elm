@@ -235,10 +235,10 @@ init =
 
 type Msg
     = CommentButton Int
-    | InputCancel
     | CommentCapture String
-    | InputOk
     | Forget Int
+    | InputCancel
+    | InputOk
     | Morph
     | Refresh
     | Remember Int
@@ -274,13 +274,6 @@ update msg model =
             , Cmd.none
             )
 
-        InputCancel ->
-            ( { model
-                | commentingSongsRememberedIndex = Nothing
-              }
-            , Cmd.none
-            )
-
         CommentCapture commentText ->
             case commentText of
                 "" ->
@@ -296,6 +289,26 @@ update msg model =
                       }
                     , Cmd.none
                     )
+
+        Forget index ->
+            let
+                withoutOne : SongsList
+                withoutOne =
+                    List.take index model.songsRemembered
+                        ++ List.drop (index + 1) model.songsRemembered
+            in
+            ( { model
+                | songsRemembered = withoutOne
+              }
+            , Cmd.none
+            )
+
+        InputCancel ->
+            ( { model
+                | commentingSongsRememberedIndex = Nothing
+              }
+            , Cmd.none
+            )
 
         InputOk ->
             let
@@ -321,19 +334,6 @@ update msg model =
             ( { model
                 | commentingSongsRememberedIndex = Nothing
                 , songsRemembered = songsRememberedNew
-              }
-            , Cmd.none
-            )
-
-        Forget index ->
-            let
-                withoutOne : SongsList
-                withoutOne =
-                    List.take index model.songsRemembered
-                        ++ List.drop (index + 1) model.songsRemembered
-            in
-            ( { model
-                | songsRemembered = withoutOne
               }
             , Cmd.none
             )
