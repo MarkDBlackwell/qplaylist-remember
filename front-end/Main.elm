@@ -77,7 +77,7 @@ type alias Artist =
 
 
 type alias CommentText =
-    Maybe String
+    String
 
 
 type alias Commented =
@@ -129,7 +129,7 @@ type alias Title =
 
 commentTextInit : CommentText
 commentTextInit =
-    Nothing
+    ""
 
 
 commentingSongsRememberedIndexInit : CommentingIndex
@@ -275,20 +275,11 @@ update msg model =
             )
 
         CommentCapture commentText ->
-            case commentText of
-                "" ->
-                    ( { model
-                        | commentText = Nothing
-                      }
-                    , Cmd.none
-                    )
-
-                _ ->
-                    ( { model
-                        | commentText = Just commentText
-                      }
-                    , Cmd.none
-                    )
+            ( { model
+                | commentText = commentText
+              }
+            , Cmd.none
+            )
 
         Forget index ->
             let
@@ -557,6 +548,8 @@ commentArea model =
                                     ++ " ("
                                     ++ song.time
                                     ++ ")"
+                                    ++ " "
+                                    ++ toString (String.length model.commentText)
                                 )
                             ]
                         , input
