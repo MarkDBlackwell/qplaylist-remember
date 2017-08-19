@@ -85,7 +85,7 @@ type alias Commented =
 
 
 type alias CommentingIndex =
-    Maybe Int
+    SongsRememberedIndex
 
 
 type alias Messages =
@@ -94,7 +94,7 @@ type alias Messages =
 
 type alias Model =
     { commentText : CommentText
-    , commentingSongsRememberedIndex : CommentingIndex
+    , commentingSongsRememberedIndex : Maybe CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -115,6 +115,10 @@ type alias SongsList =
     List SongInfo
 
 
+type alias SongsRememberedIndex =
+    Int
+
+
 type alias Time =
     String
 
@@ -132,7 +136,7 @@ commentTextInit =
     ""
 
 
-commentingSongsRememberedIndexInit : CommentingIndex
+commentingSongsRememberedIndexInit : Maybe CommentingIndex
 commentingSongsRememberedIndexInit =
     Nothing
 
@@ -269,11 +273,11 @@ update msg model =
                 commentingSongsRememberedIndexNew : Int
                 commentingSongsRememberedIndexNew =
                     case model.commentingSongsRememberedIndex of
-                        Just i ->
-                            i
-
                         Nothing ->
                             index
+
+                        Just a ->
+                            a
             in
             ( { model
                 | commentingSongsRememberedIndex = Just commentingSongsRememberedIndexNew
