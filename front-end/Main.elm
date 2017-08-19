@@ -34,7 +34,8 @@ import Html
         )
 import Html.Attributes
     exposing
-        ( autofocus
+        ( autocomplete
+        , autofocus
         , class
         , href
         , id
@@ -75,7 +76,7 @@ type alias Artist =
     String
 
 
-type alias CommentEntered =
+type alias CommentText =
     Maybe String
 
 
@@ -92,7 +93,7 @@ type alias Messages =
 
 
 type alias Model =
-    { commentEntered : CommentEntered
+    { commentText : CommentText
     , commentingIndex : CommentingIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
@@ -126,8 +127,8 @@ type alias Title =
     String
 
 
-commentEnteredInit : CommentEntered
-commentEnteredInit =
+commentTextInit : CommentText
+commentTextInit =
     Nothing
 
 
@@ -223,7 +224,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentEnteredInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentTextInit commentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -234,9 +235,9 @@ init =
 
 type Msg
     = Add Int
-    | ChangeInput String
     | CommentButton Int
     | CommentCancel
+    | CommentCapture String
     | CommentOk
     | Drop Int
     | Morph
@@ -296,13 +297,6 @@ update msg model =
             , Cmd.none
             )
 
-        ChangeInput commentEntered ->
-            ( { model
-                | commentEntered = Just commentEntered
-              }
-            , Cmd.none
-            )
-
         CommentButton index ->
             let
                 commentingIndexNew : Int
@@ -326,6 +320,22 @@ update msg model =
               }
             , Cmd.none
             )
+
+        CommentCapture commentText ->
+            case commentText of
+                "" ->
+                    ( { model
+                        | commentText = Nothing
+                      }
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( { model
+                        | commentText = Just commentText
+                      }
+                    , Cmd.none
+                    )
 
         CommentOk ->
             let
@@ -567,8 +577,9 @@ commentArea model =
         , input
             [ id "input"
             , type_ "text"
-            , onInput ChangeInput
+            , onInput CommentCapture
             , placeholder "Type your comment here!"
+            , autocomplete False
             , autofocus True
             , required True
             ]
