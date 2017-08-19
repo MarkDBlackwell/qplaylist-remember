@@ -84,17 +84,13 @@ type alias Commented =
     Bool
 
 
-type alias CommentingIndex =
-    SongsRememberedIndex
-
-
 type alias Messages =
     List String
 
 
 type alias Model =
     { commentText : CommentText
-    , commentingSongsRememberedIndex : Maybe CommentingIndex
+    , commentingSongsRememberedIndex : Maybe SongsRememberedIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
@@ -136,7 +132,7 @@ commentTextInit =
     ""
 
 
-commentingSongsRememberedIndexInit : Maybe CommentingIndex
+commentingSongsRememberedIndexInit : Maybe SongsRememberedIndex
 commentingSongsRememberedIndexInit =
     Nothing
 
