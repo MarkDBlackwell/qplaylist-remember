@@ -296,7 +296,8 @@ update msg model =
 
         InputCancel ->
             ( { model
-                | commentingSongsRememberedIndex = Nothing
+                | commentText = ""
+                , commentingSongsRememberedIndex = Nothing
               }
             , Cmd.none
             )
@@ -323,7 +324,8 @@ update msg model =
                     List.indexedMap displayHasCommented model.songsRemembered
             in
             ( { model
-                | commentingSongsRememberedIndex = Nothing
+                | commentText = ""
+                , commentingSongsRememberedIndex = Nothing
                 , songsRemembered = songsRememberedNew
               }
             , Cmd.none
@@ -529,6 +531,11 @@ commentArea model =
 
         Just index ->
             let
+                commentTextStatistics : String
+                commentTextStatistics =
+                    -- " " ++ toString (String.length model.commentText)
+                    ""
+
                 song : Maybe SongInfo
                 song =
                     List.head (List.drop index model.songsRemembered)
@@ -548,8 +555,7 @@ commentArea model =
                                     ++ " ("
                                     ++ song.time
                                     ++ ")"
-                                    ++ " "
-                                    ++ toString (String.length model.commentText)
+                                    ++ commentTextStatistics
                                 )
                             ]
                         , input
