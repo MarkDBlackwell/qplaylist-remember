@@ -532,62 +532,46 @@ buttonRememberForget group index =
 
 commentArea : Model -> Html Msg
 commentArea model =
-    let
-        rememberedIndex : Int
-        rememberedIndex =
-            case model.commentingSongsRememberedIndex of
-                Nothing ->
-                    0
+    case model.commentingSongsRememberedIndex of
+        Nothing ->
+            text ""
 
-                Just a ->
-                    a
-
-        sectionDisplayToggle : Attribute msg
-        sectionDisplayToggle =
-            case model.commentingSongsRememberedIndex of
-                Nothing ->
-                    style [ ( "display", "none" ) ]
-
-                Just a ->
-                    style [ ( "display", "block" ) ]
-
-        song : Maybe SongInfo
-        song =
-            List.head (List.drop rememberedIndex model.songsRemembered)
-
-        songHeader : String
-        songHeader =
+        Just index ->
+            let
+                song : Maybe SongInfo
+                song =
+                    List.head (List.drop index model.songsRemembered)
+            in
             case song of
                 Nothing ->
-                    "Some artist e: Some title e (Time e)"
+                    text ""
 
                 Just song ->
-                    song.artist
-                        ++ ": "
-                        ++ song.title
-                        ++ " ("
-                        ++ song.time
-                        ++ ")"
-    in
-    section
-        [ id "comment"
-        , sectionDisplayToggle
-        ]
-        [ p []
-            [ text songHeader ]
-        , input
-            [ id "input"
-            , type_ "text"
-            , onInput CommentCapture
-            , placeholder "Type your comment here!"
-            , autocomplete False
-            , autofocus True
-            , required True
-            ]
-            []
-        , buttonMy Nothing "Submit your comment" CommentOk
-        , buttonMy Nothing "Cancel your comment" CommentCancel
-        ]
+                    section
+                        [ id "comment" ]
+                        [ p []
+                            [ text
+                                (song.artist
+                                    ++ ": "
+                                    ++ song.title
+                                    ++ " ("
+                                    ++ song.time
+                                    ++ ")"
+                                )
+                            ]
+                        , input
+                            [ id "input"
+                            , type_ "text"
+                            , onInput CommentCapture
+                            , placeholder "Type your comment here!"
+                            , autocomplete False
+                            , autofocus True
+                            , required True
+                            ]
+                            []
+                        , buttonMy Nothing "Submit your comment" CommentOk
+                        , buttonMy Nothing "Cancel your comment" CommentCancel
+                        ]
 
 
 groupAttributes : SongGroup -> List (Attribute msg)

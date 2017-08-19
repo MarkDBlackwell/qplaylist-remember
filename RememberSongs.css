@@ -41,9 +41,6 @@ html {
     color: White;
     background-color: Black;
 }
-/*
-    display: none;
-*/
 section#comment {
     line-height: 1.5;
     background-color: rgb(190,255,190);
