@@ -306,18 +306,23 @@ update msg model =
             let
                 displayHasCommented : Int -> SongInfo -> SongInfo
                 displayHasCommented index song =
-                    case model.commentingSongsRememberedIndex of
-                        Nothing ->
+                    case String.isEmpty model.commentText of
+                        True ->
                             song
 
-                        Just commentingSongsRememberedIndex ->
-                            case index == commentingSongsRememberedIndex of
-                                False ->
+                        False ->
+                            case model.commentingSongsRememberedIndex of
+                                Nothing ->
                                     song
 
-                                -- TODO: make AJAX request.
-                                True ->
-                                    { song | commented = True }
+                                Just commentingSongsRememberedIndex ->
+                                    case index == commentingSongsRememberedIndex of
+                                        False ->
+                                            song
+
+                                        -- TODO: make AJAX request.
+                                        True ->
+                                            { song | commented = True }
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
