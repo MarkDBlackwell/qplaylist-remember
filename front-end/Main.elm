@@ -319,7 +319,8 @@ update msg model =
                     List.indexedMap displayHasCommented model.songsRemembered
             in
             ( { model
-                | songsRemembered = songsRememberedNew
+                | commentingIndex = Nothing
+                , songsRemembered = songsRememberedNew
               }
             , Cmd.none
             )
