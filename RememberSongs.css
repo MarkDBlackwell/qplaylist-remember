@@ -166,10 +166,10 @@ section.songs-group > div > p > button:first-of-type {
     letter-spacing: .0909091em;
 }
 section#songs-played > div > p > button:before {
-    content: "ADD";
+    content: "REMEMBER";
 }
 section#songs-remembered > div > p > button:first-of-type:before {
-    content: "DROP";
+    content: "FORGET";
 }
 section#songs-remembered > div > p > button:last-of-type:before {
     content: "Comment";

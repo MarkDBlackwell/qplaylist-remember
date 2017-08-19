@@ -234,12 +234,12 @@ init =
 
 
 type Msg
-    = Add Int
+    = Remember Int
     | CommentButton Int
     | CommentCancel
     | CommentCapture String
     | CommentOk
-    | Drop Int
+    | Forget Int
     | Morph
     | Refresh
 
@@ -257,7 +257,7 @@ update msg model =
                     Expanded
     in
     case msg of
-        Add index ->
+        Remember index ->
             let
                 songSelected : Maybe SongInfo
                 songSelected =
@@ -364,7 +364,7 @@ update msg model =
             , Cmd.none
             )
 
-        Drop index ->
+        Forget index ->
             let
                 withoutOne : SongsList
                 withoutOne =
@@ -417,17 +417,17 @@ type SongGroup
     | Remembered
 
 
-buttonAddDrop : SongGroup -> Int -> Html Msg
-buttonAddDrop group index =
+buttonRememberForget : SongGroup -> Int -> Html Msg
+buttonRememberForget group index =
     let
         action : Msg
         action =
             case group of
                 Played ->
-                    Add index
+                    Remember index
 
                 Remembered ->
-                    Drop index
+                    Forget index
 
         buttonId : Maybe String
         buttonId =
@@ -437,10 +437,10 @@ buttonAddDrop group index =
         groupString =
             case group of
                 Played ->
-                    "Add"
+                    "Remember"
 
                 Remembered ->
-                    "Drop"
+                    "Forget"
 
         titleString : String
         titleString =
@@ -665,7 +665,7 @@ songView model group index song =
     div
         songAttributes
         [ p []
-            [ buttonAddDrop group index
+            [ buttonRememberForget group index
             , span []
                 [ text song.time ]
             , buttonComment group index
