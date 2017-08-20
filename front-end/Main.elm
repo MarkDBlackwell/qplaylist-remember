@@ -496,9 +496,9 @@ buttonMy buttonId titleString action =
                     [ id buttonId ]
     in
     button
-        ([ type_ "button"
+        ([ onClick action
          , title titleString
-         , onClick action
+         , type_ "button"
          ]
             ++ idMy
         )
@@ -582,14 +582,14 @@ commentArea model =
                                 )
                             ]
                         , input
-                            [ id "input"
-                            , type_ "text"
+                            [ autocomplete False
+                            , autofocus True
+                            , id "input"
                             , onInput CommentCapture
                             , placeholder prompt
-                            , title prompt
-                            , autocomplete False
-                            , autofocus True
                             , required True
+                            , title prompt
+                            , type_ "text"
                             ]
                             []
                         , buttonMy Nothing "Submit your comment" InputOk
@@ -609,8 +609,8 @@ groupAttributes group =
                 Remembered ->
                     "remembered"
     in
-    [ id ("songs-" ++ groupString)
-    , class "songs-group"
+    [ class "songs-group"
+    , id ("songs-" ++ groupString)
     ]
 
 
@@ -642,9 +642,9 @@ songView model group index song =
 
         buySong : List (Attribute msg)
         buySong =
-            [ target "_blank"
+            [ href (amazonConstant ++ song.title ++ "+" ++ song.artist)
+            , target "_blank"
             , title "See song on Amazon (in new tab)"
-            , href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             ]
 
         commentedIndicator : Html Msg
