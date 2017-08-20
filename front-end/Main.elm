@@ -102,6 +102,10 @@ type alias SongGroupLength =
     Int
 
 
+type alias SongIndex =
+    Int
+
+
 type alias SongInfo =
     { artist : Artist
     , commented : Commented
@@ -112,10 +116,6 @@ type alias SongInfo =
 
 
 type alias SongsLatestFewIndex =
-    Int
-
-
-type alias SongsLatestFewOrRememberedIndex =
     Int
 
 
@@ -493,7 +493,7 @@ buttonMy buttonId titleString action =
         []
 
 
-buttonRememberForget : SongGroup -> SongsLatestFewOrRememberedIndex -> Html Msg
+buttonRememberForget : SongGroup -> SongIndex -> Html Msg
 buttonRememberForget group index =
     let
         action : Msg
@@ -612,7 +612,7 @@ songsOfGroup model group =
     List.indexedMap (songView model group) songs
 
 
-songView : Model -> SongGroup -> SongsLatestFewOrRememberedIndex -> SongInfo -> Html Msg
+songView : Model -> SongGroup -> SongIndex -> SongInfo -> Html Msg
 songView model group index song =
     let
         amazonConstant : String
@@ -672,7 +672,7 @@ songView model group index song =
         ]
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsLatestFewOrRememberedIndex -> List (Attribute msg)
+styleCalc : SongGroup -> SongGroupLength -> SongIndex -> List (Attribute msg)
 styleCalc group songGroupLength index =
     let
         backgroundColorStyling : List ( String, String )
@@ -708,7 +708,7 @@ styleCalc group songGroupLength index =
         goldenRatio =
             0.6180339887498949
 
-        indexReversed : SongsLatestFewOrRememberedIndex
+        indexReversed : SongIndex
         indexReversed =
             songGroupLength - index - 1
 
