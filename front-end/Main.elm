@@ -92,9 +92,9 @@ type alias Model =
     { commentText : CommentText
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
+    , songRememberedCommentingIndex : Maybe SongRememberedIndex
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
-    , songsRememberedCommentingIndex : Maybe SongsRememberedIndex
     }
 
 
@@ -115,16 +115,16 @@ type alias SongInfo =
     }
 
 
-type alias SongsLatestFewIndex =
+type alias SongLatestFewIndex =
+    Int
+
+
+type alias SongRememberedIndex =
     Int
 
 
 type alias SongsList =
     List SongInfo
-
-
-type alias SongsRememberedIndex =
-    Int
 
 
 type alias Time =
@@ -157,6 +157,11 @@ songInfo artist title time timeStamp commented =
     , timeStamp = timeStamp
     , title = title
     }
+
+
+songRememberedCommentingIndexInit : Maybe SongRememberedIndex
+songRememberedCommentingIndexInit =
+    Nothing
 
 
 songsLatestFewInit : SongsList
@@ -192,11 +197,6 @@ songsLatestFewInitFull =
         "2017 08 07 17 31"
         False
     ]
-
-
-songsRememberedCommentingIndexInit : Maybe SongsRememberedIndex
-songsRememberedCommentingIndexInit =
-    Nothing
 
 
 songsRememberedInit : SongsList
@@ -236,7 +236,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentTextInit messagesInit Shrunk songsLatestFewInit songsRememberedInit songsRememberedCommentingIndexInit
+    ( Model commentTextInit messagesInit Shrunk songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
     , Cmd.none
     )
 
@@ -247,13 +247,13 @@ init =
 
 type Msg
     = CommentCapture String
-    | CommentOpen SongsRememberedIndex
-    | Forget SongsRememberedIndex
+    | CommentOpen SongRememberedIndex
+    | Forget SongRememberedIndex
     | InputCancel
     | InputOk
     | Morph
     | Refresh
-    | Remember SongsLatestFewIndex
+    | Remember SongLatestFewIndex
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -270,22 +270,26 @@ update msg model =
     in
     case msg of
         CommentCapture commentText ->
-            ( { model | commentText = commentText }
+            ( { model
+                | commentText = commentText
+              }
             , Cmd.none
             )
 
         CommentOpen index ->
             let
-                songsRememberedCommentingIndexNew : SongsRememberedIndex
-                songsRememberedCommentingIndexNew =
-                    case model.songsRememberedCommentingIndex of
+                songRememberedCommentingIndexNew : SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    case model.songRememberedCommentingIndex of
                         Nothing ->
                             index
 
                         Just a ->
                             a
             in
-            ( { model | songsRememberedCommentingIndex = Just songsRememberedCommentingIndexNew }
+            ( { model
+                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
+              }
             , Cmd.none
             )
 
@@ -296,39 +300,43 @@ update msg model =
                     List.take index model.songsRemembered
                         ++ List.drop (index + 1) model.songsRemembered
             in
-            ( { model | songsRemembered = withoutOne }
+            ( { model
+                | songsRemembered = withoutOne
+              }
             , Cmd.none
             )
 
         InputCancel ->
             ( { model
                 | commentText = ""
-                , songsRememberedCommentingIndex = Nothing
+                , songRememberedCommentingIndex = Nothing
               }
             , Cmd.none
             )
 
         InputOk ->
             let
-                displayHasCommented : SongsRememberedIndex -> SongInfo -> SongInfo
+                displayHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
                 displayHasCommented index song =
                     case String.isEmpty model.commentText of
                         True ->
                             song
 
                         False ->
-                            case model.songsRememberedCommentingIndex of
+                            case model.songRememberedCommentingIndex of
                                 Nothing ->
                                     song
 
-                                Just songsRememberedCommentingIndex ->
-                                    case songsRememberedCommentingIndex == index of
+                                Just songRememberedCommentingIndex ->
+                                    case songRememberedCommentingIndex == index of
                                         False ->
                                             song
 
                                         -- TODO: make AJAX request.
                                         True ->
-                                            { song | commented = True }
+                                            { song
+                                                | commented = True
+                                            }
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -336,14 +344,16 @@ update msg model =
             in
             ( { model
                 | commentText = ""
+                , songRememberedCommentingIndex = Nothing
                 , songsRemembered = songsRememberedNew
-                , songsRememberedCommentingIndex = Nothing
               }
             , Cmd.none
             )
 
         Morph ->
-            ( { model | pageShape = pageShapeMorphed }
+            ( { model
+                | pageShape = pageShapeMorphed
+              }
             , Cmd.none
             )
 
@@ -389,7 +399,9 @@ update msg model =
                                 False ->
                                     songsDifferent ++ [ songSelected ]
             in
-            ( { model | songsRemembered = songsRememberedNew }
+            ( { model
+                | songsRemembered = songsRememberedNew
+              }
             , Cmd.none
             )
 
@@ -418,7 +430,7 @@ type SongGroup
     | Remembered
 
 
-buttonComment : SongGroup -> SongsRememberedIndex -> Html Msg
+buttonComment : SongGroup -> SongRememberedIndex -> Html Msg
 buttonComment group index =
     let
         action : Msg
@@ -532,7 +544,7 @@ buttonRememberForget group index =
 
 commentArea : Model -> Html Msg
 commentArea model =
-    case model.songsRememberedCommentingIndex of
+    case model.songRememberedCommentingIndex of
         Nothing ->
             text ""
 
