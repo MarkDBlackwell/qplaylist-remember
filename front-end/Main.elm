@@ -245,14 +245,14 @@ init =
 
 
 type Msg
-    = CommentTextChangeCapture String
-    | CommentOpenUp SongRememberedIndex
-    | SongForget SongRememberedIndex
-    | CommentInputCancel
+    = CommentInputCancel
     | CommentInputOk
+    | CommentOpenUp SongRememberedIndex
+    | CommentTextChangeCapture String
     | PageShapeMorph
-    | SongsLatestFewRefresh
+    | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
+    | SongsLatestFewRefresh
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -268,43 +268,6 @@ update msg model =
                     Expanded
     in
     case msg of
-        CommentTextChangeCapture commentText ->
-            ( { model
-                | commentText = commentText
-              }
-            , Cmd.none
-            )
-
-        CommentOpenUp index ->
-            let
-                songRememberedCommentingIndexNew : SongRememberedIndex
-                songRememberedCommentingIndexNew =
-                    case model.songRememberedCommentingIndex of
-                        Nothing ->
-                            index
-
-                        Just a ->
-                            a
-            in
-            ( { model
-                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
-              }
-            , Cmd.none
-            )
-
-        SongForget index ->
-            let
-                withoutOne : SongsList
-                withoutOne =
-                    List.take index model.songsRemembered
-                        ++ List.drop (index + 1) model.songsRemembered
-            in
-            ( { model
-                | songsRemembered = withoutOne
-              }
-            , Cmd.none
-            )
-
         CommentInputCancel ->
             ( { model
                 | commentText = ""
@@ -349,6 +312,30 @@ update msg model =
             , Cmd.none
             )
 
+        CommentOpenUp index ->
+            let
+                songRememberedCommentingIndexNew : SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    case model.songRememberedCommentingIndex of
+                        Nothing ->
+                            index
+
+                        Just a ->
+                            a
+            in
+            ( { model
+                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
+              }
+            , Cmd.none
+            )
+
+        CommentTextChangeCapture commentText ->
+            ( { model
+                | commentText = commentText
+              }
+            , Cmd.none
+            )
+
         PageShapeMorph ->
             ( { model
                 | pageShape = pageShapeMorphed
@@ -356,10 +343,15 @@ update msg model =
             , Cmd.none
             )
 
-        SongsLatestFewRefresh ->
+        SongForget index ->
+            let
+                withoutOne : SongsList
+                withoutOne =
+                    List.take index model.songsRemembered
+                        ++ List.drop (index + 1) model.songsRemembered
+            in
             ( { model
-                | songsLatestFew = songsLatestFewInitFull
-                , songsRemembered = songsRememberedInitFull
+                | songsRemembered = withoutOne
               }
             , Cmd.none
             )
@@ -400,6 +392,14 @@ update msg model =
             in
             ( { model
                 | songsRemembered = songsRememberedNew
+              }
+            , Cmd.none
+            )
+
+        SongsLatestFewRefresh ->
+            ( { model
+                | songsLatestFew = songsLatestFewInitFull
+                , songsRemembered = songsRememberedInitFull
               }
             , Cmd.none
             )
