@@ -35,7 +35,6 @@ import Html
 import Html.Attributes
     exposing
         ( autocomplete
-        , autofocus
         , class
         , href
         , id
@@ -583,7 +582,6 @@ commentArea model =
                             ]
                         , input
                             [ autocomplete False
-                            , autofocus True
                             , id "input"
                             , onInput CommentCapture
                             , placeholder prompt
