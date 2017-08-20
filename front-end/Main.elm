@@ -62,9 +62,9 @@ main : Program Never Model Msg
 main =
     Html.program
         { init = init
-        , view = view
-        , update = update
         , subscriptions = subscriptions
+        , update = update
+        , view = view
         }
 
 
@@ -100,10 +100,10 @@ type alias Model =
 
 type alias SongInfo =
     { artist : Artist
+    , commented : Commented
     , time : Time
     , timeStamp : TimeStamp
     , title : Title
-    , commented : Commented
     }
 
 
@@ -140,10 +140,10 @@ messagesInit =
 songInfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
 songInfo artist title time timeStamp commented =
     { artist = artist
-    , title = title
+    , commented = commented
     , time = time
     , timeStamp = timeStamp
-    , commented = commented
+    , title = title
     }
 
 
@@ -258,9 +258,7 @@ update msg model =
     in
     case msg of
         CommentCapture commentText ->
-            ( { model
-                | commentText = commentText
-              }
+            ( { model | commentText = commentText }
             , Cmd.none
             )
 
@@ -275,9 +273,7 @@ update msg model =
                         Just a ->
                             a
             in
-            ( { model
-                | songsRememberedCommentingIndex = Just songsRememberedCommentingIndexNew
-              }
+            ( { model | songsRememberedCommentingIndex = Just songsRememberedCommentingIndexNew }
             , Cmd.none
             )
 
@@ -288,9 +284,7 @@ update msg model =
                     List.take index model.songsRemembered
                         ++ List.drop (index + 1) model.songsRemembered
             in
-            ( { model
-                | songsRemembered = withoutOne
-              }
+            ( { model | songsRemembered = withoutOne }
             , Cmd.none
             )
 
@@ -330,16 +324,14 @@ update msg model =
             in
             ( { model
                 | commentText = ""
-                , songsRememberedCommentingIndex = Nothing
                 , songsRemembered = songsRememberedNew
+                , songsRememberedCommentingIndex = Nothing
               }
             , Cmd.none
             )
 
         Morph ->
-            ( { model
-                | pageShape = pageShapeMorphed
-              }
+            ( { model | pageShape = pageShapeMorphed }
             , Cmd.none
             )
 
@@ -385,9 +377,7 @@ update msg model =
                                 False ->
                                     songsDifferent ++ [ songSelected ]
             in
-            ( { model
-                | songsRemembered = songsRememberedNew
-              }
+            ( { model | songsRemembered = songsRememberedNew }
             , Cmd.none
             )
 
