@@ -90,11 +90,11 @@ type alias Messages =
 
 type alias Model =
     { commentText : CommentText
-    , songsRememberedCommentingIndex : Maybe SongsRememberedIndex
     , messages : Messages -- TODO: Do we need messages?
     , pageShape : PageShape
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
+    , songsRememberedCommentingIndex : Maybe SongsRememberedIndex
     }
 
 
@@ -132,18 +132,13 @@ commentTextInit =
     ""
 
 
-songsRememberedCommentingIndexInit : Maybe SongsRememberedIndex
-songsRememberedCommentingIndexInit =
-    Nothing
-
-
 messagesInit : Messages
 messagesInit =
     []
 
 
-songinfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
-songinfo artist title time timeStamp commented =
+songInfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
+songInfo artist title time timeStamp commented =
     { artist = artist
     , title = title
     , time = time
@@ -159,32 +154,37 @@ songsLatestFewInit =
 
 songsLatestFewInitFull : SongsList
 songsLatestFewInitFull =
-    [ songinfo "U2"
+    [ songInfo "U2"
         "Bullet The Blue Sky"
         "5:53 PM"
         "2017 08 07 17 53"
         False
-    , songinfo "LP"
+    , songInfo "LP"
         "No Witness"
         "5:49 PM"
         "2017 08 07 17 49"
         False
-    , songinfo "Cage The Elephant"
+    , songInfo "Cage The Elephant"
         "Whole Wide World"
         "5:46 PM"
         "2017 08 07 17 46"
         False
-    , songinfo "Robert Randolph and the Fami"
+    , songInfo "Robert Randolph and the Fami"
         "Deliver Me"
         "5:41 PM"
         "2017 08 07 17 41"
         False
-    , songinfo "Outer Spaces"
+    , songInfo "Outer Spaces"
         "Words"
         "5:31 PM"
         "2017 08 07 17 31"
         False
     ]
+
+
+songsRememberedCommentingIndexInit : Maybe SongsRememberedIndex
+songsRememberedCommentingIndexInit =
+    Nothing
 
 
 songsRememberedInit : SongsList
@@ -194,27 +194,27 @@ songsRememberedInit =
 
 songsRememberedInitFull : SongsList
 songsRememberedInitFull =
-    [ songinfo "The Rosebuds"
+    [ songInfo "The Rosebuds"
         "In My Teeth"
         "4:54 PM"
         "2017 08 07 16 54"
         False
-    , songinfo "T. Rex"
+    , songInfo "T. Rex"
         "King Of The Rumbling Spires"
         "4:59 PM"
         "2017 08 07 16 59"
         False
-    , songinfo "Tedeschi Trucks Band"
+    , songInfo "Tedeschi Trucks Band"
         "I Pity The Fool - Live"
         "5:07 PM"
         "2017 08 07 17 07"
         False
-    , songinfo "Bobby \"Blue\" Bland"
+    , songInfo "Bobby \"Blue\" Bland"
         "I Pity The Fool"
         "5:14 PM"
         "2017 08 07 17 14"
         False
-    , songinfo "Eddy Clearwater"
+    , songInfo "Eddy Clearwater"
         "Find You A Job"
         "5:19 PM"
         "2017 08 07 17 19"
@@ -224,7 +224,7 @@ songsRememberedInitFull =
 
 init : ( Model, Cmd pageShape )
 init =
-    ( Model commentTextInit songsRememberedCommentingIndexInit messagesInit Shrunk songsLatestFewInit songsRememberedInit
+    ( Model commentTextInit messagesInit Shrunk songsLatestFewInit songsRememberedInit songsRememberedCommentingIndexInit
     , Cmd.none
     )
 
@@ -614,7 +614,7 @@ songView : Model -> SongGroup -> Int -> SongInfo -> Html Msg
 songView model group index song =
     let
         amazonConstant : String
-        -- TODO: Is %3D the "equals" sign (=)?
+        -- %3D represents the "equals" sign.
         amazonConstant =
             "http://www.amazon.com/s/ref=nb_sb_noss?"
                 ++ "tag=wtmdradio-20"
