@@ -107,6 +107,10 @@ type alias SongInfo =
     }
 
 
+type alias SongsLatestFewIndex =
+    Int
+
+
 type alias SongsList =
     List SongInfo
 
@@ -235,13 +239,13 @@ init =
 
 type Msg
     = CommentCapture String
-    | CommentOpen Int
-    | Forget Int
+    | CommentOpen SongsRememberedIndex
+    | Forget SongsRememberedIndex
     | InputCancel
     | InputOk
     | Morph
     | Refresh
-    | Remember Int
+    | Remember SongsLatestFewIndex
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -264,7 +268,7 @@ update msg model =
 
         CommentOpen index ->
             let
-                songsRememberedCommentingIndexNew : Int
+                songsRememberedCommentingIndexNew : SongsRememberedIndex
                 songsRememberedCommentingIndexNew =
                     case model.songsRememberedCommentingIndex of
                         Nothing ->
@@ -298,7 +302,7 @@ update msg model =
 
         InputOk ->
             let
-                displayHasCommented : Int -> SongInfo -> SongInfo
+                displayHasCommented : SongsRememberedIndex -> SongInfo -> SongInfo
                 displayHasCommented index song =
                     case String.isEmpty model.commentText of
                         True ->
@@ -310,7 +314,7 @@ update msg model =
                                     song
 
                                 Just songsRememberedCommentingIndex ->
-                                    case index == songsRememberedCommentingIndex of
+                                    case songsRememberedCommentingIndex == index of
                                         False ->
                                             song
 
@@ -406,7 +410,7 @@ type SongGroup
     | Remembered
 
 
-buttonComment : SongGroup -> Int -> Html Msg
+buttonComment : SongGroup -> SongsRememberedIndex -> Html Msg
 buttonComment group index =
     let
         action : Msg
