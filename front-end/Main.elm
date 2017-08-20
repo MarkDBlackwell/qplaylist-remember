@@ -552,8 +552,12 @@ commentArea model =
             let
                 commentTextStatistics : String
                 commentTextStatistics =
-                    -- " " ++ toString (String.length model.commentText)
-                    ""
+                    -- ""
+                    " " ++ toString (String.length model.commentText)
+
+                prompt : String
+                prompt =
+                    "Type your comment here!"
 
                 song : Maybe SongInfo
                 song =
@@ -581,14 +585,15 @@ commentArea model =
                             [ id "input"
                             , type_ "text"
                             , onInput CommentCapture
-                            , placeholder "Type your comment here!"
+                            , placeholder prompt
+                            , title prompt
                             , autocomplete False
                             , autofocus True
                             , required True
                             ]
                             []
                         , buttonMy Nothing "Submit your comment" InputOk
-                        , buttonMy Nothing "Cancel your comment" InputCancel
+                        , buttonMy Nothing "Cancel this comment" InputCancel
                         ]
 
 
