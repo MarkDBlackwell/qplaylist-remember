@@ -245,14 +245,14 @@ init =
 
 
 type Msg
-    = CommentCapture String
-    | CommentOpen SongRememberedIndex
-    | Forget SongRememberedIndex
-    | InputCancel
-    | InputOk
-    | Morph
-    | Refresh
-    | Remember SongLatestFewIndex
+    = CommentTextChangeCapture String
+    | CommentOpenUp SongRememberedIndex
+    | SongForget SongRememberedIndex
+    | CommentInputCancel
+    | CommentInputOk
+    | PageShapeMorph
+    | SongsLatestFewRefresh
+    | SongRemember SongLatestFewIndex
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -268,14 +268,14 @@ update msg model =
                     Expanded
     in
     case msg of
-        CommentCapture commentText ->
+        CommentTextChangeCapture commentText ->
             ( { model
                 | commentText = commentText
               }
             , Cmd.none
             )
 
-        CommentOpen index ->
+        CommentOpenUp index ->
             let
                 songRememberedCommentingIndexNew : SongRememberedIndex
                 songRememberedCommentingIndexNew =
@@ -292,7 +292,7 @@ update msg model =
             , Cmd.none
             )
 
-        Forget index ->
+        SongForget index ->
             let
                 withoutOne : SongsList
                 withoutOne =
@@ -305,7 +305,7 @@ update msg model =
             , Cmd.none
             )
 
-        InputCancel ->
+        CommentInputCancel ->
             ( { model
                 | commentText = ""
                 , songRememberedCommentingIndex = Nothing
@@ -313,7 +313,7 @@ update msg model =
             , Cmd.none
             )
 
-        InputOk ->
+        CommentInputOk ->
             let
                 displayHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
                 displayHasCommented index song =
@@ -349,14 +349,14 @@ update msg model =
             , Cmd.none
             )
 
-        Morph ->
+        PageShapeMorph ->
             ( { model
                 | pageShape = pageShapeMorphed
               }
             , Cmd.none
             )
 
-        Refresh ->
+        SongsLatestFewRefresh ->
             ( { model
                 | songsLatestFew = songsLatestFewInitFull
                 , songsRemembered = songsRememberedInitFull
@@ -364,7 +364,7 @@ update msg model =
             , Cmd.none
             )
 
-        Remember index ->
+        SongRemember index ->
             let
                 songSelected : Maybe SongInfo
                 songSelected =
@@ -434,7 +434,7 @@ buttonComment group index =
     let
         action : Msg
         action =
-            CommentOpen index
+            CommentOpenUp index
 
         buttonId : Maybe String
         buttonId =
@@ -459,10 +459,10 @@ buttonGroup group =
         action =
             case group of
                 Played ->
-                    Refresh
+                    SongsLatestFewRefresh
 
                 Remembered ->
-                    Morph
+                    PageShapeMorph
 
         buttonId : Maybe String
         buttonId =
@@ -511,10 +511,10 @@ buttonRememberForget group index =
         action =
             case group of
                 Played ->
-                    Remember index
+                    SongRemember index
 
                 Remembered ->
-                    Forget index
+                    SongForget index
 
         buttonId : Maybe String
         buttonId =
@@ -583,15 +583,15 @@ commentArea model =
                         , input
                             [ autocomplete False
                             , id "input"
-                            , onInput CommentCapture
+                            , onInput CommentTextChangeCapture
                             , placeholder prompt
                             , required True
                             , title prompt
                             , type_ "text"
                             ]
                             []
-                        , buttonMy Nothing "Submit your comment" InputOk
-                        , buttonMy Nothing "Cancel this comment" InputCancel
+                        , buttonMy Nothing "Submit your comment" CommentInputOk
+                        , buttonMy Nothing "Cancel this comment" CommentInputCancel
                         ]
 
 
