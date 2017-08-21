@@ -262,12 +262,12 @@ type Msg
 
 inputRefocus : Model -> Cmd Msg
 inputRefocus model =
-    case String.isEmpty model.commentText of
-        True ->
-            Task.perform identity (Task.succeed (FocusSet "input"))
-
-        False ->
+    case model.songRememberedCommentingIndex of
+        Nothing ->
             Cmd.none
+
+        _ ->
+            Task.perform identity (Task.succeed (FocusSet "input"))
 
 
 mainRefocus : Cmd Msg
