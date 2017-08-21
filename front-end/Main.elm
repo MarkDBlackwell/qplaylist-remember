@@ -250,18 +250,18 @@ init =
 type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
-    | FocusSet String
     | CommentInputOk
     | CommentTextChangeCapture String
     | FocusResult (Result Dom.Error ())
+    | FocusSet String
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
 
 
-inputRefocus : Model -> Cmd Msg
-inputRefocus model =
+focusInput : Model -> Cmd Msg
+focusInput model =
     case model.songRememberedCommentingIndex of
         Nothing ->
             Cmd.none
@@ -270,8 +270,8 @@ inputRefocus model =
             Task.perform identity (Task.succeed (FocusSet "input"))
 
 
-mainRefocus : Cmd Msg
-mainRefocus =
+focusMain : Cmd Msg
+focusMain =
     Task.perform identity (Task.succeed (FocusSet "main"))
 
 
@@ -315,11 +315,6 @@ update msg model =
             , Cmd.none
             )
 
-        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-        -- https://stackoverflow.com/a/39419640/1136063
-        FocusSet id ->
-            ( model, Task.attempt FocusResult (Dom.focus id) )
-
         CommentInputOk ->
             let
                 displayHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
@@ -362,7 +357,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, focusInput model ]
             )
 
         CommentTextChangeCapture commentText ->
@@ -371,6 +366,11 @@ update msg model =
               }
             , Cmd.none
             )
+
+        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+        -- https://stackoverflow.com/a/39419640/1136063
+        FocusSet id ->
+            ( model, Task.attempt FocusResult (Dom.focus id) )
 
         FocusResult result ->
             ( model
@@ -381,7 +381,7 @@ update msg model =
             ( { model
                 | pageShape = pageShapeMorphed
               }
-            , Cmd.batch [ Cmd.none, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, focusInput model ]
             )
 
         SongForget index ->
@@ -403,7 +403,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, mainRefocus, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, focusMain, focusInput model ]
             )
 
         SongRemember index ->
@@ -443,7 +443,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, focusInput model ]
             )
 
         SongsLatestFewRefresh ->
@@ -451,7 +451,7 @@ update msg model =
                 | songsLatestFew = songsLatestFewInitFull
                 , songsRemembered = songsRememberedInitFull
               }
-            , Cmd.batch [ Cmd.none, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, focusInput model ]
             )
 
 
