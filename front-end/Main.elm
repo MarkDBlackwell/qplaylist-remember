@@ -16,6 +16,7 @@
 
 module Main exposing (main)
 
+import Dom exposing (focus)
 import Html
     exposing
         ( Attribute
@@ -51,10 +52,8 @@ import Html.Events
         , onInput
         , onSubmit
         )
-import Tuple
-    exposing
-        ( second
-        )
+import Task exposing (..)
+import Tuple exposing (second)
 
 
 main : Program Never Model Msg
@@ -247,8 +246,10 @@ init =
 type Msg
     = CommentInputCancel
     | CommentInputOk
-    | CommentOpenUp SongRememberedIndex
+    | CommentAreaShow SongRememberedIndex
     | CommentTextChangeCapture String
+    | FocusSet String
+    | FocusResult (Result Dom.Error ())
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -312,7 +313,7 @@ update msg model =
             , Cmd.none
             )
 
-        CommentOpenUp index ->
+        CommentAreaShow index ->
             let
                 songRememberedCommentingIndexNew : SongRememberedIndex
                 songRememberedCommentingIndexNew =
@@ -326,7 +327,9 @@ update msg model =
             ( { model
                 | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
               }
-            , Cmd.none
+              -- Wrap a message as a `Cmd`.
+              -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+            , Task.perform identity (Task.succeed (FocusSet "input"))
             )
 
         CommentTextChangeCapture commentText ->
@@ -335,6 +338,16 @@ update msg model =
               }
             , Cmd.none
             )
+
+        FocusResult result ->
+            ( model
+            , Cmd.none
+            )
+
+        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+        -- https://stackoverflow.com/a/39419640/1136063
+        FocusSet id ->
+            ( model, Task.attempt FocusResult (Dom.focus id) )
 
         PageShapeMorph ->
             ( { model
@@ -434,7 +447,7 @@ buttonComment group index =
     let
         action : Msg
         action =
-            CommentOpenUp index
+            CommentAreaShow index
 
         buttonId : Maybe String
         buttonId =
