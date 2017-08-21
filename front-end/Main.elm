@@ -274,9 +274,14 @@ focusInput model =
             Task.perform identity (Task.succeed (FocusSet "input"))
 
 
-focusMain : Cmd Msg
-focusMain =
-    Task.perform identity (Task.succeed (FocusSet "main"))
+focusRefresh : Model -> Cmd Msg
+focusRefresh model =
+    case model.songRememberedCommentingIndex of
+        Nothing ->
+            Task.perform identity (Task.succeed (FocusSet "refresh"))
+
+        _ ->
+            Cmd.none
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -300,8 +305,8 @@ update msg model =
                         Nothing ->
                             index
 
-                        Just a ->
-                            a
+                        Just modelIndex ->
+                            modelIndex
             in
             ( { model
                 | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
@@ -407,7 +412,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, focusMain, focusInput model ]
+            , Cmd.batch [ Cmd.none, focusRefresh model, focusInput model ]
             )
 
         SongRemember index ->
@@ -520,7 +525,12 @@ buttonGroup group =
 
         buttonId : Maybe String
         buttonId =
-            Nothing
+            case group of
+                Played ->
+                    Just "refresh"
+
+                Remembered ->
+                    Just "morph"
 
         titleString : String
         titleString =

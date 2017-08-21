@@ -75,6 +75,11 @@ section#comment > p {
 section.songs-group {
     background-color: Black;
 }
+section.songs-group:focus {
+    outline-color: Blue;
+    outline-style: dotted;
+    outline-width: 3px;
+}
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-width: .19230769em;
