@@ -250,7 +250,7 @@ init =
 type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
-    | CommentInputFocusSet
+    | FocusSet String
     | CommentInputOk
     | CommentTextChangeCapture String
     | FocusResult (Result Dom.Error ())
@@ -264,10 +264,15 @@ inputRefocus : Model -> Cmd Msg
 inputRefocus model =
     case String.isEmpty model.commentText of
         True ->
-            Task.perform identity (Task.succeed CommentInputFocusSet)
+            Task.perform identity (Task.succeed (FocusSet "input"))
 
         False ->
             Cmd.none
+
+
+mainRefocus : Cmd Msg
+mainRefocus =
+    Task.perform identity (Task.succeed (FocusSet "main"))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -299,7 +304,7 @@ update msg model =
               }
               -- Wrap a message as a `Cmd`.
               -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-            , Task.perform identity (Task.succeed CommentInputFocusSet)
+            , Task.perform identity (Task.succeed (FocusSet "input"))
             )
 
         CommentInputCancel ->
@@ -312,8 +317,8 @@ update msg model =
 
         -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
         -- https://stackoverflow.com/a/39419640/1136063
-        CommentInputFocusSet ->
-            ( model, Task.attempt FocusResult (Dom.focus "input") )
+        FocusSet id ->
+            ( model, Task.attempt FocusResult (Dom.focus id) )
 
         CommentInputOk ->
             let
@@ -398,7 +403,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, inputRefocus model ]
+            , Cmd.batch [ Cmd.none, mainRefocus, inputRefocus model ]
             )
 
         SongRemember index ->
