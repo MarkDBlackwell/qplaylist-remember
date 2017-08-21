@@ -334,13 +334,22 @@ update msg model =
                                                 | commented = True
                                             }
 
+                songRememberedCommentingIndexNew : Maybe SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    case String.isEmpty model.commentText of
+                        True ->
+                            model.songRememberedCommentingIndex
+
+                        False ->
+                            Nothing
+
                 songsRememberedNew : SongsList
                 songsRememberedNew =
                     List.indexedMap displayHasCommented model.songsRemembered
             in
             ( { model
                 | commentText = ""
-                , songRememberedCommentingIndex = Nothing
+                , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
             , Cmd.none
