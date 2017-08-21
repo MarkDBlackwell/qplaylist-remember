@@ -16,7 +16,11 @@
 
 module Main exposing (main)
 
-import Dom exposing (focus)
+import Dom
+    exposing
+        ( Id
+        , focus
+        )
 import Html
     exposing
         ( Attribute
@@ -253,7 +257,7 @@ type Msg
     | CommentInputOk
     | CommentTextChangeCapture String
     | FocusResult (Result Dom.Error ())
-    | FocusSet String
+    | FocusSet Id
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
