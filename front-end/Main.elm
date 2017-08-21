@@ -250,10 +250,10 @@ init =
 type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
-    | FocusResult (Result Dom.Error ())
     | CommentInputFocusSet
     | CommentInputOk
     | CommentTextChangeCapture String
+    | FocusResult (Result Dom.Error ())
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -307,11 +307,6 @@ update msg model =
                 | commentText = ""
                 , songRememberedCommentingIndex = Nothing
               }
-            , Cmd.none
-            )
-
-        FocusResult result ->
-            ( model
             , Cmd.none
             )
 
@@ -369,6 +364,11 @@ update msg model =
             ( { model
                 | commentText = commentText
               }
+            , Cmd.none
+            )
+
+        FocusResult result ->
+            ( model
             , Cmd.none
             )
 
