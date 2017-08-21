@@ -312,6 +312,15 @@ update msg model =
 
         CommentInputOk ->
             let
+                command : Cmd Msg
+                command =
+                    case String.isEmpty model.commentText of
+                        True ->
+                            Task.perform identity (Task.succeed CommentInputFocusSet)
+
+                        False ->
+                            Cmd.none
+
                 displayHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
                 displayHasCommented index song =
                     case String.isEmpty model.commentText of
@@ -352,7 +361,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , Cmd.none
+            , command
             )
 
         CommentTextChangeCapture commentText ->
