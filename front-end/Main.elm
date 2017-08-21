@@ -248,12 +248,12 @@ init =
 
 
 type Msg
-    = CommentInputCancel
+    = CommentAreaShow SongRememberedIndex
+    | CommentInputCancel
+    | CommentInputFocusResult (Result Dom.Error ())
+    | CommentInputFocusSet
     | CommentInputOk
-    | CommentAreaShow SongRememberedIndex
     | CommentTextChangeCapture String
-    | FocusResult (Result Dom.Error ())
-    | FocusSet
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -273,6 +273,25 @@ update msg model =
                     Expanded
     in
     case msg of
+        CommentAreaShow index ->
+            let
+                songRememberedCommentingIndexNew : SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    case model.songRememberedCommentingIndex of
+                        Nothing ->
+                            index
+
+                        Just a ->
+                            a
+            in
+            ( { model
+                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
+              }
+              -- Wrap a message as a `Cmd`.
+              -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+            , Task.perform identity (Task.succeed CommentInputFocusSet)
+            )
+
         CommentInputCancel ->
             ( { model
                 | commentText = ""
@@ -280,6 +299,16 @@ update msg model =
               }
             , Cmd.none
             )
+
+        CommentInputFocusResult result ->
+            ( model
+            , Cmd.none
+            )
+
+        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+        -- https://stackoverflow.com/a/39419640/1136063
+        CommentInputFocusSet ->
+            ( model, Task.attempt CommentInputFocusResult (Dom.focus "input") )
 
         CommentInputOk ->
             let
@@ -317,41 +346,12 @@ update msg model =
             , Cmd.none
             )
 
-        CommentAreaShow index ->
-            let
-                songRememberedCommentingIndexNew : SongRememberedIndex
-                songRememberedCommentingIndexNew =
-                    case model.songRememberedCommentingIndex of
-                        Nothing ->
-                            index
-
-                        Just a ->
-                            a
-            in
-            ( { model
-                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
-              }
-              -- Wrap a message as a `Cmd`.
-              -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-            , Task.perform identity (Task.succeed FocusSet)
-            )
-
         CommentTextChangeCapture commentText ->
             ( { model
                 | commentText = commentText
               }
             , Cmd.none
             )
-
-        FocusResult result ->
-            ( model
-            , Cmd.none
-            )
-
-        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-        -- https://stackoverflow.com/a/39419640/1136063
-        FocusSet ->
-            ( model, Task.attempt FocusResult (Dom.focus "input") )
 
         PageShapeMorph ->
             ( { model
