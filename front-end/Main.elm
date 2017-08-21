@@ -50,9 +50,13 @@ import Html.Events
     exposing
         ( onClick
         , onInput
-        , onSubmit
         )
-import Task exposing (..)
+import Task
+    exposing
+        ( attempt
+        , perform
+        , succeed
+        )
 import Tuple exposing (second)
 
 
@@ -248,8 +252,8 @@ type Msg
     | CommentInputOk
     | CommentAreaShow SongRememberedIndex
     | CommentTextChangeCapture String
-    | FocusSet String
     | FocusResult (Result Dom.Error ())
+    | FocusSet
     | PageShapeMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -329,7 +333,7 @@ update msg model =
               }
               -- Wrap a message as a `Cmd`.
               -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-            , Task.perform identity (Task.succeed (FocusSet "input"))
+            , Task.perform identity (Task.succeed FocusSet)
             )
 
         CommentTextChangeCapture commentText ->
@@ -346,8 +350,8 @@ update msg model =
 
         -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
         -- https://stackoverflow.com/a/39419640/1136063
-        FocusSet id ->
-            ( model, Task.attempt FocusResult (Dom.focus id) )
+        FocusSet ->
+            ( model, Task.attempt FocusResult (Dom.focus "input") )
 
         PageShapeMorph ->
             ( { model
