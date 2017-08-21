@@ -250,7 +250,7 @@ init =
 type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
-    | CommentInputFocusResult (Result Dom.Error ())
+    | FocusResult (Result Dom.Error ())
     | CommentInputFocusSet
     | CommentInputOk
     | CommentTextChangeCapture String
@@ -310,7 +310,7 @@ update msg model =
             , Cmd.none
             )
 
-        CommentInputFocusResult result ->
+        FocusResult result ->
             ( model
             , Cmd.none
             )
@@ -318,7 +318,7 @@ update msg model =
         -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
         -- https://stackoverflow.com/a/39419640/1136063
         CommentInputFocusSet ->
-            ( model, Task.attempt CommentInputFocusResult (Dom.focus "input") )
+            ( model, Task.attempt FocusResult (Dom.focus "input") )
 
         CommentInputOk ->
             let
@@ -381,13 +381,22 @@ update msg model =
 
         SongForget index ->
             let
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    case model.songRememberedCommentingIndex of
+                        Nothing ->
+                            withoutOne
+
+                        Just songRememberedCommentingIndex ->
+                            model.songsRemembered
+
                 withoutOne : SongsList
                 withoutOne =
                     List.take index model.songsRemembered
                         ++ List.drop (index + 1) model.songsRemembered
             in
             ( { model
-                | songsRemembered = withoutOne
+                | songsRemembered = songsRememberedNew
               }
             , Cmd.batch [ Cmd.none, inputRefocus model ]
             )
