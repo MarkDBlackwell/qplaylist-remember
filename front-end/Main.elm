@@ -271,7 +271,17 @@ focusInput model =
             Cmd.none
 
         _ ->
-            Task.perform identity (Task.succeed (FocusSet "input"))
+            focusSetTask "input"
+
+
+
+-- For wrapping a message as a `Cmd`, see:
+-- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+
+
+focusSetTask : Id -> Cmd Msg
+focusSetTask id =
+    Task.perform identity (Task.succeed (FocusSet id))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -301,9 +311,7 @@ update msg model =
             ( { model
                 | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
               }
-              -- Wrap a message as a `Cmd`.
-              -- See https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-            , Task.perform identity (Task.succeed (FocusSet "input"))
+            , focusSetTask "input"
             )
 
         CommentInputCancel ->
@@ -369,7 +377,9 @@ update msg model =
         -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
         -- https://stackoverflow.com/a/39419640/1136063
         FocusSet id ->
-            ( model, Task.attempt FocusResult (Dom.focus id) )
+            ( model
+            , Task.attempt FocusResult (Dom.focus id)
+            )
 
         FocusResult result ->
             ( model
@@ -385,14 +395,14 @@ update msg model =
 
         SongForget index ->
             let
-                focusRefreshOrInput : Model -> Cmd Msg
-                focusRefreshOrInput model =
+                focusMy : Cmd Msg
+                focusMy =
                     case model.songRememberedCommentingIndex of
                         Nothing ->
-                            Task.perform identity (Task.succeed (FocusSet "refresh"))
+                            focusSetTask "refresh"
 
                         _ ->
-                            focusInput model
+                            focusSetTask "input"
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -400,7 +410,7 @@ update msg model =
                         Nothing ->
                             withoutOne
 
-                        Just songRememberedCommentingIndex ->
+                        _ ->
                             model.songsRemembered
 
                 withoutOne : SongsList
@@ -411,7 +421,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focusRefreshOrInput model
+            , focusMy
             )
 
         SongRemember index ->
