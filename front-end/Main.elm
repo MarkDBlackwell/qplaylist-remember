@@ -264,16 +264,6 @@ type Msg
     | SongsLatestFewRefresh
 
 
-focusInput : Model -> Cmd Msg
-focusInput model =
-    case model.songRememberedCommentingIndex of
-        Nothing ->
-            Cmd.none
-
-        _ ->
-            focusSetTask "input"
-
-
 
 -- For wrapping a message as a `Cmd`, see:
 -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
@@ -287,14 +277,14 @@ focusSetTask id =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        pageShapeMorphed : PageShape
-        pageShapeMorphed =
-            case model.pageShape of
-                Expanded ->
-                    Shrunk
+        focusInput : Cmd Msg
+        focusInput =
+            case model.songRememberedCommentingIndex of
+                Nothing ->
+                    Cmd.none
 
-                Shrunk ->
-                    Expanded
+                _ ->
+                    focusSetTask "input"
     in
     case msg of
         CommentAreaShow index ->
@@ -364,7 +354,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , focusInput model
+            , focusInput
             )
 
         CommentTextChangeCapture commentText ->
@@ -387,16 +377,26 @@ update msg model =
             )
 
         PageShapeMorph ->
+            let
+                pageShapeMorphed : PageShape
+                pageShapeMorphed =
+                    case model.pageShape of
+                        Expanded ->
+                            Shrunk
+
+                        Shrunk ->
+                            Expanded
+            in
             ( { model
                 | pageShape = pageShapeMorphed
               }
-            , focusInput model
+            , focusInput
             )
 
         SongForget index ->
             let
-                focusMy : Cmd Msg
-                focusMy =
+                focus : Cmd Msg
+                focus =
                     case model.songRememberedCommentingIndex of
                         Nothing ->
                             focusSetTask "refresh"
@@ -421,7 +421,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focusMy
+            , focus
             )
 
         SongRemember index ->
@@ -461,7 +461,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focusInput model
+            , focusInput
             )
 
         SongsLatestFewRefresh ->
@@ -469,7 +469,7 @@ update msg model =
                 | songsLatestFew = songsLatestFewInitFull
                 , songsRemembered = songsRememberedInitFull
               }
-            , focusInput model
+            , focusInput
             )
 
 
