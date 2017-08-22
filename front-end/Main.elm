@@ -274,16 +274,6 @@ focusInput model =
             Task.perform identity (Task.succeed (FocusSet "input"))
 
 
-focusRefresh : Model -> Cmd Msg
-focusRefresh model =
-    case model.songRememberedCommentingIndex of
-        Nothing ->
-            Task.perform identity (Task.succeed (FocusSet "refresh"))
-
-        _ ->
-            Cmd.none
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -366,7 +356,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, focusInput model ]
+            , focusInput model
             )
 
         CommentTextChangeCapture commentText ->
@@ -390,11 +380,20 @@ update msg model =
             ( { model
                 | pageShape = pageShapeMorphed
               }
-            , Cmd.batch [ Cmd.none, focusInput model ]
+            , focusInput model
             )
 
         SongForget index ->
             let
+                focusRefreshOrInput : Model -> Cmd Msg
+                focusRefreshOrInput model =
+                    case model.songRememberedCommentingIndex of
+                        Nothing ->
+                            Task.perform identity (Task.succeed (FocusSet "refresh"))
+
+                        _ ->
+                            focusInput model
+
                 songsRememberedNew : SongsList
                 songsRememberedNew =
                     case model.songRememberedCommentingIndex of
@@ -412,7 +411,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, focusRefresh model, focusInput model ]
+            , focusRefreshOrInput model
             )
 
         SongRemember index ->
@@ -452,7 +451,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , Cmd.batch [ Cmd.none, focusInput model ]
+            , focusInput model
             )
 
         SongsLatestFewRefresh ->
@@ -460,7 +459,7 @@ update msg model =
                 | songsLatestFew = songsLatestFewInitFull
                 , songsRemembered = songsRememberedInitFull
               }
-            , Cmd.batch [ Cmd.none, focusInput model ]
+            , focusInput model
             )
 
 
