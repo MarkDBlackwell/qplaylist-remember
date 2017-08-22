@@ -360,6 +360,11 @@ update msg model =
             , Cmd.none
             )
 
+        FocusResult result ->
+            ( model
+            , Cmd.none
+            )
+
         -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
         -- https://stackoverflow.com/a/39419640/1136063
         FocusSet id ->
@@ -367,15 +372,10 @@ update msg model =
             , Task.attempt FocusResult (Dom.focus id)
             )
 
-        FocusResult result ->
-            ( model
-            , Cmd.none
-            )
-
         PageShapeMorph ->
             let
-                pageShapeMorphed : PageShape
-                pageShapeMorphed =
+                pageShapeNew : PageShape
+                pageShapeNew =
                     case model.pageShape of
                         Expanded ->
                             Shrunk
@@ -384,21 +384,21 @@ update msg model =
                             Expanded
             in
             ( { model
-                | pageShape = pageShapeMorphed
+                | pageShape = pageShapeNew
               }
             , focusInput
             )
 
         SongForget index ->
             let
-                focus : Cmd Msg
-                focus =
+                focusId : Id
+                focusId =
                     case model.songRememberedCommentingIndex of
                         Nothing ->
-                            focusSetTask "refresh"
+                            "refresh"
 
                         _ ->
-                            focusSetTask "input"
+                            "input"
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -417,7 +417,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focus
+            , focusSetTask focusId
             )
 
         SongRemember index ->
@@ -432,11 +432,11 @@ update msg model =
                         Nothing ->
                             model.songsRemembered
 
-                        Just songSelected ->
+                        Just song ->
                             let
                                 partition : ( SongsList, SongsList )
                                 partition =
-                                    List.partition (\x -> x == songSelected) model.songsRemembered
+                                    List.partition (\x -> x == song) model.songsRemembered
                             in
                             Tuple.second partition
 
@@ -446,13 +446,13 @@ update msg model =
                         Nothing ->
                             model.songsRemembered
 
-                        Just songSelected ->
-                            case List.member songSelected model.songsRemembered of
+                        Just song ->
+                            case List.member song model.songsRemembered of
                                 True ->
                                     model.songsRemembered
 
-                                False ->
-                                    songsDifferent ++ [ songSelected ]
+                                _ ->
+                                    songsDifferent ++ [ song ]
             in
             ( { model
                 | songsRemembered = songsRememberedNew
@@ -720,7 +720,7 @@ songView model group index song =
                 False ->
                     text ""
 
-                True ->
+                _ ->
                     em [ title "You've left a comment about this song" ]
                         []
 
