@@ -506,7 +506,7 @@ buttonComment group index =
 
         titleString : String
         titleString =
-            "Share a comment (with the DJs) about this song"
+            "Share a comment (with the DJ) about this song"
     in
     case group of
         Played ->
@@ -602,10 +602,10 @@ buttonRememberForget group index =
         titleString =
             case group of
                 Played ->
-                    "Add (to remembered songs)"
+                    "Add this song (to remembered songs)"
 
                 Remembered ->
-                    "Drop (from remembered songs)"
+                    "Drop this song (from remembered songs)"
     in
     buttonMy buttonId titleString action
 
