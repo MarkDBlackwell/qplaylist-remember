@@ -264,16 +264,6 @@ type Msg
     | SongsLatestFewRefresh
 
 
-
--- For wrapping a message as a `Cmd`, see:
--- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-
-
-focusSetTask : Id -> Cmd Msg
-focusSetTask id =
-    Task.perform identity (Task.succeed (FocusSet id))
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -285,21 +275,27 @@ update msg model =
 
                 _ ->
                     focusSetTask "input"
+
+        -- For wrapping a message as a `Cmd`, see:
+        -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+        focusSetTask : Id -> Cmd Msg
+        focusSetTask id =
+            Task.perform identity (Task.succeed (FocusSet id))
     in
     case msg of
         CommentAreaShow index ->
             let
-                songRememberedCommentingIndexNew : SongRememberedIndex
-                songRememberedCommentingIndexNew =
+                indexNew : SongRememberedIndex
+                indexNew =
                     case model.songRememberedCommentingIndex of
+                        Just indexCommentingAlready ->
+                            indexCommentingAlready
+
                         Nothing ->
                             index
-
-                        Just modelIndex ->
-                            modelIndex
             in
             ( { model
-                | songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
+                | songRememberedCommentingIndex = Just indexNew
               }
             , focusSetTask "input"
             )
@@ -320,7 +316,7 @@ update msg model =
                         True ->
                             song
 
-                        False ->
+                        _ ->
                             case model.songRememberedCommentingIndex of
                                 Nothing ->
                                     song
@@ -331,7 +327,7 @@ update msg model =
                                             song
 
                                         -- TODO: make AJAX request.
-                                        True ->
+                                        _ ->
                                             { song
                                                 | commented = True
                                             }
@@ -339,11 +335,11 @@ update msg model =
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
                     case String.isEmpty model.commentText of
-                        True ->
-                            model.songRememberedCommentingIndex
-
                         False ->
                             Nothing
+
+                        _ ->
+                            model.songRememberedCommentingIndex
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -357,9 +353,9 @@ update msg model =
             , focusInput
             )
 
-        CommentTextChangeCapture commentText ->
+        CommentTextChangeCapture text ->
             ( { model
-                | commentText = commentText
+                | commentText = text
               }
             , Cmd.none
             )
