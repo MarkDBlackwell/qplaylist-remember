@@ -625,7 +625,7 @@ commentArea model =
 
                 prompt : String
                 prompt =
-                    "Type your new comment here!"
+                    "Type your additional comment here!"
 
                 song : Maybe SongInfo
                 song =
