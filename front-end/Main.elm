@@ -324,40 +324,30 @@ update msg model =
 
         CommentInputOk ->
             let
-                displayHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
-                displayHasCommented index song =
-                    case String.isEmpty model.commentText of
-                        True ->
-                            song
-
-                        _ ->
-                            case model.songRememberedCommentingIndex of
-                                Nothing ->
-                                    song
-
-                                Just songRememberedCommentingIndex ->
-                                    case songRememberedCommentingIndex == index of
-                                        False ->
-                                            song
-
-                                        -- TODO: make AJAX request.
-                                        _ ->
-                                            { song
-                                                | commented = True
-                                            }
+                showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
+                showHasCommented index song =
+                    if
+                        String.isEmpty model.commentText
+                            || (model.songRememberedCommentingIndex == Nothing)
+                            || (model.songRememberedCommentingIndex /= Just index)
+                    then
+                        song
+                    else
+                        -- TODO: make AJAX request.
+                        { song
+                            | commented = True
+                        }
 
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
-                    case String.isEmpty model.commentText of
-                        False ->
-                            Nothing
-
-                        _ ->
-                            model.songRememberedCommentingIndex
+                    if "" /= model.commentText then
+                        Nothing
+                    else
+                        model.songRememberedCommentingIndex
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    List.indexedMap displayHasCommented model.songsRemembered
+                    List.indexedMap showHasCommented model.songsRemembered
             in
             ( { model
                 | commentText = ""
