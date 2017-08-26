@@ -292,8 +292,8 @@ msg2Cmd msg =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        focusInput : Cmd Msg
-        focusInput =
+        focusInputPossibly : Cmd Msg
+        focusInputPossibly =
             case model.songRememberedCommentingIndex of
                 Nothing ->
                     Cmd.none
@@ -306,12 +306,7 @@ update msg model =
             let
                 indexNew : SongRememberedIndex
                 indexNew =
-                    case model.songRememberedCommentingIndex of
-                        Just indexCommentingAlready ->
-                            indexCommentingAlready
-
-                        Nothing ->
-                            index
+                    Maybe.withDefault index model.songRememberedCommentingIndex
             in
             ( { model
                 | songRememberedCommentingIndex = Just indexNew
@@ -369,7 +364,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , focusInput
+            , focusInputPossibly
             )
 
         CommentTextChangeCapture text ->
@@ -403,7 +398,7 @@ update msg model =
             ( { model
                 | pageShape = pageShapeNew
               }
-            , focusInput
+            , focusInputPossibly
             )
 
         SongForget index ->
@@ -474,7 +469,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focusInput
+            , focusInputPossibly
             )
 
         SongsLatestFewRefresh ->
@@ -482,7 +477,7 @@ update msg model =
                 | songsLatestFew = songsLatestFewInitFull
                 , songsRemembered = songsRememberedInitFull
               }
-            , focusInput
+            , focusInputPossibly
             )
 
 
