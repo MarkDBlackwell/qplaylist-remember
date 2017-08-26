@@ -269,8 +269,8 @@ type Msg
 -- https://stackoverflow.com/a/39419640/1136063
 
 
-taskAttemptFocusResultDomFocus : Id -> Cmd Msg
-taskAttemptFocusResultDomFocus id =
+domFocus : Id -> Cmd Msg
+domFocus id =
     Task.attempt FocusResult (Dom.focus id)
 
 
@@ -279,14 +279,9 @@ taskAttemptFocusResultDomFocus id =
 -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
 
 
-taskPerformIdentityTaskSucceedFocusSet : Id -> Cmd Msg
-taskPerformIdentityTaskSucceedFocusSet id =
-    Task.perform identity (Task.succeed (FocusSet id))
-
-
 focusSet : Id -> Cmd Msg
 focusSet id =
-    taskPerformIdentityTaskSucceedFocusSet id
+    Task.perform identity (Task.succeed (FocusSet id))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -386,7 +381,7 @@ update msg model =
 
         FocusSet id ->
             ( model
-            , taskAttemptFocusResultDomFocus id
+            , domFocus id
             )
 
         PageShapeMorph ->
