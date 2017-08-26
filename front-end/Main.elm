@@ -274,6 +274,21 @@ taskAttemptFocusResultDomFocus id =
     Task.attempt FocusResult (Dom.focus id)
 
 
+
+-- For wrapping a message as a `Cmd`, see:
+-- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+
+
+taskPerformIdentityTaskSucceedFocusSet : Id -> Cmd Msg
+taskPerformIdentityTaskSucceedFocusSet id =
+    Task.perform identity (Task.succeed (FocusSet id))
+
+
+focusSet : Id -> Cmd Msg
+focusSet id =
+    taskPerformIdentityTaskSucceedFocusSet id
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -284,13 +299,7 @@ update msg model =
                     Cmd.none
 
                 _ ->
-                    focusSetTask "input"
-
-        -- For wrapping a message as a `Cmd`, see:
-        -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-        focusSetTask : Id -> Cmd Msg
-        focusSetTask id =
-            Task.perform identity (Task.succeed (FocusSet id))
+                    focusSet "input"
     in
     case msg of
         CommentAreaShow index ->
@@ -307,7 +316,7 @@ update msg model =
             ( { model
                 | songRememberedCommentingIndex = Just indexNew
               }
-            , focusSetTask "input"
+            , focusSet "input"
             )
 
         CommentInputCancel ->
@@ -425,7 +434,7 @@ update msg model =
             ( { model
                 | songsRemembered = songsRememberedNew
               }
-            , focusSetTask focusId
+            , focusSet focusId
             )
 
         SongRemember index ->
