@@ -264,6 +264,16 @@ type Msg
     | SongsLatestFewRefresh
 
 
+
+-- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+-- https://stackoverflow.com/a/39419640/1136063
+
+
+taskAttemptFocusResultDomFocus : Id -> Cmd Msg
+taskAttemptFocusResultDomFocus id =
+    Task.attempt FocusResult (Dom.focus id)
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -365,11 +375,9 @@ update msg model =
             , Cmd.none
             )
 
-        -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-        -- https://stackoverflow.com/a/39419640/1136063
         FocusSet id ->
             ( model
-            , Task.attempt FocusResult (Dom.focus id)
+            , taskAttemptFocusResultDomFocus id
             )
 
         PageShapeMorph ->
@@ -608,6 +616,13 @@ buttonRememberForget group index =
                     "Drop this song (from remembered songs)"
     in
     buttonMy buttonId titleString action
+
+
+
+{-
+   timeStampString : String
+   timeStampString =
+-}
 
 
 commentArea : Model -> Html Msg
