@@ -605,21 +605,22 @@ buttonRememberForget group index =
 
 commentArea : Model -> Html Msg
 commentArea model =
+    let
+        commentTextStatistics : String
+        commentTextStatistics =
+            -- ""
+            ": " ++ toString (String.length model.commentText)
+
+        prompt : String
+        prompt =
+            "Type your (additional) comment here!"
+    in
     case model.songRememberedCommentingIndex of
         Nothing ->
             text ""
 
         Just index ->
             let
-                commentTextStatistics : String
-                commentTextStatistics =
-                    -- ""
-                    ": " ++ toString (String.length model.commentText)
-
-                prompt : String
-                prompt =
-                    "Type your (additional) comment here!"
-
                 song : Maybe SongInfo
                 song =
                     List.head (List.drop index model.songsRemembered)
