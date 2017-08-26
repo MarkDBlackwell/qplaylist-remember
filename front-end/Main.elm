@@ -395,21 +395,17 @@ update msg model =
             let
                 focusId : Id
                 focusId =
-                    case model.songRememberedCommentingIndex of
-                        Nothing ->
-                            "refresh"
-
-                        _ ->
-                            "input"
+                    if Nothing == model.songRememberedCommentingIndex then
+                        "refresh"
+                    else
+                        "input"
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    case model.songRememberedCommentingIndex of
-                        Nothing ->
-                            withoutOne
-
-                        _ ->
-                            model.songsRemembered
+                    if Nothing == model.songRememberedCommentingIndex then
+                        withoutOne
+                    else
+                        model.songsRemembered
 
                 withoutOne : SongsList
                 withoutOne =
@@ -430,17 +426,15 @@ update msg model =
 
                 songsDifferent : SongsList
                 songsDifferent =
-                    case songSelected of
-                        Nothing ->
-                            model.songsRemembered
-
-                        Just song ->
-                            let
-                                partition : ( SongsList, SongsList )
-                                partition =
-                                    List.partition (\x -> x == song) model.songsRemembered
-                            in
-                            Tuple.second partition
+                    if Nothing == songSelected then
+                        model.songsRemembered
+                    else
+                        let
+                            partition : ( SongsList, SongsList )
+                            partition =
+                                List.partition (\x -> Just x == songSelected) model.songsRemembered
+                        in
+                        Tuple.second partition
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
