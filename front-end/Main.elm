@@ -435,12 +435,10 @@ update msg model =
                             model.songsRemembered
 
                         Just songSelected ->
-                            case List.member songSelected model.songsRemembered of
-                                True ->
-                                    model.songsRemembered
-
-                                _ ->
-                                    songsDifferent ++ [ songSelected ]
+                            if List.member songSelected model.songsRemembered then
+                                model.songsRemembered
+                            else
+                                songsDifferent ++ [ songSelected ]
             in
             ( { model
                 | songsRemembered = songsRememberedNew
