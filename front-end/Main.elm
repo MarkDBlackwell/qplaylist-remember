@@ -274,14 +274,19 @@ domFocus id =
     Task.attempt FocusResult (Dom.focus id)
 
 
+focusSet : Id -> Cmd Msg
+focusSet id =
+    msg2Cmd (Task.succeed (FocusSet id))
+
+
 
 -- For wrapping a message as a `Cmd`, see:
 -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
 
 
-focusSet : Id -> Cmd Msg
-focusSet id =
-    Task.perform identity (Task.succeed (FocusSet id))
+msg2Cmd : Task.Task Never msg -> Cmd msg
+msg2Cmd msg =
+    Task.perform identity msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
