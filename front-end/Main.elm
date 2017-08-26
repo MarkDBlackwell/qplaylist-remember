@@ -61,7 +61,6 @@ import Task
         , perform
         , succeed
         )
-import Tuple exposing (second)
 
 
 main : Program Never Model Msg
@@ -429,12 +428,7 @@ update msg model =
                     if Nothing == songSelected then
                         model.songsRemembered
                     else
-                        let
-                            partition : ( SongsList, SongsList )
-                            partition =
-                                List.partition (\x -> Just x == songSelected) model.songsRemembered
-                        in
-                        Tuple.second partition
+                        List.filter (\x -> Just x /= songSelected) model.songsRemembered
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
