@@ -293,12 +293,10 @@ update msg model =
     let
         focusInputPossibly : Cmd Msg
         focusInputPossibly =
-            case model.songRememberedCommentingIndex of
-                Nothing ->
-                    Cmd.none
-
-                _ ->
-                    focusSet "input"
+            if Nothing == model.songRememberedCommentingIndex then
+                Cmd.none
+            else
+                focusSet "input"
     in
     case msg of
         CommentAreaShow index ->
@@ -436,13 +434,13 @@ update msg model =
                         Nothing ->
                             model.songsRemembered
 
-                        Just song ->
-                            case List.member song model.songsRemembered of
+                        Just songSelected ->
+                            case List.member songSelected model.songsRemembered of
                                 True ->
                                     model.songsRemembered
 
                                 _ ->
-                                    songsDifferent ++ [ song ]
+                                    songsDifferent ++ [ songSelected ]
             in
             ( { model
                 | songsRemembered = songsRememberedNew
