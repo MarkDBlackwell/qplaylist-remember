@@ -621,7 +621,7 @@ commentArea model =
                 commentTextStatistics : String
                 commentTextStatistics =
                     -- ""
-                    " " ++ toString (String.length model.commentText)
+                    ": " ++ toString (String.length model.commentText)
 
                 prompt : String
                 prompt =
@@ -645,7 +645,8 @@ commentArea model =
                                     ++ song.title
                                     ++ " ("
                                     ++ song.time
-                                    ++ ")"
+                                    ++ ") "
+                                    ++ song.timeStamp
                                     ++ commentTextStatistics
                                 )
                             ]
