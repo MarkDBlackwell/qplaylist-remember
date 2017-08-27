@@ -482,7 +482,7 @@ buttonComment group index =
         action =
             CommentAreaShow index
 
-        buttonId : Maybe String
+        buttonId : Maybe Id
         buttonId =
             Just ("buttonComment" ++ toString index)
 
@@ -510,7 +510,7 @@ buttonGroup group =
                 Remembered ->
                     PageReshape
 
-        buttonId : Maybe String
+        buttonId : Maybe Id
         buttonId =
             case group of
                 Played ->
@@ -533,7 +533,7 @@ buttonGroup group =
     ]
 
 
-buttonMy : Maybe String -> HoverString -> Msg -> Html Msg
+buttonMy : Maybe Id -> HoverString -> Msg -> Html Msg
 buttonMy buttonId hoverString action =
     let
         idMy : List (Attribute msg)
@@ -567,7 +567,7 @@ buttonRememberForget group index =
                 Remembered ->
                     SongForget index
 
-        buttonId : Maybe String
+        buttonId : Maybe Id
         buttonId =
             Just ("button" ++ groupString ++ toString index)
 
