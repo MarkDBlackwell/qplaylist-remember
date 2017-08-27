@@ -146,6 +146,10 @@ type alias Title =
     String
 
 
+type alias HoverString =
+    String
+
+
 commentTextInit : CommentText
 commentTextInit =
     ""
@@ -482,8 +486,8 @@ buttonComment group index =
         buttonId =
             Just ("buttonComment" ++ toString index)
 
-        titleString : String
-        titleString =
+        hoverString : HoverString
+        hoverString =
             "Share a comment (with the DJ) about this song"
     in
     case group of
@@ -491,7 +495,7 @@ buttonComment group index =
             text ""
 
         Remembered ->
-            buttonMy buttonId titleString action
+            buttonMy buttonId hoverString action
 
 
 buttonGroup : SongGroup -> List (Html Msg)
@@ -515,8 +519,8 @@ buttonGroup group =
                 Remembered ->
                     Just "morph"
 
-        titleString : String
-        titleString =
+        hoverString : HoverString
+        hoverString =
             case group of
                 Played ->
                     "Refresh the latest few songs"
@@ -525,12 +529,12 @@ buttonGroup group =
                     "Morph this page's shape"
     in
     [ p []
-        [ buttonMy buttonId titleString action ]
+        [ buttonMy buttonId hoverString action ]
     ]
 
 
-buttonMy : Maybe String -> String -> Msg -> Html Msg
-buttonMy buttonId titleString action =
+buttonMy : Maybe String -> HoverString -> Msg -> Html Msg
+buttonMy buttonId hoverString action =
     let
         idMy : List (Attribute msg)
         idMy =
@@ -543,7 +547,7 @@ buttonMy buttonId titleString action =
     in
     button
         ([ onClick action
-         , title titleString
+         , title hoverString
          , type_ "button"
          ]
             ++ idMy
@@ -576,8 +580,8 @@ buttonRememberForget group index =
                 Remembered ->
                     "Forget"
 
-        titleString : String
-        titleString =
+        hoverString : HoverString
+        hoverString =
             case group of
                 Played ->
                     "Add this song (to remembered songs)"
@@ -585,7 +589,7 @@ buttonRememberForget group index =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonMy buttonId titleString action
+    buttonMy buttonId hoverString action
 
 
 commentArea : Model -> Html Msg
