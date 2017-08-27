@@ -264,7 +264,7 @@ type Msg
     | CommentTextChangeCapture String
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | PageShapeMorph
+    | PageReshape
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
@@ -378,7 +378,7 @@ update msg model =
             , domFocus id
             )
 
-        PageShapeMorph ->
+        PageReshape ->
             ( { model
                 | pageExpanded = not model.pageExpanded
               }
@@ -504,7 +504,7 @@ buttonGroup group =
                     SongsLatestFewRefresh
 
                 Remembered ->
-                    PageShapeMorph
+                    PageReshape
 
         buttonId : Maybe String
         buttonId =
