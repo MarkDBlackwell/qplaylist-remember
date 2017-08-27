@@ -3,12 +3,10 @@
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -}
@@ -614,18 +612,17 @@ commentArea model =
         prompt : String
         prompt =
             "Type your (additional) comment here!"
+
+        song : Int -> Maybe SongInfo
+        song index =
+            List.head (List.drop index model.songsRemembered)
     in
     case model.songRememberedCommentingIndex of
         Nothing ->
             text ""
 
         Just index ->
-            let
-                song : Maybe SongInfo
-                song =
-                    List.head (List.drop index model.songsRemembered)
-            in
-            case song of
+            case song index of
                 Nothing ->
                     text ""
 
@@ -711,13 +708,11 @@ songView model group index song =
 
         commentedIndicator : Html Msg
         commentedIndicator =
-            case song.commented of
-                False ->
-                    text ""
-
-                _ ->
-                    em [ title "You've left a comment about this song" ]
-                        []
+            if not song.commented then
+                text ""
+            else
+                em [ title "You've left a comment about this song" ]
+                    []
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
