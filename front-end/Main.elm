@@ -94,11 +94,15 @@ type alias Messages =
 type alias Model =
     { commentText : CommentText
     , messages : Messages -- TODO: Do we need messages?
-    , pageShape : PageShape
+    , pageExpanded : PageExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedIndex
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
     }
+
+
+type alias PageExpanded =
+    Bool
 
 
 type alias SongGroupLength =
@@ -150,6 +154,11 @@ commentTextInit =
 messagesInit : Messages
 messagesInit =
     []
+
+
+pageExpandedInit : PageExpanded
+pageExpandedInit =
+    False
 
 
 songInfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
@@ -237,9 +246,9 @@ songsRememberedInitFull =
     ]
 
 
-init : ( Model, Cmd pageShape )
+init : ( Model, Cmd msg )
 init =
-    ( Model commentTextInit messagesInit Shrunk songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
+    ( Model commentTextInit messagesInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
     , Cmd.none
     )
 
@@ -370,18 +379,8 @@ update msg model =
             )
 
         PageShapeMorph ->
-            let
-                pageShapeNew : PageShape
-                pageShapeNew =
-                    case model.pageShape of
-                        Expanded ->
-                            Shrunk
-
-                        Shrunk ->
-                            Expanded
-            in
             ( { model
-                | pageShape = pageShapeNew
+                | pageExpanded = not model.pageExpanded
               }
             , focusInputPossibly
             )
@@ -465,11 +464,6 @@ subscriptions model =
 
 
 -- VIEW
-
-
-type PageShape
-    = Expanded
-    | Shrunk
 
 
 type SongGroup
@@ -720,12 +714,10 @@ songView model group index song =
 
         songAttributes : List (Attribute msg)
         songAttributes =
-            case model.pageShape of
-                Expanded ->
-                    []
-
-                Shrunk ->
-                    styleCalc group lengthRemembered index
+            if model.pageExpanded then
+                []
+            else
+                styleCalc group lengthRemembered index
     in
     div
         songAttributes
