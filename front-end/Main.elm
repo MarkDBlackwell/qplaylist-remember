@@ -265,7 +265,7 @@ type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
     | CommentInputOk
-    | CommentTextChangeCapture String
+    | CommentTextChangeCapture CommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | PageReshape
