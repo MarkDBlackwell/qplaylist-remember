@@ -87,6 +87,10 @@ type alias Commented =
     Bool
 
 
+type alias HoverString =
+    String
+
+
 type alias Messages =
     List String
 
@@ -143,10 +147,6 @@ type alias TimeStamp =
 
 
 type alias Title =
-    String
-
-
-type alias HoverString =
     String
 
 
