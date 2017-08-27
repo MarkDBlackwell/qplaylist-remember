@@ -588,13 +588,6 @@ buttonRememberForget group index =
     buttonMy buttonId titleString action
 
 
-
-{-
-   timeStampString : String
-   timeStampString =
--}
-
-
 commentArea : Model -> Html Msg
 commentArea model =
     let
@@ -607,7 +600,7 @@ commentArea model =
         prompt =
             "Type your (additional) comment here!"
 
-        song : Int -> Maybe SongInfo
+        song : SongRememberedIndex -> Maybe SongInfo
         song index =
             List.head (List.drop index model.songsRemembered)
     in
