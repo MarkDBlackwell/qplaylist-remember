@@ -358,10 +358,10 @@ update msg model =
 
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
-                    if "" /= model.commentText then
-                        Nothing
-                    else
+                    if "" == model.commentText then
                         model.songRememberedCommentingIndex
+                    else
+                        Nothing
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -533,12 +533,13 @@ buttonComment group index =
         hoverString =
             "Share a comment (with the DJ) about this song"
     in
-    case group of
-        Played ->
-            text ""
-
-        Remembered ->
-            buttonMy buttonId hoverString action
+    if
+        showCommentButtons
+            && (Remembered == group)
+    then
+        buttonMy buttonId hoverString action
+    else
+        text ""
 
 
 buttonGroup : SongGroup -> List (Html Msg)
@@ -759,18 +760,18 @@ songView model group index song =
 
         commentedIndicator : Html Msg
         commentedIndicator =
-            if not song.commented then
-                text ""
-            else
+            if song.commented then
                 em [ title hoverLiked ]
                     []
+            else
+                text ""
 
         hoverCommentButton : String
         hoverCommentButton =
-            if not showCommentButtons then
-                ""
-            else
+            if showCommentButtons then
                 "(or left a comment about) "
+            else
+                ""
 
         hoverLiked : String
         hoverLiked =
