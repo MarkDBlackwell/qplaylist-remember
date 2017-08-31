@@ -676,21 +676,53 @@ buttonRemembered =
     buttonMy buttonId hoverString PageReshape
 
 
-commentArea : Model -> Html Msg
-commentArea model =
+commentArea : Model -> SongInfo -> Html Msg
+commentArea model song =
     let
         commentTextStatistics : String
         commentTextStatistics =
-            --""
-            ": "
+            " – "
+                ++ song.timeStamp
+                ++ ": "
                 ++ toString (String.length model.commentText)
 
         prompt : String
         prompt =
             "Type your (additional) comment here!"
+    in
+    section
+        [ id "comment" ]
+        [ p []
+            [ text
+                (song.artist
+                    ++ ": "
+                    ++ song.title
+                    ++ " ("
+                    ++ song.time
+                    ++ ")"
+                    ++ commentTextStatistics
+                )
+            ]
+        , input
+            [ autocomplete False
+            , id "input"
+            , onInput CommentTextChangeCapture
+            , placeholder prompt
+            , required True
+            , title prompt
+            , type_ "text"
+            ]
+            []
+        , buttonMy Nothing "Submit your comment" CommentInputOk
+        , buttonMy Nothing "Cancel this comment" CommentInputCancel
+        ]
 
-        song : SongRememberedIndex -> Maybe SongInfo
-        song index =
+
+commentAreaPossibly : Model -> Html Msg
+commentAreaPossibly model =
+    let
+        songPossibly : SongRememberedIndex -> Maybe SongInfo
+        songPossibly index =
             List.head (List.drop index model.songsRemembered)
     in
     case model.songRememberedCommentingIndex of
@@ -698,38 +730,12 @@ commentArea model =
             text ""
 
         Just index ->
-            case song index of
+            case songPossibly index of
                 Nothing ->
                     text ""
 
                 Just song ->
-                    section
-                        [ id "comment" ]
-                        [ p []
-                            [ text
-                                (song.artist
-                                    ++ ": "
-                                    ++ song.title
-                                    ++ " ("
-                                    ++ song.time
-                                    ++ ") "
-                                    ++ song.timeStamp
-                                    ++ commentTextStatistics
-                                )
-                            ]
-                        , input
-                            [ autocomplete False
-                            , id "input"
-                            , onInput CommentTextChangeCapture
-                            , placeholder prompt
-                            , required True
-                            , title prompt
-                            , type_ "text"
-                            ]
-                            []
-                        , buttonMy Nothing "Submit your comment" CommentInputOk
-                        , buttonMy Nothing "Cancel this comment" CommentInputCancel
-                        ]
+                    commentArea model song
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
@@ -909,7 +915,7 @@ view model =
     in
     main_
         []
-        [ commentArea model
+        [ commentAreaPossibly model
         , section
             (groupAttributes Remembered)
             ([ p []
