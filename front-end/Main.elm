@@ -66,7 +66,11 @@ import Http
     exposing
         ( Error
         )
-import Json.Decode exposing (field)
+import Json.Decode
+    exposing
+        ( decodeString
+        , field
+        )
 import Task
     exposing
         ( attempt
@@ -348,136 +352,66 @@ decodeSongsListRaw =
         (field "latestFive" (Json.Decode.list decodeSongInfoRaw))
 
 
+songsLatestFewGet : List SongInfo
+songsLatestFewGet =
+    let
+        stringJson : String
+        stringJson =
+            """
+{ "latestFive":
+  [
+    { "artist": "The Herd Of Main Street",
+      "title": "Never Look Back",
+      "time": "4:54 PM",
+      "timeStamp": "2017 08 29 16 54"
+    },
+    { "artist": "Susan Alcorn",
+      "title": "Baltimore Hit Parade",
+      "time": "3:55 PM",
+      "timeStamp": "2017 08 29 15 55"
+    },
+    { "artist": "Thao and the Get Down Stay D",
+      "title": "Astonished Man",
+      "time": "3:51 PM",
+      "timeStamp": "2017 08 29 15 51"
+    },
+    { "artist": "The Herd Of Main Street",
+      "title": "Never Look Back",
+      "time": "3:47 PM",
+      "timeStamp": "2017 08 29 15 47"
+    },
+    { "artist": "Djembe Jones",
+      "title": "Nowhere",
+      "time": "3:42 PM",
+      "timeStamp": "2017 08 29 15 42"
+    }
+  ]
+}
+"""
 
-{-
-         songDecode : Decoder (List Int)
-         songDecode =
-             -- decodeString (keyValuePairs string) "{
+        raw : Result String SongsListRaw
+        raw =
+            decodeString decodeSongsListRaw stringJson
 
+        rawUnpacked : List SongInfoRaw
+        rawUnpacked =
+            case raw of
+                Err _ ->
+                    []
 
-   songsLatestFewDecode : Decoder (List Int)
-   songsLatestFewDecode =
-          map map
--}
-{-
-   --songInfoTupleDecoder : Result String (List ( String, String ))
-   songInfoTupleDecoder : Decoder SongInfo
-   songInfoTupleDecoder =
-       let
-           stringJson : String
-           stringJson = """
-       { "artist": "The Herd Of Main Street",
-         "title": "Never Look Back",
-         "time": "4:54 PM",
-         "timeStamp": "2017 08 29 16 54"
-       }
-   """
+                Ok json ->
+                    json.latestFive
 
-           --songInfoDecoder : Result String (List ( String, String ))
-           songInfoDecoder : Decoder SongInfo
-           songInfoDecoder =
-               --decodeString (keyValuePairs string) stringJson
-               object4 (,,,)
-               ("artist" := string)
-               ("title" := string)
-               ("time" := string)
-               ("timeStamp" := string)
-       in
-       songInfoDecoder
--}
-{-
-   """
-   { "latestFive":
-     [
-       { "artist": "The Herd Of Main Street",
-         "title": "Never Look Back",
-         "time": "4:54 PM",
-         "timeStamp": "2017 08 29 16 54"
-       },
-       { "artist": "Susan Alcorn",
-         "title": "Baltimore Hit Parade",
-         "time": "3:55 PM",
-         "timeStamp": "2017 08 29 15 55"
-       },
-       { "artist": "Thao and the Get Down Stay D",
-         "title": "Astonished Man",
-         "time": "3:51 PM",
-         "timeStamp": "2017 08 29 15 51"
-       },
-       { "artist": "The Herd Of Main Street",
-         "title": "Never Look Back",
-         "time": "3:47 PM",
-         "timeStamp": "2017 08 29 15 47"
-       },
-       { "artist": "Djembe Jones",
-         "title": "Nowhere",
-         "time": "3:42 PM",
-         "timeStamp": "2017 08 29 15 42"
-       }
-     ]
-   }
-   """
-           artistsDecoded : Result String (List String)
-           artistsDecoded =
-               decodeString (field "latestFive" (list (field "artist" string))) stringJson
-
-           artists : List String
-           artists =
-               artistsDecoded
-
-           timeStampsDecoded : Result String (List String)
-           timeStampsDecoded =
-               decodeString (field "latestFive" (list (field "timeStamp" string))) stringJson
-
-           timeStamps : List String
-           timeStamps =
-               timeStampsDecoded
-
-           timesDecoded : Result String (List String)
-           timesDecoded =
-               decodeString (field "latestFive" (list (field "time" string))) stringJson
-
-           times : List String
-           times =
-               timesDecoded
-
-           titlesDecoded : Result String (List String)
-           titlesDecoded =
-               decodeString (field "latestFive" (list (field "title" string))) stringJson
-
-           titles : List String
-           titles =
-               titlesDecoded
-
-           commented : Commented
-           commented =
-               False
-
-           zipped : List ( String, String, String, String )
-           zipped =
-               List.map4 (,,,) artists timeStamps times titles
-
-           tupleToRecord : ( Artist, TimeStamp, Time, Title ) -> SongInfo
-           tupleToRecord ( artist, timeStamp, time, title ) =
-               songInfo artist title time timeStamp commented
-
-           records : List SongInfo
-           records =
-               List.map tupleToRecord zipped
-       in
-       -- songInfo artist title time timeStamp commented =
-       decodeString records
--}
-{-
-   let
-       array : List
-       array =
-           []
-   in
-   -- decodeString (list (decodeString .at ["latestFive", ""] Decode.string
-   -- decodeString (list string) "[ \"1\", \"2\", \"3\" ]"
-   decodeString (list int) "[ 1,2,3 ]"
--}
+        addFields : SongInfoRaw -> SongInfo
+        addFields songInfoRaw =
+            { artist = songInfoRaw.artist
+            , commented = False
+            , time = songInfoRaw.time
+            , timeStamp = songInfoRaw.timeStamp
+            , title = songInfoRaw.title
+            }
+    in
+    List.map addFields rawUnpacked
 
 
 songsLatestFewRequest : Cmd Msg

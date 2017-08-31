@@ -1,4 +1,41 @@
 {-
+   let
+       array : List
+       array =
+           []
+   in
+   -- decodeString (list (decodeString .at ["latestFive", ""] Decode.string
+   -- decodeString (list string) "[ \"1\", \"2\", \"3\" ]"
+   decodeString (list int) "[ 1,2,3 ]"
+-}
+{-
+           --songInfoDecoder : Result String (List ( String, String ))
+           songInfoDecoder : Decoder SongInfo
+           songInfoDecoder =
+               --decodeString (keyValuePairs string) stringJson
+               object4 (,,,)
+               ("artist" := string)
+               ("title" := string)
+               ("time" := string)
+               ("timeStamp" := string)
+       in
+       songInfoDecoder
+-}
+{-
+   --songInfoTupleDecoder : Result String (List ( String, String ))
+   songInfoTupleDecoder : Decoder SongInfo
+   songInfoTupleDecoder =
+       let
+           stringJson : String
+           stringJson = """
+       { "artist": "The Herd Of Main Street",
+         "title": "Never Look Back",
+         "time": "4:54 PM",
+         "timeStamp": "2017 08 29 16 54"
+       }
+   """
+-}
+{-
    someArtist : Artist
    someArtist =
        case List.head latestFewSongsInit of
