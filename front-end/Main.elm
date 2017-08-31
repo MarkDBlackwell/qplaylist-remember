@@ -14,6 +14,15 @@
 
 module Main exposing (main)
 
+{-
+   ( decodeString
+   , int
+     -- TODO: remove int
+   , list
+   , string
+   )
+-}
+
 import Dom
     exposing
         ( Id
@@ -53,6 +62,11 @@ import Html.Events
         ( onClick
         , onInput
         )
+import Http
+    exposing
+        ( Error
+        )
+import Json.Decode exposing (field)
 import Task
     exposing
         ( attempt
@@ -123,6 +137,19 @@ type alias SongInfo =
     , time : Time
     , timeStamp : TimeStamp
     , title : Title
+    }
+
+
+type alias ComplexType =
+    { artist : String
+    , title : String
+    , time : String
+    , timeStamp : String
+    }
+
+
+type alias Something =
+    { latestFive : List ComplexType
     }
 
 
@@ -272,6 +299,7 @@ type Msg
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
+    | SongsLatestFewResponse (Result Http.Error String)
 
 
 
@@ -290,13 +318,181 @@ focusSet id =
 
 
 
--- For wrapping a message as a `Cmd`, see:
+--For wrapping a message as a `Cmd`, see:
 -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
 
 
 msg2Cmd : Task.Task Never msg -> Cmd msg
 msg2Cmd msg =
     Task.perform identity msg
+
+
+
+--For decoding Json, see:
+--https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+--http://eeue56.github.io/json-to-elm/
+
+
+decodeComplexType : Json.Decode.Decoder ComplexType
+decodeComplexType =
+    Json.Decode.map4 ComplexType
+        (field "artist" Json.Decode.string)
+        (field "title" Json.Decode.string)
+        (field "time" Json.Decode.string)
+        (field "timeStamp" Json.Decode.string)
+
+
+decodeSomething : Json.Decode.Decoder Something
+decodeSomething =
+    Json.Decode.map Something
+        (field "latestFive" (Json.Decode.list decodeComplexType))
+
+
+
+{-
+         songDecode : Decoder (List Int)
+         songDecode =
+             -- decodeString (keyValuePairs string) "{
+
+
+   songsLatestFewDecode : Decoder (List Int)
+   songsLatestFewDecode =
+          map map
+-}
+{-
+   --songInfoTupleDecoder : Result String (List ( String, String ))
+   songInfoTupleDecoder : Decoder SongInfo
+   songInfoTupleDecoder =
+       let
+           stringJson : String
+           stringJson = """
+       { "artist": "The Herd Of Main Street",
+         "title": "Never Look Back",
+         "time": "4:54 PM",
+         "timeStamp": "2017 08 29 16 54"
+       }
+   """
+
+           --songInfoDecoder : Result String (List ( String, String ))
+           songInfoDecoder : Decoder SongInfo
+           songInfoDecoder =
+               --decodeString (keyValuePairs string) stringJson
+               object4 (,,,)
+               ("artist" := string)
+               ("title" := string)
+               ("time" := string)
+               ("timeStamp" := string)
+       in
+       songInfoDecoder
+-}
+{-
+   """
+   { "latestFive":
+     [
+       { "artist": "The Herd Of Main Street",
+         "title": "Never Look Back",
+         "time": "4:54 PM",
+         "timeStamp": "2017 08 29 16 54"
+       },
+       { "artist": "Susan Alcorn",
+         "title": "Baltimore Hit Parade",
+         "time": "3:55 PM",
+         "timeStamp": "2017 08 29 15 55"
+       },
+       { "artist": "Thao and the Get Down Stay D",
+         "title": "Astonished Man",
+         "time": "3:51 PM",
+         "timeStamp": "2017 08 29 15 51"
+       },
+       { "artist": "The Herd Of Main Street",
+         "title": "Never Look Back",
+         "time": "3:47 PM",
+         "timeStamp": "2017 08 29 15 47"
+       },
+       { "artist": "Djembe Jones",
+         "title": "Nowhere",
+         "time": "3:42 PM",
+         "timeStamp": "2017 08 29 15 42"
+       }
+     ]
+   }
+   """
+           artistsDecoded : Result String (List String)
+           artistsDecoded =
+               decodeString (field "latestFive" (list (field "artist" string))) stringJson
+
+           artists : List String
+           artists =
+               artistsDecoded
+
+           timeStampsDecoded : Result String (List String)
+           timeStampsDecoded =
+               decodeString (field "latestFive" (list (field "timeStamp" string))) stringJson
+
+           timeStamps : List String
+           timeStamps =
+               timeStampsDecoded
+
+           timesDecoded : Result String (List String)
+           timesDecoded =
+               decodeString (field "latestFive" (list (field "time" string))) stringJson
+
+           times : List String
+           times =
+               timesDecoded
+
+           titlesDecoded : Result String (List String)
+           titlesDecoded =
+               decodeString (field "latestFive" (list (field "title" string))) stringJson
+
+           titles : List String
+           titles =
+               titlesDecoded
+
+           commented : Commented
+           commented =
+               False
+
+           zipped : List ( String, String, String, String )
+           zipped =
+               List.map4 (,,,) artists timeStamps times titles
+
+           tupleToRecord : ( Artist, TimeStamp, Time, Title ) -> SongInfo
+           tupleToRecord ( artist, timeStamp, time, title ) =
+               songInfo artist title time timeStamp commented
+
+           records : List SongInfo
+           records =
+               List.map tupleToRecord zipped
+       in
+       -- songInfo artist title time timeStamp commented =
+       decodeString records
+-}
+{-
+   let
+       array : List
+       array =
+           []
+   in
+   -- decodeString (list (decodeString .at ["latestFive", ""] Decode.string
+   -- decodeString (list string) "[ \"1\", \"2\", \"3\" ]"
+   decodeString (list int) "[ 1,2,3 ]"
+-}
+
+
+songsLatestFewRequest : Cmd Msg
+songsLatestFewRequest =
+    let
+        request : Http.Request String
+        request =
+            Http.getString url
+
+        -- songsLatestFewDecode
+        url : String
+        url =
+            "https://wtmd.org/wtmdapp/LatestFiveHD2.json"
+    in
+    Http.send SongsLatestFewResponse request
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -332,6 +528,10 @@ update msg model =
 
         CommentInputOk ->
             let
+                commands : Cmd Msg
+                commands =
+                    Cmd.batch [ focusInputPossibly ]
+
                 showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
                 showHasCommented index song =
                     if
@@ -362,7 +562,7 @@ update msg model =
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , focusInputPossibly
+            , commands
             )
 
         CommentTextChangeCapture text ->
@@ -448,11 +648,25 @@ update msg model =
             )
 
         SongsLatestFewRefresh ->
+            ( model
+            , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
+            )
+
+        SongsLatestFewResponse (Ok latestFew) ->
+            let
+                songsLatestFewNew : SongsList
+                songsLatestFewNew =
+                    songsLatestFewInitFull
+            in
             ( { model
-                | songsLatestFew = songsLatestFewInitFull
-                , songsRemembered = songsRememberedInitFull
+                | songsLatestFew = songsLatestFewNew
               }
-            , focusInputPossibly
+            , Cmd.none
+            )
+
+        SongsLatestFewResponse (Err _) ->
+            ( model
+            , Cmd.none
             )
 
 
@@ -531,6 +745,29 @@ buttonGroup group =
     [ p []
         [ buttonMy buttonId hoverString action ]
     ]
+
+
+buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
+buttonLike group index =
+    let
+        action : Msg
+        action =
+            CommentAreaShow index
+
+        buttonId : Maybe Id
+        buttonId =
+            Just ("buttonLike" ++ toString index)
+
+        hoverString : HoverString
+        hoverString =
+            "Share a 'Like' (with the DJ) about this song"
+    in
+    case group of
+        Played ->
+            text ""
+
+        Remembered ->
+            buttonMy buttonId hoverString action
 
 
 buttonMy : Maybe Id -> HoverString -> Msg -> Html Msg
@@ -723,6 +960,7 @@ songView model group index song =
             , span []
                 [ text song.time ]
             , buttonComment group index
+            , buttonLike group index
             , commentedIndicator
             , a
                 buySong

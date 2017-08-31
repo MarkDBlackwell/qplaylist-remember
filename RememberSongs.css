@@ -167,14 +167,20 @@ section.songs-group > div > p > button:first-of-type {
     font-style: italic;
     letter-spacing: .0909091em;
 }
+section.songs-group > div > p > button:last-of-type {
+    margin: 0 0 0 .290909em;
+}
 section#songs-played > div > p > button:before {
     content: "REMEMBER";
 }
 section#songs-remembered > div > p > button:first-of-type:before {
     content: "FORGET";
 }
-section#songs-remembered > div > p > button:last-of-type:before {
+section#songs-remembered > div > p > button:nth-of-type(2):before {
     content: "Comment";
+}
+section#songs-remembered > div > p > button:last-of-type:before {
+    content: "Like";
 }
 section#songs-remembered > div > p > em {
     margin: 0 0 0 .4em;
