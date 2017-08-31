@@ -814,7 +814,7 @@ songView model group index song =
             if model.pageExpanded then
                 []
             else
-                styleCalc group lengthRemembered index
+                [ styleCalc group lengthRemembered index ]
     in
     div
         songAttributes
@@ -836,7 +836,7 @@ songView model group index song =
         ]
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongIndex -> List (Attribute msg)
+styleCalc : SongGroup -> SongGroupLength -> SongIndex -> Attribute msg
 styleCalc group songGroupLength index =
     let
         backgroundColorStyling : List ( String, String )
@@ -890,11 +890,10 @@ styleCalc group songGroupLength index =
                 Remembered ->
                     goldenRatio ^ toFloat indexReversed
     in
-    [ style
+    style
         (backgroundColorStyling
             ++ fontSizeStyling
         )
-    ]
 
 
 view : Model -> Html Msg
