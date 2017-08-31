@@ -706,8 +706,8 @@ commentArea model song =
                 ++ ": "
                 ++ toString (String.length model.commentText)
 
-        prompt : String
-        prompt =
+        hoverText : HoverText
+        hoverText =
             "Type your (additional) comment here!"
     in
     section
@@ -727,9 +727,9 @@ commentArea model song =
             [ autocomplete False
             , id "input"
             , onInput CommentTextChangeCapture
-            , placeholder prompt
+            , placeholder hoverText
             , required True
-            , title prompt
+            , title hoverText
             , type_ "text"
             ]
             []
