@@ -167,8 +167,8 @@ section.songs-group > div > p > button:first-of-type {
     font-style: italic;
     letter-spacing: .0909091em;
 }
-section.songs-group > div > p > button:last-of-type {
-    margin: 0 0 0 .290909em;
+section.songs-group > div > p > button:nth-of-type(2) {
+    margin: 0 .290909em 0 0;
 }
 section#songs-played > div > p > button:before {
     content: "REMEMBER";
