@@ -14,16 +14,7 @@
 
 module Main exposing (main)
 
-{-
-   ( decodeString
-   , int
-     -- TODO: remove int
-   , list
-   , string
-   )
--}
-
-import Debug exposing (..)
+import Debug exposing (log)
 import Dom
     exposing
         ( Id
@@ -69,8 +60,13 @@ import Http
         )
 import Json.Decode
     exposing
-        ( decodeString
+        ( Decoder
+        , decodeString
         , field
+        , list
+        , map
+        , map4
+        , string
         )
 import Task
     exposing
@@ -197,16 +193,6 @@ pageExpandedInit =
     False
 
 
-songInfo : Artist -> Title -> Time -> TimeStamp -> Commented -> SongInfo
-songInfo artist title time timeStamp commented =
-    { artist = artist
-    , commented = commented
-    , time = time
-    , timeStamp = timeStamp
-    , title = title
-    }
-
-
 songRememberedCommentingIndexInit : Maybe SongRememberedIndex
 songRememberedCommentingIndexInit =
     Nothing
@@ -217,69 +203,9 @@ songsLatestFewInit =
     []
 
 
-songsLatestFewInitFull : SongsList
-songsLatestFewInitFull =
-    [ songInfo "U2"
-        "Bullet The Blue Sky"
-        "5:53 PM"
-        "2017 08 07 17 53"
-        False
-    , songInfo "LP"
-        "No Witness"
-        "5:49 PM"
-        "2017 08 07 17 49"
-        False
-    , songInfo "Cage The Elephant"
-        "Whole Wide World"
-        "5:46 PM"
-        "2017 08 07 17 46"
-        False
-    , songInfo "Robert Randolph and the Fami"
-        "Deliver Me"
-        "5:41 PM"
-        "2017 08 07 17 41"
-        False
-    , songInfo "Outer Spaces"
-        "Words"
-        "5:31 PM"
-        "2017 08 07 17 31"
-        False
-    ]
-
-
 songsRememberedInit : SongsList
 songsRememberedInit =
     []
-
-
-songsRememberedInitFull : SongsList
-songsRememberedInitFull =
-    [ songInfo "The Rosebuds"
-        "In My Teeth"
-        "4:54 PM"
-        "2017 08 07 16 54"
-        False
-    , songInfo "T. Rex"
-        "King Of The Rumbling Spires"
-        "4:59 PM"
-        "2017 08 07 16 59"
-        False
-    , songInfo "Tedeschi Trucks Band"
-        "I Pity The Fool - Live"
-        "5:07 PM"
-        "2017 08 07 17 07"
-        False
-    , songInfo "Bobby \"Blue\" Bland"
-        "I Pity The Fool"
-        "5:14 PM"
-        "2017 08 07 17 14"
-        False
-    , songInfo "Eddy Clearwater"
-        "Find You A Job"
-        "5:19 PM"
-        "2017 08 07 17 19"
-        False
-    ]
 
 
 init : ( Model, Cmd msg )
@@ -313,19 +239,19 @@ type Msg
 --http://eeue56.github.io/json-to-elm/
 
 
-decodeSongInfoRaw : Json.Decode.Decoder SongInfoRaw
+decodeSongInfoRaw : Decoder SongInfoRaw
 decodeSongInfoRaw =
-    Json.Decode.map4 SongInfoRaw
-        (field "artist" Json.Decode.string)
-        (field "title" Json.Decode.string)
-        (field "time" Json.Decode.string)
-        (field "timeStamp" Json.Decode.string)
+    map4 SongInfoRaw
+        (field "artist" string)
+        (field "title" string)
+        (field "time" string)
+        (field "timeStamp" string)
 
 
-decodeSongsListRaw : Json.Decode.Decoder SongsListRaw
+decodeSongsListRaw : Decoder SongsListRaw
 decodeSongsListRaw =
-    Json.Decode.map SongsListRaw
-        (field "latestFive" (Json.Decode.list decodeSongInfoRaw))
+    map SongsListRaw
+        (field "latestFive" (list decodeSongInfoRaw))
 
 
 
@@ -353,8 +279,8 @@ msg2Cmd msg =
     Task.perform identity msg
 
 
-songsLatestFewGet : List SongInfo
-songsLatestFewGet =
+songsLatestFewGet : String -> List SongInfo
+songsLatestFewGet stringJson =
     let
         raw : Result String SongsListRaw
         raw =
@@ -393,41 +319,6 @@ songsLatestFewRequest =
             "/wtmdapp/LatestFive.json"
     in
     Http.send SongsLatestFewResponse request
-
-
-stringJson : String
-stringJson =
-    """
-{ "latestFive":
-  [
-    { "artist": "The Herd Of Main Street",
-      "title": "Never Look Back",
-      "time": "4:54 PM",
-      "timeStamp": "2017 08 29 16 54"
-    },
-    { "artist": "Susan Alcorn",
-      "title": "Baltimore Hit Parade",
-      "time": "3:55 PM",
-      "timeStamp": "2017 08 29 15 55"
-    },
-    { "artist": "Thao and the Get Down Stay D",
-      "title": "Astonished Man",
-      "time": "3:51 PM",
-      "timeStamp": "2017 08 29 15 51"
-    },
-    { "artist": "The Herd Of Main Street",
-      "title": "Never Look Back",
-      "time": "3:47 PM",
-      "timeStamp": "2017 08 29 15 47"
-    },
-    { "artist": "Djembe Jones",
-      "title": "Nowhere",
-      "time": "3:42 PM",
-      "timeStamp": "2017 08 29 15 42"
-    }
-  ]
-}
-"""
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -583,24 +474,19 @@ update msg model =
             )
 
         SongsLatestFewRefresh ->
-            ( { model
-                --| songsLatestFew = songsLatestFewGet
-                | songsLatestFew = model.songsLatestFew
-              }
+            ( model
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
             )
 
-        SongsLatestFewResponse (Ok latestFew) ->
+        SongsLatestFewResponse (Ok songsLatestFewJson) ->
             let
-                errorString : String
-                errorString =
-                    log "AJAX" "worked"
-
+                -- errorString : String
+                -- errorString =
+                --     log "AJAX" "worked"
+                --
                 songsLatestFewNew : SongsList
                 songsLatestFewNew =
-                    songsLatestFewInitFull
-
-                --songsLatestFewGet
+                    songsLatestFewGet songsLatestFewJson
             in
             ( { model
                 | songsLatestFew = songsLatestFewNew
@@ -628,9 +514,7 @@ update msg model =
                         Http.BadPayload debuggingMessage responseString ->
                             log "Bad payload" debuggingMessage
             in
-            ( { model
-                | songsLatestFew = songsLatestFewInitFull
-              }
+            ( model
             , Cmd.none
             )
 
