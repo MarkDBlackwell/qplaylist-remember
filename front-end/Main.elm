@@ -57,6 +57,9 @@ import Html.Events
 import Http
     exposing
         ( Error
+        , Request
+        , getString
+        , send
         )
 import Json.Decode
     exposing
@@ -106,13 +109,8 @@ type alias HoverString =
     String
 
 
-type alias Messages =
-    List String
-
-
 type alias Model =
     { commentText : CommentText
-    , messages : Messages -- TODO: Do we need messages?
     , pageExpanded : PageExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedIndex
     , songsLatestFew : SongsList
@@ -142,6 +140,7 @@ type alias SongInfo =
 
 
 type alias SongInfoRaw =
+    --Keep order
     { artist : Artist
     , title : Title
     , time : Time
@@ -162,8 +161,7 @@ type alias SongsList =
 
 
 type alias SongsListRaw =
-    { latestFive : List SongInfoRaw
-    }
+    { latestFive : List SongInfoRaw }
 
 
 type alias Time =
@@ -181,11 +179,6 @@ type alias Title =
 commentTextInit : CommentText
 commentTextInit =
     ""
-
-
-messagesInit : Messages
-messagesInit =
-    []
 
 
 pageExpandedInit : PageExpanded
@@ -210,7 +203,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model commentTextInit messagesInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
+    ( Model commentTextInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
     , Cmd.none
     )
 
@@ -230,17 +223,14 @@ type Msg
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
-    | SongsLatestFewResponse (Result Http.Error String)
-
-
-
---For decoding Json, see:
---https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
---http://eeue56.github.io/json-to-elm/
+    | SongsLatestFewResponse (Result Error String)
 
 
 decodeSongInfoRaw : Decoder SongInfoRaw
 decodeSongInfoRaw =
+    --For decoding Json, see:
+    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+    --http://eeue56.github.io/json-to-elm/
     map4 SongInfoRaw
         (field "artist" string)
         (field "title" string)
@@ -254,34 +244,37 @@ decodeSongsListRaw =
         (field "latestFive" (list decodeSongInfoRaw))
 
 
-
--- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
--- https://stackoverflow.com/a/39419640/1136063
-
-
 domFocus : Id -> Cmd Msg
 domFocus id =
-    Task.attempt FocusResult (Dom.focus id)
+    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+    --https://stackoverflow.com/a/39419640/1136063
+    attempt FocusResult (focus id)
 
 
 focusSet : Id -> Cmd Msg
 focusSet id =
-    msg2Cmd (Task.succeed (FocusSet id))
-
-
-
---For wrapping a message as a `Cmd`, see:
--- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    msg2Cmd (succeed (FocusSet id))
 
 
 msg2Cmd : Task.Task Never msg -> Cmd msg
 msg2Cmd msg =
+    --For wrapping a message as a `Cmd`, see:
+    -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     Task.perform identity msg
 
 
 songsLatestFewGet : String -> List SongInfo
 songsLatestFewGet stringJson =
     let
+        addFields : SongInfoRaw -> SongInfo
+        addFields songInfoRaw =
+            { artist = songInfoRaw.artist
+            , commented = False
+            , time = songInfoRaw.time
+            , timeStamp = songInfoRaw.timeStamp
+            , title = songInfoRaw.title
+            }
+
         raw : Result String SongsListRaw
         raw =
             decodeString decodeSongsListRaw stringJson
@@ -294,15 +287,6 @@ songsLatestFewGet stringJson =
 
                 Ok json ->
                     json.latestFive
-
-        addFields : SongInfoRaw -> SongInfo
-        addFields songInfoRaw =
-            { artist = songInfoRaw.artist
-            , commented = False
-            , time = songInfoRaw.time
-            , timeStamp = songInfoRaw.timeStamp
-            , title = songInfoRaw.title
-            }
     in
     List.map addFields rawUnpacked
 
@@ -310,15 +294,15 @@ songsLatestFewGet stringJson =
 songsLatestFewRequest : Cmd Msg
 songsLatestFewRequest =
     let
-        request : Http.Request String
+        request : Request String
         request =
-            Http.getString url
+            getString url
 
         url : String
         url =
             "/wtmdapp/LatestFive.json"
     in
-    Http.send SongsLatestFewResponse request
+    send SongsLatestFewResponse request
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -367,7 +351,7 @@ update msg model =
                     then
                         song
                     else
-                        -- TODO: make AJAX request.
+                        --TODO: make AJAX request.
                         { song
                             | commented = True
                         }
@@ -478,12 +462,32 @@ update msg model =
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
             )
 
+        SongsLatestFewResponse (Err httpError) ->
+            let
+                errorString : String
+                errorString =
+                    case httpError of
+                        Http.BadPayload debuggingMessage responseString ->
+                            log "Bad payload" debuggingMessage
+
+                        Http.BadStatus responseString ->
+                            log "Bad status" ""
+
+                        Http.BadUrl string ->
+                            log "Bad URL" string
+
+                        Http.NetworkError ->
+                            log "Network error" ""
+
+                        Http.Timeout ->
+                            log "HTTP timeout" ""
+            in
+            ( model
+            , Cmd.none
+            )
+
         SongsLatestFewResponse (Ok songsLatestFewJson) ->
             let
-                -- errorString : String
-                -- errorString =
-                --     log "AJAX" "worked"
-                --
                 songsLatestFewNew : SongsList
                 songsLatestFewNew =
                     songsLatestFewGet songsLatestFewJson
@@ -491,30 +495,6 @@ update msg model =
             ( { model
                 | songsLatestFew = songsLatestFewNew
               }
-            , Cmd.none
-            )
-
-        SongsLatestFewResponse (Err httpError) ->
-            let
-                errorString : String
-                errorString =
-                    case httpError of
-                        Http.BadUrl string ->
-                            log "Bad URL" string
-
-                        Http.Timeout ->
-                            log "HTTP timeout" ""
-
-                        Http.NetworkError ->
-                            log "Network error" ""
-
-                        Http.BadStatus responseString ->
-                            log "Bad status" ""
-
-                        Http.BadPayload debuggingMessage responseString ->
-                            log "Bad payload" debuggingMessage
-            in
-            ( model
             , Cmd.none
             )
 
@@ -683,7 +663,7 @@ commentArea model =
     let
         commentTextStatistics : String
         commentTextStatistics =
-            -- ""
+            --""
             ": " ++ toString (String.length model.commentText)
 
         prompt : String
@@ -750,27 +730,12 @@ groupAttributes group =
     ]
 
 
-songsOfGroup : Model -> SongGroup -> List (Html Msg)
-songsOfGroup model group =
-    let
-        songs : List SongInfo
-        songs =
-            case group of
-                Played ->
-                    model.songsLatestFew
-
-                Remembered ->
-                    model.songsRemembered
-    in
-    List.indexedMap (songView model group) songs
-
-
 songView : Model -> SongGroup -> SongIndex -> SongInfo -> Html Msg
 songView model group index song =
     let
         amazonConstant : String
-        -- %3D represents the "equals" sign.
         amazonConstant =
+            --%3D represents the "equals" sign.
             "http://www.amazon.com/s/ref=nb_sb_noss?"
                 ++ "tag=wtmdradio-20"
                 ++ "&url=search-alias%3Ddigital-music"
@@ -822,6 +787,21 @@ songView model group index song =
         ]
 
 
+songsOfGroup : Model -> SongGroup -> List (Html Msg)
+songsOfGroup model group =
+    let
+        songs : List SongInfo
+        songs =
+            case group of
+                Played ->
+                    model.songsLatestFew
+
+                Remembered ->
+                    model.songsRemembered
+    in
+    List.indexedMap (songView model group) songs
+
+
 styleCalc : SongGroup -> SongGroupLength -> SongIndex -> List (Attribute msg)
 styleCalc group songGroupLength index =
     let
@@ -852,10 +832,10 @@ styleCalc group songGroupLength index =
         fontSizeValue =
             toString (sizeFactor * base) ++ "px"
 
-        -- Golden ratio:
-        -- https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
         goldenRatio : Float
         goldenRatio =
+            --Golden ratio:
+            --https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
             0.6180339887498949
 
         indexReversed : SongIndex
