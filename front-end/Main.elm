@@ -730,6 +730,11 @@ groupAttributes group =
     ]
 
 
+showCommentButtons : Bool
+showCommentButtons =
+    False
+
+
 songView : Model -> SongGroup -> SongIndex -> SongInfo -> Html Msg
 songView model group index song =
     let
@@ -745,16 +750,33 @@ songView model group index song =
         buySong =
             [ href (amazonConstant ++ song.title ++ "+" ++ song.artist)
             , target "_blank"
-            , title "See song on Amazon (in new tab)"
+            , title buySongLiked
             ]
+
+        buySongLiked : String
+        buySongLiked =
+            "See song on Amazon (in new tab)"
 
         commentedIndicator : Html Msg
         commentedIndicator =
             if not song.commented then
                 text ""
             else
-                em [ title "You've left a comment about this song" ]
+                em [ title hoverLiked ]
                     []
+
+        hoverCommentButton : String
+        hoverCommentButton =
+            if not showCommentButtons then
+                ""
+            else
+                "(or left a comment about) "
+
+        hoverLiked : String
+        hoverLiked =
+            "You've 'Liked' "
+                ++ hoverCommentButton
+                ++ "this song"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
