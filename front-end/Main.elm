@@ -533,10 +533,7 @@ buttonComment group index =
         hoverString =
             "Share a comment (with the DJ) about this song"
     in
-    if
-        showCommentButtons
-            && (Remembered == group)
-    then
+    if Remembered == group then
         buttonMy buttonId hoverString action
     else
         text ""
@@ -603,6 +600,21 @@ buttonLike group index =
 buttonMy : Maybe Id -> HoverString -> Msg -> Html Msg
 buttonMy buttonId hoverString action =
     let
+        displayValue : String
+        displayValue =
+            case buttonId of
+                Nothing ->
+                    "none"
+
+                Just buttonId ->
+                    if
+                        String.startsWith "buttonComment" buttonId
+                            && not showCommentButtons
+                    then
+                        "none"
+                    else
+                        "inline-block"
+
         idMy : List (Attribute msg)
         idMy =
             case buttonId of
@@ -613,7 +625,8 @@ buttonMy buttonId hoverString action =
                     [ id buttonId ]
     in
     button
-        ([ onClick action
+        ([ style [ ( "display", displayValue ) ]
+         , onClick action
          , title hoverString
          , type_ "button"
          ]
