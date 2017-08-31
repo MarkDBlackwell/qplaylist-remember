@@ -122,10 +122,6 @@ type alias SongsList =
     List SongInfo
 
 
-type alias Title =
-    String
-
-
 commentTextInit : CommentText
 commentTextInit =
     ""
@@ -213,6 +209,10 @@ type alias Time =
 
 
 type alias TimeStamp =
+    String
+
+
+type alias Title =
     String
 
 
