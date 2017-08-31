@@ -807,7 +807,7 @@ songView model group index song =
         hoverCommentButton : String
         hoverCommentButton =
             if showCommentButtons then
-                "(or left a comment about) "
+                "(or commented on) "
             else
                 ""
 
