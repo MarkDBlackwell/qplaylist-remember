@@ -216,7 +216,7 @@ type alias Title =
     String
 
 
-type alias Url =
+type alias UrlText =
     String
 
 
@@ -304,10 +304,10 @@ songsLatestFewRequest =
     let
         request : Request HttpRequestText
         request =
-            getString url
+            getString urlText
 
-        url : Url
-        url =
+        urlText : UrlText
+        urlText =
             "/wtmdapp/LatestFive.json"
     in
     send SongsLatestFewResponse request
@@ -476,20 +476,24 @@ update msg model =
                 errorString : HttpErrorMessageText
                 errorString =
                     case httpError of
-                        Http.BadPayload debuggingMessage httpResponseText ->
-                            log "Bad payload" debuggingMessage
+                        Http.BadPayload debuggingText httpResponseText ->
+                            log (prefix ++ ": BadPayload") debuggingText
 
                         Http.BadStatus httpResponseText ->
-                            log "Bad status" ""
+                            log prefix "BadStatus"
 
-                        Http.BadUrl string ->
-                            log "Bad URL" string
+                        Http.BadUrl urlText ->
+                            log (prefix ++ ": BadUrl") urlText
 
                         Http.NetworkError ->
-                            log "Network error" ""
+                            log prefix "NetworkError"
 
                         Http.Timeout ->
-                            log "HTTP timeout" ""
+                            log prefix "Timeout"
+
+                prefix : HttpErrorMessageText
+                prefix =
+                    "HttpError"
             in
             ( model
             , Cmd.none
