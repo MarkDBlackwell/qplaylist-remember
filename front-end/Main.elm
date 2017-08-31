@@ -543,8 +543,8 @@ buttonComment group index =
         text ""
 
 
-buttonGroupPlayed : List (Html Msg)
-buttonGroupPlayed =
+buttonPlayed : List (Html Msg)
+buttonPlayed =
     let
         action : Msg
         action =
@@ -563,8 +563,8 @@ buttonGroupPlayed =
     ]
 
 
-buttonGroupRemembered : List (Html Msg)
-buttonGroupRemembered =
+buttonRemembered : List (Html Msg)
+buttonRemembered =
     let
         action : Msg
         action =
@@ -848,21 +848,6 @@ songView model group index song =
         ]
 
 
-songsOfGroup : Model -> SongGroup -> List (Html Msg)
-songsOfGroup model group =
-    let
-        songs : List SongInfo
-        songs =
-            case group of
-                Played ->
-                    model.songsLatestFew
-
-                Remembered ->
-                    model.songsRemembered
-    in
-    List.indexedMap (songView model group) songs
-
-
 styleCalc : SongGroup -> SongGroupLength -> SongIndex -> List (Attribute msg)
 styleCalc group songGroupLength index =
     let
@@ -926,18 +911,27 @@ styleCalc group songGroupLength index =
 
 view : Model -> Html Msg
 view model =
+    let
+        songsLatestFew : List (Html Msg)
+        songsLatestFew =
+            List.indexedMap (songView model Played) model.songsLatestFew
+
+        songsRemembered : List (Html Msg)
+        songsRemembered =
+            List.indexedMap (songView model Remembered) model.songsRemembered
+    in
     main_
         []
         [ commentArea model
         , section
             (groupAttributes Remembered)
-            (buttonGroupRemembered
-                ++ songsOfGroup model Remembered
+            (buttonRemembered
+                ++ songsRemembered
             )
         , hr [] []
         , section
             (groupAttributes Played)
-            (buttonGroupPlayed
-                ++ songsOfGroup model Played
+            (buttonPlayed
+                ++ songsLatestFew
             )
         ]
