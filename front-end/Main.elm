@@ -105,7 +105,7 @@ type alias Commented =
     Bool
 
 
-type alias HoverString =
+type alias HoverText =
     String
 
 
@@ -212,6 +212,26 @@ init =
 -- UPDATE
 
 
+type alias DecodeErrorMessageText =
+    String
+
+
+type alias HttpErrorMessageText =
+    String
+
+
+type alias HttpRequestText =
+    String
+
+
+type alias HttpResponseText =
+    String
+
+
+type alias Url =
+    String
+
+
 type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
@@ -223,7 +243,7 @@ type Msg
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
-    | SongsLatestFewResponse (Result Error String)
+    | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
 decodeSongInfoRaw : Decoder SongInfoRaw
@@ -263,7 +283,7 @@ msg2Cmd msg =
     Task.perform identity msg
 
 
-songsLatestFewGet : String -> List SongInfo
+songsLatestFewGet : HttpResponseText -> List SongInfo
 songsLatestFewGet stringJson =
     let
         addFields : SongInfoRaw -> SongInfo
@@ -275,7 +295,7 @@ songsLatestFewGet stringJson =
             , title = songInfoRaw.title
             }
 
-        raw : Result String SongsListRaw
+        raw : Result DecodeErrorMessageText SongsListRaw
         raw =
             decodeString decodeSongsListRaw stringJson
 
@@ -294,11 +314,11 @@ songsLatestFewGet stringJson =
 songsLatestFewRequest : Cmd Msg
 songsLatestFewRequest =
     let
-        request : Request String
+        request : Request HttpRequestText
         request =
             getString url
 
-        url : String
+        url : Url
         url =
             "/wtmdapp/LatestFive.json"
     in
@@ -465,13 +485,13 @@ update msg model =
 
         SongsLatestFewResponse (Err httpError) ->
             let
-                errorString : String
+                errorString : HttpErrorMessageText
                 errorString =
                     case httpError of
-                        Http.BadPayload debuggingMessage responseString ->
+                        Http.BadPayload debuggingMessage httpResponseText ->
                             log "Bad payload" debuggingMessage
 
-                        Http.BadStatus responseString ->
+                        Http.BadStatus httpResponseText ->
                             log "Bad status" ""
 
                         Http.BadUrl string ->
@@ -533,12 +553,12 @@ buttonComment group index =
                     ++ toString index
                 )
 
-        hoverString : HoverString
-        hoverString =
+        hoverText : HoverText
+        hoverText =
             "Share a comment (with the DJ) about this song"
     in
     if Remembered == group then
-        buttonMy buttonId hoverString action
+        buttonMy buttonId hoverText action
     else
         text ""
 
@@ -572,8 +592,8 @@ buttonForgetRemember group index =
                 Remembered ->
                     "Forget"
 
-        hoverString : HoverString
-        hoverString =
+        hoverText : HoverText
+        hoverText =
             case group of
                 Played ->
                     "Add this song (to remembered songs)"
@@ -581,7 +601,7 @@ buttonForgetRemember group index =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonMy buttonId hoverString action
+    buttonMy buttonId hoverText action
 
 
 buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
@@ -598,8 +618,8 @@ buttonLike group index =
                     ++ toString index
                 )
 
-        hoverString : HoverString
-        hoverString =
+        hoverText : HoverText
+        hoverText =
             "Share a 'Like' (with the DJ) about this song"
     in
     case group of
@@ -607,11 +627,11 @@ buttonLike group index =
             text ""
 
         Remembered ->
-            buttonMy buttonId hoverString action
+            buttonMy buttonId hoverText action
 
 
-buttonMy : Maybe Id -> HoverString -> Msg -> Html Msg
-buttonMy buttonId hoverString action =
+buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
+buttonMy buttonId hoverText action =
     let
         display : String
         display =
@@ -640,7 +660,7 @@ buttonMy buttonId hoverString action =
     button
         ([ style [ ( "display", display ) ]
          , onClick action
-         , title hoverString
+         , title hoverText
          , type_ "button"
          ]
             ++ idMy
@@ -655,11 +675,11 @@ buttonPlayed =
         buttonId =
             Just "refresh"
 
-        hoverString : HoverString
-        hoverString =
+        hoverText : HoverText
+        hoverText =
             "Refresh the latest few songs"
     in
-    buttonMy buttonId hoverString SongsLatestFewRefresh
+    buttonMy buttonId hoverText SongsLatestFewRefresh
 
 
 buttonRemembered : Html Msg
@@ -669,11 +689,11 @@ buttonRemembered =
         buttonId =
             Just "morph"
 
-        hoverString : HoverString
-        hoverString =
+        hoverText : HoverText
+        hoverText =
             "Morph this page's shape"
     in
-    buttonMy buttonId hoverString PageReshape
+    buttonMy buttonId hoverText PageReshape
 
 
 commentArea : Model -> SongInfo -> Html Msg
