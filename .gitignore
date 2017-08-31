@@ -3,4 +3,5 @@
 /out/*
 
 /index.html
-/RememberSongs.js
+/remember/RememberSongs.js
+/wtmdapp/LatestFive.json
