@@ -543,44 +543,45 @@ buttonComment group index =
         text ""
 
 
-buttonPlayed : List (Html Msg)
-buttonPlayed =
+buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
+buttonForgetRemember group index =
     let
         action : Msg
         action =
-            SongsLatestFewRefresh
+            case group of
+                Played ->
+                    SongRemember index
+
+                Remembered ->
+                    SongForget index
 
         buttonId : Maybe Id
         buttonId =
-            Just "refresh"
+            Just
+                ("button"
+                    ++ groupString
+                    ++ toString index
+                )
+
+        groupString : String
+        groupString =
+            case group of
+                Played ->
+                    "Remember"
+
+                Remembered ->
+                    "Forget"
 
         hoverString : HoverString
         hoverString =
-            "Refresh the latest few songs"
+            case group of
+                Played ->
+                    "Add this song (to remembered songs)"
+
+                Remembered ->
+                    "Drop this song (from remembered songs)"
     in
-    [ p []
-        [ buttonMy buttonId hoverString action ]
-    ]
-
-
-buttonRemembered : List (Html Msg)
-buttonRemembered =
-    let
-        action : Msg
-        action =
-            PageReshape
-
-        buttonId : Maybe Id
-        buttonId =
-            Just "morph"
-
-        hoverString : HoverString
-        hoverString =
-            "Morph this page's shape"
-    in
-    [ p []
-        [ buttonMy buttonId hoverString action ]
-    ]
+    buttonMy buttonId hoverString action
 
 
 buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
@@ -647,45 +648,44 @@ buttonMy buttonId hoverString action =
         []
 
 
-buttonRememberForget : SongGroup -> SongIndex -> Html Msg
-buttonRememberForget group index =
+buttonPlayed : List (Html Msg)
+buttonPlayed =
     let
         action : Msg
         action =
-            case group of
-                Played ->
-                    SongRemember index
-
-                Remembered ->
-                    SongForget index
+            SongsLatestFewRefresh
 
         buttonId : Maybe Id
         buttonId =
-            Just
-                ("button"
-                    ++ groupString
-                    ++ toString index
-                )
-
-        groupString : String
-        groupString =
-            case group of
-                Played ->
-                    "Remember"
-
-                Remembered ->
-                    "Forget"
+            Just "refresh"
 
         hoverString : HoverString
         hoverString =
-            case group of
-                Played ->
-                    "Add this song (to remembered songs)"
-
-                Remembered ->
-                    "Drop this song (from remembered songs)"
+            "Refresh the latest few songs"
     in
-    buttonMy buttonId hoverString action
+    [ p []
+        [ buttonMy buttonId hoverString action ]
+    ]
+
+
+buttonRemembered : List (Html Msg)
+buttonRemembered =
+    let
+        action : Msg
+        action =
+            PageReshape
+
+        buttonId : Maybe Id
+        buttonId =
+            Just "morph"
+
+        hoverString : HoverString
+        hoverString =
+            "Morph this page's shape"
+    in
+    [ p []
+        [ buttonMy buttonId hoverString action ]
+    ]
 
 
 commentArea : Model -> Html Msg
@@ -831,7 +831,7 @@ songView model group index song =
     div
         songAttributes
         [ p []
-            [ buttonRememberForget group index
+            [ buttonForgetRemember group index
             , span []
                 [ text song.time ]
             , buttonComment group index
