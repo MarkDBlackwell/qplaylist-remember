@@ -140,16 +140,11 @@ type alias SongInfo =
     }
 
 
-type alias ComplexType =
-    { artist : String
-    , title : String
-    , time : String
-    , timeStamp : String
-    }
-
-
-type alias Something =
-    { latestFive : List ComplexType
+type alias SongInfoRaw =
+    { artist : Artist
+    , title : Title
+    , time : Time
+    , timeStamp : TimeStamp
     }
 
 
@@ -163,6 +158,11 @@ type alias SongRememberedIndex =
 
 type alias SongsList =
     List SongInfo
+
+
+type alias SongsListRaw =
+    { latestFive : List SongInfoRaw
+    }
 
 
 type alias Time =
@@ -333,19 +333,19 @@ msg2Cmd msg =
 --http://eeue56.github.io/json-to-elm/
 
 
-decodeComplexType : Json.Decode.Decoder ComplexType
-decodeComplexType =
-    Json.Decode.map4 ComplexType
+decodeSongInfoRaw : Json.Decode.Decoder SongInfoRaw
+decodeSongInfoRaw =
+    Json.Decode.map4 SongInfoRaw
         (field "artist" Json.Decode.string)
         (field "title" Json.Decode.string)
         (field "time" Json.Decode.string)
         (field "timeStamp" Json.Decode.string)
 
 
-decodeSomething : Json.Decode.Decoder Something
-decodeSomething =
-    Json.Decode.map Something
-        (field "latestFive" (Json.Decode.list decodeComplexType))
+decodeSongsListRaw : Json.Decode.Decoder SongsListRaw
+decodeSongsListRaw =
+    Json.Decode.map SongsListRaw
+        (field "latestFive" (Json.Decode.list decodeSongInfoRaw))
 
 
 
