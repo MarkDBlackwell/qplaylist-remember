@@ -101,55 +101,17 @@ type alias CommentText =
     String
 
 
-type alias Commented =
-    Bool
-
-
-type alias HoverText =
-    String
-
-
 type alias Model =
     { commentText : CommentText
-    , pageExpanded : PageExpanded
+    , pageExpanded : PageIsExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedIndex
     , songsLatestFew : SongsList
     , songsRemembered : SongsList
     }
 
 
-type alias PageExpanded =
+type alias PageIsExpanded =
     Bool
-
-
-type alias SongGroupLength =
-    Int
-
-
-type alias SongIndex =
-    Int
-
-
-type alias SongInfo =
-    { artist : Artist
-    , commented : Commented
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
-type alias SongInfoRaw =
-    --Keep order
-    { artist : Artist
-    , title : Title
-    , time : Time
-    , timeStamp : TimeStamp
-    }
-
-
-type alias SongLatestFewIndex =
-    Int
 
 
 type alias SongRememberedIndex =
@@ -158,18 +120,6 @@ type alias SongRememberedIndex =
 
 type alias SongsList =
     List SongInfo
-
-
-type alias SongsListRaw =
-    { latestFive : List SongInfoRaw }
-
-
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
 
 
 type alias Title =
@@ -181,7 +131,7 @@ commentTextInit =
     ""
 
 
-pageExpandedInit : PageExpanded
+pageExpandedInit : PageIsExpanded
 pageExpandedInit =
     False
 
@@ -212,6 +162,10 @@ init =
 -- UPDATE
 
 
+type alias Commented =
+    Bool
+
+
 type alias DecodeErrorMessageText =
     String
 
@@ -225,6 +179,40 @@ type alias HttpRequestText =
 
 
 type alias HttpResponseText =
+    String
+
+
+type alias SongInfo =
+    { artist : Artist
+    , commented : Commented
+    , time : Time
+    , timeStamp : TimeStamp
+    , title : Title
+    }
+
+
+type alias SongInfoRaw =
+    --Keep order
+    { artist : Artist
+    , title : Title
+    , time : Time
+    , timeStamp : TimeStamp
+    }
+
+
+type alias SongLatestFewIndex =
+    Int
+
+
+type alias SongsListRaw =
+    { latestFive : List SongInfoRaw }
+
+
+type alias Time =
+    String
+
+
+type alias TimeStamp =
     String
 
 
@@ -532,6 +520,18 @@ subscriptions model =
 
 
 -- VIEW
+
+
+type alias HoverText =
+    String
+
+
+type alias SongGroupLength =
+    Int
+
+
+type alias SongIndex =
+    Int
 
 
 type SongGroup
