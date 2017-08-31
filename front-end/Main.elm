@@ -307,6 +307,27 @@ type Msg
 
 
 
+--For decoding Json, see:
+--https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+--http://eeue56.github.io/json-to-elm/
+
+
+decodeSongInfoRaw : Json.Decode.Decoder SongInfoRaw
+decodeSongInfoRaw =
+    Json.Decode.map4 SongInfoRaw
+        (field "artist" Json.Decode.string)
+        (field "title" Json.Decode.string)
+        (field "time" Json.Decode.string)
+        (field "timeStamp" Json.Decode.string)
+
+
+decodeSongsListRaw : Json.Decode.Decoder SongsListRaw
+decodeSongsListRaw =
+    Json.Decode.map SongsListRaw
+        (field "latestFive" (Json.Decode.list decodeSongInfoRaw))
+
+
+
 -- https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
 -- https://stackoverflow.com/a/39419640/1136063
 
@@ -331,64 +352,9 @@ msg2Cmd msg =
     Task.perform identity msg
 
 
-
---For decoding Json, see:
---https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
---http://eeue56.github.io/json-to-elm/
-
-
-decodeSongInfoRaw : Json.Decode.Decoder SongInfoRaw
-decodeSongInfoRaw =
-    Json.Decode.map4 SongInfoRaw
-        (field "artist" Json.Decode.string)
-        (field "title" Json.Decode.string)
-        (field "time" Json.Decode.string)
-        (field "timeStamp" Json.Decode.string)
-
-
-decodeSongsListRaw : Json.Decode.Decoder SongsListRaw
-decodeSongsListRaw =
-    Json.Decode.map SongsListRaw
-        (field "latestFive" (Json.Decode.list decodeSongInfoRaw))
-
-
 songsLatestFewGet : List SongInfo
 songsLatestFewGet =
     let
-        stringJson : String
-        stringJson =
-            """
-{ "latestFive":
-  [
-    { "artist": "The Herd Of Main Street",
-      "title": "Never Look Back",
-      "time": "4:54 PM",
-      "timeStamp": "2017 08 29 16 54"
-    },
-    { "artist": "Susan Alcorn",
-      "title": "Baltimore Hit Parade",
-      "time": "3:55 PM",
-      "timeStamp": "2017 08 29 15 55"
-    },
-    { "artist": "Thao and the Get Down Stay D",
-      "title": "Astonished Man",
-      "time": "3:51 PM",
-      "timeStamp": "2017 08 29 15 51"
-    },
-    { "artist": "The Herd Of Main Street",
-      "title": "Never Look Back",
-      "time": "3:47 PM",
-      "timeStamp": "2017 08 29 15 47"
-    },
-    { "artist": "Djembe Jones",
-      "title": "Nowhere",
-      "time": "3:42 PM",
-      "timeStamp": "2017 08 29 15 42"
-    }
-  ]
-}
-"""
-
         raw : Result String SongsListRaw
         raw =
             decodeString decodeSongsListRaw stringJson
@@ -424,9 +390,44 @@ songsLatestFewRequest =
         -- songsLatestFewDecode
         url : String
         url =
-            "https://wtmd.org/wtmdapp/LatestFiveHD2.json"
+            "https://wtmd.org/wtmdapp/LatestFive.json"
     in
     Http.send SongsLatestFewResponse request
+
+
+stringJson : String
+stringJson =
+    """
+{ "latestFive":
+  [
+    { "artist": "The Herd Of Main Street",
+      "title": "Never Look Back",
+      "time": "4:54 PM",
+      "timeStamp": "2017 08 29 16 54"
+    },
+    { "artist": "Susan Alcorn",
+      "title": "Baltimore Hit Parade",
+      "time": "3:55 PM",
+      "timeStamp": "2017 08 29 15 55"
+    },
+    { "artist": "Thao and the Get Down Stay D",
+      "title": "Astonished Man",
+      "time": "3:51 PM",
+      "timeStamp": "2017 08 29 15 51"
+    },
+    { "artist": "The Herd Of Main Street",
+      "title": "Never Look Back",
+      "time": "3:47 PM",
+      "timeStamp": "2017 08 29 15 47"
+    },
+    { "artist": "Djembe Jones",
+      "title": "Nowhere",
+      "time": "3:42 PM",
+      "timeStamp": "2017 08 29 15 42"
+    }
+  ]
+}
+"""
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -582,7 +583,9 @@ update msg model =
             )
 
         SongsLatestFewRefresh ->
-            ( model
+            ( { model
+                | songsLatestFew = songsLatestFewGet
+              }
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
             )
 
@@ -593,7 +596,8 @@ update msg model =
                     songsLatestFewInitFull
             in
             ( { model
-                | songsLatestFew = songsLatestFewNew
+                --| songsLatestFew = songsLatestFewNew
+                | songsLatestFew = songsLatestFewGet
               }
             , Cmd.none
             )
