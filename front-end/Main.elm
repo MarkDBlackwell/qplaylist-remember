@@ -449,7 +449,8 @@ update msg model =
                             if List.member songSelected model.songsRemembered then
                                 model.songsRemembered
                             else
-                                songsDifferent ++ [ songSelected ]
+                                songsDifferent
+                                    ++ [ songSelected ]
             in
             ( { model
                 | songsRemembered = songsRememberedNew
@@ -527,7 +528,10 @@ buttonComment group index =
 
         buttonId : Maybe Id
         buttonId =
-            Just ("buttonComment" ++ toString index)
+            Just
+                ("buttonComment"
+                    ++ toString index
+                )
 
         hoverString : HoverString
         hoverString =
@@ -588,7 +592,10 @@ buttonLike group index =
 
         buttonId : Maybe Id
         buttonId =
-            Just ("buttonLike" ++ toString index)
+            Just
+                ("buttonLike"
+                    ++ toString index
+                )
 
         hoverString : HoverString
         hoverString =
@@ -654,7 +661,11 @@ buttonRememberForget group index =
 
         buttonId : Maybe Id
         buttonId =
-            Just ("button" ++ groupString ++ toString index)
+            Just
+                ("button"
+                    ++ groupString
+                    ++ toString index
+                )
 
         groupString : String
         groupString =
@@ -683,7 +694,8 @@ commentArea model =
         commentTextStatistics : String
         commentTextStatistics =
             --""
-            ": " ++ toString (String.length model.commentText)
+            ": "
+                ++ toString (String.length model.commentText)
 
         prompt : String
         prompt =
@@ -745,7 +757,10 @@ groupAttributes group =
                     "remembered"
     in
     [ class "songs-group"
-    , id ("songs-" ++ groupString)
+    , id
+        ("songs-"
+            ++ groupString
+        )
     ]
 
 
@@ -767,7 +782,12 @@ songView model group index song =
 
         buySong : List (Attribute msg)
         buySong =
-            [ href (amazonConstant ++ song.title ++ "+" ++ song.artist)
+            [ href
+                (amazonConstant
+                    ++ song.title
+                    ++ "+"
+                    ++ song.artist
+                )
             , target "_blank"
             , title buySongLiked
             ]
@@ -871,7 +891,8 @@ styleCalc group songGroupLength index =
 
         fontSizeValue : String
         fontSizeValue =
-            toString (sizeFactor * base) ++ "px"
+            toString (sizeFactor * base)
+                ++ "px"
 
         goldenRatio : Float
         goldenRatio =
@@ -896,7 +917,11 @@ styleCalc group songGroupLength index =
                 Remembered ->
                     goldenRatio ^ toFloat indexReversed
     in
-    [ style (backgroundColorStyling ++ fontSizeStyling) ]
+    [ style
+        (backgroundColorStyling
+            ++ fontSizeStyling
+        )
+    ]
 
 
 view : Model -> Html Msg
@@ -906,9 +931,13 @@ view model =
         [ commentArea model
         , section
             (groupAttributes Remembered)
-            (buttonGroupRemembered ++ songsOfGroup model Remembered)
+            (buttonGroupRemembered
+                ++ songsOfGroup model Remembered
+            )
         , hr [] []
         , section
             (groupAttributes Played)
-            (buttonGroupPlayed ++ songsOfGroup model Played)
+            (buttonGroupPlayed
+                ++ songsOfGroup model Played
+            )
         ]
