@@ -648,13 +648,9 @@ buttonMy buttonId hoverString action =
         []
 
 
-buttonPlayed : List (Html Msg)
+buttonPlayed : Html Msg
 buttonPlayed =
     let
-        action : Msg
-        action =
-            SongsLatestFewRefresh
-
         buttonId : Maybe Id
         buttonId =
             Just "refresh"
@@ -663,18 +659,12 @@ buttonPlayed =
         hoverString =
             "Refresh the latest few songs"
     in
-    [ p []
-        [ buttonMy buttonId hoverString action ]
-    ]
+    buttonMy buttonId hoverString SongsLatestFewRefresh
 
 
-buttonRemembered : List (Html Msg)
+buttonRemembered : Html Msg
 buttonRemembered =
     let
-        action : Msg
-        action =
-            PageReshape
-
         buttonId : Maybe Id
         buttonId =
             Just "morph"
@@ -683,9 +673,7 @@ buttonRemembered =
         hoverString =
             "Morph this page's shape"
     in
-    [ p []
-        [ buttonMy buttonId hoverString action ]
-    ]
+    buttonMy buttonId hoverString PageReshape
 
 
 commentArea : Model -> Html Msg
@@ -925,13 +913,17 @@ view model =
         [ commentArea model
         , section
             (groupAttributes Remembered)
-            (buttonRemembered
+            ([ p []
+                [ buttonRemembered ]
+             ]
                 ++ songsRemembered
             )
         , hr [] []
         , section
             (groupAttributes Played)
-            (buttonPlayed
+            ([ p []
+                [ buttonPlayed ]
+             ]
                 ++ songsLatestFew
             )
         ]
