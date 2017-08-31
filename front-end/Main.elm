@@ -600,11 +600,11 @@ buttonLike group index =
 buttonMy : Maybe Id -> HoverString -> Msg -> Html Msg
 buttonMy buttonId hoverString action =
     let
-        displayValue : String
-        displayValue =
+        display : String
+        display =
             case buttonId of
                 Nothing ->
-                    "none"
+                    "inline-block"
 
                 Just buttonId ->
                     if
@@ -625,7 +625,7 @@ buttonMy buttonId hoverString action =
                     [ id buttonId ]
     in
     button
-        ([ style [ ( "display", displayValue ) ]
+        ([ style [ ( "display", display ) ]
          , onClick action
          , title hoverString
          , type_ "button"
@@ -746,7 +746,7 @@ groupAttributes group =
 
 showCommentButtons : Bool
 showCommentButtons =
-    False
+    True
 
 
 songView : Model -> SongGroup -> SongIndex -> SongInfo -> Html Msg
