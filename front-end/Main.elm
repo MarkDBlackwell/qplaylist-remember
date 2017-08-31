@@ -768,8 +768,8 @@ songView model group index song =
                 ++ "&url=search-alias%3Ddigital-music"
                 ++ "&field-keywords="
 
-        buySong : List (Attribute msg)
-        buySong =
+        anchorBuySongAttributes : List (Attribute msg)
+        anchorBuySongAttributes =
             [ href
                 (amazonConstant
                     ++ song.title
@@ -777,11 +777,11 @@ songView model group index song =
                     ++ song.artist
                 )
             , target "_blank"
-            , title buySongLiked
+            , title buySong
             ]
 
-        buySongLiked : String
-        buySongLiked =
+        buySong : String
+        buySong =
             "See song on Amazon (in new tab)"
 
         commentedIndicator : Html Msg
@@ -826,7 +826,7 @@ songView model group index song =
             , buttonLike group index
             , commentedIndicator
             , a
-                buySong
+                anchorBuySongAttributes
                 []
             ]
         , p []
