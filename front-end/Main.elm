@@ -539,35 +539,40 @@ buttonComment group index =
         text ""
 
 
-buttonGroup : SongGroup -> List (Html Msg)
-buttonGroup group =
+buttonGroupPlayed : List (Html Msg)
+buttonGroupPlayed =
     let
         action : Msg
         action =
-            case group of
-                Played ->
-                    SongsLatestFewRefresh
-
-                Remembered ->
-                    PageReshape
+            SongsLatestFewRefresh
 
         buttonId : Maybe Id
         buttonId =
-            case group of
-                Played ->
-                    Just "refresh"
-
-                Remembered ->
-                    Just "morph"
+            Just "refresh"
 
         hoverString : HoverString
         hoverString =
-            case group of
-                Played ->
-                    "Refresh the latest few songs"
+            "Refresh the latest few songs"
+    in
+    [ p []
+        [ buttonMy buttonId hoverString action ]
+    ]
 
-                Remembered ->
-                    "Morph this page's shape"
+
+buttonGroupRemembered : List (Html Msg)
+buttonGroupRemembered =
+    let
+        action : Msg
+        action =
+            PageReshape
+
+        buttonId : Maybe Id
+        buttonId =
+            Just "morph"
+
+        hoverString : HoverString
+        hoverString =
+            "Morph this page's shape"
     in
     [ p []
         [ buttonMy buttonId hoverString action ]
@@ -901,9 +906,9 @@ view model =
         [ commentArea model
         , section
             (groupAttributes Remembered)
-            (buttonGroup Remembered ++ songsOfGroup model Remembered)
+            (buttonGroupRemembered ++ songsOfGroup model Remembered)
         , hr [] []
         , section
             (groupAttributes Played)
-            (buttonGroup Played ++ songsOfGroup model Played)
+            (buttonGroupPlayed ++ songsOfGroup model Played)
         ]
