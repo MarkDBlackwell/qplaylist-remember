@@ -23,6 +23,7 @@ module Main exposing (main)
    )
 -}
 
+import Debug exposing (..)
 import Dom
     exposing
         ( Id
@@ -387,7 +388,6 @@ songsLatestFewRequest =
         request =
             Http.getString url
 
-        -- songsLatestFewDecode
         url : String
         url =
             "https://wtmd.org/wtmdapp/LatestFive.json"
@@ -584,7 +584,8 @@ update msg model =
 
         SongsLatestFewRefresh ->
             ( { model
-                | songsLatestFew = songsLatestFewGet
+                --| songsLatestFew = songsLatestFewGet
+                | songsLatestFew = model.songsLatestFew
               }
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
             )
@@ -594,16 +595,38 @@ update msg model =
                 songsLatestFewNew : SongsList
                 songsLatestFewNew =
                     songsLatestFewInitFull
+
+                --songsLatestFewGet
             in
             ( { model
-                --| songsLatestFew = songsLatestFewNew
-                | songsLatestFew = songsLatestFewGet
+                | songsLatestFew = songsLatestFewNew
               }
             , Cmd.none
             )
 
-        SongsLatestFewResponse (Err _) ->
-            ( model
+        SongsLatestFewResponse (Err httpError) ->
+            let
+                errorString : String
+                errorString =
+                    case httpError of
+                        Http.BadUrl string ->
+                            log "Bad URL" string
+
+                        Http.Timeout ->
+                            log "HTTP timeout" ""
+
+                        Http.NetworkError ->
+                            log "Network error" ""
+
+                        Http.BadStatus responseString ->
+                            log "Bad status" ""
+
+                        Http.BadPayload debuggingMessage responseString ->
+                            log "Bad payload" debuggingMessage
+            in
+            ( { model
+                | songsLatestFew = songsLatestFewInitFull
+              }
             , Cmd.none
             )
 
