@@ -390,7 +390,7 @@ songsLatestFewRequest =
 
         url : String
         url =
-            "https://wtmd.org/wtmdapp/LatestFive.json"
+            "/wtmdapp/LatestFive.json"
     in
     Http.send SongsLatestFewResponse request
 
@@ -592,6 +592,10 @@ update msg model =
 
         SongsLatestFewResponse (Ok latestFew) ->
             let
+                errorString : String
+                errorString =
+                    log "AJAX" "worked"
+
                 songsLatestFewNew : SongsList
                 songsLatestFewNew =
                     songsLatestFewInitFull
