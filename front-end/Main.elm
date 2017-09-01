@@ -885,7 +885,7 @@ songView model group index song =
 
         buySong : String
         buySong =
-            "See song on Amazon (in new tab)"
+            "See this song on Amazon (in new tab)"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
