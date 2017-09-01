@@ -235,8 +235,8 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-decodeSongInfoRaw : Decoder SongInfoRaw
-decodeSongInfoRaw =
+decodeSongRaw : Decoder SongInfoRaw
+decodeSongRaw =
     --For decoding Json, see:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
@@ -261,7 +261,7 @@ decodeSongsLatestFew stringJson =
 
         raw : Result DecodeErrorMessageText SongsListRaw
         raw =
-            decodeString decodeSongsListRaw stringJson
+            decodeString decodeSongsLatestFewRaw stringJson
 
         rawUnpacked : List SongInfoRaw
         rawUnpacked =
@@ -275,10 +275,10 @@ decodeSongsLatestFew stringJson =
     List.map addFields rawUnpacked
 
 
-decodeSongsListRaw : Decoder SongsListRaw
-decodeSongsListRaw =
+decodeSongsLatestFewRaw : Decoder SongsListRaw
+decodeSongsLatestFewRaw =
     map SongsListRaw
-        (field "latestFive" (list decodeSongInfoRaw))
+        (field "latestFive" (list decodeSongRaw))
 
 
 domFocus : Id -> Cmd Msg
