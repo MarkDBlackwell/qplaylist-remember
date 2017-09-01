@@ -394,13 +394,29 @@ update msg model =
                                     ""
 
                                 Just song ->
-                                    song.timeStamp
-                                        ++ " "
-                                        ++ song.time
+                                    song.time
                                         ++ " "
                                         ++ song.artist
                                         ++ ": "
                                         ++ song.title
+
+                queryStringTimeStampKeyword : UrlText
+                queryStringTimeStampKeyword =
+                    "timestamp"
+
+                queryStringTimeStampPayload : UrlText
+                queryStringTimeStampPayload =
+                    case songRememberedIndex of
+                        Nothing ->
+                            ""
+
+                        Just songRememberedIndex ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
 
                 request : Request HttpRequestText
                 request =
@@ -412,6 +428,10 @@ update msg model =
                         (subUri
                             ++ basename
                             ++ "?"
+                            ++ queryStringTimeStampKeyword
+                            ++ "="
+                            ++ queryStringTimeStampPayload
+                            ++ "&"
                             ++ queryStringSongInfoKeyword
                             ++ "="
                             ++ queryStringSongInfoPayload
