@@ -419,22 +419,21 @@ update msg model =
                     "Loved it!"
 
                 showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
-                showHasCommented index song =
-                    if
-                        String.isEmpty model.commentText
-                            || (model.songRememberedCommentingIndex == Nothing)
-                            || (model.songRememberedCommentingIndex /= Just index)
-                    then
-                        song
-                    else
-                        --TODO: make AJAX request.
+                showHasCommented indexRotating song =
+                    if indexRotating == index then
                         { song
                             | commented = True
                         }
+                    else
+                        song
 
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
                     Just index
+
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    List.indexedMap showHasCommented model.songsRemembered
             in
             case model.songRememberedCommentingIndex of
                 Just _ ->
