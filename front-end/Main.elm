@@ -355,7 +355,7 @@ update msg model =
             let
                 basename : UrlText
                 basename =
-                    "ajax-append.php"
+                    "append.php"
 
                 commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
                 commentedShow index song =
@@ -366,16 +366,73 @@ update msg model =
                     else
                         song
 
-                request : Request HttpRequestText
-                request =
-                    getString
-                        (subUri
-                            ++ basename
-                        )
-
                 likeOrCommentRequest : Cmd Msg
                 likeOrCommentRequest =
                     send LikeOrCommentResponse request
+
+                queryStringLikeOrCommentKeyword : UrlText
+                queryStringLikeOrCommentKeyword =
+                    "comment"
+
+                queryStringLikeOrCommentPayload : UrlText
+                queryStringLikeOrCommentPayload =
+                    model.likeOrCommentText
+
+                queryStringSongInfoKeyword : UrlText
+                queryStringSongInfoKeyword =
+                    "song"
+
+                queryStringSongInfoPayload : UrlText
+                queryStringSongInfoPayload =
+                    case songRememberedIndex of
+                        Nothing ->
+                            ""
+
+                        Just songRememberedIndex ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
+                                        ++ " "
+                                        ++ song.time
+                                        ++ " "
+                                        ++ song.artist
+                                        ++ ": "
+                                        ++ song.title
+
+                request : Request HttpRequestText
+                request =
+                    getString requestUri
+
+                requestUri : UrlText
+                requestUri =
+                    log "Request"
+                        (subUri
+                            ++ basename
+                            ++ "?"
+                            ++ queryStringSongInfoKeyword
+                            ++ "="
+                            ++ queryStringSongInfoPayload
+                            ++ "&"
+                            ++ queryStringLikeOrCommentKeyword
+                            ++ "="
+                            ++ queryStringLikeOrCommentPayload
+                        )
+
+                songRememberedIndex : Maybe SongRememberedIndex
+                songRememberedIndex =
+                    model.songRememberedCommentingIndex
+
+                songSelected : Maybe SongInfo
+                songSelected =
+                    case songRememberedIndex of
+                        Nothing ->
+                            Nothing
+
+                        Just songRememberedIndex ->
+                            List.head (List.drop songRememberedIndex model.songsRemembered)
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -390,7 +447,6 @@ update msg model =
                 , focusInputPossibly
                 )
             else
-                --TODO: make AJAX request.
                 ( { model
                     | likeOrCommentText = likeOrCommentTextInit
                     , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -419,6 +475,12 @@ update msg model =
             )
 
         LikeOrCommentResponse (Err httpError) ->
+            let
+                --Keep for console logging:
+                likeOrCommentResponseHttpErrorMessageText : HttpErrorMessageText
+                likeOrCommentResponseHttpErrorMessageText =
+                    httpErrorMessageText httpError
+            in
             ( model
             , Cmd.none
             )
@@ -427,7 +489,8 @@ update msg model =
             let
                 a : String
                 a =
-                    log appendLikeOrCommentJson ""
+                    --log "Ok response" appendLikeOrCommentJson
+                    log "Response" "Ok"
             in
             ( model
             , Cmd.none
