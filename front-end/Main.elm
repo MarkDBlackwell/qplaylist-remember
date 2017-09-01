@@ -397,13 +397,13 @@ update msg model =
             let
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
-                    if "" == model.likeOrCommentText then
+                    if model.likeOrCommentText == likeOrCommentTextInit then
                         model.songRememberedCommentingIndex
                     else
                         songRememberedCommentingIndexInit
             in
             ( { model
-                | likeOrCommentText = ""
+                | likeOrCommentText = likeOrCommentTextInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
@@ -625,7 +625,7 @@ buttonComment group index =
     if Remembered == group then
         buttonMy buttonId hoverText action
     else
-        text ""
+        htmlNodeNull
 
 
 buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
@@ -689,7 +689,7 @@ buttonLike group index =
     in
     case group of
         Played ->
-            text ""
+            htmlNodeNull
 
         Remembered ->
             buttonMy buttonId hoverText action
@@ -814,13 +814,13 @@ commentAreaPossibly model =
         Just index ->
             case songPossibly index of
                 Nothing ->
-                    text ""
+                    htmlNodeNull
 
                 Just song ->
                     commentArea model song
 
         songRememberedCommentingIndexInit ->
-            text ""
+            htmlNodeNull
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
@@ -841,6 +841,11 @@ groupAttributes group =
             ++ groupString
         )
     ]
+
+
+htmlNodeNull : Html Msg
+htmlNodeNull =
+    text ""
 
 
 showCommentButtons : Bool
@@ -885,7 +890,7 @@ songView model group index song =
                 em [ title likedOrCommentedIndicatorHoverText ]
                     []
             else
-                text ""
+                htmlNodeNull
 
         likedOrCommentedIndicatorHoverText : HoverText
         likedOrCommentedIndicatorHoverText =
