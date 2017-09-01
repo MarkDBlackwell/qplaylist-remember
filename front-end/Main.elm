@@ -97,12 +97,12 @@ type alias Artist =
     String
 
 
-type alias CommentText =
+type alias LikeOrCommentText =
     String
 
 
 type alias Model =
-    { commentText : CommentText
+    { likeOrCommentText : LikeOrCommentText
     , pageExpanded : PageIsExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedIndex
     , songsLatestFew : SongsList
@@ -122,8 +122,8 @@ type alias SongsList =
     List SongInfo
 
 
-commentTextInit : CommentText
-commentTextInit =
+likeOrCommentTextInit : LikeOrCommentText
+likeOrCommentTextInit =
     ""
 
 
@@ -149,7 +149,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model commentTextInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
+    ( Model likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
     , Cmd.none
     )
 
@@ -224,7 +224,7 @@ type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
     | CommentInputOk
-    | CommentTextChangeCapture CommentText
+    | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | LikeProcess SongRememberedIndex
@@ -357,7 +357,7 @@ update msg model =
         likedOrCommentedShowHas : SongRememberedIndex -> SongInfo -> SongInfo
         likedOrCommentedShowHas index song =
             if
-                String.isEmpty model.commentText
+                String.isEmpty model.likeOrCommentText
                     || (model.songRememberedCommentingIndex == Nothing)
                     || (model.songRememberedCommentingIndex /= Just index)
             then
@@ -387,7 +387,7 @@ update msg model =
 
         CommentInputCancel ->
             ( { model
-                | commentText = ""
+                | likeOrCommentText = ""
                 , songRememberedCommentingIndex = Nothing
               }
             , Cmd.none
@@ -395,28 +395,24 @@ update msg model =
 
         CommentInputOk ->
             let
-                commands : Cmd Msg
-                commands =
-                    Cmd.batch [ focusInputPossibly ]
-
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
-                    if "" == model.commentText then
+                    if "" == model.likeOrCommentText then
                         model.songRememberedCommentingIndex
                     else
                         Nothing
             in
             ( { model
-                | commentText = ""
+                | likeOrCommentText = ""
                 , songRememberedCommentingIndex = songRememberedCommentingIndexNew
                 , songsRemembered = songsRememberedNew
               }
-            , commands
+            , focusInputPossibly
             )
 
         CommentTextChangeCapture text ->
             ( { model
-                | commentText = text
+                | likeOrCommentText = text
               }
             , Cmd.none
             )
@@ -433,11 +429,7 @@ update msg model =
 
         LikeProcess songRememberedIndex ->
             let
-                commands : Cmd Msg
-                commands =
-                    msg2Cmd (succeed CommentInputOk)
-
-                likeText : CommentText
+                likeText : LikeOrCommentText
                 likeText =
                     "Loved it!"
 
@@ -449,10 +441,6 @@ update msg model =
                         }
                     else
                         song
-
-                songRememberedCommentingIndexNew : Maybe SongRememberedIndex
-                songRememberedCommentingIndexNew =
-                    Just songRememberedIndex
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -466,11 +454,11 @@ update msg model =
 
                 Nothing ->
                     ( { model
-                        | commentText = likeText
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexNew
+                        | likeOrCommentText = likeText
+                        , songRememberedCommentingIndex = Just songRememberedIndex
                         , songsRemembered = songsRememberedNew
                       }
-                    , commands
+                    , msg2Cmd (succeed CommentInputOk)
                     )
 
         PageReshape ->
@@ -781,7 +769,7 @@ commentArea model song =
             " – "
                 ++ song.timeStamp
                 ++ ": "
-                ++ toString (String.length model.commentText)
+                ++ toString (String.length model.likeOrCommentText)
 
         hoverText : HoverText
         hoverText =
