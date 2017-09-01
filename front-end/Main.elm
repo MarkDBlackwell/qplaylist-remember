@@ -346,24 +346,6 @@ update msg model =
 
                 Http.Timeout ->
                     log prefix "Timeout"
-
-        likedOrCommentedShow : SongRememberedIndex -> SongInfo -> SongInfo
-        likedOrCommentedShow index song =
-            if
-                String.isEmpty model.likeOrCommentText
-                    || (model.songRememberedCommentingIndex == songRememberedCommentingIndexInit)
-                    || (model.songRememberedCommentingIndex /= Just index)
-            then
-                song
-            else
-                --TODO: make AJAX request.
-                { song
-                    | likedOrCommented = True
-                }
-
-        songsRememberedNew : SongsList
-        songsRememberedNew =
-            List.indexedMap likedOrCommentedShow model.songsRemembered
     in
     case msg of
         CommentAreaShow index ->
@@ -388,20 +370,32 @@ update msg model =
 
         CommentInputOk ->
             let
-                songRememberedCommentingIndexNew : Maybe SongRememberedIndex
-                songRememberedCommentingIndexNew =
-                    if model.likeOrCommentText == likeOrCommentTextInit then
-                        model.songRememberedCommentingIndex
+                commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                commentedShow index song =
+                    if Just index == model.songRememberedCommentingIndex then
+                        { song
+                            | likedOrCommented = True
+                        }
                     else
-                        songRememberedCommentingIndexInit
+                        song
+
+                songsRememberedNew : SongsList
+                songsRememberedNew =
+                    List.indexedMap commentedShow model.songsRemembered
             in
-            ( { model
-                | likeOrCommentText = likeOrCommentTextInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexNew
-                , songsRemembered = songsRememberedNew
-              }
-            , focusInputPossibly
-            )
+            if String.isEmpty model.likeOrCommentText then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                --TODO: make AJAX request.
+                ( { model
+                    | likeOrCommentText = likeOrCommentTextInit
+                    , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                    , songsRemembered = songsRememberedNew
+                  }
+                , Cmd.none
+                )
 
         CommentTextChangeCapture text ->
             ( { model
