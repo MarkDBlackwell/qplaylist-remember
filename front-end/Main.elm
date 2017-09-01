@@ -158,7 +158,7 @@ init =
 -- UPDATE
 
 
-type alias CommentedOrLiked =
+type alias LikedOrCommented =
     Bool
 
 
@@ -180,7 +180,7 @@ type alias HttpResponseText =
 
 type alias SongInfo =
     { artist : Artist
-    , commentedOrLiked : CommentedOrLiked
+    , likedOrCommented : LikedOrCommented
     , time : Time
     , timeStamp : TimeStamp
     , title : Title
@@ -278,7 +278,7 @@ songsLatestFewGet stringJson =
         addFields : SongInfoRaw -> SongInfo
         addFields songInfoRaw =
             { artist = songInfoRaw.artist
-            , commentedOrLiked = False
+            , likedOrCommented = False
             , time = songInfoRaw.time
             , timeStamp = songInfoRaw.timeStamp
             , title = songInfoRaw.title
@@ -354,8 +354,8 @@ update msg model =
                 Http.Timeout ->
                     log prefix "Timeout"
 
-        showHasCommentedOrLiked : SongRememberedIndex -> SongInfo -> SongInfo
-        showHasCommentedOrLiked index song =
+        showHasLikedOrCommented : SongRememberedIndex -> SongInfo -> SongInfo
+        showHasLikedOrCommented index song =
             if
                 String.isEmpty model.commentText
                     || (model.songRememberedCommentingIndex == Nothing)
@@ -365,12 +365,12 @@ update msg model =
             else
                 --TODO: make AJAX request.
                 { song
-                    | commentedOrLiked = True
+                    | likedOrCommented = True
                 }
 
         songsRememberedNew : SongsList
         songsRememberedNew =
-            List.indexedMap showHasCommentedOrLiked model.songsRemembered
+            List.indexedMap showHasLikedOrCommented model.songsRemembered
     in
     case msg of
         CommentAreaShow index ->
@@ -448,11 +448,11 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                showHasCommentedOrLiked : SongRememberedIndex -> SongInfo -> SongInfo
-                showHasCommentedOrLiked index song =
+                showHasLikedOrCommented : SongRememberedIndex -> SongInfo -> SongInfo
+                showHasLikedOrCommented index song =
                     if index == songRememberedIndex then
                         { song
-                            | commentedOrLiked = True
+                            | likedOrCommented = True
                         }
                     else
                         song
@@ -463,7 +463,7 @@ update msg model =
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    List.indexedMap showHasCommentedOrLiked model.songsRemembered
+                    List.indexedMap showHasLikedOrCommented model.songsRemembered
             in
             case model.songRememberedCommentingIndex of
                 Just _ ->
@@ -511,7 +511,7 @@ update msg model =
             let
                 songClean : SongInfo -> SongInfo
                 songClean song =
-                    { song | commentedOrLiked = False }
+                    { song | likedOrCommented = False }
 
                 songDiffers : SongInfo -> Bool
                 songDiffers song =
@@ -887,30 +887,30 @@ songView model group index song =
         buySong =
             "See song on Amazon (in new tab)"
 
-        commentedOrLikedIndicator : Html Msg
-        commentedOrLikedIndicator =
-            if song.commentedOrLiked then
-                em [ title commentedOrLikedIndicatorHoverText ]
+        lengthRemembered : SongGroupLength
+        lengthRemembered =
+            List.length model.songsRemembered
+
+        likedOrCommentedIndicator : Html Msg
+        likedOrCommentedIndicator =
+            if song.likedOrCommented then
+                em [ title likedOrCommentedIndicatorHoverText ]
                     []
             else
                 text ""
 
-        commentedOrLikedIndicatorHoverText : HoverText
-        commentedOrLikedIndicatorHoverText =
+        likedOrCommentedIndicatorHoverText : HoverText
+        likedOrCommentedIndicatorHoverText =
             "You've shared a 'Like'"
-                ++ commentedOrLikedIndicatorHoverTextCommentButton
+                ++ likedOrCommentedIndicatorHoverTextCommentButton
                 ++ " about this song (with the DJ)"
 
-        commentedOrLikedIndicatorHoverTextCommentButton : HoverText
-        commentedOrLikedIndicatorHoverTextCommentButton =
+        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
+        likedOrCommentedIndicatorHoverTextCommentButton =
             if showCommentButtons then
                 " (or a comment)"
             else
                 ""
-
-        lengthRemembered : SongGroupLength
-        lengthRemembered =
-            List.length model.songsRemembered
 
         songAttributes : List (Attribute msg)
         songAttributes =
@@ -927,7 +927,7 @@ songView model group index song =
                 [ text song.time ]
             , buttonComment group index
             , buttonLike group index
-            , commentedOrLikedIndicator
+            , likedOrCommentedIndicator
             , a
                 anchorBuySongAttributes
                 []
