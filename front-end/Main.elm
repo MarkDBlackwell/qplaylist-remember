@@ -303,13 +303,20 @@ songsLatestFewGet stringJson =
 songsLatestFewRequest : Cmd Msg
 songsLatestFewRequest =
     let
+        basename : UrlText
+        basename =
+            "LatestFive.json"
+
         request : Request HttpRequestText
         request =
-            getString urlText
+            getString
+                (subUri
+                    ++ basename
+                )
 
-        urlText : UrlText
-        urlText =
-            "/wtmdapp/LatestFive.json"
+        subUri : UrlText
+        subUri =
+            "/wtmdapp/"
     in
     send SongsLatestFewResponse request
 
