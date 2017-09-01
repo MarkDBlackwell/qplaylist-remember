@@ -348,15 +348,16 @@ update msg model =
                     log prefix "Timeout"
     in
     case msg of
-        CommentAreaShow index ->
+        CommentAreaShow songRememberedIndex ->
             let
-                indexNew : SongRememberedIndex
-                indexNew =
-                    Maybe.withDefault index model.songRememberedCommentingIndex
+                songRememberedIndexNew : SongRememberedIndex
+                songRememberedIndexNew =
+                    Maybe.withDefault songRememberedIndex model.songRememberedCommentingIndex
             in
             ( { model
-                | songRememberedCommentingIndex = Just indexNew
+                | songRememberedCommentingIndex = Just songRememberedIndexNew
               }
+              --'focusInputPossibly' doesn't work, here.
             , focusSet "input"
             )
 
@@ -397,14 +398,14 @@ update msg model =
                 , Cmd.none
                 )
 
-        CommentTextChangeCapture text ->
+        CommentTextChangeCapture likeOrCommentTextNew ->
             ( { model
-                | likeOrCommentText = text
+                | likeOrCommentText = likeOrCommentTextNew
               }
             , Cmd.none
             )
 
-        FocusResult result ->
+        FocusResult _ ->
             ( model
             , Cmd.none
             )
@@ -457,32 +458,24 @@ update msg model =
             , focusInputPossibly
             )
 
-        SongForget index ->
+        SongForget songRememberedIndex ->
             let
-                focusId : Id
-                focusId =
-                    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
-                        "refresh"
-                    else
-                        "input"
-
-                songsRememberedNew : SongsList
-                songsRememberedNew =
-                    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
-                        withoutOne
-                    else
-                        model.songsRemembered
-
-                withoutOne : SongsList
-                withoutOne =
-                    List.take index model.songsRemembered
-                        ++ List.drop (index + 1) model.songsRemembered
+                songsRememberedWithoutOne : SongsList
+                songsRememberedWithoutOne =
+                    List.take songRememberedIndex model.songsRemembered
+                        ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
-            ( { model
-                | songsRemembered = songsRememberedNew
-              }
-            , focusSet focusId
-            )
+            if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
+                ( { model
+                    | songsRemembered = songsRememberedWithoutOne
+                  }
+                , focusSet "refresh"
+                )
+            else
+                ( model
+                  --, focusSet "input"
+                , focusInputPossibly
+                )
 
         SongRemember songLatestFewIndex ->
             let
