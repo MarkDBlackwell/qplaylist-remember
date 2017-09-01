@@ -347,8 +347,8 @@ update msg model =
                 Http.Timeout ->
                     log prefix "Timeout"
 
-        likedOrCommentedShowHas : SongRememberedIndex -> SongInfo -> SongInfo
-        likedOrCommentedShowHas index song =
+        likedOrCommentedShow : SongRememberedIndex -> SongInfo -> SongInfo
+        likedOrCommentedShow index song =
             if
                 String.isEmpty model.likeOrCommentText
                     || (model.songRememberedCommentingIndex == songRememberedCommentingIndexInit)
@@ -363,7 +363,7 @@ update msg model =
 
         songsRememberedNew : SongsList
         songsRememberedNew =
-            List.indexedMap likedOrCommentedShowHas model.songsRemembered
+            List.indexedMap likedOrCommentedShow model.songsRemembered
     in
     case msg of
         CommentAreaShow index ->
@@ -428,8 +428,8 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                likedOrCommentedShowHas : SongRememberedIndex -> SongInfo -> SongInfo
-                likedOrCommentedShowHas index song =
+                likedOrCommentedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                likedOrCommentedShow index song =
                     if index == songRememberedIndex then
                         { song
                             | likedOrCommented = True
@@ -439,7 +439,7 @@ update msg model =
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    List.indexedMap likedOrCommentedShowHas model.songsRemembered
+                    List.indexedMap likedOrCommentedShow model.songsRemembered
             in
             case model.songRememberedCommentingIndex of
                 Just _ ->
