@@ -328,17 +328,19 @@ update msg model =
     in
     case msg of
         CommentAreaShow songRememberedIndex ->
-            let
-                songRememberedIndexNew : SongRememberedIndex
-                songRememberedIndexNew =
-                    Maybe.withDefault songRememberedIndex model.songRememberedCommentingIndex
-            in
-            ( { model
-                | songRememberedCommentingIndex = Just songRememberedIndexNew
-              }
-              --'focusInputPossibly' doesn't work, here.
-            , focusSet "input"
-            )
+            case model.songRememberedCommentingIndex of
+                Just _ ->
+                    ( model
+                    , focusInputPossibly
+                    )
+
+                songRememberedCommentingIndexInit ->
+                    ( { model
+                        | songRememberedCommentingIndex = Just songRememberedIndex
+                      }
+                      --'focusInputPossibly' doesn't work, here.
+                    , focusSet "input"
+                    )
 
         CommentInputCancel ->
             ( { model
