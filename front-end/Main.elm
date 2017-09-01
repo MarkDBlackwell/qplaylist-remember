@@ -247,33 +247,8 @@ decodeSongInfoRaw =
         (field "timeStamp" string)
 
 
-decodeSongsListRaw : Decoder SongsListRaw
-decodeSongsListRaw =
-    map SongsListRaw
-        (field "latestFive" (list decodeSongInfoRaw))
-
-
-domFocus : Id -> Cmd Msg
-domFocus id =
-    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-    --https://stackoverflow.com/a/39419640/1136063
-    attempt FocusResult (focus id)
-
-
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (succeed (FocusSet id))
-
-
-msg2Cmd : Task.Task Never msg -> Cmd msg
-msg2Cmd msg =
-    --For wrapping a message as a `Cmd`, see:
-    -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-    Task.perform identity msg
-
-
-songsLatestFewGet : HttpResponseText -> List SongInfo
-songsLatestFewGet stringJson =
+decodeSongsLatestFew : HttpResponseText -> List SongInfo
+decodeSongsLatestFew stringJson =
     let
         addFields : SongInfoRaw -> SongInfo
         addFields songInfoRaw =
@@ -298,6 +273,31 @@ songsLatestFewGet stringJson =
                     json.latestFive
     in
     List.map addFields rawUnpacked
+
+
+decodeSongsListRaw : Decoder SongsListRaw
+decodeSongsListRaw =
+    map SongsListRaw
+        (field "latestFive" (list decodeSongInfoRaw))
+
+
+domFocus : Id -> Cmd Msg
+domFocus id =
+    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+    --https://stackoverflow.com/a/39419640/1136063
+    attempt FocusResult (focus id)
+
+
+focusSet : Id -> Cmd Msg
+focusSet id =
+    msg2Cmd (succeed (FocusSet id))
+
+
+msg2Cmd : Task.Task Never msg -> Cmd msg
+msg2Cmd msg =
+    --For wrapping a message as a `Cmd`, see:
+    -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    Task.perform identity msg
 
 
 songsLatestFewRequest : Cmd Msg
@@ -564,7 +564,7 @@ update msg model =
             let
                 songsLatestFewNew : SongsList
                 songsLatestFewNew =
-                    songsLatestFewGet songsLatestFewJson
+                    decodeSongsLatestFew songsLatestFewJson
             in
             ( { model
                 | songsLatestFew = songsLatestFewNew
