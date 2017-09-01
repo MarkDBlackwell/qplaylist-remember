@@ -227,8 +227,8 @@ type Msg
     | CommentTextChangeCapture CommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | PageReshape
     | LikeProcess SongRememberedIndex
+    | PageReshape
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
@@ -354,8 +354,8 @@ update msg model =
                 Http.Timeout ->
                     log prefix "Timeout"
 
-        showHasLikedOrCommented : SongRememberedIndex -> SongInfo -> SongInfo
-        showHasLikedOrCommented index song =
+        likedOrCommentedShowHas : SongRememberedIndex -> SongInfo -> SongInfo
+        likedOrCommentedShowHas index song =
             if
                 String.isEmpty model.commentText
                     || (model.songRememberedCommentingIndex == Nothing)
@@ -370,7 +370,7 @@ update msg model =
 
         songsRememberedNew : SongsList
         songsRememberedNew =
-            List.indexedMap showHasLikedOrCommented model.songsRemembered
+            List.indexedMap likedOrCommentedShowHas model.songsRemembered
     in
     case msg of
         CommentAreaShow index ->
@@ -431,13 +431,6 @@ update msg model =
             , domFocus id
             )
 
-        PageReshape ->
-            ( { model
-                | pageExpanded = not model.pageExpanded
-              }
-            , focusInputPossibly
-            )
-
         LikeProcess songRememberedIndex ->
             let
                 commands : Cmd Msg
@@ -448,8 +441,8 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                showHasLikedOrCommented : SongRememberedIndex -> SongInfo -> SongInfo
-                showHasLikedOrCommented index song =
+                likedOrCommentedShowHas : SongRememberedIndex -> SongInfo -> SongInfo
+                likedOrCommentedShowHas index song =
                     if index == songRememberedIndex then
                         { song
                             | likedOrCommented = True
@@ -463,7 +456,7 @@ update msg model =
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    List.indexedMap showHasLikedOrCommented model.songsRemembered
+                    List.indexedMap likedOrCommentedShowHas model.songsRemembered
             in
             case model.songRememberedCommentingIndex of
                 Just _ ->
@@ -479,6 +472,13 @@ update msg model =
                       }
                     , commands
                     )
+
+        PageReshape ->
+            ( { model
+                | pageExpanded = not model.pageExpanded
+              }
+            , focusInputPossibly
+            )
 
         SongForget index ->
             let
