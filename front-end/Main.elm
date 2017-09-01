@@ -319,7 +319,7 @@ update msg model =
     let
         focusInputPossibly : Cmd Msg
         focusInputPossibly =
-            if Nothing == model.songRememberedCommentingIndex then
+            if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
                 Cmd.none
             else
                 focusSet "input"
@@ -808,11 +808,11 @@ commentAreaPossibly model =
     case model.songRememberedCommentingIndex of
         Just index ->
             case songPossibly index of
-                Nothing ->
-                    htmlNodeNull
-
                 Just song ->
                     commentArea model song
+
+                songRememberedCommentingIndexInit ->
+                    htmlNodeNull
 
         songRememberedCommentingIndexInit ->
             htmlNodeNull
