@@ -188,7 +188,7 @@ type alias SongInfo =
 
 
 type alias SongInfoRaw =
-    --Keep order
+    --Keep order:
     { artist : Artist
     , title : Title
     , time : Time
@@ -330,6 +330,29 @@ update msg model =
                 Cmd.none
             else
                 focusSet "input"
+
+        httpErrorMessageText : Error -> HttpErrorMessageText
+        httpErrorMessageText httpError =
+            let
+                prefix : HttpErrorMessageText
+                prefix =
+                    "HttpError"
+            in
+            case httpError of
+                Http.BadPayload debuggingText httpResponseText ->
+                    log (prefix ++ ": BadPayload") debuggingText
+
+                Http.BadStatus httpResponseText ->
+                    log prefix "BadStatus"
+
+                Http.BadUrl urlText ->
+                    log (prefix ++ ": BadUrl") urlText
+
+                Http.NetworkError ->
+                    log prefix "NetworkError"
+
+                Http.Timeout ->
+                    log prefix "Timeout"
 
         showHasCommentedOrLiked : SongRememberedIndex -> SongInfo -> SongInfo
         showHasCommentedOrLiked index song =
@@ -540,27 +563,10 @@ update msg model =
 
         SongsLatestFewResponse (Err httpError) ->
             let
-                errorString : HttpErrorMessageText
-                errorString =
-                    case httpError of
-                        Http.BadPayload debuggingText httpResponseText ->
-                            log (prefix ++ ": BadPayload") debuggingText
-
-                        Http.BadStatus httpResponseText ->
-                            log prefix "BadStatus"
-
-                        Http.BadUrl urlText ->
-                            log (prefix ++ ": BadUrl") urlText
-
-                        Http.NetworkError ->
-                            log prefix "NetworkError"
-
-                        Http.Timeout ->
-                            log prefix "Timeout"
-
-                prefix : HttpErrorMessageText
-                prefix =
-                    "HttpError"
+                --Keep for console logging:
+                songsLatestFewResponseHttpErrorMessageText : HttpErrorMessageText
+                songsLatestFewResponseHttpErrorMessageText =
+                    httpErrorMessageText httpError
             in
             ( model
             , Cmd.none
@@ -859,7 +865,7 @@ songView model group index song =
     let
         amazonConstant : String
         amazonConstant =
-            --%3D represents the "equals" sign.
+            --%3D represents the "equals" sign:
             "http://www.amazon.com/s/ref=nb_sb_noss?"
                 ++ "tag=wtmdradio-20"
                 ++ "&url=search-alias%3Ddigital-music"
