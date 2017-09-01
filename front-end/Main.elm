@@ -884,23 +884,23 @@ songView model group index song =
         commentedIndicator : Html Msg
         commentedIndicator =
             if song.commented then
-                em [ title hoverTextLiked ]
+                em [ title commentedIndicatorHoverText ]
                     []
             else
                 text ""
 
-        hoverTextCommentButton : HoverText
-        hoverTextCommentButton =
+        commentedIndicatorHoverText : HoverText
+        commentedIndicatorHoverText =
+            "You've shared a 'Like'"
+                ++ commentedIndicatorHoverTextCommentButton
+                ++ " about this song (with the DJ)"
+
+        commentedIndicatorHoverTextCommentButton : HoverText
+        commentedIndicatorHoverTextCommentButton =
             if showCommentButtons then
                 " (or a comment)"
             else
                 ""
-
-        hoverTextLiked : HoverText
-        hoverTextLiked =
-            "You've shared a 'Like'"
-                ++ hoverTextCommentButton
-                ++ " regarding this song (with the DJ)"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
