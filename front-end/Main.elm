@@ -293,27 +293,6 @@ msg2Cmd msg =
     Task.perform identity msg
 
 
-songsLatestFewRequest : Cmd Msg
-songsLatestFewRequest =
-    let
-        basename : UrlText
-        basename =
-            "LatestFive.json"
-
-        request : Request HttpRequestText
-        request =
-            getString
-                (subUri
-                    ++ basename
-                )
-
-        subUri : UrlText
-        subUri =
-            "/wtmdapp/"
-    in
-    send SongsLatestFewResponse request
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -473,7 +452,6 @@ update msg model =
                 )
             else
                 ( model
-                  --, focusSet "input"
                 , focusInputPossibly
                 )
 
@@ -527,6 +505,26 @@ update msg model =
             )
 
         SongsLatestFewRefresh ->
+            let
+                basename : UrlText
+                basename =
+                    "LatestFive.json"
+
+                request : Request HttpRequestText
+                request =
+                    getString
+                        (subUri
+                            ++ basename
+                        )
+
+                songsLatestFewRequest : Cmd Msg
+                songsLatestFewRequest =
+                    send SongsLatestFewResponse request
+
+                subUri : UrlText
+                subUri =
+                    "/wtmdapp/"
+            in
             ( model
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
             )
