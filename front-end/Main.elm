@@ -228,7 +228,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | PageReshape
-    | ProcessLike SongRememberedIndex
+    | LikeProcess SongRememberedIndex
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
@@ -438,7 +438,7 @@ update msg model =
             , focusInputPossibly
             )
 
-        ProcessLike songRememberedIndex ->
+        LikeProcess songRememberedIndex ->
             let
                 commands : Cmd Msg
                 commands =
@@ -686,7 +686,7 @@ buttonLike group index =
     let
         action : Msg
         action =
-            ProcessLike index
+            LikeProcess index
 
         buttonId : Maybe Id
         buttonId =
