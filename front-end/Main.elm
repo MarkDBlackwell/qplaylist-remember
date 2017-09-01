@@ -685,7 +685,7 @@ buttonLike group index =
 
         hoverText : HoverText
         hoverText =
-            "Share a 'Like' (with the DJ) about this song"
+            "Send a 'Like' (to the DJ) about this song"
     in
     case group of
         Played ->
@@ -886,15 +886,14 @@ songView model group index song =
         hoverCommentButton : String
         hoverCommentButton =
             if showCommentButtons then
-                "(or commented on) "
+                " (or commented on it)"
             else
                 ""
 
         hoverLiked : String
         hoverLiked =
-            "You've 'Liked' "
+            "You've sent a 'Like' (to the DJ) regarding this song"
                 ++ hoverCommentButton
-                ++ "this song"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =

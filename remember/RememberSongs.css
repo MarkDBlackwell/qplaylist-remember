@@ -180,7 +180,7 @@ section#songs-remembered > div > p > button:nth-of-type(2):before {
     content: "Comment";
 }
 section#songs-remembered > div > p > button:last-of-type:before {
-    content: "Like";
+    content: "Send like";
 }
 section#songs-remembered > div > p > em {
     margin: 0 0 0 .4em;
