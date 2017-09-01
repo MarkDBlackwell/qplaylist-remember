@@ -408,7 +408,7 @@ update msg model =
             , focusInputPossibly
             )
 
-        ProcessLike index ->
+        ProcessLike songRememberedIndex ->
             let
                 commands : Cmd Msg
                 commands =
@@ -419,8 +419,8 @@ update msg model =
                     "Loved it!"
 
                 showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
-                showHasCommented indexRotating song =
-                    if indexRotating == index then
+                showHasCommented index song =
+                    if index == songRememberedIndex then
                         { song
                             | commented = True
                         }
@@ -429,7 +429,7 @@ update msg model =
 
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
-                    Just index
+                    Just songRememberedIndex
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
