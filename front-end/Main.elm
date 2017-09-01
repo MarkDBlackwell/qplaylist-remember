@@ -281,13 +281,6 @@ decodeSongsLatestFewRaw =
         (field "latestFive" (list decodeSongRaw))
 
 
-domFocus : Id -> Cmd Msg
-domFocus id =
-    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-    --https://stackoverflow.com/a/39419640/1136063
-    attempt FocusResult (focus id)
-
-
 focusSet : Id -> Cmd Msg
 focusSet id =
     msg2Cmd (succeed (FocusSet id))
@@ -423,8 +416,10 @@ update msg model =
             )
 
         FocusSet id ->
+            --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+            --https://stackoverflow.com/a/39419640/1136063
             ( model
-            , domFocus id
+            , attempt FocusResult (focus id)
             )
 
         LikeProcess songRememberedIndex ->
