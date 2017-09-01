@@ -480,18 +480,35 @@ update msg model =
             , focusSet focusId
             )
 
-        SongRemember index ->
+        SongRemember songLatestFewIndex ->
             let
+                songClean : SongInfo -> SongInfo
+                songClean song =
+                    { song | commented = False }
+
+                songDiffers : SongInfo -> Bool
+                songDiffers song =
+                    case songSelected of
+                        Nothing ->
+                            True
+
+                        Just songSelected ->
+                            songClean songSelected /= songClean song
+
                 songSelected : Maybe SongInfo
                 songSelected =
-                    List.head (List.drop index model.songsLatestFew)
+                    List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
                 songsDifferent : SongsList
                 songsDifferent =
                     if Nothing == songSelected then
                         model.songsRemembered
                     else
-                        List.filter (\x -> Just x /= songSelected) model.songsRemembered
+                        List.filter songDiffers model.songsRemembered
+
+                songsRememberedCleaned : SongsList
+                songsRememberedCleaned =
+                    List.map songClean model.songsRemembered
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
@@ -500,7 +517,7 @@ update msg model =
                             model.songsRemembered
 
                         Just songSelected ->
-                            if List.member songSelected model.songsRemembered then
+                            if List.member (songClean songSelected) songsRememberedCleaned then
                                 model.songsRemembered
                             else
                                 songsDifferent
