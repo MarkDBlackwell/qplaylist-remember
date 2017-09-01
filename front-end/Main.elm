@@ -691,7 +691,7 @@ buttonLike group index =
 
         hoverText : HoverText
         hoverText =
-            "Send a 'Like' (to the DJ) about this song"
+            "Share a 'Like' (with the DJ) about this song"
     in
     case group of
         Played ->
@@ -884,22 +884,23 @@ songView model group index song =
         commentedIndicator : Html Msg
         commentedIndicator =
             if song.commented then
-                em [ title hoverLiked ]
+                em [ title hoverTextLiked ]
                     []
             else
                 text ""
 
-        hoverCommentButton : String
-        hoverCommentButton =
+        hoverTextCommentButton : HoverText
+        hoverTextCommentButton =
             if showCommentButtons then
-                " (or commented on it)"
+                " (or a comment)"
             else
                 ""
 
-        hoverLiked : String
-        hoverLiked =
-            "You've sent a 'Like' (to the DJ) regarding this song"
-                ++ hoverCommentButton
+        hoverTextLiked : HoverText
+        hoverTextLiked =
+            "You've shared a 'Like'"
+                ++ hoverTextCommentButton
+                ++ " regarding this song (with the DJ)"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
