@@ -808,11 +808,11 @@ commentAreaPossibly model =
     case model.songRememberedCommentingIndex of
         Just index ->
             case songPossibly index of
+                Nothing ->
+                    htmlNodeNull
+
                 Just song ->
                     commentArea model song
-
-                songRememberedCommentingIndexInit ->
-                    htmlNodeNull
 
         songRememberedCommentingIndexInit ->
             htmlNodeNull
