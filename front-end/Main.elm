@@ -428,8 +428,8 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                likedOrCommentedShow : SongRememberedIndex -> SongInfo -> SongInfo
-                likedOrCommentedShow index song =
+                likedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                likedShow index song =
                     if index == songRememberedIndex then
                         { song
                             | likedOrCommented = True
@@ -439,7 +439,7 @@ update msg model =
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    List.indexedMap likedOrCommentedShow model.songsRemembered
+                    List.indexedMap likedShow model.songsRemembered
             in
             case model.songRememberedCommentingIndex of
                 Just _ ->
