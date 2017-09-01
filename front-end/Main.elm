@@ -412,46 +412,44 @@ update msg model =
             let
                 commands : Cmd Msg
                 commands =
-                    if Nothing == model.songRememberedCommentingIndex then
-                        Cmd.none
-                    else
-                        Cmd.none
-
-                commentTextNew : CommentText
-                commentTextNew =
-                    if Nothing == model.songRememberedCommentingIndex then
-                        likeText
-                    else
-                        model.commentText
+                    msg2Cmd (succeed CommentInputOk)
 
                 likeText : CommentText
                 likeText =
                     "Loved it!"
 
-                songRememberedCommentingIndexNew : SongRememberedIndex
-                songRememberedCommentingIndexNew =
-                    Maybe.withDefault index model.songRememberedCommentingIndex
+                showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
+                showHasCommented index song =
+                    if
+                        String.isEmpty model.commentText
+                            || (model.songRememberedCommentingIndex == Nothing)
+                            || (model.songRememberedCommentingIndex /= Just index)
+                    then
+                        song
+                    else
+                        --TODO: make AJAX request.
+                        { song
+                            | commented = True
+                        }
 
-                {-
-                   songRememberedCommentingIndexNew : Maybe SongRememberedIndex
-                   songRememberedCommentingIndexNew =
-                       if Nothing == model.songRememberedCommentingIndex then
-                           likeText
-                       else
-                           model.commentText
-                       if "" == model.commentText then
-                           model.songRememberedCommentingIndex
-                       else
-                           Nothing
-                -}
+                songRememberedCommentingIndexNew : Maybe SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    Just index
             in
-            ( { model
-                | commentText = commentTextNew
-                , songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
-                , songsRemembered = songsRememberedNew
-              }
-            , commands
-            )
+            case model.songRememberedCommentingIndex of
+                Just _ ->
+                    ( model
+                    , Cmd.none
+                    )
+
+                Nothing ->
+                    ( { model
+                        | commentText = likeText
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexNew
+                        , songsRemembered = songsRememberedNew
+                      }
+                    , commands
+                    )
 
         SongForget index ->
             let
