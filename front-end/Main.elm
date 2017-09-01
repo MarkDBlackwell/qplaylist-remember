@@ -228,6 +228,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | PageReshape
+    | ProcessLike SongRememberedIndex
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
@@ -322,6 +323,24 @@ update msg model =
                 Cmd.none
             else
                 focusSet "input"
+
+        showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
+        showHasCommented index song =
+            if
+                String.isEmpty model.commentText
+                    || (model.songRememberedCommentingIndex == Nothing)
+                    || (model.songRememberedCommentingIndex /= Just index)
+            then
+                song
+            else
+                --TODO: make AJAX request.
+                { song
+                    | commented = True
+                }
+
+        songsRememberedNew : SongsList
+        songsRememberedNew =
+            List.indexedMap showHasCommented model.songsRemembered
     in
     case msg of
         CommentAreaShow index ->
@@ -350,30 +369,12 @@ update msg model =
                 commands =
                     Cmd.batch [ focusInputPossibly ]
 
-                showHasCommented : SongRememberedIndex -> SongInfo -> SongInfo
-                showHasCommented index song =
-                    if
-                        String.isEmpty model.commentText
-                            || (model.songRememberedCommentingIndex == Nothing)
-                            || (model.songRememberedCommentingIndex /= Just index)
-                    then
-                        song
-                    else
-                        --TODO: make AJAX request.
-                        { song
-                            | commented = True
-                        }
-
                 songRememberedCommentingIndexNew : Maybe SongRememberedIndex
                 songRememberedCommentingIndexNew =
                     if "" == model.commentText then
                         model.songRememberedCommentingIndex
                     else
                         Nothing
-
-                songsRememberedNew : SongsList
-                songsRememberedNew =
-                    List.indexedMap showHasCommented model.songsRemembered
             in
             ( { model
                 | commentText = ""
@@ -405,6 +406,51 @@ update msg model =
                 | pageExpanded = not model.pageExpanded
               }
             , focusInputPossibly
+            )
+
+        ProcessLike index ->
+            let
+                commands : Cmd Msg
+                commands =
+                    if Nothing == model.songRememberedCommentingIndex then
+                        Cmd.none
+                    else
+                        Cmd.none
+
+                commentTextNew : CommentText
+                commentTextNew =
+                    if Nothing == model.songRememberedCommentingIndex then
+                        likeText
+                    else
+                        model.commentText
+
+                likeText : CommentText
+                likeText =
+                    "Loved it!"
+
+                songRememberedCommentingIndexNew : SongRememberedIndex
+                songRememberedCommentingIndexNew =
+                    Maybe.withDefault index model.songRememberedCommentingIndex
+
+                {-
+                   songRememberedCommentingIndexNew : Maybe SongRememberedIndex
+                   songRememberedCommentingIndexNew =
+                       if Nothing == model.songRememberedCommentingIndex then
+                           likeText
+                       else
+                           model.commentText
+                       if "" == model.commentText then
+                           model.songRememberedCommentingIndex
+                       else
+                           Nothing
+                -}
+            in
+            ( { model
+                | commentText = commentTextNew
+                , songRememberedCommentingIndex = Just songRememberedCommentingIndexNew
+                , songsRemembered = songsRememberedNew
+              }
+            , commands
             )
 
         SongForget index ->
@@ -613,7 +659,7 @@ buttonLike group index =
     let
         action : Msg
         action =
-            CommentAreaShow index
+            ProcessLike index
 
         buttonId : Maybe Id
         buttonId =
