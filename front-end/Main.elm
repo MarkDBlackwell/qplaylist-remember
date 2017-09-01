@@ -358,7 +358,7 @@ update msg model =
         likedOrCommentedShowHas index song =
             if
                 String.isEmpty model.likeOrCommentText
-                    || (model.songRememberedCommentingIndex == Nothing)
+                    || (model.songRememberedCommentingIndex == songRememberedCommentingIndexInit)
                     || (model.songRememberedCommentingIndex /= Just index)
             then
                 song
@@ -387,8 +387,8 @@ update msg model =
 
         CommentInputCancel ->
             ( { model
-                | likeOrCommentText = ""
-                , songRememberedCommentingIndex = Nothing
+                | likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
               }
             , Cmd.none
             )
@@ -400,7 +400,7 @@ update msg model =
                     if "" == model.likeOrCommentText then
                         model.songRememberedCommentingIndex
                     else
-                        Nothing
+                        songRememberedCommentingIndexInit
             in
             ( { model
                 | likeOrCommentText = ""
@@ -452,7 +452,7 @@ update msg model =
                     , Cmd.none
                     )
 
-                Nothing ->
+                songRememberedCommentingIndexInit ->
                     ( { model
                         | likeOrCommentText = likeText
                         , songRememberedCommentingIndex = Just songRememberedIndex
@@ -472,14 +472,14 @@ update msg model =
             let
                 focusId : Id
                 focusId =
-                    if Nothing == model.songRememberedCommentingIndex then
+                    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
                         "refresh"
                     else
                         "input"
 
                 songsRememberedNew : SongsList
                 songsRememberedNew =
-                    if Nothing == model.songRememberedCommentingIndex then
+                    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
                         withoutOne
                     else
                         model.songsRemembered
@@ -811,9 +811,6 @@ commentAreaPossibly model =
             List.head (List.drop index model.songsRemembered)
     in
     case model.songRememberedCommentingIndex of
-        Nothing ->
-            text ""
-
         Just index ->
             case songPossibly index of
                 Nothing ->
@@ -821,6 +818,9 @@ commentAreaPossibly model =
 
                 Just song ->
                     commentArea model song
+
+        songRememberedCommentingIndexInit ->
+            text ""
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
