@@ -227,6 +227,7 @@ type Msg
     | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
+    | LikeOrCommentResponse (Result Error HttpResponseText)
     | LikeProcess SongRememberedIndex
     | PageReshape
     | SongForget SongRememberedIndex
@@ -352,6 +353,10 @@ update msg model =
 
         CommentInputOk ->
             let
+                basename : UrlText
+                basename =
+                    "ajax-append.php"
+
                 commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
                 commentedShow index song =
                     if Just index == model.songRememberedCommentingIndex then
@@ -361,9 +366,24 @@ update msg model =
                     else
                         song
 
+                request : Request HttpRequestText
+                request =
+                    getString
+                        (subUri
+                            ++ basename
+                        )
+
+                likeOrCommentRequest : Cmd Msg
+                likeOrCommentRequest =
+                    send LikeOrCommentResponse request
+
                 songsRememberedNew : SongsList
                 songsRememberedNew =
                     List.indexedMap commentedShow model.songsRemembered
+
+                subUri : UrlText
+                subUri =
+                    "/remember/"
             in
             if String.isEmpty model.likeOrCommentText then
                 ( model
@@ -376,7 +396,7 @@ update msg model =
                     , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                     , songsRemembered = songsRememberedNew
                   }
-                , Cmd.none
+                , likeOrCommentRequest
                 )
 
         CommentTextChangeCapture likeOrCommentTextNew ->
@@ -396,6 +416,21 @@ update msg model =
             --https://stackoverflow.com/a/39419640/1136063
             ( model
             , attempt FocusResult (focus id)
+            )
+
+        LikeOrCommentResponse (Err httpError) ->
+            ( model
+            , Cmd.none
+            )
+
+        LikeOrCommentResponse (Ok appendLikeOrCommentJson) ->
+            let
+                a : String
+                a =
+                    log appendLikeOrCommentJson ""
+            in
+            ( model
+            , Cmd.none
             )
 
         LikeProcess songRememberedIndex ->
