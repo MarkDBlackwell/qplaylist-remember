@@ -1124,6 +1124,11 @@ view model =
         []
         [ commentAreaPossibly model
         , section
+            [ id "message" ]
+            [ p []
+                [ text "Message" ]
+            ]
+        , section
             (groupAttributes Remembered)
             ([ p []
                 [ buttonRemembered ]

@@ -41,6 +41,15 @@ html {
     color: White;
     background-color: Black;
 }
+section#message {
+    line-height: 1.5;
+    background-color: rgb(255,255,0);
+    color: rgb(230,0,140);
+}
+section#message > p {
+    font-size: 15px; /* basis for em and percentage calculations */
+    text-align: center;
+}
 section#comment {
     line-height: 1.5;
     background-color: rgb(190,255,190);
