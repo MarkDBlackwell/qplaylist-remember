@@ -97,16 +97,21 @@ type alias Artist =
     String
 
 
+type alias AwaitingServerResponse =
+    Bool
+
+
 type alias LikeOrCommentText =
     String
 
 
 type alias Model =
-    { likeOrCommentText : LikeOrCommentText
+    { awaitingServerResponse : AwaitingServerResponse
+    , likeOrCommentText : LikeOrCommentText
     , pageExpanded : PageIsExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedIndex
-    , songsLatestFew : SongsList
-    , songsRemembered : SongsList
+    , songsLatestFew : SongsLatestFew
+    , songsRemembered : SongsRemembered
     }
 
 
@@ -118,8 +123,17 @@ type alias SongRememberedIndex =
     Int
 
 
-type alias SongsList =
+type alias SongsLatestFew =
     List SongInfo
+
+
+type alias SongsRemembered =
+    List SongInfo
+
+
+awaitingServerResponseInit : AwaitingServerResponse
+awaitingServerResponseInit =
+    False
 
 
 likeOrCommentTextInit : LikeOrCommentText
@@ -137,19 +151,19 @@ songRememberedCommentingIndexInit =
     Nothing
 
 
-songsLatestFewInit : SongsList
+songsLatestFewInit : SongsLatestFew
 songsLatestFewInit =
     []
 
 
-songsRememberedInit : SongsList
+songsRememberedInit : SongsRemembered
 songsRememberedInit =
     []
 
 
 init : ( Model, Cmd msg )
 init =
-    ( Model likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsRememberedInit songsLatestFewInit
+    ( Model awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -200,8 +214,8 @@ type alias SongLatestFewIndex =
     Int
 
 
-type alias SongsListRaw =
-    { latestFive : List SongInfoRaw }
+type alias SongsLatestFewRaw =
+    { latestFew : List SongInfoRaw }
 
 
 type alias Time =
@@ -260,7 +274,7 @@ decodeSongsLatestFew stringJson =
             , title = songInfoRaw.title
             }
 
-        raw : Result DecodeErrorMessageText SongsListRaw
+        raw : Result DecodeErrorMessageText SongsLatestFewRaw
         raw =
             decodeString decodeSongsLatestFewRaw stringJson
 
@@ -271,14 +285,14 @@ decodeSongsLatestFew stringJson =
                     []
 
                 Ok json ->
-                    json.latestFive
+                    json.latestFew
     in
     List.map addFields rawUnpacked
 
 
-decodeSongsLatestFewRaw : Decoder SongsListRaw
+decodeSongsLatestFewRaw : Decoder SongsLatestFewRaw
 decodeSongsLatestFewRaw =
-    map SongsListRaw
+    map SongsLatestFewRaw
         (field "latestFive" (list decodeSongRaw))
 
 
@@ -454,7 +468,7 @@ update msg model =
                         Just songRememberedIndex ->
                             List.head (List.drop songRememberedIndex model.songsRemembered)
 
-                songsRememberedNew : SongsList
+                songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     List.indexedMap commentedShow model.songsRemembered
 
@@ -531,7 +545,7 @@ update msg model =
                     else
                         song
 
-                songsRememberedNew : SongsList
+                songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     List.indexedMap likedShow model.songsRemembered
             in
@@ -559,7 +573,7 @@ update msg model =
 
         SongForget songRememberedIndex ->
             let
-                songsRememberedWithoutOne : SongsList
+                songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
                     List.take songRememberedIndex model.songsRemembered
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
@@ -594,18 +608,18 @@ update msg model =
                 songSelected =
                     List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
-                songsDifferent : SongsList
+                songsDifferent : SongsRemembered
                 songsDifferent =
                     if Nothing == songSelected then
                         model.songsRemembered
                     else
                         List.filter songDiffers model.songsRemembered
 
-                songsRememberedCleaned : SongsList
+                songsRememberedCleaned : SongsRemembered
                 songsRememberedCleaned =
                     List.map songClean model.songsRemembered
 
-                songsRememberedNew : SongsList
+                songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     case songSelected of
                         Nothing ->
@@ -662,7 +676,7 @@ update msg model =
 
         SongsLatestFewResponse (Ok songsLatestFewJson) ->
             let
-                songsLatestFewNew : SongsList
+                songsLatestFewNew : SongsLatestFew
                 songsLatestFewNew =
                     decodeSongsLatestFew songsLatestFewJson
             in
