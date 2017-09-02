@@ -371,15 +371,6 @@ update msg model =
                 basename =
                     "append.php"
 
-                commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
-                commentedShow index song =
-                    if Just index == model.songRememberedCommentingIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-
                 likeOrCommentRequest : Cmd Msg
                 likeOrCommentRequest =
                     send LikeOrCommentResponse request
@@ -468,10 +459,6 @@ update msg model =
                         Just songRememberedIndex ->
                             List.head (List.drop songRememberedIndex model.songsRemembered)
 
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.indexedMap commentedShow model.songsRemembered
-
                 subUri : UrlText
                 subUri =
                     "/remember/"
@@ -482,9 +469,7 @@ update msg model =
                 )
             else
                 ( { model
-                    | likeOrCommentText = likeOrCommentTextInit
-                    , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                    , songsRemembered = songsRememberedNew
+                    | awaitingServerResponse = True
                   }
                 , likeOrCommentRequest
                 )
@@ -525,8 +510,26 @@ update msg model =
                 a =
                     --log "Ok response" appendLikeOrCommentJson
                     log "Response" "Ok"
+
+                commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                commentedShow index song =
+                    if Just index == model.songRememberedCommentingIndex then
+                        { song
+                            | likedOrCommented = True
+                        }
+                    else
+                        song
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    List.indexedMap commentedShow model.songsRemembered
             in
-            ( model
+            ( { model
+                | awaitingServerResponse = False
+                , likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                , songsRemembered = songsRememberedNew
+              }
             , Cmd.none
             )
 
