@@ -119,6 +119,14 @@ type alias PageIsExpanded =
     Bool
 
 
+type alias SongLatestFew =
+    { artist : Artist
+    , time : Time
+    , timeStamp : TimeStamp
+    , title : Title
+    }
+
+
 type alias SongInfo =
     { artist : Artist
     , likedOrCommented : LikedOrCommented
@@ -142,7 +150,7 @@ type alias SongRememberedIndex =
 
 
 type alias SongsLatestFew =
-    List SongInfo
+    List SongLatestFew
 
 
 type alias SongsRemembered =
@@ -274,10 +282,9 @@ decodeSongRaw =
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew stringJson =
     let
-        addFields : SongInfoRaw -> SongInfo
+        addFields : SongInfoRaw -> SongLatestFew
         addFields songInfoRaw =
             { artist = songInfoRaw.artist
-            , likedOrCommented = False
             , time = songInfoRaw.time
             , timeStamp = songInfoRaw.timeStamp
             , title = songInfoRaw.title
@@ -315,6 +322,16 @@ msg2Cmd msg =
     --For wrapping a message as a `Cmd`, see:
     -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     Task.perform identity msg
+
+
+songLatestFew2Remembered : SongLatestFew -> SongRemembered
+songLatestFew2Remembered song =
+    { artist = song.artist
+    , likedOrCommented = False
+    , time = song.time
+    , timeStamp = song.timeStamp
+    , title = song.title
+    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -607,16 +624,16 @@ update msg model =
                 songClean song =
                     { song | likedOrCommented = False }
 
-                songDiffers : SongInfo -> Bool
+                songDiffers : SongRemembered -> Bool
                 songDiffers song =
                     case songSelected of
                         Nothing ->
                             True
 
                         Just songSelected ->
-                            songClean songSelected /= songClean song
+                            songClean (songLatestFew2Remembered songSelected) /= songClean song
 
-                songSelected : Maybe SongInfo
+                songSelected : Maybe SongLatestFew
                 songSelected =
                     List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
@@ -638,11 +655,11 @@ update msg model =
                             model.songsRemembered
 
                         Just songSelected ->
-                            if List.member (songClean songSelected) songsRememberedCleaned then
+                            if List.member (songClean (songLatestFew2Remembered songSelected)) songsRememberedCleaned then
                                 model.songsRemembered
                             else
                                 songsDifferent
-                                    ++ [ songSelected ]
+                                    ++ [ songLatestFew2Remembered songSelected ]
             in
             ( { model
                 | songsRemembered = songsRememberedNew
@@ -1123,7 +1140,11 @@ view model =
     let
         songsLatestFew : List (Html Msg)
         songsLatestFew =
-            List.indexedMap (songView model Played) model.songsLatestFew
+            List.indexedMap (songView model Played) songsLatestFew2Remembered
+
+        songsLatestFew2Remembered : List SongRemembered
+        songsLatestFew2Remembered =
+            List.map songLatestFew2Remembered model.songsLatestFew
 
         songsRemembered : List (Html Msg)
         songsRemembered =
