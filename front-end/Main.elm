@@ -119,6 +119,24 @@ type alias PageIsExpanded =
     Bool
 
 
+type alias SongInfo =
+    { artist : Artist
+    , likedOrCommented : LikedOrCommented
+    , time : Time
+    , timeStamp : TimeStamp
+    , title : Title
+    }
+
+
+type alias SongRemembered =
+    { artist : Artist
+    , likedOrCommented : LikedOrCommented
+    , time : Time
+    , timeStamp : TimeStamp
+    , title : Title
+    }
+
+
 type alias SongRememberedIndex =
     Int
 
@@ -128,7 +146,7 @@ type alias SongsLatestFew =
 
 
 type alias SongsRemembered =
-    List SongInfo
+    List SongRemembered
 
 
 awaitingServerResponseInit : AwaitingServerResponse
@@ -190,15 +208,6 @@ type alias HttpRequestText =
 
 type alias HttpResponseText =
     String
-
-
-type alias SongInfo =
-    { artist : Artist
-    , likedOrCommented : LikedOrCommented
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
 
 
 type alias SongInfoRaw =
@@ -450,7 +459,7 @@ update msg model =
                 songRememberedIndex =
                     model.songRememberedCommentingIndex
 
-                songSelected : Maybe SongInfo
+                songSelected : Maybe SongRemembered
                 songSelected =
                     case songRememberedIndex of
                         Nothing ->
@@ -511,7 +520,7 @@ update msg model =
                     --log "Ok response" appendLikeOrCommentJson
                     log "Response" "Ok"
 
-                commentedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
                 commentedShow index song =
                     if Just index == model.songRememberedCommentingIndex then
                         { song
@@ -539,7 +548,7 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                likedShow : SongRememberedIndex -> SongInfo -> SongInfo
+                likedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
                 likedShow index song =
                     if index == songRememberedIndex then
                         { song
@@ -594,7 +603,7 @@ update msg model =
 
         SongRemember songLatestFewIndex ->
             let
-                songClean : SongInfo -> SongInfo
+                songClean : SongRemembered -> SongRemembered
                 songClean song =
                     { song | likedOrCommented = False }
 
@@ -878,7 +887,7 @@ buttonRemembered =
     buttonMy buttonId hoverText PageReshape
 
 
-commentArea : Model -> SongInfo -> Html Msg
+commentArea : Model -> SongRemembered -> Html Msg
 commentArea model song =
     let
         commentTextStatistics : String
@@ -923,7 +932,7 @@ commentArea model song =
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
     let
-        songPossibly : SongRememberedIndex -> Maybe SongInfo
+        songPossibly : SongRememberedIndex -> Maybe SongRemembered
         songPossibly index =
             List.head (List.drop index model.songsRemembered)
     in
@@ -970,7 +979,7 @@ showCommentButtons =
     True
 
 
-songView : Model -> SongGroup -> SongIndex -> SongInfo -> Html Msg
+songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
         amazonConstant : String
