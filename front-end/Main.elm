@@ -254,25 +254,24 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-decodeSongLatestFew : Decoder SongLatestFew
-decodeSongLatestFew =
+decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
+decodeSongsLatestFew jsonRawText =
     --For decoding JSON, see:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
-    map4 SongLatestFew
-        (field "artist" string)
-        (field "time" string)
-        (field "timeStamp" string)
-        (field "title" string)
-
-
-decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew jsonRawText =
     let
+        decodeSong : Decoder SongLatestFew
+        decodeSong =
+            map4 SongLatestFew
+                (field "artist" string)
+                (field "time" string)
+                (field "timeStamp" string)
+                (field "title" string)
+
         tagged2Record : Decoder SongsLatestFewTagged
         tagged2Record =
             map SongsLatestFewTagged
-                (field "latestFive" (list decodeSongLatestFew))
+                (field "latestFive" (list decodeSong))
 
         tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
         tryRecord =
@@ -367,8 +366,8 @@ update msg model =
 
         CommentInputOk ->
             let
-                artistTimeTitlePayload : UrlText
-                artistTimeTitlePayload =
+                artistTimeTitle : UrlText
+                artistTimeTitle =
                     case songRememberedIndex of
                         Nothing ->
                             ""
@@ -389,8 +388,8 @@ update msg model =
                 basename =
                     "append.php"
 
-                likeOrCommentPayload : UrlText
-                likeOrCommentPayload =
+                likeOrComment : UrlText
+                likeOrComment =
                     model.likeOrCommentText
 
                 likeOrCommentRequest : Cmd Msg
@@ -407,11 +406,11 @@ update msg model =
                         (subUri
                             ++ basename
                             ++ "?comment="
-                            ++ likeOrCommentPayload
+                            ++ likeOrComment
                             ++ "&song="
-                            ++ artistTimeTitlePayload
+                            ++ artistTimeTitle
                             ++ "&timestamp="
-                            ++ timeStampPayload
+                            ++ timeStamp
                         )
 
                 songRememberedIndex : Maybe SongRememberedIndex
@@ -431,8 +430,8 @@ update msg model =
                 subUri =
                     "/remember/"
 
-                timeStampPayload : UrlText
-                timeStampPayload =
+                timeStamp : UrlText
+                timeStamp =
                     case songRememberedIndex of
                         Nothing ->
                             ""
