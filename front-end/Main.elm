@@ -254,9 +254,9 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-decodeSongRaw : Decoder SongLatestFew
-decodeSongRaw =
-    --For decoding Json, see:
+decodeSongLatestFew : Decoder SongLatestFew
+decodeSongLatestFew =
+    --For decoding JSON, see:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
     map4 SongLatestFew
@@ -269,22 +269,21 @@ decodeSongRaw =
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew jsonRawText =
     let
-        raw : Result DecodeErrorMessageText SongsLatestFewTagged
-        raw =
-            decodeString decodeSongsLatestFewRemoveTag jsonRawText
+        tagged2Record : Decoder SongsLatestFewTagged
+        tagged2Record =
+            map SongsLatestFewTagged
+                (field "latestFive" (list decodeSongLatestFew))
+
+        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
+        tryRecord =
+            decodeString tagged2Record jsonRawText
     in
-    case raw of
+    case tryRecord of
         Err _ ->
             []
 
-        Ok tagged ->
-            tagged.latestFew
-
-
-decodeSongsLatestFewRemoveTag : Decoder SongsLatestFewTagged
-decodeSongsLatestFewRemoveTag =
-    map SongsLatestFewTagged
-        (field "latestFive" (list decodeSongRaw))
+        Ok record ->
+            record.latestFew
 
 
 focusSet : Id -> Cmd Msg
@@ -368,28 +367,12 @@ update msg model =
 
         CommentInputOk ->
             let
-                basename : UrlText
-                basename =
-                    "append.php"
-
-                likeOrCommentRequest : Cmd Msg
-                likeOrCommentRequest =
-                    send LikeOrCommentResponse request
-
-                queryStringLikeOrCommentKeyword : UrlText
-                queryStringLikeOrCommentKeyword =
-                    "comment"
-
-                queryStringLikeOrCommentPayload : UrlText
-                queryStringLikeOrCommentPayload =
-                    model.likeOrCommentText
-
-                queryStringSongInfoKeyword : UrlText
-                queryStringSongInfoKeyword =
+                artistTimeTitleKeyword : UrlText
+                artistTimeTitleKeyword =
                     "song"
 
-                queryStringSongInfoPayload : UrlText
-                queryStringSongInfoPayload =
+                artistTimeTitlePayload : UrlText
+                artistTimeTitlePayload =
                     case songRememberedIndex of
                         Nothing ->
                             ""
@@ -406,23 +389,21 @@ update msg model =
                                         ++ ": "
                                         ++ song.title
 
-                queryStringTimeStampKeyword : UrlText
-                queryStringTimeStampKeyword =
-                    "timestamp"
+                basename : UrlText
+                basename =
+                    "append.php"
 
-                queryStringTimeStampPayload : UrlText
-                queryStringTimeStampPayload =
-                    case songRememberedIndex of
-                        Nothing ->
-                            ""
+                likeOrCommentKeyword : UrlText
+                likeOrCommentKeyword =
+                    "comment"
 
-                        Just songRememberedIndex ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
+                likeOrCommentPayload : UrlText
+                likeOrCommentPayload =
+                    model.likeOrCommentText
 
-                                Just song ->
-                                    song.timeStamp
+                likeOrCommentRequest : Cmd Msg
+                likeOrCommentRequest =
+                    send LikeOrCommentResponse request
 
                 request : Request HttpRequestText
                 request =
@@ -434,17 +415,17 @@ update msg model =
                         (subUri
                             ++ basename
                             ++ "?"
-                            ++ queryStringTimeStampKeyword
+                            ++ timeStampKeyword
                             ++ "="
-                            ++ queryStringTimeStampPayload
+                            ++ timeStampPayload
                             ++ "&"
-                            ++ queryStringSongInfoKeyword
+                            ++ artistTimeTitleKeyword
                             ++ "="
-                            ++ queryStringSongInfoPayload
+                            ++ artistTimeTitlePayload
                             ++ "&"
-                            ++ queryStringLikeOrCommentKeyword
+                            ++ likeOrCommentKeyword
                             ++ "="
-                            ++ queryStringLikeOrCommentPayload
+                            ++ likeOrCommentPayload
                         )
 
                 songRememberedIndex : Maybe SongRememberedIndex
@@ -463,6 +444,24 @@ update msg model =
                 subUri : UrlText
                 subUri =
                     "/remember/"
+
+                timeStampKeyword : UrlText
+                timeStampKeyword =
+                    "timestamp"
+
+                timeStampPayload : UrlText
+                timeStampPayload =
+                    case songRememberedIndex of
+                        Nothing ->
+                            ""
+
+                        Just songRememberedIndex ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
             in
             if String.isEmpty model.likeOrCommentText then
                 ( model
