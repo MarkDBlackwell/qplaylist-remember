@@ -124,11 +124,11 @@ type alias PageIsExpanded =
 
 
 type alias SongLatestFew =
-    --Keep order:
+    --Keep order (for JSON decoding):
     { artist : Artist
-    , title : Title
     , time : Time
     , timeStamp : TimeStamp
+    , title : Title
     }
 
 
@@ -261,20 +261,21 @@ decodeSongRaw =
     --http://eeue56.github.io/json-to-elm/
     map4 SongLatestFew
         (field "artist" string)
-        (field "title" string)
         (field "time" string)
         (field "timeStamp" string)
+        (field "title" string)
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew stringJson =
     let
         addFields : SongLatestFew -> SongLatestFew
-        addFields songInfoRaw =
-            { artist = songInfoRaw.artist
-            , time = songInfoRaw.time
-            , timeStamp = songInfoRaw.timeStamp
-            , title = songInfoRaw.title
+        addFields songLatestFew =
+            --Keep order aligned (with type alias):
+            { artist = songLatestFew.artist
+            , time = songLatestFew.time
+            , timeStamp = songLatestFew.timeStamp
+            , title = songLatestFew.title
             }
 
         raw : Result DecodeErrorMessageText SongsLatestFewWithTag
