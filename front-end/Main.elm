@@ -392,12 +392,8 @@ update msg model =
                 index =
                     model.songRememberedCommentingIndex
 
-                request : Cmd Msg
+                request : Request HttpRequestText
                 request =
-                    send LikeOrCommentResponse requestHttp
-
-                requestHttp : Request HttpRequestText
-                requestHttp =
                     getString requestUri
 
                 requestUri : UrlText
@@ -448,12 +444,12 @@ update msg model =
                 ( { model
                     | awaitingServerResponse = True
                   }
-                , request
+                , send LikeOrCommentResponse request
                 )
 
-        CommentTextChangeCapture likeOrCommentTextNew ->
+        CommentTextChangeCapture text ->
             ( { model
-                | likeOrCommentText = likeOrCommentTextNew
+                | likeOrCommentText = text
               }
             , Cmd.none
             )
@@ -473,8 +469,8 @@ update msg model =
         LikeOrCommentResponse (Err httpError) ->
             let
                 --Keep for console logging:
-                likeOrCommentResponseHttpErrorMessageText : HttpErrorMessageText
-                likeOrCommentResponseHttpErrorMessageText =
+                a : HttpErrorMessageText
+                a =
                     httpErrorMessageText httpError
             in
             ( model
@@ -483,6 +479,7 @@ update msg model =
 
         LikeOrCommentResponse (Ok appendLikeOrCommentJson) ->
             let
+                --Keep for console logging:
                 a : String
                 a =
                     --log "Ok response" appendLikeOrCommentJson
