@@ -215,7 +215,7 @@ type alias SongLatestFewIndex =
 
 
 type alias SongsLatestFewRaw =
-    { latestFew : List SongLatestFew }
+    { latestFew : SongsLatestFew }
 
 
 type alias Time =
@@ -277,7 +277,7 @@ decodeSongsLatestFew stringJson =
         raw =
             decodeString decodeSongsLatestFewRaw stringJson
 
-        rawUnpacked : List SongLatestFew
+        rawUnpacked : SongsLatestFew
         rawUnpacked =
             case raw of
                 Err _ ->
@@ -1125,7 +1125,7 @@ view model =
         songsLatestFew =
             List.indexedMap (songView model Played) songsLatestFew2Remembered
 
-        songsLatestFew2Remembered : List SongRemembered
+        songsLatestFew2Remembered : SongsRemembered
         songsLatestFew2Remembered =
             List.map songLatestFew2Remembered model.songsLatestFew
 
