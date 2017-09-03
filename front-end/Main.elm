@@ -105,11 +105,15 @@ type alias LikeOrCommentText =
     String
 
 
+type alias LikedOrCommented =
+    Bool
+
+
 type alias Model =
     { awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
     , pageExpanded : PageIsExpanded
-    , songRememberedCommentingIndex : Maybe SongRememberedIndex
+    , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
@@ -188,10 +192,6 @@ init =
 
 
 -- UPDATE
-
-
-type alias LikedOrCommented =
-    Bool
 
 
 type alias DecodeErrorMessageText =
