@@ -262,7 +262,7 @@ decodeSongRaw =
         (field "timeStamp" string)
 
 
-decodeSongsLatestFew : HttpResponseText -> List SongInfo
+decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew stringJson =
     let
         addFields : SongInfoRaw -> SongInfo
