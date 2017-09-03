@@ -550,20 +550,24 @@ update msg model =
 
         SongForget songRememberedIndex ->
             let
+                commenting : Bool
+                commenting =
+                    model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+
                 songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
                     List.take songRememberedIndex model.songsRemembered
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
-            if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
+            if commenting then
+                ( model
+                , focusInputPossibly
+                )
+            else
                 ( { model
                     | songsRemembered = songsRememberedWithoutOne
                   }
                 , focusSet "refresh"
-                )
-            else
-                ( model
-                , focusInputPossibly
                 )
 
         SongRemember songLatestFewIndex ->
