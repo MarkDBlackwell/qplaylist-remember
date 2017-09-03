@@ -120,14 +120,6 @@ type alias PageIsExpanded =
 
 
 type alias SongLatestFew =
-    { artist : Artist
-    , title : Title
-    , time : Time
-    , timeStamp : TimeStamp
-    }
-
-
-type alias SongInfoRaw =
     --Keep order:
     { artist : Artist
     , title : Title
@@ -223,7 +215,7 @@ type alias SongLatestFewIndex =
 
 
 type alias SongsLatestFewRaw =
-    { latestFew : List SongInfoRaw }
+    { latestFew : List SongLatestFew }
 
 
 type alias Time =
@@ -258,12 +250,12 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-decodeSongRaw : Decoder SongInfoRaw
+decodeSongRaw : Decoder SongLatestFew
 decodeSongRaw =
     --For decoding Json, see:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
-    map4 SongInfoRaw
+    map4 SongLatestFew
         (field "artist" string)
         (field "title" string)
         (field "time" string)
@@ -273,7 +265,7 @@ decodeSongRaw =
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew stringJson =
     let
-        addFields : SongInfoRaw -> SongLatestFew
+        addFields : SongLatestFew -> SongLatestFew
         addFields songInfoRaw =
             { artist = songInfoRaw.artist
             , time = songInfoRaw.time
@@ -285,7 +277,7 @@ decodeSongsLatestFew stringJson =
         raw =
             decodeString decodeSongsLatestFewRaw stringJson
 
-        rawUnpacked : List SongInfoRaw
+        rawUnpacked : List SongLatestFew
         rawUnpacked =
             case raw of
                 Err _ ->
