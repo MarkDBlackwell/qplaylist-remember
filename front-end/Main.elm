@@ -218,7 +218,7 @@ type alias SongRememberedIndex =
     Int
 
 
-type alias SongsLatestFewRaw =
+type alias SongsLatestFewWithTag =
     { latestFew : SongsLatestFew }
 
 
@@ -277,9 +277,9 @@ decodeSongsLatestFew stringJson =
             , title = songInfoRaw.title
             }
 
-        raw : Result DecodeErrorMessageText SongsLatestFewRaw
+        raw : Result DecodeErrorMessageText SongsLatestFewWithTag
         raw =
-            decodeString decodeSongsLatestFewRaw stringJson
+            decodeString decodeSongsLatestFewWithTag stringJson
 
         rawUnpacked : SongsLatestFew
         rawUnpacked =
@@ -293,9 +293,9 @@ decodeSongsLatestFew stringJson =
     List.map addFields rawUnpacked
 
 
-decodeSongsLatestFewRaw : Decoder SongsLatestFewRaw
-decodeSongsLatestFewRaw =
-    map SongsLatestFewRaw
+decodeSongsLatestFewWithTag : Decoder SongsLatestFewWithTag
+decodeSongsLatestFewWithTag =
+    map SongsLatestFewWithTag
         (field "latestFive" (list decodeSongRaw))
 
 
