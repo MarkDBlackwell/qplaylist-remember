@@ -367,10 +367,6 @@ update msg model =
 
         CommentInputOk ->
             let
-                artistTimeTitleKeyword : UrlText
-                artistTimeTitleKeyword =
-                    "song"
-
                 artistTimeTitlePayload : UrlText
                 artistTimeTitlePayload =
                     case songRememberedIndex of
@@ -393,10 +389,6 @@ update msg model =
                 basename =
                     "append.php"
 
-                likeOrCommentKeyword : UrlText
-                likeOrCommentKeyword =
-                    "comment"
-
                 likeOrCommentPayload : UrlText
                 likeOrCommentPayload =
                     model.likeOrCommentText
@@ -414,18 +406,12 @@ update msg model =
                     log "Request"
                         (subUri
                             ++ basename
-                            ++ "?"
-                            ++ timeStampKeyword
-                            ++ "="
-                            ++ timeStampPayload
-                            ++ "&"
-                            ++ artistTimeTitleKeyword
-                            ++ "="
-                            ++ artistTimeTitlePayload
-                            ++ "&"
-                            ++ likeOrCommentKeyword
-                            ++ "="
+                            ++ "?comment="
                             ++ likeOrCommentPayload
+                            ++ "&song="
+                            ++ artistTimeTitlePayload
+                            ++ "&timestamp="
+                            ++ timeStampPayload
                         )
 
                 songRememberedIndex : Maybe SongRememberedIndex
@@ -444,10 +430,6 @@ update msg model =
                 subUri : UrlText
                 subUri =
                     "/remember/"
-
-                timeStampKeyword : UrlText
-                timeStampKeyword =
-                    "timestamp"
 
                 timeStampPayload : UrlText
                 timeStampPayload =
