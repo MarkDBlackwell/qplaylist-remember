@@ -137,7 +137,7 @@ type alias SongRemembered =
     }
 
 
-type alias SongRememberedIndex =
+type alias SongRememberedCommentingIndex =
     Int
 
 
@@ -164,7 +164,7 @@ pageExpandedInit =
     False
 
 
-songRememberedCommentingIndexInit : Maybe SongRememberedIndex
+songRememberedCommentingIndexInit : Maybe SongRememberedCommentingIndex
 songRememberedCommentingIndexInit =
     Nothing
 
@@ -211,6 +211,10 @@ type alias HttpResponseText =
 
 
 type alias SongLatestFewIndex =
+    Int
+
+
+type alias SongRememberedIndex =
     Int
 
 
