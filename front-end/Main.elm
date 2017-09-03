@@ -121,18 +121,18 @@ type alias PageIsExpanded =
 
 type alias SongLatestFew =
     { artist : Artist
+    , title : Title
     , time : Time
     , timeStamp : TimeStamp
-    , title : Title
     }
 
 
-type alias SongInfo =
+type alias SongInfoRaw =
+    --Keep order:
     { artist : Artist
-    , likedOrCommented : LikedOrCommented
+    , title : Title
     , time : Time
     , timeStamp : TimeStamp
-    , title : Title
     }
 
 
@@ -216,15 +216,6 @@ type alias HttpRequestText =
 
 type alias HttpResponseText =
     String
-
-
-type alias SongInfoRaw =
-    --Keep order:
-    { artist : Artist
-    , title : Title
-    , time : Time
-    , timeStamp : TimeStamp
-    }
 
 
 type alias SongLatestFewIndex =
