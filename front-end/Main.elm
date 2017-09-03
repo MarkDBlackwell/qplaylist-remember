@@ -1122,12 +1122,12 @@ view model =
     in
     main_
         []
-        [ commentAreaPossibly model
-        , section
+        [ section
             [ id "message" ]
             [ p []
                 [ text "Message" ]
             ]
+        , commentAreaPossibly model
         , section
             (groupAttributes Remembered)
             ([ p []
