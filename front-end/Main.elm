@@ -341,7 +341,7 @@ update msg model =
                     log prefix "Timeout"
     in
     case msg of
-        CommentAreaShow songRememberedIndex ->
+        CommentAreaShow index ->
             case model.songRememberedCommentingIndex of
                 Just _ ->
                     ( model
@@ -350,7 +350,7 @@ update msg model =
 
                 songRememberedCommentingIndexInit ->
                     ( { model
-                        | songRememberedCommentingIndex = Just songRememberedIndex
+                        | songRememberedCommentingIndex = Just index
                       }
                       --'focusInputPossibly' doesn't work, here.
                     , focusSet "input"
@@ -368,36 +368,36 @@ update msg model =
             let
                 artistTimeTitle : UrlText
                 artistTimeTitle =
-                    case songRememberedIndex of
+                    case index of
                         Nothing ->
                             ""
 
-                        Just songRememberedIndex ->
+                        Just _ ->
                             case songSelected of
                                 Nothing ->
                                     ""
 
-                                Just song ->
-                                    song.time
+                                Just songSelected ->
+                                    songSelected.time
                                         ++ " "
-                                        ++ song.artist
+                                        ++ songSelected.artist
                                         ++ ": "
-                                        ++ song.title
+                                        ++ songSelected.title
 
                 basename : UrlText
                 basename =
                     "append.php"
 
-                likeOrComment : UrlText
-                likeOrComment =
-                    model.likeOrCommentText
+                index : Maybe SongRememberedIndex
+                index =
+                    model.songRememberedCommentingIndex
 
-                likeOrCommentRequest : Cmd Msg
-                likeOrCommentRequest =
-                    send LikeOrCommentResponse request
-
-                request : Request HttpRequestText
+                request : Cmd Msg
                 request =
+                    send LikeOrCommentResponse requestHttp
+
+                requestHttp : Request HttpRequestText
+                requestHttp =
                     getString requestUri
 
                 requestUri : UrlText
@@ -406,25 +406,21 @@ update msg model =
                         (subUri
                             ++ basename
                             ++ "?comment="
-                            ++ likeOrComment
+                            ++ model.likeOrCommentText
                             ++ "&song="
                             ++ artistTimeTitle
                             ++ "&timestamp="
                             ++ timeStamp
                         )
 
-                songRememberedIndex : Maybe SongRememberedIndex
-                songRememberedIndex =
-                    model.songRememberedCommentingIndex
-
                 songSelected : Maybe SongRemembered
                 songSelected =
-                    case songRememberedIndex of
+                    case index of
                         Nothing ->
                             Nothing
 
-                        Just songRememberedIndex ->
-                            List.head (List.drop songRememberedIndex model.songsRemembered)
+                        Just index ->
+                            List.head (List.drop index model.songsRemembered)
 
                 subUri : UrlText
                 subUri =
@@ -432,11 +428,11 @@ update msg model =
 
                 timeStamp : UrlText
                 timeStamp =
-                    case songRememberedIndex of
+                    case index of
                         Nothing ->
                             ""
 
-                        Just songRememberedIndex ->
+                        Just _ ->
                             case songSelected of
                                 Nothing ->
                                     ""
@@ -452,7 +448,7 @@ update msg model =
                 ( { model
                     | awaitingServerResponse = True
                   }
-                , likeOrCommentRequest
+                , request
                 )
 
         CommentTextChangeCapture likeOrCommentTextNew ->
