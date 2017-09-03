@@ -218,7 +218,7 @@ type alias SongRememberedIndex =
     Int
 
 
-type alias SongsLatestFewWithTag =
+type alias SongsLatestFewTagged =
     { latestFew : SongsLatestFew }
 
 
@@ -267,36 +267,23 @@ decodeSongRaw =
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew stringJson =
+decodeSongsLatestFew jsonRawText =
     let
-        addFields : SongLatestFew -> SongLatestFew
-        addFields songLatestFew =
-            --Keep order aligned (with type alias):
-            { artist = songLatestFew.artist
-            , time = songLatestFew.time
-            , timeStamp = songLatestFew.timeStamp
-            , title = songLatestFew.title
-            }
-
-        raw : Result DecodeErrorMessageText SongsLatestFewWithTag
+        raw : Result DecodeErrorMessageText SongsLatestFewTagged
         raw =
-            decodeString decodeSongsLatestFewWithTag stringJson
-
-        rawUnpacked : SongsLatestFew
-        rawUnpacked =
-            case raw of
-                Err _ ->
-                    []
-
-                Ok json ->
-                    json.latestFew
+            decodeString decodeSongsLatestFewRemoveTag jsonRawText
     in
-    List.map addFields rawUnpacked
+    case raw of
+        Err _ ->
+            []
+
+        Ok tagged ->
+            tagged.latestFew
 
 
-decodeSongsLatestFewWithTag : Decoder SongsLatestFewWithTag
-decodeSongsLatestFewWithTag =
-    map SongsLatestFewWithTag
+decodeSongsLatestFewRemoveTag : Decoder SongsLatestFewTagged
+decodeSongsLatestFewRemoveTag =
+    map SongsLatestFewTagged
         (field "latestFive" (list decodeSongRaw))
 
 
@@ -691,11 +678,11 @@ update msg model =
             , Cmd.none
             )
 
-        SongsLatestFewResponse (Ok songsLatestFewJson) ->
+        SongsLatestFewResponse (Ok jsonRawText) ->
             let
                 songsLatestFewNew : SongsLatestFew
                 songsLatestFewNew =
-                    decodeSongsLatestFew songsLatestFewJson
+                    decodeSongsLatestFew jsonRawText
             in
             ( { model
                 | songsLatestFew = songsLatestFewNew
