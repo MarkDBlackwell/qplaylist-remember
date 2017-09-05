@@ -982,6 +982,17 @@ showCommentButtons =
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
+        buySongAttributes : List (Attribute msg)
+        buySongAttributes =
+            [ href buySongUri
+            , target "_blank"
+            , title buySongHoverText
+            ]
+
+        buySongHoverText : String
+        buySongHoverText =
+            "See this song on Amazon (in new tab)"
+
         buySongUri : UriText
         buySongUri =
             absolute buySongUriBeforeQuery buySongUriQueryPairs
@@ -1000,17 +1011,6 @@ songView model group index song =
                     ++ song.artist
               )
             ]
-
-        buySongAttributes : List (Attribute msg)
-        buySongAttributes =
-            [ href buySongUri
-            , target "_blank"
-            , title buySongHoverText
-            ]
-
-        buySongHoverText : String
-        buySongHoverText =
-            "See this song on Amazon (in new tab)"
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
