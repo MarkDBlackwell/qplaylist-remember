@@ -254,27 +254,36 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-absolute : List String -> List ( String, String ) -> UriText
-absolute beforeQuery queryPair =
+absolute : List UriText -> List ( UriText, UriText ) -> UriText
+absolute beforeQuery queryPairs =
     --See also: evancz/elm-http.
     --TODO: When elm-lang/url is released, replace this code:
     let
-        escapeAmpersands : String -> String
+        escapeAll : UriText -> UriText
+        escapeAll string =
+            escapeAmpersands (escapeEqualsSigns string)
+
+        escapeAmpersands : UriText -> UriText
         escapeAmpersands string =
             String.join "%26"
                 (String.split "&" string)
 
-        joinEach : ( String, String ) -> UriText
+        escapeEqualsSigns : UriText -> UriText
+        escapeEqualsSigns string =
+            String.join "%3D"
+                (String.split "=" string)
+
+        joinEach : ( UriText, UriText ) -> UriText
         joinEach ( name, value ) =
             String.join "="
                 [ name
-                , escapeAmpersands value
+                , escapeAll value
                 ]
     in
     String.join "/" beforeQuery
         ++ "?"
         ++ String.join "&"
-            (List.map joinEach queryPair)
+            (List.map joinEach queryPairs)
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
@@ -973,28 +982,34 @@ showCommentButtons =
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
-        amazonConstant : String
-        amazonConstant =
-            --%3D represents the "equals" sign:
-            "http://www.amazon.com/s/ref=nb_sb_noss?"
-                ++ "tag=wtmdradio-20"
-                ++ "&url=search-alias%3Ddigital-music"
-                ++ "&field-keywords="
+        amazonRequestUri : UriText
+        amazonRequestUri =
+            absolute amazonRequestUriBeforeQuery amazonRequestUriQueryPairs
+
+        amazonRequestUriBeforeQuery : List UriText
+        amazonRequestUriBeforeQuery =
+            [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
+
+        amazonRequestUriQueryPairs : List ( UriText, UriText )
+        amazonRequestUriQueryPairs =
+            [ ( "tag", "wtmdradio-20" )
+            , ( "url", "search-alias=digital-music" )
+            , ( "field-keywords"
+              , song.title
+                    ++ "+"
+                    ++ song.artist
+              )
+            ]
 
         anchorBuySongAttributes : List (Attribute msg)
         anchorBuySongAttributes =
-            [ href
-                (amazonConstant
-                    ++ song.title
-                    ++ "+"
-                    ++ song.artist
-                )
+            [ href amazonRequestUri
             , target "_blank"
-            , title buySong
+            , title anchorBuySongHoverText
             ]
 
-        buySong : String
-        buySong =
+        anchorBuySongHoverText : String
+        anchorBuySongHoverText =
             "See this song on Amazon (in new tab)"
 
         lengthRemembered : SongGroupLength
