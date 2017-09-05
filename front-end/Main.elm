@@ -655,13 +655,16 @@ update msg model =
 
                 request : Request HttpRequestText
                 request =
-                    getString
-                        (log
-                            "LatestFew"
-                            (subUri
-                                ++ basename
-                            )
-                        )
+                    getString (log "LatestFew" requestUriText)
+
+                requestUriText : UriText
+                requestUriText =
+                    relative
+                        [ ".."
+                        , subUri
+                        , basename
+                        ]
+                        []
 
                 songsLatestFewRequest : Cmd Msg
                 songsLatestFewRequest =
@@ -669,7 +672,7 @@ update msg model =
 
                 subUri : UriText
                 subUri =
-                    "/wtmdapp/"
+                    "wtmdapp"
             in
             ( model
             , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
