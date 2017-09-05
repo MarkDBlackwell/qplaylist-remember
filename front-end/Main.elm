@@ -982,16 +982,16 @@ showCommentButtons =
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
-        amazonRequestUri : UriText
-        amazonRequestUri =
-            absolute amazonRequestUriBeforeQuery amazonRequestUriQueryPairs
+        buySongUri : UriText
+        buySongUri =
+            absolute buySongUriBeforeQuery buySongUriQueryPairs
 
-        amazonRequestUriBeforeQuery : List UriText
-        amazonRequestUriBeforeQuery =
+        buySongUriBeforeQuery : List UriText
+        buySongUriBeforeQuery =
             [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
 
-        amazonRequestUriQueryPairs : List ( UriText, UriText )
-        amazonRequestUriQueryPairs =
+        buySongUriQueryPairs : List ( UriText, UriText )
+        buySongUriQueryPairs =
             [ ( "tag", "wtmdradio-20" )
             , ( "url", "search-alias=digital-music" )
             , ( "field-keywords"
@@ -1001,15 +1001,15 @@ songView model group index song =
               )
             ]
 
-        anchorBuySongAttributes : List (Attribute msg)
-        anchorBuySongAttributes =
-            [ href amazonRequestUri
+        buySongAttributes : List (Attribute msg)
+        buySongAttributes =
+            [ href buySongUri
             , target "_blank"
-            , title anchorBuySongHoverText
+            , title buySongHoverText
             ]
 
-        anchorBuySongHoverText : String
-        anchorBuySongHoverText =
+        buySongHoverText : String
+        buySongHoverText =
             "See this song on Amazon (in new tab)"
 
         lengthRemembered : SongGroupLength
@@ -1054,7 +1054,7 @@ songView model group index song =
             , buttonLike group index
             , likedOrCommentedIndicator
             , a
-                anchorBuySongAttributes
+                buySongAttributes
                 []
             ]
         , p []
