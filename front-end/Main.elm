@@ -234,7 +234,7 @@ type alias Title =
     String
 
 
-type alias UrlText =
+type alias UriText =
     String
 
 
@@ -252,6 +252,29 @@ type Msg
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
     | SongsLatestFewResponse (Result Error HttpResponseText)
+
+
+absolute : List String -> List ( String, String ) -> UriText
+absolute beforeQuery queryPair =
+    --See also: evancz/elm-http.
+    --TODO: When elm-lang/url is released, replace this code:
+    let
+        escapeAmpersands : String -> String
+        escapeAmpersands string =
+            String.join "%26"
+                (String.split "&" string)
+
+        joinEach : ( String, String ) -> UriText
+        joinEach ( name, value ) =
+            String.join "="
+                [ name
+                , escapeAmpersands value
+                ]
+    in
+    String.join "/" beforeQuery
+        ++ "?"
+        ++ String.join "&"
+            (List.map joinEach queryPair)
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
@@ -331,8 +354,8 @@ update msg model =
                 Http.BadStatus httpResponseText ->
                     log prefix "BadStatus"
 
-                Http.BadUrl urlText ->
-                    log (prefix ++ ": BadUrl") urlText
+                Http.BadUrl uriText ->
+                    log (prefix ++ ": BadUrl") uriText
 
                 Http.NetworkError ->
                     log prefix "NetworkError"
@@ -366,7 +389,7 @@ update msg model =
 
         CommentInputOk ->
             let
-                artistTimeTitle : UrlText
+                artistTimeTitle : UriText
                 artistTimeTitle =
                     case index of
                         Nothing ->
@@ -384,7 +407,7 @@ update msg model =
                                         ++ ": "
                                         ++ songSelected.title
 
-                basename : UrlText
+                basename : UriText
                 basename =
                     "append.php"
 
@@ -394,20 +417,16 @@ update msg model =
 
                 request : Request HttpRequestText
                 request =
-                    getString requestUri
+                    getString (log "Request" requestUri)
 
-                requestUri : UrlText
+                requestUri : UriText
                 requestUri =
-                    log "Request"
-                        (subUri
-                            ++ basename
-                            ++ "?comment="
-                            ++ model.likeOrCommentText
-                            ++ "&song="
-                            ++ artistTimeTitle
-                            ++ "&timestamp="
-                            ++ timeStamp
-                        )
+                    absolute
+                        [ "/", subUri, basename ]
+                        [ ( "comment", model.likeOrCommentText )
+                        , ( "song", artistTimeTitle )
+                        , ( "timestamp", timeStamp )
+                        ]
 
                 songSelected : Maybe SongRemembered
                 songSelected =
@@ -418,11 +437,11 @@ update msg model =
                         Just index ->
                             List.head (List.drop index model.songsRemembered)
 
-                subUri : UrlText
+                subUri : UriText
                 subUri =
-                    "/remember/"
+                    "remember"
 
-                timeStamp : UrlText
+                timeStamp : UriText
                 timeStamp =
                     case index of
                         Nothing ->
@@ -621,22 +640,25 @@ update msg model =
 
         SongsLatestFewRefresh ->
             let
-                basename : UrlText
+                basename : UriText
                 basename =
                     "LatestFive.json"
 
                 request : Request HttpRequestText
                 request =
                     getString
-                        (subUri
-                            ++ basename
+                        (log
+                            "LatestFew"
+                            (subUri
+                                ++ basename
+                            )
                         )
 
                 songsLatestFewRequest : Cmd Msg
                 songsLatestFewRequest =
                     send SongsLatestFewResponse request
 
-                subUri : UrlText
+                subUri : UriText
                 subUri =
                     "/wtmdapp/"
             in
