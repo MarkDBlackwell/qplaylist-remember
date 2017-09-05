@@ -254,10 +254,10 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-absolute : List UriText -> List ( UriText, UriText ) -> UriText
-absolute beforeQuery queryPairs =
+relative : List UriText -> List ( UriText, UriText ) -> UriText
+relative beforeQuery queryPairs =
     --See also: evancz/elm-http.
-    --TODO: When elm-lang/url is released, replace this code:
+    --TODO: When elm-lang/url is updated to contain 'relative', replace this code:
     let
         escapeAll : UriText -> UriText
         escapeAll string =
@@ -426,12 +426,12 @@ update msg model =
 
                 request : Request HttpRequestText
                 request =
-                    getString (log "Request" requestUri)
+                    getString (log "Request" requestUriText)
 
-                requestUri : UriText
-                requestUri =
-                    absolute
-                        [ "/", subUri, basename ]
+                requestUriText : UriText
+                requestUriText =
+                    relative
+                        [ "..", subUri, basename ]
                         [ ( "comment", model.likeOrCommentText )
                         , ( "song", artistTimeTitle )
                         , ( "timestamp", timeStamp )
@@ -984,7 +984,7 @@ songView model group index song =
     let
         buySongAttributes : List (Attribute msg)
         buySongAttributes =
-            [ href buySongUri
+            [ href buySongUriText
             , target "_blank"
             , title buySongHoverText
             ]
@@ -992,10 +992,6 @@ songView model group index song =
         buySongHoverText : String
         buySongHoverText =
             "See this song on Amazon (in new tab)"
-
-        buySongUri : UriText
-        buySongUri =
-            absolute buySongUriBeforeQuery buySongUriQueryPairs
 
         buySongUriBeforeQuery : List UriText
         buySongUriBeforeQuery =
@@ -1011,6 +1007,10 @@ songView model group index song =
                     ++ song.artist
               )
             ]
+
+        buySongUriText : UriText
+        buySongUriText =
+            relative buySongUriBeforeQuery buySongUriQueryPairs
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
