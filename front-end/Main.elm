@@ -504,13 +504,16 @@ update msg model =
 
         LikeOrCommentResponse (Err httpError) ->
             let
-                --Keep for console logging:
-                errorMessageText : HttpErrorMessageText
-                errorMessageText =
-                    httpErrorMessageText httpError ++ " while sending to server"
+                alertMessageNew : AlertMessage
+                alertMessageNew =
+                    httpErrorMessageText httpError ++ suffix
+
+                suffix : AlertMessage
+                suffix =
+                    " while sending comment to server"
             in
             ( { model
-                | alertMessage = errorMessageText
+                | alertMessage = alertMessageNew
               }
             , focusInputPossibly
             )
@@ -691,13 +694,16 @@ update msg model =
 
         SongsLatestFewResponse (Err httpError) ->
             let
-                --Keep for console logging:
-                errorMessageText : HttpErrorMessageText
-                errorMessageText =
-                    httpErrorMessageText httpError ++ " while accessing the latest few songs"
+                alertMessageNew : AlertMessage
+                alertMessageNew =
+                    httpErrorMessageText httpError ++ suffix
+
+                suffix : HttpErrorMessageText
+                suffix =
+                    " while accessing the latest few songs"
             in
             ( { model
-                | alertMessage = errorMessageText
+                | alertMessage = alertMessageNew
               }
             , Cmd.none
             )
