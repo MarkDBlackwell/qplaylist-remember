@@ -273,8 +273,8 @@ absolute beforeQuery queryPairs =
             String.join "%3D"
                 (String.split "=" string)
 
-        joinEach : ( UriText, UriText ) -> UriText
-        joinEach ( name, value ) =
+        queryPairJoin : ( UriText, UriText ) -> UriText
+        queryPairJoin ( name, value ) =
             String.join "="
                 [ name
                 , escapeAll value
@@ -283,7 +283,7 @@ absolute beforeQuery queryPairs =
     String.join "/" beforeQuery
         ++ "?"
         ++ String.join "&"
-            (List.map joinEach queryPairs)
+            (List.map queryPairJoin queryPairs)
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
