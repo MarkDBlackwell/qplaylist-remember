@@ -93,6 +93,10 @@ main =
 -- MODEL
 
 
+type alias AlertMessage =
+    String
+
+
 type alias Artist =
     String
 
@@ -110,7 +114,8 @@ type alias LikedOrCommented =
 
 
 type alias Model =
-    { awaitingServerResponse : AwaitingServerResponse
+    { alertMessage : AlertMessage
+    , awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
     , pageExpanded : PageIsExpanded
     , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
@@ -153,6 +158,11 @@ type alias SongsRemembered =
     List SongRemembered
 
 
+alertMessageInit : AlertMessage
+alertMessageInit =
+    ""
+
+
 awaitingServerResponseInit : AwaitingServerResponse
 awaitingServerResponseInit =
     False
@@ -185,7 +195,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -390,7 +400,8 @@ update msg model =
 
         CommentInputCancel ->
             ( { model
-                | likeOrCommentText = likeOrCommentTextInit
+                | alertMessage = alertMessageInit
+                , likeOrCommentText = likeOrCommentTextInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
               }
             , Cmd.none
@@ -431,7 +442,7 @@ update msg model =
                 requestUriText : UriText
                 requestUriText =
                     relative
-                        [ "..", subUri, basename ]
+                        [ basename ]
                         [ ( "comment", model.likeOrCommentText )
                         , ( "song", artistTimeTitle )
                         , ( "timestamp", timeStamp )
@@ -445,10 +456,6 @@ update msg model =
 
                         Just index ->
                             List.head (List.drop index model.songsRemembered)
-
-                subUri : UriText
-                subUri =
-                    "remember"
 
                 timeStamp : UriText
                 timeStamp =
@@ -470,7 +477,8 @@ update msg model =
                 )
             else
                 ( { model
-                    | awaitingServerResponse = True
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = True
                   }
                 , send LikeOrCommentResponse request
                 )
@@ -497,12 +505,14 @@ update msg model =
         LikeOrCommentResponse (Err httpError) ->
             let
                 --Keep for console logging:
-                a : HttpErrorMessageText
-                a =
-                    httpErrorMessageText httpError
+                errorMessageText : HttpErrorMessageText
+                errorMessageText =
+                    httpErrorMessageText httpError ++ " while sending to server"
             in
-            ( model
-            , Cmd.none
+            ( { model
+                | alertMessage = errorMessageText
+              }
+            , focusInputPossibly
             )
 
         LikeOrCommentResponse (Ok appendLikeOrCommentJson) ->
@@ -527,7 +537,8 @@ update msg model =
                     List.indexedMap commentedShow model.songsRemembered
             in
             ( { model
-                | awaitingServerResponse = False
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = False
                 , likeOrCommentText = likeOrCommentTextInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                 , songsRemembered = songsRememberedNew
@@ -681,11 +692,13 @@ update msg model =
         SongsLatestFewResponse (Err httpError) ->
             let
                 --Keep for console logging:
-                songsLatestFewResponseHttpErrorMessageText : HttpErrorMessageText
-                songsLatestFewResponseHttpErrorMessageText =
-                    httpErrorMessageText httpError
+                errorMessageText : HttpErrorMessageText
+                errorMessageText =
+                    httpErrorMessageText httpError ++ " while accessing the latest few songs"
             in
-            ( model
+            ( { model
+                | alertMessage = errorMessageText
+              }
             , Cmd.none
             )
 
@@ -696,7 +709,8 @@ update msg model =
                     decodeSongsLatestFew jsonRawText
             in
             ( { model
-                | songsLatestFew = songsLatestFewNew
+                | alertMessage = alertMessageInit
+                , songsLatestFew = songsLatestFewNew
               }
             , Cmd.none
             )
@@ -1147,7 +1161,7 @@ view model =
         [ section
             [ id "message" ]
             [ p []
-                [ text "Message" ]
+                [ text model.alertMessage ]
             ]
         , commentAreaPossibly model
         , section
