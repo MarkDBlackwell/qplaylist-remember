@@ -271,8 +271,10 @@ type Msg
     | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | LikeOrCommentResponse (Result Error HttpResponseText)
+    | CommentResponse (Result Error HttpResponseText)
+    | LikeResponse (Result Error HttpResponseText)
     | LikeButtonHandle SongRememberedIndex
+    | LikeProcess
     | PageReshape
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -450,6 +452,82 @@ update msg model =
             , Cmd.none
             )
 
+        LikeProcess ->
+            let
+                artistTimeTitle : UriText
+                artistTimeTitle =
+                    case index of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just songSelected ->
+                                    songSelected.time
+                                        ++ " "
+                                        ++ songSelected.artist
+                                        ++ ": "
+                                        ++ songSelected.title
+
+                basename : UriText
+                basename =
+                    "append.php"
+
+                index : Maybe SongRememberedIndex
+                index =
+                    model.songRememberedCommentingIndex
+
+                request : Request HttpRequestText
+                request =
+                    getString (log "Request" requestUriText)
+
+                requestUriText : UriText
+                requestUriText =
+                    relative
+                        [ basename ]
+                        [ ( "timestamp", timeStamp )
+                        , ( "song", artistTimeTitle )
+                        , ( "comment", model.likeOrCommentText )
+                        ]
+
+                songSelected : Maybe SongRemembered
+                songSelected =
+                    case index of
+                        Nothing ->
+                            Nothing
+
+                        Just index ->
+                            List.head (List.drop index model.songsRemembered)
+
+                timeStamp : UriText
+                timeStamp =
+                    case index of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
+            in
+            if String.isEmpty model.likeOrCommentText then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = True
+                  }
+                , send LikeResponse request
+                )
+
         CommentInputOk ->
             let
                 artistTimeTitle : UriText
@@ -523,7 +601,7 @@ update msg model =
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = True
                   }
-                , send LikeOrCommentResponse request
+                , send CommentResponse request
                 )
 
         CommentTextChangeCapture text ->
@@ -546,7 +624,7 @@ update msg model =
             , attempt FocusResult (focus id)
             )
 
-        LikeOrCommentResponse (Err httpError) ->
+        CommentResponse (Err httpError) ->
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
@@ -562,12 +640,59 @@ update msg model =
             , focusInputPossibly
             )
 
-        LikeOrCommentResponse (Ok appendLikeOrCommentJson) ->
+        LikeResponse (Err httpError) ->
+            let
+                alertMessageNew : AlertMessage
+                alertMessageNew =
+                    httpErrorMessageText httpError ++ suffix
+
+                suffix : AlertMessage
+                suffix =
+                    " while sending comment to server"
+            in
+            ( { model
+                | alertMessage = alertMessageNew
+              }
+            , focusInputPossibly
+            )
+
+        CommentResponse (Ok appendCommentJson) ->
             let
                 --Keep for console logging:
                 a : String
                 a =
-                    --log "Ok response" appendLikeOrCommentJson
+                    --log "Ok response" appendCommentJson
+                    log "Response" "Ok"
+
+                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
+                commentedShow index song =
+                    if Just index == model.songRememberedCommentingIndex then
+                        { song
+                            | likedOrCommented = True
+                        }
+                    else
+                        song
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    List.indexedMap commentedShow model.songsRemembered
+            in
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = False
+                , likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                , songsRemembered = songsRememberedNew
+              }
+            , Cmd.none
+            )
+
+        LikeResponse (Ok appendLikeJson) ->
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    --log "Ok response" appendLikeJson
                     log "Response" "Ok"
 
                 commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
@@ -624,7 +749,7 @@ update msg model =
                         , songRememberedCommentingIndex = Just songRememberedIndex
                         , songsRemembered = songsRememberedNew
                       }
-                    , msg2Cmd (succeed CommentInputOk)
+                    , msg2Cmd (succeed LikeProcess)
                     )
 
         PageReshape ->
