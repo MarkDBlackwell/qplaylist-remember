@@ -1049,8 +1049,8 @@ showCommentButtons =
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
-        buySongAnchor : Html Msg
-        buySongAnchor =
+        buySongAnchor : SongRemembered -> Html Msg
+        buySongAnchor song =
             a
                 buySongAttributes
                 []
@@ -1130,7 +1130,7 @@ songView model group index song =
             , buttonComment group index
             , buttonLike group index
             , likedOrCommentedIndicator
-            , buySongAnchor
+            , buySongAnchor song
             ]
         , p []
             [ text song.title ]
