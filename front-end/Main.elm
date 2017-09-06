@@ -996,8 +996,8 @@ buySongAnchor song =
 commentArea : Model -> SongRemembered -> Html Msg
 commentArea model song =
     let
-        commentTextStatistics : String
-        commentTextStatistics =
+        statistics : String
+        statistics =
             " – "
                 ++ song.timeStamp
                 ++ ": "
@@ -1017,7 +1017,7 @@ commentArea model song =
                     ++ " ("
                     ++ song.time
                     ++ ")"
-                    ++ commentTextStatistics
+                    ++ statistics
                 )
             ]
         , input
