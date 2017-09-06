@@ -384,6 +384,70 @@ relative queryBeforeList queryPairs =
     queryBefore ++ "?" ++ query
 
 
+requestLikeOrComment : Model -> Request HttpRequestText
+requestLikeOrComment model =
+    let
+        artistTimeTitle : UriText
+        artistTimeTitle =
+            case index of
+                Nothing ->
+                    ""
+
+                Just _ ->
+                    case songSelected of
+                        Nothing ->
+                            ""
+
+                        Just songSelected ->
+                            songSelected.time
+                                ++ " "
+                                ++ songSelected.artist
+                                ++ ": "
+                                ++ songSelected.title
+
+        basename : UriText
+        basename =
+            "append.php"
+
+        index : Maybe SongRememberedIndex
+        index =
+            model.songRememberedCommentingIndex
+
+        requestUriText : UriText
+        requestUriText =
+            relative
+                [ basename ]
+                [ ( "timestamp", timeStamp )
+                , ( "song", artistTimeTitle )
+                , ( "comment", model.likeOrCommentText )
+                ]
+
+        songSelected : Maybe SongRemembered
+        songSelected =
+            case index of
+                Nothing ->
+                    Nothing
+
+                Just index ->
+                    List.head (List.drop index model.songsRemembered)
+
+        timeStamp : UriText
+        timeStamp =
+            case index of
+                Nothing ->
+                    ""
+
+                Just _ ->
+                    case songSelected of
+                        Nothing ->
+                            ""
+
+                        Just song ->
+                            song.timeStamp
+    in
+    getString (log "Request" requestUriText)
+
+
 songLatestFew2Remembered : SongLatestFew -> SongRemembered
 songLatestFew2Remembered song =
     { artist = song.artist
@@ -462,69 +526,6 @@ update msg model =
         logResponseOk string =
             --log "Ok response" string
             log "Response" "Ok"
-
-        requestLikeOrComment : Request HttpRequestText
-        requestLikeOrComment =
-            let
-                artistTimeTitle : UriText
-                artistTimeTitle =
-                    case index of
-                        Nothing ->
-                            ""
-
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just songSelected ->
-                                    songSelected.time
-                                        ++ " "
-                                        ++ songSelected.artist
-                                        ++ ": "
-                                        ++ songSelected.title
-
-                basename : UriText
-                basename =
-                    "append.php"
-
-                index : Maybe SongRememberedIndex
-                index =
-                    model.songRememberedCommentingIndex
-
-                requestUriText : UriText
-                requestUriText =
-                    relative
-                        [ basename ]
-                        [ ( "timestamp", timeStamp )
-                        , ( "song", artistTimeTitle )
-                        , ( "comment", model.likeOrCommentText )
-                        ]
-
-                songSelected : Maybe SongRemembered
-                songSelected =
-                    case index of
-                        Nothing ->
-                            Nothing
-
-                        Just index ->
-                            List.head (List.drop index model.songsRemembered)
-
-                timeStamp : UriText
-                timeStamp =
-                    case index of
-                        Nothing ->
-                            ""
-
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just song ->
-                                    song.timeStamp
-            in
-            getString (log "Request" requestUriText)
     in
     case msg of
         CommentAreaShow index ->
@@ -555,7 +556,7 @@ update msg model =
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse requestLikeOrComment
+                    send CommentResponse (requestLikeOrComment model)
             in
             if String.isEmpty model.likeOrCommentText then
                 ( model
@@ -633,7 +634,7 @@ update msg model =
                 , awaitingServerResponse = True
                 , likeOrCommentText = likeText
               }
-            , send LikeResponse requestLikeOrComment
+            , send LikeResponse (requestLikeOrComment model)
             )
 
         LikeResponse (Err httpError) ->
