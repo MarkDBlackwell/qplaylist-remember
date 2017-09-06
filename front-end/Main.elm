@@ -265,7 +265,7 @@ type Msg
 
 
 relative : List UriText -> List ( UriText, UriText ) -> UriText
-relative beforeQuery queryPairs =
+relative queryBefore queryPairs =
     --See also: evancz/elm-http.
     --TODO: When elm-lang/url is updated to contain 'relative', replace this code:
     let
@@ -290,7 +290,7 @@ relative beforeQuery queryPairs =
                 , escapeAll value
                 ]
     in
-    String.join "/" beforeQuery
+    String.join "/" queryBefore
         ++ "?"
         ++ String.join "&"
             (List.map queryPairJoin queryPairs)
@@ -1016,8 +1016,8 @@ songView model group index song =
         buySongHoverText =
             "See this song on Amazon (in new tab)"
 
-        buySongUriBeforeQuery : List UriText
-        buySongUriBeforeQuery =
+        buySongUriQueryBefore : List UriText
+        buySongUriQueryBefore =
             [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
 
         buySongUriQueryPairs : List ( UriText, UriText )
@@ -1033,7 +1033,7 @@ songView model group index song =
 
         buySongUriText : UriText
         buySongUriText =
-            relative buySongUriBeforeQuery buySongUriQueryPairs
+            relative buySongUriQueryBefore buySongUriQueryPairs
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
