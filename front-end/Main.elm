@@ -220,7 +220,7 @@ type alias HttpResponseText =
     String
 
 
-type alias QueryBefore =
+type alias QueryBeforeList =
     --See:
     --https://github.com/elm-lang/url
     --https://tools.ietf.org/html/rfc3986
@@ -280,8 +280,8 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-relative : QueryBefore -> QueryPairs -> UriText
-relative queryBefore queryPairs =
+relative : QueryBeforeList -> QueryPairs -> UriText
+relative queryBeforeList queryPairs =
     --See:
     --https://github.com/elm-lang/http/issues/10
     --https://github.com/elm-lang/url
@@ -314,11 +314,17 @@ relative queryBefore queryPairs =
                 "%23"
                 (String.split "#" string)
 
-        queryBeforeSegment : UriText
-        queryBeforeSegment =
+        query : UriText
+        query =
+            String.join
+                "&"
+                (List.map queryPairJoin queryPairs)
+
+        queryBefore : UriText
+        queryBefore =
             String.join
                 "/"
-                queryBefore
+                queryBeforeList
 
         queryPairJoin : QueryPair -> UriText
         queryPairJoin ( name, value ) =
@@ -327,14 +333,8 @@ relative queryBefore queryPairs =
                 [ name
                 , escapeAll value
                 ]
-
-        querySegment : UriText
-        querySegment =
-            String.join
-                "&"
-                (List.map queryPairJoin queryPairs)
     in
-    queryBeforeSegment ++ "?" ++ querySegment
+    queryBefore ++ "?" ++ query
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
@@ -486,9 +486,9 @@ update msg model =
                 requestUriText =
                     relative
                         [ basename ]
-                        [ ( "comment", model.likeOrCommentText )
+                        [ ( "timestamp", timeStamp )
                         , ( "song", artistTimeTitle )
-                        , ( "timestamp", timeStamp )
+                        , ( "comment", model.likeOrCommentText )
                         ]
 
                 songSelected : Maybe SongRemembered
@@ -1060,8 +1060,8 @@ songView model group index song =
         buySongHoverText =
             "See this song on Amazon (in new tab)"
 
-        buySongUriQueryBefore : QueryBefore
-        buySongUriQueryBefore =
+        buySongUriQueryBeforeList : QueryBeforeList
+        buySongUriQueryBeforeList =
             [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
 
         buySongUriQueryPairs : QueryPairs
@@ -1077,7 +1077,7 @@ songView model group index song =
 
         buySongUriText : UriText
         buySongUriText =
-            relative buySongUriQueryBefore buySongUriQueryPairs
+            relative buySongUriQueryBeforeList buySongUriQueryPairs
 
         lengthRemembered : SongGroupLength
         lengthRemembered =
