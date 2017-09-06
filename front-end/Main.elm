@@ -1046,15 +1046,9 @@ showCommentButtons =
     True
 
 
-songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
-songView model group index song =
+buySongAnchor : SongRemembered -> Html Msg
+buySongAnchor song =
     let
-        buySongAnchor : SongRemembered -> Html Msg
-        buySongAnchor song =
-            a
-                buySongAttributes
-                []
-
         buySongAttributes : List (Attribute msg)
         buySongAttributes =
             [ href buySongUriText
@@ -1088,7 +1082,13 @@ songView model group index song =
         buySongUriText : UriText
         buySongUriText =
             relative buySongUriQueryBeforeList buySongUriQueryPairs
+    in
+    a buySongAttributes []
 
+
+songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
+songView model group index song =
+    let
         lengthRemembered : SongGroupLength
         lengthRemembered =
             List.length model.songsRemembered
