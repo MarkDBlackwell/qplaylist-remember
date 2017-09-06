@@ -525,68 +525,9 @@ update msg model =
 
         CommentInputOk ->
             let
-                artistTimeTitle : UriText
-                artistTimeTitle =
-                    case index of
-                        Nothing ->
-                            ""
-
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just songSelected ->
-                                    songSelected.time
-                                        ++ " "
-                                        ++ songSelected.artist
-                                        ++ ": "
-                                        ++ songSelected.title
-
-                basename : UriText
-                basename =
-                    "append.php"
-
-                index : Maybe SongRememberedIndex
-                index =
-                    model.songRememberedCommentingIndex
-
-                {-
-                   requestLikeOrComment : Request HttpRequestText
-                   requestLikeOrComment =
-                       getString (log "Request" requestUriText)
-                -}
-                requestUriText : UriText
-                requestUriText =
-                    relative
-                        [ basename ]
-                        [ ( "timestamp", timeStamp )
-                        , ( "song", artistTimeTitle )
-                        , ( "comment", model.likeOrCommentText )
-                        ]
-
-                songSelected : Maybe SongRemembered
-                songSelected =
-                    case index of
-                        Nothing ->
-                            Nothing
-
-                        Just index ->
-                            List.head (List.drop index model.songsRemembered)
-
-                timeStamp : UriText
-                timeStamp =
-                    case index of
-                        Nothing ->
-                            ""
-
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just song ->
-                                    song.timeStamp
+                commentRequest : Cmd Msg
+                commentRequest =
+                    send CommentResponse requestLikeOrComment
             in
             if String.isEmpty model.likeOrCommentText then
                 ( model
@@ -597,7 +538,7 @@ update msg model =
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = True
                   }
-                , send CommentResponse requestLikeOrComment
+                , Cmd.batch [ focusInputPossibly, commentRequest ]
                 )
 
         CommentTextChangeCapture text ->
