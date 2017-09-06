@@ -268,18 +268,63 @@ type Msg
     = CommentAreaShow SongRememberedIndex
     | CommentInputCancel
     | CommentInputOk
+    | CommentResponse (Result Error HttpResponseText)
     | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | CommentResponse (Result Error HttpResponseText)
-    | LikeResponse (Result Error HttpResponseText)
     | LikeButtonHandle SongRememberedIndex
     | LikeProcess
+    | LikeResponse (Result Error HttpResponseText)
     | PageReshape
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
     | SongsLatestFewResponse (Result Error HttpResponseText)
+
+
+decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
+decodeSongsLatestFew jsonRawText =
+    --See:
+    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+    --http://eeue56.github.io/json-to-elm/
+    --For decoding JSON:
+    let
+        decodeSong : Decoder SongLatestFew
+        decodeSong =
+            map4 SongLatestFew
+                (field "artist" string)
+                (field "time" string)
+                (field "timeStamp" string)
+                (field "title" string)
+
+        tagged2Record : Decoder SongsLatestFewTagged
+        tagged2Record =
+            map SongsLatestFewTagged
+                (field "latestFive" (list decodeSong))
+
+        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
+        tryRecord =
+            decodeString tagged2Record jsonRawText
+    in
+    case tryRecord of
+        Err _ ->
+            []
+
+        Ok record ->
+            record.latestFew
+
+
+focusSet : Id -> Cmd Msg
+focusSet id =
+    msg2Cmd (succeed (FocusSet id))
+
+
+msg2Cmd : Task.Task Never msg -> Cmd msg
+msg2Cmd msg =
+    --See:
+    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --For wrapping a message as a Cmd:
+    Task.perform identity msg
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
@@ -337,51 +382,6 @@ relative queryBeforeList queryPairs =
                 ]
     in
     queryBefore ++ "?" ++ query
-
-
-decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew jsonRawText =
-    --See:
-    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
-    --http://eeue56.github.io/json-to-elm/
-    --For decoding JSON:
-    let
-        decodeSong : Decoder SongLatestFew
-        decodeSong =
-            map4 SongLatestFew
-                (field "artist" string)
-                (field "time" string)
-                (field "timeStamp" string)
-                (field "title" string)
-
-        tagged2Record : Decoder SongsLatestFewTagged
-        tagged2Record =
-            map SongsLatestFewTagged
-                (field "latestFive" (list decodeSong))
-
-        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
-        tryRecord =
-            decodeString tagged2Record jsonRawText
-    in
-    case tryRecord of
-        Err _ ->
-            []
-
-        Ok record ->
-            record.latestFew
-
-
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (succeed (FocusSet id))
-
-
-msg2Cmd : Task.Task Never msg -> Cmd msg
-msg2Cmd msg =
-    --See:
-    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-    --For wrapping a message as a Cmd:
-    Task.perform identity msg
 
 
 songLatestFew2Remembered : SongLatestFew -> SongRemembered
@@ -515,14 +515,6 @@ update msg model =
             , Cmd.none
             )
 
-        LikeProcess ->
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = True
-              }
-            , send LikeResponse requestLikeOrComment
-            )
-
         CommentInputOk ->
             let
                 commentRequest : Cmd Msg
@@ -541,26 +533,6 @@ update msg model =
                 , Cmd.batch [ focusInputPossibly, commentRequest ]
                 )
 
-        CommentTextChangeCapture text ->
-            ( { model
-                | likeOrCommentText = text
-              }
-            , Cmd.none
-            )
-
-        FocusResult _ ->
-            ( model
-            , Cmd.none
-            )
-
-        FocusSet id ->
-            --See:
-            --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-            --https://stackoverflow.com/a/39419640/1136063
-            ( model
-            , attempt FocusResult (focus id)
-            )
-
         CommentResponse (Err httpError) ->
             let
                 alertMessageNew : AlertMessage
@@ -575,22 +547,6 @@ update msg model =
                 | alertMessage = alertMessageNew
               }
             , focusInputPossibly
-            )
-
-        LikeResponse (Err httpError) ->
-            let
-                alertMessageNew : AlertMessage
-                alertMessageNew =
-                    httpErrorMessageText httpError ++ suffix
-
-                suffix : AlertMessage
-                suffix =
-                    " while sending like to server"
-            in
-            ( { model
-                | alertMessage = alertMessageNew
-              }
-            , Cmd.none
             )
 
         CommentResponse (Ok appendCommentJson) ->
@@ -624,35 +580,24 @@ update msg model =
             , Cmd.none
             )
 
-        LikeResponse (Ok appendLikeJson) ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    --log "Ok response" appendLikeJson
-                    log "Response" "Ok"
-
-                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
-                commentedShow index song =
-                    if Just index == model.songRememberedCommentingIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.indexedMap commentedShow model.songsRemembered
-            in
+        CommentTextChangeCapture text ->
             ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = False
-                , likeOrCommentText = likeOrCommentTextInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                , songsRemembered = songsRememberedNew
+                | likeOrCommentText = text
               }
             , Cmd.none
+            )
+
+        FocusResult _ ->
+            ( model
+            , Cmd.none
+            )
+
+        FocusSet id ->
+            --See:
+            --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+            --https://stackoverflow.com/a/39419640/1136063
+            ( model
+            , attempt FocusResult (focus id)
             )
 
         LikeButtonHandle songRememberedIndex ->
@@ -688,6 +633,61 @@ update msg model =
                       }
                     , msg2Cmd (succeed LikeProcess)
                     )
+
+        LikeProcess ->
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = True
+              }
+            , send LikeResponse requestLikeOrComment
+            )
+
+        LikeResponse (Err httpError) ->
+            let
+                alertMessageNew : AlertMessage
+                alertMessageNew =
+                    httpErrorMessageText httpError ++ suffix
+
+                suffix : AlertMessage
+                suffix =
+                    " while sending like to server"
+            in
+            ( { model
+                | alertMessage = alertMessageNew
+              }
+            , Cmd.none
+            )
+
+        LikeResponse (Ok appendLikeJson) ->
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    --log "Ok response" appendLikeJson
+                    log "Response" "Ok"
+
+                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
+                commentedShow index song =
+                    if Just index == model.songRememberedCommentingIndex then
+                        { song
+                            | likedOrCommented = True
+                        }
+                    else
+                        song
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    List.indexedMap commentedShow model.songsRemembered
+            in
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = False
+                , likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                , songsRemembered = songsRememberedNew
+              }
+            , Cmd.none
+            )
 
         PageReshape ->
             ( { model
