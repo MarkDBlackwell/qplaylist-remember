@@ -837,8 +837,8 @@ type SongGroup
 buttonComment : SongGroup -> SongRememberedIndex -> Html Msg
 buttonComment group index =
     let
-        action : Msg
-        action =
+        buttonAction : Msg
+        buttonAction =
             CommentAreaShow index
 
         buttonId : Maybe Id
@@ -853,7 +853,7 @@ buttonComment group index =
             "Share a comment (with the DJ) about this song"
     in
     if Remembered == group then
-        buttonMy buttonId hoverText action
+        buttonMy buttonId hoverText buttonAction
     else
         htmlNodeNull
 
@@ -861,8 +861,8 @@ buttonComment group index =
 buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
 buttonForgetRemember group index =
     let
-        action : Msg
-        action =
+        buttonAction : Msg
+        buttonAction =
             case group of
                 Played ->
                     SongRemember index
@@ -887,14 +887,14 @@ buttonForgetRemember group index =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonMy buttonId hoverText action
+    buttonMy buttonId hoverText buttonAction
 
 
 buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
 buttonLike group index =
     let
-        action : Msg
-        action =
+        buttonAction : Msg
+        buttonAction =
             LikeButtonHandle index
 
         buttonId : Maybe Id
@@ -913,7 +913,7 @@ buttonLike group index =
             htmlNodeNull
 
         Remembered ->
-            buttonMy buttonId hoverText action
+            buttonMy buttonId hoverText buttonAction
 
 
 buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
