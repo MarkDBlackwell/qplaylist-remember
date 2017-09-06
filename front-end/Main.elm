@@ -221,6 +221,10 @@ type alias HttpResponseText =
 
 
 type alias QueryBefore =
+    --See:
+    --https://github.com/elm-lang/url
+    --https://tools.ietf.org/html/rfc3986
+    --If joined, then comprises a URI's scheme, authority, and path:
     List UriText
 
 
@@ -278,41 +282,67 @@ type Msg
 
 relative : QueryBefore -> QueryPairs -> UriText
 relative queryBefore queryPairs =
-    --See also: evancz/elm-http.
+    --See:
+    --https://github.com/elm-lang/http/issues/10
+    --https://github.com/elm-lang/url
+    --https://github.com/evancz/elm-http
+    --http://package.elm-lang.org/packages/elm-lang/http/latest
     --TODO: When elm-lang/url is updated to contain 'relative', replace this code:
     let
         escapeAll : UriText -> UriText
         escapeAll string =
-            escapeAmpersands (escapeEqualsSigns string)
+            --See:
+            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
+            --TODO: Possibly, use Http.encodeUri instead:
+            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
 
         escapeAmpersands : UriText -> UriText
         escapeAmpersands string =
-            String.join "%26"
+            String.join
+                "%26"
                 (String.split "&" string)
 
         escapeEqualsSigns : UriText -> UriText
         escapeEqualsSigns string =
-            String.join "%3D"
+            String.join
+                "%3D"
                 (String.split "=" string)
+
+        escapeHashes : UriText -> UriText
+        escapeHashes string =
+            String.join
+                "%23"
+                (String.split "#" string)
+
+        queryBeforeSegment : UriText
+        queryBeforeSegment =
+            String.join
+                "/"
+                queryBefore
 
         queryPairJoin : QueryPair -> UriText
         queryPairJoin ( name, value ) =
-            String.join "="
+            String.join
+                "="
                 [ name
                 , escapeAll value
                 ]
+
+        querySegment : UriText
+        querySegment =
+            String.join
+                "&"
+                (List.map queryPairJoin queryPairs)
     in
-    String.join "/" queryBefore
-        ++ "?"
-        ++ String.join "&"
-            (List.map queryPairJoin queryPairs)
+    queryBeforeSegment ++ "?" ++ querySegment
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
 decodeSongsLatestFew jsonRawText =
-    --For decoding JSON, see:
+    --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
+    --For decoding JSON:
     let
         decodeSong : Decoder SongLatestFew
         decodeSong =
@@ -346,8 +376,9 @@ focusSet id =
 
 msg2Cmd : Task.Task Never msg -> Cmd msg
 msg2Cmd msg =
-    --For wrapping a message as a `Cmd`, see:
-    -- https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --See:
+    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --For wrapping a message as a Cmd:
     Task.perform identity msg
 
 
@@ -406,7 +437,7 @@ update msg model =
                     ( { model
                         | songRememberedCommentingIndex = Just index
                       }
-                      --'focusInputPossibly' doesn't work, here.
+                      --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
                     )
 
@@ -508,6 +539,7 @@ update msg model =
             )
 
         FocusSet id ->
+            --See:
             --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
             --https://stackoverflow.com/a/39419640/1136063
             ( model
@@ -1132,7 +1164,7 @@ styleCalc group songGroupLength index =
 
         goldenRatio : Float
         goldenRatio =
-            --Golden ratio:
+            --See:
             --https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
             0.6180339887498949
 
