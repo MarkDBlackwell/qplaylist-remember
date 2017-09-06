@@ -426,33 +426,9 @@ update msg model =
 
                 Http.Timeout ->
                     log prefix "Timeout"
-    in
-    case msg of
-        CommentAreaShow index ->
-            case model.songRememberedCommentingIndex of
-                Just _ ->
-                    ( model
-                    , focusInputPossibly
-                    )
 
-                songRememberedCommentingIndexInit ->
-                    ( { model
-                        | songRememberedCommentingIndex = Just index
-                      }
-                      --'focusInputPossibly' doesn't work, here:
-                    , focusSet "input"
-                    )
-
-        CommentInputCancel ->
-            ( { model
-                | alertMessage = alertMessageInit
-                , likeOrCommentText = likeOrCommentTextInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-              }
-            , Cmd.none
-            )
-
-        LikeProcess ->
+        requestLikeOrComment : Request HttpRequestText
+        requestLikeOrComment =
             let
                 artistTimeTitle : UriText
                 artistTimeTitle =
@@ -479,10 +455,6 @@ update msg model =
                 index : Maybe SongRememberedIndex
                 index =
                     model.songRememberedCommentingIndex
-
-                requestLikeOrComment : Request HttpRequestText
-                requestLikeOrComment =
-                    getString (log "Request" requestUriText)
 
                 requestUriText : UriText
                 requestUriText =
@@ -516,6 +488,34 @@ update msg model =
                                 Just song ->
                                     song.timeStamp
             in
+            getString (log "Request" requestUriText)
+    in
+    case msg of
+        CommentAreaShow index ->
+            case model.songRememberedCommentingIndex of
+                Just _ ->
+                    ( model
+                    , focusInputPossibly
+                    )
+
+                songRememberedCommentingIndexInit ->
+                    ( { model
+                        | songRememberedCommentingIndex = Just index
+                      }
+                      --'focusInputPossibly' doesn't work, here:
+                    , focusSet "input"
+                    )
+
+        CommentInputCancel ->
+            ( { model
+                | alertMessage = alertMessageInit
+                , likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+              }
+            , Cmd.none
+            )
+
+        LikeProcess ->
             ( { model
                 | alertMessage = alertMessageInit
                 , awaitingServerResponse = True
@@ -551,10 +551,11 @@ update msg model =
                 index =
                     model.songRememberedCommentingIndex
 
-                requestLikeOrComment : Request HttpRequestText
-                requestLikeOrComment =
-                    getString (log "Request" requestUriText)
-
+                {-
+                   requestLikeOrComment : Request HttpRequestText
+                   requestLikeOrComment =
+                       getString (log "Request" requestUriText)
+                -}
                 requestUriText : UriText
                 requestUriText =
                     relative
