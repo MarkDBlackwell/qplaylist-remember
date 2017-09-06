@@ -480,8 +480,8 @@ update msg model =
                 index =
                     model.songRememberedCommentingIndex
 
-                request : Request HttpRequestText
-                request =
+                requestLikeOrComment : Request HttpRequestText
+                requestLikeOrComment =
                     getString (log "Request" requestUriText)
 
                 requestUriText : UriText
@@ -520,7 +520,7 @@ update msg model =
                 | alertMessage = alertMessageInit
                 , awaitingServerResponse = True
               }
-            , send LikeResponse request
+            , send LikeResponse requestLikeOrComment
             )
 
         CommentInputOk ->
@@ -551,8 +551,8 @@ update msg model =
                 index =
                     model.songRememberedCommentingIndex
 
-                request : Request HttpRequestText
-                request =
+                requestLikeOrComment : Request HttpRequestText
+                requestLikeOrComment =
                     getString (log "Request" requestUriText)
 
                 requestUriText : UriText
@@ -596,7 +596,7 @@ update msg model =
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = True
                   }
-                , send CommentResponse request
+                , send CommentResponse requestLikeOrComment
                 )
 
         CommentTextChangeCapture text ->
