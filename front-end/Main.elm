@@ -693,7 +693,11 @@ update msg model =
                             model.songsRemembered
 
                         Just songSelected ->
-                            if List.member (songClean (songLatestFew2Remembered songSelected)) songsRememberedCleaned then
+                            if
+                                List.member
+                                    (songClean (songLatestFew2Remembered songSelected))
+                                    songsRememberedCleaned
+                            then
                                 model.songsRemembered
                             else
                                 songsDifferent
@@ -778,6 +782,10 @@ subscriptions model =
 
 
 -- VIEW
+
+
+type alias Display =
+    String
 
 
 type alias HoverText =
@@ -891,7 +899,7 @@ buttonLike group index =
 buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
 buttonMy buttonId hoverText action =
     let
-        display : String
+        display : Display
         display =
             case buttonId of
                 Nothing ->
@@ -952,6 +960,46 @@ buttonRemembered =
             "Morph this page's shape"
     in
     buttonMy buttonId hoverText PageReshape
+
+
+buySongAnchor : SongRemembered -> Html Msg
+buySongAnchor song =
+    let
+        fieldKeywords : UriText
+        fieldKeywords =
+            String.join
+                "+"
+                [ song.title
+                , song.artist
+                ]
+
+        hoverText : HoverText
+        hoverText =
+            "See this song on Amazon (in new tab)"
+
+        queryBeforeList : QueryBeforeList
+        queryBeforeList =
+            [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
+
+        queryPairs : QueryPairs
+        queryPairs =
+            [ ( "tag", "wtmdradio-20" )
+            , ( "url", "search-alias=digital-music" )
+            , ( "field-keywords"
+              , fieldKeywords
+              )
+            ]
+
+        uriText : UriText
+        uriText =
+            relative queryBeforeList queryPairs
+    in
+    a
+        [ href uriText
+        , target "_blank"
+        , title hoverText
+        ]
+        []
 
 
 commentArea : Model -> SongRemembered -> Html Msg
@@ -1044,46 +1092,6 @@ htmlNodeNull =
 showCommentButtons : Bool
 showCommentButtons =
     True
-
-
-buySongAnchor : SongRemembered -> Html Msg
-buySongAnchor song =
-    let
-        buySongAttributes : List (Attribute msg)
-        buySongAttributes =
-            [ href buySongUriText
-            , target "_blank"
-            , title buySongHoverText
-            ]
-
-        buySongHoverText : String
-        buySongHoverText =
-            "See this song on Amazon (in new tab)"
-
-        buySongUriQueryBeforeList : QueryBeforeList
-        buySongUriQueryBeforeList =
-            [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
-
-        buySongUriQueryPairs : QueryPairs
-        buySongUriQueryPairs =
-            [ ( "tag", "wtmdradio-20" )
-            , ( "url", "search-alias=digital-music" )
-            , ( "field-keywords"
-              , buySongUriQueryPairsFieldKeywords
-              )
-            ]
-
-        buySongUriQueryPairsFieldKeywords : UriText
-        buySongUriQueryPairsFieldKeywords =
-            song.title
-                ++ "+"
-                ++ song.artist
-
-        buySongUriText : UriText
-        buySongUriText =
-            relative buySongUriQueryBeforeList buySongUriQueryPairs
-    in
-    a buySongAttributes []
 
 
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
