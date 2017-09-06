@@ -427,6 +427,42 @@ update msg model =
                 Http.Timeout ->
                     log prefix "Timeout"
 
+        likeOrCommentResponse : String -> ( Model, Cmd Msg )
+        likeOrCommentResponse appendLikeOrCommentJson =
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    logResponseOk appendLikeOrCommentJson
+
+                sharedShow : SongsRemembered
+                sharedShow =
+                    List.indexedMap sharedShowSong model.songsRemembered
+
+                sharedShowSong : SongRememberedIndex -> SongRemembered -> SongRemembered
+                sharedShowSong index song =
+                    if Just index == model.songRememberedCommentingIndex then
+                        { song
+                            | likedOrCommented = True
+                        }
+                    else
+                        song
+            in
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = False
+                , likeOrCommentText = likeOrCommentTextInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                , songsRemembered = sharedShow
+              }
+            , Cmd.none
+            )
+
+        logResponseOk : String -> String
+        logResponseOk string =
+            --log "Ok response" string
+            log "Response" "Ok"
+
         requestLikeOrComment : Request HttpRequestText
         requestLikeOrComment =
             let
@@ -550,35 +586,7 @@ update msg model =
             )
 
         CommentResponse (Ok appendCommentJson) ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    --log "Ok response" appendCommentJson
-                    log "Response" "Ok"
-
-                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
-                commentedShow index song =
-                    if Just index == model.songRememberedCommentingIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.indexedMap commentedShow model.songsRemembered
-            in
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = False
-                , likeOrCommentText = likeOrCommentTextInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                , songsRemembered = songsRememberedNew
-              }
-            , Cmd.none
-            )
+            likeOrCommentResponse appendCommentJson
 
         CommentTextChangeCapture text ->
             ( { model
@@ -601,24 +609,6 @@ update msg model =
             )
 
         LikeButtonHandle songRememberedIndex ->
-            let
-                likeText : LikeOrCommentText
-                likeText =
-                    "Loved it!"
-
-                likedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
-                likedShow index song =
-                    if index == songRememberedIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.indexedMap likedShow model.songsRemembered
-            in
             case model.songRememberedCommentingIndex of
                 Just _ ->
                     ( model
@@ -627,17 +617,21 @@ update msg model =
 
                 songRememberedCommentingIndexInit ->
                     ( { model
-                        | likeOrCommentText = likeText
-                        , songRememberedCommentingIndex = Just songRememberedIndex
-                        , songsRemembered = songsRememberedNew
+                        | songRememberedCommentingIndex = Just songRememberedIndex
                       }
                     , msg2Cmd (succeed LikeProcess)
                     )
 
         LikeProcess ->
+            let
+                likeText : LikeOrCommentText
+                likeText =
+                    "Loved it!"
+            in
             ( { model
                 | alertMessage = alertMessageInit
                 , awaitingServerResponse = True
+                , likeOrCommentText = likeText
               }
             , send LikeResponse requestLikeOrComment
             )
@@ -659,35 +653,7 @@ update msg model =
             )
 
         LikeResponse (Ok appendLikeJson) ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    --log "Ok response" appendLikeJson
-                    log "Response" "Ok"
-
-                commentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
-                commentedShow index song =
-                    if Just index == model.songRememberedCommentingIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.indexedMap commentedShow model.songsRemembered
-            in
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = False
-                , likeOrCommentText = likeOrCommentTextInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                , songsRemembered = songsRememberedNew
-              }
-            , Cmd.none
-            )
+            likeOrCommentResponse appendLikeJson
 
         PageReshape ->
             ( { model
