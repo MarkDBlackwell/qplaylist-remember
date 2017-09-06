@@ -788,10 +788,6 @@ type alias Display =
     String
 
 
-type alias GroupString =
-    String
-
-
 type alias HoverText =
     String
 
@@ -849,18 +845,9 @@ buttonForgetRemember group index =
         buttonId =
             Just
                 ("button"
-                    ++ groupString
+                    ++ songGroup2String group
                     ++ toString index
                 )
-
-        groupString : GroupString
-        groupString =
-            case group of
-                Played ->
-                    "played"
-
-                Remembered ->
-                    "remembered"
 
         hoverText : HoverText
         hoverText =
@@ -1070,20 +1057,10 @@ commentAreaPossibly model =
 
 groupAttributes : SongGroup -> List (Attribute msg)
 groupAttributes group =
-    let
-        groupString : GroupString
-        groupString =
-            case group of
-                Played ->
-                    "played"
-
-                Remembered ->
-                    "remembered"
-    in
     [ class "songs-group"
     , id
         ("songs-"
-            ++ groupString
+            ++ songGroup2String group
         )
     ]
 
@@ -1096,6 +1073,16 @@ htmlNodeNull =
 showCommentButtons : Bool
 showCommentButtons =
     True
+
+
+songGroup2String : SongGroup -> String
+songGroup2String group =
+    case group of
+        Played ->
+            "played"
+
+        Remembered ->
+            "remembered"
 
 
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
