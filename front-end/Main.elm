@@ -272,7 +272,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | LikeOrCommentResponse (Result Error HttpResponseText)
-    | LikeProcess SongRememberedIndex
+    | LikeButtonHandle SongRememberedIndex
     | PageReshape
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
@@ -593,7 +593,7 @@ update msg model =
             , Cmd.none
             )
 
-        LikeProcess songRememberedIndex ->
+        LikeButtonHandle songRememberedIndex ->
             let
                 likeText : LikeOrCommentText
                 likeText =
@@ -866,7 +866,7 @@ buttonLike group index =
     let
         action : Msg
         action =
-            LikeProcess index
+            LikeButtonHandle index
 
         buttonId : Maybe Id
         buttonId =
