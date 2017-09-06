@@ -220,6 +220,18 @@ type alias HttpResponseText =
     String
 
 
+type alias QueryBefore =
+    List UriText
+
+
+type alias QueryPair =
+    ( UriText, UriText )
+
+
+type alias QueryPairs =
+    List QueryPair
+
+
 type alias SongLatestFewIndex =
     Int
 
@@ -264,7 +276,7 @@ type Msg
     | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
-relative : List UriText -> List ( UriText, UriText ) -> UriText
+relative : QueryBefore -> QueryPairs -> UriText
 relative queryBefore queryPairs =
     --See also: evancz/elm-http.
     --TODO: When elm-lang/url is updated to contain 'relative', replace this code:
@@ -283,7 +295,7 @@ relative queryBefore queryPairs =
             String.join "%3D"
                 (String.split "=" string)
 
-        queryPairJoin : ( UriText, UriText ) -> UriText
+        queryPairJoin : QueryPair -> UriText
         queryPairJoin ( name, value ) =
             String.join "="
                 [ name
@@ -1016,11 +1028,11 @@ songView model group index song =
         buySongHoverText =
             "See this song on Amazon (in new tab)"
 
-        buySongUriQueryBefore : List UriText
+        buySongUriQueryBefore : QueryBefore
         buySongUriQueryBefore =
             [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
 
-        buySongUriQueryPairs : List ( UriText, UriText )
+        buySongUriQueryPairs : QueryPairs
         buySongUriQueryPairs =
             [ ( "tag", "wtmdradio-20" )
             , ( "url", "search-alias=digital-music" )
