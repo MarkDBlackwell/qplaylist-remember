@@ -1049,6 +1049,12 @@ showCommentButtons =
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
 songView model group index song =
     let
+        buySongAnchor : Html Msg
+        buySongAnchor =
+            a
+                buySongAttributes
+                []
+
         buySongAttributes : List (Attribute msg)
         buySongAttributes =
             [ href buySongUriText
@@ -1069,11 +1075,15 @@ songView model group index song =
             [ ( "tag", "wtmdradio-20" )
             , ( "url", "search-alias=digital-music" )
             , ( "field-keywords"
-              , song.title
-                    ++ "+"
-                    ++ song.artist
+              , buySongUriQueryPairsFieldKeywords
               )
             ]
+
+        buySongUriQueryPairsFieldKeywords : UriText
+        buySongUriQueryPairsFieldKeywords =
+            song.title
+                ++ "+"
+                ++ song.artist
 
         buySongUriText : UriText
         buySongUriText =
@@ -1120,9 +1130,7 @@ songView model group index song =
             , buttonComment group index
             , buttonLike group index
             , likedOrCommentedIndicator
-            , a
-                buySongAttributes
-                []
+            , buySongAnchor
             ]
         , p []
             [ text song.title ]
