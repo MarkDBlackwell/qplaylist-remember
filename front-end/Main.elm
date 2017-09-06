@@ -788,6 +788,10 @@ type alias Display =
     String
 
 
+type alias GroupString =
+    String
+
+
 type alias HoverText =
     String
 
@@ -849,14 +853,14 @@ buttonForgetRemember group index =
                     ++ toString index
                 )
 
-        groupString : String
+        groupString : GroupString
         groupString =
             case group of
                 Played ->
-                    "Remember"
+                    "played"
 
                 Remembered ->
-                    "Forget"
+                    "remembered"
 
         hoverText : HoverText
         hoverText =
@@ -1067,7 +1071,7 @@ commentAreaPossibly model =
 groupAttributes : SongGroup -> List (Attribute msg)
 groupAttributes group =
     let
-        groupString : String
+        groupString : GroupString
         groupString =
             case group of
                 Played ->
