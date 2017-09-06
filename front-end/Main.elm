@@ -273,7 +273,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | LikeButtonHandle SongRememberedIndex
-    | LikeProcess
+    | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
     | PageReshape
     | SongForget SongRememberedIndex
@@ -610,6 +610,11 @@ update msg model =
             )
 
         LikeButtonHandle songRememberedIndex ->
+            let
+                likeText : LikeOrCommentText
+                likeText =
+                    "Loved it!"
+            in
             case model.songRememberedCommentingIndex of
                 Just _ ->
                     ( model
@@ -618,22 +623,16 @@ update msg model =
 
                 songRememberedCommentingIndexInit ->
                     ( { model
-                        | songRememberedCommentingIndex = Just songRememberedIndex
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = True
+                        , likeOrCommentText = likeText
+                        , songRememberedCommentingIndex = Just songRememberedIndex
                       }
-                    , msg2Cmd (succeed LikeProcess)
+                    , msg2Cmd (succeed LikeRequest)
                     )
 
-        LikeProcess ->
-            let
-                likeText : LikeOrCommentText
-                likeText =
-                    "Loved it!"
-            in
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = True
-                , likeOrCommentText = likeText
-              }
+        LikeRequest ->
+            ( model
             , send LikeResponse (requestLikeOrComment model)
             )
 
