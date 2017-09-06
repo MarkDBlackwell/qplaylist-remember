@@ -516,17 +516,12 @@ update msg model =
                                 Just song ->
                                     song.timeStamp
             in
-            if String.isEmpty model.likeOrCommentText then
-                ( model
-                , focusInputPossibly
-                )
-            else
-                ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = True
-                  }
-                , send LikeResponse request
-                )
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = True
+              }
+            , send LikeResponse request
+            )
 
         CommentInputOk ->
             let
@@ -648,12 +643,12 @@ update msg model =
 
                 suffix : AlertMessage
                 suffix =
-                    " while sending comment to server"
+                    " while sending like to server"
             in
             ( { model
                 | alertMessage = alertMessageNew
               }
-            , focusInputPossibly
+            , Cmd.none
             )
 
         CommentResponse (Ok appendCommentJson) ->
