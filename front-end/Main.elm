@@ -275,9 +275,9 @@ type alias UriText =
 
 
 type Msg
-    = CommentInputSetUp SongRememberedIndex
-    | CommentInputCancel
+    = CommentInputCancel
     | CommentInputOk
+    | CommentInputSetUp SongRememberedIndex
     | CommentResponse (Result Error HttpResponseText)
     | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
@@ -544,22 +544,6 @@ update msg model =
             log "Response" "Ok"
     in
     case msg of
-        CommentInputSetUp index ->
-            case model.songRememberedCommentingIndex of
-                Just _ ->
-                    ( model
-                    , focusInputPossibly
-                    )
-
-                songRememberedCommentingIndexInit ->
-                    ( { model
-                        | processingComment = True
-                        , songRememberedCommentingIndex = Just index
-                      }
-                      --'focusInputPossibly' doesn't work, here:
-                    , focusSet "input"
-                    )
-
         CommentInputCancel ->
             ( { model
                 | alertMessage = alertMessageInit
@@ -590,6 +574,22 @@ update msg model =
                   }
                 , Cmd.batch [ focusInputPossibly, commentRequest ]
                 )
+
+        CommentInputSetUp index ->
+            case model.songRememberedCommentingIndex of
+                Just _ ->
+                    ( model
+                    , focusInputPossibly
+                    )
+
+                songRememberedCommentingIndexInit ->
+                    ( { model
+                        | processingComment = True
+                        , songRememberedCommentingIndex = Just index
+                      }
+                      --'focusInputPossibly' doesn't work, here:
+                    , focusSet "input"
+                    )
 
         CommentResponse (Err httpError) ->
             let
