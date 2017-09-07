@@ -41,12 +41,12 @@ html {
     color: White;
     background-color: Black;
 }
-section#message {
+section#alert {
     line-height: 1.5;
     background-color: rgb(255,255,0);
     color: rgb(230,0,140);
 }
-section#message > p {
+section#alert > p {
     font-size: 15px; /* basis for em and percentage calculations */
     text-align: center;
 }

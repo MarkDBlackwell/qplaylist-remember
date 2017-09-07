@@ -118,6 +118,7 @@ type alias Model =
     , awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
     , pageExpanded : PageIsExpanded
+    , processingComment : ProcessingComment
     , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
@@ -125,6 +126,10 @@ type alias Model =
 
 
 type alias PageIsExpanded =
+    Bool
+
+
+type alias ProcessingComment =
     Bool
 
 
@@ -178,6 +183,11 @@ pageExpandedInit =
     False
 
 
+processingCommentInit : ProcessingComment
+processingCommentInit =
+    False
+
+
 songRememberedCommentingIndexInit : Maybe SongRememberedCommentingIndex
 songRememberedCommentingIndexInit =
     Nothing
@@ -195,7 +205,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit processingCommentInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -265,7 +275,7 @@ type alias UriText =
 
 
 type Msg
-    = CommentAreaShow SongRememberedIndex
+    = CommentInputSetUp SongRememberedIndex
     | CommentInputCancel
     | CommentInputOk
     | CommentResponse (Result Error HttpResponseText)
@@ -520,7 +530,7 @@ update msg model =
             in
             ( { model
                 | alertMessage = alertMessageInit
-                , awaitingServerResponse = False
+                , awaitingServerResponse = awaitingServerResponseInit
                 , likeOrCommentText = likeOrCommentTextInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                 , songsRemembered = sharedShow
@@ -534,7 +544,7 @@ update msg model =
             log "Response" "Ok"
     in
     case msg of
-        CommentAreaShow index ->
+        CommentInputSetUp index ->
             case model.songRememberedCommentingIndex of
                 Just _ ->
                     ( model
@@ -543,7 +553,8 @@ update msg model =
 
                 songRememberedCommentingIndexInit ->
                     ( { model
-                        | songRememberedCommentingIndex = Just index
+                        | processingComment = True
+                        , songRememberedCommentingIndex = Just index
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
@@ -553,6 +564,7 @@ update msg model =
             ( { model
                 | alertMessage = alertMessageInit
                 , likeOrCommentText = likeOrCommentTextInit
+                , processingComment = processingCommentInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
               }
             , Cmd.none
@@ -565,7 +577,10 @@ update msg model =
                     send CommentResponse (requestLikeOrComment model)
             in
             if String.isEmpty model.likeOrCommentText then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -592,11 +607,20 @@ update msg model =
             likeOrCommentResponse appendCommentJson
 
         CommentTextChangeCapture text ->
-            ( { model
-                | likeOrCommentText = text
-              }
-            , Cmd.none
-            )
+            if String.isEmpty text then
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                    , likeOrCommentText = likeOrCommentTextInit
+                  }
+                , Cmd.none
+                )
+            else
+                ( { model
+                    | likeOrCommentText = text
+                  }
+                , Cmd.none
+                )
 
         FocusResult _ ->
             ( model
@@ -836,7 +860,7 @@ buttonComment group index =
     let
         buttonAction : Msg
         buttonAction =
-            CommentAreaShow index
+            CommentInputSetUp index
 
         buttonId : Maybe Id
         buttonId =
@@ -1068,17 +1092,20 @@ commentAreaPossibly model =
         songPossibly index =
             List.head (List.drop index model.songsRemembered)
     in
-    case model.songRememberedCommentingIndex of
-        Just index ->
-            case songPossibly index of
-                Nothing ->
-                    htmlNodeNull
+    if not model.processingComment then
+        htmlNodeNull
+    else
+        case model.songRememberedCommentingIndex of
+            Just index ->
+                case songPossibly index of
+                    Nothing ->
+                        htmlNodeNull
 
-                Just song ->
-                    commentArea model song
+                    Just song ->
+                        commentArea model song
 
-        songRememberedCommentingIndexInit ->
-            htmlNodeNull
+            songRememberedCommentingIndexInit ->
+                htmlNodeNull
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
@@ -1227,6 +1254,14 @@ styleCalc group songGroupLength index =
 view : Model -> Html Msg
 view model =
     let
+        alertArea : Html Msg
+        alertArea =
+            section
+                [ id "alert" ]
+                [ p []
+                    [ text model.alertMessage ]
+                ]
+
         songsLatestFew : List (Html Msg)
         songsLatestFew =
             List.indexedMap (songView model Played) songsLatestFew2Remembered
@@ -1241,11 +1276,7 @@ view model =
     in
     main_
         []
-        [ section
-            [ id "message" ]
-            [ p []
-                [ text model.alertMessage ]
-            ]
+        [ alertArea
         , commentAreaPossibly model
         , section
             (groupAttributes Remembered)
