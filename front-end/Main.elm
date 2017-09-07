@@ -394,70 +394,6 @@ relative queryBeforeList queryPairs =
     queryBefore ++ "?" ++ query
 
 
-requestLikeOrComment : Model -> Request HttpRequestText
-requestLikeOrComment model =
-    let
-        artistTimeTitle : UriText
-        artistTimeTitle =
-            case index of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just songSelected ->
-                            songSelected.time
-                                ++ " "
-                                ++ songSelected.artist
-                                ++ ": "
-                                ++ songSelected.title
-
-        basename : UriText
-        basename =
-            "append.php"
-
-        index : Maybe SongRememberedIndex
-        index =
-            model.songRememberedCommentingIndex
-
-        requestUriText : UriText
-        requestUriText =
-            relative
-                [ basename ]
-                [ ( "timestamp", timeStamp )
-                , ( "song", artistTimeTitle )
-                , ( "comment", model.likeOrCommentText )
-                ]
-
-        songSelected : Maybe SongRemembered
-        songSelected =
-            case index of
-                Nothing ->
-                    Nothing
-
-                Just index ->
-                    List.head (List.drop index model.songsRemembered)
-
-        timeStamp : UriText
-        timeStamp =
-            case index of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just song ->
-                            song.timeStamp
-    in
-    getString (log "Request" requestUriText)
-
-
 songLatestFew2Remembered : SongLatestFew -> SongRemembered
 songLatestFew2Remembered song =
     { artist = song.artist
@@ -506,6 +442,65 @@ update msg model =
 
                 Http.Timeout ->
                     log prefix "Timeout"
+
+        likeOrCommentRequestUriText : UriText
+        likeOrCommentRequestUriText =
+            let
+                artistTimeTitle : UriText
+                artistTimeTitle =
+                    case index of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just songSelected ->
+                                    songSelected.time
+                                        ++ " "
+                                        ++ songSelected.artist
+                                        ++ ": "
+                                        ++ songSelected.title
+
+                basename : UriText
+                basename =
+                    "append.php"
+
+                index : Maybe SongRememberedIndex
+                index =
+                    model.songRememberedCommentingIndex
+
+                songSelected : Maybe SongRemembered
+                songSelected =
+                    case index of
+                        Nothing ->
+                            Nothing
+
+                        Just index ->
+                            List.head (List.drop index model.songsRemembered)
+
+                timeStamp : UriText
+                timeStamp =
+                    case index of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
+            in
+            relative
+                [ basename ]
+                [ ( "timestamp", timeStamp )
+                , ( "song", artistTimeTitle )
+                , ( "comment", model.likeOrCommentText )
+                ]
 
         likeOrCommentResponse : String -> ( Model, Cmd Msg )
         likeOrCommentResponse appendLikeOrCommentJson =
@@ -558,7 +553,7 @@ update msg model =
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse (requestLikeOrComment model)
+                    send CommentResponse (getString (log "Request" likeOrCommentRequestUriText))
             in
             if String.isEmpty model.likeOrCommentText then
                 ( { model
@@ -650,7 +645,7 @@ update msg model =
 
         LikeRequest ->
             ( model
-            , send LikeResponse (requestLikeOrComment model)
+            , send LikeResponse (getString (log "Request" likeOrCommentRequestUriText))
             )
 
         LikeResponse (Err httpError) ->
