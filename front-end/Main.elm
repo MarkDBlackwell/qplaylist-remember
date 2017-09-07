@@ -656,7 +656,10 @@ update msg model =
             else
                 case model.songRememberedCommentingIndex of
                     Just _ ->
-                        ( model
+                        ( { model
+                            | alertMessage = alertMessageInit
+                            , awaitingServerResponse = awaitingServerResponseInit
+                          }
                         , focusInputPossibly
                         )
 
