@@ -282,7 +282,7 @@ type Msg
     | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | LikeButtonHandle SongRememberedIndex
+    | LikeButtonProcess SongRememberedIndex
     | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
     | PageMorph
@@ -625,27 +625,32 @@ update msg model =
             , attempt FocusResult (focus id)
             )
 
-        LikeButtonHandle songRememberedIndex ->
+        LikeButtonProcess songRememberedIndex ->
             let
                 likeText : LikeOrCommentText
                 likeText =
                     "Loved it!"
             in
-            case model.songRememberedCommentingIndex of
-                Just _ ->
-                    ( model
-                    , Cmd.none
-                    )
+            if likingOrCommenting then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                case model.songRememberedCommentingIndex of
+                    Just _ ->
+                        ( model
+                        , focusInputPossibly
+                        )
 
-                songRememberedCommentingIndexInit ->
-                    ( { model
-                        | alertMessage = alertMessageInit
-                        , awaitingServerResponse = True
-                        , likeOrCommentText = likeText
-                        , songRememberedCommentingIndex = Just songRememberedIndex
-                      }
-                    , msg2Cmd (succeed LikeRequest)
-                    )
+                    songRememberedCommentingIndexInit ->
+                        ( { model
+                            | alertMessage = alertMessageInit
+                            , awaitingServerResponse = True
+                            , likeOrCommentText = likeText
+                            , songRememberedCommentingIndex = Just songRememberedIndex
+                          }
+                        , msg2Cmd (succeed LikeRequest)
+                        )
 
         LikeRequest ->
             ( model
@@ -679,12 +684,17 @@ update msg model =
                     else
                         not model.pageIsExpanded
             in
-            ( { model
-                | alertMessage = alertMessageInit
-                , pageIsExpanded = pageIsExpandedNew
-              }
-            , focusInputPossibly
-            )
+            if likingOrCommenting then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , pageIsExpanded = pageIsExpandedNew
+                  }
+                , focusInputPossibly
+                )
 
         SongForget songRememberedIndex ->
             let
@@ -751,11 +761,16 @@ update msg model =
                                 songsDifferent
                                     ++ [ songLatestFew2Remembered songSelected ]
             in
-            ( { model
-                | songsRemembered = songsRememberedNew
-              }
-            , focusInputPossibly
-            )
+            if likingOrCommenting then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                ( { model
+                    | songsRemembered = songsRememberedNew
+                  }
+                , focusInputPossibly
+                )
 
         SongsLatestFewRefresh ->
             let
@@ -784,9 +799,14 @@ update msg model =
                 subUri =
                     "wtmdapp"
             in
-            ( model
-            , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
-            )
+            if likingOrCommenting then
+                ( model
+                , focusInputPossibly
+                )
+            else
+                ( model
+                , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
+                )
 
         SongsLatestFewResponse (Err httpError) ->
             let
@@ -914,7 +934,7 @@ buttonLike group index =
     let
         buttonAction : Msg
         buttonAction =
-            LikeButtonHandle index
+            LikeButtonProcess index
 
         buttonId : Maybe Id
         buttonId =
