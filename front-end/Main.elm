@@ -566,7 +566,10 @@ update msg model =
                     send CommentResponse (getString (log "Request" likeOrCommentRequestUriText))
             in
             if String.isEmpty model.likeOrCommentText then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -576,21 +579,29 @@ update msg model =
                 , Cmd.batch [ focusInputPossibly, commentRequest ]
                 )
 
-        CommentInputSetUp index ->
-            case model.songRememberedCommentingIndex of
-                Just _ ->
-                    ( model
-                    , focusInputPossibly
-                    )
+        CommentInputSetUp songRememberedIndex ->
+            if likingOrCommenting then
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
+                , focusInputPossibly
+                )
+            else
+                case model.songRememberedCommentingIndex of
+                    Just _ ->
+                        ( model
+                        , focusInputPossibly
+                        )
 
-                songRememberedCommentingIndexInit ->
-                    ( { model
-                        | processingComment = True
-                        , songRememberedCommentingIndex = Just index
-                      }
-                      --'focusInputPossibly' doesn't work, here:
-                    , focusSet "input"
-                    )
+                    songRememberedCommentingIndexInit ->
+                        ( { model
+                            | processingComment = True
+                            , songRememberedCommentingIndex = Just songRememberedIndex
+                          }
+                          --'focusInputPossibly' doesn't work, here:
+                        , focusSet "input"
+                        )
 
         CommentInputTextChangeCapture text ->
             ( { model
@@ -636,7 +647,10 @@ update msg model =
                     "Loved it!"
             in
             if likingOrCommenting then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -689,7 +703,10 @@ update msg model =
                         not model.pageIsExpanded
             in
             if likingOrCommenting then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -708,7 +725,10 @@ update msg model =
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
             if likingOrCommenting then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -766,7 +786,10 @@ update msg model =
                                     ++ [ songLatestFew2Remembered songSelected ]
             in
             if likingOrCommenting then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
@@ -804,7 +827,10 @@ update msg model =
                     "wtmdapp"
             in
             if likingOrCommenting then
-                ( model
+                ( { model
+                    | alertMessage = alertMessageInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
                 , focusInputPossibly
                 )
             else
