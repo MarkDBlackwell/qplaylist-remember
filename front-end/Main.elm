@@ -119,6 +119,7 @@ type alias Model =
     , likeOrCommentText : LikeOrCommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
+    , processingLike : ProcessingLike
     , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
@@ -130,6 +131,10 @@ type alias PageIsExpanded =
 
 
 type alias ProcessingComment =
+    Bool
+
+
+type alias ProcessingLike =
     Bool
 
 
@@ -188,6 +193,11 @@ processingCommentInit =
     False
 
 
+processingLikeInit : ProcessingLike
+processingLikeInit =
+    False
+
+
 songRememberedCommentingIndexInit : Maybe SongRememberedCommentingIndex
 songRememberedCommentingIndexInit =
     Nothing
@@ -205,7 +215,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -528,6 +538,8 @@ update msg model =
                 | alertMessage = alertMessageInit
                 , awaitingServerResponse = awaitingServerResponseInit
                 , likeOrCommentText = likeOrCommentTextInit
+                , processingComment = processingCommentInit
+                , processingLike = processingLikeInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                 , songsRemembered = sharedShow
               }
@@ -678,6 +690,7 @@ update msg model =
                             | alertMessage = alertMessageInit
                             , awaitingServerResponse = True
                             , likeOrCommentText = likeText
+                            , processingLike = True
                             , songRememberedCommentingIndex = Just songRememberedIndex
                           }
                         , msg2Cmd (succeed LikeRequest)
@@ -696,6 +709,11 @@ update msg model =
             in
             ( { model
                 | alertMessage = alertMessageNew
+                , awaitingServerResponse = awaitingServerResponseInit
+                , likeOrCommentText = likeOrCommentTextInit
+                , processingComment = processingCommentInit
+                , processingLike = processingLikeInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
               }
             , Cmd.none
             )
@@ -738,6 +756,7 @@ update msg model =
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
             if likingOrCommenting then
+                --if String.isEmpty model.alertMessage then
                 if model.processingComment then
                     ( { model
                         | alertMessage = alertMessageInit
