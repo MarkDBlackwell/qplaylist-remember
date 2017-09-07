@@ -275,7 +275,8 @@ type alias UriText =
 
 
 type Msg
-    = CommentInputCancel
+    = BuySongAnchorProcess
+    | CommentInputCancel
     | CommentInputOk
     | CommentInputSetUp SongRememberedIndex
     | CommentResponse (Result Error HttpResponseText)
@@ -543,6 +544,11 @@ update msg model =
             log "Response" "Ok"
     in
     case msg of
+        BuySongAnchorProcess ->
+            ( model
+            , focusInputPossibly
+            )
+
         CommentInputCancel ->
             ( { model
                 | alertMessage = alertMessageInit
@@ -1055,6 +1061,7 @@ buySongAnchor song =
     in
     a
         [ href uriText
+        , onClick BuySongAnchorProcess
         , target "_blank"
         , title hoverText
         ]
