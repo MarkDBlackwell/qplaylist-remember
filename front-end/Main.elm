@@ -591,6 +591,7 @@ update msg model =
                 case model.songRememberedCommentingIndex of
                     Just _ ->
                         ( model
+                          --, focusSet "refresh"
                         , focusInputPossibly
                         )
 
@@ -647,12 +648,21 @@ update msg model =
                     "Loved it!"
             in
             if likingOrCommenting then
-                ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly
-                )
+                if model.processingComment then
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , focusInputPossibly
+                    )
+                else
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                      }
+                    , msg2Cmd (succeed (LikeButtonProcess songRememberedIndex))
+                    )
             else
                 case model.songRememberedCommentingIndex of
                     Just _ ->
@@ -728,12 +738,29 @@ update msg model =
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
             if likingOrCommenting then
-                ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly
-                )
+                if model.processingComment then
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , focusInputPossibly
+                    )
+                else if model.songRememberedCommentingIndex == Just songRememberedIndex then
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                      }
+                    , Cmd.none
+                    )
+                else
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                      }
+                    , msg2Cmd (succeed (SongForget songRememberedIndex))
+                    )
             else
                 ( { model
                     | songsRemembered = songsRememberedWithoutOne
@@ -789,12 +816,21 @@ update msg model =
                                     ++ [ songLatestFew2Remembered songSelected ]
             in
             if likingOrCommenting then
-                ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly
-                )
+                if model.processingComment then
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , focusInputPossibly
+                    )
+                else
+                    ( { model
+                        | alertMessage = alertMessageInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                      }
+                    , Cmd.none
+                    )
             else
                 ( { model
                     | songsRemembered = songsRememberedNew
