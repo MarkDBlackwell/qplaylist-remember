@@ -461,6 +461,12 @@ songLatestFew2Remembered song =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        alertMessageSuffix : AlertMessage -> AlertMessage
+        alertMessageSuffix thing =
+            " while attempting to send "
+                ++ thing
+                ++ " to server"
+
         focusInputPossibly : Cmd Msg
         focusInputPossibly =
             if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
@@ -574,11 +580,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessageText httpError ++ suffix
-
-                suffix : AlertMessage
-                suffix =
-                    " while sending comment to server"
+                    httpErrorMessageText httpError ++ alertMessageSuffix "comment"
             in
             ( { model
                 | alertMessage = alertMessageNew
@@ -640,11 +642,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessageText httpError ++ suffix
-
-                suffix : AlertMessage
-                suffix =
-                    " while sending like to server"
+                    httpErrorMessageText httpError ++ alertMessageSuffix "Like"
             in
             ( { model
                 | alertMessage = alertMessageNew
@@ -776,7 +774,7 @@ update msg model =
 
                 suffix : HttpErrorMessageText
                 suffix =
-                    " while accessing the latest few songs"
+                    " while attempting to access the latest few songs"
             in
             ( { model
                 | alertMessage = alertMessageNew
