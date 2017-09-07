@@ -117,7 +117,7 @@ type alias Model =
     { alertMessage : AlertMessage
     , awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
-    , pageExpanded : PageIsExpanded
+    , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
     , songsLatestFew : SongsLatestFew
@@ -178,8 +178,8 @@ likeOrCommentTextInit =
     ""
 
 
-pageExpandedInit : PageIsExpanded
-pageExpandedInit =
+pageIsExpandedInit : PageIsExpanded
+pageIsExpandedInit =
     False
 
 
@@ -205,7 +205,7 @@ songsRememberedInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageExpandedInit processingCommentInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 
@@ -285,7 +285,7 @@ type Msg
     | LikeButtonHandle SongRememberedIndex
     | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
-    | PageReshape
+    | PageMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
@@ -562,15 +562,13 @@ update msg model =
             in
             if String.isEmpty model.likeOrCommentText then
                 ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = awaitingServerResponseInit
+                    | awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly
                 )
             else
                 ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = True
+                    | awaitingServerResponse = True
                   }
                 , Cmd.batch [ focusInputPossibly, commentRequest ]
                 )
@@ -607,20 +605,13 @@ update msg model =
             likeOrCommentResponse appendCommentJson
 
         CommentTextChangeCapture text ->
-            if String.isEmpty text then
-                ( { model
-                    | alertMessage = alertMessageInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                    , likeOrCommentText = likeOrCommentTextInit
-                  }
-                , Cmd.none
-                )
-            else
-                ( { model
-                    | likeOrCommentText = text
-                  }
-                , Cmd.none
-                )
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , likeOrCommentText = text
+              }
+            , Cmd.none
+            )
 
         FocusResult _ ->
             ( model
@@ -677,9 +668,21 @@ update msg model =
         LikeResponse (Ok appendLikeJson) ->
             likeOrCommentResponse appendLikeJson
 
-        PageReshape ->
+        PageMorph ->
+            let
+                pageIsExpandedNew : PageIsExpanded
+                pageIsExpandedNew =
+                    if
+                        List.isEmpty model.songsLatestFew
+                            && List.isEmpty model.songsRemembered
+                    then
+                        model.pageIsExpanded
+                    else
+                        not model.pageIsExpanded
+            in
             ( { model
-                | pageExpanded = not model.pageExpanded
+                | alertMessage = alertMessageInit
+                , pageIsExpanded = pageIsExpandedNew
               }
             , focusInputPossibly
             )
@@ -1000,7 +1003,7 @@ buttonRemembered =
         hoverText =
             "Morph this page's shape"
     in
-    buttonMy buttonId hoverText PageReshape
+    buttonMy buttonId hoverText PageMorph
 
 
 buySongAnchor : SongRemembered -> Html Msg
@@ -1168,7 +1171,7 @@ songView model group index song =
 
         songAttributes : List (Attribute msg)
         songAttributes =
-            if model.pageExpanded then
+            if model.pageIsExpanded then
                 []
             else
                 [ styleCalc group lengthRemembered index ]
