@@ -473,9 +473,9 @@ update msg model =
     let
         alertMessageSuffix : AlertMessage -> AlertMessage
         alertMessageSuffix thing =
-            " while attempting to send "
+            " (while attempting to send "
                 ++ thing
-                ++ " to server"
+                ++ " to server)"
 
         focusInputPossibly : Cmd Msg
         focusInputPossibly =
@@ -801,7 +801,7 @@ update msg model =
 
                 suffix : HttpErrorMessageText
                 suffix =
-                    " while attempting to access the latest few songs"
+                    " (while attempting to access the latest few songs)"
             in
             ( { model
                 | alertMessage = alertMessageNew
