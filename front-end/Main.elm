@@ -279,8 +279,8 @@ type Msg
     | CommentInputCancel
     | CommentInputOk
     | CommentInputSetUp SongRememberedIndex
+    | CommentInputTextChangeCapture LikeOrCommentText
     | CommentResponse (Result Error HttpResponseText)
-    | CommentTextChangeCapture LikeOrCommentText
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | LikeButtonProcess SongRememberedIndex
@@ -594,6 +594,15 @@ update msg model =
                     , focusSet "input"
                     )
 
+        CommentInputTextChangeCapture text ->
+            ( { model
+                | alertMessage = alertMessageInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , likeOrCommentText = text
+              }
+            , Cmd.none
+            )
+
         CommentResponse (Err httpError) ->
             let
                 alertMessageNew : AlertMessage
@@ -608,15 +617,6 @@ update msg model =
 
         CommentResponse (Ok appendCommentJson) ->
             likeOrCommentResponse appendCommentJson
-
-        CommentTextChangeCapture text ->
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , likeOrCommentText = text
-              }
-            , Cmd.none
-            )
 
         FocusResult _ ->
             ( model
@@ -1098,7 +1098,7 @@ commentArea model song =
         , input
             [ autocomplete False
             , id "input"
-            , onInput CommentTextChangeCapture
+            , onInput CommentInputTextChangeCapture
             , placeholder hoverText
             , required True
             , title hoverText
