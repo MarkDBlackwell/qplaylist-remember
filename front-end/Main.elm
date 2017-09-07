@@ -566,9 +566,7 @@ update msg model =
                     send CommentResponse (getString (log "Request" likeOrCommentRequestUriText))
             in
             if String.isEmpty model.likeOrCommentText then
-                ( { model
-                    | awaitingServerResponse = awaitingServerResponseInit
-                  }
+                ( model
                 , focusInputPossibly
                 )
             else
