@@ -533,6 +533,10 @@ update msg model =
             , Cmd.none
             )
 
+        likingOrCommenting : Bool
+        likingOrCommenting =
+            model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+
         logResponseOk : String -> String
         logResponseOk string =
             --log "Ok response" string
@@ -684,16 +688,12 @@ update msg model =
 
         SongForget songRememberedIndex ->
             let
-                commenting : Bool
-                commenting =
-                    model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
-
                 songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
                     List.take songRememberedIndex model.songsRemembered
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
-            if commenting then
+            if likingOrCommenting then
                 ( model
                 , focusInputPossibly
                 )
