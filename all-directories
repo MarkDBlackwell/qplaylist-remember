@@ -1,0 +1,8 @@
+#/bin/sh
+# Copyright (C) 2017 Mark D. Blackwell.
+
+find * \
+-path RememberSongs.js -prune -o \
+-path elm-stuff -prune -o \
+-path index.html -prune -o \
+-type d -print
