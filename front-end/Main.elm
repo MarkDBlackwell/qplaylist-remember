@@ -71,6 +71,7 @@ import Json.Decode
         , map4
         , string
         )
+import Msgs exposing (..)
 import Task
     exposing
         ( attempt
@@ -103,10 +104,6 @@ type alias Artist =
 
 type alias AwaitingServerResponse =
     Bool
-
-
-type alias LikeOrCommentText =
-    String
 
 
 type alias LikedOrCommented =
@@ -236,10 +233,6 @@ type alias HttpRequestText =
     String
 
 
-type alias HttpResponseText =
-    String
-
-
 type alias QueryBeforeList =
     --See:
     --https://github.com/elm-lang/url
@@ -254,14 +247,6 @@ type alias QueryPair =
 
 type alias QueryPairs =
     List QueryPair
-
-
-type alias SongLatestFewIndex =
-    Int
-
-
-type alias SongRememberedIndex =
-    Int
 
 
 type alias SongsLatestFewTagged =
@@ -282,25 +267,6 @@ type alias Title =
 
 type alias UriText =
     String
-
-
-type Msg
-    = BuySongAnchorProcess
-    | CommentInputCancel
-    | CommentInputOk
-    | CommentInputSetUp SongRememberedIndex
-    | CommentInputTextChangeCapture LikeOrCommentText
-    | CommentResponse (Result Error HttpResponseText)
-    | FocusResult (Result Dom.Error ())
-    | FocusSet Id
-    | LikeButtonProcess SongRememberedIndex
-    | LikeRequest
-    | LikeResponse (Result Error HttpResponseText)
-    | PageMorph
-    | SongForget SongRememberedIndex
-    | SongRemember SongLatestFewIndex
-    | SongsLatestFewRefresh
-    | SongsLatestFewResponse (Result Error HttpResponseText)
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
