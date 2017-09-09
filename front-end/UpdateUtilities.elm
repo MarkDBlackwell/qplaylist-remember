@@ -12,7 +12,7 @@
 -}
 
 
-module Utilities exposing (msg2Cmd)
+module UpdateUtilities exposing (msg2Cmd)
 
 import Task
     exposing

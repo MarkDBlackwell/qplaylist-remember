@@ -43,7 +43,7 @@ import Task
         ( attempt
         , succeed
         )
-import Utilities exposing (msg2Cmd)
+import UpdateUtilities exposing (msg2Cmd)
 import View exposing (likeOrCommentRequestUriText)
 import ViewUtilities exposing (relative)
 
