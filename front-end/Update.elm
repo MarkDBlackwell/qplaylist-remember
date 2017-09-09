@@ -12,7 +12,7 @@
 -}
 
 
-module Update exposing (..)
+module Update exposing (update)
 
 import Debug exposing (log)
 import DecodeLatestFew exposing (decodeSongsLatestFew)

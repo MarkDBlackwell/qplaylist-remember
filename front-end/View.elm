@@ -12,7 +12,12 @@
 -}
 
 
-module View exposing (..)
+module View
+    exposing
+        ( likeOrCommentRequestUriText
+        , relative
+        , view
+        )
 
 import Dom exposing (Id)
 import Html

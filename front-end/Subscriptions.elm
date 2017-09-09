@@ -12,7 +12,7 @@
 -}
 
 
-module Subscriptions exposing (..)
+module Subscriptions exposing (subscriptions)
 
 import MessageDetails exposing (Msg)
 import ModelDetails exposing (Model)

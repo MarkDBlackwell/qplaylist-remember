@@ -12,7 +12,7 @@
 -}
 
 
-module DecodeLatestFew exposing (..)
+module DecodeLatestFew exposing (decodeSongsLatestFew)
 
 import Json.Decode
     exposing
