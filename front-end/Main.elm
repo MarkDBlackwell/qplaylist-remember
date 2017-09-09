@@ -68,6 +68,7 @@ import Task
         ( attempt
         , succeed
         )
+import Types exposing (..)
 import Update exposing (..)
 import Utilities exposing (..)
 

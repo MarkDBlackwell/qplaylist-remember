@@ -23,6 +23,7 @@ import Task
     exposing
         ( succeed
         )
+import Types exposing (..)
 import Utilities exposing (..)
 
 

@@ -22,6 +22,9 @@ import Http
     exposing
         ( Error
         )
+import Types exposing (..)
+
+
 
 -- UPDATE
 

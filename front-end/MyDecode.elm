@@ -25,6 +25,7 @@ import Json.Decode
         , string
         )
 import Msgs exposing (..)
+import Types exposing (..)
 
 
 type alias Artist =

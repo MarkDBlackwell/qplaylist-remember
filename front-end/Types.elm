@@ -14,3 +14,18 @@
 
 module Types exposing (..)
 
+
+
+-- MODEL
+
+
+
+-- UPDATE
+
+
+
+-- SUBSCRIPTIONS
+
+
+
+-- VIEW
