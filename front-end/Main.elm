@@ -87,60 +87,6 @@ main =
 -- MODEL
 
 
-type alias AlertMessage =
-    String
-
-
-type alias AwaitingServerResponse =
-    Bool
-
-
-type alias LikedOrCommented =
-    Bool
-
-
-type alias Model =
-    { alertMessage : AlertMessage
-    , awaitingServerResponse : AwaitingServerResponse
-    , likeOrCommentText : LikeOrCommentText
-    , pageIsExpanded : PageIsExpanded
-    , processingComment : ProcessingComment
-    , processingLike : ProcessingLike
-    , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
-    , songsLatestFew : SongsLatestFew
-    , songsRemembered : SongsRemembered
-    }
-
-
-type alias PageIsExpanded =
-    Bool
-
-
-type alias ProcessingComment =
-    Bool
-
-
-type alias ProcessingLike =
-    Bool
-
-
-type alias SongRemembered =
-    { artist : Artist
-    , likedOrCommented : LikedOrCommented
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
-type alias SongRememberedCommentingIndex =
-    Int
-
-
-type alias SongsRemembered =
-    List SongRemembered
-
-
 alertMessageInit : AlertMessage
 alertMessageInit =
     ""
@@ -195,34 +141,6 @@ init =
 
 
 -- UPDATE
-
-
-type alias HttpErrorMessageText =
-    String
-
-
-type alias HttpRequestText =
-    String
-
-
-type alias QueryBeforeList =
-    --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
-    --If joined, then comprises a URI's scheme, authority, and path:
-    List UriText
-
-
-type alias QueryPair =
-    ( UriText, UriText )
-
-
-type alias QueryPairs =
-    List QueryPair
-
-
-type alias UriText =
-    String
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
@@ -815,27 +733,6 @@ subscriptions model =
 
 
 -- VIEW
-
-
-type alias Display =
-    String
-
-
-type alias HoverText =
-    String
-
-
-type alias SongGroupLength =
-    Int
-
-
-type alias SongIndex =
-    Int
-
-
-type SongGroup
-    = Played
-    | Remembered
 
 
 buttonComment : SongGroup -> SongRememberedIndex -> Html Msg

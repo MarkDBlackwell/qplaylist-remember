@@ -24,45 +24,10 @@ import Json.Decode
         , map4
         , string
         )
-import Msgs exposing (..)
 import Types exposing (..)
 
 
-type alias Artist =
-    String
-
-
-type alias DecodeErrorMessageText =
-    String
-
-
-type alias SongLatestFew =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
-type alias SongsLatestFew =
-    List SongLatestFew
-
-
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
-
-
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
-
-
-type alias Title =
-    String
+-- UPDATE
 
 
 decodeSongsLatestFew : HttpResponseText -> SongsLatestFew

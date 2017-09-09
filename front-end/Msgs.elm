@@ -25,24 +25,7 @@ import Http
 import Types exposing (..)
 
 
-
 -- UPDATE
-
-
-type alias HttpResponseText =
-    String
-
-
-type alias LikeOrCommentText =
-    String
-
-
-type alias SongLatestFewIndex =
-    Int
-
-
-type alias SongRememberedIndex =
-    Int
 
 
 type Msg

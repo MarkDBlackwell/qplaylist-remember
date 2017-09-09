@@ -18,7 +18,9 @@ import Task
     exposing
         ( perform
         )
-import Types exposing (..)
+
+
+-- UPDATE
 
 
 msg2Cmd : Task.Task Never msg -> Cmd msg
