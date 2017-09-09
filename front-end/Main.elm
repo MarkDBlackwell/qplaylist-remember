@@ -63,6 +63,8 @@ import Http
         , send
         )
 import ModelDetails exposing (..)
+import ModelDetailsUpdate exposing (..)
+import ModelDetailsView exposing (..)
 import ModelInitialize exposing (..)
 import MsgDetails exposing (..)
 import Task
@@ -86,16 +88,6 @@ main =
 
 
 -- MODEL
-
-
-init : ( Model, Cmd msg )
-init =
-    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
-    , Cmd.none
-    )
-
-
-
 -- UPDATE
 
 

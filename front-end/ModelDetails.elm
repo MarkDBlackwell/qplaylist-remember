@@ -29,6 +29,10 @@ type alias AwaitingServerResponse =
     Bool
 
 
+type alias LikeOrCommentText =
+    String
+
+
 type alias LikedOrCommented =
     Bool
 
@@ -88,58 +92,6 @@ type alias SongsRemembered =
     List SongRemembered
 
 
-
--- UPDATE
-
-
-type alias DecodeErrorMessageText =
-    String
-
-
-type alias HttpErrorMessageText =
-    String
-
-
-type alias HttpRequestText =
-    String
-
-
-type alias HttpResponseText =
-    String
-
-
-type alias LikeOrCommentText =
-    String
-
-
-type alias SongLatestFewIndex =
-    Int
-
-
-type alias SongRememberedIndex =
-    Int
-
-
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
-
-
-type alias QueryBeforeList =
-    --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
-    --If joined, then comprises a URI's scheme, authority, and path:
-    List UriText
-
-
-type alias QueryPair =
-    ( UriText, UriText )
-
-
-type alias QueryPairs =
-    List QueryPair
-
-
 type alias Time =
     String
 
@@ -152,31 +104,7 @@ type alias Title =
     String
 
 
-type alias UriText =
-    String
 
-
-
+-- UPDATE
 -- SUBSCRIPTIONS
 -- VIEW
-
-
-type alias Display =
-    String
-
-
-type alias HoverText =
-    String
-
-
-type alias SongGroupLength =
-    Int
-
-
-type alias SongIndex =
-    Int
-
-
-type SongGroup
-    = Played
-    | Remembered

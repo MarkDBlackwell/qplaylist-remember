@@ -23,6 +23,7 @@ import Http
         ( Error
         )
 import ModelDetails exposing (..)
+import ModelDetailsUpdate exposing (..)
 
 
 -- UPDATE

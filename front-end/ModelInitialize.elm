@@ -63,3 +63,10 @@ songsLatestFewInit =
 songsRememberedInit : SongsRemembered
 songsRememberedInit =
     []
+
+
+init : ( Model, Cmd msg )
+init =
+    ( Model alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    , Cmd.none
+    )

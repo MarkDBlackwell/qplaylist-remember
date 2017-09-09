@@ -25,6 +25,7 @@ import Json.Decode
         , string
         )
 import ModelDetails exposing (..)
+import ModelDetailsUpdate exposing (..)
 
 
 -- UPDATE
