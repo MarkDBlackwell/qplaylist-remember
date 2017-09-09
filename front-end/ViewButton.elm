@@ -30,9 +30,14 @@ import Html.Attributes
         )
 import Html.Events exposing (onClick)
 import MessageDetails exposing (..)
-import ModelDetailsUpdate exposing (..)
+import ModelDetailsUpdate exposing (SongRememberedIndex)
 import ModelDetailsView exposing (..)
-import ViewUtilities exposing (..)
+import ViewUtilities
+    exposing
+        ( htmlNodeNull
+        , showCommentButtons
+        , songGroup2String
+        )
 
 
 -- VIEW
