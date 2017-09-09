@@ -14,11 +14,8 @@
 
 module Update exposing (..)
 
-import Debug
-    exposing
-        ( log
-        )
-import DecodeLatestFew exposing (..)
+import Debug exposing (log)
+import DecodeLatestFew exposing (decodeSongsLatestFew)
 import Dom
     exposing
         ( Id
@@ -46,15 +43,11 @@ import Task
         ( attempt
         , succeed
         )
-import Utilities
-    exposing
-        ( msg2Cmd
-        )
+import Utilities exposing (msg2Cmd)
 import View
     exposing
         ( likeOrCommentRequestUriText
         , relative
-        , view
         )
 
 
