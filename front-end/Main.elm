@@ -61,16 +61,6 @@ import Http
         , getString
         , send
         )
-import Json.Decode
-    exposing
-        ( Decoder
-        , decodeString
-        , field
-        , list
-        , map
-        , map4
-        , string
-        )
 import Msgs exposing (..)
 import Task
     exposing
@@ -95,10 +85,6 @@ main =
 
 
 type alias AlertMessage =
-    String
-
-
-type alias Artist =
     String
 
 
@@ -135,15 +121,6 @@ type alias ProcessingLike =
     Bool
 
 
-type alias SongLatestFew =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
 type alias SongRemembered =
     { artist : Artist
     , likedOrCommented : LikedOrCommented
@@ -155,10 +132,6 @@ type alias SongRemembered =
 
 type alias SongRememberedCommentingIndex =
     Int
-
-
-type alias SongsLatestFew =
-    List SongLatestFew
 
 
 type alias SongsRemembered =
@@ -221,10 +194,6 @@ init =
 -- UPDATE
 
 
-type alias DecodeErrorMessageText =
-    String
-
-
 type alias HttpErrorMessageText =
     String
 
@@ -249,56 +218,8 @@ type alias QueryPairs =
     List QueryPair
 
 
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
-
-
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
-
-
-type alias Title =
-    String
-
-
 type alias UriText =
     String
-
-
-decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew jsonRawText =
-    --See:
-    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
-    --http://eeue56.github.io/json-to-elm/
-    --For decoding JSON:
-    let
-        decodeSong : Decoder SongLatestFew
-        decodeSong =
-            map4 SongLatestFew
-                (field "artist" string)
-                (field "time" string)
-                (field "timeStamp" string)
-                (field "title" string)
-
-        tagged2Record : Decoder SongsLatestFewTagged
-        tagged2Record =
-            map SongsLatestFewTagged
-                (field "latestFive" (list decodeSong))
-
-        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
-        tryRecord =
-            decodeString tagged2Record jsonRawText
-    in
-    case tryRecord of
-        Err _ ->
-            []
-
-        Ok record ->
-            record.latestFew
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
