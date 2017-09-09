@@ -62,8 +62,8 @@ import Http
         , getString
         , send
         )
-import Init exposing (..)
 import ModelDetails exposing (..)
+import ModelInit exposing (..)
 import MsgDetails exposing (..)
 import Task
     exposing
