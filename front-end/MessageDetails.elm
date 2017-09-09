@@ -12,7 +12,7 @@
 -}
 
 
-module MsgDetails exposing (..)
+module MessageDetails exposing (..)
 
 import Dom
     exposing

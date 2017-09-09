@@ -43,10 +43,10 @@ import Http
         , getString
         , send
         )
+import MessageDetails exposing (..)
 import ModelDetails exposing (..)
 import ModelDetailsUpdate exposing (..)
 import ModelInitialize exposing (..)
-import MsgDetails exposing (..)
 import Subscriptions exposing (..)
 import Task
     exposing

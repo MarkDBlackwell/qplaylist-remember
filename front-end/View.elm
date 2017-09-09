@@ -52,10 +52,10 @@ import Html.Events
         ( onClick
         , onInput
         )
+import MessageDetails exposing (..)
 import ModelDetails exposing (..)
 import ModelDetailsUpdate exposing (..)
 import ModelDetailsView exposing (..)
-import MsgDetails exposing (..)
 
 
 -- VIEW

@@ -18,7 +18,7 @@ import Dom
     exposing
         ( Id
         )
-import MsgDetails exposing (..)
+import MessageDetails exposing (..)
 import Task
     exposing
         ( succeed
