@@ -15,6 +15,7 @@
 module Main exposing (main)
 
 import Debug exposing (log)
+import DecodeLatestFew exposing (..)
 import Dom
     exposing
         ( Id
@@ -62,7 +63,6 @@ import Http
         , send
         )
 import Msgs exposing (..)
-import MyDecode exposing (..)
 import Task
     exposing
         ( attempt

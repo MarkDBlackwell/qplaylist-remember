@@ -12,7 +12,7 @@
 -}
 
 
-module MyDecode exposing (..)
+module DecodeLatestFew exposing (..)
 
 import Json.Decode
     exposing
