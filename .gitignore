@@ -6,3 +6,5 @@
 /remember/RememberSongs.js
 /remember/comments.txt
 /wtmdapp/LatestFive.json
+
+*.stackdump

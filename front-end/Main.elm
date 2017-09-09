@@ -62,6 +62,7 @@ import Http
         , getString
         , send
         )
+import Init exposing (..)
 import Msgs exposing (..)
 import Task
     exposing
@@ -85,51 +86,6 @@ main =
 
 
 -- MODEL
-
-
-alertMessageInit : AlertMessage
-alertMessageInit =
-    ""
-
-
-awaitingServerResponseInit : AwaitingServerResponse
-awaitingServerResponseInit =
-    False
-
-
-likeOrCommentTextInit : LikeOrCommentText
-likeOrCommentTextInit =
-    ""
-
-
-pageIsExpandedInit : PageIsExpanded
-pageIsExpandedInit =
-    False
-
-
-processingCommentInit : ProcessingComment
-processingCommentInit =
-    False
-
-
-processingLikeInit : ProcessingLike
-processingLikeInit =
-    False
-
-
-songRememberedCommentingIndexInit : Maybe SongRememberedCommentingIndex
-songRememberedCommentingIndexInit =
-    Nothing
-
-
-songsLatestFewInit : SongsLatestFew
-songsLatestFewInit =
-    []
-
-
-songsRememberedInit : SongsRemembered
-songsRememberedInit =
-    []
 
 
 init : ( Model, Cmd msg )
