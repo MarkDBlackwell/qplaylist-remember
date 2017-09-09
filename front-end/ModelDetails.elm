@@ -12,7 +12,7 @@
 -}
 
 
-module Types exposing (..)
+module ModelDetails exposing (..)
 
 -- MODEL
 

@@ -14,7 +14,7 @@
 
 module Init exposing (..)
 
-import Types exposing (..)
+import ModelDetails exposing (..)
 
 
 -- MODEL

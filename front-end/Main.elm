@@ -63,13 +63,13 @@ import Http
         , send
         )
 import Init exposing (..)
+import ModelDetails exposing (..)
 import Msgs exposing (..)
 import Task
     exposing
         ( attempt
         , succeed
         )
-import Types exposing (..)
 import Update exposing (..)
 import Utilities exposing (..)
 

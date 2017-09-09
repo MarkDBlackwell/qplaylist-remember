@@ -24,7 +24,7 @@ import Json.Decode
         , map4
         , string
         )
-import Types exposing (..)
+import ModelDetails exposing (..)
 
 
 -- UPDATE

@@ -22,7 +22,7 @@ import Http
     exposing
         ( Error
         )
-import Types exposing (..)
+import ModelDetails exposing (..)
 
 
 -- UPDATE
