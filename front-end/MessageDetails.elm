@@ -14,16 +14,15 @@
 
 module MessageDetails exposing (..)
 
-import Dom
+import Dom exposing (Id)
+import Http exposing (Error)
+import ModelDetails exposing (LikeOrCommentText)
+import ModelDetailsUpdate
     exposing
-        ( Id
+        ( HttpResponseText
+        , SongLatestFewIndex
+        , SongRememberedIndex
         )
-import Http
-    exposing
-        ( Error
-        )
-import ModelDetails exposing (..)
-import ModelDetailsUpdate exposing (..)
 
 
 -- UPDATE

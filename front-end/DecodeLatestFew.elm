@@ -24,8 +24,17 @@ import Json.Decode
         , map4
         , string
         )
-import ModelDetails exposing (..)
-import ModelDetailsUpdate exposing (..)
+import ModelDetails
+    exposing
+        ( SongLatestFew
+        , SongsLatestFew
+        )
+import ModelDetailsUpdate
+    exposing
+        ( DecodeErrorMessageText
+        , HttpResponseText
+        , SongsLatestFewTagged
+        )
 
 
 -- UPDATE
