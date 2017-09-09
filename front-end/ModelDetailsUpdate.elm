@@ -66,13 +66,3 @@ type alias QueryPairs =
 
 type alias UriText =
     String
-
-
-songLatestFew2Remembered : SongLatestFew -> SongRemembered
-songLatestFew2Remembered song =
-    { artist = song.artist
-    , likedOrCommented = False
-    , time = song.time
-    , timeStamp = song.timeStamp
-    , title = song.title
-    }
