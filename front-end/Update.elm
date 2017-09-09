@@ -44,11 +44,8 @@ import Task
         , succeed
         )
 import Utilities exposing (msg2Cmd)
-import View
-    exposing
-        ( likeOrCommentRequestUriText
-        , relative
-        )
+import View exposing (likeOrCommentRequestUriText)
+import ViewUtilities exposing (relative)
 
 
 -- UPDATE

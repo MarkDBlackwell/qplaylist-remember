@@ -29,6 +29,7 @@ type SongGroup
     = Played
     | Remembered
 
+
 type alias SongGroupLength =
     Int
 
