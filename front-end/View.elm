@@ -62,7 +62,14 @@ import ModelDetails
 import ModelDetailsUpdate exposing (..)
 import ModelDetailsView exposing (..)
 import ViewButton exposing (..)
-import ViewUtilities exposing (..)
+import ViewUtilities
+    exposing
+        ( goldenRatio
+        , htmlNodeNull
+        , relative
+        , showCommentButtons
+        , songGroup2String
+        )
 
 
 buySongAnchor : SongRemembered -> Html Msg
