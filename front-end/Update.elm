@@ -18,16 +18,6 @@ import Dom
     exposing
         ( Id
         )
-import Json.Decode
-    exposing
-        ( Decoder
-        , decodeString
-        , field
-        , list
-        , map
-        , map4
-        , string
-        )
 import Msgs exposing (..)
 import Task
     exposing
@@ -37,75 +27,6 @@ import Utilities exposing (..)
 
 
 -- UPDATE
-
-
-type alias Artist =
-    String
-
-
-type alias DecodeErrorMessageText =
-    String
-
-
-type alias SongLatestFew =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
-type alias SongsLatestFew =
-    List SongLatestFew
-
-
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
-
-
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
-
-
-type alias Title =
-    String
-
-
-decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew jsonRawText =
-    --See:
-    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
-    --http://eeue56.github.io/json-to-elm/
-    --For decoding JSON:
-    let
-        decodeSong : Decoder SongLatestFew
-        decodeSong =
-            map4 SongLatestFew
-                (field "artist" string)
-                (field "time" string)
-                (field "timeStamp" string)
-                (field "title" string)
-
-        tagged2Record : Decoder SongsLatestFewTagged
-        tagged2Record =
-            map SongsLatestFewTagged
-                (field "latestFive" (list decodeSong))
-
-        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
-        tryRecord =
-            decodeString tagged2Record jsonRawText
-    in
-    case tryRecord of
-        Err _ ->
-            []
-
-        Ok record ->
-            record.latestFew
 
 
 focusSet : Id -> Cmd Msg
