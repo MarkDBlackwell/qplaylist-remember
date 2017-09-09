@@ -14,8 +14,8 @@
 
 module Subscriptions exposing (..)
 
-import MessageDetails exposing (..)
-import ModelDetails exposing (..)
+import MessageDetails exposing (Msg)
+import ModelDetails exposing (Model)
 
 
 -- SUBSCRIPTIONS

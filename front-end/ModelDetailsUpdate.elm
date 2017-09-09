@@ -14,7 +14,7 @@
 
 module ModelDetailsUpdate exposing (..)
 
-import ModelDetails exposing (..)
+import ModelDetails exposing (SongsLatestFew)
 
 
 -- UPDATE
