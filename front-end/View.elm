@@ -412,7 +412,8 @@ relative queryBeforeList queryPairs =
     --https://github.com/elm-lang/url
     --https://github.com/evancz/elm-http
     --http://package.elm-lang.org/packages/elm-lang/http/latest
-    --TODO: When elm-lang/url is updated to contain 'relative', replace this code:
+    --TODO: When elm-lang/url is updated to contain 'relative',
+    --consider replacing this code:
     let
         escapeAll : UriText -> UriText
         escapeAll string =

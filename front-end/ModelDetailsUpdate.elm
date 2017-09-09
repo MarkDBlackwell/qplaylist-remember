@@ -36,18 +36,6 @@ type alias HttpResponseText =
     String
 
 
-type alias SongLatestFewIndex =
-    Int
-
-
-type alias SongRememberedIndex =
-    Int
-
-
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
-
-
 type alias QueryBeforeList =
     --See:
     --https://github.com/elm-lang/url
@@ -62,6 +50,18 @@ type alias QueryPair =
 
 type alias QueryPairs =
     List QueryPair
+
+
+type alias SongLatestFewIndex =
+    Int
+
+
+type alias SongRememberedIndex =
+    Int
+
+
+type alias SongsLatestFewTagged =
+    { latestFew : SongsLatestFew }
 
 
 type alias UriText =

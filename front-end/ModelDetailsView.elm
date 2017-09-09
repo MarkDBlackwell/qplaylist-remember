@@ -25,14 +25,13 @@ type alias HoverText =
     String
 
 
+type SongGroup
+    = Played
+    | Remembered
+
 type alias SongGroupLength =
     Int
 
 
 type alias SongIndex =
     Int
-
-
-type SongGroup
-    = Played
-    | Remembered
