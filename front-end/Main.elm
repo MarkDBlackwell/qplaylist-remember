@@ -63,7 +63,7 @@ import Http
         , send
         )
 import ModelDetails exposing (..)
-import ModelInit exposing (..)
+import ModelInitialize exposing (..)
 import MsgDetails exposing (..)
 import Task
     exposing

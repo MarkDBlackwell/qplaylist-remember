@@ -12,7 +12,7 @@
 -}
 
 
-module ModelInit exposing (..)
+module ModelInitialize exposing (..)
 
 import ModelDetails exposing (..)
 
