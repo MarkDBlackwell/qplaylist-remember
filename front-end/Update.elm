@@ -31,9 +31,9 @@ import Json.Decode
 import Msgs exposing (..)
 import Task
     exposing
-        ( perform
-        , succeed
+        ( succeed
         )
+import Utilities exposing (..)
 
 
 -- UPDATE
@@ -111,11 +111,3 @@ decodeSongsLatestFew jsonRawText =
 focusSet : Id -> Cmd Msg
 focusSet id =
     msg2Cmd (succeed (FocusSet id))
-
-
-msg2Cmd : Task.Task Never msg -> Cmd msg
-msg2Cmd msg =
-    --See:
-    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-    --For wrapping a message as a Cmd:
-    Task.perform identity msg

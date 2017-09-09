@@ -68,6 +68,7 @@ import Task
         , succeed
         )
 import Update exposing (..)
+import Utilities exposing (..)
 
 
 main : Program Never Model Msg
