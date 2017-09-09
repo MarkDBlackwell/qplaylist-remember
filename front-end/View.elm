@@ -58,9 +58,6 @@ import ModelDetailsView exposing (..)
 import MsgDetails exposing (..)
 
 
--- MODEL
--- UPDATE
--- SUBSCRIPTIONS
 -- VIEW
 
 

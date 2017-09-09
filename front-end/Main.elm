@@ -47,6 +47,7 @@ import ModelDetails exposing (..)
 import ModelDetailsUpdate exposing (..)
 import ModelInitialize exposing (..)
 import MsgDetails exposing (..)
+import Subscriptions exposing (..)
 import Task
     exposing
         ( attempt
@@ -526,13 +527,4 @@ update msg model =
 
 
 -- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch
-        []
-
-
-
 -- VIEW
