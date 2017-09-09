@@ -14,10 +14,21 @@
 
 module Update exposing (..)
 
+import Dom
+    exposing
+        ( Id
+        )
+import Msgs exposing (..)
 import Task
     exposing
         ( perform
+        , succeed
         )
+
+
+focusSet : Id -> Cmd Msg
+focusSet id =
+    msg2Cmd (succeed (FocusSet id))
 
 
 msg2Cmd : Task.Task Never msg -> Cmd msg

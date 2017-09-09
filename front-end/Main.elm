@@ -301,11 +301,6 @@ decodeSongsLatestFew jsonRawText =
             record.latestFew
 
 
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (succeed (FocusSet id))
-
-
 relative : QueryBeforeList -> QueryPairs -> UriText
 relative queryBeforeList queryPairs =
     --See:
