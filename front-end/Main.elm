@@ -64,7 +64,7 @@ import Http
         )
 import Init exposing (..)
 import ModelDetails exposing (..)
-import Msgs exposing (..)
+import MsgDetails exposing (..)
 import Task
     exposing
         ( attempt
