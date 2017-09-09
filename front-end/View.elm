@@ -14,10 +14,7 @@
 
 module View exposing (..)
 
-import Dom
-    exposing
-        ( Id
-        )
+import Dom exposing (Id)
 import Html
     exposing
         ( Attribute
@@ -53,7 +50,13 @@ import Html.Events
         , onInput
         )
 import MessageDetails exposing (..)
-import ModelDetails exposing (..)
+import ModelDetails
+    exposing
+        ( Model
+        , SongRemembered
+        , SongsRemembered
+        , songLatestFew2Remembered
+        )
 import ModelDetailsUpdate exposing (..)
 import ModelDetailsView exposing (..)
 

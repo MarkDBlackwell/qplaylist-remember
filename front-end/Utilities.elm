@@ -12,20 +12,21 @@
 -}
 
 
-module Utilities exposing (..)
+module Utilities exposing (msg2Cmd)
 
 import Task
     exposing
-        ( perform
+        ( Task
+        , perform
         )
 
 
 -- UPDATE
 
 
-msg2Cmd : Task.Task Never msg -> Cmd msg
+msg2Cmd : Task Never msg -> Cmd msg
 msg2Cmd msg =
     --See:
     --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
-    Task.perform identity msg
+    perform identity msg
