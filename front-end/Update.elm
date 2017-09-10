@@ -43,7 +43,12 @@ import Task
         ( attempt
         , succeed
         )
-import UpdateUtilities exposing (msg2Cmd)
+import UpdateDetails exposing (..)
+import UpdateUtilities
+    exposing
+        ( focusSet
+        , msg2Cmd
+        )
 import View exposing (likeOrCommentRequestUriText)
 import ViewUtilities exposing (relative)
 
@@ -51,96 +56,89 @@ import ViewUtilities exposing (relative)
 -- UPDATE
 
 
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (succeed (FocusSet id))
+focusInputPossibly : Model -> Cmd Msg
+focusInputPossibly model =
+    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
+        Cmd.none
+    else
+        focusSet "input"
+
+
+httpErrorMessageText : Error -> HttpErrorMessageText
+httpErrorMessageText httpError =
+    let
+        prefix : HttpErrorMessageText
+        prefix =
+            "HttpError"
+    in
+    case httpError of
+        Http.BadPayload debuggingText httpResponseText ->
+            log (prefix ++ ": BadPayload") debuggingText
+
+        Http.BadStatus httpResponseText ->
+            log prefix "BadStatus"
+
+        Http.BadUrl uriText ->
+            log (prefix ++ ": BadUrl") uriText
+
+        Http.NetworkError ->
+            log prefix "NetworkError"
+
+        Http.Timeout ->
+            log prefix "Timeout"
+
+
+likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )
+likeOrCommentResponse model appendLikeOrCommentJson =
+    let
+        --Keep for console logging:
+        a : String
+        a =
+            logResponseOk appendLikeOrCommentJson
+
+        sharedShow : SongsRemembered
+        sharedShow =
+            List.indexedMap sharedShowSong model.songsRemembered
+
+        sharedShowSong : SongRememberedIndex -> SongRemembered -> SongRemembered
+        sharedShowSong index song =
+            if Just index == model.songRememberedCommentingIndex then
+                { song
+                    | likedOrCommented = True
+                }
+            else
+                song
+    in
+    ( { model
+        | alertMessage = alertMessageInit
+        , awaitingServerResponse = awaitingServerResponseInit
+        , likeOrCommentText = likeOrCommentTextInit
+        , processingComment = processingCommentInit
+        , processingLike = processingLikeInit
+        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+        , songsRemembered = sharedShow
+      }
+    , Cmd.none
+    )
+
+
+likingOrCommenting : Model -> Bool
+likingOrCommenting model =
+    model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+
+
+logResponseOk : String -> String
+logResponseOk string =
+    --log "Ok response" string
+    log "Response" "Ok"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        alertMessageSuffix : AlertMessage -> AlertMessage
-        alertMessageSuffix thing =
-            " (while attempting to send "
-                ++ thing
-                ++ " to server)"
-
-        focusInputPossibly : Cmd Msg
-        focusInputPossibly =
-            if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
-                Cmd.none
-            else
-                focusSet "input"
-
-        httpErrorMessageText : Error -> HttpErrorMessageText
-        httpErrorMessageText httpError =
-            let
-                prefix : HttpErrorMessageText
-                prefix =
-                    "HttpError"
-            in
-            case httpError of
-                Http.BadPayload debuggingText httpResponseText ->
-                    log (prefix ++ ": BadPayload") debuggingText
-
-                Http.BadStatus httpResponseText ->
-                    log prefix "BadStatus"
-
-                Http.BadUrl uriText ->
-                    log (prefix ++ ": BadUrl") uriText
-
-                Http.NetworkError ->
-                    log prefix "NetworkError"
-
-                Http.Timeout ->
-                    log prefix "Timeout"
-
-        likeOrCommentResponse : String -> ( Model, Cmd Msg )
-        likeOrCommentResponse appendLikeOrCommentJson =
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    logResponseOk appendLikeOrCommentJson
-
-                sharedShow : SongsRemembered
-                sharedShow =
-                    List.indexedMap sharedShowSong model.songsRemembered
-
-                sharedShowSong : SongRememberedIndex -> SongRemembered -> SongRemembered
-                sharedShowSong index song =
-                    if Just index == model.songRememberedCommentingIndex then
-                        { song
-                            | likedOrCommented = True
-                        }
-                    else
-                        song
-            in
-            ( { model
-                | alertMessage = alertMessageInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , likeOrCommentText = likeOrCommentTextInit
-                , processingComment = processingCommentInit
-                , processingLike = processingLikeInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                , songsRemembered = sharedShow
-              }
-            , Cmd.none
-            )
-
-        likingOrCommenting : Bool
-        likingOrCommenting =
-            model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
-
-        logResponseOk : String -> String
-        logResponseOk string =
-            --log "Ok response" string
-            log "Response" "Ok"
-    in
     case msg of
         BuySongAnchorProcess ->
             ( model
-            , focusInputPossibly
+            , focusInputPossibly model
             )
 
         CommentInputCancel ->
@@ -164,29 +162,29 @@ update msg model =
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
             else
                 ( { model
                     | awaitingServerResponse = True
                   }
-                , Cmd.batch [ focusInputPossibly, commentRequest ]
+                , Cmd.batch [ focusInputPossibly model, commentRequest ]
                 )
 
         CommentInputSetUp songRememberedIndex ->
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 ( { model
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
             else
                 case model.songRememberedCommentingIndex of
                     Just _ ->
                         ( model
                           --, focusSet "refresh"
-                        , focusInputPossibly
+                        , focusInputPossibly model
                         )
 
                     songRememberedCommentingIndexInit ->
@@ -216,11 +214,11 @@ update msg model =
             ( { model
                 | alertMessage = alertMessageNew
               }
-            , focusInputPossibly
+            , focusInputPossibly model
             )
 
         CommentResponse (Ok appendCommentJson) ->
-            likeOrCommentResponse appendCommentJson
+            likeOrCommentResponse model appendCommentJson
 
         FocusResult _ ->
             ( model
@@ -241,13 +239,13 @@ update msg model =
                 likeText =
                     "Loved it!"
             in
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 if model.processingComment then
                     ( { model
                         | alertMessage = alertMessageInit
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
-                    , focusInputPossibly
+                    , focusInputPossibly model
                     )
                 else
                     ( { model
@@ -264,7 +262,7 @@ update msg model =
                             | alertMessage = alertMessageInit
                             , awaitingServerResponse = awaitingServerResponseInit
                           }
-                        , focusInputPossibly
+                        , focusInputPossibly model
                         )
 
                     songRememberedCommentingIndexInit ->
@@ -301,7 +299,7 @@ update msg model =
             )
 
         LikeResponse (Ok appendLikeJson) ->
-            likeOrCommentResponse appendLikeJson
+            likeOrCommentResponse model appendLikeJson
 
         PageMorph ->
             let
@@ -315,19 +313,19 @@ update msg model =
                     else
                         not model.pageIsExpanded
             in
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 ( { model
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
             else
                 ( { model
                     | alertMessage = alertMessageInit
                     , pageIsExpanded = pageIsExpandedNew
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
 
         SongForget songRememberedIndex ->
@@ -337,14 +335,14 @@ update msg model =
                     List.take songRememberedIndex model.songsRemembered
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 --if String.isEmpty model.alertMessage then
                 if model.processingComment then
                     ( { model
                         | alertMessage = alertMessageInit
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
-                    , focusInputPossibly
+                    , focusInputPossibly model
                     )
                 else if model.songRememberedCommentingIndex == Just songRememberedIndex then
                     ( { model
@@ -416,13 +414,13 @@ update msg model =
                                 songsDifferent
                                     ++ [ songLatestFew2Remembered songSelected ]
             in
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 if model.processingComment then
                     ( { model
                         | alertMessage = alertMessageInit
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
-                    , focusInputPossibly
+                    , focusInputPossibly model
                     )
                 else
                     ( { model
@@ -436,7 +434,7 @@ update msg model =
                 ( { model
                     | songsRemembered = songsRememberedNew
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
 
         SongsLatestFewRefresh ->
@@ -466,16 +464,16 @@ update msg model =
                 subUri =
                     "wtmdapp"
             in
-            if likingOrCommenting then
+            if likingOrCommenting model then
                 ( { model
                     | alertMessage = alertMessageInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , focusInputPossibly
+                , focusInputPossibly model
                 )
             else
                 ( model
-                , Cmd.batch [ focusInputPossibly, songsLatestFewRequest ]
+                , Cmd.batch [ focusInputPossibly model, songsLatestFewRequest ]
                 )
 
         SongsLatestFewResponse (Err httpError) ->

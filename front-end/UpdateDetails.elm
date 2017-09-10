@@ -12,33 +12,16 @@
 -}
 
 
-module UpdateUtilities exposing (..)
+module UpdateDetails exposing (..)
 
-import Dom
-    exposing
-        ( Id
-        , focus
-        )
-import MessageDetails exposing (..)
-import Task
-    exposing
-        ( Task
-        , perform
-        , succeed
-        )
+import ModelDetails exposing (..)
 
 
 -- UPDATE
 
 
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (succeed (FocusSet id))
-
-
-msg2Cmd : Task Never msg -> Cmd msg
-msg2Cmd msg =
-    --See:
-    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-    --For wrapping a message as a Cmd:
-    perform identity msg
+alertMessageSuffix : AlertMessage -> AlertMessage
+alertMessageSuffix thing =
+    " (while attempting to send "
+        ++ thing
+        ++ " to server)"
