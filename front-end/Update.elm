@@ -16,15 +16,10 @@ module Update exposing (update)
 
 import Debug exposing (log)
 import DecodeLatestFew exposing (decodeSongsLatestFew)
-import Dom
-    exposing
-        ( Id
-        , focus
-        )
+import Dom exposing (focus)
 import Http
     exposing
-        ( Error
-        , Request
+        ( Request
         , getString
         , send
         )
@@ -34,7 +29,6 @@ import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText
         , HttpRequestText
-        , SongRememberedIndex
         , UriText
         )
 import ModelInitialize exposing (..)
