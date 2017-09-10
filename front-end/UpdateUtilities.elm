@@ -15,26 +15,10 @@
 module UpdateUtilities exposing (..)
 
 import Debug exposing (log)
-import Dom
-    exposing
-        ( Id
-          --, focus
-        )
-import Http
-    exposing
-        ( Error
-        , Request
-        , getString
-        , send
-        )
+import Dom exposing (Id)
+import Http exposing (Error)
 import MessageDetails exposing (..)
-import ModelDetailsUpdate
-    exposing
-        ( HttpErrorMessageText
-        , HttpRequestText
-        , SongRememberedIndex
-        , UriText
-        )
+import ModelDetailsUpdate exposing (HttpErrorMessageText)
 import Task
     exposing
         ( Task
