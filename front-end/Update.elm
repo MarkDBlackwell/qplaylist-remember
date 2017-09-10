@@ -23,7 +23,7 @@ import Http
         , getString
         , send
         )
-import MessageDetails exposing (..)
+import MessageDetails exposing (Msg(..))
 import ModelDetails exposing (..)
 import ModelDetailsUpdate
     exposing

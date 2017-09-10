@@ -12,7 +12,7 @@
 -}
 
 
-module MessageDetails exposing (..)
+module MessageDetails exposing (Msg(..))
 
 import Dom exposing (Id)
 import Http exposing (Error)

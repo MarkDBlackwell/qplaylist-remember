@@ -29,7 +29,17 @@ import Html.Attributes
         , type_
         )
 import Html.Events exposing (onClick)
-import MessageDetails exposing (..)
+import MessageDetails
+    exposing
+        ( Msg
+            ( CommentInputSetUp
+            , LikeButtonProcess
+            , PageMorph
+            , SongForget
+            , SongRemember
+            , SongsLatestFewRefresh
+            )
+        )
 import ModelDetailsUpdate exposing (SongRememberedIndex)
 import ModelDetailsView
     exposing

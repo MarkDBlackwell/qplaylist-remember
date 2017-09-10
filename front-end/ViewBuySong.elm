@@ -26,7 +26,7 @@ import Html.Attributes
         , title
         )
 import Html.Events exposing (onClick)
-import MessageDetails exposing (..)
+import MessageDetails exposing (Msg(BuySongAnchorProcess))
 import ModelDetails exposing (SongRemembered)
 import ModelDetailsUpdate
     exposing

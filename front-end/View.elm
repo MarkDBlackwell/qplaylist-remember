@@ -43,7 +43,14 @@ import Html.Attributes
         , type_
         )
 import Html.Events exposing (onInput)
-import MessageDetails exposing (..)
+import MessageDetails
+    exposing
+        ( Msg
+            ( CommentInputCancel
+            , CommentInputOk
+            , CommentInputTextChangeCapture
+            )
+        )
 import ModelDetails
     exposing
         ( Model

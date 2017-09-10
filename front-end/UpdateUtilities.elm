@@ -17,7 +17,7 @@ module UpdateUtilities exposing (..)
 import Debug exposing (log)
 import Dom exposing (Id)
 import Http exposing (Error)
-import MessageDetails exposing (..)
+import MessageDetails exposing (Msg(FocusSet))
 import ModelDetailsUpdate exposing (HttpErrorMessageText)
 import Task
     exposing
