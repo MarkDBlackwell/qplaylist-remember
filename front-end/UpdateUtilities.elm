@@ -18,7 +18,7 @@ import Debug exposing (log)
 import Dom
     exposing
         ( Id
-        , focus
+          --, focus
         )
 import Http
     exposing
@@ -28,7 +28,6 @@ import Http
         , send
         )
 import MessageDetails exposing (..)
-import ModelDetails exposing (..)
 import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText

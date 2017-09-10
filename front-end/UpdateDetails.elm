@@ -15,7 +15,6 @@
 module UpdateDetails exposing (..)
 
 import Debug exposing (log)
-import Http exposing (Error)
 import MessageDetails exposing (Msg)
 import ModelDetails exposing (..)
 import ModelDetailsUpdate
