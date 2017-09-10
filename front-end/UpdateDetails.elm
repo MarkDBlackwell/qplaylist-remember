@@ -48,10 +48,10 @@ import UpdateUtilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    if model.songRememberedCommentingIndex == songRememberedCommentingIndexInit then
-        Cmd.none
-    else
+    if likingOrCommenting model then
         focusSet "input"
+    else
+        Cmd.none
 
 
 likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )
@@ -62,18 +62,18 @@ likeOrCommentResponse model appendLikeOrCommentJson =
         a =
             logResponseOk appendLikeOrCommentJson
 
-        sharedShow : SongsRemembered
-        sharedShow =
-            List.indexedMap sharedShowSong model.songsRemembered
-
-        sharedShowSong : SongRememberedIndex -> SongRemembered -> SongRemembered
-        sharedShowSong index song =
-            if Just index == model.songRememberedCommentingIndex then
+        likedOrCommentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
+        likedOrCommentedShow index song =
+            if model.songRememberedCommentingIndex == Just index then
                 { song
                     | likedOrCommented = True
                 }
             else
                 song
+
+        songsRememberedNew : SongsRemembered
+        songsRememberedNew =
+            List.indexedMap likedOrCommentedShow model.songsRemembered
     in
     ( { model
         | alertMessage = alertMessageInit
@@ -82,7 +82,7 @@ likeOrCommentResponse model appendLikeOrCommentJson =
         , processingComment = processingCommentInit
         , processingLike = processingLikeInit
         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-        , songsRemembered = sharedShow
+        , songsRemembered = songsRememberedNew
       }
     , Cmd.none
     )
