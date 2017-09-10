@@ -12,7 +12,15 @@
 -}
 
 
-module ViewButton exposing (..)
+module ViewButton
+    exposing
+        ( buttonComment
+        , buttonForgetRemember
+        , buttonLike
+        , buttonMy
+        , buttonPlayed
+        , buttonRemembered
+        )
 
 import Dom exposing (Id)
 import Html
