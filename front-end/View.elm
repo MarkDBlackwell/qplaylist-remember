@@ -41,7 +41,6 @@ import Html.Attributes
         , id
         , placeholder
         , required
-        , style
         , target
         , title
         , type_
@@ -65,8 +64,7 @@ import ViewButton exposing (..)
 import ViewStyleCalc exposing (styleCalc)
 import ViewUtilities
     exposing
-        ( goldenRatio
-        , htmlNodeNull
+        ( htmlNodeNull
         , relative
         , showCommentButtons
         , songGroup2String
