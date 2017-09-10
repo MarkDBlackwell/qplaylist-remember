@@ -24,20 +24,44 @@ import Http
         , send
         )
 import MessageDetails exposing (Msg(..))
-import ModelDetails exposing (..)
+import ModelDetails
+    exposing
+        ( AlertMessage
+        , LikeOrCommentText
+        , Model
+        , PageIsExpanded
+        , SongLatestFew
+        , SongRemembered
+        , SongsLatestFew
+        , SongsRemembered
+        , songLatestFew2Remembered
+        )
 import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText
         , HttpRequestText
         , UriText
         )
-import ModelInitialize exposing (..)
+import ModelInitialize
+    exposing
+        ( alertMessageInit
+        , awaitingServerResponseInit
+        , likeOrCommentTextInit
+        , processingCommentInit
+        , processingLikeInit
+        , songRememberedCommentingIndexInit
+        )
 import Task
     exposing
         ( attempt
         , succeed
         )
-import UpdateDetails exposing (..)
+import UpdateDetails
+    exposing
+        ( focusInputPossibly
+        , likeOrCommentResponse
+        , likingOrCommenting
+        )
 import UpdateUtilities
     exposing
         ( alertMessageSuffix

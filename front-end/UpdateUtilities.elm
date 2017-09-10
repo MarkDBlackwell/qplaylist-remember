@@ -12,7 +12,14 @@
 -}
 
 
-module UpdateUtilities exposing (..)
+module UpdateUtilities
+    exposing
+        ( alertMessageSuffix
+        , focusSet
+        , httpErrorMessageText
+        , logResponseOk
+        , msg2Cmd
+        )
 
 import Debug exposing (log)
 import Dom exposing (Id)

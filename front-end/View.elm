@@ -73,7 +73,15 @@ import ModelDetailsView
         , SongGroupLength
         , SongIndex
         )
-import ViewButton exposing (..)
+import ViewButton
+    exposing
+        ( buttonComment
+        , buttonForgetRemember
+        , buttonLike
+        , buttonMy
+        , buttonPlayed
+        , buttonRemembered
+        )
 import ViewBuySong exposing (buySongAnchor)
 import ViewStyleCalc exposing (styleCalc)
 import ViewUtilities

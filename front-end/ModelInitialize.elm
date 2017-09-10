@@ -14,7 +14,19 @@
 
 module ModelInitialize exposing (..)
 
-import ModelDetails exposing (..)
+import ModelDetails
+    exposing
+        ( AlertMessage
+        , AwaitingServerResponse
+        , LikeOrCommentText
+        , Model
+        , PageIsExpanded
+        , ProcessingComment
+        , ProcessingLike
+        , SongRememberedCommentingIndex
+        , SongsLatestFew
+        , SongsRemembered
+        )
 
 
 -- MODEL

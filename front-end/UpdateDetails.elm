@@ -12,7 +12,12 @@
 -}
 
 
-module UpdateDetails exposing (..)
+module UpdateDetails
+    exposing
+        ( focusInputPossibly
+        , likeOrCommentResponse
+        , likingOrCommenting
+        )
 
 import MessageDetails exposing (Msg)
 import ModelDetails
@@ -22,7 +27,15 @@ import ModelDetails
         , SongsRemembered
         )
 import ModelDetailsUpdate exposing (SongRememberedIndex)
-import ModelInitialize exposing (..)
+import ModelInitialize
+    exposing
+        ( alertMessageInit
+        , awaitingServerResponseInit
+        , likeOrCommentTextInit
+        , processingCommentInit
+        , processingLikeInit
+        , songRememberedCommentingIndexInit
+        )
 import UpdateUtilities
     exposing
         ( focusSet
