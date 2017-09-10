@@ -12,7 +12,17 @@
 -}
 
 
-module ModelDetailsView exposing (..)
+module ModelDetailsView
+    exposing
+        ( Display
+        , HoverText
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
+        , SongIndex
+        )
 
 -- VIEW
 
