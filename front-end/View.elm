@@ -61,6 +61,7 @@ import ModelDetails
 import ModelDetailsUpdate exposing (..)
 import ModelDetailsView exposing (..)
 import ViewButton exposing (..)
+import ViewBuySong exposing (buySongAnchor)
 import ViewStyleCalc exposing (styleCalc)
 import ViewUtilities
     exposing
@@ -72,47 +73,6 @@ import ViewUtilities
 
 
 -- VIEW
-
-
-buySongAnchor : SongRemembered -> Html Msg
-buySongAnchor song =
-    let
-        fieldKeywords : UriText
-        fieldKeywords =
-            String.join
-                "+"
-                [ song.title
-                , song.artist
-                ]
-
-        hoverText : HoverText
-        hoverText =
-            "See this song on Amazon (in new tab)"
-
-        queryBeforeList : QueryBeforeList
-        queryBeforeList =
-            [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
-
-        queryPairs : QueryPairs
-        queryPairs =
-            [ ( "tag", "wtmdradio-20" )
-            , ( "url", "search-alias=digital-music" )
-            , ( "field-keywords"
-              , fieldKeywords
-              )
-            ]
-
-        uriText : UriText
-        uriText =
-            relative queryBeforeList queryPairs
-    in
-    a
-        [ href uriText
-        , onClick BuySongAnchorProcess
-        , target "_blank"
-        , title hoverText
-        ]
-        []
 
 
 commentArea : Model -> SongRemembered -> Html Msg
