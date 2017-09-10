@@ -12,7 +12,14 @@
 -}
 
 
-module ViewUtilities exposing (..)
+module ViewUtilities
+    exposing
+        ( goldenRatio
+        , htmlNodeNull
+        , relative
+        , showCommentButtons
+        , songGroup2String
+        )
 
 import Html
     exposing
