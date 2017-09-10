@@ -15,11 +15,8 @@
 module UpdateDetails exposing (..)
 
 import Debug exposing (log)
-import Http
-    exposing
-        ( Error
-        )
-import MessageDetails exposing (..)
+import Http exposing (Error)
+import MessageDetails exposing (Msg)
 import ModelDetails exposing (..)
 import ModelDetailsUpdate
     exposing
@@ -29,11 +26,7 @@ import ModelDetailsUpdate
         , UriText
         )
 import ModelInitialize exposing (..)
-import UpdateUtilities
-    exposing
-        ( focusSet
-        , msg2Cmd
-        )
+import UpdateUtilities exposing (focusSet)
 
 
 -- UPDATE
@@ -52,30 +45,6 @@ focusInputPossibly model =
         Cmd.none
     else
         focusSet "input"
-
-
-httpErrorMessageText : Error -> HttpErrorMessageText
-httpErrorMessageText httpError =
-    let
-        prefix : HttpErrorMessageText
-        prefix =
-            "HttpError"
-    in
-    case httpError of
-        Http.BadPayload debuggingText httpResponseText ->
-            log (prefix ++ ": BadPayload") debuggingText
-
-        Http.BadStatus httpResponseText ->
-            log prefix "BadStatus"
-
-        Http.BadUrl uriText ->
-            log (prefix ++ ": BadUrl") uriText
-
-        Http.NetworkError ->
-            log prefix "NetworkError"
-
-        Http.Timeout ->
-            log prefix "Timeout"
 
 
 likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )

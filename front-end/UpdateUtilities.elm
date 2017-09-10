@@ -14,12 +14,28 @@
 
 module UpdateUtilities exposing (..)
 
+import Debug exposing (log)
 import Dom
     exposing
         ( Id
         , focus
         )
+import Http
+    exposing
+        ( Error
+        , Request
+        , getString
+        , send
+        )
 import MessageDetails exposing (..)
+import ModelDetails exposing (..)
+import ModelDetailsUpdate
+    exposing
+        ( HttpErrorMessageText
+        , HttpRequestText
+        , SongRememberedIndex
+        , UriText
+        )
 import Task
     exposing
         ( Task
@@ -34,6 +50,30 @@ import Task
 focusSet : Id -> Cmd Msg
 focusSet id =
     msg2Cmd (succeed (FocusSet id))
+
+
+httpErrorMessageText : Error -> HttpErrorMessageText
+httpErrorMessageText httpError =
+    let
+        prefix : HttpErrorMessageText
+        prefix =
+            "HttpError"
+    in
+    case httpError of
+        Http.BadPayload debuggingText httpResponseText ->
+            log (prefix ++ ": BadPayload") debuggingText
+
+        Http.BadStatus httpResponseText ->
+            log prefix "BadStatus"
+
+        Http.BadUrl uriText ->
+            log (prefix ++ ": BadUrl") uriText
+
+        Http.NetworkError ->
+            log prefix "NetworkError"
+
+        Http.Timeout ->
+            log prefix "Timeout"
 
 
 msg2Cmd : Task Never msg -> Cmd msg

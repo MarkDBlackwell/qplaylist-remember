@@ -47,6 +47,7 @@ import UpdateDetails exposing (..)
 import UpdateUtilities
     exposing
         ( focusSet
+        , httpErrorMessageText
         , msg2Cmd
         )
 import View exposing (likeOrCommentRequestUriText)
