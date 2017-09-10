@@ -62,6 +62,7 @@ import ModelDetails
 import ModelDetailsUpdate exposing (..)
 import ModelDetailsView exposing (..)
 import ViewButton exposing (..)
+import ViewStyleCalc exposing (styleCalc)
 import ViewUtilities
     exposing
         ( goldenRatio
@@ -70,6 +71,9 @@ import ViewUtilities
         , showCommentButtons
         , songGroup2String
         )
+
+
+-- VIEW
 
 
 buySongAnchor : SongRemembered -> Html Msg
@@ -299,60 +303,6 @@ songView model group index song =
         , p []
             [ text song.artist ]
         ]
-
-
-styleCalc : SongGroup -> SongGroupLength -> SongIndex -> Attribute msg
-styleCalc group songGroupLength index =
-    let
-        backgroundColorStyling : List ( String, String )
-        backgroundColorStyling =
-            case group of
-                Played ->
-                    []
-
-                Remembered ->
-                    [ ( "background-color", backgroundColorValue ) ]
-
-        backgroundColorValue : String
-        backgroundColorValue =
-            "hsl(0,"
-                ++ toString (saturation * 100.0)
-                ++ "%,50%"
-
-        base : Float
-        base =
-            16.0
-
-        fontSizeStyling : List ( String, String )
-        fontSizeStyling =
-            [ ( "font-size", fontSizeValue ) ]
-
-        fontSizeValue : String
-        fontSizeValue =
-            toString (sizeFactor * base)
-                ++ "px"
-
-        indexReversed : SongIndex
-        indexReversed =
-            songGroupLength - index - 1
-
-        saturation : Float
-        saturation =
-            sizeFactor * 0.5
-
-        sizeFactor : Float
-        sizeFactor =
-            case group of
-                Played ->
-                    goldenRatio ^ toFloat index
-
-                Remembered ->
-                    goldenRatio ^ toFloat indexReversed
-    in
-    style
-        (backgroundColorStyling
-            ++ fontSizeStyling
-        )
 
 
 view : Model -> Html Msg

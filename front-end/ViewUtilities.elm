@@ -30,6 +30,9 @@ import ModelDetailsUpdate
 import ModelDetailsView exposing (SongGroup)
 
 
+-- VIEW
+
+
 goldenRatio : Float
 goldenRatio =
     --See:
