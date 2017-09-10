@@ -19,7 +19,7 @@ module UpdateDetails
         , likingOrCommenting
         )
 
-import MessageDetails exposing (Msg)
+import MessageDetails exposing (Msg(LogResponseOk))
 import ModelDetails
     exposing
         ( Model
@@ -36,10 +36,12 @@ import ModelInitialize
         , processingLikeInit
         , songRememberedCommentingIndexInit
         )
+import Task exposing (succeed)
 import UpdateUtilities
     exposing
         ( focusSet
         , logResponseOk
+        , msg2Cmd
         )
 
 
@@ -57,11 +59,6 @@ focusInputPossibly model =
 likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )
 likeOrCommentResponse model appendLikeOrCommentJson =
     let
-        --Keep for console logging:
-        a : String
-        a =
-            logResponseOk appendLikeOrCommentJson
-
         likedOrCommentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
         likedOrCommentedShow index song =
             if model.songRememberedCommentingIndex == Just index then
@@ -84,7 +81,7 @@ likeOrCommentResponse model appendLikeOrCommentJson =
         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
         , songsRemembered = songsRememberedNew
       }
-    , Cmd.none
+    , msg2Cmd (succeed (LogResponseOk appendLikeOrCommentJson))
     )
 
 

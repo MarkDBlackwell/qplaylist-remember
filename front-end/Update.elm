@@ -244,6 +244,17 @@ update msg model =
         LikeResponse (Ok appendLikeJson) ->
             likeOrCommentResponse model appendLikeJson
 
+        LogResponseOk httpResponseText ->
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    log "Response" "Ok"
+            in
+            ( model
+            , focusInputPossibly model
+            )
+
         PageMorph ->
             let
                 pageIsExpandedNew : PageIsExpanded

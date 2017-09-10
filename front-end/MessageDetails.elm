@@ -40,6 +40,7 @@ type Msg
     | LikeButtonProcess SongRememberedIndex
     | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
+    | LogResponseOk HttpResponseText
     | PageMorph
     | SongForget SongRememberedIndex
     | SongRemember SongLatestFewIndex
