@@ -18,6 +18,7 @@ import Debug exposing (log)
 import Dom exposing (Id)
 import Http exposing (Error)
 import MessageDetails exposing (Msg(FocusSet))
+import ModelDetails exposing (AlertMessage)
 import ModelDetailsUpdate exposing (HttpErrorMessageText)
 import Task
     exposing
@@ -28,6 +29,13 @@ import Task
 
 
 -- UPDATE
+
+
+alertMessageSuffix : AlertMessage -> AlertMessage
+alertMessageSuffix thing =
+    " (while attempting to send "
+        ++ thing
+        ++ " to server)"
 
 
 focusSet : Id -> Cmd Msg
@@ -57,6 +65,12 @@ httpErrorMessageText httpError =
 
         Http.Timeout ->
             log prefix "Timeout"
+
+
+logResponseOk : String -> String
+logResponseOk string =
+    --log "Ok response" string
+    log "Response" "Ok"
 
 
 msg2Cmd : Task Never msg -> Cmd msg

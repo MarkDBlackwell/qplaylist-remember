@@ -14,28 +14,23 @@
 
 module UpdateDetails exposing (..)
 
-import Debug exposing (log)
 import MessageDetails exposing (Msg)
 import ModelDetails
     exposing
-        ( AlertMessage
-        , Model
+        ( Model
         , SongRemembered
         , SongsRemembered
         )
 import ModelDetailsUpdate exposing (SongRememberedIndex)
 import ModelInitialize exposing (..)
-import UpdateUtilities exposing (focusSet)
+import UpdateUtilities
+    exposing
+        ( focusSet
+        , logResponseOk
+        )
 
 
 -- UPDATE
-
-
-alertMessageSuffix : AlertMessage -> AlertMessage
-alertMessageSuffix thing =
-    " (while attempting to send "
-        ++ thing
-        ++ " to server)"
 
 
 focusInputPossibly : Model -> Cmd Msg
@@ -83,9 +78,3 @@ likeOrCommentResponse model appendLikeOrCommentJson =
 likingOrCommenting : Model -> Bool
 likingOrCommenting model =
     model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
-
-
-logResponseOk : String -> String
-logResponseOk string =
-    --log "Ok response" string
-    log "Response" "Ok"

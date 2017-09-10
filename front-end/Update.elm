@@ -40,7 +40,8 @@ import Task
 import UpdateDetails exposing (..)
 import UpdateUtilities
     exposing
-        ( focusSet
+        ( alertMessageSuffix
+        , focusSet
         , httpErrorMessageText
         , msg2Cmd
         )
