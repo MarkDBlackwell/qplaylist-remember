@@ -22,7 +22,6 @@ import Html
     exposing
         ( Attribute
         , Html
-        , a
         , div
         , em
         , hr
@@ -37,19 +36,13 @@ import Html.Attributes
     exposing
         ( autocomplete
         , class
-        , href
         , id
         , placeholder
         , required
-        , target
         , title
         , type_
         )
-import Html.Events
-    exposing
-        ( onClick
-        , onInput
-        )
+import Html.Events exposing (onInput)
 import MessageDetails exposing (..)
 import ModelDetails
     exposing
@@ -58,8 +51,18 @@ import ModelDetails
         , SongsRemembered
         , songLatestFew2Remembered
         )
-import ModelDetailsUpdate exposing (..)
-import ModelDetailsView exposing (..)
+import ModelDetailsUpdate
+    exposing
+        ( SongRememberedIndex
+        , UriText
+        )
+import ModelDetailsView
+    exposing
+        ( HoverText
+        , SongGroup
+        , SongGroupLength
+        , SongIndex
+        )
 import ViewButton exposing (..)
 import ViewBuySong exposing (buySongAnchor)
 import ViewStyleCalc exposing (styleCalc)
@@ -276,7 +279,7 @@ view model =
 
         songsLatestFew : List (Html Msg)
         songsLatestFew =
-            List.indexedMap (songView model Played) songsLatestFew2Remembered
+            List.indexedMap (songView model ModelDetailsView.Played) songsLatestFew2Remembered
 
         songsLatestFew2Remembered : SongsRemembered
         songsLatestFew2Remembered =
@@ -284,14 +287,14 @@ view model =
 
         songsRemembered : List (Html Msg)
         songsRemembered =
-            List.indexedMap (songView model Remembered) model.songsRemembered
+            List.indexedMap (songView model ModelDetailsView.Remembered) model.songsRemembered
     in
     main_
         []
         [ alertArea
         , commentAreaPossibly model
         , section
-            (groupAttributes Remembered)
+            (groupAttributes ModelDetailsView.Remembered)
             ([ p []
                 [ buttonRemembered ]
              ]
@@ -299,7 +302,7 @@ view model =
             )
         , hr [] []
         , section
-            (groupAttributes Played)
+            (groupAttributes ModelDetailsView.Played)
             ([ p []
                 [ buttonPlayed ]
              ]
