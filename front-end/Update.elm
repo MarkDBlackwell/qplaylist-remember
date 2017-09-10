@@ -66,7 +66,8 @@ import UpdateUtilities
     exposing
         ( alertMessageSuffix
         , focusSet
-        , httpErrorMessageText
+        , httpErrorMessage
+        , httpErrorMessageLogging
         , msg2Cmd
         )
 import View exposing (likeOrCommentRequestUriText)
@@ -152,7 +153,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessageText httpError ++ alertMessageSuffix "comment"
+                    httpErrorMessage httpError ++ alertMessageSuffix "comment"
             in
             ( { model
                 | alertMessage = alertMessageNew
@@ -228,7 +229,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessageText httpError ++ alertMessageSuffix "Like"
+                    httpErrorMessage httpError ++ alertMessageSuffix "Like"
             in
             ( { model
                 | alertMessage = alertMessageNew
@@ -434,7 +435,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessageText httpError ++ suffix
+                    httpErrorMessage httpError ++ suffix
 
                 suffix : HttpErrorMessageText
                 suffix =

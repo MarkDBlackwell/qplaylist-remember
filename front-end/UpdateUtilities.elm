@@ -16,11 +16,11 @@ module UpdateUtilities
     exposing
         ( alertMessageSuffix
         , focusSet
-        , httpErrorMessageText
+        , httpErrorMessage
+        , httpErrorMessageLogging
         , msg2Cmd
         )
 
-import Debug exposing (log)
 import Dom exposing (Id)
 import Http exposing (Error)
 import MessageDetails exposing (Msg(FocusSet))
@@ -31,6 +31,11 @@ import Task
         ( Task
         , perform
         , succeed
+        )
+import Tuple
+    exposing
+        ( first
+        , second
         )
 
 
@@ -49,8 +54,18 @@ focusSet id =
     msg2Cmd (succeed (FocusSet id))
 
 
-httpErrorMessageText : Error -> HttpErrorMessageText
-httpErrorMessageText httpError =
+httpErrorMessage : Error -> HttpErrorMessageText
+httpErrorMessage httpError =
+    second (httpErrorMessagePair httpError)
+
+
+httpErrorMessageLogging : Error -> HttpErrorMessageText
+httpErrorMessageLogging httpError =
+    first (httpErrorMessagePair httpError)
+
+
+httpErrorMessagePair : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
+httpErrorMessagePair httpError =
     let
         prefix : HttpErrorMessageText
         prefix =
@@ -58,19 +73,19 @@ httpErrorMessageText httpError =
     in
     case httpError of
         Http.BadPayload debuggingText httpResponseText ->
-            log (prefix ++ ": BadPayload") debuggingText
+            ( prefix ++ ": BadPayload", debuggingText )
 
         Http.BadStatus httpResponseText ->
-            log prefix "BadStatus"
+            ( prefix, "BadStatus" )
 
         Http.BadUrl uriText ->
-            log (prefix ++ ": BadUrl") uriText
+            ( prefix ++ ": BadUrl", uriText )
 
         Http.NetworkError ->
-            log prefix "NetworkError"
+            ( prefix, "NetworkError" )
 
         Http.Timeout ->
-            log prefix "Timeout"
+            ( prefix, "Timeout" )
 
 
 msg2Cmd : Task Never msg -> Cmd msg
