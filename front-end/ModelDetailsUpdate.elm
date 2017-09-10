@@ -12,7 +12,20 @@
 -}
 
 
-module ModelDetailsUpdate exposing (..)
+module ModelDetailsUpdate
+    exposing
+        ( DecodeErrorMessageText
+        , HttpErrorMessageText
+        , HttpRequestText
+        , HttpResponseText
+        , QueryBeforeList
+        , QueryPair
+        , QueryPairs
+        , SongLatestFewIndex
+        , SongRememberedIndex
+        , SongsLatestFewTagged
+        , UriText
+        )
 
 import ModelDetails exposing (SongsLatestFew)
 

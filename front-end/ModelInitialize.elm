@@ -12,7 +12,19 @@
 -}
 
 
-module ModelInitialize exposing (..)
+module ModelInitialize
+    exposing
+        ( alertMessageInit
+        , awaitingServerResponseInit
+        , init
+        , likeOrCommentTextInit
+        , pageIsExpandedInit
+        , processingCommentInit
+        , processingLikeInit
+        , songRememberedCommentingIndexInit
+        , songsLatestFewInit
+        , songsRememberedInit
+        )
 
 import ModelDetails
     exposing
