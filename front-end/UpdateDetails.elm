@@ -40,7 +40,6 @@ import Task exposing (succeed)
 import UpdateUtilities
     exposing
         ( focusSet
-        , logResponseOk
         , msg2Cmd
         )
 

@@ -17,7 +17,6 @@ module UpdateUtilities
         ( alertMessageSuffix
         , focusSet
         , httpErrorMessageText
-        , logResponseOk
         , msg2Cmd
         )
 
@@ -72,12 +71,6 @@ httpErrorMessageText httpError =
 
         Http.Timeout ->
             log prefix "Timeout"
-
-
-logResponseOk : String -> String
-logResponseOk string =
-    --log "Ok response" string
-    log "Response" "Ok"
 
 
 msg2Cmd : Task Never msg -> Cmd msg
