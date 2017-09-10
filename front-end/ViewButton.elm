@@ -31,7 +31,16 @@ import Html.Attributes
 import Html.Events exposing (onClick)
 import MessageDetails exposing (..)
 import ModelDetailsUpdate exposing (SongRememberedIndex)
-import ModelDetailsView exposing (..)
+import ModelDetailsView
+    exposing
+        ( Display
+        , HoverText
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongIndex
+        )
 import ViewUtilities
     exposing
         ( htmlNodeNull

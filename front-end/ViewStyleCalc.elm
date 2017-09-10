@@ -16,7 +16,15 @@ module ViewStyleCalc exposing (styleCalc)
 
 import Html exposing (Attribute)
 import Html.Attributes exposing (style)
-import ModelDetailsView exposing (..)
+import ModelDetailsView
+    exposing
+        ( SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
+        , SongIndex
+        )
 import ViewUtilities exposing (goldenRatio)
 
 

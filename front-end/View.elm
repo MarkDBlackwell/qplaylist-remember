@@ -60,6 +60,9 @@ import ModelDetailsView
     exposing
         ( HoverText
         , SongGroup
+            ( Played
+            , Remembered
+            )
         , SongGroupLength
         , SongIndex
         )
@@ -279,7 +282,7 @@ view model =
 
         songsLatestFew : List (Html Msg)
         songsLatestFew =
-            List.indexedMap (songView model ModelDetailsView.Played) songsLatestFew2Remembered
+            List.indexedMap (songView model Played) songsLatestFew2Remembered
 
         songsLatestFew2Remembered : SongsRemembered
         songsLatestFew2Remembered =
@@ -287,14 +290,14 @@ view model =
 
         songsRemembered : List (Html Msg)
         songsRemembered =
-            List.indexedMap (songView model ModelDetailsView.Remembered) model.songsRemembered
+            List.indexedMap (songView model Remembered) model.songsRemembered
     in
     main_
         []
         [ alertArea
         , commentAreaPossibly model
         , section
-            (groupAttributes ModelDetailsView.Remembered)
+            (groupAttributes Remembered)
             ([ p []
                 [ buttonRemembered ]
              ]
@@ -302,7 +305,7 @@ view model =
             )
         , hr [] []
         , section
-            (groupAttributes ModelDetailsView.Played)
+            (groupAttributes Played)
             ([ p []
                 [ buttonPlayed ]
              ]

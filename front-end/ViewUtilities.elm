@@ -27,7 +27,13 @@ import ModelDetailsUpdate
         , QueryPairs
         , UriText
         )
-import ModelDetailsView exposing (SongGroup)
+import ModelDetailsView
+    exposing
+        ( SongGroup
+            ( Played
+            , Remembered
+            )
+        )
 
 
 -- VIEW
@@ -112,8 +118,8 @@ showCommentButtons =
 songGroup2String : SongGroup -> String
 songGroup2String group =
     case group of
-        ModelDetailsView.Played ->
+        Played ->
             "played"
 
-        ModelDetailsView.Remembered ->
+        Remembered ->
             "remembered"
