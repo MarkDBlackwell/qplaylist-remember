@@ -17,6 +17,10 @@ module ModelDetails exposing (..)
 -- MODEL
 
 
+type alias ActionsDelay =
+    Bool
+
+
 type alias AlertMessage =
     String
 
@@ -38,7 +42,8 @@ type alias LikedOrCommented =
 
 
 type alias Model =
-    { alertMessage : AlertMessage
+    { actionsDelay : ActionsDelay
+    , alertMessage : AlertMessage
     , awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
     , pageIsExpanded : PageIsExpanded
