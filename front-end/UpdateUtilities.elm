@@ -60,22 +60,36 @@ httpErrorMessage httpError =
         prefix : HttpErrorMessageText
         prefix =
             "HttpError"
+
+        prefixColon : HttpErrorMessageText
+        prefixColon =
+            prefix ++ ": "
     in
     case httpError of
         Http.BadPayload debuggingText httpResponseText ->
-            ( prefix ++ ": BadPayload", debuggingText )
+            ( prefixColon ++ "BadPayload"
+            , debuggingText
+            )
 
         Http.BadStatus httpResponseText ->
-            ( prefix ++ ": BadStatus", toString httpResponseText.status )
+            ( prefixColon ++ "BadStatus"
+            , toString httpResponseText.status
+            )
 
         Http.BadUrl uriText ->
-            ( prefix ++ ": BadUrl", uriText )
+            ( prefixColon ++ "BadUrl"
+            , uriText
+            )
 
         Http.NetworkError ->
-            ( prefix, "NetworkError" )
+            ( prefix
+            , "NetworkError"
+            )
 
         Http.Timeout ->
-            ( prefix, "Timeout" )
+            ( prefix
+            , "Timeout"
+            )
 
 
 httpErrorMessageLogging : Error -> HttpErrorMessageText
