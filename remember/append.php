@@ -1,4 +1,4 @@
- <?php
+<?php
 // See https://stackoverflow.com/questions/24972424/php-create-or-write-append-in-text-file
 // Copyright (c) 2017 Mark D. Blackwell
 // Accept AJAX request to append to a comments file.
