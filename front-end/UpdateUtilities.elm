@@ -16,8 +16,8 @@ module UpdateUtilities
     exposing
         ( alertMessageSuffix
         , focusSet
-        , httpErrorMessage
         , httpErrorMessageLogging
+        , httpErrorMessageScreen
         , msg2Cmd
         )
 
@@ -54,14 +54,14 @@ focusSet id =
     msg2Cmd (succeed (FocusSet id))
 
 
-httpErrorMessage : Error -> HttpErrorMessageText
-httpErrorMessage httpError =
-    second (httpErrorMessagePair httpError)
-
-
 httpErrorMessageLogging : Error -> HttpErrorMessageText
 httpErrorMessageLogging httpError =
     first (httpErrorMessagePair httpError)
+
+
+httpErrorMessageScreen : Error -> HttpErrorMessageText
+httpErrorMessageScreen httpError =
+    second (httpErrorMessagePair httpError)
 
 
 httpErrorMessagePair : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
@@ -76,7 +76,7 @@ httpErrorMessagePair httpError =
             ( prefix ++ ": BadPayload", debuggingText )
 
         Http.BadStatus httpResponseText ->
-            ( prefix, "BadStatus" )
+            ( prefix ++ ": BadStatus", toString httpResponseText.status )
 
         Http.BadUrl uriText ->
             ( prefix ++ ": BadUrl", uriText )

@@ -19,7 +19,7 @@ module UpdateDetails
         , likingOrCommenting
         )
 
-import MessageDetails exposing (Msg(LogResponseOk))
+import MessageDetails exposing (Msg(ResponseLog))
 import ModelDetails
     exposing
         ( Model
@@ -80,7 +80,7 @@ likeOrCommentResponse model appendLikeOrCommentJson =
         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
         , songsRemembered = songsRememberedNew
       }
-    , msg2Cmd (succeed (LogResponseOk appendLikeOrCommentJson))
+    , msg2Cmd (succeed (ResponseLog appendLikeOrCommentJson))
     )
 
 

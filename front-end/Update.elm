@@ -66,8 +66,8 @@ import UpdateUtilities
     exposing
         ( alertMessageSuffix
         , focusSet
-        , httpErrorMessage
         , httpErrorMessageLogging
+        , httpErrorMessageScreen
         , msg2Cmd
         )
 import View exposing (likeOrCommentRequestUriText)
@@ -153,12 +153,15 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessage httpError ++ alertMessageSuffix "comment"
+                    httpErrorMessageScreen httpError ++ alertMessageSuffix "comment"
             in
             ( { model
                 | alertMessage = alertMessageNew
               }
-            , focusInputPossibly model
+            , Cmd.batch
+                [ msg2Cmd (succeed (ResponseLog (httpErrorMessageLogging httpError)))
+                , focusInputPossibly model
+                ]
             )
 
         CommentResponse (Ok appendCommentJson) ->
@@ -229,7 +232,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessage httpError ++ alertMessageSuffix "Like"
+                    httpErrorMessageScreen httpError ++ alertMessageSuffix "Like"
             in
             ( { model
                 | alertMessage = alertMessageNew
@@ -245,12 +248,15 @@ update msg model =
         LikeResponse (Ok appendLikeJson) ->
             likeOrCommentResponse model appendLikeJson
 
-        LogResponseOk httpResponseText ->
+        ResponseLog httpResponseText ->
             let
                 --Keep for console logging:
                 a : String
                 a =
-                    log "Response" "Ok"
+                    if String.isEmpty httpResponseText then
+                        log "Response" "Ok"
+                    else
+                        log "Response: Ok" httpResponseText
             in
             ( model
             , focusInputPossibly model
@@ -435,7 +441,7 @@ update msg model =
             let
                 alertMessageNew : AlertMessage
                 alertMessageNew =
-                    httpErrorMessage httpError ++ suffix
+                    httpErrorMessageScreen httpError ++ suffix
 
                 suffix : HttpErrorMessageText
                 suffix =
