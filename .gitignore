@@ -1,6 +1,5 @@
 /elm-stuff/build-artifacts/*
 /elm-stuff/packages/*
-/node_modules/*
 /out/*
 /test/elm-stuff/build-artifacts/*
 /test/elm-stuff/packages/*
