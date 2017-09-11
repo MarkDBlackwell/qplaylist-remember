@@ -54,18 +54,8 @@ focusSet id =
     msg2Cmd (succeed (FocusSet id))
 
 
-httpErrorMessageLogging : Error -> HttpErrorMessageText
-httpErrorMessageLogging httpError =
-    first (httpErrorMessagePair httpError)
-
-
-httpErrorMessageScreen : Error -> HttpErrorMessageText
-httpErrorMessageScreen httpError =
-    second (httpErrorMessagePair httpError)
-
-
-httpErrorMessagePair : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
-httpErrorMessagePair httpError =
+httpErrorMessage : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
+httpErrorMessage httpError =
     let
         prefix : HttpErrorMessageText
         prefix =
@@ -86,6 +76,16 @@ httpErrorMessagePair httpError =
 
         Http.Timeout ->
             ( prefix, "Timeout" )
+
+
+httpErrorMessageLogging : Error -> HttpErrorMessageText
+httpErrorMessageLogging httpError =
+    first (httpErrorMessage httpError)
+
+
+httpErrorMessageScreen : Error -> HttpErrorMessageText
+httpErrorMessageScreen httpError =
+    second (httpErrorMessage httpError)
 
 
 msg2Cmd : Task Never msg -> Cmd msg
