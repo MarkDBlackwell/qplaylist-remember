@@ -1,8 +1,9 @@
 /elm-stuff/build-artifacts/*
+/elm-stuff/generated-code/*
 /elm-stuff/packages/*
 /out/*
-/test/elm-stuff/build-artifacts/*
-/test/elm-stuff/packages/*
+/tests/elm-stuff/build-artifacts/*
+/tests/elm-stuff/packages/*
 
 /index.html
 /remember/RememberSongs.js
