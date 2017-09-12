@@ -150,6 +150,9 @@ commentAreaPossibly model =
         htmlNodeNull
     else
         case model.songRememberedCommentingIndex of
+            Nothing ->
+                htmlNodeNull
+
             Just index ->
                 case songMaybe index of
                     Nothing ->
@@ -157,9 +160,6 @@ commentAreaPossibly model =
 
                     Just song ->
                         commentArea model song
-
-            songRememberedCommentingIndexInit ->
-                htmlNodeNull
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
