@@ -142,8 +142,8 @@ commentArea model song =
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
     let
-        songPossibly : SongRememberedIndex -> Maybe SongRemembered
-        songPossibly index =
+        songMaybe : SongRememberedIndex -> Maybe SongRemembered
+        songMaybe index =
             List.head (List.drop index model.songsRemembered)
     in
     if not model.processingComment then
@@ -151,7 +151,7 @@ commentAreaPossibly model =
     else
         case model.songRememberedCommentingIndex of
             Just index ->
-                case songPossibly index of
+                case songMaybe index of
                     Nothing ->
                         htmlNodeNull
 
