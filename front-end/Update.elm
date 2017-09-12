@@ -334,37 +334,32 @@ update msg model =
                 songClean song =
                     { song | likedOrCommented = False }
 
-                songDiffers : SongRemembered -> Bool
-                songDiffers song =
-                    case songLatestFewSelected of
-                        Nothing ->
-                            True
-
-                        Just songLatestFewSelected ->
-                            songClean song /= songClean (songLatestFew2Remembered songLatestFewSelected)
-
                 songLatestFewSelected : Maybe SongLatestFew
                 songLatestFewSelected =
                     List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
-                songsDifferent : SongsRemembered
-                songsDifferent =
-                    if Nothing == songLatestFewSelected then
-                        model.songsRemembered
-                    else
-                        List.filter songDiffers model.songsRemembered
-
                 songsRememberedCleaned : SongsRemembered
                 songsRememberedCleaned =
                     List.map songClean model.songsRemembered
+            in
+            case songLatestFewSelected of
+                Nothing ->
+                    ( model
+                    , focusInputPossibly model
+                    )
 
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    case songLatestFewSelected of
-                        Nothing ->
-                            model.songsRemembered
+                Just songLatestFewSelected ->
+                    let
+                        songDiffers : SongRemembered -> Bool
+                        songDiffers song =
+                            songClean song /= songLatestFew2Remembered songLatestFewSelected
 
-                        Just songLatestFewSelected ->
+                        songsDifferent : SongsRemembered
+                        songsDifferent =
+                            List.filter songDiffers model.songsRemembered
+
+                        songsRememberedNew : SongsRemembered
+                        songsRememberedNew =
                             if
                                 List.member
                                     (songLatestFew2Remembered songLatestFewSelected)
@@ -374,29 +369,29 @@ update msg model =
                             else
                                 songsDifferent
                                     ++ [ songLatestFew2Remembered songLatestFewSelected ]
-            in
-            if likingOrCommenting model then
-                if model.processingComment then
-                    ( { model
-                        | alertMessage = alertMessageInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                      }
-                    , focusInputPossibly model
-                    )
-                else
-                    ( { model
-                        | alertMessage = alertMessageInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                      }
-                    , Cmd.none
-                    )
-            else
-                ( { model
-                    | songsRemembered = songsRememberedNew
-                  }
-                , focusInputPossibly model
-                )
+                    in
+                    if likingOrCommenting model then
+                        if model.processingComment then
+                            ( { model
+                                | alertMessage = alertMessageInit
+                                , awaitingServerResponse = awaitingServerResponseInit
+                              }
+                            , focusInputPossibly model
+                            )
+                        else
+                            ( { model
+                                | alertMessage = alertMessageInit
+                                , awaitingServerResponse = awaitingServerResponseInit
+                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                              }
+                            , Cmd.none
+                            )
+                    else
+                        ( { model
+                            | songsRemembered = songsRememberedNew
+                          }
+                        , focusInputPossibly model
+                        )
 
         SongsLatestFewRefresh ->
             let
