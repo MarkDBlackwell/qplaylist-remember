@@ -35,6 +35,7 @@ import ModelDetails
         , SongsLatestFew
         , SongsRemembered
         , songLatestFew2Remembered
+        , songRemembered2LatestFew
         )
 import ModelDetailsUpdate
     exposing
@@ -337,10 +338,6 @@ update msg model =
                 songLatestFewSelected : Maybe SongLatestFew
                 songLatestFewSelected =
                     List.head (List.drop songLatestFewIndex model.songsLatestFew)
-
-                songsRememberedCleaned : SongsRemembered
-                songsRememberedCleaned =
-                    List.map songClean model.songsRemembered
             in
             case songLatestFewSelected of
                 Nothing ->
@@ -352,7 +349,7 @@ update msg model =
                     let
                         songDiffers : SongRemembered -> Bool
                         songDiffers song =
-                            songClean song /= songLatestFew2Remembered songLatestFewSelected
+                            songLatestFewSelected /= songRemembered2LatestFew song
 
                         songsDifferent : SongsRemembered
                         songsDifferent =
@@ -362,8 +359,8 @@ update msg model =
                         songsRememberedNew =
                             if
                                 List.member
-                                    (songLatestFew2Remembered songLatestFewSelected)
-                                    songsRememberedCleaned
+                                    songLatestFewSelected
+                                    (List.map songRemembered2LatestFew model.songsRemembered)
                             then
                                 model.songsRemembered
                             else

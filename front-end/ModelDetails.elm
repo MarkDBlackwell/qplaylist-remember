@@ -117,3 +117,12 @@ songLatestFew2Remembered song =
     , timeStamp = song.timeStamp
     , title = song.title
     }
+
+
+songRemembered2LatestFew : SongRemembered -> SongLatestFew
+songRemembered2LatestFew song =
+    { artist = song.artist
+    , time = song.time
+    , timeStamp = song.timeStamp
+    , title = song.title
+    }
