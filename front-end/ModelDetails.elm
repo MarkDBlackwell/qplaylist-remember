@@ -49,7 +49,7 @@ type alias Model =
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike
-    , songRememberedCommentingIndex : Maybe SongRememberedCommentingIndex
+    , songRememberedCommentingIndex : SongRememberedCommentingIndex
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
@@ -86,7 +86,7 @@ type alias SongRemembered =
 
 
 type alias SongRememberedCommentingIndex =
-    Int
+    Maybe Int
 
 
 type alias SongsLatestFew =

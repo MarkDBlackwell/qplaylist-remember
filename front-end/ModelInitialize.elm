@@ -88,7 +88,7 @@ processingLikeInit =
     False
 
 
-songRememberedCommentingIndexInit : Maybe SongRememberedCommentingIndex
+songRememberedCommentingIndexInit : SongRememberedCommentingIndex
 songRememberedCommentingIndexInit =
     Nothing
 
