@@ -348,8 +348,8 @@ update msg model =
                 Just songLatestFewSelected ->
                     let
                         songDiffers : SongRemembered -> Bool
-                        songDiffers song =
-                            songLatestFewSelected /= songRemembered2LatestFew song
+                        songDiffers songRemembered =
+                            songLatestFewSelected /= songRemembered2LatestFew songRemembered
 
                         songsDifferent : SongsRemembered
                         songsDifferent =
