@@ -55,6 +55,7 @@ import ModelDetails
     exposing
         ( Model
         , SongRemembered
+        , SongRememberedCommentingIndex
         , SongsRemembered
         , songLatestFew2Remembered
         )
@@ -176,7 +177,7 @@ likeOrCommentRequestUriText model =
     let
         artistTimeTitle : UriText
         artistTimeTitle =
-            case index of
+            case songRememberedCommentingIndex of
                 Nothing ->
                     ""
 
@@ -196,13 +197,13 @@ likeOrCommentRequestUriText model =
         basename =
             "append.php"
 
-        index : Maybe SongRememberedIndex
-        index =
+        songRememberedCommentingIndex : SongRememberedCommentingIndex
+        songRememberedCommentingIndex =
             model.songRememberedCommentingIndex
 
         songSelected : Maybe SongRemembered
         songSelected =
-            case index of
+            case songRememberedCommentingIndex of
                 Nothing ->
                     Nothing
 
@@ -211,7 +212,7 @@ likeOrCommentRequestUriText model =
 
         timeStamp : UriText
         timeStamp =
-            case index of
+            case songRememberedCommentingIndex of
                 Nothing ->
                     ""
 
