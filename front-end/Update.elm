@@ -131,7 +131,7 @@ update msg model =
                         , focusInputPossibly model
                         )
 
-                    songRememberedCommentingIndexInit ->
+                    Nothing ->
                         ( { model
                             | processingComment = True
                             , songRememberedCommentingIndex = Just songRememberedIndex
@@ -212,7 +212,7 @@ update msg model =
                         , focusInputPossibly model
                         )
 
-                    songRememberedCommentingIndexInit ->
+                    Nothing ->
                         ( { model
                             | alertMessage = alertMessageInit
                             , awaitingServerResponse = True
@@ -336,20 +336,20 @@ update msg model =
 
                 songDiffers : SongRemembered -> Bool
                 songDiffers song =
-                    case songSelected of
+                    case songLatestFewSelected of
                         Nothing ->
                             True
 
-                        Just songSelected ->
-                            songClean (songLatestFew2Remembered songSelected) /= songClean song
+                        Just songLatestFewSelected ->
+                            songClean song /= songClean (songLatestFew2Remembered songLatestFewSelected)
 
-                songSelected : Maybe SongLatestFew
-                songSelected =
+                songLatestFewSelected : Maybe SongLatestFew
+                songLatestFewSelected =
                     List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
                 songsDifferent : SongsRemembered
                 songsDifferent =
-                    if Nothing == songSelected then
+                    if Nothing == songLatestFewSelected then
                         model.songsRemembered
                     else
                         List.filter songDiffers model.songsRemembered
@@ -360,20 +360,20 @@ update msg model =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    case songSelected of
+                    case songLatestFewSelected of
                         Nothing ->
                             model.songsRemembered
 
-                        Just songSelected ->
+                        Just songLatestFewSelected ->
                             if
                                 List.member
-                                    (songClean (songLatestFew2Remembered songSelected))
+                                    (songLatestFew2Remembered songLatestFewSelected)
                                     songsRememberedCleaned
                             then
                                 model.songsRemembered
                             else
                                 songsDifferent
-                                    ++ [ songLatestFew2Remembered songSelected ]
+                                    ++ [ songLatestFew2Remembered songLatestFewSelected ]
             in
             if likingOrCommenting model then
                 if model.processingComment then
