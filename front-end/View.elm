@@ -105,7 +105,7 @@ commentArea model song =
             " – "
                 ++ song.timeStamp
                 ++ ": "
-                ++ toString (String.length model.likeOrCommentText)
+                ++ toString (String.length model.commentText)
 
         hoverText : HoverText
         hoverText =
@@ -228,7 +228,7 @@ likeOrCommentRequestUriText model =
         [ basename ]
         [ ( "timestamp", timeStamp )
         , ( "song", artistTimeTitle )
-        , ( "comment", model.likeOrCommentText )
+        , ( "comment", model.commentText )
         ]
 
 

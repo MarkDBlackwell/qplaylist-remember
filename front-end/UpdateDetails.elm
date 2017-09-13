@@ -40,7 +40,7 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
-        , likeOrCommentTextInit
+        , commentTextInit
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
@@ -83,7 +83,7 @@ likeOrCommentResponse model appendLikeOrCommentJson =
     ( { model
         | alertMessageText = alertMessageTextInit
         , awaitingServerResponse = awaitingServerResponseInit
-        , likeOrCommentText = likeOrCommentTextInit
+        , commentText = commentTextInit
         , processingComment = processingCommentInit
         , processingLike = processingLikeInit
         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -95,4 +95,6 @@ likeOrCommentResponse model appendLikeOrCommentJson =
 
 likingOrCommenting : Model -> Bool
 likingOrCommenting model =
-    model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+    --model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+    model.processingComment
+        || model.processingLike

@@ -50,7 +50,7 @@ type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
     , commentAreaClosedOpen : CommentAreaClosedOpen
-    , likeOrCommentText : LikeOrCommentText
+    , commentText : LikeOrCommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike

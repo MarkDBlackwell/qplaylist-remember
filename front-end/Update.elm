@@ -53,7 +53,7 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
-        , likeOrCommentTextInit
+        , commentTextInit
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
@@ -112,7 +112,7 @@ update msg model =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
-                        , likeOrCommentText = text
+                        , commentText = text
                       }
                     , Cmd.none
                     )
@@ -129,6 +129,9 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
+                        , commentAreaClosedOpen = Open
+                        , commentText = commentTextInit
+                        , processingComment = True
                       }
                     , msg2Cmd (succeed (CommentAreaOpenInternal songRememberedIndex))
                     )
@@ -163,7 +166,7 @@ update msg model =
                 ( _, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , likeOrCommentText = likeOrCommentTextInit
+                        , commentText = commentTextInit
                         , processingComment = processingCommentInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
@@ -197,7 +200,7 @@ update msg model =
                         commentRequest =
                             send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
                     in
-                    if String.isEmpty model.likeOrCommentText then
+                    if String.isEmpty model.commentText then
                         ( { model
                             | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = awaitingServerResponseInit
@@ -279,7 +282,7 @@ update msg model =
                                 ( { model
                                     | alertMessageText = alertMessageTextInit
                                     , awaitingServerResponse = True
-                                    , likeOrCommentText = likeText
+                                    , commentText = likeText
                                     , processingLike = True
                                     , songRememberedCommentingIndex = Just songRememberedIndex
                                   }
@@ -301,7 +304,7 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
-                , likeOrCommentText = likeOrCommentTextInit
+                , commentText = commentTextInit
                 , processingComment = processingCommentInit
                 , processingLike = processingLikeInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit

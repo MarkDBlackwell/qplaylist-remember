@@ -16,8 +16,8 @@ module ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
+        , commentTextInit
         , init
-        , likeOrCommentTextInit
         , pageIsExpandedInit
         , processingCommentInit
         , processingLikeInit
@@ -70,7 +70,7 @@ init =
         alertMessageTextInit
         awaitingServerResponseInit
         commentAreaClosedOpenInit
-        likeOrCommentTextInit
+        commentTextInit
         pageIsExpandedInit
         processingCommentInit
         processingLikeInit
@@ -81,8 +81,8 @@ init =
     )
 
 
-likeOrCommentTextInit : LikeOrCommentText
-likeOrCommentTextInit =
+commentTextInit : LikeOrCommentText
+commentTextInit =
     ""
 
 
