@@ -81,12 +81,12 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        BuySongAnchorProcess ->
+        SongBuyAnchorProcessHand ->
             ( model
             , focusInputPossibly model
             )
 
-        CommentInputCancel ->
+        CommentCancelHand ->
             ( { model
                 | actionsDelay = actionsDelayInit
                 , alertMessageText = alertMessageTextInit
@@ -97,7 +97,7 @@ update msg model =
             , Cmd.none
             )
 
-        CommentInputOk ->
+        CommentSendHand ->
             let
                 commentRequest : Cmd Msg
                 commentRequest =
@@ -122,7 +122,7 @@ update msg model =
                     ]
                 )
 
-        CommentInputSetUp songRememberedIndex ->
+        CommentAreaOpenHand songRememberedIndex ->
             if model.actionsDelay then
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -154,7 +154,7 @@ update msg model =
                         , focusSet "input"
                         )
 
-        CommentInputTextChangeCapture text ->
+        CommentAreaInputTextChangeCaptureHand text ->
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
@@ -174,7 +174,7 @@ update msg model =
                 | alertMessageText = alertMessageTextNew
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (ResponseLog (httpErrorMessageLogging httpError)))
+                [ msg2Cmd (succeed (HttpResponseTextLog (httpErrorMessageLogging httpError)))
                 , focusInputPossibly model
                 ]
             )
@@ -195,7 +195,7 @@ update msg model =
             , attempt FocusResult (focus id)
             )
 
-        LikeButtonProcess songRememberedIndex ->
+        LikeButtonProcessHand songRememberedIndex ->
             let
                 likeText : LikeOrCommentText
                 likeText =
@@ -215,7 +215,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
-                    , msg2Cmd (succeed (LikeButtonProcess songRememberedIndex))
+                    , msg2Cmd (succeed (LikeButtonProcessHand songRememberedIndex))
                     )
             else
                 case model.songRememberedCommentingIndex of
@@ -264,7 +264,7 @@ update msg model =
         LikeResponse (Ok appendLikeJson) ->
             likeOrCommentResponse model appendLikeJson
 
-        PageMorph ->
+        PageMorphHand ->
             let
                 pageIsExpandedNew : PageIsExpanded
                 pageIsExpandedNew =
@@ -291,7 +291,7 @@ update msg model =
                 , focusInputPossibly model
                 )
 
-        ResponseLog httpResponseText ->
+        HttpResponseTextLog httpResponseText ->
             let
                 --Keep for console logging:
                 a : String
@@ -305,7 +305,7 @@ update msg model =
             , focusInputPossibly model
             )
 
-        SongForget songRememberedIndex ->
+        SongForgetHand songRememberedIndex ->
             let
                 songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
@@ -335,7 +335,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
-                    , msg2Cmd (succeed (SongForget songRememberedIndex))
+                    , msg2Cmd (succeed (SongForgetHand songRememberedIndex))
                     )
             else
                 ( { model

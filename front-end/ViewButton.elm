@@ -40,10 +40,10 @@ import Html.Events exposing (onClick)
 import MessageDetails
     exposing
         ( Msg
-            ( CommentInputSetUp
-            , LikeButtonProcess
-            , PageMorph
-            , SongForget
+            ( CommentAreaOpenHand
+            , LikeButtonProcessHand
+            , PageMorphHand
+            , SongForgetHand
             , SongRemember
             , SongsLatestFewRefresh
             )
@@ -75,7 +75,7 @@ buttonComment group index =
     let
         buttonAction : Msg
         buttonAction =
-            CommentInputSetUp index
+            CommentAreaOpenHand index
 
         buttonId : Maybe Id
         buttonId =
@@ -104,7 +104,7 @@ buttonForgetRemember group index =
                     SongRemember index
 
                 Remembered ->
-                    SongForget index
+                    SongForgetHand index
 
         buttonId : Maybe Id
         buttonId =
@@ -131,7 +131,7 @@ buttonLike group index =
     let
         buttonAction : Msg
         buttonAction =
-            LikeButtonProcess index
+            LikeButtonProcessHand index
 
         buttonId : Maybe Id
         buttonId =
@@ -215,4 +215,4 @@ buttonRemembered =
         hoverText =
             "Morph this page's shape"
     in
-    buttonMy buttonId hoverText PageMorph
+    buttonMy buttonId hoverText PageMorphHand

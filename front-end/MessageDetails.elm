@@ -29,20 +29,20 @@ import ModelDetailsUpdate
 
 
 type Msg
-    = BuySongAnchorProcess
-    | CommentInputCancel
-    | CommentInputOk
-    | CommentInputSetUp SongRememberedIndex
-    | CommentInputTextChangeCapture LikeOrCommentText
+    = SongBuyAnchorProcessHand
+    | CommentCancelHand
+    | CommentSendHand
+    | CommentAreaOpenHand SongRememberedIndex
+    | CommentAreaInputTextChangeCaptureHand LikeOrCommentText
     | CommentResponse (Result Error HttpResponseText)
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | LikeButtonProcess SongRememberedIndex
+    | LikeButtonProcessHand SongRememberedIndex
     | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
-    | PageMorph
-    | ResponseLog HttpResponseText
-    | SongForget SongRememberedIndex
+    | PageMorphHand
+    | HttpResponseTextLog HttpResponseText
+    | SongForgetHand SongRememberedIndex
     | SongRemember SongLatestFewIndex
     | SongsLatestFewRefresh
     | SongsLatestFewResponse (Result Error HttpResponseText)

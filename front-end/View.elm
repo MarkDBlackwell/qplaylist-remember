@@ -46,9 +46,9 @@ import Html.Events exposing (onInput)
 import MessageDetails
     exposing
         ( Msg
-            ( CommentInputCancel
-            , CommentInputOk
-            , CommentInputTextChangeCapture
+            ( CommentAreaInputTextChangeCaptureHand
+            , CommentCancelHand
+            , CommentSendHand
             )
         )
 import ModelDetails
@@ -127,15 +127,15 @@ commentArea model song =
         , input
             [ autocomplete False
             , id "input"
-            , onInput CommentInputTextChangeCapture
+            , onInput CommentAreaInputTextChangeCaptureHand
             , placeholder hoverText
             , required True
             , title hoverText
             , type_ "text"
             ]
             []
-        , buttonMy Nothing "Submit your comment" CommentInputOk
-        , buttonMy Nothing "Cancel this comment" CommentInputCancel
+        , buttonMy Nothing "Submit your comment" CommentSendHand
+        , buttonMy Nothing "Cancel this comment" CommentCancelHand
         ]
 
 

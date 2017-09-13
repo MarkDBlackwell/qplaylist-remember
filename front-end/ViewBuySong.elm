@@ -26,7 +26,7 @@ import Html.Attributes
         , title
         )
 import Html.Events exposing (onClick)
-import MessageDetails exposing (Msg(BuySongAnchorProcess))
+import MessageDetails exposing (Msg(SongBuyAnchorProcessHand))
 import ModelDetails exposing (SongRemembered)
 import ModelDetailsUpdate
     exposing
@@ -75,7 +75,7 @@ buySongAnchor song =
     in
     a
         [ href uriText
-        , onClick BuySongAnchorProcess
+        , onClick SongBuyAnchorProcessHand
         , target "_blank"
         , title hoverText
         ]
