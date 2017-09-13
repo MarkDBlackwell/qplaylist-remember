@@ -250,20 +250,6 @@ update msg model =
         LikeResponse (Ok appendLikeJson) ->
             likeOrCommentResponse model appendLikeJson
 
-        ResponseLog httpResponseText ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    if String.isEmpty httpResponseText then
-                        log "Response" "Ok"
-                    else
-                        log "Response: Ok" httpResponseText
-            in
-            ( model
-            , focusInputPossibly model
-            )
-
         PageMorph ->
             let
                 pageIsExpandedNew : PageIsExpanded
@@ -290,6 +276,20 @@ update msg model =
                   }
                 , focusInputPossibly model
                 )
+
+        ResponseLog httpResponseText ->
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    if String.isEmpty httpResponseText then
+                        log "Response" "Ok"
+                    else
+                        log "Response: Ok" httpResponseText
+            in
+            ( model
+            , focusInputPossibly model
+            )
 
         SongForget songRememberedIndex ->
             let
