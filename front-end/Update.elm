@@ -147,15 +147,17 @@ update msg model =
                                 )
 
         CommentCancelHand ->
-            ( { model
-                | actionsDelay = actionsDelayInit
-                , alertMessageText = alertMessageTextInit
-                , likeOrCommentText = likeOrCommentTextInit
-                , processingComment = processingCommentInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-              }
-            , Cmd.none
-            )
+            case stateVector of
+                ( _, _ ) ->
+                    ( { model
+                        | actionsDelay = actionsDelayInit
+                        , alertMessageText = alertMessageTextInit
+                        , likeOrCommentText = likeOrCommentTextInit
+                        , processingComment = processingCommentInit
+                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                      }
+                    , Cmd.none
+                    )
 
         CommentResponse (Err httpError) ->
             let
@@ -177,29 +179,31 @@ update msg model =
             likeOrCommentResponse model appendCommentJson
 
         CommentSendHand ->
-            let
-                commentRequest : Cmd Msg
-                commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
-            in
-            if String.isEmpty model.likeOrCommentText then
-                ( { model
-                    | actionsDelay = actionsDelayInit
-                    , alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                ( { model
-                    | actionsDelay = True
-                    , awaitingServerResponse = True
-                  }
-                , Cmd.batch
-                    [ commentRequest
-                    , focusInputPossibly model
-                    ]
-                )
+            case stateVector of
+                ( _, _ ) ->
+                    let
+                        commentRequest : Cmd Msg
+                        commentRequest =
+                            send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
+                    in
+                    if String.isEmpty model.likeOrCommentText then
+                        ( { model
+                            | actionsDelay = actionsDelayInit
+                            , alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
+                          }
+                        , focusInputPossibly model
+                        )
+                    else
+                        ( { model
+                            | actionsDelay = True
+                            , awaitingServerResponse = True
+                          }
+                        , Cmd.batch
+                            [ commentRequest
+                            , focusInputPossibly model
+                            ]
+                        )
 
         FocusResult _ ->
             ( model
@@ -229,47 +233,49 @@ update msg model =
             )
 
         LikeButtonProcessHand songRememberedIndex ->
-            let
-                likeText : LikeOrCommentText
-                likeText =
-                    "Loved it!"
-            in
-            if likingOrCommenting model then
-                if model.processingComment then
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                      }
-                    , focusInputPossibly model
-                    )
-                else
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                      }
-                    , msg2Cmd (succeed (LikeButtonProcessHand songRememberedIndex))
-                    )
-            else
-                case model.songRememberedCommentingIndex of
-                    Just _ ->
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
-                        , focusInputPossibly model
-                        )
+            case stateVector of
+                ( _, _ ) ->
+                    let
+                        likeText : LikeOrCommentText
+                        likeText =
+                            "Loved it!"
+                    in
+                    if likingOrCommenting model then
+                        if model.processingComment then
+                            ( { model
+                                | alertMessageText = alertMessageTextInit
+                                , awaitingServerResponse = awaitingServerResponseInit
+                              }
+                            , focusInputPossibly model
+                            )
+                        else
+                            ( { model
+                                | alertMessageText = alertMessageTextInit
+                                , awaitingServerResponse = awaitingServerResponseInit
+                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                              }
+                            , msg2Cmd (succeed (LikeButtonProcessHand songRememberedIndex))
+                            )
+                    else
+                        case model.songRememberedCommentingIndex of
+                            Just _ ->
+                                ( { model
+                                    | alertMessageText = alertMessageTextInit
+                                    , awaitingServerResponse = awaitingServerResponseInit
+                                  }
+                                , focusInputPossibly model
+                                )
 
-                    Nothing ->
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = True
-                            , likeOrCommentText = likeText
-                            , processingLike = True
-                            , songRememberedCommentingIndex = Just songRememberedIndex
-                          }
-                        , msg2Cmd (succeed LikeRequest)
-                        )
+                            Nothing ->
+                                ( { model
+                                    | alertMessageText = alertMessageTextInit
+                                    , awaitingServerResponse = True
+                                    , likeOrCommentText = likeText
+                                    , processingLike = True
+                                    , songRememberedCommentingIndex = Just songRememberedIndex
+                                  }
+                                , msg2Cmd (succeed LikeRequest)
+                                )
 
         LikeRequest ->
             ( model
@@ -298,115 +304,52 @@ update msg model =
             likeOrCommentResponse model appendLikeJson
 
         PageMorphHand ->
-            let
-                pageIsExpandedNew : PageIsExpanded
-                pageIsExpandedNew =
-                    if
-                        List.isEmpty model.songsLatestFew
-                            && List.isEmpty model.songsRemembered
-                    then
-                        model.pageIsExpanded
+            case stateVector of
+                ( _, _ ) ->
+                    let
+                        pageIsExpandedNew : PageIsExpanded
+                        pageIsExpandedNew =
+                            if
+                                List.isEmpty model.songsLatestFew
+                                    && List.isEmpty model.songsRemembered
+                            then
+                                model.pageIsExpanded
+                            else
+                                not model.pageIsExpanded
+                    in
+                    if likingOrCommenting model then
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
+                          }
+                        , focusInputPossibly model
+                        )
                     else
-                        not model.pageIsExpanded
-            in
-            if likingOrCommenting model then
-                ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , pageIsExpanded = pageIsExpandedNew
-                  }
-                , focusInputPossibly model
-                )
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                            , pageIsExpanded = pageIsExpandedNew
+                          }
+                        , focusInputPossibly model
+                        )
 
         SongBuyAnchorProcessHand ->
-            ( model
-            , focusInputPossibly model
-            )
-
-        SongForgetHand songRememberedIndex ->
-            let
-                songsRememberedWithoutOne : SongsRemembered
-                songsRememberedWithoutOne =
-                    List.take songRememberedIndex model.songsRemembered
-                        ++ List.drop (songRememberedIndex + 1) model.songsRemembered
-            in
-            if likingOrCommenting model then
-                --if String.isEmpty model.alertMessageText then
-                if model.processingComment then
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                      }
-                    , focusInputPossibly model
-                    )
-                else if model.songRememberedCommentingIndex == Just songRememberedIndex then
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                      }
-                    , Cmd.none
-                    )
-                else
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                      }
-                    , msg2Cmd (succeed (SongForgetHand songRememberedIndex))
-                    )
-            else
-                ( { model
-                    | songsRemembered = songsRememberedWithoutOne
-                  }
-                , focusSet "refresh"
-                )
-
-        SongRememberHand songLatestFewIndex ->
-            let
-                songClean : SongRemembered -> SongRemembered
-                songClean song =
-                    { song | likedOrCommented = False }
-
-                songLatestFewSelected : Maybe SongLatestFew
-                songLatestFewSelected =
-                    List.head (List.drop songLatestFewIndex model.songsLatestFew)
-            in
-            case songLatestFewSelected of
-                Nothing ->
+            case stateVector of
+                ( _, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
 
-                Just songLatestFewSelected ->
+        SongForgetHand songRememberedIndex ->
+            case stateVector of
+                ( _, _ ) ->
                     let
-                        songDiffers : SongRemembered -> Bool
-                        songDiffers songRemembered =
-                            songLatestFewSelected /= songRemembered2LatestFew songRemembered
-
-                        songsDifferent : SongsRemembered
-                        songsDifferent =
-                            List.filter songDiffers model.songsRemembered
-
-                        songsRememberedNew : SongsRemembered
-                        songsRememberedNew =
-                            if
-                                List.member
-                                    songLatestFewSelected
-                                    (List.map songRemembered2LatestFew model.songsRemembered)
-                            then
-                                model.songsRemembered
-                            else
-                                songsDifferent
-                                    ++ [ songLatestFew2Remembered songLatestFewSelected ]
+                        songsRememberedWithoutOne : SongsRemembered
+                        songsRememberedWithoutOne =
+                            List.take songRememberedIndex model.songsRemembered
+                                ++ List.drop (songRememberedIndex + 1) model.songsRemembered
                     in
                     if likingOrCommenting model then
+                        --if String.isEmpty model.alertMessageText then
                         if model.processingComment then
                             ( { model
                                 | alertMessageText = alertMessageTextInit
@@ -414,7 +357,7 @@ update msg model =
                               }
                             , focusInputPossibly model
                             )
-                        else
+                        else if model.songRememberedCommentingIndex == Just songRememberedIndex then
                             ( { model
                                 | alertMessageText = alertMessageTextInit
                                 , awaitingServerResponse = awaitingServerResponseInit
@@ -422,51 +365,124 @@ update msg model =
                               }
                             , Cmd.none
                             )
+                        else
+                            ( { model
+                                | alertMessageText = alertMessageTextInit
+                                , awaitingServerResponse = awaitingServerResponseInit
+                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                              }
+                            , msg2Cmd (succeed (SongForgetHand songRememberedIndex))
+                            )
                     else
                         ( { model
-                            | songsRemembered = songsRememberedNew
+                            | songsRemembered = songsRememberedWithoutOne
+                          }
+                        , focusSet "refresh"
+                        )
+
+        SongRememberHand songLatestFewIndex ->
+            case stateVector of
+                ( _, _ ) ->
+                    let
+                        songClean : SongRemembered -> SongRemembered
+                        songClean song =
+                            { song | likedOrCommented = False }
+
+                        songLatestFewSelected : Maybe SongLatestFew
+                        songLatestFewSelected =
+                            List.head (List.drop songLatestFewIndex model.songsLatestFew)
+                    in
+                    case songLatestFewSelected of
+                        Nothing ->
+                            ( model
+                            , focusInputPossibly model
+                            )
+
+                        Just songLatestFewSelected ->
+                            let
+                                songDiffers : SongRemembered -> Bool
+                                songDiffers songRemembered =
+                                    songLatestFewSelected /= songRemembered2LatestFew songRemembered
+
+                                songsDifferent : SongsRemembered
+                                songsDifferent =
+                                    List.filter songDiffers model.songsRemembered
+
+                                songsRememberedNew : SongsRemembered
+                                songsRememberedNew =
+                                    if
+                                        List.member
+                                            songLatestFewSelected
+                                            (List.map songRemembered2LatestFew model.songsRemembered)
+                                    then
+                                        model.songsRemembered
+                                    else
+                                        songsDifferent
+                                            ++ [ songLatestFew2Remembered songLatestFewSelected ]
+                            in
+                            if likingOrCommenting model then
+                                if model.processingComment then
+                                    ( { model
+                                        | alertMessageText = alertMessageTextInit
+                                        , awaitingServerResponse = awaitingServerResponseInit
+                                      }
+                                    , focusInputPossibly model
+                                    )
+                                else
+                                    ( { model
+                                        | alertMessageText = alertMessageTextInit
+                                        , awaitingServerResponse = awaitingServerResponseInit
+                                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                                      }
+                                    , Cmd.none
+                                    )
+                            else
+                                ( { model
+                                    | songsRemembered = songsRememberedNew
+                                  }
+                                , focusInputPossibly model
+                                )
+
+        SongsLatestFewRefreshHand ->
+            case stateVector of
+                ( _, _ ) ->
+                    let
+                        basename : UriText
+                        basename =
+                            "LatestFive.json"
+
+                        request : Request HttpRequestText
+                        request =
+                            getString (log "LatestFew" requestUriText)
+
+                        requestUriText : UriText
+                        requestUriText =
+                            relative
+                                [ ".."
+                                , subUri
+                                , basename
+                                ]
+                                []
+
+                        songsLatestFewRequest : Cmd Msg
+                        songsLatestFewRequest =
+                            send SongsLatestFewResponse request
+
+                        subUri : UriText
+                        subUri =
+                            "wtmdapp"
+                    in
+                    if likingOrCommenting model then
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
                           }
                         , focusInputPossibly model
                         )
-
-        SongsLatestFewRefreshHand ->
-            let
-                basename : UriText
-                basename =
-                    "LatestFive.json"
-
-                request : Request HttpRequestText
-                request =
-                    getString (log "LatestFew" requestUriText)
-
-                requestUriText : UriText
-                requestUriText =
-                    relative
-                        [ ".."
-                        , subUri
-                        , basename
-                        ]
-                        []
-
-                songsLatestFewRequest : Cmd Msg
-                songsLatestFewRequest =
-                    send SongsLatestFewResponse request
-
-                subUri : UriText
-                subUri =
-                    "wtmdapp"
-            in
-            if likingOrCommenting model then
-                ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                ( model
-                , Cmd.batch [ focusInputPossibly model, songsLatestFewRequest ]
-                )
+                    else
+                        ( model
+                        , Cmd.batch [ focusInputPossibly model, songsLatestFewRequest ]
+                        )
 
         SongsLatestFewResponse (Err httpError) ->
             let
