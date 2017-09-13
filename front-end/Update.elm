@@ -51,8 +51,7 @@ import ModelDetailsUpdate
         )
 import ModelInitialize
     exposing
-        ( actionsDelayInit
-        , alertMessageTextInit
+        ( alertMessageTextInit
         , awaitingServerResponseInit
         , likeOrCommentTextInit
         , processingCommentInit
@@ -104,7 +103,12 @@ update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
             case stateVector of
-                ( _, _ ) ->
+                ( _, Closed ) ->
+                    ( model
+                    , Cmd.none
+                    )
+
+                _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
@@ -115,44 +119,50 @@ update msg model =
 
         CommentAreaOpenHand songRememberedIndex ->
             case stateVector of
-                ( _, _ ) ->
-                    if model.actionsDelay then
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
-                        , focusInputPossibly model
-                        )
-                    else if likingOrCommenting model then
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
-                        , focusInputPossibly model
-                        )
-                    else
-                        case model.songRememberedCommentingIndex of
-                            Just _ ->
-                                ( model
-                                  --, focusSet "refresh"
-                                , focusInputPossibly model
-                                )
+                ( _, Open ) ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                      }
+                    , focusInputPossibly model
+                    )
 
-                            Nothing ->
-                                ( { model
-                                    | processingComment = True
-                                    , songRememberedCommentingIndex = Just songRememberedIndex
-                                  }
-                                  --'focusInputPossibly' doesn't work, here:
-                                , focusSet "input"
-                                )
+                _ ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                      }
+                    , msg2Cmd (succeed (CommentAreaOpenInternal songRememberedIndex))
+                    )
+
+        CommentAreaOpenInternal songRememberedIndex ->
+            if likingOrCommenting model then
+                ( { model
+                    | alertMessageText = alertMessageTextInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
+                , focusInputPossibly model
+                )
+            else
+                case model.songRememberedCommentingIndex of
+                    Just _ ->
+                        ( model
+                          --, focusSet "refresh"
+                        , focusInputPossibly model
+                        )
+
+                    Nothing ->
+                        ( { model
+                            | processingComment = True
+                            , songRememberedCommentingIndex = Just songRememberedIndex
+                          }
+                          --'focusInputPossibly' doesn't work, here:
+                        , focusSet "input"
+                        )
 
         CommentCancelHand ->
             case stateVector of
                 ( _, _ ) ->
                     ( { model
-                        | actionsDelay = actionsDelayInit
-                        , alertMessageText = alertMessageTextInit
+                        | alertMessageText = alertMessageTextInit
                         , likeOrCommentText = likeOrCommentTextInit
                         , processingComment = processingCommentInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -189,16 +199,14 @@ update msg model =
                     in
                     if String.isEmpty model.likeOrCommentText then
                         ( { model
-                            | actionsDelay = actionsDelayInit
-                            , alertMessageText = alertMessageTextInit
+                            | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = awaitingServerResponseInit
                           }
                         , focusInputPossibly model
                         )
                     else
                         ( { model
-                            | actionsDelay = True
-                            , awaitingServerResponse = True
+                            | awaitingServerResponse = True
                           }
                         , Cmd.batch
                             [ commentRequest

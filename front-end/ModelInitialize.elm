@@ -14,8 +14,7 @@
 
 module ModelInitialize
     exposing
-        ( actionsDelayInit
-        , alertMessageTextInit
+        ( alertMessageTextInit
         , awaitingServerResponseInit
         , init
         , likeOrCommentTextInit
@@ -29,8 +28,7 @@ module ModelInitialize
 
 import ModelDetails
     exposing
-        ( ActionsDelay
-        , AlertMessageText
+        ( AlertMessageText
         , AwaitingServerResponse
         , ClosedOpen
             ( Closed
@@ -51,11 +49,6 @@ import ModelDetails
 -- MODEL
 
 
-actionsDelayInit : ActionsDelay
-actionsDelayInit =
-    False
-
-
 alertMessageTextInit : AlertMessageText
 alertMessageTextInit =
     ""
@@ -74,7 +67,6 @@ commentAreaClosedOpenInit =
 init : ( Model, Cmd msg )
 init =
     ( Model
-        actionsDelayInit
         alertMessageTextInit
         awaitingServerResponseInit
         commentAreaClosedOpenInit

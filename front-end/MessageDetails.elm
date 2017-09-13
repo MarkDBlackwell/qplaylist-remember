@@ -31,6 +31,7 @@ import ModelDetailsUpdate
 type Msg
     = CommentAreaInputTextChangeCaptureHand LikeOrCommentText
     | CommentAreaOpenHand SongRememberedIndex
+    | CommentAreaOpenInternal SongRememberedIndex
     | CommentCancelHand
     | CommentResponse (Result Error HttpResponseText)
     | CommentSendHand
