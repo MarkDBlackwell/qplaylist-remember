@@ -45,7 +45,7 @@ import MessageDetails
             , PageMorphHand
             , SongForgetHand
             , SongRememberHand
-            , SongsLatestFewRefresh
+            , SongsLatestFewRefreshHand
             )
         )
 import ModelDetailsUpdate exposing (SongRememberedIndex)
@@ -201,7 +201,7 @@ buttonPlayed =
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonMy buttonId hoverText SongsLatestFewRefresh
+    buttonMy buttonId hoverText SongsLatestFewRefreshHand
 
 
 buttonRemembered : Html Msg

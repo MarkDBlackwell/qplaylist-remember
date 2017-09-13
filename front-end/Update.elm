@@ -405,7 +405,7 @@ update msg model =
                         , focusInputPossibly model
                         )
 
-        SongsLatestFewRefresh ->
+        SongsLatestFewRefreshHand ->
             let
                 basename : UriText
                 basename =

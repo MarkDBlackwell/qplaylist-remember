@@ -44,5 +44,5 @@ type Msg
     | HttpResponseTextLog HttpResponseText
     | SongForgetHand SongRememberedIndex
     | SongRememberHand SongLatestFewIndex
-    | SongsLatestFewRefresh
+    | SongsLatestFewRefreshHand
     | SongsLatestFewResponse (Result Error HttpResponseText)
