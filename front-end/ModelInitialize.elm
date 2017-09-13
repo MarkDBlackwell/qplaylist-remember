@@ -22,6 +22,7 @@ module ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
+        , songRememberedLikedInit
         , songsLatestFewInit
         , songsRememberedInit
         )
@@ -41,6 +42,7 @@ import ModelDetails
         , ProcessingComment
         , ProcessingLike
         , SongRememberedCommentingIndex
+        , SongRememberedLiked
         , SongsLatestFew
         , SongsRemembered
         )
@@ -75,6 +77,7 @@ init =
         processingCommentInit
         processingLikeInit
         songRememberedCommentingIndexInit
+        songRememberedLikedInit
         songsLatestFewInit
         songsRememberedInit
     , Cmd.none
@@ -103,6 +106,11 @@ processingLikeInit =
 
 songRememberedCommentingIndexInit : SongRememberedCommentingIndex
 songRememberedCommentingIndexInit =
+    Nothing
+
+
+songRememberedLikedInit : SongRememberedLiked
+songRememberedLikedInit =
     Nothing
 
 

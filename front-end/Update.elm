@@ -37,6 +37,7 @@ import ModelDetails
         , PageIsExpanded
         , SongLatestFew
         , SongRemembered
+        , SongRememberedLiked
         , SongsLatestFew
         , SongsRemembered
         , songLatestFew2Remembered
@@ -47,6 +48,7 @@ import ModelDetailsUpdate
         ( AlertMessageClosedOpen
         , HttpErrorMessageText
         , HttpRequestText
+        , LikeText
         , UriText
         )
 import ModelInitialize
@@ -57,6 +59,7 @@ import ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
+        , songRememberedLikedInit
         )
 import Task
     exposing
@@ -67,6 +70,7 @@ import UpdateDetails
     exposing
         ( focusInputPossibly
         , likeOrCommentResponse
+        , likeResponse
         , likingOrCommenting
         )
 import UpdateUtilities
@@ -139,8 +143,7 @@ update msg model =
         CommentAreaOpenInternal songRememberedIndex ->
             if likingOrCommenting model then
                 ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
+                    | awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
                 )
@@ -198,7 +201,11 @@ update msg model =
                     let
                         commentRequest : Cmd Msg
                         commentRequest =
-                            send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
+                            send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model commentText)))
+
+                        commentText : CommentText
+                        commentText =
+                            model.commentText
                     in
                     if String.isEmpty model.commentText then
                         ( { model
@@ -245,54 +252,39 @@ update msg model =
             )
 
         LikeButtonProcessHand songRememberedIndex ->
+            let
+                likeText : LikeText
+                likeText =
+                    "Loved it!"
+
+                songRememberedLikedNew : SongRememberedLiked
+                songRememberedLikedNew =
+                    case List.head (List.drop songRememberedIndex model.songsRemembered) of
+                        Nothing ->
+                            Nothing
+
+                        Just songSelected ->
+                            Just (songRemembered2LatestFew songSelected)
+            in
             case stateVector of
                 ( _, _ ) ->
-                    let
-                        likeText : CommentText
-                        likeText =
-                            "Loved it!"
-                    in
-                    if likingOrCommenting model then
-                        if model.processingComment then
-                            ( { model
-                                | alertMessageText = alertMessageTextInit
-                                , awaitingServerResponse = awaitingServerResponseInit
-                              }
-                            , focusInputPossibly model
-                            )
-                        else
-                            ( { model
-                                | alertMessageText = alertMessageTextInit
-                                , awaitingServerResponse = awaitingServerResponseInit
-                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-                              }
-                            , msg2Cmd (succeed (LikeButtonProcessHand songRememberedIndex))
-                            )
+                    if model.awaitingServerResponse then
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                          }
+                        , focusInputPossibly model
+                        )
                     else
-                        case model.songRememberedCommentingIndex of
-                            Just _ ->
-                                ( { model
-                                    | alertMessageText = alertMessageTextInit
-                                    , awaitingServerResponse = awaitingServerResponseInit
-                                  }
-                                , focusInputPossibly model
-                                )
-
-                            Nothing ->
-                                ( { model
-                                    | alertMessageText = alertMessageTextInit
-                                    , awaitingServerResponse = True
-                                    , commentText = likeText
-                                    , processingLike = True
-                                    , songRememberedCommentingIndex = Just songRememberedIndex
-                                  }
-                                , msg2Cmd (succeed LikeRequest)
-                                )
-
-        LikeRequest ->
-            ( model
-            , send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
-            )
+                        ( { model
+                            | awaitingServerResponse = True
+                            , processingLike = True
+                            , songRememberedLiked = songRememberedLikedNew
+                          }
+                        , Cmd.batch
+                            [ send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model likeText)))
+                            , focusInputPossibly model
+                            ]
+                        )
 
         LikeResponse (Err httpError) ->
             let
@@ -304,16 +296,14 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
-                , commentText = commentTextInit
-                , processingComment = processingCommentInit
                 , processingLike = processingLikeInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                , songRememberedLiked = songRememberedLikedInit
               }
             , Cmd.none
             )
 
         LikeResponse (Ok appendLikeJson) ->
-            likeOrCommentResponse model appendLikeJson
+            likeResponse model appendLikeJson
 
         PageMorphHand ->
             case stateVector of

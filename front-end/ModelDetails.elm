@@ -55,6 +55,7 @@ type alias Model =
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike
     , songRememberedCommentingIndex : SongRememberedCommentingIndex
+    , songRememberedLiked : SongRememberedLiked
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
@@ -72,13 +73,17 @@ type alias ProcessingLike =
     Bool
 
 
-type alias SongLatestFew =
+type alias SongBasic =
     --Keep order (for JSON decoding):
     { artist : Artist
     , time : Time
     , timeStamp : TimeStamp
     , title : Title
     }
+
+
+type alias SongLatestFew =
+    SongBasic
 
 
 type alias SongRemembered =
@@ -92,6 +97,10 @@ type alias SongRemembered =
 
 type alias SongRememberedCommentingIndex =
     Maybe Int
+
+
+type alias SongRememberedLiked =
+    Maybe SongBasic
 
 
 type alias SongsLatestFew =

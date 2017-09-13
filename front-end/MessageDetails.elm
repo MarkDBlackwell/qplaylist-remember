@@ -39,7 +39,6 @@ type Msg
     | FocusSet Id
     | HttpResponseTextLog HttpResponseText
     | LikeButtonProcessHand SongRememberedIndex
-    | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand
     | SongBuyAnchorProcessHand

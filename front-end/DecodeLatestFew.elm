@@ -26,7 +26,7 @@ import Json.Decode
         )
 import ModelDetails
     exposing
-        ( SongLatestFew
+        ( SongBasic
         , SongsLatestFew
         )
 import ModelDetailsUpdate
@@ -47,9 +47,9 @@ decodeSongsLatestFew jsonRawText =
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        decodeSong : Decoder SongLatestFew
+        decodeSong : Decoder SongBasic
         decodeSong =
-            map4 SongLatestFew
+            map4 SongBasic
                 (field "artist" string)
                 (field "time" string)
                 (field "timeStamp" string)

@@ -172,8 +172,8 @@ groupAttributes group =
     ]
 
 
-likeOrCommentRequestUriText : Model -> UriText
-likeOrCommentRequestUriText model =
+likeOrCommentRequestUriText : Model -> String -> UriText
+likeOrCommentRequestUriText model likeOrCommentText =
     let
         artistTimeTitle : UriText
         artistTimeTitle =
@@ -228,7 +228,7 @@ likeOrCommentRequestUriText model =
         [ basename ]
         [ ( "timestamp", timeStamp )
         , ( "song", artistTimeTitle )
-        , ( "comment", model.commentText )
+        , ( "comment", likeOrCommentText )
         ]
 
 

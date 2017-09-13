@@ -16,6 +16,7 @@ module UpdateDetails
     exposing
         ( focusInputPossibly
         , likeOrCommentResponse
+        , likeResponse
         , likingOrCommenting
         )
 
@@ -30,6 +31,7 @@ import ModelDetails
         , Model
         , SongRemembered
         , SongsRemembered
+        , songRemembered2LatestFew
         )
 import ModelDetailsUpdate
     exposing
@@ -44,6 +46,7 @@ import ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
+        , songRememberedLikedInit
         )
 import Task exposing (succeed)
 import UpdateUtilities
@@ -90,6 +93,38 @@ likeOrCommentResponse model appendLikeOrCommentJson =
         , songsRemembered = songsRememberedNew
       }
     , msg2Cmd (succeed (HttpResponseTextLog appendLikeOrCommentJson))
+    )
+
+
+likeResponse : Model -> String -> ( Model, Cmd Msg )
+likeResponse model appendLikeJson =
+    let
+        likedShow : SongRemembered -> SongRemembered
+        likedShow song =
+            case model.songRememberedLiked of
+                Nothing ->
+                    song
+
+                Just songRememberedLiked ->
+                    if songRemembered2LatestFew song /= songRememberedLiked then
+                        song
+                    else
+                        { song
+                            | likedOrCommented = True
+                        }
+
+        songsRememberedNew : SongsRemembered
+        songsRememberedNew =
+            List.map likedShow model.songsRemembered
+    in
+    ( { model
+        | alertMessageText = alertMessageTextInit
+        , awaitingServerResponse = awaitingServerResponseInit
+        , processingLike = processingLikeInit
+        , songRememberedLiked = songRememberedLikedInit
+        , songsRemembered = songsRememberedNew
+      }
+    , msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))
     )
 
 
