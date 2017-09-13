@@ -81,46 +81,14 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        SongBuyAnchorProcessHand ->
-            ( model
-            , focusInputPossibly model
-            )
-
-        CommentCancelHand ->
+        CommentAreaInputTextChangeCaptureHand text ->
             ( { model
-                | actionsDelay = actionsDelayInit
-                , alertMessageText = alertMessageTextInit
-                , likeOrCommentText = likeOrCommentTextInit
-                , processingComment = processingCommentInit
-                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , likeOrCommentText = text
               }
             , Cmd.none
             )
-
-        CommentSendHand ->
-            let
-                commentRequest : Cmd Msg
-                commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
-            in
-            if String.isEmpty model.likeOrCommentText then
-                ( { model
-                    | actionsDelay = actionsDelayInit
-                    , alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                ( { model
-                    | actionsDelay = True
-                    , awaitingServerResponse = True
-                  }
-                , Cmd.batch
-                    [ commentRequest
-                    , focusInputPossibly model
-                    ]
-                )
 
         CommentAreaOpenHand songRememberedIndex ->
             if model.actionsDelay then
@@ -154,11 +122,13 @@ update msg model =
                         , focusSet "input"
                         )
 
-        CommentAreaInputTextChangeCaptureHand text ->
+        CommentCancelHand ->
             ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , likeOrCommentText = text
+                | actionsDelay = actionsDelayInit
+                , alertMessageText = alertMessageTextInit
+                , likeOrCommentText = likeOrCommentTextInit
+                , processingComment = processingCommentInit
+                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
               }
             , Cmd.none
             )
@@ -182,6 +152,31 @@ update msg model =
         CommentResponse (Ok appendCommentJson) ->
             likeOrCommentResponse model appendCommentJson
 
+        CommentSendHand ->
+            let
+                commentRequest : Cmd Msg
+                commentRequest =
+                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model)))
+            in
+            if String.isEmpty model.likeOrCommentText then
+                ( { model
+                    | actionsDelay = actionsDelayInit
+                    , alertMessageText = alertMessageTextInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
+                , focusInputPossibly model
+                )
+            else
+                ( { model
+                    | actionsDelay = True
+                    , awaitingServerResponse = True
+                  }
+                , Cmd.batch
+                    [ commentRequest
+                    , focusInputPossibly model
+                    ]
+                )
+
         FocusResult _ ->
             ( model
             , Cmd.none
@@ -193,6 +188,20 @@ update msg model =
             --https://stackoverflow.com/a/39419640/1136063
             ( model
             , attempt FocusResult (focus id)
+            )
+
+        HttpResponseTextLog httpResponseText ->
+            let
+                --Keep for console logging:
+                a : String
+                a =
+                    if String.isEmpty httpResponseText then
+                        log "Response" "Ok"
+                    else
+                        log "Response: Ok" httpResponseText
+            in
+            ( model
+            , focusInputPossibly model
             )
 
         LikeButtonProcessHand songRememberedIndex ->
@@ -291,16 +300,7 @@ update msg model =
                 , focusInputPossibly model
                 )
 
-        HttpResponseTextLog httpResponseText ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    if String.isEmpty httpResponseText then
-                        log "Response" "Ok"
-                    else
-                        log "Response: Ok" httpResponseText
-            in
+        SongBuyAnchorProcessHand ->
             ( model
             , focusInputPossibly model
             )

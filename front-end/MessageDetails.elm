@@ -29,19 +29,19 @@ import ModelDetailsUpdate
 
 
 type Msg
-    = SongBuyAnchorProcessHand
-    | CommentCancelHand
-    | CommentSendHand
+    = CommentAreaInputTextChangeCaptureHand LikeOrCommentText
     | CommentAreaOpenHand SongRememberedIndex
-    | CommentAreaInputTextChangeCaptureHand LikeOrCommentText
+    | CommentCancelHand
     | CommentResponse (Result Error HttpResponseText)
+    | CommentSendHand
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
+    | HttpResponseTextLog HttpResponseText
     | LikeButtonProcessHand SongRememberedIndex
     | LikeRequest
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand
-    | HttpResponseTextLog HttpResponseText
+    | SongBuyAnchorProcessHand
     | SongForgetHand SongRememberedIndex
     | SongRememberHand SongLatestFewIndex
     | SongsLatestFewRefreshHand
