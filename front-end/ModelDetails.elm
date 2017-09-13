@@ -33,6 +33,15 @@ type alias AwaitingServerResponse =
     Bool
 
 
+type ClosedOpen
+    = Closed
+    | Open
+
+
+type alias CommentAreaClosedOpen =
+    ClosedOpen
+
+
 type alias LikeOrCommentText =
     String
 
@@ -45,6 +54,7 @@ type alias Model =
     { actionsDelay : ActionsDelay
     , alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
+    , commentAreaClosedOpen : CommentAreaClosedOpen
     , likeOrCommentText : LikeOrCommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment

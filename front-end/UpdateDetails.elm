@@ -22,18 +22,18 @@ module UpdateDetails
 import MessageDetails exposing (Msg(HttpResponseTextLog))
 import ModelDetails
     exposing
-        ( Model
+        ( ClosedOpen
+            ( Closed
+            , Open
+            )
+        , CommentAreaClosedOpen
+        , Model
         , SongRemembered
         , SongsRemembered
         )
 import ModelDetailsUpdate
     exposing
         ( AlertMessageClosedOpen
-        , ClosedOpen
-            ( Closed
-            , Open
-            )
-        , CommentAreaClosedOpen
         , SongRememberedIndex
         )
 import ModelInitialize
@@ -56,14 +56,17 @@ import UpdateUtilities
 -- UPDATE
 
 
-alertMessageClosedOpen : AlertMessageClosedOpen
-alertMessageClosedOpen =
-    Closed
+alertMessageClosedOpen : Model -> AlertMessageClosedOpen
+alertMessageClosedOpen model =
+    if model.alertMessageText == alertMessageTextInit then
+        Closed
+    else
+        Open
 
 
-commentAreaClosedOpen : CommentAreaClosedOpen
-commentAreaClosedOpen =
-    Closed
+commentAreaClosedOpen : Model -> CommentAreaClosedOpen
+commentAreaClosedOpen model =
+    model.commentAreaClosedOpen
 
 
 focusInputPossibly : Model -> Cmd Msg

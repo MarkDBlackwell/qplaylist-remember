@@ -15,11 +15,6 @@
 module ModelDetailsUpdate
     exposing
         ( AlertMessageClosedOpen
-        , ClosedOpen
-            ( Closed
-            , Open
-            )
-        , CommentAreaClosedOpen
         , DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestText
@@ -33,22 +28,20 @@ module ModelDetailsUpdate
         , UriText
         )
 
-import ModelDetails exposing (SongsLatestFew)
+import ModelDetails
+    exposing
+        ( ClosedOpen
+            ( Closed
+            , Open
+            )
+        , SongsLatestFew
+        )
 
 
 -- UPDATE
 
 
 type alias AlertMessageClosedOpen =
-    ClosedOpen
-
-
-type ClosedOpen
-    = Closed
-    | Open
-
-
-type alias CommentAreaClosedOpen =
     ClosedOpen
 
 
