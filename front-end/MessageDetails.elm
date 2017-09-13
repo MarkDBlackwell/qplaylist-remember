@@ -16,7 +16,7 @@ module MessageDetails exposing (Msg(..))
 
 import Dom exposing (Id)
 import Http exposing (Error)
-import ModelDetails exposing (LikeOrCommentText)
+import ModelDetails exposing (CommentText)
 import ModelDetailsUpdate
     exposing
         ( HttpResponseText
@@ -29,7 +29,7 @@ import ModelDetailsUpdate
 
 
 type Msg
-    = CommentAreaInputTextChangeCaptureHand LikeOrCommentText
+    = CommentAreaInputTextChangeCaptureHand CommentText
     | CommentAreaOpenHand SongRememberedIndex
     | CommentAreaOpenInternal SongRememberedIndex
     | CommentCancelHand

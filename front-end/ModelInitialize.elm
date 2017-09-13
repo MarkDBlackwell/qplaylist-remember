@@ -35,7 +35,7 @@ import ModelDetails
             , Open
             )
         , CommentAreaClosedOpen
-        , LikeOrCommentText
+        , CommentText
         , Model
         , PageIsExpanded
         , ProcessingComment
@@ -81,7 +81,7 @@ init =
     )
 
 
-commentTextInit : LikeOrCommentText
+commentTextInit : CommentText
 commentTextInit =
     ""
 

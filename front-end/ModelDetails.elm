@@ -38,7 +38,7 @@ type alias CommentAreaClosedOpen =
     ClosedOpen
 
 
-type alias LikeOrCommentText =
+type alias CommentText =
     String
 
 
@@ -50,7 +50,7 @@ type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
     , commentAreaClosedOpen : CommentAreaClosedOpen
-    , commentText : LikeOrCommentText
+    , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike

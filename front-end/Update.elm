@@ -32,7 +32,7 @@ import ModelDetails
             , Open
             )
         , CommentAreaClosedOpen
-        , LikeOrCommentText
+        , CommentText
         , Model
         , PageIsExpanded
         , SongLatestFew
@@ -248,7 +248,7 @@ update msg model =
             case stateVector of
                 ( _, _ ) ->
                     let
-                        likeText : LikeOrCommentText
+                        likeText : CommentText
                         likeText =
                             "Loved it!"
                     in
