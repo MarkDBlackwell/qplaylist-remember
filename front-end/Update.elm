@@ -45,7 +45,8 @@ import ModelDetailsUpdate
         )
 import ModelInitialize
     exposing
-        ( alertMessageTextInit
+        ( actionsDelayInit
+        , alertMessageTextInit
         , awaitingServerResponseInit
         , likeOrCommentTextInit
         , processingCommentInit
@@ -87,7 +88,8 @@ update msg model =
 
         CommentInputCancel ->
             ( { model
-                | alertMessageText = alertMessageTextInit
+                | actionsDelay = actionsDelayInit
+                , alertMessageText = alertMessageTextInit
                 , likeOrCommentText = likeOrCommentTextInit
                 , processingComment = processingCommentInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -103,20 +105,32 @@ update msg model =
             in
             if String.isEmpty model.likeOrCommentText then
                 ( { model
-                    | alertMessageText = alertMessageTextInit
+                    | actionsDelay = actionsDelayInit
+                    , alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
                 )
             else
                 ( { model
-                    | awaitingServerResponse = True
+                    | actionsDelay = True
+                    , awaitingServerResponse = True
                   }
-                , Cmd.batch [ focusInputPossibly model, commentRequest ]
+                , Cmd.batch
+                    [ commentRequest
+                    , focusInputPossibly model
+                    ]
                 )
 
         CommentInputSetUp songRememberedIndex ->
-            if likingOrCommenting model then
+            if model.actionsDelay then
+                ( { model
+                    | alertMessageText = alertMessageTextInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                  }
+                , focusInputPossibly model
+                )
+            else if likingOrCommenting model then
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
