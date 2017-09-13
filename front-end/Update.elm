@@ -87,15 +87,16 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        alertMessageClosedOpen : AlertMessageClosedOpen
-        alertMessageClosedOpen =
-            if model.alertMessageText == alertMessageTextInit then
-                Closed
-            else
-                Open
-
         stateVector : ( AlertMessageClosedOpen, CommentAreaClosedOpen )
         stateVector =
+            let
+                alertMessageClosedOpen : AlertMessageClosedOpen
+                alertMessageClosedOpen =
+                    if model.alertMessageText == alertMessageTextInit then
+                        Closed
+                    else
+                        Open
+            in
             ( alertMessageClosedOpen
             , model.commentAreaClosedOpen
             )
