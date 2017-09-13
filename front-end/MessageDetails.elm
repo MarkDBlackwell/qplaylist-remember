@@ -43,6 +43,6 @@ type Msg
     | PageMorphHand
     | HttpResponseTextLog HttpResponseText
     | SongForgetHand SongRememberedIndex
-    | SongRemember SongLatestFewIndex
+    | SongRememberHand SongLatestFewIndex
     | SongsLatestFewRefresh
     | SongsLatestFewResponse (Result Error HttpResponseText)

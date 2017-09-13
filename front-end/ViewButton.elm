@@ -44,7 +44,7 @@ import MessageDetails
             , LikeButtonProcessHand
             , PageMorphHand
             , SongForgetHand
-            , SongRemember
+            , SongRememberHand
             , SongsLatestFewRefresh
             )
         )
@@ -101,7 +101,7 @@ buttonForgetRemember group index =
         buttonAction =
             case group of
                 Played ->
-                    SongRemember index
+                    SongRememberHand index
 
                 Remembered ->
                     SongForgetHand index

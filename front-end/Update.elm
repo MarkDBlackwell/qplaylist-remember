@@ -344,7 +344,7 @@ update msg model =
                 , focusSet "refresh"
                 )
 
-        SongRemember songLatestFewIndex ->
+        SongRememberHand songLatestFewIndex ->
             let
                 songClean : SongRemembered -> SongRemembered
                 songClean song =
