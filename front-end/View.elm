@@ -293,7 +293,7 @@ view model =
             section
                 [ id "alert" ]
                 [ p []
-                    [ text model.alertMessage ]
+                    [ text model.alertMessageText ]
                 ]
 
         songsLatestFew : List (Html Msg)

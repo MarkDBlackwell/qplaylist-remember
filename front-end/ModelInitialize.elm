@@ -15,7 +15,7 @@
 module ModelInitialize
     exposing
         ( actionsDelayInit
-        , alertMessageInit
+        , alertMessageTextInit
         , awaitingServerResponseInit
         , init
         , likeOrCommentTextInit
@@ -30,7 +30,7 @@ module ModelInitialize
 import ModelDetails
     exposing
         ( ActionsDelay
-        , AlertMessage
+        , AlertMessageText
         , AwaitingServerResponse
         , LikeOrCommentText
         , Model
@@ -51,8 +51,8 @@ actionsDelayInit =
     False
 
 
-alertMessageInit : AlertMessage
-alertMessageInit =
+alertMessageTextInit : AlertMessageText
+alertMessageTextInit =
     ""
 
 
@@ -63,7 +63,7 @@ awaitingServerResponseInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model actionsDelayInit alertMessageInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model actionsDelayInit alertMessageTextInit awaitingServerResponseInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
     , Cmd.none
     )
 

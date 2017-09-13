@@ -14,8 +14,7 @@
 
 module UpdateUtilities
     exposing
-        ( alertMessageSuffix
-        , focusSet
+        ( focusSet
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
@@ -24,7 +23,6 @@ module UpdateUtilities
 import Dom exposing (Id)
 import Http exposing (Error)
 import MessageDetails exposing (Msg(FocusSet))
-import ModelDetails exposing (AlertMessage)
 import ModelDetailsUpdate exposing (HttpErrorMessageText)
 import Task
     exposing
@@ -40,13 +38,6 @@ import Tuple
 
 
 -- UPDATE
-
-
-alertMessageSuffix : AlertMessage -> AlertMessage
-alertMessageSuffix thing =
-    " (while attempting to send "
-        ++ thing
-        ++ " to server)"
 
 
 focusSet : Id -> Cmd Msg

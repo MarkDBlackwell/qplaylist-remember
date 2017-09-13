@@ -29,7 +29,7 @@ import ModelDetails
 import ModelDetailsUpdate exposing (SongRememberedIndex)
 import ModelInitialize
     exposing
-        ( alertMessageInit
+        ( alertMessageTextInit
         , awaitingServerResponseInit
         , likeOrCommentTextInit
         , processingCommentInit
@@ -72,7 +72,7 @@ likeOrCommentResponse model appendLikeOrCommentJson =
             List.indexedMap likedOrCommentedShow model.songsRemembered
     in
     ( { model
-        | alertMessage = alertMessageInit
+        | alertMessageText = alertMessageTextInit
         , awaitingServerResponse = awaitingServerResponseInit
         , likeOrCommentText = likeOrCommentTextInit
         , processingComment = processingCommentInit

@@ -26,7 +26,7 @@ import Http
 import MessageDetails exposing (Msg(..))
 import ModelDetails
     exposing
-        ( AlertMessage
+        ( AlertMessageText
         , LikeOrCommentText
         , Model
         , PageIsExpanded
@@ -45,7 +45,7 @@ import ModelDetailsUpdate
         )
 import ModelInitialize
     exposing
-        ( alertMessageInit
+        ( alertMessageTextInit
         , awaitingServerResponseInit
         , likeOrCommentTextInit
         , processingCommentInit
@@ -65,8 +65,7 @@ import UpdateDetails
         )
 import UpdateUtilities
     exposing
-        ( alertMessageSuffix
-        , focusSet
+        ( focusSet
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
@@ -88,7 +87,7 @@ update msg model =
 
         CommentInputCancel ->
             ( { model
-                | alertMessage = alertMessageInit
+                | alertMessageText = alertMessageTextInit
                 , likeOrCommentText = likeOrCommentTextInit
                 , processingComment = processingCommentInit
                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -104,7 +103,7 @@ update msg model =
             in
             if String.isEmpty model.likeOrCommentText then
                 ( { model
-                    | alertMessage = alertMessageInit
+                    | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
@@ -119,7 +118,7 @@ update msg model =
         CommentInputSetUp songRememberedIndex ->
             if likingOrCommenting model then
                 ( { model
-                    | alertMessage = alertMessageInit
+                    | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
@@ -143,7 +142,7 @@ update msg model =
 
         CommentInputTextChangeCapture text ->
             ( { model
-                | alertMessage = alertMessageInit
+                | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
                 , likeOrCommentText = text
               }
@@ -152,12 +151,13 @@ update msg model =
 
         CommentResponse (Err httpError) ->
             let
-                alertMessageNew : AlertMessage
-                alertMessageNew =
-                    httpErrorMessageScreen httpError ++ alertMessageSuffix "comment"
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    httpErrorMessageScreen httpError
+                        ++ " (while attempting to send comment to server)"
             in
             ( { model
-                | alertMessage = alertMessageNew
+                | alertMessageText = alertMessageTextNew
               }
             , Cmd.batch
                 [ msg2Cmd (succeed (ResponseLog (httpErrorMessageLogging httpError)))
@@ -190,14 +190,14 @@ update msg model =
             if likingOrCommenting model then
                 if model.processingComment then
                     ( { model
-                        | alertMessage = alertMessageInit
+                        | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , focusInputPossibly model
                     )
                 else
                     ( { model
-                        | alertMessage = alertMessageInit
+                        | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
@@ -207,7 +207,7 @@ update msg model =
                 case model.songRememberedCommentingIndex of
                     Just _ ->
                         ( { model
-                            | alertMessage = alertMessageInit
+                            | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = awaitingServerResponseInit
                           }
                         , focusInputPossibly model
@@ -215,7 +215,7 @@ update msg model =
 
                     Nothing ->
                         ( { model
-                            | alertMessage = alertMessageInit
+                            | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = True
                             , likeOrCommentText = likeText
                             , processingLike = True
@@ -231,12 +231,13 @@ update msg model =
 
         LikeResponse (Err httpError) ->
             let
-                alertMessageNew : AlertMessage
-                alertMessageNew =
-                    httpErrorMessageScreen httpError ++ alertMessageSuffix "Like"
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    httpErrorMessageScreen httpError
+                        ++ " (while attempting to send Like to server)"
             in
             ( { model
-                | alertMessage = alertMessageNew
+                | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
                 , likeOrCommentText = likeOrCommentTextInit
                 , processingComment = processingCommentInit
@@ -277,14 +278,14 @@ update msg model =
             in
             if likingOrCommenting model then
                 ( { model
-                    | alertMessage = alertMessageInit
+                    | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
                 )
             else
                 ( { model
-                    | alertMessage = alertMessageInit
+                    | alertMessageText = alertMessageTextInit
                     , pageIsExpanded = pageIsExpandedNew
                   }
                 , focusInputPossibly model
@@ -298,17 +299,17 @@ update msg model =
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
             if likingOrCommenting model then
-                --if String.isEmpty model.alertMessage then
+                --if String.isEmpty model.alertMessageText then
                 if model.processingComment then
                     ( { model
-                        | alertMessage = alertMessageInit
+                        | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , focusInputPossibly model
                     )
                 else if model.songRememberedCommentingIndex == Just songRememberedIndex then
                     ( { model
-                        | alertMessage = alertMessageInit
+                        | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
@@ -316,7 +317,7 @@ update msg model =
                     )
                 else
                     ( { model
-                        | alertMessage = alertMessageInit
+                        | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                       }
@@ -370,14 +371,14 @@ update msg model =
                     if likingOrCommenting model then
                         if model.processingComment then
                             ( { model
-                                | alertMessage = alertMessageInit
+                                | alertMessageText = alertMessageTextInit
                                 , awaitingServerResponse = awaitingServerResponseInit
                               }
                             , focusInputPossibly model
                             )
                         else
                             ( { model
-                                | alertMessage = alertMessageInit
+                                | alertMessageText = alertMessageTextInit
                                 , awaitingServerResponse = awaitingServerResponseInit
                                 , songRememberedCommentingIndex = songRememberedCommentingIndexInit
                               }
@@ -419,7 +420,7 @@ update msg model =
             in
             if likingOrCommenting model then
                 ( { model
-                    | alertMessage = alertMessageInit
+                    | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , focusInputPossibly model
@@ -431,16 +432,13 @@ update msg model =
 
         SongsLatestFewResponse (Err httpError) ->
             let
-                alertMessageNew : AlertMessage
-                alertMessageNew =
-                    httpErrorMessageScreen httpError ++ suffix
-
-                suffix : HttpErrorMessageText
-                suffix =
-                    " (while attempting to access the latest few songs)"
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    httpErrorMessageScreen httpError
+                        ++ " (while attempting to access the latest few songs)"
             in
             ( { model
-                | alertMessage = alertMessageNew
+                | alertMessageText = alertMessageTextNew
               }
             , Cmd.none
             )
@@ -452,7 +450,7 @@ update msg model =
                     decodeSongsLatestFew jsonRawText
             in
             ( { model
-                | alertMessage = alertMessageInit
+                | alertMessageText = alertMessageTextInit
                 , songsLatestFew = songsLatestFewNew
               }
             , Cmd.none

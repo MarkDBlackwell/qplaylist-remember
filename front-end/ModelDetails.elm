@@ -21,7 +21,7 @@ type alias ActionsDelay =
     Bool
 
 
-type alias AlertMessage =
+type alias AlertMessageText =
     String
 
 
@@ -43,7 +43,7 @@ type alias LikedOrCommented =
 
 type alias Model =
     { actionsDelay : ActionsDelay
-    , alertMessage : AlertMessage
+    , alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
     , likeOrCommentText : LikeOrCommentText
     , pageIsExpanded : PageIsExpanded
