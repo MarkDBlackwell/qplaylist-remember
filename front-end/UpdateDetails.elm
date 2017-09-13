@@ -26,7 +26,16 @@ import ModelDetails
         , SongRemembered
         , SongsRemembered
         )
-import ModelDetailsUpdate exposing (SongRememberedIndex)
+import ModelDetailsUpdate
+    exposing
+        ( AlertMessageClosedOpen
+        , ClosedOpen
+            ( Closed
+            , Open
+            )
+        , CommentAreaClosedOpen
+        , SongRememberedIndex
+        )
 import ModelInitialize
     exposing
         ( alertMessageTextInit
@@ -45,6 +54,16 @@ import UpdateUtilities
 
 
 -- UPDATE
+
+
+alertMessageClosedOpen : AlertMessageClosedOpen
+alertMessageClosedOpen =
+    Closed
+
+
+commentAreaClosedOpen : CommentAreaClosedOpen
+commentAreaClosedOpen =
+    Closed
 
 
 focusInputPossibly : Model -> Cmd Msg
