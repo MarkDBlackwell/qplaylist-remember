@@ -56,19 +56,6 @@ import UpdateUtilities
 -- UPDATE
 
 
-alertMessageClosedOpen : Model -> AlertMessageClosedOpen
-alertMessageClosedOpen model =
-    if model.alertMessageText == alertMessageTextInit then
-        Closed
-    else
-        Open
-
-
-commentAreaClosedOpen : Model -> CommentAreaClosedOpen
-commentAreaClosedOpen model =
-    model.commentAreaClosedOpen
-
-
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
     if likingOrCommenting model then

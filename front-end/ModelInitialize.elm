@@ -73,7 +73,18 @@ commentAreaClosedOpenInit =
 
 init : ( Model, Cmd msg )
 init =
-    ( Model actionsDelayInit alertMessageTextInit awaitingServerResponseInit commentAreaClosedOpenInit likeOrCommentTextInit pageIsExpandedInit processingCommentInit processingLikeInit songRememberedCommentingIndexInit songsLatestFewInit songsRememberedInit
+    ( Model
+        actionsDelayInit
+        alertMessageTextInit
+        awaitingServerResponseInit
+        commentAreaClosedOpenInit
+        likeOrCommentTextInit
+        pageIsExpandedInit
+        processingCommentInit
+        processingLikeInit
+        songRememberedCommentingIndexInit
+        songsLatestFewInit
+        songsRememberedInit
     , Cmd.none
     )
 

@@ -27,6 +27,11 @@ import MessageDetails exposing (Msg(..))
 import ModelDetails
     exposing
         ( AlertMessageText
+        , ClosedOpen
+            ( Closed
+            , Open
+            )
+        , CommentAreaClosedOpen
         , LikeOrCommentText
         , Model
         , PageIsExpanded
@@ -39,7 +44,8 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( HttpErrorMessageText
+        ( AlertMessageClosedOpen
+        , HttpErrorMessageText
         , HttpRequestText
         , UriText
         )
@@ -80,47 +86,65 @@ import ViewUtilities exposing (relative)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        alertMessageClosedOpen : AlertMessageClosedOpen
+        alertMessageClosedOpen =
+            if model.alertMessageText == alertMessageTextInit then
+                Closed
+            else
+                Open
+
+        stateVector : ( AlertMessageClosedOpen, CommentAreaClosedOpen )
+        stateVector =
+            ( alertMessageClosedOpen
+            , model.commentAreaClosedOpen
+            )
+    in
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , likeOrCommentText = text
-              }
-            , Cmd.none
-            )
+            case stateVector of
+                ( _, _ ) ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , likeOrCommentText = text
+                      }
+                    , Cmd.none
+                    )
 
         CommentAreaOpenHand songRememberedIndex ->
-            if model.actionsDelay then
-                ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else if likingOrCommenting model then
-                ( { model
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                case model.songRememberedCommentingIndex of
-                    Just _ ->
-                        ( model
-                          --, focusSet "refresh"
+            case stateVector of
+                ( _, _ ) ->
+                    if model.actionsDelay then
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
+                          }
                         , focusInputPossibly model
                         )
-
-                    Nothing ->
+                    else if likingOrCommenting model then
                         ( { model
-                            | processingComment = True
-                            , songRememberedCommentingIndex = Just songRememberedIndex
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
                           }
-                          --'focusInputPossibly' doesn't work, here:
-                        , focusSet "input"
+                        , focusInputPossibly model
                         )
+                    else
+                        case model.songRememberedCommentingIndex of
+                            Just _ ->
+                                ( model
+                                  --, focusSet "refresh"
+                                , focusInputPossibly model
+                                )
+
+                            Nothing ->
+                                ( { model
+                                    | processingComment = True
+                                    , songRememberedCommentingIndex = Just songRememberedIndex
+                                  }
+                                  --'focusInputPossibly' doesn't work, here:
+                                , focusSet "input"
+                                )
 
         CommentCancelHand ->
             ( { model
