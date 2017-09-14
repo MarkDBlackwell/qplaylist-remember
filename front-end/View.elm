@@ -59,7 +59,7 @@ import ModelDetails
         , SongRemembered
         , SongRememberedCommentingIndex
         , SongsRemembered
-        , songLatestFew2Remembered
+        , songBasic2SongRemembered
         )
 import ModelDetailsUpdate
     exposing
@@ -237,7 +237,7 @@ view model =
 
         songsLatestFew2Remembered : SongsRemembered
         songsLatestFew2Remembered =
-            List.map songLatestFew2Remembered model.songsLatestFew
+            List.map songBasic2SongRemembered model.songsLatestFew
 
         songsRemembered : List (Html Msg)
         songsRemembered =

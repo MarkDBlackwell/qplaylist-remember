@@ -42,7 +42,7 @@ import ModelDetails
         , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
-        , songLatestFew2Remembered
+        , songBasic2SongRemembered
         , songRemembered2SongBasic
         )
 import ModelDetailsUpdate
@@ -445,7 +445,7 @@ update msg model =
                                         model.songsRemembered
                                     else
                                         songsDifferent
-                                            ++ [ songLatestFew2Remembered songLatestFewSelected ]
+                                            ++ [ songBasic2SongRemembered songLatestFewSelected ]
                             in
                             if likingOrCommenting model then
                                 if model.processingComment then

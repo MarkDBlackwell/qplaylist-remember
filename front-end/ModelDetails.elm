@@ -128,8 +128,8 @@ type alias Title =
     String
 
 
-songLatestFew2Remembered : SongLatestFew -> SongRemembered
-songLatestFew2Remembered song =
+songBasic2SongRemembered : SongBasic -> SongRemembered
+songBasic2SongRemembered song =
     { artist = song.artist
     , likedOrCommented = False
     , time = song.time
