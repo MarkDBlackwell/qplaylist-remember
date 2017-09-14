@@ -102,57 +102,34 @@ update msg model =
                 ++ likeOrCommentName
                 ++ " to server)"
 
-        likeOrCommentRequestUriText : String -> UriText
-        likeOrCommentRequestUriText likeOrCommentText =
+        likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
+        likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
             let
                 artistTimeTitle : UriText
                 artistTimeTitle =
-                    case songCommentingIndex of
+                    case songLikingOrCommenting of
                         Nothing ->
                             ""
 
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just songSelected ->
-                                    songSelected.time
-                                        ++ " "
-                                        ++ songSelected.artist
-                                        ++ ": "
-                                        ++ songSelected.title
+                        Just songLikingOrCommenting ->
+                            songLikingOrCommenting.time
+                                ++ " "
+                                ++ songLikingOrCommenting.artist
+                                ++ ": "
+                                ++ songLikingOrCommenting.title
 
                 basename : UriText
                 basename =
                     "append.php"
 
-                songCommentingIndex : SongCommentingIndex
-                songCommentingIndex =
-                    model.songCommentingIndex
-
-                songSelected : Maybe SongRemembered
-                songSelected =
-                    case songCommentingIndex of
-                        Nothing ->
-                            Nothing
-
-                        Just index ->
-                            List.head (List.drop index model.songsRemembered)
-
                 timeStamp : UriText
                 timeStamp =
-                    case songCommentingIndex of
+                    case songLikingOrCommenting of
                         Nothing ->
                             ""
 
-                        Just _ ->
-                            case songSelected of
-                                Nothing ->
-                                    ""
-
-                                Just song ->
-                                    song.timeStamp
+                        Just songLikingOrCommenting ->
+                            songLikingOrCommenting.timeStamp
             in
             relative
                 [ basename ]
@@ -297,7 +274,7 @@ update msg model =
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model.commentText)))
+                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model.songCommenting model.commentText)))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
@@ -355,7 +332,7 @@ update msg model =
             let
                 likeRequest : Cmd Msg
                 likeRequest =
-                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText "Loved it!")))
+                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model.songLiking "Loved it!")))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
