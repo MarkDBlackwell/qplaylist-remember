@@ -337,15 +337,14 @@ update msg model =
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                      }
+                    ( model
                     , focusInputPossibly model
                     )
 
                 _ ->
                     ( { model
-                        | awaitingServerResponse = True
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = True
                         , processingLike = True
                         , songLiking = songLikingOrCommentingNew songRememberedIndex
                       }
