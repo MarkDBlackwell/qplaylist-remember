@@ -167,6 +167,11 @@ update msg model =
         CommentCancelHand ->
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
@@ -197,14 +202,14 @@ update msg model =
 
         CommentResponse (Ok appendCommentJson) ->
             let
-                commentedShow : SongRemembered -> SongRemembered
-                commentedShow song =
-                    case model.songCommenting of
+                commentedShow : SongCommenting -> SongRemembered -> SongRemembered
+                commentedShow songCommenting song =
+                    case songCommenting of
                         Nothing ->
                             song
 
                         Just songCommenting ->
-                            if songRemembered2SongBasic song /= songCommenting then
+                            if songCommenting /= songRemembered2SongBasic song then
                                 song
                             else
                                 { song
@@ -213,7 +218,7 @@ update msg model =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    List.map commentedShow model.songsRemembered
+                    List.map (commentedShow model.songCommenting) model.songsRemembered
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
