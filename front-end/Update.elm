@@ -145,14 +145,14 @@ update msg model =
                     , focusInputPossibly model
                     )
 
-                ( _, False, Open ) ->
+                ( _, _, Open ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                       }
                     , focusInputPossibly model
                     )
 
-                ( _, False, Closed ) ->
+                _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentAreaOptional = Open
