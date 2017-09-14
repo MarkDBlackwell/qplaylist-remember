@@ -323,7 +323,7 @@ update msg model =
                     if String.isEmpty httpResponseText then
                         log "Response" "Ok"
                     else
-                        log "Response: Ok" httpResponseText
+                        log "Response" httpResponseText
             in
             ( model
             , focusInputPossibly model
