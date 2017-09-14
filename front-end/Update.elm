@@ -163,9 +163,10 @@ update msg model =
 
         CommentCancelHand ->
             case stateVector of
-                ( _, _, _ ) ->
+                _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
+                        , commentAreaClosedOpen = Closed
                         , commentText = commentTextInit
                         , processingComment = processingCommentInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -223,17 +224,22 @@ update msg model =
             )
 
         CommentSendHand ->
-            case stateVector of
-                ( _, _, _ ) ->
-                    let
-                        commentRequest : Cmd Msg
-                        commentRequest =
-                            send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model commentText)))
+            let
+                commentRequest : Cmd Msg
+                commentRequest =
+                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model commentText)))
 
-                        commentText : CommentText
-                        commentText =
-                            model.commentText
-                    in
+                commentText : CommentText
+                commentText =
+                    model.commentText
+            in
+            case stateVector of
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                _ ->
                     if String.isEmpty model.commentText then
                         ( { model
                             | alertMessageText = alertMessageTextInit
