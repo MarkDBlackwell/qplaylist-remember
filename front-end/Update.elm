@@ -361,7 +361,7 @@ update msg model =
                 , processingLike = processingLikeInit
                 , songLiking = songLikingInit
               }
-            , Cmd.none
+            , focusInputPossibly model
             )
 
         LikeResponse (Ok appendLikeJson) ->
@@ -377,24 +377,32 @@ update msg model =
                 , songLiking = songLikingInit
                 , songsRemembered = songsRememberedNew
               }
-            , msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))
+            , Cmd.batch
+                [ msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))
+                , focusInputPossibly model
+                ]
             )
 
         PageMorphHand ->
+            let
+                pageIsExpandedNew : PageIsExpanded
+                pageIsExpandedNew =
+                    if
+                        List.isEmpty model.songsLatestFew
+                            && List.isEmpty model.songsRemembered
+                    then
+                        model.pageIsExpanded
+                    else
+                        not model.pageIsExpanded
+            in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
                 _ ->
-                    let
-                        pageIsExpandedNew : PageIsExpanded
-                        pageIsExpandedNew =
-                            if
-                                List.isEmpty model.songsLatestFew
-                                    && List.isEmpty model.songsRemembered
-                            then
-                                model.pageIsExpanded
-                            else
-                                not model.pageIsExpanded
-                    in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , pageIsExpanded = pageIsExpandedNew
@@ -411,15 +419,20 @@ update msg model =
                     )
 
         SongForgetHand songRememberedIndex ->
+            let
+                songsRememberedWithoutOne : SongsRemembered
+                songsRememberedWithoutOne =
+                    List.take songRememberedIndex model.songsRemembered
+                        ++ List.drop (songRememberedIndex + 1) model.songsRemembered
+            in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
-                ( _, _, _ ) ->
-                    let
-                        songsRememberedWithoutOne : SongsRemembered
-                        songsRememberedWithoutOne =
-                            List.take songRememberedIndex model.songsRemembered
-                                ++ List.drop (songRememberedIndex + 1) model.songsRemembered
-                    in
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                _ ->
                     if likingOrCommenting model then
                         --if String.isEmpty model.alertMessageText then
                         if model.processingComment then
