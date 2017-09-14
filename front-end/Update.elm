@@ -38,8 +38,8 @@ import ModelDetails
         , PageIsExpanded
         , SongCommenting
         , SongLatestFew
+        , SongLiking
         , SongRemembered
-        , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
         , songBasic2SongRemembered
@@ -64,7 +64,7 @@ import ModelInitialize
         , processingLikeInit
         , songCommentingIndexInit
         , songCommentingInit
-        , songRememberedLikingInit
+        , songLikingInit
         )
 import Task
     exposing
@@ -290,8 +290,8 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                songRememberedLikingNew : SongRememberedLiking
-                songRememberedLikingNew =
+                songLikingNew : SongLiking
+                songLikingNew =
                     case List.head (List.drop songRememberedIndex model.songsRemembered) of
                         Nothing ->
                             Nothing
@@ -311,7 +311,7 @@ update msg model =
                     ( { model
                         | awaitingServerResponse = True
                         , processingLike = True
-                        , songRememberedLiking = songRememberedLikingNew
+                        , songLiking = songLikingNew
                       }
                     , Cmd.batch
                         [ send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model likeText)))
@@ -330,7 +330,7 @@ update msg model =
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
                 , processingLike = processingLikeInit
-                , songRememberedLiking = songRememberedLikingInit
+                , songLiking = songLikingInit
               }
             , Cmd.none
             )

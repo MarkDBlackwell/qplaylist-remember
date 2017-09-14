@@ -30,7 +30,7 @@ import ModelDetails
         , ProcessingLike
         , SongCommenting
         , SongCommentingIndex
-        , SongRememberedLiking
+        , SongLiking
         , SongsLatestFew
         , SongsRemembered
         )
@@ -71,7 +71,7 @@ init =
         processingLikeInit
         songCommentingInit
         songCommentingIndexInit
-        songRememberedLikingInit
+        songLikingInit
         songsLatestFewInit
         songsRememberedInit
     , Cmd.none
@@ -103,8 +103,8 @@ songCommentingInit =
     Nothing
 
 
-songRememberedLikingInit : SongRememberedLiking
-songRememberedLikingInit =
+songLikingInit : SongLiking
+songLikingInit =
     Nothing
 
 

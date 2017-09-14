@@ -47,7 +47,7 @@ import ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songCommentingIndexInit
-        , songRememberedLikingInit
+        , songLikingInit
         )
 import Task exposing (succeed)
 import UpdateUtilities
@@ -134,12 +134,12 @@ likeResponse model appendLikeJson =
     let
         likedShow : SongRemembered -> SongRemembered
         likedShow song =
-            case model.songRememberedLiking of
+            case model.songLiking of
                 Nothing ->
                     song
 
-                Just songRememberedLiking ->
-                    if songRememberedLiking /= songRemembered2SongBasic song then
+                Just songLiking ->
+                    if songLiking /= songRemembered2SongBasic song then
                         song
                     else
                         { song
@@ -154,7 +154,7 @@ likeResponse model appendLikeJson =
         | alertMessageText = alertMessageTextInit
         , awaitingServerResponse = awaitingServerResponseInit
         , processingLike = processingLikeInit
-        , songRememberedLiking = songRememberedLikingInit
+        , songLiking = songLikingInit
         , songsRemembered = songsRememberedNew
       }
     , msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))

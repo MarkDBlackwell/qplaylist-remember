@@ -51,7 +51,7 @@ type alias Model =
     , processingLike : ProcessingLike
     , songCommenting : SongCommenting
     , songCommentingIndex : SongCommentingIndex
-    , songRememberedLiking : SongRememberedLiking
+    , songLiking : SongLiking
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
@@ -104,7 +104,7 @@ type alias SongCommentingIndex =
     Maybe Int
 
 
-type alias SongRememberedLiking =
+type alias SongLiking =
     Maybe SongBasic
 
 
