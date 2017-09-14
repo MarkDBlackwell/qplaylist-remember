@@ -100,16 +100,16 @@ import ViewUtilities
 commentArea : Model -> SongBasic -> Html Msg
 commentArea model song =
     let
+        hoverText : HoverText
+        hoverText =
+            "Type your (additional) comment here!"
+
         statistics : String
         statistics =
             " – "
                 ++ song.timeStamp
                 ++ ": "
                 ++ toString (String.length model.commentText)
-
-        hoverText : HoverText
-        hoverText =
-            "Type your (additional) comment here!"
     in
     section
         [ id "comment" ]

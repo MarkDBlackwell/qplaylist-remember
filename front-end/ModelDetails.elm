@@ -83,8 +83,20 @@ type alias SongBasic =
     }
 
 
+type alias SongCommenting =
+    Maybe SongBasic
+
+
+type alias SongCommentingIndex =
+    Maybe Int
+
+
 type alias SongLatestFew =
     SongBasic
+
+
+type alias SongLiking =
+    Maybe SongBasic
 
 
 type alias SongRemembered =
@@ -94,18 +106,6 @@ type alias SongRemembered =
     , timeStamp : TimeStamp
     , title : Title
     }
-
-
-type alias SongCommenting =
-    Maybe SongBasic
-
-
-type alias SongCommentingIndex =
-    Maybe Int
-
-
-type alias SongLiking =
-    Maybe SongBasic
 
 
 type alias SongsBasic =
