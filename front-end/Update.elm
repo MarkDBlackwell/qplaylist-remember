@@ -94,6 +94,15 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        songLikingOrCommentingNew : SongRememberedIndex -> SongCommenting
+        songLikingOrCommentingNew songRememberedIndex =
+            case List.head (List.drop songRememberedIndex model.songsRemembered) of
+                Nothing ->
+                    Nothing
+
+                Just songSelected ->
+                    Just (songRemembered2SongBasic songSelected)
+
         stateVector : ( AlertMessageOptional, AwaitingServerResponse, CommentAreaOptional )
         stateVector =
             let
@@ -111,9 +120,12 @@ update msg model =
     in
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
-                ( _, _, Closed ) ->
-                    ( model
+                ( _, True, _ ) ->
+                    ( { model
+                        | commentText = text
+                      }
                     , Cmd.none
                     )
 
@@ -126,16 +138,7 @@ update msg model =
                     )
 
         CommentAreaOpenHand songRememberedIndex ->
-            let
-                songCommentingNew : SongCommenting
-                songCommentingNew =
-                    case List.head (List.drop songRememberedIndex model.songsRemembered) of
-                        Nothing ->
-                            Nothing
-
-                        Just songSelected ->
-                            Just (songRemembered2SongBasic songSelected)
-            in
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, True, _ ) ->
                     ( model
@@ -155,13 +158,14 @@ update msg model =
                         , commentAreaOptional = Open
                         , commentText = commentTextInit
                         , processingComment = True
-                        , songCommenting = songCommentingNew
+                        , songCommenting = songLikingOrCommentingNew songRememberedIndex
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
                     )
 
         CommentCancelHand ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 _ ->
                     ( { model
@@ -233,6 +237,7 @@ update msg model =
                 commentText =
                     model.commentText
             in
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, True, _ ) ->
                     ( model
@@ -289,16 +294,8 @@ update msg model =
                 likeText : LikeText
                 likeText =
                     "Loved it!"
-
-                songLikingNew : SongLiking
-                songLikingNew =
-                    case List.head (List.drop songRememberedIndex model.songsRemembered) of
-                        Nothing ->
-                            Nothing
-
-                        Just songSelected ->
-                            Just (songRemembered2SongBasic songSelected)
             in
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, True, _ ) ->
                     ( { model
@@ -311,7 +308,7 @@ update msg model =
                     ( { model
                         | awaitingServerResponse = True
                         , processingLike = True
-                        , songLiking = songLikingNew
+                        , songLiking = songLikingOrCommentingNew songRememberedIndex
                       }
                     , Cmd.batch
                         [ send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model likeText)))
@@ -339,6 +336,7 @@ update msg model =
             likeResponse model appendLikeJson
 
         PageMorphHand ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 _ ->
                     let
@@ -360,6 +358,7 @@ update msg model =
                     )
 
         SongBuyAnchorProcessHand ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, _, _ ) ->
                     ( model
@@ -367,6 +366,7 @@ update msg model =
                     )
 
         SongForgetHand songRememberedIndex ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, _, _ ) ->
                     let
@@ -408,6 +408,7 @@ update msg model =
                         )
 
         SongRememberHand songLatestFewIndex ->
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, _, _ ) ->
                     let
@@ -497,6 +498,7 @@ update msg model =
                 subUri =
                     "wtmdapp"
             in
+            --(alertMessage, awaitingServer, commentArea)
             case stateVector of
                 ( _, True, _ ) ->
                     ( model
