@@ -202,8 +202,8 @@ update msg model =
 
         CommentResponse (Ok appendCommentJson) ->
             let
-                commentedShow : SongCommenting -> SongRemembered -> SongRemembered
-                commentedShow songCommenting song =
+                likedOrCommentedShow : SongCommenting -> SongRemembered -> SongRemembered
+                likedOrCommentedShow songCommenting song =
                     case songCommenting of
                         Nothing ->
                             song
@@ -218,7 +218,7 @@ update msg model =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    List.map (commentedShow model.songCommenting) model.songsRemembered
+                    List.map (likedOrCommentedShow model.songCommenting) model.songsRemembered
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
