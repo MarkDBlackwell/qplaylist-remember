@@ -50,22 +50,26 @@ decodeSongsBasic jsonRawText =
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        decodeSong : Decoder SongBasic
-        decodeSong =
+        decodeSongBasic : Decoder SongBasic
+        decodeSongBasic =
             map4 SongBasic
                 (field "artist" string)
                 (field "time" string)
                 (field "timeStamp" string)
                 (field "title" string)
 
-        removeTag : Decoder SongsBasicTagged
-        removeTag =
+        decodeSongsBasicTagged : Decoder SongsBasicTagged
+        decodeSongsBasicTagged =
             map SongsBasicTagged
-                (field "latestFive" (list decodeSong))
+                (field tag (list decodeSongBasic))
+
+        tag : String
+        tag =
+            "latestFive"
 
         tryRecord : Result DecodeErrorMessageText SongsBasicTagged
         tryRecord =
-            decodeString removeTag jsonRawText
+            decodeString decodeSongsBasicTagged jsonRawText
     in
     case tryRecord of
         Err _ ->
