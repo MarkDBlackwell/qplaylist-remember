@@ -108,7 +108,7 @@ update msg model =
                             | likedOrCommented = True
                         }
 
-        songLikingOrCommentingNew : SongRememberedIndex -> SongCommenting
+        songLikingOrCommentingNew : SongRememberedIndex -> SongLikingOrCommenting
         songLikingOrCommentingNew songRememberedIndex =
             case List.head (List.drop songRememberedIndex model.songsRemembered) of
                 Nothing ->
