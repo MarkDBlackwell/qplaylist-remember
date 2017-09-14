@@ -18,13 +18,13 @@ import ModelDetails
     exposing
         ( AlertMessageText
         , AwaitingServerResponse
-        , ClosedOpen
+        , CommentAreaOptional
+        , CommentText
+        , Model
+        , Optional
             ( Closed
             , Open
             )
-        , CommentAreaClosedOpen
-        , CommentText
-        , Model
         , PageIsExpanded
         , ProcessingComment
         , ProcessingLike
@@ -49,8 +49,8 @@ awaitingServerResponseInit =
     False
 
 
-commentAreaClosedOpenInit : CommentAreaClosedOpen
-commentAreaClosedOpenInit =
+commentAreaOptionalInit : CommentAreaOptional
+commentAreaOptionalInit =
     Closed
 
 
@@ -59,7 +59,7 @@ init =
     ( Model
         alertMessageTextInit
         awaitingServerResponseInit
-        commentAreaClosedOpenInit
+        commentAreaOptionalInit
         commentTextInit
         pageIsExpandedInit
         processingCommentInit

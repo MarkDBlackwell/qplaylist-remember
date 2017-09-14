@@ -14,7 +14,7 @@
 
 module ModelDetailsUpdate
     exposing
-        ( AlertMessageClosedOpen
+        ( AlertMessageOptional
         , DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestText
@@ -31,7 +31,7 @@ module ModelDetailsUpdate
 
 import ModelDetails
     exposing
-        ( ClosedOpen
+        ( Optional
             ( Closed
             , Open
             )
@@ -42,8 +42,8 @@ import ModelDetails
 -- UPDATE
 
 
-type alias AlertMessageClosedOpen =
-    ClosedOpen
+type alias AlertMessageOptional =
+    Optional
 
 
 type alias DecodeErrorMessageText =

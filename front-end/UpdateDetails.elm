@@ -23,12 +23,12 @@ module UpdateDetails
 import MessageDetails exposing (Msg(HttpResponseTextLog))
 import ModelDetails
     exposing
-        ( ClosedOpen
+        ( CommentAreaOptional
+        , Model
+        , Optional
             ( Closed
             , Open
             )
-        , CommentAreaClosedOpen
-        , Model
         , SongRemembered
         , SongRememberedCommentingIndex
         , SongsRemembered
@@ -36,7 +36,7 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( AlertMessageClosedOpen
+        ( AlertMessageOptional
         , UriText
         )
 import ModelInitialize

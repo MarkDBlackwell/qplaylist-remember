@@ -28,13 +28,13 @@ import ModelDetails
     exposing
         ( AlertMessageText
         , AwaitingServerResponse
-        , ClosedOpen
+        , CommentAreaOptional
+        , CommentText
+        , Model
+        , Optional
             ( Closed
             , Open
             )
-        , CommentAreaClosedOpen
-        , CommentText
-        , Model
         , PageIsExpanded
         , SongLatestFew
         , SongRemembered
@@ -47,7 +47,7 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( AlertMessageClosedOpen
+        ( AlertMessageOptional
         , HttpErrorMessageText
         , HttpRequestText
         , LikeText
@@ -58,7 +58,7 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
-        , commentAreaClosedOpenInit
+        , commentAreaOptionalInit
         , commentTextInit
         , processingCommentInit
         , processingLikeInit
@@ -94,19 +94,19 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        stateVector : ( AlertMessageClosedOpen, AwaitingServerResponse, CommentAreaClosedOpen )
+        stateVector : ( AlertMessageOptional, AwaitingServerResponse, CommentAreaOptional )
         stateVector =
             let
-                alertMessageClosedOpen : AlertMessageClosedOpen
-                alertMessageClosedOpen =
+                alertMessageOptional : AlertMessageOptional
+                alertMessageOptional =
                     if model.alertMessageText == alertMessageTextInit then
                         Closed
                     else
                         Open
             in
-            ( alertMessageClosedOpen
+            ( alertMessageOptional
             , model.awaitingServerResponse
-            , model.commentAreaClosedOpen
+            , model.commentAreaOptional
             )
     in
     case msg of
@@ -152,7 +152,7 @@ update msg model =
                 ( _, False, Closed ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , commentAreaClosedOpen = Open
+                        , commentAreaOptional = Open
                         , commentText = commentTextInit
                         , processingComment = True
                         , songRememberedCommenting = songRememberedCommentingNew
@@ -166,7 +166,7 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , commentAreaClosedOpen = Closed
+                        , commentAreaOptional = Closed
                         , commentText = commentTextInit
                         , processingComment = processingCommentInit
                         , songRememberedCommentingIndex = songRememberedCommentingIndexInit
@@ -214,7 +214,7 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
-                , commentAreaClosedOpen = commentAreaClosedOpenInit
+                , commentAreaOptional = commentAreaOptionalInit
                 , commentText = commentTextInit
                 , processingComment = processingCommentInit
                 , songRememberedCommenting = songRememberedCommentingInit

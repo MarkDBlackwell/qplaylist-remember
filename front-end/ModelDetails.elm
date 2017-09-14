@@ -29,13 +29,13 @@ type alias AwaitingServerResponse =
     Bool
 
 
-type ClosedOpen
+type Optional
     = Closed
     | Open
 
 
-type alias CommentAreaClosedOpen =
-    ClosedOpen
+type alias CommentAreaOptional =
+    Optional
 
 
 type alias CommentText =
@@ -49,7 +49,7 @@ type alias LikedOrCommented =
 type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
-    , commentAreaClosedOpen : CommentAreaClosedOpen
+    , commentAreaOptional : CommentAreaOptional
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
