@@ -39,7 +39,8 @@ import ModelDetailsUpdate
 -- UPDATE
 
 
-type alias SongsBasicWithTag =
+type alias SongsBasicWithDummyTag =
+    --TODO: Why do we need a tag?
     { dummyTag : SongsBasic }
 
 
@@ -50,9 +51,9 @@ decodeSongsBasic jsonRawText =
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        asRecord : Result DecodeErrorMessageText SongsBasicWithTag
+        asRecord : Result DecodeErrorMessageText SongsBasicWithDummyTag
         asRecord =
-            decodeString decodeSongsBasicWithTag jsonRawText
+            decodeString decodeSongsBasicWithDummyTag jsonRawText
 
         decodeSongBasic : Decoder SongBasic
         decodeSongBasic =
@@ -62,9 +63,9 @@ decodeSongsBasic jsonRawText =
                 (field "timeStamp" string)
                 (field "title" string)
 
-        decodeSongsBasicWithTag : Decoder SongsBasicWithTag
-        decodeSongsBasicWithTag =
-            map SongsBasicWithTag
+        decodeSongsBasicWithDummyTag : Decoder SongsBasicWithDummyTag
+        decodeSongsBasicWithDummyTag =
+            map SongsBasicWithDummyTag
                 (field tag (list decodeSongBasic))
 
         tag : String
