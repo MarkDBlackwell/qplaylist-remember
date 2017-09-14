@@ -136,39 +136,16 @@ update msg model =
                     , focusInputPossibly model
                     )
 
-                _ ->
+                ( _, False, Closed ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentAreaClosedOpen = Open
                         , commentText = commentTextInit
                         , processingComment = True
                       }
-                    , msg2Cmd (succeed (CommentAreaOpenInternal songRememberedIndex))
+                      --'focusInputPossibly' doesn't work, here:
+                    , focusSet "input"
                     )
-
-        CommentAreaOpenInternal songRememberedIndex ->
-            if likingOrCommenting model then
-                ( { model
-                    | awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , focusInputPossibly model
-                )
-            else
-                case model.songRememberedCommentingIndex of
-                    Just _ ->
-                        ( model
-                          --, focusSet "refresh"
-                        , focusInputPossibly model
-                        )
-
-                    Nothing ->
-                        ( { model
-                            | processingComment = True
-                            , songRememberedCommentingIndex = Just songRememberedIndex
-                          }
-                          --'focusInputPossibly' doesn't work, here:
-                        , focusSet "input"
-                        )
 
         CommentCancelHand ->
             case stateVector of
