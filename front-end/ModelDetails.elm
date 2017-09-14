@@ -99,6 +99,10 @@ type alias SongLiking =
     Maybe SongBasic
 
 
+type alias SongLikingOrCommenting =
+    Maybe SongBasic
+
+
 type alias SongRemembered =
     { artist : Artist
     , likedOrCommented : LikedOrCommented

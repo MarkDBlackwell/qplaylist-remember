@@ -39,6 +39,7 @@ import ModelDetails
         , SongCommenting
         , SongLatestFew
         , SongLiking
+        , SongLikingOrCommenting
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered
@@ -75,7 +76,6 @@ import UpdateDetails
     exposing
         ( focusInputPossibly
         , likeOrCommentRequestUriText
-        , likeResponse
         , likingOrCommenting
         )
 import UpdateUtilities
@@ -94,6 +94,20 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
+        likedOrCommentedShow songLikingOrCommenting song =
+            case songLikingOrCommenting of
+                Nothing ->
+                    song
+
+                Just songLikingOrCommenting ->
+                    if songLikingOrCommenting /= songRemembered2SongBasic song then
+                        song
+                    else
+                        { song
+                            | likedOrCommented = True
+                        }
+
         songLikingOrCommentingNew : SongRememberedIndex -> SongCommenting
         songLikingOrCommentingNew songRememberedIndex =
             case List.head (List.drop songRememberedIndex model.songsRemembered) of
@@ -202,20 +216,6 @@ update msg model =
 
         CommentResponse (Ok appendCommentJson) ->
             let
-                likedOrCommentedShow : SongCommenting -> SongRemembered -> SongRemembered
-                likedOrCommentedShow songCommenting song =
-                    case songCommenting of
-                        Nothing ->
-                            song
-
-                        Just songCommenting ->
-                            if songCommenting /= songRemembered2SongBasic song then
-                                song
-                            else
-                                { song
-                                    | likedOrCommented = True
-                                }
-
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     List.map (likedOrCommentedShow model.songCommenting) model.songsRemembered
@@ -338,7 +338,20 @@ update msg model =
             )
 
         LikeResponse (Ok appendLikeJson) ->
-            likeResponse model appendLikeJson
+            let
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    List.map (likedOrCommentedShow model.songLiking) model.songsRemembered
+            in
+            ( { model
+                | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , processingLike = processingLikeInit
+                , songLiking = songLikingInit
+                , songsRemembered = songsRememberedNew
+              }
+            , msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))
+            )
 
         PageMorphHand ->
             --(alertMessage, awaitingServer, commentArea)
