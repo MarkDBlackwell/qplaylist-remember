@@ -132,11 +132,16 @@ type alias Title =
     String
 
 
+likedOrCommentedInit : LikedOrCommented
+likedOrCommentedInit =
+    False
+
+
 songBasic2SongRemembered : SongBasic -> SongRemembered
 songBasic2SongRemembered song =
     SongRemembered
         song.artist
-        False
+        likedOrCommentedInit
         song.time
         song.timeStamp
         song.title
