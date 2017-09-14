@@ -29,8 +29,8 @@ import ModelDetails
             ( Closed
             , Open
             )
+        , SongCommentingIndex
         , SongRemembered
-        , SongRememberedCommentingIndex
         , SongsRemembered
         , songRemembered2SongBasic
         )
@@ -94,7 +94,7 @@ likeOrCommentRequestUriText model likeOrCommentText =
         basename =
             "append.php"
 
-        songCommentingIndex : SongRememberedCommentingIndex
+        songCommentingIndex : SongCommentingIndex
         songCommentingIndex =
             model.songCommentingIndex
 

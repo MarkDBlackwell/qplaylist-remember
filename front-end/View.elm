@@ -56,8 +56,8 @@ import ModelDetails
     exposing
         ( Model
         , SongBasic
+        , SongCommentingIndex
         , SongRemembered
-        , SongRememberedCommentingIndex
         , SongsRemembered
         , songBasic2SongRemembered
         )

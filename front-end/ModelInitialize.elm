@@ -28,8 +28,8 @@ import ModelDetails
         , PageIsExpanded
         , ProcessingComment
         , ProcessingLike
-        , SongRememberedCommenting
-        , SongRememberedCommentingIndex
+        , SongCommenting
+        , SongCommentingIndex
         , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
@@ -93,12 +93,12 @@ processingLikeInit =
     False
 
 
-songCommentingIndexInit : SongRememberedCommentingIndex
+songCommentingIndexInit : SongCommentingIndex
 songCommentingIndexInit =
     Nothing
 
 
-songCommentingInit : SongRememberedCommenting
+songCommentingInit : SongCommenting
 songCommentingInit =
     Nothing
 

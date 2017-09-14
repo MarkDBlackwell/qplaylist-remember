@@ -36,9 +36,9 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
+        , SongCommenting
         , SongLatestFew
         , SongRemembered
-        , SongRememberedCommenting
         , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
@@ -127,7 +127,7 @@ update msg model =
 
         CommentAreaOpenHand songRememberedIndex ->
             let
-                songCommentingNew : SongRememberedCommenting
+                songCommentingNew : SongCommenting
                 songCommentingNew =
                     case List.head (List.drop songRememberedIndex model.songsRemembered) of
                         Nothing ->
