@@ -162,26 +162,17 @@ update msg model =
                 Just songSelected ->
                     Just (songRemembered2SongBasic songSelected)
 
-        stateVector : ( AlertMessageOptional, AwaitingServerResponse, CommentAreaOptional )
+        stateVector : ( AwaitingServerResponse, CommentAreaOptional )
         stateVector =
-            let
-                alertMessageOptional : AlertMessageOptional
-                alertMessageOptional =
-                    if model.alertMessageText == alertMessageTextInit then
-                        Closed
-                    else
-                        Open
-            in
-            ( alertMessageOptional
-            , model.awaitingServerResponse
+            ( model.awaitingServerResponse
             , model.commentAreaOptional
             )
     in
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( { model
                         | commentText = text
                       }
@@ -197,14 +188,14 @@ update msg model =
                     )
 
         CommentAreaOpenHand songRememberedIndex ->
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
 
-                ( _, _, Open ) ->
+                ( _, Open ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                       }
@@ -224,9 +215,9 @@ update msg model =
                     )
 
         CommentCancelHand ->
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -277,9 +268,9 @@ update msg model =
                 commentRequest =
                     send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model.songCommenting model.commentText)))
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -339,9 +330,9 @@ update msg model =
                 songLikingNew =
                     songLikingOrCommentingNew songRememberedIndex
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -400,9 +391,9 @@ update msg model =
                     else
                         not model.pageIsExpanded
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -416,12 +407,9 @@ update msg model =
                     )
 
         SongBuyAnchorProcessHand ->
-            --(alertMessage, awaitingServer, commentArea)
-            case stateVector of
-                _ ->
-                    ( model
-                    , focusInputPossibly model
-                    )
+            ( model
+            , focusInputPossibly model
+            )
 
         SongForgetHand songRememberedIndex ->
             let
@@ -443,9 +431,9 @@ update msg model =
                     List.take songRememberedIndex model.songsRemembered
                         ++ List.drop (songRememberedIndex + 1) model.songsRemembered
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -488,9 +476,9 @@ update msg model =
                                 model.songsRemembered
                                     ++ [ songBasic2SongRemembered songLatestFewSelected ]
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
@@ -530,9 +518,9 @@ update msg model =
                 subUri =
                     "wtmdapp"
             in
-            --(alertMessage, awaitingServer, commentArea)
+            --(awaitingServer, commentArea)
             case stateVector of
-                ( _, True, _ ) ->
+                ( True, _ ) ->
                     ( model
                     , focusInputPossibly model
                     )
