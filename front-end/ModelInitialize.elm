@@ -54,6 +54,11 @@ commentAreaOptionalInit =
     Closed
 
 
+commentTextInit : CommentText
+commentTextInit =
+    ""
+
+
 init : ( Model, Cmd msg )
 init =
     ( Model
@@ -71,11 +76,6 @@ init =
         songsRememberedInit
     , Cmd.none
     )
-
-
-commentTextInit : CommentText
-commentTextInit =
-    ""
 
 
 pageIsExpandedInit : PageIsExpanded
