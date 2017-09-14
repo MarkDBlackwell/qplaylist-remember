@@ -62,8 +62,8 @@ import ModelInitialize
         , commentTextInit
         , processingCommentInit
         , processingLikeInit
-        , songRememberedCommentingIndexInit
-        , songRememberedCommentingInit
+        , songCommentingIndexInit
+        , songCommentingInit
         , songRememberedLikingInit
         )
 import Task
@@ -127,8 +127,8 @@ update msg model =
 
         CommentAreaOpenHand songRememberedIndex ->
             let
-                songRememberedCommentingNew : SongRememberedCommenting
-                songRememberedCommentingNew =
+                songCommentingNew : SongRememberedCommenting
+                songCommentingNew =
                     case List.head (List.drop songRememberedIndex model.songsRemembered) of
                         Nothing ->
                             Nothing
@@ -155,7 +155,7 @@ update msg model =
                         , commentAreaOptional = Open
                         , commentText = commentTextInit
                         , processingComment = True
-                        , songRememberedCommenting = songRememberedCommentingNew
+                        , songCommenting = songCommentingNew
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
@@ -169,7 +169,7 @@ update msg model =
                         , commentAreaOptional = Closed
                         , commentText = commentTextInit
                         , processingComment = processingCommentInit
-                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                        , songCommentingIndex = songCommentingIndexInit
                       }
                     , Cmd.none
                     )
@@ -195,12 +195,12 @@ update msg model =
             let
                 commentedShow : SongRemembered -> SongRemembered
                 commentedShow song =
-                    case model.songRememberedCommenting of
+                    case model.songCommenting of
                         Nothing ->
                             song
 
-                        Just songRememberedCommenting ->
-                            if songRemembered2SongBasic song /= songRememberedCommenting then
+                        Just songCommenting ->
+                            if songRemembered2SongBasic song /= songCommenting then
                                 song
                             else
                                 { song
@@ -217,7 +217,7 @@ update msg model =
                 , commentAreaOptional = commentAreaOptionalInit
                 , commentText = commentTextInit
                 , processingComment = processingCommentInit
-                , songRememberedCommenting = songRememberedCommentingInit
+                , songCommenting = songCommentingInit
                 , songsRemembered = songsRememberedNew
               }
             , msg2Cmd (succeed (HttpResponseTextLog appendCommentJson))
@@ -384,11 +384,11 @@ update msg model =
                               }
                             , focusInputPossibly model
                             )
-                        else if model.songRememberedCommentingIndex == Just songRememberedIndex then
+                        else if model.songCommentingIndex == Just songRememberedIndex then
                             ( { model
                                 | alertMessageText = alertMessageTextInit
                                 , awaitingServerResponse = awaitingServerResponseInit
-                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                                , songCommentingIndex = songCommentingIndexInit
                               }
                             , Cmd.none
                             )
@@ -396,7 +396,7 @@ update msg model =
                             ( { model
                                 | alertMessageText = alertMessageTextInit
                                 , awaitingServerResponse = awaitingServerResponseInit
-                                , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                                , songCommentingIndex = songCommentingIndexInit
                               }
                             , msg2Cmd (succeed (SongForgetHand songRememberedIndex))
                             )
@@ -459,7 +459,7 @@ update msg model =
                                     ( { model
                                         | alertMessageText = alertMessageTextInit
                                         , awaitingServerResponse = awaitingServerResponseInit
-                                        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
+                                        , songCommentingIndex = songCommentingIndexInit
                                       }
                                     , Cmd.none
                                     )

@@ -49,8 +49,8 @@ type alias Model =
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike
-    , songRememberedCommenting : SongRememberedCommenting
-    , songRememberedCommentingIndex : SongRememberedCommentingIndex
+    , songCommenting : SongRememberedCommenting
+    , songCommentingIndex : SongRememberedCommentingIndex
     , songRememberedLiking : SongRememberedLiking
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered

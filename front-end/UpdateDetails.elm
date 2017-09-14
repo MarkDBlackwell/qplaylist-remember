@@ -46,7 +46,7 @@ import ModelInitialize
         , commentTextInit
         , processingCommentInit
         , processingLikeInit
-        , songRememberedCommentingIndexInit
+        , songCommentingIndexInit
         , songRememberedLikingInit
         )
 import Task exposing (succeed)
@@ -74,7 +74,7 @@ likeOrCommentRequestUriText model likeOrCommentText =
     let
         artistTimeTitle : UriText
         artistTimeTitle =
-            case songRememberedCommentingIndex of
+            case songCommentingIndex of
                 Nothing ->
                     ""
 
@@ -94,13 +94,13 @@ likeOrCommentRequestUriText model likeOrCommentText =
         basename =
             "append.php"
 
-        songRememberedCommentingIndex : SongRememberedCommentingIndex
-        songRememberedCommentingIndex =
-            model.songRememberedCommentingIndex
+        songCommentingIndex : SongRememberedCommentingIndex
+        songCommentingIndex =
+            model.songCommentingIndex
 
         songSelected : Maybe SongRemembered
         songSelected =
-            case songRememberedCommentingIndex of
+            case songCommentingIndex of
                 Nothing ->
                     Nothing
 
@@ -109,7 +109,7 @@ likeOrCommentRequestUriText model likeOrCommentText =
 
         timeStamp : UriText
         timeStamp =
-            case songRememberedCommentingIndex of
+            case songCommentingIndex of
                 Nothing ->
                     ""
 
@@ -163,6 +163,6 @@ likeResponse model appendLikeJson =
 
 likingOrCommenting : Model -> Bool
 likingOrCommenting model =
-    --model.songRememberedCommentingIndex /= songRememberedCommentingIndexInit
+    --model.songCommentingIndex /= songCommentingIndexInit
     model.processingComment
         || model.processingLike

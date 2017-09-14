@@ -149,12 +149,12 @@ commentAreaPossibly model =
     if not model.processingComment then
         htmlNodeNull
     else
-        case model.songRememberedCommenting of
+        case model.songCommenting of
             Nothing ->
                 htmlNodeNull
 
-            Just songRememberedCommenting ->
-                commentArea model songRememberedCommenting
+            Just songCommenting ->
+                commentArea model songCommenting
 
 
 groupAttributes : SongGroup -> List (Attribute msg)

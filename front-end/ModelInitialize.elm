@@ -69,8 +69,8 @@ init =
         pageIsExpandedInit
         processingCommentInit
         processingLikeInit
-        songRememberedCommentingInit
-        songRememberedCommentingIndexInit
+        songCommentingInit
+        songCommentingIndexInit
         songRememberedLikingInit
         songsLatestFewInit
         songsRememberedInit
@@ -93,13 +93,13 @@ processingLikeInit =
     False
 
 
-songRememberedCommentingIndexInit : SongRememberedCommentingIndex
-songRememberedCommentingIndexInit =
+songCommentingIndexInit : SongRememberedCommentingIndex
+songCommentingIndexInit =
     Nothing
 
 
-songRememberedCommentingInit : SongRememberedCommenting
-songRememberedCommentingInit =
+songCommentingInit : SongRememberedCommenting
+songCommentingInit =
     Nothing
 
 
