@@ -15,6 +15,7 @@
 module UpdateDetails
     exposing
         ( focusInputPossibly
+        , likeOrCommentRequestUriText
         , likeOrCommentResponse
         , likeResponse
         , likingOrCommenting
@@ -30,6 +31,7 @@ import ModelDetails
         , CommentAreaClosedOpen
         , Model
         , SongRemembered
+        , SongRememberedCommentingIndex
         , SongsRemembered
         , songRemembered2LatestFew
         )
@@ -37,6 +39,7 @@ import ModelDetailsUpdate
     exposing
         ( AlertMessageClosedOpen
         , SongRememberedIndex
+        , UriText
         )
 import ModelInitialize
     exposing
@@ -54,6 +57,7 @@ import UpdateUtilities
         ( focusSet
         , msg2Cmd
         )
+import ViewUtilities exposing (relative)
 
 
 -- UPDATE
@@ -65,6 +69,66 @@ focusInputPossibly model =
         focusSet "input"
     else
         Cmd.none
+
+
+likeOrCommentRequestUriText : Model -> String -> UriText
+likeOrCommentRequestUriText model likeOrCommentText =
+    let
+        artistTimeTitle : UriText
+        artistTimeTitle =
+            case songRememberedCommentingIndex of
+                Nothing ->
+                    ""
+
+                Just _ ->
+                    case songSelected of
+                        Nothing ->
+                            ""
+
+                        Just songSelected ->
+                            songSelected.time
+                                ++ " "
+                                ++ songSelected.artist
+                                ++ ": "
+                                ++ songSelected.title
+
+        basename : UriText
+        basename =
+            "append.php"
+
+        songRememberedCommentingIndex : SongRememberedCommentingIndex
+        songRememberedCommentingIndex =
+            model.songRememberedCommentingIndex
+
+        songSelected : Maybe SongRemembered
+        songSelected =
+            case songRememberedCommentingIndex of
+                Nothing ->
+                    Nothing
+
+                Just index ->
+                    List.head (List.drop index model.songsRemembered)
+
+        timeStamp : UriText
+        timeStamp =
+            case songRememberedCommentingIndex of
+                Nothing ->
+                    ""
+
+                Just _ ->
+                    case songSelected of
+                        Nothing ->
+                            ""
+
+                        Just song ->
+                            song.timeStamp
+    in
+    relative
+        [ basename ]
+        [ ( "timestamp", timeStamp )
+        , ( "song", artistTimeTitle )
+        , ( "comment", likeOrCommentText )
+        ]
 
 
 likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )

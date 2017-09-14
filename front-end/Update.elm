@@ -71,6 +71,7 @@ import Task
 import UpdateDetails
     exposing
         ( focusInputPossibly
+        , likeOrCommentRequestUriText
         , likeOrCommentResponse
         , likeResponse
         , likingOrCommenting
@@ -82,7 +83,6 @@ import UpdateUtilities
         , httpErrorMessageScreen
         , msg2Cmd
         )
-import View exposing (likeOrCommentRequestUriText)
 import ViewUtilities exposing (relative)
 
 

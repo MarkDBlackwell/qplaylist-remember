@@ -14,9 +14,10 @@
 
 module View
     exposing
-        ( likeOrCommentRequestUriText
-        , view
+        ( view
         )
+
+--import UpdateDetails exposing (likeOrCommentRequestUriText)
 
 import Html
     exposing
@@ -63,7 +64,6 @@ import ModelDetails
 import ModelDetailsUpdate
     exposing
         ( SongRememberedIndex
-        , UriText
         )
 import ModelDetailsView
     exposing
@@ -89,7 +89,6 @@ import ViewStyleCalc exposing (styleCalc)
 import ViewUtilities
     exposing
         ( htmlNodeNull
-        , relative
         , showCommentButtons
         , songGroup2String
         )
@@ -166,66 +165,6 @@ groupAttributes group =
             ++ songGroup2String group
         )
     ]
-
-
-likeOrCommentRequestUriText : Model -> String -> UriText
-likeOrCommentRequestUriText model likeOrCommentText =
-    let
-        artistTimeTitle : UriText
-        artistTimeTitle =
-            case songRememberedCommentingIndex of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just songSelected ->
-                            songSelected.time
-                                ++ " "
-                                ++ songSelected.artist
-                                ++ ": "
-                                ++ songSelected.title
-
-        basename : UriText
-        basename =
-            "append.php"
-
-        songRememberedCommentingIndex : SongRememberedCommentingIndex
-        songRememberedCommentingIndex =
-            model.songRememberedCommentingIndex
-
-        songSelected : Maybe SongRemembered
-        songSelected =
-            case songRememberedCommentingIndex of
-                Nothing ->
-                    Nothing
-
-                Just index ->
-                    List.head (List.drop index model.songsRemembered)
-
-        timeStamp : UriText
-        timeStamp =
-            case songRememberedCommentingIndex of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just song ->
-                            song.timeStamp
-    in
-    relative
-        [ basename ]
-        [ ( "timestamp", timeStamp )
-        , ( "song", artistTimeTitle )
-        , ( "comment", likeOrCommentText )
-        ]
 
 
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
