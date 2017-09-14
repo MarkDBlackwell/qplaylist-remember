@@ -51,6 +51,7 @@ import ModelDetailsUpdate
         , HttpErrorMessageText
         , HttpRequestText
         , LikeText
+        , SongRememberedIndex
         , UriText
         )
 import ModelInitialize
@@ -61,6 +62,7 @@ import ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
+        , songRememberedCommentingInit
         , songRememberedLikingInit
         )
 import Task
@@ -72,7 +74,6 @@ import UpdateDetails
     exposing
         ( focusInputPossibly
         , likeOrCommentRequestUriText
-        , likeOrCommentResponse
         , likeResponse
         , likingOrCommenting
         )
@@ -188,7 +189,35 @@ update msg model =
             )
 
         CommentResponse (Ok appendCommentJson) ->
-            likeOrCommentResponse model appendCommentJson
+            let
+                commentedShow : SongRemembered -> SongRemembered
+                commentedShow song =
+                    case model.songRememberedCommenting of
+                        Nothing ->
+                            song
+
+                        Just songRememberedCommenting ->
+                            if songRemembered2LatestFew song /= songRememberedCommenting then
+                                song
+                            else
+                                { song
+                                    | likedOrCommented = True
+                                }
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    List.map commentedShow model.songsRemembered
+            in
+            ( { model
+                | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , commentText = commentTextInit
+                , processingComment = processingCommentInit
+                , songRememberedCommenting = songRememberedCommentingInit
+                , songsRemembered = songsRememberedNew
+              }
+            , msg2Cmd (succeed (HttpResponseTextLog appendCommentJson))
+            )
 
         CommentSendHand ->
             case stateVector of

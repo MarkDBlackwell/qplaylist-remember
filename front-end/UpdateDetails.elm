@@ -16,7 +16,6 @@ module UpdateDetails
     exposing
         ( focusInputPossibly
         , likeOrCommentRequestUriText
-        , likeOrCommentResponse
         , likeResponse
         , likingOrCommenting
         )
@@ -38,7 +37,6 @@ import ModelDetails
 import ModelDetailsUpdate
     exposing
         ( AlertMessageClosedOpen
-        , SongRememberedIndex
         , UriText
         )
 import ModelInitialize
@@ -129,35 +127,6 @@ likeOrCommentRequestUriText model likeOrCommentText =
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]
-
-
-likeOrCommentResponse : Model -> String -> ( Model, Cmd Msg )
-likeOrCommentResponse model appendLikeOrCommentJson =
-    let
-        likedOrCommentedShow : SongRememberedIndex -> SongRemembered -> SongRemembered
-        likedOrCommentedShow index song =
-            if model.songRememberedCommentingIndex == Just index then
-                { song
-                    | likedOrCommented = True
-                }
-            else
-                song
-
-        songsRememberedNew : SongsRemembered
-        songsRememberedNew =
-            List.indexedMap likedOrCommentedShow model.songsRemembered
-    in
-    ( { model
-        | alertMessageText = alertMessageTextInit
-        , awaitingServerResponse = awaitingServerResponseInit
-        , commentText = commentTextInit
-        , processingComment = processingCommentInit
-        , processingLike = processingLikeInit
-        , songRememberedCommentingIndex = songRememberedCommentingIndexInit
-        , songsRemembered = songsRememberedNew
-      }
-    , msg2Cmd (succeed (HttpResponseTextLog appendLikeOrCommentJson))
-    )
 
 
 likeResponse : Model -> String -> ( Model, Cmd Msg )

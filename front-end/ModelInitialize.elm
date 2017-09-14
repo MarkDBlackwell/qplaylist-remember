@@ -12,20 +12,7 @@
 -}
 
 
-module ModelInitialize
-    exposing
-        ( alertMessageTextInit
-        , awaitingServerResponseInit
-        , commentTextInit
-        , init
-        , pageIsExpandedInit
-        , processingCommentInit
-        , processingLikeInit
-        , songRememberedCommentingIndexInit
-        , songRememberedLikingInit
-        , songsLatestFewInit
-        , songsRememberedInit
-        )
+module ModelInitialize exposing (..)
 
 import ModelDetails
     exposing
