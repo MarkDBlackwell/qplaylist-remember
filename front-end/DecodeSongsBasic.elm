@@ -40,7 +40,7 @@ import ModelDetailsUpdate
 
 
 type alias SongsBasicWithTag =
-    { latestFew : SongsBasic }
+    { dummyTag : SongsBasic }
 
 
 decodeSongsBasic : HttpResponseText -> SongsBasic
@@ -50,6 +50,10 @@ decodeSongsBasic jsonRawText =
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
+        asRecord : Result DecodeErrorMessageText SongsBasicWithTag
+        asRecord =
+            decodeString decodeSongsBasicWithTag jsonRawText
+
         decodeSongBasic : Decoder SongBasic
         decodeSongBasic =
             map4 SongBasic
@@ -66,14 +70,10 @@ decodeSongsBasic jsonRawText =
         tag : String
         tag =
             "latestFive"
-
-        tryRecord : Result DecodeErrorMessageText SongsBasicWithTag
-        tryRecord =
-            decodeString decodeSongsBasicWithTag jsonRawText
     in
-    case tryRecord of
+    case asRecord of
         Err _ ->
             []
 
         Ok record ->
-            record.latestFew
+            record.dummyTag
