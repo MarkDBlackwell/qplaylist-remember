@@ -119,7 +119,7 @@ commentArea model song =
                     ++ " ("
                     ++ song.time
                     ++ ")"
-                    ++ statistics
+                 --++ statistics
                 )
             ]
         , input
