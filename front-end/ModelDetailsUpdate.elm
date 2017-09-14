@@ -25,7 +25,6 @@ module ModelDetailsUpdate
         , QueryPairs
         , SongLatestFewIndex
         , SongRememberedIndex
-        , SongsLatestFewTagged
         , UriText
         )
 
@@ -88,10 +87,6 @@ type alias SongLatestFewIndex =
 
 type alias SongRememberedIndex =
     Int
-
-
-type alias SongsLatestFewTagged =
-    { latestFew : SongsLatestFew }
 
 
 type alias UriText =

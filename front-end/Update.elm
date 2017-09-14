@@ -15,7 +15,7 @@
 module Update exposing (update)
 
 import Debug exposing (log)
-import DecodeLatestFew exposing (decodeSongsLatestFew)
+import DecodeSongsBasic exposing (decodeSongsBasic)
 import Dom exposing (focus)
 import Http
     exposing
@@ -532,7 +532,7 @@ update msg model =
             let
                 songsLatestFewNew : SongsLatestFew
                 songsLatestFewNew =
-                    decodeSongsLatestFew jsonRawText
+                    decodeSongsBasic jsonRawText
             in
             ( { model
                 | alertMessageText = alertMessageTextInit

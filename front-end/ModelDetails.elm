@@ -29,11 +29,6 @@ type alias AwaitingServerResponse =
     Bool
 
 
-type Optional
-    = Closed
-    | Open
-
-
 type alias CommentAreaOptional =
     Optional
 
@@ -60,6 +55,11 @@ type alias Model =
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
+
+
+type Optional
+    = Closed
+    | Open
 
 
 type alias PageIsExpanded =
@@ -106,6 +106,10 @@ type alias SongRememberedCommentingIndex =
 
 type alias SongRememberedLiking =
     Maybe SongBasic
+
+
+type alias SongsBasic =
+    List SongBasic
 
 
 type alias SongsLatestFew =

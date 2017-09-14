@@ -12,7 +12,7 @@
 -}
 
 
-module DecodeLatestFew exposing (decodeSongsLatestFew)
+module DecodeSongsBasic exposing (decodeSongsBasic)
 
 import Json.Decode
     exposing
@@ -27,21 +27,24 @@ import Json.Decode
 import ModelDetails
     exposing
         ( SongBasic
-        , SongsLatestFew
+        , SongsBasic
         )
 import ModelDetailsUpdate
     exposing
         ( DecodeErrorMessageText
         , HttpResponseText
-        , SongsLatestFewTagged
         )
 
 
 -- UPDATE
 
 
-decodeSongsLatestFew : HttpResponseText -> SongsLatestFew
-decodeSongsLatestFew jsonRawText =
+type alias SongsBasicTagged =
+    { latestFew : SongsBasic }
+
+
+decodeSongsBasic : HttpResponseText -> SongsBasic
+decodeSongsBasic jsonRawText =
     --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
@@ -55,14 +58,14 @@ decodeSongsLatestFew jsonRawText =
                 (field "timeStamp" string)
                 (field "title" string)
 
-        tagged2Record : Decoder SongsLatestFewTagged
-        tagged2Record =
-            map SongsLatestFewTagged
+        removeTag : Decoder SongsBasicTagged
+        removeTag =
+            map SongsBasicTagged
                 (field "latestFive" (list decodeSong))
 
-        tryRecord : Result DecodeErrorMessageText SongsLatestFewTagged
+        tryRecord : Result DecodeErrorMessageText SongsBasicTagged
         tryRecord =
-            decodeString tagged2Record jsonRawText
+            decodeString removeTag jsonRawText
     in
     case tryRecord of
         Err _ ->
