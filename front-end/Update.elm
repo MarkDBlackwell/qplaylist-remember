@@ -462,68 +462,42 @@ update msg model =
                         )
 
         SongRememberHand songLatestFewIndex ->
-            --(alertMessage, awaitingServer, commentArea)
-            case stateVector of
-                ( _, _, _ ) ->
-                    let
-                        songClean : SongRemembered -> SongRemembered
-                        songClean song =
-                            { song | likedOrCommented = False }
+            let
+                songLatestFewSelected : Maybe SongLatestFew
+                songLatestFewSelected =
+                    List.head (List.drop songLatestFewIndex model.songsLatestFew)
 
-                        songLatestFewSelected : Maybe SongLatestFew
-                        songLatestFewSelected =
-                            List.head (List.drop songLatestFewIndex model.songsLatestFew)
-                    in
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
                     case songLatestFewSelected of
                         Nothing ->
-                            ( model
-                            , focusInputPossibly model
-                            )
+                            model.songsRemembered
 
                         Just songLatestFewSelected ->
-                            let
-                                songDiffers : SongRemembered -> Bool
-                                songDiffers songRemembered =
-                                    songLatestFewSelected /= songRemembered2SongBasic songRemembered
-
-                                songsDifferent : SongsRemembered
-                                songsDifferent =
-                                    List.filter songDiffers model.songsRemembered
-
-                                songsRememberedNew : SongsRemembered
-                                songsRememberedNew =
-                                    if
-                                        List.member
-                                            songLatestFewSelected
-                                            (List.map songRemembered2SongBasic model.songsRemembered)
-                                    then
-                                        model.songsRemembered
-                                    else
-                                        songsDifferent
-                                            ++ [ songBasic2SongRemembered songLatestFewSelected ]
-                            in
-                            if likingOrCommenting model then
-                                if model.processingComment then
-                                    ( { model
-                                        | alertMessageText = alertMessageTextInit
-                                        , awaitingServerResponse = awaitingServerResponseInit
-                                      }
-                                    , focusInputPossibly model
-                                    )
-                                else
-                                    ( { model
-                                        | alertMessageText = alertMessageTextInit
-                                        , awaitingServerResponse = awaitingServerResponseInit
-                                        , songCommentingIndex = songCommentingIndexInit
-                                      }
-                                    , Cmd.none
-                                    )
+                            if
+                                List.member
+                                    songLatestFewSelected
+                                    (List.map songRemembered2SongBasic model.songsRemembered)
+                            then
+                                model.songsRemembered
                             else
-                                ( { model
-                                    | songsRemembered = songsRememberedNew
-                                  }
-                                , focusInputPossibly model
-                                )
+                                model.songsRemembered
+                                    ++ [ songBasic2SongRemembered songLatestFewSelected ]
+            in
+            --(alertMessage, awaitingServer, commentArea)
+            case stateVector of
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                _ ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , songsRemembered = songsRememberedNew
+                      }
+                    , focusInputPossibly model
+                    )
 
         SongsLatestFewRefreshHand ->
             let
