@@ -444,45 +444,48 @@ update msg model =
                                 )
 
         SongsLatestFewRefreshHand ->
+            let
+                basename : UriText
+                basename =
+                    "LatestFive.json"
+
+                request : Request HttpRequestText
+                request =
+                    getString (log "LatestFew" requestUriText)
+
+                requestUriText : UriText
+                requestUriText =
+                    relative
+                        [ ".."
+                        , subUri
+                        , basename
+                        ]
+                        []
+
+                songsLatestFewRequest : Cmd Msg
+                songsLatestFewRequest =
+                    send SongsLatestFewResponse request
+
+                subUri : UriText
+                subUri =
+                    "wtmdapp"
+            in
             case stateVector of
-                ( _, _, _ ) ->
-                    let
-                        basename : UriText
-                        basename =
-                            "LatestFive.json"
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
 
-                        request : Request HttpRequestText
-                        request =
-                            getString (log "LatestFew" requestUriText)
-
-                        requestUriText : UriText
-                        requestUriText =
-                            relative
-                                [ ".."
-                                , subUri
-                                , basename
-                                ]
-                                []
-
-                        songsLatestFewRequest : Cmd Msg
-                        songsLatestFewRequest =
-                            send SongsLatestFewResponse request
-
-                        subUri : UriText
-                        subUri =
-                            "wtmdapp"
-                    in
-                    if likingOrCommenting model then
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
+                _ ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , Cmd.batch
+                        [ songsLatestFewRequest
                         , focusInputPossibly model
-                        )
-                    else
-                        ( model
-                        , Cmd.batch [ focusInputPossibly model, songsLatestFewRequest ]
-                        )
+                        ]
+                    )
 
         SongsLatestFewResponse (Err httpError) ->
             let
@@ -493,8 +496,9 @@ update msg model =
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
+                , awaitingServerResponse = awaitingServerResponseInit
               }
-            , Cmd.none
+            , focusInputPossibly model
             )
 
         SongsLatestFewResponse (Ok jsonRawText) ->
@@ -505,7 +509,8 @@ update msg model =
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = awaitingServerResponseInit
                 , songsLatestFew = songsLatestFewNew
               }
-            , Cmd.none
+            , focusInputPossibly model
             )
