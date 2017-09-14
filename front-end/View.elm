@@ -54,6 +54,7 @@ import MessageDetails
 import ModelDetails
     exposing
         ( Model
+        , SongBasic
         , SongRemembered
         , SongRememberedCommentingIndex
         , SongsRemembered
@@ -97,7 +98,7 @@ import ViewUtilities
 -- VIEW
 
 
-commentArea : Model -> SongRemembered -> Html Msg
+commentArea : Model -> SongBasic -> Html Msg
 commentArea model song =
     let
         statistics : String
@@ -149,17 +150,12 @@ commentAreaPossibly model =
     if not model.processingComment then
         htmlNodeNull
     else
-        case model.songRememberedCommentingIndex of
+        case model.songRememberedCommenting of
             Nothing ->
                 htmlNodeNull
 
-            Just index ->
-                case songMaybe index of
-                    Nothing ->
-                        htmlNodeNull
-
-                    Just song ->
-                        commentArea model song
+            Just songRememberedCommenting ->
+                commentArea model songRememberedCommenting
 
 
 groupAttributes : SongGroup -> List (Attribute msg)

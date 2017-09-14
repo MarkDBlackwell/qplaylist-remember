@@ -38,7 +38,8 @@ import ModelDetails
         , PageIsExpanded
         , SongLatestFew
         , SongRemembered
-        , SongRememberedLiked
+        , SongRememberedCommenting
+        , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
         , songLatestFew2Remembered
@@ -60,7 +61,7 @@ import ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
-        , songRememberedLikedInit
+        , songRememberedLikingInit
         )
 import Task
     exposing
@@ -123,6 +124,16 @@ update msg model =
                     )
 
         CommentAreaOpenHand songRememberedIndex ->
+            let
+                songRememberedCommentingNew : SongRememberedCommenting
+                songRememberedCommentingNew =
+                    case List.head (List.drop songRememberedIndex model.songsRemembered) of
+                        Nothing ->
+                            Nothing
+
+                        Just songSelected ->
+                            Just (songRemembered2LatestFew songSelected)
+            in
             case stateVector of
                 ( _, True, _ ) ->
                     ( model
@@ -142,6 +153,7 @@ update msg model =
                         , commentAreaClosedOpen = Open
                         , commentText = commentTextInit
                         , processingComment = True
+                        , songRememberedCommenting = songRememberedCommentingNew
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
@@ -240,8 +252,8 @@ update msg model =
                 likeText =
                     "Loved it!"
 
-                songRememberedLikedNew : SongRememberedLiked
-                songRememberedLikedNew =
+                songRememberedLikingNew : SongRememberedLiking
+                songRememberedLikingNew =
                     case List.head (List.drop songRememberedIndex model.songsRemembered) of
                         Nothing ->
                             Nothing
@@ -261,7 +273,7 @@ update msg model =
                     ( { model
                         | awaitingServerResponse = True
                         , processingLike = True
-                        , songRememberedLiked = songRememberedLikedNew
+                        , songRememberedLiking = songRememberedLikingNew
                       }
                     , Cmd.batch
                         [ send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model likeText)))
@@ -280,7 +292,7 @@ update msg model =
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
                 , processingLike = processingLikeInit
-                , songRememberedLiked = songRememberedLikedInit
+                , songRememberedLiking = songRememberedLikingInit
               }
             , Cmd.none
             )

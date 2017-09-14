@@ -54,8 +54,9 @@ type alias Model =
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike
+    , songRememberedCommenting : SongRememberedCommenting
     , songRememberedCommentingIndex : SongRememberedCommentingIndex
-    , songRememberedLiked : SongRememberedLiked
+    , songRememberedLiking : SongRememberedLiking
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
     }
@@ -95,11 +96,15 @@ type alias SongRemembered =
     }
 
 
+type alias SongRememberedCommenting =
+    Maybe SongBasic
+
+
 type alias SongRememberedCommentingIndex =
     Maybe Int
 
 
-type alias SongRememberedLiked =
+type alias SongRememberedLiking =
     Maybe SongBasic
 
 

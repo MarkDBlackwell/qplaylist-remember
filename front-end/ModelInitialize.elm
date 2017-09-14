@@ -22,7 +22,7 @@ module ModelInitialize
         , processingCommentInit
         , processingLikeInit
         , songRememberedCommentingIndexInit
-        , songRememberedLikedInit
+        , songRememberedLikingInit
         , songsLatestFewInit
         , songsRememberedInit
         )
@@ -41,8 +41,9 @@ import ModelDetails
         , PageIsExpanded
         , ProcessingComment
         , ProcessingLike
+        , SongRememberedCommenting
         , SongRememberedCommentingIndex
-        , SongRememberedLiked
+        , SongRememberedLiking
         , SongsLatestFew
         , SongsRemembered
         )
@@ -76,8 +77,9 @@ init =
         pageIsExpandedInit
         processingCommentInit
         processingLikeInit
+        songRememberedCommentingInit
         songRememberedCommentingIndexInit
-        songRememberedLikedInit
+        songRememberedLikingInit
         songsLatestFewInit
         songsRememberedInit
     , Cmd.none
@@ -109,8 +111,13 @@ songRememberedCommentingIndexInit =
     Nothing
 
 
-songRememberedLikedInit : SongRememberedLiked
-songRememberedLikedInit =
+songRememberedCommentingInit : SongRememberedCommenting
+songRememberedCommentingInit =
+    Nothing
+
+
+songRememberedLikingInit : SongRememberedLiking
+songRememberedLikingInit =
     Nothing
 
 
