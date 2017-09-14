@@ -536,7 +536,7 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
+                        , awaitingServerResponse = True
                       }
                     , Cmd.batch
                         [ songsLatestFewRequest
