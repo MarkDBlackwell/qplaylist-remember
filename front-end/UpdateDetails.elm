@@ -15,7 +15,6 @@
 module UpdateDetails
     exposing
         ( focusInputPossibly
-        , likeOrCommentRequestUriText
         , likingOrCommenting
         )
 
@@ -28,22 +27,15 @@ import ModelDetails
             ( Closed
             , Open
             )
-        , SongCommentingIndex
         , SongRemembered
         , SongsRemembered
         , songRemembered2SongBasic
-        )
-import ModelDetailsUpdate
-    exposing
-        ( AlertMessageOptional
-        , UriText
         )
 import UpdateUtilities
     exposing
         ( focusSet
         , msg2Cmd
         )
-import ViewUtilities exposing (relative)
 
 
 -- UPDATE
@@ -55,66 +47,6 @@ focusInputPossibly model =
         focusSet "input"
     else
         Cmd.none
-
-
-likeOrCommentRequestUriText : Model -> String -> UriText
-likeOrCommentRequestUriText model likeOrCommentText =
-    let
-        artistTimeTitle : UriText
-        artistTimeTitle =
-            case songCommentingIndex of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just songSelected ->
-                            songSelected.time
-                                ++ " "
-                                ++ songSelected.artist
-                                ++ ": "
-                                ++ songSelected.title
-
-        basename : UriText
-        basename =
-            "append.php"
-
-        songCommentingIndex : SongCommentingIndex
-        songCommentingIndex =
-            model.songCommentingIndex
-
-        songSelected : Maybe SongRemembered
-        songSelected =
-            case songCommentingIndex of
-                Nothing ->
-                    Nothing
-
-                Just index ->
-                    List.head (List.drop index model.songsRemembered)
-
-        timeStamp : UriText
-        timeStamp =
-            case songCommentingIndex of
-                Nothing ->
-                    ""
-
-                Just _ ->
-                    case songSelected of
-                        Nothing ->
-                            ""
-
-                        Just song ->
-                            song.timeStamp
-    in
-    relative
-        [ basename ]
-        [ ( "timestamp", timeStamp )
-        , ( "song", artistTimeTitle )
-        , ( "comment", likeOrCommentText )
-        ]
 
 
 likingOrCommenting : Model -> Bool

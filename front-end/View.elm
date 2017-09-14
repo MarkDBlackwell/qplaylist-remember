@@ -17,8 +17,6 @@ module View
         ( view
         )
 
---import UpdateDetails exposing (likeOrCommentRequestUriText)
-
 import Html
     exposing
         ( Attribute

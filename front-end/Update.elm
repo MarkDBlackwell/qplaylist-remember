@@ -38,6 +38,7 @@ import ModelDetails
             )
         , PageIsExpanded
         , SongCommenting
+        , SongCommentingIndex
         , SongLatestFew
         , SongLiking
         , SongLikingOrCommenting
@@ -76,7 +77,6 @@ import Task
 import UpdateDetails
     exposing
         ( focusInputPossibly
-        , likeOrCommentRequestUriText
         , likingOrCommenting
         )
 import UpdateUtilities
@@ -101,6 +101,65 @@ update msg model =
                 ++ " (while attempting to send "
                 ++ likeOrCommentName
                 ++ " to server)"
+
+        likeOrCommentRequestUriText : Model -> String -> UriText
+        likeOrCommentRequestUriText model likeOrCommentText =
+            let
+                artistTimeTitle : UriText
+                artistTimeTitle =
+                    case songCommentingIndex of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just songSelected ->
+                                    songSelected.time
+                                        ++ " "
+                                        ++ songSelected.artist
+                                        ++ ": "
+                                        ++ songSelected.title
+
+                basename : UriText
+                basename =
+                    "append.php"
+
+                songCommentingIndex : SongCommentingIndex
+                songCommentingIndex =
+                    model.songCommentingIndex
+
+                songSelected : Maybe SongRemembered
+                songSelected =
+                    case songCommentingIndex of
+                        Nothing ->
+                            Nothing
+
+                        Just index ->
+                            List.head (List.drop index model.songsRemembered)
+
+                timeStamp : UriText
+                timeStamp =
+                    case songCommentingIndex of
+                        Nothing ->
+                            ""
+
+                        Just _ ->
+                            case songSelected of
+                                Nothing ->
+                                    ""
+
+                                Just song ->
+                                    song.timeStamp
+            in
+            relative
+                [ basename ]
+                [ ( "timestamp", timeStamp )
+                , ( "song", artistTimeTitle )
+                , ( "comment", likeOrCommentText )
+                ]
 
         likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
         likedOrCommentedShow songLikingOrCommenting song =
@@ -251,13 +310,13 @@ update msg model =
                     if String.isEmpty model.commentText then
                         ( { model
                             | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
                           }
                         , focusInputPossibly model
                         )
                     else
                         ( { model
-                            | awaitingServerResponse = True
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = True
                           }
                         , Cmd.batch
                             [ commentRequest
@@ -294,9 +353,9 @@ update msg model =
 
         LikeButtonProcessHand songRememberedIndex ->
             let
-                likeText : LikeText
-                likeText =
-                    "Loved it!"
+                likeRequest : Cmd Msg
+                likeRequest =
+                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model "Loved it!")))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
@@ -314,7 +373,7 @@ update msg model =
                         , songLiking = songLikingOrCommentingNew songRememberedIndex
                       }
                     , Cmd.batch
-                        [ send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model likeText)))
+                        [ likeRequest
                         , focusInputPossibly model
                         ]
                     )
