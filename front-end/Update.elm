@@ -333,7 +333,11 @@ update msg model =
             let
                 likeRequest : Cmd Msg
                 likeRequest =
-                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model.songLiking "Loved it!")))
+                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText songLikingNew "Loved it!")))
+
+                songLikingNew : SongLikingOrCommenting
+                songLikingNew =
+                    songLikingOrCommentingNew songRememberedIndex
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
@@ -347,7 +351,7 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
                         , processingLike = True
-                        , songLiking = songLikingOrCommentingNew songRememberedIndex
+                        , songLiking = songLikingNew
                       }
                     , Cmd.batch
                         [ likeRequest
