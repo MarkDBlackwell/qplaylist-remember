@@ -39,7 +39,7 @@ import ModelDetailsUpdate
 -- UPDATE
 
 
-type alias SongsBasicTagged =
+type alias SongsBasicWithTag =
     { latestFew : SongsBasic }
 
 
@@ -58,18 +58,18 @@ decodeSongsBasic jsonRawText =
                 (field "timeStamp" string)
                 (field "title" string)
 
-        decodeSongsBasicTagged : Decoder SongsBasicTagged
-        decodeSongsBasicTagged =
-            map SongsBasicTagged
+        decodeSongsBasicWithTag : Decoder SongsBasicWithTag
+        decodeSongsBasicWithTag =
+            map SongsBasicWithTag
                 (field tag (list decodeSongBasic))
 
         tag : String
         tag =
             "latestFive"
 
-        tryRecord : Result DecodeErrorMessageText SongsBasicTagged
+        tryRecord : Result DecodeErrorMessageText SongsBasicWithTag
         tryRecord =
-            decodeString decodeSongsBasicTagged jsonRawText
+            decodeString decodeSongsBasicWithTag jsonRawText
     in
     case tryRecord of
         Err _ ->
