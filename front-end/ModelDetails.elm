@@ -130,18 +130,18 @@ type alias Title =
 
 songBasic2SongRemembered : SongBasic -> SongRemembered
 songBasic2SongRemembered song =
-    { artist = song.artist
-    , likedOrCommented = False
-    , time = song.time
-    , timeStamp = song.timeStamp
-    , title = song.title
-    }
+    SongRemembered
+        song.artist
+        False
+        song.time
+        song.timeStamp
+        song.title
 
 
 songRemembered2SongBasic : SongRemembered -> SongBasic
 songRemembered2SongBasic song =
-    { artist = song.artist
-    , time = song.time
-    , timeStamp = song.timeStamp
-    , title = song.title
-    }
+    SongBasic
+        song.artist
+        song.time
+        song.timeStamp
+        song.title
