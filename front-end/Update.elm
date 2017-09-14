@@ -58,6 +58,7 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
+        , commentAreaClosedOpenInit
         , commentTextInit
         , processingCommentInit
         , processingLikeInit
@@ -181,6 +182,7 @@ update msg model =
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
+                , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
                 [ msg2Cmd (succeed (HttpResponseTextLog (httpErrorMessageLogging httpError)))
@@ -211,6 +213,7 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
+                , commentAreaClosedOpen = commentAreaClosedOpenInit
                 , commentText = commentTextInit
                 , processingComment = processingCommentInit
                 , songRememberedCommenting = songRememberedCommentingInit
