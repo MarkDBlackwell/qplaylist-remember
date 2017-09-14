@@ -37,6 +37,7 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
+        , SongBasic
         , SongCommenting
         , SongCommentingIndex
         , SongLatestFew
@@ -413,13 +414,26 @@ update msg model =
         SongBuyAnchorProcessHand ->
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
-                ( _, _, _ ) ->
+                _ ->
                     ( model
                     , focusInputPossibly model
                     )
 
         SongForgetHand songRememberedIndex ->
             let
+                songRemembered : Maybe SongRemembered
+                songRemembered =
+                    List.head (List.drop songRememberedIndex model.songsRemembered)
+
+                songRememberedCompare : Maybe SongBasic
+                songRememberedCompare =
+                    case songRemembered of
+                        Nothing ->
+                            Nothing
+
+                        Just songRemembered ->
+                            Just (songRemembered2SongBasic songRemembered)
+
                 songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
                     List.take songRememberedIndex model.songsRemembered
@@ -433,36 +447,18 @@ update msg model =
                     )
 
                 _ ->
-                    if likingOrCommenting model then
-                        --if String.isEmpty model.alertMessageText then
-                        if model.processingComment then
-                            ( { model
-                                | alertMessageText = alertMessageTextInit
-                                , awaitingServerResponse = awaitingServerResponseInit
-                              }
-                            , focusInputPossibly model
-                            )
-                        else if model.songCommentingIndex == Just songRememberedIndex then
-                            ( { model
-                                | alertMessageText = alertMessageTextInit
-                                , awaitingServerResponse = awaitingServerResponseInit
-                                , songCommentingIndex = songCommentingIndexInit
-                              }
-                            , Cmd.none
-                            )
-                        else
-                            ( { model
-                                | alertMessageText = alertMessageTextInit
-                                , awaitingServerResponse = awaitingServerResponseInit
-                                , songCommentingIndex = songCommentingIndexInit
-                              }
-                            , msg2Cmd (succeed (SongForgetHand songRememberedIndex))
-                            )
+                    if model.songCommenting == songRememberedCompare then
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                          }
+                        , focusInputPossibly model
+                        )
                     else
                         ( { model
-                            | songsRemembered = songsRememberedWithoutOne
+                            | alertMessageText = alertMessageTextInit
+                            , songsRemembered = songsRememberedWithoutOne
                           }
-                        , focusSet "refresh"
+                        , focusInputPossibly model
                         )
 
         SongRememberHand songLatestFewIndex ->
