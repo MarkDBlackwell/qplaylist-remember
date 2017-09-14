@@ -238,11 +238,7 @@ update msg model =
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model commentText)))
-
-                commentText : CommentText
-                commentText =
-                    model.commentText
+                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model model.commentText)))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
