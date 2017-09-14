@@ -117,7 +117,6 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
                         , commentText = text
                       }
                     , Cmd.none
@@ -125,7 +124,12 @@ update msg model =
 
         CommentAreaOpenHand songRememberedIndex ->
             case stateVector of
-                ( _, _, Open ) ->
+                ( _, True, _ ) ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                ( _, False, Open ) ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                       }
@@ -309,7 +313,7 @@ update msg model =
 
         PageMorphHand ->
             case stateVector of
-                ( _, _, _ ) ->
+                _ ->
                     let
                         pageIsExpandedNew : PageIsExpanded
                         pageIsExpandedNew =
@@ -321,20 +325,12 @@ update msg model =
                             else
                                 not model.pageIsExpanded
                     in
-                    if likingOrCommenting model then
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
-                        , focusInputPossibly model
-                        )
-                    else
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , pageIsExpanded = pageIsExpandedNew
-                          }
-                        , focusInputPossibly model
-                        )
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , pageIsExpanded = pageIsExpandedNew
+                      }
+                    , focusInputPossibly model
+                    )
 
         SongBuyAnchorProcessHand ->
             case stateVector of
