@@ -19,7 +19,8 @@ import DecodeSongsBasic exposing (decodeSongsBasic)
 import Dom exposing (focus)
 import Http
     exposing
-        ( Request
+        ( Error
+        , Request
         , getString
         , send
         )
@@ -94,6 +95,13 @@ import ViewUtilities exposing (relative)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        alertMessageTextLikeOrComment : Error -> String -> AlertMessageText
+        alertMessageTextLikeOrComment httpError likeOrCommentName =
+            httpErrorMessageScreen httpError
+                ++ " (while attempting to send "
+                ++ likeOrCommentName
+                ++ " to server)"
+
         likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
         likedOrCommentedShow songLikingOrCommenting song =
             case songLikingOrCommenting of
@@ -198,14 +206,8 @@ update msg model =
                     )
 
         CommentResponse (Err httpError) ->
-            let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    httpErrorMessageScreen httpError
-                        ++ " (while attempting to send comment to server)"
-            in
             ( { model
-                | alertMessageText = alertMessageTextNew
+                | alertMessageText = alertMessageTextLikeOrComment httpError "comment"
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
@@ -322,14 +324,8 @@ update msg model =
                     )
 
         LikeResponse (Err httpError) ->
-            let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    httpErrorMessageScreen httpError
-                        ++ " (while attempting to send Like to server)"
-            in
             ( { model
-                | alertMessageText = alertMessageTextNew
+                | alertMessageText = alertMessageTextLikeOrComment httpError "Like"
                 , awaitingServerResponse = awaitingServerResponseInit
                 , processingLike = processingLikeInit
                 , songLiking = songLikingInit
