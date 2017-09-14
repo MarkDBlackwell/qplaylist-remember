@@ -102,8 +102,8 @@ update msg model =
                 ++ likeOrCommentName
                 ++ " to server)"
 
-        likeOrCommentRequestUriText : Model -> String -> UriText
-        likeOrCommentRequestUriText model likeOrCommentText =
+        likeOrCommentRequestUriText : String -> UriText
+        likeOrCommentRequestUriText likeOrCommentText =
             let
                 artistTimeTitle : UriText
                 artistTimeTitle =
@@ -297,7 +297,7 @@ update msg model =
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model model.commentText)))
+                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model.commentText)))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
@@ -355,7 +355,7 @@ update msg model =
             let
                 likeRequest : Cmd Msg
                 likeRequest =
-                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText model "Loved it!")))
+                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText "Loved it!")))
             in
             --(alertMessage, awaitingServer, commentArea)
             case stateVector of
