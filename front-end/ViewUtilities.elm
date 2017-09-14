@@ -16,7 +16,6 @@ module ViewUtilities
     exposing
         ( goldenRatio
         , htmlNodeNull
-        , relative
         , showCommentButtons
         , songGroup2String
         )
@@ -27,13 +26,6 @@ import Html
         , text
         )
 import MessageDetails exposing (Msg)
-import ModelDetailsUpdate
-    exposing
-        ( QueryBeforeList
-        , QueryPair
-        , QueryPairs
-        , UriText
-        )
 import ModelDetailsView
     exposing
         ( SongGroup
@@ -56,64 +48,6 @@ goldenRatio =
 htmlNodeNull : Html Msg
 htmlNodeNull =
     text ""
-
-
-relative : QueryBeforeList -> QueryPairs -> UriText
-relative queryBeforeList queryPairs =
-    --See:
-    --https://github.com/elm-lang/http/issues/10
-    --https://github.com/elm-lang/url
-    --https://github.com/evancz/elm-http
-    --http://package.elm-lang.org/packages/elm-lang/http/latest
-    --TODO: When elm-lang/url is updated to contain 'relative',
-    --consider replacing this code:
-    let
-        escapeAll : UriText -> UriText
-        escapeAll string =
-            --See:
-            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
-            --TODO: Possibly, use Http.encodeUri instead:
-            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
-
-        escapeAmpersands : UriText -> UriText
-        escapeAmpersands string =
-            String.join
-                "%26"
-                (String.split "&" string)
-
-        escapeEqualsSigns : UriText -> UriText
-        escapeEqualsSigns string =
-            String.join
-                "%3D"
-                (String.split "=" string)
-
-        escapeHashes : UriText -> UriText
-        escapeHashes string =
-            String.join
-                "%23"
-                (String.split "#" string)
-
-        query : UriText
-        query =
-            String.join
-                "&"
-                (List.map queryPairJoin queryPairs)
-
-        queryBefore : UriText
-        queryBefore =
-            String.join
-                "/"
-                queryBeforeList
-
-        queryPairJoin : QueryPair -> UriText
-        queryPairJoin ( name, value ) =
-            String.join
-                "="
-                [ name
-                , escapeAll value
-                ]
-    in
-    queryBefore ++ "?" ++ query
 
 
 showCommentButtons : Bool

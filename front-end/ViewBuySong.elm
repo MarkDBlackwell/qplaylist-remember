@@ -35,7 +35,7 @@ import ModelDetailsUpdate
         , UriText
         )
 import ModelDetailsView exposing (HoverText)
-import ViewUtilities exposing (relative)
+import UpdateUtilities exposing (relative)
 
 
 -- VIEW

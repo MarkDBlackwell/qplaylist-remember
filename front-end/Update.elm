@@ -86,8 +86,8 @@ import UpdateUtilities
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
+        , relative
         )
-import ViewUtilities exposing (relative)
 
 
 -- UPDATE
