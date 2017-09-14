@@ -32,7 +32,7 @@ import ModelDetails
         , SongRemembered
         , SongRememberedCommentingIndex
         , SongsRemembered
-        , songRemembered2LatestFew
+        , songRemembered2SongBasic
         )
 import ModelDetailsUpdate
     exposing
@@ -139,7 +139,7 @@ likeResponse model appendLikeJson =
                     song
 
                 Just songRememberedLiking ->
-                    if songRemembered2LatestFew song /= songRememberedLiking then
+                    if songRememberedLiking /= songRemembered2SongBasic song then
                         song
                     else
                         { song

@@ -43,7 +43,7 @@ import ModelDetails
         , SongsLatestFew
         , SongsRemembered
         , songLatestFew2Remembered
-        , songRemembered2LatestFew
+        , songRemembered2SongBasic
         )
 import ModelDetailsUpdate
     exposing
@@ -134,7 +134,7 @@ update msg model =
                             Nothing
 
                         Just songSelected ->
-                            Just (songRemembered2LatestFew songSelected)
+                            Just (songRemembered2SongBasic songSelected)
             in
             case stateVector of
                 ( _, True, _ ) ->
@@ -200,7 +200,7 @@ update msg model =
                             song
 
                         Just songRememberedCommenting ->
-                            if songRemembered2LatestFew song /= songRememberedCommenting then
+                            if songRemembered2SongBasic song /= songRememberedCommenting then
                                 song
                             else
                                 { song
@@ -297,7 +297,7 @@ update msg model =
                             Nothing
 
                         Just songSelected ->
-                            Just (songRemembered2LatestFew songSelected)
+                            Just (songRemembered2SongBasic songSelected)
             in
             case stateVector of
                 ( _, True, _ ) ->
@@ -429,7 +429,7 @@ update msg model =
                             let
                                 songDiffers : SongRemembered -> Bool
                                 songDiffers songRemembered =
-                                    songLatestFewSelected /= songRemembered2LatestFew songRemembered
+                                    songLatestFewSelected /= songRemembered2SongBasic songRemembered
 
                                 songsDifferent : SongsRemembered
                                 songsDifferent =
@@ -440,7 +440,7 @@ update msg model =
                                     if
                                         List.member
                                             songLatestFewSelected
-                                            (List.map songRemembered2LatestFew model.songsRemembered)
+                                            (List.map songRemembered2SongBasic model.songsRemembered)
                                     then
                                         model.songsRemembered
                                     else

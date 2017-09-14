@@ -138,8 +138,8 @@ songLatestFew2Remembered song =
     }
 
 
-songRemembered2LatestFew : SongRemembered -> SongLatestFew
-songRemembered2LatestFew song =
+songRemembered2SongBasic : SongRemembered -> SongBasic
+songRemembered2SongBasic song =
     { artist = song.artist
     , time = song.time
     , timeStamp = song.timeStamp
