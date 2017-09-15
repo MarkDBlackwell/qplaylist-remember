@@ -67,7 +67,6 @@ init =
         commentAreaOptionalInit
         commentTextInit
         pageIsExpandedInit
-        processingCommentInit
         songCommentingInit
         songLikingInit
         songsLatestFewInit
@@ -78,11 +77,6 @@ init =
 
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
-    False
-
-
-processingCommentInit : ProcessingComment
-processingCommentInit =
     False
 
 

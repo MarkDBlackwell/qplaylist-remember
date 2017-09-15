@@ -64,7 +64,6 @@ import ModelInitialize
         , awaitingServerResponseInit
         , commentAreaOptionalInit
         , commentTextInit
-        , processingCommentInit
         , songCommentingInit
         , songLikingInit
         )
@@ -204,7 +203,6 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , commentAreaOptional = Open
                         , commentText = commentTextInit
-                        , processingComment = True
                         , songCommenting = songLikingOrCommentingNew songRememberedIndex
                       }
                       --'focusInputPossibly' doesn't work, here:
@@ -224,7 +222,6 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , commentAreaOptional = Closed
                         , commentText = commentTextInit
-                        , processingComment = processingCommentInit
                         , songCommenting = songCommentingInit
                       }
                     , Cmd.none
@@ -252,7 +249,6 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
                 , commentAreaOptional = commentAreaOptionalInit
                 , commentText = commentTextInit
-                , processingComment = processingCommentInit
                 , songCommenting = songCommentingInit
                 , songsRemembered = songsRememberedNew
               }

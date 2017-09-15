@@ -144,15 +144,12 @@ commentAreaPossibly model =
         songMaybe index =
             List.head (List.drop index model.songsRemembered)
     in
-    if not model.processingComment then
-        htmlNodeNull
-    else
-        case model.songCommenting of
-            Nothing ->
-                htmlNodeNull
+    case model.songCommenting of
+        Nothing ->
+            htmlNodeNull
 
-            Just songCommenting ->
-                commentArea model songCommenting
+        Just songCommenting ->
+            commentArea model songCommenting
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
