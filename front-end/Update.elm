@@ -253,15 +253,15 @@ update msg model =
             , attempt FocusResult (focus id)
             )
 
-        HttpRequestOrResponseTextLog requestOrResponse httpRequestOrResponseText ->
+        HttpRequestOrResponseTextLog labelText httpRequestOrResponseText ->
             let
                 --Keep for console logging:
                 a : String
                 a =
                     if String.isEmpty httpRequestOrResponseText then
-                        log requestOrResponse "Ok"
+                        log labelText "Ok"
                     else
-                        log requestOrResponse httpRequestOrResponseText
+                        log labelText httpRequestOrResponseText
             in
             ( model
             , focusInputPossibly model
@@ -307,7 +307,10 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songLiking = songLikingInit
               }
-            , focusInputPossibly model
+            , Cmd.batch
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
+                , focusInputPossibly model
+                ]
             )
 
         LikeResponse (Ok appendLikeJson) ->
@@ -332,6 +335,7 @@ update msg model =
             let
                 pageIsExpandedNew : PageIsExpanded
                 pageIsExpandedNew =
+                    --Here, can't use List.all.
                     if
                         List.isEmpty model.songsLatestFew
                             && List.isEmpty model.songsRemembered
@@ -448,7 +452,7 @@ update msg model =
 
                 request : Request HttpRequestText
                 request =
-                    getString (log "LatestFew" requestUriText)
+                    getString requestUriText
 
                 requestUriText : UriText
                 requestUriText =
@@ -480,7 +484,8 @@ update msg model =
                         , awaitingServerResponse = True
                       }
                     , Cmd.batch
-                        [ songsLatestFewRequest
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" requestUriText))
+                        , songsLatestFewRequest
                         , focusInputPossibly model
                         ]
                     )
@@ -496,7 +501,10 @@ update msg model =
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , focusInputPossibly model
+            , Cmd.batch
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
+                , focusInputPossibly model
+                ]
             )
 
         SongsLatestFewResponse (Ok jsonRawText) ->
@@ -510,5 +518,8 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songsLatestFew = songsLatestFewNew
               }
-            , focusInputPossibly model
+            , Cmd.batch
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" jsonRawText))
+                , focusInputPossibly model
+                ]
             )
