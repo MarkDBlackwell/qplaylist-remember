@@ -56,7 +56,6 @@ import ModelDetails
         , SongBasic
         , SongRemembered
         , SongsRemembered
-        , songBasic2SongRemembered
         )
 import ModelDetailsUpdate
     exposing
@@ -71,6 +70,10 @@ import ModelDetailsView
             )
         , SongGroupLength
         , SongIndex
+        )
+import UpdateUtilities
+    exposing
+        ( songBasic2SongRemembered
         )
 import ViewButton
     exposing

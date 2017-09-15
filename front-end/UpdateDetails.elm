@@ -28,7 +28,6 @@ import ModelDetails
             )
         , SongRemembered
         , SongsRemembered
-        , songRemembered2SongBasic
         )
 import ModelDetailsUpdate
     exposing

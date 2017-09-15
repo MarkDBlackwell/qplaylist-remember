@@ -19,6 +19,7 @@ import ModelDetails
         ( AlertMessageText
         , AwaitingServerResponse
         , CommentText
+        , LikedOrCommented
         , Model
         , Optional
             ( Closed
@@ -63,6 +64,11 @@ init =
         songsRememberedInit
     , Cmd.none
     )
+
+
+likedOrCommentedInit : LikedOrCommented
+likedOrCommentedInit =
+    False
 
 
 pageIsExpandedInit : PageIsExpanded

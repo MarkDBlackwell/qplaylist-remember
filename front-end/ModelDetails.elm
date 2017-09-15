@@ -114,27 +114,3 @@ type alias TimeStamp =
 
 type alias Title =
     String
-
-
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
-
-
-songBasic2SongRemembered : SongBasic -> SongRemembered
-songBasic2SongRemembered song =
-    SongRemembered
-        song.artist
-        likedOrCommentedInit
-        song.time
-        song.timeStamp
-        song.title
-
-
-songRemembered2SongBasic : SongRemembered -> SongBasic
-songRemembered2SongBasic song =
-    SongBasic
-        song.artist
-        song.time
-        song.timeStamp
-        song.title

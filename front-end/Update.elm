@@ -44,8 +44,6 @@ import ModelDetails
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered
-        , songBasic2SongRemembered
-        , songRemembered2SongBasic
         )
 import ModelDetailsUpdate
     exposing
@@ -80,6 +78,8 @@ import UpdateUtilities
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
+        , songBasic2SongRemembered
+        , songRemembered2SongBasic
         )
 
 
