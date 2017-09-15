@@ -48,7 +48,6 @@ type alias Model =
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , processingComment : ProcessingComment
-    , processingLike : ProcessingLike
     , songCommenting : SongCommenting
     , songLiking : SongLiking
     , songsLatestFew : SongsLatestFew

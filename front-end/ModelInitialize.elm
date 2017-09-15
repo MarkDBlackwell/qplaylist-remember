@@ -68,7 +68,6 @@ init =
         commentTextInit
         pageIsExpandedInit
         processingCommentInit
-        processingLikeInit
         songCommentingInit
         songLikingInit
         songsLatestFewInit
@@ -84,11 +83,6 @@ pageIsExpandedInit =
 
 processingCommentInit : ProcessingComment
 processingCommentInit =
-    False
-
-
-processingLikeInit : ProcessingLike
-processingLikeInit =
     False
 
 

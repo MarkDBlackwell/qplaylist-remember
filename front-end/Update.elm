@@ -65,7 +65,6 @@ import ModelInitialize
         , commentAreaOptionalInit
         , commentTextInit
         , processingCommentInit
-        , processingLikeInit
         , songCommentingInit
         , songLikingInit
         )
@@ -339,7 +338,6 @@ update msg model =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
-                        , processingLike = True
                         , songLiking = songLikingNew
                       }
                     , Cmd.batch
@@ -352,7 +350,6 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextLikeOrComment httpError "Like"
                 , awaitingServerResponse = awaitingServerResponseInit
-                , processingLike = processingLikeInit
                 , songLiking = songLikingInit
               }
             , focusInputPossibly model
@@ -367,7 +364,6 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
-                , processingLike = processingLikeInit
                 , songLiking = songLikingInit
                 , songsRemembered = songsRememberedNew
               }
