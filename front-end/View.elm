@@ -245,17 +245,17 @@ view model =
                     [ text model.alertMessageText ]
                 ]
 
-        songsLatestFew : List (Html Msg)
-        songsLatestFew =
+        songsLatestFewView : List (Html Msg)
+        songsLatestFewView =
             let
-                songsLatestFew2Remembered : SongsRemembered
-                songsLatestFew2Remembered =
+                songsLatestFewExpanded : SongsRemembered
+                songsLatestFewExpanded =
                     List.map songBasic2SongRemembered model.songsLatestFew
             in
-            List.indexedMap (songView model Played) songsLatestFew2Remembered
+            List.indexedMap (songView model Played) songsLatestFewExpanded
 
-        songsRemembered : List (Html Msg)
-        songsRemembered =
+        songsRememberedView : List (Html Msg)
+        songsRememberedView =
             List.indexedMap (songView model Remembered) model.songsRemembered
     in
     main_
@@ -267,7 +267,7 @@ view model =
             ([ p []
                 [ buttonRemembered ]
              ]
-                ++ songsRemembered
+                ++ songsRememberedView
             )
         , hr [] []
         , section
@@ -275,6 +275,6 @@ view model =
             ([ p []
                 [ buttonPlayed ]
              ]
-                ++ songsLatestFew
+                ++ songsLatestFewView
             )
         ]
