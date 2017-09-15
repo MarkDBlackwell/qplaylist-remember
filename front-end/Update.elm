@@ -78,7 +78,6 @@ import Task
 import UpdateDetails
     exposing
         ( focusInputPossibly
-        , likingOrCommenting
         , relative
         )
 import UpdateUtilities
@@ -228,6 +227,7 @@ update msg model =
                         , commentAreaOptional = Closed
                         , commentText = commentTextInit
                         , processingComment = processingCommentInit
+                        , songCommenting = songCommentingInit
                         , songCommentingIndex = songCommentingIndexInit
                       }
                     , Cmd.none

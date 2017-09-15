@@ -15,7 +15,6 @@
 module UpdateDetails
     exposing
         ( focusInputPossibly
-        , likingOrCommenting
         , relative
         )
 
@@ -51,17 +50,12 @@ import UpdateUtilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    if likingOrCommenting model then
-        focusSet "input"
-    else
-        Cmd.none
+    case model.songCommenting of
+        Nothing ->
+            Cmd.none
 
-
-likingOrCommenting : Model -> Bool
-likingOrCommenting model =
-    --model.songCommentingIndex /= songCommentingIndexInit
-    model.processingComment
-        || model.processingLike
+        _ ->
+            focusSet "input"
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
