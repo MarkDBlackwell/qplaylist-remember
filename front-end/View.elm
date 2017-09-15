@@ -57,10 +57,6 @@ import ModelDetails
         , SongRemembered
         , SongsRemembered
         )
-import ModelDetailsUpdate
-    exposing
-        ( SongRememberedIndex
-        )
 import ModelDetailsView
     exposing
         ( HoverText
@@ -141,11 +137,6 @@ commentArea model song =
 
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
-    let
-        songMaybe : SongRememberedIndex -> Maybe SongRemembered
-        songMaybe index =
-            List.head (List.drop index model.songsRemembered)
-    in
     case model.songCommenting of
         Nothing ->
             htmlNodeNull

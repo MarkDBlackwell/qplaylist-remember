@@ -71,17 +71,17 @@ import ViewUtilities
 
 
 buttonComment : SongGroup -> SongRememberedIndex -> Html Msg
-buttonComment group index =
+buttonComment group songRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
-            CommentAreaOpenHand index
+            CommentAreaOpenHand songRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("buttonComment"
-                    ++ toString index
+                    ++ toString songRememberedIndex
                 )
 
         hoverText : HoverText
@@ -95,23 +95,23 @@ buttonComment group index =
 
 
 buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
-buttonForgetRemember group index =
+buttonForgetRemember group songIndex =
     let
         buttonAction : Msg
         buttonAction =
             case group of
                 Played ->
-                    SongRememberHand index
+                    SongRememberHand songIndex
 
                 Remembered ->
-                    SongForgetHand index
+                    SongForgetHand songIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("button"
                     ++ songGroup2String group
-                    ++ toString index
+                    ++ toString songIndex
                 )
 
         hoverText : HoverText
@@ -127,17 +127,17 @@ buttonForgetRemember group index =
 
 
 buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
-buttonLike group index =
+buttonLike group songRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
-            LikeButtonProcessHand index
+            LikeButtonProcessHand songRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("buttonLike"
-                    ++ toString index
+                    ++ toString songRememberedIndex
                 )
 
         hoverText : HoverText
