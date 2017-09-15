@@ -36,6 +36,18 @@ styleCalc group songGroupLength songLatestFewOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
         backgroundColorStyling =
+            let
+                backgroundColorValue : String
+                backgroundColorValue =
+                    let
+                        saturation : Float
+                        saturation =
+                            scaleFactor * 0.5
+                    in
+                    "hsl(0,"
+                        ++ toString (saturation * 100.0)
+                        ++ "%,50%"
+            in
             case group of
                 Played ->
                     []
@@ -43,35 +55,28 @@ styleCalc group songGroupLength songLatestFewOrRememberedIndex =
                 Remembered ->
                     [ ( "background-color", backgroundColorValue ) ]
 
-        backgroundColorValue : String
-        backgroundColorValue =
-            "hsl(0,"
-                ++ toString (saturation * 100.0)
-                ++ "%,50%"
-
-        base : Float
-        base =
-            16.0
-
         fontSizeStyling : List ( String, String )
         fontSizeStyling =
+            let
+                fontSizeValue : String
+                fontSizeValue =
+                    let
+                        base : Float
+                        base =
+                            16.0
+                    in
+                    toString (scaleFactor * base)
+                        ++ "px"
+            in
             [ ( "font-size", fontSizeValue ) ]
 
-        fontSizeValue : String
-        fontSizeValue =
-            toString (sizeFactor * base)
-                ++ "px"
-
-        songLatestFewOrRememberedIndexReversed : SongLatestFewOrRememberedIndex
-        songLatestFewOrRememberedIndexReversed =
-            songGroupLength - songLatestFewOrRememberedIndex - 1
-
-        saturation : Float
-        saturation =
-            sizeFactor * 0.5
-
-        sizeFactor : Float
-        sizeFactor =
+        scaleFactor : Float
+        scaleFactor =
+            let
+                songLatestFewOrRememberedIndexReversed : SongLatestFewOrRememberedIndex
+                songLatestFewOrRememberedIndexReversed =
+                    songGroupLength - songLatestFewOrRememberedIndex - 1
+            in
             case group of
                 Played ->
                     goldenRatio ^ toFloat songLatestFewOrRememberedIndex
