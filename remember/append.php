@@ -1,1 +1,1 @@
-{"response":"ok"}
+{ "response": "ok" }
