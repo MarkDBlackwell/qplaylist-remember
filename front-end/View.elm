@@ -103,9 +103,11 @@ commentArea model song =
         statistics : String
         statistics =
             " – "
-                ++ song.timeStamp
-                ++ ": "
-                ++ toString (String.length model.commentText)
+                ++ toString commentTextLength
+
+        commentTextLength : Int
+        commentTextLength =
+            String.length model.commentText
 
         yearMonthDay : String
         yearMonthDay =
@@ -123,7 +125,7 @@ commentArea model song =
                     ++ " on "
                     ++ yearMonthDay
                     ++ ")"
-                 --++ statistics
+                    ++ statistics
                 )
             ]
         , input
