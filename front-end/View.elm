@@ -139,7 +139,7 @@ commentArea model song =
                     ++ " on "
                     ++ yearMonthDay
                     ++ ")"
-                    ++ statistics
+                 --++ statistics
                 )
             ]
         , input
