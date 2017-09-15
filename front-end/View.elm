@@ -156,7 +156,7 @@ groupAttributes group =
 
 
 songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
-songView model group index song =
+songView model group songLatestFewOrRememberedIndex song =
     let
         lengthRemembered : SongGroupLength
         lengthRemembered =
@@ -188,16 +188,16 @@ songView model group index song =
             if model.pageIsExpanded then
                 []
             else
-                [ styleCalc group lengthRemembered index ]
+                [ styleCalc group lengthRemembered songLatestFewOrRememberedIndex ]
     in
     div
         songAttributes
         [ p []
-            [ buttonForgetRemember group index
+            [ buttonForgetRemember group songLatestFewOrRememberedIndex
             , span []
                 [ text song.time ]
-            , buttonComment group index
-            , buttonLike group index
+            , buttonComment group songLatestFewOrRememberedIndex
+            , buttonLike group songLatestFewOrRememberedIndex
             , likedOrCommentedIndicator
             , buySongAnchor song
             ]

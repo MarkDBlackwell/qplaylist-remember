@@ -32,7 +32,7 @@ import ViewUtilities exposing (goldenRatio)
 
 
 styleCalc : SongGroup -> SongGroupLength -> SongIndex -> Attribute msg
-styleCalc group songGroupLength index =
+styleCalc group songGroupLength songLatestFewOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
         backgroundColorStyling =
@@ -62,9 +62,9 @@ styleCalc group songGroupLength index =
             toString (sizeFactor * base)
                 ++ "px"
 
-        indexReversed : SongIndex
-        indexReversed =
-            songGroupLength - index - 1
+        songLatestFewOrRememberedIndexReversed : SongIndex
+        songLatestFewOrRememberedIndexReversed =
+            songGroupLength - songLatestFewOrRememberedIndex - 1
 
         saturation : Float
         saturation =
@@ -74,10 +74,10 @@ styleCalc group songGroupLength index =
         sizeFactor =
             case group of
                 Played ->
-                    goldenRatio ^ toFloat index
+                    goldenRatio ^ toFloat songLatestFewOrRememberedIndex
 
                 Remembered ->
-                    goldenRatio ^ toFloat indexReversed
+                    goldenRatio ^ toFloat songLatestFewOrRememberedIndexReversed
     in
     style
         (backgroundColorStyling

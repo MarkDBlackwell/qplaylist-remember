@@ -95,23 +95,23 @@ buttonComment group songRememberedIndex =
 
 
 buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
-buttonForgetRemember group songIndex =
+buttonForgetRemember group songLatestFewOrRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
             case group of
                 Played ->
-                    SongRememberHand songIndex
+                    SongRememberHand songLatestFewOrRememberedIndex
 
                 Remembered ->
-                    SongForgetHand songIndex
+                    SongForgetHand songLatestFewOrRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("button"
                     ++ songGroup2String group
-                    ++ toString songIndex
+                    ++ toString songLatestFewOrRememberedIndex
                 )
 
         hoverText : HoverText
