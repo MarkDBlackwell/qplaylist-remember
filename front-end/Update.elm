@@ -62,7 +62,6 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
-        , commentAreaOptionalInit
         , commentTextInit
         , songCommentingInit
         , songLikingInit
@@ -98,6 +97,15 @@ update msg model =
                 ++ " (while attempting to send "
                 ++ likeOrCommentName
                 ++ " to server)"
+
+        commentOptional : Optional
+        commentOptional =
+            case model.songCommenting of
+                Nothing ->
+                    Closed
+
+                Just songCommenting ->
+                    Open
 
         likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
         likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
@@ -158,10 +166,10 @@ update msg model =
                 Just songSelected ->
                     Just (songRemembered2SongBasic songSelected)
 
-        stateVector : ( AwaitingServerResponse, CommentAreaOptional )
+        stateVector : ( AwaitingServerResponse, Optional )
         stateVector =
             ( model.awaitingServerResponse
-            , model.commentAreaOptional
+            , commentOptional
             )
     in
     case msg of
@@ -201,7 +209,6 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , commentAreaOptional = Open
                         , commentText = commentTextInit
                         , songCommenting = songLikingOrCommentingNew songRememberedIndex
                       }
@@ -220,7 +227,6 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , commentAreaOptional = Closed
                         , commentText = commentTextInit
                         , songCommenting = songCommentingInit
                       }
@@ -247,7 +253,6 @@ update msg model =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
-                , commentAreaOptional = commentAreaOptionalInit
                 , commentText = commentTextInit
                 , songCommenting = songCommentingInit
                 , songsRemembered = songsRememberedNew

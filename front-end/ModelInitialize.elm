@@ -49,11 +49,6 @@ awaitingServerResponseInit =
     False
 
 
-commentAreaOptionalInit : CommentAreaOptional
-commentAreaOptionalInit =
-    Closed
-
-
 commentTextInit : CommentText
 commentTextInit =
     ""
@@ -64,7 +59,6 @@ init =
     ( Model
         alertMessageTextInit
         awaitingServerResponseInit
-        commentAreaOptionalInit
         commentTextInit
         pageIsExpandedInit
         songCommentingInit

@@ -44,7 +44,6 @@ type alias LikedOrCommented =
 type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
-    , commentAreaOptional : CommentAreaOptional
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , songCommenting : SongCommenting
