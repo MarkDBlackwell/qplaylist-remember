@@ -102,16 +102,30 @@ commentArea model song =
 
         statistics : String
         statistics =
+            let
+                commentTextLength : Int
+                commentTextLength =
+                    String.length model.commentText
+            in
             " – "
                 ++ toString commentTextLength
 
-        commentTextLength : Int
-        commentTextLength =
-            String.length model.commentText
-
         yearMonthDay : String
         yearMonthDay =
-            String.join "-" (List.take 3 (String.split " " song.timeStamp))
+            let
+                howManyToTake : Int
+                howManyToTake =
+                    3
+
+                timeStampList : List String
+                timeStampList =
+                    String.split " " song.timeStamp
+
+                timeStampFieldsSelected : List String
+                timeStampFieldsSelected =
+                    List.take howManyToTake timeStampList
+            in
+            String.join "-" timeStampFieldsSelected
     in
     section
         [ id "comment" ]
