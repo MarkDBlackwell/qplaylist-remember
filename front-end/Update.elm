@@ -19,8 +19,7 @@ import DecodeSongsBasic exposing (decodeSongsBasic)
 import Dom exposing (focus)
 import Http
     exposing
-        ( Error
-        , Request
+        ( Request
         , getString
         , send
         )
@@ -69,7 +68,10 @@ import Task
         )
 import UpdateDetails
     exposing
-        ( focusInputPossibly
+        ( alertMessageTextLikeOrComment
+        , focusInputPossibly
+        , likeOrCommentRequestUriText
+        , likedOrCommentedShow
         , relative
         )
 import UpdateUtilities
@@ -89,63 +91,6 @@ import UpdateUtilities
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        alertMessageTextLikeOrComment : Error -> String -> AlertMessageText
-        alertMessageTextLikeOrComment httpError likeOrCommentName =
-            httpErrorMessageScreen httpError
-                ++ " (while attempting to send "
-                ++ likeOrCommentName
-                ++ " to server)"
-
-        likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
-        likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
-            let
-                artistTimeTitle : UriText
-                artistTimeTitle =
-                    case songLikingOrCommenting of
-                        Nothing ->
-                            ""
-
-                        Just songLikingOrCommenting ->
-                            songLikingOrCommenting.time
-                                ++ " "
-                                ++ songLikingOrCommenting.artist
-                                ++ ": "
-                                ++ songLikingOrCommenting.title
-
-                basename : UriText
-                basename =
-                    "append.php"
-
-                timeStamp : UriText
-                timeStamp =
-                    case songLikingOrCommenting of
-                        Nothing ->
-                            ""
-
-                        Just songLikingOrCommenting ->
-                            songLikingOrCommenting.timeStamp
-            in
-            relative
-                [ basename ]
-                [ ( "timestamp", timeStamp )
-                , ( "song", artistTimeTitle )
-                , ( "comment", likeOrCommentText )
-                ]
-
-        likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
-        likedOrCommentedShow songLikingOrCommenting song =
-            case songLikingOrCommenting of
-                Nothing ->
-                    song
-
-                Just songLikingOrCommenting ->
-                    if songLikingOrCommenting /= songRemembered2SongBasic song then
-                        song
-                    else
-                        { song
-                            | likedOrCommented = True
-                        }
-
         songLikingOrCommentingNew : SongRememberedIndex -> SongLikingOrCommenting
         songLikingOrCommentingNew songRememberedIndex =
             case List.head (List.drop songRememberedIndex model.songsRemembered) of

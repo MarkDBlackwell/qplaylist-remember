@@ -14,18 +14,24 @@
 
 module UpdateDetails
     exposing
-        ( focusInputPossibly
+        ( alertMessageTextLikeOrComment
+        , focusInputPossibly
+        , likeOrCommentRequestUriText
+        , likedOrCommentedShow
         , relative
         )
 
+import Http exposing (Error)
 import MessageDetails exposing (Msg)
 import ModelDetails
     exposing
-        ( Model
+        ( AlertMessageText
+        , Model
         , Optional
             ( Closed
             , Open
             )
+        , SongLikingOrCommenting
         , SongRemembered
         , SongsRemembered
         )
@@ -39,11 +45,21 @@ import ModelDetailsUpdate
 import UpdateUtilities
     exposing
         ( focusSet
+        , httpErrorMessageScreen
         , msg2Cmd
+        , songRemembered2SongBasic
         )
 
 
 -- UPDATE
+
+
+alertMessageTextLikeOrComment : Error -> String -> AlertMessageText
+alertMessageTextLikeOrComment httpError likeOrCommentName =
+    httpErrorMessageScreen httpError
+        ++ " (while attempting to send "
+        ++ likeOrCommentName
+        ++ " to server)"
 
 
 focusInputPossibly : Model -> Cmd Msg
@@ -54,6 +70,58 @@ focusInputPossibly model =
 
         _ ->
             focusSet "input"
+
+
+likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
+likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
+    let
+        artistTimeTitle : UriText
+        artistTimeTitle =
+            case songLikingOrCommenting of
+                Nothing ->
+                    ""
+
+                Just songLikingOrCommenting ->
+                    songLikingOrCommenting.time
+                        ++ " "
+                        ++ songLikingOrCommenting.artist
+                        ++ ": "
+                        ++ songLikingOrCommenting.title
+
+        basename : UriText
+        basename =
+            "append.php"
+
+        timeStamp : UriText
+        timeStamp =
+            case songLikingOrCommenting of
+                Nothing ->
+                    ""
+
+                Just songLikingOrCommenting ->
+                    songLikingOrCommenting.timeStamp
+    in
+    relative
+        [ basename ]
+        [ ( "timestamp", timeStamp )
+        , ( "song", artistTimeTitle )
+        , ( "comment", likeOrCommentText )
+        ]
+
+
+likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
+likedOrCommentedShow songLikingOrCommenting song =
+    case songLikingOrCommenting of
+        Nothing ->
+            song
+
+        Just songLikingOrCommenting ->
+            if songLikingOrCommenting /= songRemembered2SongBasic song then
+                song
+            else
+                { song
+                    | likedOrCommented = True
+                }
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
