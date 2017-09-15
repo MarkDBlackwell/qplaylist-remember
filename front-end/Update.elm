@@ -96,15 +96,6 @@ update msg model =
                 ++ likeOrCommentName
                 ++ " to server)"
 
-        commentOptional : Optional
-        commentOptional =
-            case model.songCommenting of
-                Nothing ->
-                    Closed
-
-                Just songCommenting ->
-                    Open
-
         likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
         likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
             let
@@ -166,6 +157,16 @@ update msg model =
 
         stateVector : ( AwaitingServerResponse, Optional )
         stateVector =
+            let
+                commentOptional : Optional
+                commentOptional =
+                    case model.songCommenting of
+                        Nothing ->
+                            Closed
+
+                        Just songCommenting ->
+                            Open
+            in
             ( model.awaitingServerResponse
             , commentOptional
             )
@@ -325,7 +326,11 @@ update msg model =
             let
                 likeRequest : Cmd Msg
                 likeRequest =
-                    send LikeResponse (getString (log "Request" (likeOrCommentRequestUriText songLikingNew "Loved it!")))
+                    send LikeResponse (getString likeRequestUriText)
+
+                likeRequestUriText : UriText
+                likeRequestUriText =
+                    likeOrCommentRequestUriText songLikingNew "Loved it!"
 
                 songLikingNew : SongLikingOrCommenting
                 songLikingNew =
@@ -345,7 +350,8 @@ update msg model =
                         , songLiking = songLikingNew
                       }
                     , Cmd.batch
-                        [ likeRequest
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" likeRequestUriText))
+                        , likeRequest
                         , focusInputPossibly model
                         ]
                     )
