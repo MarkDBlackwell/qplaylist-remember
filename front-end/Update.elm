@@ -79,6 +79,7 @@ import UpdateDetails
     exposing
         ( focusInputPossibly
         , likingOrCommenting
+        , relative
         )
 import UpdateUtilities
     exposing
@@ -86,7 +87,6 @@ import UpdateUtilities
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
-        , relative
         )
 
 
