@@ -18,7 +18,6 @@ import ModelDetails
     exposing
         ( AlertMessageText
         , AwaitingServerResponse
-        , CommentAreaOptional
         , CommentText
         , Model
         , Optional
@@ -26,10 +25,7 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
-        , ProcessingComment
-        , ProcessingLike
         , SongCommenting
-        , SongCommentingIndex
         , SongLiking
         , SongsLatestFew
         , SongsRemembered

@@ -21,8 +21,7 @@ module UpdateDetails
 import MessageDetails exposing (Msg(HttpResponseTextLog))
 import ModelDetails
     exposing
-        ( CommentAreaOptional
-        , Model
+        ( Model
         , Optional
             ( Closed
             , Open

@@ -29,10 +29,6 @@ type alias AwaitingServerResponse =
     Bool
 
 
-type alias CommentAreaOptional =
-    Optional
-
-
 type alias CommentText =
     String
 
@@ -62,14 +58,6 @@ type alias PageIsExpanded =
     Bool
 
 
-type alias ProcessingComment =
-    Bool
-
-
-type alias ProcessingLike =
-    Bool
-
-
 type alias SongBasic =
     --Keep order (for JSON decoding):
     { artist : Artist
@@ -81,10 +69,6 @@ type alias SongBasic =
 
 type alias SongCommenting =
     Maybe SongBasic
-
-
-type alias SongCommentingIndex =
-    Maybe Int
 
 
 type alias SongLatestFew =
