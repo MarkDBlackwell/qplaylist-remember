@@ -134,33 +134,40 @@ relative queryBeforeList queryPairs =
     --TODO: When elm-lang/url is updated to contain 'relative',
     --consider replacing this code:
     let
-        escapeAll : UriText -> UriText
-        escapeAll string =
-            --See:
-            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
-            --TODO: Possibly, use Http.encodeUri instead:
-            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
-
-        escapeAmpersands : UriText -> UriText
-        escapeAmpersands string =
-            String.join
-                "%26"
-                (String.split "&" string)
-
-        escapeEqualsSigns : UriText -> UriText
-        escapeEqualsSigns string =
-            String.join
-                "%3D"
-                (String.split "=" string)
-
-        escapeHashes : UriText -> UriText
-        escapeHashes string =
-            String.join
-                "%23"
-                (String.split "#" string)
-
         query : UriText
         query =
+            let
+                queryPairJoin : QueryPair -> UriText
+                queryPairJoin ( name, value ) =
+                    let
+                        escapeAll : UriText -> UriText
+                        escapeAll string =
+                            let
+                                escapeAmpersands : UriText -> UriText
+                                escapeAmpersands string =
+                                    String.join
+                                        "%26"
+                                        (String.split "&" string)
+
+                                escapeEqualsSigns : UriText -> UriText
+                                escapeEqualsSigns string =
+                                    String.join
+                                        "%3D"
+                                        (String.split "=" string)
+
+                                escapeHashes : UriText -> UriText
+                                escapeHashes string =
+                                    String.join
+                                        "%23"
+                                        (String.split "#" string)
+                            in
+                            --See:
+                            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
+                            --TODO: Possibly, use Http.encodeUri instead:
+                            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
+                    in
+                    name ++ "=" ++ escapeAll value
+            in
             String.join
                 "&"
                 (List.map queryPairJoin queryPairs)
@@ -170,13 +177,5 @@ relative queryBeforeList queryPairs =
             String.join
                 "/"
                 queryBeforeList
-
-        queryPairJoin : QueryPair -> UriText
-        queryPairJoin ( name, value ) =
-            String.join
-                "="
-                [ name
-                , escapeAll value
-                ]
     in
     queryBefore ++ "?" ++ query
