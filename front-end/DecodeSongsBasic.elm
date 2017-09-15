@@ -53,24 +53,26 @@ decodeSongsBasic jsonRawText =
     let
         asRecord : Result DecodeErrorMessageText SongsBasicWithDummyTag
         asRecord =
+            let
+                decodeSongsBasicWithDummyTag : Decoder SongsBasicWithDummyTag
+                decodeSongsBasicWithDummyTag =
+                    let
+                        decodeSongBasic : Decoder SongBasic
+                        decodeSongBasic =
+                            map4 SongBasic
+                                (field "artist" string)
+                                (field "time" string)
+                                (field "timeStamp" string)
+                                (field "title" string)
+
+                        tag : String
+                        tag =
+                            "latestFive"
+                    in
+                    map SongsBasicWithDummyTag
+                        (field tag (list decodeSongBasic))
+            in
             decodeString decodeSongsBasicWithDummyTag jsonRawText
-
-        decodeSongBasic : Decoder SongBasic
-        decodeSongBasic =
-            map4 SongBasic
-                (field "artist" string)
-                (field "time" string)
-                (field "timeStamp" string)
-                (field "title" string)
-
-        decodeSongsBasicWithDummyTag : Decoder SongsBasicWithDummyTag
-        decodeSongsBasicWithDummyTag =
-            map SongsBasicWithDummyTag
-                (field tag (list decodeSongBasic))
-
-        tag : String
-        tag =
-            "latestFive"
     in
     case asRecord of
         Err _ ->
