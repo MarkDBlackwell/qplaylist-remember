@@ -66,7 +66,6 @@ import ModelInitialize
         , commentTextInit
         , processingCommentInit
         , processingLikeInit
-        , songCommentingIndexInit
         , songCommentingInit
         , songLikingInit
         )
@@ -228,7 +227,6 @@ update msg model =
                         , commentText = commentTextInit
                         , processingComment = processingCommentInit
                         , songCommenting = songCommentingInit
-                        , songCommentingIndex = songCommentingIndexInit
                       }
                     , Cmd.none
                     )

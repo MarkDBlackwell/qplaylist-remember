@@ -50,7 +50,6 @@ type alias Model =
     , processingComment : ProcessingComment
     , processingLike : ProcessingLike
     , songCommenting : SongCommenting
-    , songCommentingIndex : SongCommentingIndex
     , songLiking : SongLiking
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered

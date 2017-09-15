@@ -70,7 +70,6 @@ init =
         processingCommentInit
         processingLikeInit
         songCommentingInit
-        songCommentingIndexInit
         songLikingInit
         songsLatestFewInit
         songsRememberedInit
@@ -91,11 +90,6 @@ processingCommentInit =
 processingLikeInit : ProcessingLike
 processingLikeInit =
     False
-
-
-songCommentingIndexInit : SongCommentingIndex
-songCommentingIndexInit =
-    Nothing
 
 
 songCommentingInit : SongCommenting
