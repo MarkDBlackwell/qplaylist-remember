@@ -155,6 +155,15 @@ buttonLike group songRememberedIndex =
 buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
 buttonMy buttonId hoverText action =
     let
+        buttonIdView : List (Attribute msg)
+        buttonIdView =
+            case buttonId of
+                Nothing ->
+                    []
+
+                Just buttonId ->
+                    [ id buttonId ]
+
         display : Display
         display =
             case buttonId of
@@ -169,15 +178,6 @@ buttonMy buttonId hoverText action =
                         "none"
                     else
                         "inline-block"
-
-        idMy : List (Attribute msg)
-        idMy =
-            case buttonId of
-                Nothing ->
-                    []
-
-                Just buttonId ->
-                    [ id buttonId ]
     in
     button
         ([ style [ ( "display", display ) ]
@@ -185,7 +185,7 @@ buttonMy buttonId hoverText action =
          , title hoverText
          , type_ "button"
          ]
-            ++ idMy
+            ++ buttonIdView
         )
         []
 
