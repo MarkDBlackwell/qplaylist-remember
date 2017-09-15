@@ -113,16 +113,17 @@ commentArea model song =
         yearMonthDay : String
         yearMonthDay =
             let
-                howManyToTake : Int
-                howManyToTake =
-                    3
-
-                timeStampList : List String
-                timeStampList =
-                    String.split " " song.timeStamp
-
                 timeStampFieldsSelected : List String
                 timeStampFieldsSelected =
+                    let
+                        howManyToTake : Int
+                        howManyToTake =
+                            3
+
+                        timeStampList : List String
+                        timeStampList =
+                            String.split " " song.timeStamp
+                    in
                     List.take howManyToTake timeStampList
             in
             String.join "-" timeStampFieldsSelected
@@ -180,33 +181,36 @@ groupAttributes group =
 songView : Model -> SongGroup -> SongLatestFewOrRememberedIndex -> SongRemembered -> Html Msg
 songView model group songLatestFewOrRememberedIndex song =
     let
-        lengthRemembered : SongGroupLength
-        lengthRemembered =
-            List.length model.songsRemembered
-
         likedOrCommentedIndicator : Html Msg
         likedOrCommentedIndicator =
+            let
+                likedOrCommentedIndicatorHoverText : HoverText
+                likedOrCommentedIndicatorHoverText =
+                    let
+                        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
+                        likedOrCommentedIndicatorHoverTextCommentButton =
+                            if showCommentButtons then
+                                " (or a comment)"
+                            else
+                                ""
+                    in
+                    "You've shared a 'Like'"
+                        ++ likedOrCommentedIndicatorHoverTextCommentButton
+                        ++ " about this song (with the DJ)"
+            in
             if song.likedOrCommented then
                 em [ title likedOrCommentedIndicatorHoverText ]
                     []
             else
                 htmlNodeNull
 
-        likedOrCommentedIndicatorHoverText : HoverText
-        likedOrCommentedIndicatorHoverText =
-            "You've shared a 'Like'"
-                ++ likedOrCommentedIndicatorHoverTextCommentButton
-                ++ " about this song (with the DJ)"
-
-        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
-        likedOrCommentedIndicatorHoverTextCommentButton =
-            if showCommentButtons then
-                " (or a comment)"
-            else
-                ""
-
         songAttributes : List (Attribute msg)
         songAttributes =
+            let
+                lengthRemembered : SongGroupLength
+                lengthRemembered =
+                    List.length model.songsRemembered
+            in
             if model.pageIsExpanded then
                 []
             else
@@ -243,11 +247,12 @@ view model =
 
         songsLatestFew : List (Html Msg)
         songsLatestFew =
+            let
+                songsLatestFew2Remembered : SongsRemembered
+                songsLatestFew2Remembered =
+                    List.map songBasic2SongRemembered model.songsLatestFew
+            in
             List.indexedMap (songView model Played) songsLatestFew2Remembered
-
-        songsLatestFew2Remembered : SongsRemembered
-        songsLatestFew2Remembered =
-            List.map songBasic2SongRemembered model.songsLatestFew
 
         songsRemembered : List (Html Msg)
         songsRemembered =
