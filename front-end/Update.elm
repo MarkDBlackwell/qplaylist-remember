@@ -366,12 +366,13 @@ update msg model =
 
         SongForgetHand songRememberedIndex ->
             let
-                songRemembered : Maybe SongRemembered
-                songRemembered =
-                    List.head (List.drop songRememberedIndex model.songsRemembered)
-
                 songRememberedCompare : Maybe SongBasic
                 songRememberedCompare =
+                    let
+                        songRemembered : Maybe SongRemembered
+                        songRemembered =
+                            List.head (List.drop songRememberedIndex model.songsRemembered)
+                    in
                     case songRemembered of
                         Nothing ->
                             Nothing
@@ -408,12 +409,13 @@ update msg model =
 
         SongRememberHand songLatestFewIndex ->
             let
-                songLatestFewSelected : Maybe SongLatestFew
-                songLatestFewSelected =
-                    List.head (List.drop songLatestFewIndex model.songsLatestFew)
-
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
+                    let
+                        songLatestFewSelected : Maybe SongLatestFew
+                        songLatestFewSelected =
+                            List.head (List.drop songLatestFewIndex model.songsLatestFew)
+                    in
                     case songLatestFewSelected of
                         Nothing ->
                             model.songsRemembered
@@ -446,16 +448,17 @@ update msg model =
 
         SongsLatestFewRefreshHand ->
             let
-                basename : UriText
-                basename =
-                    "LatestFive.json"
-
-                request : Request HttpRequestText
-                request =
-                    getString requestUriText
-
                 requestUriText : UriText
                 requestUriText =
+                    let
+                        basename : UriText
+                        basename =
+                            "LatestFive.json"
+
+                        subUri : UriText
+                        subUri =
+                            "wtmdapp"
+                    in
                     relative
                         [ ".."
                         , subUri
@@ -465,11 +468,12 @@ update msg model =
 
                 songsLatestFewRequest : Cmd Msg
                 songsLatestFewRequest =
+                    let
+                        request : Request HttpRequestText
+                        request =
+                            getString requestUriText
+                    in
                     send SongsLatestFewResponse request
-
-                subUri : UriText
-                subUri =
-                    "wtmdapp"
             in
             --(awaitingServer, commentArea)
             case stateVector of
