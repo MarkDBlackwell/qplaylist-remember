@@ -106,6 +106,10 @@ commentArea model song =
                 ++ song.timeStamp
                 ++ ": "
                 ++ toString (String.length model.commentText)
+
+        yearMonthDay : String
+        yearMonthDay =
+            String.join "-" (List.take 3 (String.split " " song.timeStamp))
     in
     section
         [ id "comment" ]
@@ -116,6 +120,8 @@ commentArea model song =
                     ++ song.title
                     ++ " ("
                     ++ song.time
+                    ++ " on "
+                    ++ yearMonthDay
                     ++ ")"
                  --++ statistics
                 )
