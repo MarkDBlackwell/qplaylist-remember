@@ -65,7 +65,7 @@ import ModelDetailsView
             , Remembered
             )
         , SongGroupLength
-        , SongIndex
+        , SongLatestFewOrRememberedIndex
         )
 import UpdateUtilities
     exposing
@@ -155,7 +155,7 @@ groupAttributes group =
     ]
 
 
-songView : Model -> SongGroup -> SongIndex -> SongRemembered -> Html Msg
+songView : Model -> SongGroup -> SongLatestFewOrRememberedIndex -> SongRemembered -> Html Msg
 songView model group songLatestFewOrRememberedIndex song =
     let
         lengthRemembered : SongGroupLength

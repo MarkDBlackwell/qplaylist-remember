@@ -23,7 +23,7 @@ import ModelDetailsView
             , Remembered
             )
         , SongGroupLength
-        , SongIndex
+        , SongLatestFewOrRememberedIndex
         )
 import ViewUtilities exposing (goldenRatio)
 
@@ -31,7 +31,7 @@ import ViewUtilities exposing (goldenRatio)
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongIndex -> Attribute msg
+styleCalc : SongGroup -> SongGroupLength -> SongLatestFewOrRememberedIndex -> Attribute msg
 styleCalc group songGroupLength songLatestFewOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
@@ -62,7 +62,7 @@ styleCalc group songGroupLength songLatestFewOrRememberedIndex =
             toString (sizeFactor * base)
                 ++ "px"
 
-        songLatestFewOrRememberedIndexReversed : SongIndex
+        songLatestFewOrRememberedIndexReversed : SongLatestFewOrRememberedIndex
         songLatestFewOrRememberedIndexReversed =
             songGroupLength - songLatestFewOrRememberedIndex - 1
 

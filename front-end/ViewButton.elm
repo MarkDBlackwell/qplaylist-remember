@@ -57,7 +57,7 @@ import ModelDetailsView
             ( Played
             , Remembered
             )
-        , SongIndex
+        , SongLatestFewOrRememberedIndex
         )
 import ViewUtilities
     exposing
@@ -94,7 +94,7 @@ buttonComment group songRememberedIndex =
         htmlNodeNull
 
 
-buttonForgetRemember : SongGroup -> SongIndex -> Html Msg
+buttonForgetRemember : SongGroup -> SongLatestFewOrRememberedIndex -> Html Msg
 buttonForgetRemember group songLatestFewOrRememberedIndex =
     let
         buttonAction : Msg
