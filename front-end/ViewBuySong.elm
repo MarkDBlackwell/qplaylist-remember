@@ -44,33 +44,35 @@ import UpdateDetails exposing (relative)
 buySongAnchor : SongRemembered -> Html Msg
 buySongAnchor song =
     let
-        fieldKeywords : UriText
-        fieldKeywords =
-            String.join
-                "+"
-                [ song.title
-                , song.artist
-                ]
-
         hoverText : HoverText
         hoverText =
             "See this song on Amazon (in new tab)"
 
-        queryBeforeList : QueryBeforeList
-        queryBeforeList =
-            [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
-
-        queryPairs : QueryPairs
-        queryPairs =
-            [ ( "tag", "wtmdradio-20" )
-            , ( "url", "search-alias=digital-music" )
-            , ( "field-keywords"
-              , fieldKeywords
-              )
-            ]
-
         uriText : UriText
         uriText =
+            let
+                queryBeforeList : QueryBeforeList
+                queryBeforeList =
+                    [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
+
+                queryPairs : QueryPairs
+                queryPairs =
+                    let
+                        fieldKeywords : UriText
+                        fieldKeywords =
+                            String.join
+                                "+"
+                                [ song.title
+                                , song.artist
+                                ]
+                    in
+                    [ ( "tag", "wtmdradio-20" )
+                    , ( "url", "search-alias=digital-music" )
+                    , ( "field-keywords"
+                      , fieldKeywords
+                      )
+                    ]
+            in
             relative queryBeforeList queryPairs
     in
     a
