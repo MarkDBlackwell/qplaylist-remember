@@ -522,8 +522,9 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songsLatestFew = songsLatestFewNew
               }
+              --Here, don't log the full response.
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" jsonRawText))
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
                 , focusInputPossibly model
                 ]
             )
