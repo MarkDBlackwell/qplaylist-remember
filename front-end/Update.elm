@@ -237,7 +237,7 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpResponseTextLog (httpErrorMessageLogging httpError)))
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
                 , focusInputPossibly model
                 ]
             )
@@ -255,14 +255,18 @@ update msg model =
                 , songCommenting = songCommentingInit
                 , songsRemembered = songsRememberedNew
               }
-            , msg2Cmd (succeed (HttpResponseTextLog appendCommentJson))
+            , msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" appendCommentJson))
             )
 
         CommentSendHand ->
             let
                 commentRequest : Cmd Msg
                 commentRequest =
-                    send CommentResponse (getString (log "Request" (likeOrCommentRequestUriText model.songCommenting model.commentText)))
+                    send CommentResponse (getString commentRequestUriText)
+
+                commentRequestUriText : UriText
+                commentRequestUriText =
+                    likeOrCommentRequestUriText model.songCommenting model.commentText
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -284,7 +288,8 @@ update msg model =
                             , awaitingServerResponse = True
                           }
                         , Cmd.batch
-                            [ commentRequest
+                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" commentRequestUriText))
+                            , commentRequest
                             , focusInputPossibly model
                             ]
                         )
@@ -302,15 +307,15 @@ update msg model =
             , attempt FocusResult (focus id)
             )
 
-        HttpResponseTextLog httpResponseText ->
+        HttpRequestOrResponseTextLog requestOrResponse httpRequestOrResponseText ->
             let
                 --Keep for console logging:
                 a : String
                 a =
-                    if String.isEmpty httpResponseText then
-                        log "Response" "Ok"
+                    if String.isEmpty httpRequestOrResponseText then
+                        log requestOrResponse "Ok"
                     else
-                        log "Response" httpResponseText
+                        log requestOrResponse httpRequestOrResponseText
             in
             ( model
             , focusInputPossibly model
@@ -367,7 +372,7 @@ update msg model =
                 , songsRemembered = songsRememberedNew
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpResponseTextLog appendLikeJson))
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" appendLikeJson))
                 , focusInputPossibly model
                 ]
             )

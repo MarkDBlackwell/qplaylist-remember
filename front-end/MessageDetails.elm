@@ -19,7 +19,9 @@ import Http exposing (Error)
 import ModelDetails exposing (CommentText)
 import ModelDetailsUpdate
     exposing
-        ( HttpResponseText
+        ( HttpRequestOrResponseText
+        , HttpResponseText
+        , RequestOrResponse
         , SongLatestFewIndex
         , SongRememberedIndex
         )
@@ -36,7 +38,7 @@ type Msg
     | CommentSendHand
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | HttpResponseTextLog HttpResponseText
+    | HttpRequestOrResponseTextLog RequestOrResponse HttpRequestOrResponseText
     | LikeButtonProcessHand SongRememberedIndex
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand

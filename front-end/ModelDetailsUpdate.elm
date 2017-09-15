@@ -17,12 +17,14 @@ module ModelDetailsUpdate
         ( AlertMessageOptional
         , DecodeErrorMessageText
         , HttpErrorMessageText
+        , HttpRequestOrResponseText
         , HttpRequestText
         , HttpResponseText
         , LikeText
         , QueryBeforeList
         , QueryPair
         , QueryPairs
+        , RequestOrResponse
         , SongLatestFewIndex
         , SongRememberedIndex
         , UriText
@@ -57,6 +59,10 @@ type alias HttpRequestText =
     String
 
 
+type alias HttpRequestOrResponseText =
+    String
+
+
 type alias HttpResponseText =
     String
 
@@ -69,7 +75,7 @@ type alias QueryBeforeList =
     --See:
     --https://github.com/elm-lang/url
     --https://tools.ietf.org/html/rfc3986
-    --If joined, then comprises a URI's scheme, authority, and path:
+    --When joined, then comprises a URI's scheme, authority, and path:
     List UriText
 
 
@@ -79,6 +85,10 @@ type alias QueryPair =
 
 type alias QueryPairs =
     List QueryPair
+
+
+type alias RequestOrResponse =
+    String
 
 
 type alias SongLatestFewIndex =

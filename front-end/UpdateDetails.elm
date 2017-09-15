@@ -18,7 +18,7 @@ module UpdateDetails
         , relative
         )
 
-import MessageDetails exposing (Msg(HttpResponseTextLog))
+import MessageDetails exposing (Msg)
 import ModelDetails
     exposing
         ( Model
