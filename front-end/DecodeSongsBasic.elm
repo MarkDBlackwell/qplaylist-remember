@@ -44,7 +44,7 @@ type alias SongsBasicWithDummyTag =
     { dummyTag : SongsBasic }
 
 
-decodeSongsBasic : HttpResponseText -> SongsBasic
+decodeSongsBasic : HttpResponseText -> Result DecodeErrorMessageText SongsBasic
 decodeSongsBasic jsonRawText =
     --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
@@ -75,8 +75,8 @@ decodeSongsBasic jsonRawText =
             decodeString decodeSongsBasicWithDummyTag jsonRawText
     in
     case asRecord of
-        Err _ ->
-            []
+        Err text ->
+            Err text
 
         Ok record ->
-            record.dummyTag
+            Ok record.dummyTag

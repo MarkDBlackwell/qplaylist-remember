@@ -14,6 +14,8 @@
 
 module Update exposing (update)
 
+--import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
+
 import Debug exposing (log)
 import DecodeSongsBasic exposing (decodeSongsBasic)
 import Dom exposing (focus)
@@ -47,6 +49,7 @@ import ModelDetails
 import ModelDetailsUpdate
     exposing
         ( AlertMessageOptional
+        , DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestText
         , LikeText
@@ -513,9 +516,27 @@ update msg model =
 
         SongsLatestFewResponse (Ok jsonRawText) ->
             let
+                decodeSongsBasicResult : Result DecodeErrorMessageText SongsLatestFew
+                decodeSongsBasicResult =
+                    decodeSongsBasic jsonRawText
+
+                decodeErrorMessageText : String
+                decodeErrorMessageText =
+                    case decodeSongsBasicResult of
+                        Ok _ ->
+                            ""
+
+                        Err text ->
+                            text
+
                 songsLatestFewNew : SongsLatestFew
                 songsLatestFewNew =
-                    decodeSongsBasic jsonRawText
+                    case decodeSongsBasicResult of
+                        Err _ ->
+                            []
+
+                        Ok songsLatestFew ->
+                            songsLatestFew
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
@@ -524,7 +545,7 @@ update msg model =
               }
               --Here, don't log the full response.
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" decodeErrorMessageText))
                 , focusInputPossibly model
                 ]
             )
