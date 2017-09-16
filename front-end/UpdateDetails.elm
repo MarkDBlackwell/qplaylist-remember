@@ -14,7 +14,7 @@
 
 module UpdateDetails
     exposing
-        ( alertMessageTextLikeOrComment
+        ( alertMessageTextLikeOrCommentRequest
         , focusInputPossibly
         , likeOrCommentRequestUriText
         , likedOrCommentedShow
@@ -54,8 +54,8 @@ import UpdateUtilities
 -- UPDATE
 
 
-alertMessageTextLikeOrComment : Error -> String -> AlertMessageText
-alertMessageTextLikeOrComment httpError likeOrCommentName =
+alertMessageTextLikeOrCommentRequest : Error -> String -> AlertMessageText
+alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
     httpErrorMessageScreen httpError
         ++ " (while attempting to send "
         ++ likeOrCommentName

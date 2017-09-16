@@ -71,7 +71,7 @@ import Task
         )
 import UpdateDetails
     exposing
-        ( alertMessageTextLikeOrComment
+        ( alertMessageTextLikeOrCommentRequest
         , focusInputPossibly
         , likeOrCommentRequestUriText
         , likedOrCommentedShow
@@ -182,7 +182,7 @@ update msg model =
 
         CommentResponse (Err httpError) ->
             ( { model
-                | alertMessageText = alertMessageTextLikeOrComment httpError "comment"
+                | alertMessageText = alertMessageTextLikeOrCommentRequest httpError "comment"
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
@@ -306,7 +306,7 @@ update msg model =
 
         LikeResponse (Err httpError) ->
             ( { model
-                | alertMessageText = alertMessageTextLikeOrComment httpError "Like"
+                | alertMessageText = alertMessageTextLikeOrCommentRequest httpError "Like"
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songLiking = songLikingInit
               }
@@ -515,37 +515,33 @@ update msg model =
             )
 
         SongsLatestFewResponse (Ok jsonRawText) ->
-            let
-                decodeSongsBasicResult : Result DecodeErrorMessageText SongsLatestFew
-                decodeSongsBasicResult =
-                    decodeSongsBasic jsonRawText
+            case decodeSongsBasic jsonRawText of
+                Err decodeErrorMessageText ->
+                    let
+                        alertMessageTextNew : AlertMessageText
+                        alertMessageTextNew =
+                            "Unexpected error while attempting to access the latest few songs: "
+                                ++ decodeErrorMessageText
+                    in
+                    ( { model
+                        | alertMessageText = alertMessageTextNew
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , Cmd.batch
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" decodeErrorMessageText))
+                        , focusInputPossibly model
+                        ]
+                    )
 
-                decodeErrorMessageText : String
-                decodeErrorMessageText =
-                    case decodeSongsBasicResult of
-                        Ok _ ->
-                            ""
-
-                        Err text ->
-                            text
-
-                songsLatestFewNew : SongsLatestFew
-                songsLatestFewNew =
-                    case decodeSongsBasicResult of
-                        Err _ ->
-                            []
-
-                        Ok songsLatestFew ->
-                            songsLatestFew
-            in
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , songsLatestFew = songsLatestFewNew
-              }
-              --Here, don't log the full response.
-            , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" decodeErrorMessageText))
-                , focusInputPossibly model
-                ]
-            )
+                Ok songsLatestFewNew ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songsLatestFew = songsLatestFewNew
+                      }
+                      --Here, don't log the full response.
+                    , Cmd.batch
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                        , focusInputPossibly model
+                        ]
+                    )
