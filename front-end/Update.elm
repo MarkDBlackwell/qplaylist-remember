@@ -72,6 +72,7 @@ import Task
 import UpdateDetails
     exposing
         ( alertMessageTextLikeOrCommentRequest
+        , alertMessageTextUnexpectedError
         , focusInputPossibly
         , likeOrCommentRequestUriText
         , likedOrCommentedShow
@@ -520,8 +521,9 @@ update msg model =
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
-                            "Unexpected error while attempting to access the latest few songs: "
-                                ++ decodeErrorMessageText
+                            alertMessageTextUnexpectedError
+                                "while attempting to access the latest few songs"
+                                decodeErrorMessageText
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
