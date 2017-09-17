@@ -14,9 +14,8 @@
 
 module Update exposing (update)
 
---import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
-
 import Debug exposing (log)
+import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
 import DecodeSongsBasic exposing (decodeSongsBasic)
 import Dom exposing (focus)
 import Http
@@ -318,22 +317,42 @@ update msg model =
             )
 
         LikeResponse (Ok appendLikeJson) ->
-            let
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.map (likedOrCommentedShow model.songLiking) model.songsRemembered
-            in
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , songLiking = songLikingInit
-                , songsRemembered = songsRememberedNew
-              }
-            , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" appendLikeJson))
-                , focusInputPossibly model
-                ]
-            )
+            case decodeLikeOrCommentResponse appendLikeJson of
+                Err decodeErrorMessageText ->
+                    let
+                        alertMessageTextNew : AlertMessageText
+                        alertMessageTextNew =
+                            alertMessageTextUnexpectedError
+                                "while attempting to append your Like"
+                                decodeErrorMessageText
+                    in
+                    ( { model
+                        | alertMessageText = alertMessageTextNew
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , Cmd.batch
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
+                        , focusInputPossibly model
+                        ]
+                    )
+
+                Ok responseString ->
+                    let
+                        songsRememberedNew : SongsRemembered
+                        songsRememberedNew =
+                            List.map (likedOrCommentedShow model.songLiking) model.songsRemembered
+                    in
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = awaitingServerResponseInit
+                        , songLiking = songLikingInit
+                        , songsRemembered = songsRememberedNew
+                      }
+                    , Cmd.batch
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" appendLikeJson))
+                        , focusInputPossibly model
+                        ]
+                    )
 
         PageMorphHand ->
             let

@@ -25,6 +25,7 @@ module ModelDetailsUpdate
         , QueryPair
         , QueryPairs
         , RequestOrResponse
+        , ResponseString
         , SongLatestFewIndex
         , SongRememberedIndex
         , UriText
@@ -88,6 +89,10 @@ type alias QueryPairs =
 
 
 type alias RequestOrResponse =
+    String
+
+
+type alias ResponseString =
     String
 
 
