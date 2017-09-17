@@ -32,14 +32,20 @@ button:focus {
 }
 /* (End of override browser & user settings.) */
 
-html {
+:root {
     margin: 0;
     padding: 0;
     line-height: 0;
     font-family: 'PT Sans Narrow', 'Arial', 'Helvetica', sans-serif;
-    font-size: 0;
+    font-size: 15px; /* basis for rem calculations */
     color: White;
     background-color: Black;
+}
+head {
+    font-size: 0;
+}
+body {
+    font-size: 0;
 }
 section#alert {
     line-height: 1.5;
@@ -47,7 +53,7 @@ section#alert {
     color: rgb(230,0,140);
 }
 section#alert > p {
-    font-size: 15px; /* basis for em and percentage calculations */
+    font-size: 1rem; /* basis for em and percentage calculations */
     text-align: center;
 }
 section#comment {
@@ -57,10 +63,10 @@ section#comment {
 }
 section#comment > button {
     padding: 0 .2em 0 .2em;
-    border-width: 2.5px;
+    border-width: .16666667rem;
     border-radius: 50%;
 /* Override browser & user settings: */
-    font-size: 16px; /* basis for em and percentage calculations */
+    font-size: 1.0666667rem; /* basis for em and percentage calculations */
 }
 section#comment > button:first-of-type:after {
     content: "OK";
@@ -72,13 +78,13 @@ section#comment > input {
     display: block;
     width: 100%;
     height: 2em;
-    font-size: 19.2px; /* basis for em and percentage calculations */
+    font-size: 1.28rem; /* basis for em and percentage calculations */
     border-style: none;
     outline-width: .1em;
     outline-color: Black;
 }
 section#comment > p {
-    font-size: 16px; /* basis for em and percentage calculations */
+    font-size: 1.0666667rem; /* basis for em and percentage calculations */
     text-align: center;
 }
 section.songs-group {
@@ -87,7 +93,7 @@ section.songs-group {
 section.songs-group:focus {
     outline-color: Blue;
     outline-style: dotted;
-    outline-width: 3px;
+    outline-width: .2rem;
 }
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
@@ -95,7 +101,7 @@ section.songs-group > div {
     border-bottom-color: #63686d;
     border-bottom-style: solid;
     border-radius: .5em;
-    font-size: 10px; /* basis for em and percentage calculations */
+    font-size: .66666667rem; /* basis for em and percentage calculations */
 }
 section#songs-played > div {
     background-color: rgb(17,17,17);
@@ -207,7 +213,7 @@ section.songs-group > div > p > span {
 }
 section.songs-group > p {
     line-height: 1.1;
-    font-size: 12px; /* basis for em and percentage calculations */
+    font-size: .8rem; /* basis for em and percentage calculations */
     text-align: center;
     font-style: italic;
 /* Override browser & user settings: */
@@ -225,7 +231,7 @@ section.songs-group > p > button {
 /* Override browser & user settings: */
     margin: 0 .90909091em 0 0;
     line-height: 1.2;
-    font-size: 11px; /* basis for em and percentage calculations */
+    font-size: .73333333rem; /* basis for em and percentage calculations */
     font-weight: 400;
     letter-spacing: .227273em;
 }
