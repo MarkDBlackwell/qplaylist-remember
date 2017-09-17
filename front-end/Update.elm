@@ -530,7 +530,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" decodeErrorMessageText))
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
                         , focusInputPossibly model
                         ]
                     )

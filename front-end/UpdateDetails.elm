@@ -187,5 +187,14 @@ relative queryBeforeList queryPairs =
             String.join
                 "/"
                 queryBeforeList
+
+        queryStarter : UriText
+        queryStarter =
+            if String.isEmpty query then
+                ""
+            else
+                "?"
     in
-    queryBefore ++ "?" ++ query
+    queryBefore
+        ++ queryStarter
+        ++ query
