@@ -100,7 +100,7 @@ likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
 
         basename : UriText
         basename =
-            "append.php"
+            "append.json"
 
         timeStamp : UriText
         timeStamp =
