@@ -192,20 +192,58 @@ update msg model =
             )
 
         CommentResponse (Ok appendCommentJson) ->
-            let
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    List.map (likedOrCommentedShow model.songCommenting) model.songsRemembered
-            in
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = awaitingServerResponseInit
-                , commentText = commentTextInit
-                , songCommenting = songCommentingInit
-                , songsRemembered = songsRememberedNew
-              }
-            , msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" appendCommentJson))
-            )
+            case decodeLikeOrCommentResponse appendCommentJson of
+                Err decodeErrorMessageText ->
+                    let
+                        alertMessageTextNew : AlertMessageText
+                        alertMessageTextNew =
+                            alertMessageTextUnexpectedError
+                                "while attempting to append your Comment"
+                                decodeErrorMessageText
+                    in
+                    ( { model
+                        | alertMessageText = alertMessageTextNew
+                        , awaitingServerResponse = awaitingServerResponseInit
+                      }
+                    , Cmd.batch
+                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
+                        , focusInputPossibly model
+                        ]
+                    )
+
+                Ok responseString ->
+                    if "ok" /= responseString then
+                        let
+                            alertMessageTextNew : AlertMessageText
+                            alertMessageTextNew =
+                                alertMessageTextUnexpectedError
+                                    "while attempting to send your Like"
+                                    responseString
+                        in
+                        ( { model
+                            | alertMessageText = alertMessageTextNew
+                            , awaitingServerResponse = awaitingServerResponseInit
+                          }
+                        , Cmd.batch
+                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" responseString))
+                            , focusInputPossibly model
+                            ]
+                        )
+                    else
+                        let
+                            songsRememberedNew : SongsRemembered
+                            songsRememberedNew =
+                                List.map (likedOrCommentedShow model.songCommenting) model.songsRemembered
+                        in
+                        ( { model
+                            | alertMessageText = alertMessageTextInit
+                            , awaitingServerResponse = awaitingServerResponseInit
+                            , commentText = commentTextInit
+                            , songCommenting = songCommentingInit
+                            , songsRemembered = songsRememberedNew
+                          }
+                        , msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                        )
 
         CommentSendHand ->
             let
