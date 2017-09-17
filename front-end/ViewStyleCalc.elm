@@ -63,10 +63,10 @@ styleCalc group songGroupLength songLatestFewOrRememberedIndex =
                     let
                         base : Float
                         base =
-                            16.0
+                            1.0666666666666667
                     in
                     toString (scaleFactor * base)
-                        ++ "px"
+                        ++ "rem"
             in
             [ ( "font-size", fontSizeValue ) ]
 
