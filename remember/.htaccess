@@ -1,0 +1,5 @@
+# 09-16-17 Mark Blackwell - On requests for append.json, invoke PHP.
+# This eases development by allowing access through the local filesystem.
+<IfModule mod_rewrite.c>
+    RewriteRule "^append\.json$" "append.php" [QSA]
+</IfModule>
