@@ -33,11 +33,9 @@ import ModelDetails
         , SongsRemembered
         , UserIdentifier
         )
-import Task
+import Random
     exposing
-        ( Task
-        , perform
-        , succeed
+        ( generate
         )
 
 
@@ -62,9 +60,17 @@ commentTextInit =
 init : ( Model, Cmd Msg )
 init =
     let
-        userIdentifierNew : UserIdentifier
-        userIdentifierNew =
-            "AAA"
+        threeLetterSpaceHighest : Int
+        threeLetterSpaceHighest =
+            (26 ^ 3) - 1
+
+        threeLetterSpaceLowest : Int
+        threeLetterSpaceLowest =
+            0
+
+        --userIdentifierNew : UserIdentifier
+        --userIdentifierNew =
+        --"AAA"
     in
     ( Model
         alertMessageTextInit
@@ -76,7 +82,7 @@ init =
         songsLatestFewInit
         songsRememberedInit
         userIdentifierInit
-    , perform identity (succeed (InitialSetUp userIdentifierNew))
+    , Random.generate InitialSetUp (Random.int threeLetterSpaceLowest threeLetterSpaceHighest)
     )
 
 

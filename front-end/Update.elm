@@ -14,6 +14,10 @@
 
 module Update exposing (update)
 
+import Char
+    exposing
+        ( fromCode
+        )
 import Debug exposing (log)
 import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
 import DecodeSongsBasic exposing (decodeSongsBasic)
@@ -44,6 +48,7 @@ import ModelDetails
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered
+        , UserIdentifier
         )
 import ModelDetailsUpdate
     exposing
@@ -318,7 +323,32 @@ update msg model =
             , focusInputPossibly model
             )
 
-        InitialSetUp userIdentifierNew ->
+        InitialSetUp threeLetterSpace ->
+            let
+                userIdentifierNew : UserIdentifier
+                userIdentifierNew =
+                    let
+                        int2UpperCaseChar : Int -> Char
+                        int2UpperCaseChar myInt =
+                            Char.fromCode (myInt + 65)
+
+                        myChars : List Char
+                        myChars =
+                            List.map int2UpperCaseChar myDigits
+
+                        myDigits : List Int
+                        myDigits =
+                            [ (threeLetterSpace // 26 // 26) % 26
+                            , (threeLetterSpace // 26) % 26
+                            , threeLetterSpace % 26
+                            ]
+
+                        myStrings : List String
+                        myStrings =
+                            List.map String.fromChar myChars
+                    in
+                    String.join "" myStrings
+            in
             ( { model
                 | userIdentifier = userIdentifierNew
               }
