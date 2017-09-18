@@ -35,6 +35,7 @@ import ModelDetails
         , SongLikingOrCommenting
         , SongRemembered
         , SongsRemembered
+        , UserIdentifier
         )
 import ModelDetailsUpdate
     exposing
@@ -82,8 +83,8 @@ focusInputPossibly model =
             focusSet "input"
 
 
-likeOrCommentRequestUriText : SongLikingOrCommenting -> String -> UriText
-likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
+likeOrCommentRequestUriText : SongLikingOrCommenting -> UserIdentifier -> String -> UriText
+likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentText =
     let
         artistTimeTitle : UriText
         artistTimeTitle =
@@ -113,7 +114,8 @@ likeOrCommentRequestUriText songLikingOrCommenting likeOrCommentText =
     in
     relative
         [ basename ]
-        [ ( "timestamp", timeStamp )
+        [ ( "user_identifier", userIdentifier )
+        , ( "timestamp", timeStamp )
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]

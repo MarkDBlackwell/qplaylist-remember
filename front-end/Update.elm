@@ -253,7 +253,7 @@ update msg model =
 
                 commentRequestUriText : UriText
                 commentRequestUriText =
-                    likeOrCommentRequestUriText model.songCommenting model.commentText
+                    likeOrCommentRequestUriText model.songCommenting model.userIdentifier model.commentText
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -316,7 +316,7 @@ update msg model =
 
                 likeRequestUriText : UriText
                 likeRequestUriText =
-                    likeOrCommentRequestUriText songLikingNew "Loved it!"
+                    likeOrCommentRequestUriText songLikingNew model.userIdentifier "Loved it!"
 
                 songLikingNew : SongLikingOrCommenting
                 songLikingNew =

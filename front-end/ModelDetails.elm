@@ -46,6 +46,7 @@ type alias Model =
     , songLiking : SongLiking
     , songsLatestFew : SongsLatestFew
     , songsRemembered : SongsRemembered
+    , userIdentifier : UserIdentifier
     }
 
 
@@ -113,4 +114,8 @@ type alias TimeStamp =
 
 
 type alias Title =
+    String
+
+
+type alias UserIdentifier =
     String

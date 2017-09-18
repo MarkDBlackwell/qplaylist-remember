@@ -30,6 +30,7 @@ import ModelDetails
         , SongLiking
         , SongsLatestFew
         , SongsRemembered
+        , UserIdentifier
         )
 
 
@@ -62,6 +63,7 @@ init =
         songLikingInit
         songsLatestFewInit
         songsRememberedInit
+        userIdentifierInit
     , Cmd.none
     )
 
@@ -94,3 +96,8 @@ songsLatestFewInit =
 songsRememberedInit : SongsRemembered
 songsRememberedInit =
     []
+
+
+userIdentifierInit : UserIdentifier
+userIdentifierInit =
+    "AAA"

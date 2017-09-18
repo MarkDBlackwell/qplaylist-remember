@@ -32,18 +32,21 @@ $response_request_parameter_bad_json = json_encode(array('response' => 'Unable t
 $myfile = fopen($comments_filename, "a") or die($response_file_bad_json);
 
 // TODO: For security, change to use POST instead of GET.
-isset       ($_GET['comment'  ]) or die($response_request_parameter_bad_json);
-$comment   = $_GET['comment'  ];
+isset             ($_GET['comment'        ]) or die($response_request_parameter_bad_json);
+$comment         = $_GET['comment'        ];
 
-isset       ($_GET['song'     ]) or die($response_request_parameter_bad_json);
-$song      = $_GET['song'     ];
+isset             ($_GET['song'           ]) or die($response_request_parameter_bad_json);
+$song            = $_GET['song'           ];
 
-isset(       $_GET['timestamp']) or die($response_request_parameter_bad_json);
-$timestamp = $_GET['timestamp'];
+isset             ($_GET['user_identifier']) or die($response_request_parameter_bad_json);
+$user_identifier = $_GET['user_identifier'];
+
+isset(             $_GET['timestamp'      ]) or die($response_request_parameter_bad_json);
+$timestamp       = $_GET['timestamp'      ];
 
 // Depends upon the above:
 
-$prefix = $timestamp . " " . $ip_address . " ";
+$prefix = $timestamp . " " . $ip_address . " " . $user_identifier . " ";
 
 // Depends upon the above:
 
