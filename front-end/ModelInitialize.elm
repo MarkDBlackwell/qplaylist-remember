@@ -61,6 +61,11 @@ commentTextInit =
 
 init : ( Model, Cmd Msg )
 init =
+    let
+        userIdentifierNew : UserIdentifier
+        userIdentifierNew =
+            "AAA"
+    in
     ( Model
         alertMessageTextInit
         awaitingServerResponseInit
@@ -71,7 +76,7 @@ init =
         songsLatestFewInit
         songsRememberedInit
         userIdentifierInit
-    , msg2CmdSucceedInit
+    , perform identity (succeed (InitialSetUp userIdentifierNew))
     )
 
 
@@ -108,13 +113,3 @@ songsRememberedInit =
 userIdentifierInit : UserIdentifier
 userIdentifierInit =
     ""
-
-
-msg2CmdSucceedInit : Cmd Msg
-msg2CmdSucceedInit =
-    msg2CmdInit (succeed InitialSetUp)
-
-
-msg2CmdInit : Task Never msg -> Cmd msg
-msg2CmdInit msg =
-    perform identity msg

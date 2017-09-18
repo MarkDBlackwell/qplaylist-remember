@@ -318,9 +318,9 @@ update msg model =
             , focusInputPossibly model
             )
 
-        InitialSetUp ->
+        InitialSetUp userIdentifierNew ->
             ( { model
-                | userIdentifier = "AAA"
+                | userIdentifier = userIdentifierNew
               }
             , Cmd.none
             )

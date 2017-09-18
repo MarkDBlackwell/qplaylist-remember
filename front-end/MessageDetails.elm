@@ -16,7 +16,11 @@ module MessageDetails exposing (Msg(..))
 
 import Dom exposing (Id)
 import Http exposing (Error)
-import ModelDetails exposing (CommentText)
+import ModelDetails
+    exposing
+        ( CommentText
+        , UserIdentifier
+        )
 import ModelDetailsUpdate
     exposing
         ( HttpRequestOrResponseText
@@ -39,7 +43,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | HttpRequestOrResponseTextLog RequestOrResponse HttpRequestOrResponseText
-    | InitialSetUp
+    | InitialSetUp UserIdentifier
     | LikeButtonProcessHand SongRememberedIndex
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand
