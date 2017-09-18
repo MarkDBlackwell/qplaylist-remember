@@ -94,6 +94,10 @@ import UpdateUtilities
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        alertMessageTextAwaitingServer : AlertMessageText
+        alertMessageTextAwaitingServer =
+            "Awaiting server"
+
         songLikingOrCommentingNew : SongRememberedIndex -> SongLikingOrCommenting
         songLikingOrCommentingNew songRememberedIndex =
             case List.head (List.drop songRememberedIndex model.songsRemembered) of
@@ -142,7 +146,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -167,7 +173,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -258,7 +266,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -325,7 +335,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -427,7 +439,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -468,7 +482,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -514,7 +530,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
@@ -558,7 +576,9 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
-                    ( model
+                    ( { model
+                        | alertMessageText = alertMessageTextAwaitingServer
+                      }
                     , focusInputPossibly model
                     )
 
