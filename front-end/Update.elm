@@ -318,6 +318,13 @@ update msg model =
             , focusInputPossibly model
             )
 
+        InitialSetUp ->
+            ( { model
+                | userIdentifier = "AAA"
+              }
+            , Cmd.none
+            )
+
         LikeButtonProcessHand songRememberedIndex ->
             let
                 likeRequest : Cmd Msg

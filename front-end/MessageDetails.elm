@@ -39,6 +39,7 @@ type Msg
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
     | HttpRequestOrResponseTextLog RequestOrResponse HttpRequestOrResponseText
+    | InitialSetUp
     | LikeButtonProcessHand SongRememberedIndex
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand

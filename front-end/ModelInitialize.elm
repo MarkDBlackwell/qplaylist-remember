@@ -14,6 +14,7 @@
 
 module ModelInitialize exposing (..)
 
+import MessageDetails exposing (Msg(InitialSetUp))
 import ModelDetails
     exposing
         ( AlertMessageText
@@ -31,6 +32,12 @@ import ModelDetails
         , SongsLatestFew
         , SongsRemembered
         , UserIdentifier
+        )
+import Task
+    exposing
+        ( Task
+        , perform
+        , succeed
         )
 
 
@@ -52,7 +59,7 @@ commentTextInit =
     ""
 
 
-init : ( Model, Cmd msg )
+init : ( Model, Cmd Msg )
 init =
     ( Model
         alertMessageTextInit
@@ -64,7 +71,7 @@ init =
         songsLatestFewInit
         songsRememberedInit
         userIdentifierInit
-    , Cmd.none
+    , msg2CmdSucceedInit
     )
 
 
@@ -100,4 +107,14 @@ songsRememberedInit =
 
 userIdentifierInit : UserIdentifier
 userIdentifierInit =
-    "AAA"
+    ""
+
+
+msg2CmdSucceedInit : Cmd Msg
+msg2CmdSucceedInit =
+    msg2CmdInit (succeed InitialSetUp)
+
+
+msg2CmdInit : Task Never msg -> Cmd msg
+msg2CmdInit msg =
+    perform identity msg
