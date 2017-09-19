@@ -84,7 +84,7 @@ import Song
         , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
-        , songLikingOrCommentingNew
+        , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
         , songRememberedSelected
         , songsRememberedWithoutOne
@@ -164,6 +164,11 @@ update msg model =
                     )
 
         CommentAreaOpenHand songRememberedIndex ->
+            let
+                songCommentingNew : SongLikingOrCommenting
+                songCommentingNew =
+                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
+            in
             --(awaitingServer, commentArea)
             case stateVector of
                 ( True, _ ) ->
@@ -184,7 +189,7 @@ update msg model =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentText = commentTextInit
-                        , songCommenting = songLikingOrCommentingNew model.songsRemembered songRememberedIndex
+                        , songCommenting = songCommentingNew
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
@@ -363,7 +368,7 @@ update msg model =
 
                 songLikingNew : SongLikingOrCommenting
                 songLikingNew =
-                    songLikingOrCommentingNew model.songsRemembered songRememberedIndex
+                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -495,7 +500,7 @@ update msg model =
             let
                 songRememberedCompare : Maybe SongBasic
                 songRememberedCompare =
-                    songLikingOrCommentingNew model.songsRemembered songRememberedIndex
+                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =

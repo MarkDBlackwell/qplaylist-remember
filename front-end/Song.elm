@@ -33,7 +33,7 @@ module Song
         , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
-        , songLikingOrCommentingNew
+        , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
         , songRememberedSelected
         , songsLatestFewInit
@@ -139,8 +139,8 @@ songLikingInit =
     Nothing
 
 
-songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
-songLikingOrCommentingNew songsRemembered songRememberedIndex =
+songLikingOrCommentingMaybe : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
+songLikingOrCommentingMaybe songsRemembered songRememberedIndex =
     case songRememberedSelected songsRemembered songRememberedIndex of
         Nothing ->
             Nothing
