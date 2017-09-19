@@ -29,10 +29,13 @@ import ModelDetails
         , PageIsExpanded
         , SongCommenting
         , SongLiking
-        , SongsLatestFew
         , UserIdentifier
         )
 import Random exposing (generate)
+import SongsBasic
+    exposing
+        ( SongsLatestFew
+        )
 import SongsRemembered
     exposing
         ( LikedOrCommented

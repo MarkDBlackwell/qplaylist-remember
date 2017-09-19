@@ -42,10 +42,8 @@ import ModelDetails
             )
         , PageIsExpanded
         , SongCommenting
-        , SongLatestFew
         , SongLiking
         , SongLikingOrCommenting
-        , SongsLatestFew
         , UserIdentifier
         )
 import ModelDetailsUpdate
@@ -66,7 +64,12 @@ import ModelInitialize
         , songCommentingInit
         , songLikingInit
         )
-import SongsBasic exposing (SongBasic)
+import SongsBasic
+    exposing
+        ( SongBasic
+        , SongLatestFew
+        , SongsLatestFew
+        )
 import SongsRemembered
     exposing
         ( SongRemembered

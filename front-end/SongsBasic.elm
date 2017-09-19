@@ -16,7 +16,9 @@ module SongsBasic
     exposing
         ( Artist
         , SongBasic
+        , SongLatestFew
         , SongsBasic
+        , SongsLatestFew
         , Time
         , Timestamp
         , Title
@@ -38,8 +40,16 @@ type alias SongBasic =
     }
 
 
+type alias SongLatestFew =
+    SongBasic
+
+
 type alias SongsBasic =
     List SongBasic
+
+
+type alias SongsLatestFew =
+    List SongLatestFew
 
 
 type alias Time =

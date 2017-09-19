@@ -37,7 +37,6 @@ import ModelDetails
             ( Closed
             , Open
             )
-        , SongsLatestFew
         )
 
 

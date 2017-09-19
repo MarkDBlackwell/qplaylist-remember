@@ -18,7 +18,9 @@ import SongsBasic
     exposing
         ( Artist
         , SongBasic
+        , SongLatestFew
         , SongsBasic
+        , SongsLatestFew
         , Time
         , Timestamp
         , Title
@@ -71,20 +73,12 @@ type alias SongCommenting =
     Maybe SongBasic
 
 
-type alias SongLatestFew =
-    SongBasic
-
-
 type alias SongLiking =
     Maybe SongBasic
 
 
 type alias SongLikingOrCommenting =
     Maybe SongBasic
-
-
-type alias SongsLatestFew =
-    List SongLatestFew
 
 
 type alias UserIdentifier =
