@@ -87,6 +87,7 @@ import Song
         , songLikingOrCommentingNew
         , songRemembered2SongBasic
         , songRememberedSelected
+        , songsRememberedWithoutOne
         )
 import Task
     exposing
@@ -496,10 +497,9 @@ update msg model =
                 songRememberedCompare =
                     songLikingOrCommentingNew model.songsRemembered songRememberedIndex
 
-                songsRememberedWithoutOne : SongsRemembered -> SongRememberedIndex -> SongsRemembered
-                songsRememberedWithoutOne songsRemembered songRememberedIndex =
-                    List.take songRememberedIndex songsRemembered
-                        ++ List.drop (songRememberedIndex + 1) songsRemembered
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    songsRememberedWithoutOne model.songsRemembered songRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -520,7 +520,7 @@ update msg model =
                     else
                         ( { model
                             | alertMessageText = alertMessageTextInit
-                            , songsRemembered = songsRememberedWithoutOne model.songsRemembered songRememberedIndex
+                            , songsRemembered = songsRememberedNew
                           }
                         , focusInputPossibly model
                         )

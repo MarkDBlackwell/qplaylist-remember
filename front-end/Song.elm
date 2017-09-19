@@ -38,6 +38,7 @@ module Song
         , songRememberedSelected
         , songsLatestFewInit
         , songsRememberedInit
+        , songsRememberedWithoutOne
         )
 
 -- MODEL
@@ -170,3 +171,9 @@ songsLatestFewInit =
 songsRememberedInit : SongsRemembered
 songsRememberedInit =
     []
+
+
+songsRememberedWithoutOne : SongsRemembered -> SongRememberedIndex -> SongsRemembered
+songsRememberedWithoutOne songsRemembered songRememberedIndex =
+    List.take songRememberedIndex songsRemembered
+        ++ List.drop (songRememberedIndex + 1) songsRemembered
