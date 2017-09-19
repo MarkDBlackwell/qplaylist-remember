@@ -14,6 +14,7 @@
 
 module ModelInitialize exposing (..)
 
+import Char exposing (toCode)
 import MessageDetails exposing (Msg(InitialSetUp))
 import ModelDetails
     exposing
@@ -62,15 +63,6 @@ init =
     let
         threeLetterSpaceHighest : Int
         threeLetterSpaceHighest =
-            let
-                rankCount : Int
-                rankCount =
-                    2
-
-                rankLength : Int
-                rankLength =
-                    26
-            in
             ((rankCount * rankLength) ^ 3) - 1
     in
     ( Model
@@ -95,6 +87,16 @@ likedOrCommentedInit =
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
     False
+
+
+rankCount : Int
+rankCount =
+    2
+
+
+rankLength : Int
+rankLength =
+    1 + toCode 'Z' - toCode 'A'
 
 
 songCommentingInit : SongCommenting

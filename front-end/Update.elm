@@ -16,7 +16,9 @@ module Update exposing (update)
 
 import Char
     exposing
-        ( fromCode
+        ( KeyCode
+        , fromCode
+        , toCode
         )
 import Debug exposing (log)
 import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
@@ -65,6 +67,8 @@ import ModelInitialize
         ( alertMessageTextInit
         , awaitingServerResponseInit
         , commentTextInit
+        , rankCount
+        , rankLength
         , songCommentingInit
         , songLikingInit
         )
@@ -328,37 +332,31 @@ update msg model =
                 userIdentifierNew : UserIdentifier
                 userIdentifierNew =
                     let
-                        int2Char : Int -> Char
-                        int2Char myInt =
-                            if myInt >= rankLength then
-                                Char.fromCode (myInt - rankLength + 65)
-                                --Upper case letters.
-                            else
-                                Char.fromCode (myInt + 97)
+                        keyCode2Char : KeyCode -> Char
+                        keyCode2Char keyCode =
+                            let
+                                base : KeyCode
+                                base =
+                                    if keyCode < rankLength then
+                                        toCode 'a'
+                                    else
+                                        toCode 'A'
+                            in
+                            fromCode base + (keyCode % rankLength)
 
-                        --Lower case letters.
                         myDigits : List Int
                         myDigits =
                             let
                                 digitSpace : Int
                                 digitSpace =
-                                    let
-                                        rankCount : Int
-                                        rankCount =
-                                            2
-                                    in
                                     rankCount * rankLength
                             in
                             [ (threeLetterSpace // digitSpace // digitSpace) % digitSpace
                             , (threeLetterSpace // digitSpace) % digitSpace
                             , threeLetterSpace % digitSpace
                             ]
-
-                        rankLength : Int
-                        rankLength =
-                            26
                     in
-                    String.fromList (List.map int2Char myDigits)
+                    String.fromList (List.map keyCode2Char myDigits)
             in
             ( { model
                 | userIdentifier = userIdentifierNew
