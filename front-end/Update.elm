@@ -328,23 +328,51 @@ update msg model =
                 userIdentifierNew : UserIdentifier
                 userIdentifierNew =
                     let
-                        int2UpperCaseChar : Int -> Char
-                        int2UpperCaseChar myInt =
-                            Char.fromCode (myInt + 65)
-
-                        myChars : List Char
-                        myChars =
-                            List.map int2UpperCaseChar myDigits
-
-                        myDigits : List Int
-                        myDigits =
-                            [ (threeLetterSpace // 26 // 26) % 26
-                            , (threeLetterSpace // 26) % 26
-                            , threeLetterSpace % 26
-                            ]
-
                         myStrings : List String
                         myStrings =
+                            let
+                                myChars : List Char
+                                myChars =
+                                    let
+                                        int2Char : Int -> Char
+                                        int2Char myInt =
+                                            let
+                                                int2CharCaseLower : Int -> Char
+                                                int2CharCaseLower myInt =
+                                                    Char.fromCode (myInt + 97)
+
+                                                int2CharCaseUpper : Int -> Char
+                                                int2CharCaseUpper myInt =
+                                                    Char.fromCode (myInt + 65)
+                                            in
+                                            if myInt >= rankLength then
+                                                int2CharCaseUpper (myInt - rankLength)
+                                            else
+                                                int2CharCaseLower myInt
+
+                                        myDigits : List Int
+                                        myDigits =
+                                            let
+                                                digitSpace : Int
+                                                digitSpace =
+                                                    let
+                                                        rankCount : Int
+                                                        rankCount =
+                                                            2
+                                                    in
+                                                    rankCount * rankLength
+                                            in
+                                            [ (threeLetterSpace // digitSpace // digitSpace) % digitSpace
+                                            , (threeLetterSpace // digitSpace) % digitSpace
+                                            , threeLetterSpace % digitSpace
+                                            ]
+
+                                        rankLength : Int
+                                        rankLength =
+                                            26
+                                    in
+                                    List.map int2Char myDigits
+                            in
                             List.map String.fromChar myChars
                     in
                     String.join "" myStrings

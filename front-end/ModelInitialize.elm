@@ -62,15 +62,16 @@ init =
     let
         threeLetterSpaceHighest : Int
         threeLetterSpaceHighest =
-            (26 ^ 3) - 1
+            let
+                rankCount : Int
+                rankCount =
+                    2
 
-        threeLetterSpaceLowest : Int
-        threeLetterSpaceLowest =
-            0
-
-        --userIdentifierNew : UserIdentifier
-        --userIdentifierNew =
-        --"AAA"
+                rankLength : Int
+                rankLength =
+                    26
+            in
+            ((rankCount * rankLength) ^ 3) - 1
     in
     ( Model
         alertMessageTextInit
@@ -82,7 +83,7 @@ init =
         songsLatestFewInit
         songsRememberedInit
         userIdentifierInit
-    , Random.generate InitialSetUp (Random.int threeLetterSpaceLowest threeLetterSpaceHighest)
+    , Random.generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
     )
 
 
