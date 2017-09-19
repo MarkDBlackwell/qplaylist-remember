@@ -160,12 +160,18 @@ songRemembered2SongBasic song =
 
 songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
 songRememberedSelected songsRemembered songRememberedIndex =
-    List.head (List.drop songRememberedIndex songsRemembered)
+    --List.head (List.drop songRememberedIndex songsRemembered)
+    List.head (songsRememberedAfter songsRemembered songRememberedIndex)
 
 
 songsLatestFewInit : SongsLatestFew
 songsLatestFewInit =
     []
+
+
+songsRememberedAfter : SongsRemembered -> SongRememberedIndex -> SongsRemembered
+songsRememberedAfter songsRemembered songRememberedIndex =
+    List.drop songRememberedIndex songsRemembered
 
 
 songsRememberedInit : SongsRemembered
@@ -176,4 +182,5 @@ songsRememberedInit =
 songsRememberedWithoutOne : SongsRemembered -> SongRememberedIndex -> SongsRemembered
 songsRememberedWithoutOne songsRemembered songRememberedIndex =
     List.take songRememberedIndex songsRemembered
-        ++ List.drop (songRememberedIndex + 1) songsRemembered
+        --++ List.drop (songRememberedIndex + 1) songsRemembered
+        ++ songsRememberedAfter songsRemembered (songRememberedIndex + 1)
