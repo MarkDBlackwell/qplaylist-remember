@@ -44,7 +44,7 @@ import ModelInitialize
     exposing
         ( likedOrCommentedInit
         )
-import SongsBasic
+import Song
     exposing
         ( SongBasic
         , SongsBasic

@@ -38,7 +38,7 @@ import Random
     exposing
         ( generate
         )
-import SongsBasic
+import Song
     exposing
         ( SongsLatestFew
         )

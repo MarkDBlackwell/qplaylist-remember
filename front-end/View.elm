@@ -67,7 +67,7 @@ import ModelDetailsView
         , SongGroupLength
         , SongLatestFewOrRememberedIndex
         )
-import SongsBasic
+import Song
     exposing
         ( SongBasic
         )

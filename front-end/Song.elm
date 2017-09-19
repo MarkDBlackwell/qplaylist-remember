@@ -12,7 +12,7 @@
 -}
 
 
-module SongsBasic
+module Song
     exposing
         ( Artist
         , SongBasic

@@ -76,7 +76,7 @@ import ModelInitialize
         , songCommentingInit
         , songLikingInit
         )
-import SongsBasic
+import Song
     exposing
         ( SongBasic
         , SongLatestFew

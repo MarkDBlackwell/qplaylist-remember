@@ -14,7 +14,7 @@
 
 module ModelDetails exposing (..)
 
-import SongsBasic
+import Song
     exposing
         ( Artist
         , SongBasic

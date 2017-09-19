@@ -19,7 +19,7 @@ module SongsRemembered
         , SongsRemembered
         )
 
-import SongsBasic
+import Song
     exposing
         ( Artist
         , Time

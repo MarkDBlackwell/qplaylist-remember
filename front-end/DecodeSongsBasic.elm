@@ -32,7 +32,7 @@ import ModelDetailsUpdate
         ( DecodeErrorMessageText
         , HttpResponseText
         )
-import SongsBasic
+import Song
     exposing
         ( SongBasic
         , SongsBasic
