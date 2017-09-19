@@ -14,7 +14,7 @@
 
 module ModelInitialize exposing (..)
 
-import Char exposing (toCode)
+import Alphabet exposing (letterSpace)
 import MessageDetails exposing (Msg(InitialSetUp))
 import ModelDetails
     exposing
@@ -50,16 +50,6 @@ awaitingServerResponseInit =
     False
 
 
-caseCount : Int
-caseCount =
-    2
-
-
-caseLength : Int
-caseLength =
-    1 + toCode 'Z' - toCode 'A'
-
-
 commentTextInit : CommentText
 commentTextInit =
     ""
@@ -84,11 +74,6 @@ init =
         userIdentifierInit
     , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
     )
-
-
-letterSpace : Int
-letterSpace =
-    caseCount * caseLength
 
 
 likedOrCommentedInit : LikedOrCommented

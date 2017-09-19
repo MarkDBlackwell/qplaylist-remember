@@ -14,6 +14,11 @@
 
 module Update exposing (update)
 
+import Alphabet
+    exposing
+        ( caseLength
+        , letterSpace
+        )
 import Char
     exposing
         ( KeyCode
@@ -66,9 +71,7 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
-        , caseLength
         , commentTextInit
-        , letterSpace
         , songCommentingInit
         , songLikingInit
         )
