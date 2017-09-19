@@ -125,9 +125,9 @@ update msg model =
         alertMessageTextAwaitingServer =
             "Awaiting server"
 
-        songLikingOrCommentingNew : SongRememberedIndex -> SongLikingOrCommenting
-        songLikingOrCommentingNew songRememberedIndex =
-            case List.head (List.drop songRememberedIndex model.songsRemembered) of
+        songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
+        songLikingOrCommentingNew songsRemembered songRememberedIndex =
+            case List.head (List.drop songRememberedIndex songsRemembered) of
                 Nothing ->
                     Nothing
 
@@ -190,7 +190,7 @@ update msg model =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentText = commentTextInit
-                        , songCommenting = songLikingOrCommentingNew songRememberedIndex
+                        , songCommenting = songLikingOrCommentingNew model.songsRemembered songRememberedIndex
                       }
                       --'focusInputPossibly' doesn't work, here:
                     , focusSet "input"
@@ -369,7 +369,7 @@ update msg model =
 
                 songLikingNew : SongLikingOrCommenting
                 songLikingNew =
-                    songLikingOrCommentingNew songRememberedIndex
+                    songLikingOrCommentingNew model.songsRemembered songRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
