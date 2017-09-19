@@ -41,7 +41,6 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
-        , SongBasic
         , SongCommenting
         , SongLatestFew
         , SongLiking
@@ -68,6 +67,10 @@ import ModelInitialize
         , commentTextInit
         , songCommentingInit
         , songLikingInit
+        )
+import SongsBasic
+    exposing
+        ( SongBasic
         )
 import Task
     exposing

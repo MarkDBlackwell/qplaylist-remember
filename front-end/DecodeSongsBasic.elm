@@ -24,15 +24,15 @@ import Json.Decode
         , map4
         , string
         )
-import ModelDetails
-    exposing
-        ( SongBasic
-        , SongsBasic
-        )
 import ModelDetailsUpdate
     exposing
         ( DecodeErrorMessageText
         , HttpResponseText
+        )
+import SongsBasic
+    exposing
+        ( SongBasic
+        , SongsBasic
         )
 
 

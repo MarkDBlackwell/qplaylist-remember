@@ -53,7 +53,6 @@ import MessageDetails
 import ModelDetails
     exposing
         ( Model
-        , SongBasic
         , SongRemembered
         , SongsRemembered
         )
@@ -66,6 +65,10 @@ import ModelDetailsView
             )
         , SongGroupLength
         , SongLatestFewOrRememberedIndex
+        )
+import SongsBasic
+    exposing
+        ( SongBasic
         )
 import UpdateUtilities
     exposing
@@ -113,20 +116,20 @@ commentArea model song =
         yearMonthDay : String
         yearMonthDay =
             let
-                timeStampFieldsSelected : List String
-                timeStampFieldsSelected =
+                timestampFieldsSelected : List String
+                timestampFieldsSelected =
                     let
                         howManyToTake : Int
                         howManyToTake =
                             3
 
-                        timeStampList : List String
-                        timeStampList =
-                            String.split " " song.timeStamp
+                        timestampList : List String
+                        timestampList =
+                            String.split " " song.timestamp
                     in
-                    List.take howManyToTake timeStampList
+                    List.take howManyToTake timestampList
             in
-            String.join "-" timeStampFieldsSelected
+            String.join "-" timestampFieldsSelected
     in
     section
         [ id "comment" ]

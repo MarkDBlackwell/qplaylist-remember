@@ -14,14 +14,21 @@
 
 module ModelDetails exposing (..)
 
+import SongsBasic
+    exposing
+        ( Artist
+        , SongBasic
+        , SongsBasic
+        , Time
+        , Timestamp
+        , Title
+        )
+
+
 -- MODEL
 
 
 type alias AlertMessageText =
-    String
-
-
-type alias Artist =
     String
 
 
@@ -59,15 +66,6 @@ type alias PageIsExpanded =
     Bool
 
 
-type alias SongBasic =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timeStamp : TimeStamp
-    , title : Title
-    }
-
-
 type alias SongCommenting =
     Maybe SongBasic
 
@@ -88,13 +86,9 @@ type alias SongRemembered =
     { artist : Artist
     , likedOrCommented : LikedOrCommented
     , time : Time
-    , timeStamp : TimeStamp
+    , timestamp : Timestamp
     , title : Title
     }
-
-
-type alias SongsBasic =
-    List SongBasic
 
 
 type alias SongsLatestFew =
@@ -103,18 +97,6 @@ type alias SongsLatestFew =
 
 type alias SongsRemembered =
     List SongRemembered
-
-
-type alias Time =
-    String
-
-
-type alias TimeStamp =
-    String
-
-
-type alias Title =
-    String
 
 
 type alias UserIdentifier =

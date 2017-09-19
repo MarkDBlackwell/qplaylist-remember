@@ -103,19 +103,19 @@ likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentT
         basename =
             "append.json"
 
-        timeStamp : UriText
-        timeStamp =
+        timestamp : UriText
+        timestamp =
             case songLikingOrCommenting of
                 Nothing ->
                     ""
 
                 Just songLikingOrCommenting ->
-                    songLikingOrCommenting.timeStamp
+                    songLikingOrCommenting.timestamp
     in
     relative
         [ basename ]
         [ ( "user_identifier", userIdentifier )
-        , ( "timestamp", timeStamp )
+        , ( "timestamp", timestamp )
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]

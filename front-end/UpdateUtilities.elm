@@ -27,14 +27,18 @@ import Http exposing (Error)
 import MessageDetails exposing (Msg(FocusSet))
 import ModelDetails
     exposing
-        ( SongBasic
-        , SongRemembered
+        ( SongRemembered
         )
 import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText
         )
 import ModelInitialize exposing (likedOrCommentedInit)
+import SongsBasic
+    exposing
+        ( SongBasic
+        , SongsBasic
+        )
 import Task
     exposing
         ( Task
@@ -119,7 +123,7 @@ songBasic2SongRemembered song =
         song.artist
         likedOrCommentedInit
         song.time
-        song.timeStamp
+        song.timestamp
         song.title
 
 
@@ -128,5 +132,5 @@ songRemembered2SongBasic song =
     SongBasic
         song.artist
         song.time
-        song.timeStamp
+        song.timestamp
         song.title
