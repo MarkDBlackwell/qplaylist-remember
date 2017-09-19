@@ -54,9 +54,6 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
-        , SongCommenting
-        , SongLiking
-        , SongLikingOrCommenting
         )
 import ModelDetailsUpdate
     exposing
@@ -79,7 +76,10 @@ import ModelInitialize
 import Song
     exposing
         ( SongBasic
+        , SongCommenting
         , SongLatestFew
+        , SongLiking
+        , SongLikingOrCommenting
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered

@@ -38,7 +38,6 @@ import ModelDetails
             ( Closed
             , Open
             )
-        , SongLikingOrCommenting
         )
 import ModelDetailsUpdate
     exposing
@@ -50,7 +49,8 @@ import ModelDetailsUpdate
         )
 import Song
     exposing
-        ( SongRemembered
+        ( SongLikingOrCommenting
+        , SongRemembered
         )
 import UpdateUtilities
     exposing

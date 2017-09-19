@@ -17,7 +17,10 @@ module Song
         ( Artist
         , LikedOrCommented
         , SongBasic
+        , SongCommenting
         , SongLatestFew
+        , SongLiking
+        , SongLikingOrCommenting
         , SongRemembered
         , SongsBasic
         , SongsLatestFew
@@ -47,8 +50,20 @@ type alias SongBasic =
     }
 
 
+type alias SongCommenting =
+    Maybe SongBasic
+
+
 type alias SongLatestFew =
     SongBasic
+
+
+type alias SongLiking =
+    Maybe SongBasic
+
+
+type alias SongLikingOrCommenting =
+    Maybe SongBasic
 
 
 type alias SongRemembered =

@@ -31,8 +31,6 @@ import ModelDetails
             , Open
             )
         , PageIsExpanded
-        , SongCommenting
-        , SongLiking
         )
 import Random
     exposing
@@ -41,6 +39,8 @@ import Random
 import Song
     exposing
         ( LikedOrCommented
+        , SongCommenting
+        , SongLiking
         , SongsLatestFew
         , SongsRemembered
         )

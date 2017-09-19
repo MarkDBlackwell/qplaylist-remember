@@ -18,7 +18,10 @@ import Song
     exposing
         ( Artist
         , SongBasic
+        , SongCommenting
         , SongLatestFew
+        , SongLiking
+        , SongLikingOrCommenting
         , SongRemembered
         , SongsBasic
         , SongsLatestFew
@@ -68,15 +71,3 @@ type Optional
 
 type alias PageIsExpanded =
     Bool
-
-
-type alias SongCommenting =
-    Maybe SongBasic
-
-
-type alias SongLiking =
-    Maybe SongBasic
-
-
-type alias SongLikingOrCommenting =
-    Maybe SongBasic
