@@ -144,8 +144,8 @@ songLikingOrCommentingNew songsRemembered songRememberedIndex =
         Nothing ->
             Nothing
 
-        Just songSelected ->
-            Just (songRemembered2SongBasic songSelected)
+        Just songRememberedSelected ->
+            Just (songRemembered2SongBasic songRememberedSelected)
 
 
 songRemembered2SongBasic : SongRemembered -> SongBasic
