@@ -330,20 +330,13 @@ update msg model =
                     let
                         int2Char : Int -> Char
                         int2Char myInt =
-                            let
-                                int2CharCaseLower : Int -> Char
-                                int2CharCaseLower myInt =
-                                    Char.fromCode (myInt + 97)
-
-                                int2CharCaseUpper : Int -> Char
-                                int2CharCaseUpper myInt =
-                                    Char.fromCode (myInt + 65)
-                            in
                             if myInt >= rankLength then
-                                int2CharCaseUpper (myInt - rankLength)
+                                Char.fromCode (myInt - rankLength + 65)
+                                --Upper case letters.
                             else
-                                int2CharCaseLower myInt
+                                Char.fromCode (myInt + 97)
 
+                        --Lower case letters.
                         myDigits : List Int
                         myDigits =
                             let
