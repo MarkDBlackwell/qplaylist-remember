@@ -86,6 +86,7 @@ import Song
         , songLikingInit
         , songLikingOrCommentingNew
         , songRemembered2SongBasic
+        , songRememberedSelected
         )
 import Task
     exposing
@@ -493,11 +494,6 @@ update msg model =
             let
                 songRememberedCompare : SongsRemembered -> Maybe SongBasic
                 songRememberedCompare songsRemembered =
-                    let
-                        songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-                        songRememberedSelected songsRemembered songRememberedIndex =
-                            List.head (List.drop songRememberedIndex songsRemembered)
-                    in
                     case songRememberedSelected songsRemembered songRememberedIndex of
                         Nothing ->
                             Nothing

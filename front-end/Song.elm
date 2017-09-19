@@ -35,6 +35,7 @@ module Song
         , songLikingInit
         , songLikingOrCommentingNew
         , songRemembered2SongBasic
+        , songRememberedSelected
         , songsLatestFewInit
         , songsRememberedInit
         )
@@ -139,11 +140,6 @@ songLikingInit =
 
 songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingNew songsRemembered songRememberedIndex =
-    let
-        songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-        songRememberedSelected songsRemembered songRememberedIndex =
-            List.head (List.drop songRememberedIndex songsRemembered)
-    in
     case songRememberedSelected songsRemembered songRememberedIndex of
         Nothing ->
             Nothing
@@ -159,6 +155,11 @@ songRemembered2SongBasic song =
         song.time
         song.timestamp
         song.title
+
+
+songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
+songRememberedSelected songsRemembered songRememberedIndex =
+    List.head (List.drop songRememberedIndex songsRemembered)
 
 
 songsLatestFewInit : SongsLatestFew
