@@ -12,7 +12,10 @@
 -}
 
 
-module ViewBuySong exposing (buySongAnchor)
+module ViewBuySong
+    exposing
+        ( buySongAnchor
+        )
 
 import Html
     exposing
@@ -25,17 +28,34 @@ import Html.Attributes
         , target
         , title
         )
-import Html.Events exposing (onClick)
-import MessageDetails exposing (Msg(SongBuyAnchorProcessHand))
+import Html.Events
+    exposing
+        ( onClick
+        )
+import MessageDetails
+    exposing
+        ( Msg
+            ( SongBuyAnchorProcessHand
+            )
+        )
 import ModelDetailsUpdate
     exposing
         ( QueryBeforeList
         , QueryPairs
         , UriText
         )
-import ModelDetailsView exposing (HoverText)
-import SongsRemembered exposing (SongRemembered)
-import UpdateDetails exposing (relative)
+import ModelDetailsView
+    exposing
+        ( HoverText
+        )
+import SongsRemembered
+    exposing
+        ( SongRemembered
+        )
+import UpdateDetails
+    exposing
+        ( relative
+        )
 
 
 -- VIEW

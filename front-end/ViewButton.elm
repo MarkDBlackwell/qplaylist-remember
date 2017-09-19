@@ -22,7 +22,10 @@ module ViewButton
         , buttonRemembered
         )
 
-import Dom exposing (Id)
+import Dom
+    exposing
+        ( Id
+        )
 import Html
     exposing
         ( Attribute
@@ -36,7 +39,10 @@ import Html.Attributes
         , title
         , type_
         )
-import Html.Events exposing (onClick)
+import Html.Events
+    exposing
+        ( onClick
+        )
 import MessageDetails
     exposing
         ( Msg
@@ -48,7 +54,10 @@ import MessageDetails
             , SongsLatestFewRefreshHand
             )
         )
-import ModelDetailsUpdate exposing (SongRememberedIndex)
+import ModelDetailsUpdate
+    exposing
+        ( SongRememberedIndex
+        )
 import ModelDetailsView
     exposing
         ( Display

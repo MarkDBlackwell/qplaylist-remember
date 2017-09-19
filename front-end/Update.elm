@@ -12,24 +12,42 @@
 -}
 
 
-module Update exposing (update)
+module Update
+    exposing
+        ( update
+        )
 
 import Alphabet
     exposing
         ( keyCode2Char
         , threeDigits
         )
-import Debug exposing (log)
-import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
-import DecodeSongsBasic exposing (decodeSongsBasic)
-import Dom exposing (focus)
+import Debug
+    exposing
+        ( log
+        )
+import DecodeLikeOrCommentResponse
+    exposing
+        ( decodeLikeOrCommentResponse
+        )
+import DecodeSongsBasic
+    exposing
+        ( decodeSongsBasic
+        )
+import Dom
+    exposing
+        ( focus
+        )
 import Http
     exposing
         ( Request
         , getString
         , send
         )
-import MessageDetails exposing (Msg(..))
+import MessageDetails
+    exposing
+        ( Msg(..)
+        )
 import ModelDetails
     exposing
         ( AlertMessageText

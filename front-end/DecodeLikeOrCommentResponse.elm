@@ -12,7 +12,10 @@
 -}
 
 
-module DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
+module DecodeLikeOrCommentResponse
+    exposing
+        ( decodeLikeOrCommentResponse
+        )
 
 import Json.Decode
     exposing

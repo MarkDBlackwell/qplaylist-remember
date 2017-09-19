@@ -22,8 +22,14 @@ module UpdateDetails
         , relative
         )
 
-import Http exposing (Error)
-import MessageDetails exposing (Msg)
+import Http
+    exposing
+        ( Error
+        )
+import MessageDetails
+    exposing
+        ( Msg
+        )
 import ModelDetails
     exposing
         ( AlertMessageText
@@ -43,7 +49,10 @@ import ModelDetailsUpdate
         , QueryPairs
         , UriText
         )
-import SongsRemembered exposing (SongRemembered)
+import SongsRemembered
+    exposing
+        ( SongRemembered
+        )
 import UpdateUtilities
     exposing
         ( focusSet

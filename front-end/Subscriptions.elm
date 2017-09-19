@@ -12,10 +12,19 @@
 -}
 
 
-module Subscriptions exposing (subscriptions)
+module Subscriptions
+    exposing
+        ( subscriptions
+        )
 
-import MessageDetails exposing (Msg)
-import ModelDetails exposing (Model)
+import MessageDetails
+    exposing
+        ( Msg
+        )
+import ModelDetails
+    exposing
+        ( Model
+        )
 
 
 -- SUBSCRIPTIONS

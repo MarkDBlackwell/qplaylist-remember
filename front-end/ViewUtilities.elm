@@ -25,7 +25,10 @@ import Html
         ( Html
         , text
         )
-import MessageDetails exposing (Msg)
+import MessageDetails
+    exposing
+        ( Msg
+        )
 import ModelDetailsView
     exposing
         ( SongGroup

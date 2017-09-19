@@ -14,8 +14,16 @@
 
 module ModelInitialize exposing (..)
 
-import Alphabet exposing (letterSpace)
-import MessageDetails exposing (Msg(InitialSetUp))
+import Alphabet
+    exposing
+        ( letterSpace
+        )
+import MessageDetails
+    exposing
+        ( Msg
+            ( InitialSetUp
+            )
+        )
 import ModelDetails
     exposing
         ( AlertMessageText
@@ -31,7 +39,10 @@ import ModelDetails
         , SongLiking
         , UserIdentifier
         )
-import Random exposing (generate)
+import Random
+    exposing
+        ( generate
+        )
 import SongsBasic
     exposing
         ( SongsLatestFew

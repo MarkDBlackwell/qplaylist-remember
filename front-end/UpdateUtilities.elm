@@ -22,17 +22,37 @@ module UpdateUtilities
         , songRemembered2SongBasic
         )
 
-import Dom exposing (Id)
-import Http exposing (Error)
-import MessageDetails exposing (Msg(FocusSet))
-import ModelDetailsUpdate exposing (HttpErrorMessageText)
-import ModelInitialize exposing (likedOrCommentedInit)
+import Dom
+    exposing
+        ( Id
+        )
+import Http
+    exposing
+        ( Error
+        )
+import MessageDetails
+    exposing
+        ( Msg
+            ( FocusSet
+            )
+        )
+import ModelDetailsUpdate
+    exposing
+        ( HttpErrorMessageText
+        )
+import ModelInitialize
+    exposing
+        ( likedOrCommentedInit
+        )
 import SongsBasic
     exposing
         ( SongBasic
         , SongsBasic
         )
-import SongsRemembered exposing (SongRemembered)
+import SongsRemembered
+    exposing
+        ( SongRemembered
+        )
 import Task
     exposing
         ( Task

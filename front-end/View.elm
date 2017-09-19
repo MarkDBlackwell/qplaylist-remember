@@ -12,7 +12,10 @@
 -}
 
 
-module View exposing (view)
+module View
+    exposing
+        ( view
+        )
 
 import Html
     exposing
@@ -38,7 +41,10 @@ import Html.Attributes
         , title
         , type_
         )
-import Html.Events exposing (onInput)
+import Html.Events
+    exposing
+        ( onInput
+        )
 import MessageDetails
     exposing
         ( Msg
@@ -47,7 +53,10 @@ import MessageDetails
             , CommentSendHand
             )
         )
-import ModelDetails exposing (Model)
+import ModelDetails
+    exposing
+        ( Model
+        )
 import ModelDetailsView
     exposing
         ( HoverText
@@ -58,13 +67,19 @@ import ModelDetailsView
         , SongGroupLength
         , SongLatestFewOrRememberedIndex
         )
-import SongsBasic exposing (SongBasic)
+import SongsBasic
+    exposing
+        ( SongBasic
+        )
 import SongsRemembered
     exposing
         ( SongRemembered
         , SongsRemembered
         )
-import UpdateUtilities exposing (songBasic2SongRemembered)
+import UpdateUtilities
+    exposing
+        ( songBasic2SongRemembered
+        )
 import ViewButton
     exposing
         ( buttonComment
@@ -74,8 +89,14 @@ import ViewButton
         , buttonPlayed
         , buttonRemembered
         )
-import ViewBuySong exposing (buySongAnchor)
-import ViewStyleCalc exposing (styleCalc)
+import ViewBuySong
+    exposing
+        ( buySongAnchor
+        )
+import ViewStyleCalc
+    exposing
+        ( styleCalc
+        )
 import ViewUtilities
     exposing
         ( htmlNodeNull

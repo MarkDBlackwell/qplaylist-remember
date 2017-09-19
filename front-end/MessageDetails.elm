@@ -12,10 +12,19 @@
 -}
 
 
-module MessageDetails exposing (Msg(..))
+module MessageDetails
+    exposing
+        ( Msg(..)
+        )
 
-import Dom exposing (Id)
-import Http exposing (Error)
+import Dom
+    exposing
+        ( Id
+        )
+import Http
+    exposing
+        ( Error
+        )
 import ModelDetails
     exposing
         ( CommentText

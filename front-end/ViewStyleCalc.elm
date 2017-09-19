@@ -12,10 +12,19 @@
 -}
 
 
-module ViewStyleCalc exposing (styleCalc)
+module ViewStyleCalc
+    exposing
+        ( styleCalc
+        )
 
-import Html exposing (Attribute)
-import Html.Attributes exposing (style)
+import Html
+    exposing
+        ( Attribute
+        )
+import Html.Attributes
+    exposing
+        ( style
+        )
 import ModelDetailsView
     exposing
         ( SongGroup
@@ -25,7 +34,10 @@ import ModelDetailsView
         , SongGroupLength
         , SongLatestFewOrRememberedIndex
         )
-import ViewUtilities exposing (goldenRatio)
+import ViewUtilities
+    exposing
+        ( goldenRatio
+        )
 
 
 -- VIEW

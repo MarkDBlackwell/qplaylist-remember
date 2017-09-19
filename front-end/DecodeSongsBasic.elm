@@ -12,7 +12,10 @@
 -}
 
 
-module DecodeSongsBasic exposing (decodeSongsBasic)
+module DecodeSongsBasic
+    exposing
+        ( decodeSongsBasic
+        )
 
 import Json.Decode
     exposing
