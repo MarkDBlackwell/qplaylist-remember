@@ -34,10 +34,7 @@ import ModelDetails
         , SongsRemembered
         , UserIdentifier
         )
-import Random
-    exposing
-        ( generate
-        )
+import Random exposing (generate)
 
 
 -- MODEL
@@ -63,7 +60,7 @@ init =
     let
         threeLetterSpaceHighest : Int
         threeLetterSpaceHighest =
-            ((rankCount * rankLength) ^ 3) - 1
+            (letterSpace ^ 3) - 1
     in
     ( Model
         alertMessageTextInit
@@ -75,8 +72,13 @@ init =
         songsLatestFewInit
         songsRememberedInit
         userIdentifierInit
-    , Random.generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
+    , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
     )
+
+
+letterSpace : Int
+letterSpace =
+    rankCount * rankLength
 
 
 likedOrCommentedInit : LikedOrCommented

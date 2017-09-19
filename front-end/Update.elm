@@ -67,6 +67,7 @@ import ModelInitialize
         ( alertMessageTextInit
         , awaitingServerResponseInit
         , commentTextInit
+        , letterSpace
         , rankCount
         , rankLength
         , songCommentingInit
@@ -332,6 +333,13 @@ update msg model =
                 userIdentifierNew : UserIdentifier
                 userIdentifierNew =
                     let
+                        digits : List Int
+                        digits =
+                            [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
+                            , (threeLetterSpace // letterSpace) % letterSpace
+                            , threeLetterSpace % letterSpace
+                            ]
+
                         keyCode2Char : KeyCode -> Char
                         keyCode2Char keyCode =
                             let
@@ -342,21 +350,9 @@ update msg model =
                                     else
                                         toCode 'A'
                             in
-                            fromCode base + (keyCode % rankLength)
-
-                        myDigits : List Int
-                        myDigits =
-                            let
-                                digitSpace : Int
-                                digitSpace =
-                                    rankCount * rankLength
-                            in
-                            [ (threeLetterSpace // digitSpace // digitSpace) % digitSpace
-                            , (threeLetterSpace // digitSpace) % digitSpace
-                            , threeLetterSpace % digitSpace
-                            ]
+                            fromCode (base + (keyCode % rankLength))
                     in
-                    String.fromList (List.map keyCode2Char myDigits)
+                    String.fromList (List.map keyCode2Char digits)
             in
             ( { model
                 | userIdentifier = userIdentifierNew
