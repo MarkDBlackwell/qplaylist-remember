@@ -30,19 +30,6 @@ import Char
 -- MODEL
 
 
-baseKeyCode : KeyCode -> KeyCode
-baseKeyCode keyCode =
-    if keyCode < caseLength then
-        toCode 'a'
-    else
-        toCode 'A'
-
-
-caseCount : Int
-caseCount =
-    2
-
-
 caseLength : Int
 caseLength =
     1 + toCode 'Z' - toCode 'A'
@@ -50,11 +37,24 @@ caseLength =
 
 keyCode2Char : KeyCode -> Char
 keyCode2Char keyCode =
+    let
+        baseKeyCode : KeyCode -> KeyCode
+        baseKeyCode keyCode =
+            if keyCode < caseLength then
+                toCode 'a'
+            else
+                toCode 'A'
+    in
     fromCode (baseKeyCode keyCode + (keyCode % caseLength))
 
 
 letterSpace : Int
 letterSpace =
+    let
+        caseCount : Int
+        caseCount =
+            2
+    in
     caseCount * caseLength
 
 
