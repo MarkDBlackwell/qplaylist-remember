@@ -267,7 +267,7 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                List.map (likedOrCommentedShow model.songCommenting) model.songsRemembered
+                                likedOrCommentedShow model.songCommenting model.songsRemembered
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit
@@ -447,7 +447,7 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                List.map (likedOrCommentedShow model.songLiking) model.songsRemembered
+                                likedOrCommentedShow model.songLiking model.songsRemembered
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit

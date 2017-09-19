@@ -120,8 +120,13 @@ likedOrCommentedInit =
     False
 
 
-likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
-likedOrCommentedShow songLikingOrCommenting song =
+likedOrCommentedShow : SongLikingOrCommenting -> SongsRemembered -> SongsRemembered
+likedOrCommentedShow songLikingOrCommenting songsRemembered =
+    List.map (likedOrCommentedShowSong songLikingOrCommenting) songsRemembered
+
+
+likedOrCommentedShowSong : SongLikingOrCommenting -> SongRemembered -> SongRemembered
+likedOrCommentedShowSong songLikingOrCommenting song =
     case songLikingOrCommenting of
         Nothing ->
             song
