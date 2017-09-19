@@ -17,7 +17,7 @@ module UpdateUtilities
         ( focusSet
         , httpErrorMessageLogging
         , httpErrorMessageScreen
-        , msg2CmdSucceed
+        , msg2Cmd
         )
 
 import Dom
@@ -56,7 +56,7 @@ import Tuple
 
 focusSet : Id -> Cmd Msg
 focusSet id =
-    msg2CmdSucceed (FocusSet id)
+    msg2Cmd (FocusSet id)
 
 
 httpErrorMessage : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
@@ -107,8 +107,8 @@ httpErrorMessageScreen httpError =
     second (httpErrorMessage httpError)
 
 
-msg2CmdSucceed : Msg -> Cmd Msg
-msg2CmdSucceed msg =
+msg2Cmd : Msg -> Cmd Msg
+msg2Cmd msg =
     --See:
     --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
