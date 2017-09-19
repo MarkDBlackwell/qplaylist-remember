@@ -19,16 +19,13 @@ import Song
         ( Artist
         , SongBasic
         , SongLatestFew
+        , SongRemembered
         , SongsBasic
         , SongsLatestFew
+        , SongsRemembered
         , Time
         , Timestamp
         , Title
-        )
-import SongsRemembered
-    exposing
-        ( SongRemembered
-        , SongsRemembered
         )
 import UserIdentifier
     exposing

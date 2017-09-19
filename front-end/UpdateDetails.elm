@@ -48,7 +48,7 @@ import ModelDetailsUpdate
         , QueryPairs
         , UriText
         )
-import SongsRemembered
+import Song
     exposing
         ( SongRemembered
         )

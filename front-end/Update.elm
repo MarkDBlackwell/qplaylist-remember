@@ -80,11 +80,8 @@ import Song
     exposing
         ( SongBasic
         , SongLatestFew
+        , SongRemembered
         , SongsLatestFew
-        )
-import SongsRemembered
-    exposing
-        ( SongRemembered
         , SongsRemembered
         )
 import Task

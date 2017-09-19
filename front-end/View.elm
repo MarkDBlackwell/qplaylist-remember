@@ -70,10 +70,7 @@ import ModelDetailsView
 import Song
     exposing
         ( SongBasic
-        )
-import SongsRemembered
-    exposing
-        ( SongRemembered
+        , SongRemembered
         , SongsRemembered
         )
 import UpdateUtilities

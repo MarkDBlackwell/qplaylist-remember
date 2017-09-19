@@ -48,7 +48,7 @@ import ModelDetailsView
     exposing
         ( HoverText
         )
-import SongsRemembered
+import Song
     exposing
         ( SongRemembered
         )

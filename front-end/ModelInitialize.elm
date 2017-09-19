@@ -40,11 +40,8 @@ import Random
         )
 import Song
     exposing
-        ( SongsLatestFew
-        )
-import SongsRemembered
-    exposing
         ( LikedOrCommented
+        , SongsLatestFew
         , SongsRemembered
         )
 import UserIdentifier

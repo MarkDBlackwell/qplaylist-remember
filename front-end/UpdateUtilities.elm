@@ -47,11 +47,8 @@ import ModelInitialize
 import Song
     exposing
         ( SongBasic
+        , SongRemembered
         , SongsBasic
-        )
-import SongsRemembered
-    exposing
-        ( SongRemembered
         )
 import Task
     exposing

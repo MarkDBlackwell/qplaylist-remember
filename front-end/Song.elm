@@ -15,10 +15,13 @@
 module Song
     exposing
         ( Artist
+        , LikedOrCommented
         , SongBasic
         , SongLatestFew
+        , SongRemembered
         , SongsBasic
         , SongsLatestFew
+        , SongsRemembered
         , Time
         , Timestamp
         , Title
@@ -29,6 +32,10 @@ module Song
 
 type alias Artist =
     String
+
+
+type alias LikedOrCommented =
+    Bool
 
 
 type alias SongBasic =
@@ -44,12 +51,25 @@ type alias SongLatestFew =
     SongBasic
 
 
+type alias SongRemembered =
+    { artist : Artist
+    , likedOrCommented : LikedOrCommented
+    , time : Time
+    , timestamp : Timestamp
+    , title : Title
+    }
+
+
 type alias SongsBasic =
     List SongBasic
 
 
 type alias SongsLatestFew =
     List SongLatestFew
+
+
+type alias SongsRemembered =
+    List SongRemembered
 
 
 type alias Time =
