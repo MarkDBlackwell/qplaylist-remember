@@ -16,10 +16,8 @@ module Update exposing (update)
 
 import Alphabet
     exposing
-        ( baseKeyCode
-        , caseLength
-        , keyCode2Char
-        , letterSpace
+        ( keyCode2Char
+        , threeDigits
         )
 import Debug exposing (log)
 import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
@@ -330,14 +328,6 @@ update msg model =
             let
                 userIdentifierNew : UserIdentifier
                 userIdentifierNew =
-                    let
-                        threeDigits : Int -> List Int
-                        threeDigits threeLetterSpace =
-                            [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
-                            , (threeLetterSpace // letterSpace) % letterSpace
-                            , threeLetterSpace % letterSpace
-                            ]
-                    in
                     String.fromList (List.map keyCode2Char (threeDigits threeLetterSpace))
             in
             ( { model

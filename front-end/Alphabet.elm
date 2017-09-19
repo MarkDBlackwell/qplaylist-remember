@@ -14,11 +14,9 @@
 
 module Alphabet
     exposing
-        ( baseKeyCode
-        , caseCount
-        , caseLength
-        , keyCode2Char
+        ( keyCode2Char
         , letterSpace
+        , threeDigits
         )
 
 import Char
@@ -58,3 +56,11 @@ keyCode2Char keyCode =
 letterSpace : Int
 letterSpace =
     caseCount * caseLength
+
+
+threeDigits : Int -> List Int
+threeDigits threeLetterSpace =
+    [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
+    , (threeLetterSpace // letterSpace) % letterSpace
+    , threeLetterSpace % letterSpace
+    ]
