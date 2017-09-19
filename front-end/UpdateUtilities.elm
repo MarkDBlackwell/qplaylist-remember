@@ -18,8 +18,6 @@ module UpdateUtilities
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
-        , songBasic2SongRemembered
-        , songRemembered2SongBasic
         )
 
 import Dom
@@ -39,13 +37,6 @@ import MessageDetails
 import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText
-        )
-import Song
-    exposing
-        ( SongBasic
-        , SongRemembered
-        , SongsBasic
-        , likedOrCommentedInit
         )
 import Task
     exposing
@@ -123,22 +114,3 @@ msg2Cmd msg =
     --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
     perform identity msg
-
-
-songBasic2SongRemembered : SongBasic -> SongRemembered
-songBasic2SongRemembered song =
-    SongRemembered
-        song.artist
-        likedOrCommentedInit
-        song.time
-        song.timestamp
-        song.title
-
-
-songRemembered2SongBasic : SongRemembered -> SongBasic
-songRemembered2SongBasic song =
-    SongBasic
-        song.artist
-        song.time
-        song.timestamp
-        song.title

@@ -35,7 +35,10 @@ import ModelDetailsUpdate
         , HttpResponseText
         , RequestOrResponse
         , SongLatestFewIndex
-        , SongRememberedIndex
+        )
+import Song
+    exposing
+        ( SongRememberedIndex
         )
 
 

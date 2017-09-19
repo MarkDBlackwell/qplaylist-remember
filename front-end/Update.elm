@@ -62,7 +62,6 @@ import ModelDetailsUpdate
         , HttpErrorMessageText
         , HttpRequestText
         , LikeText
-        , SongRememberedIndex
         , UriText
         )
 import ModelInitialize
@@ -81,8 +80,11 @@ import Song
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered
+        , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
+        , songLikingOrCommentingNew
+        , songRemembered2SongBasic
         )
 import Task
     exposing
@@ -104,8 +106,6 @@ import UpdateUtilities
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         , msg2Cmd
-        , songBasic2SongRemembered
-        , songRemembered2SongBasic
         )
 import UserIdentifier
     exposing
@@ -124,15 +124,6 @@ update msg model =
         alertMessageTextAwaitingServer : AlertMessageText
         alertMessageTextAwaitingServer =
             "Awaiting server"
-
-        songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
-        songLikingOrCommentingNew songsRemembered songRememberedIndex =
-            case List.head (List.drop songRememberedIndex songsRemembered) of
-                Nothing ->
-                    Nothing
-
-                Just songSelected ->
-                    Just (songRemembered2SongBasic songSelected)
 
         stateVector : ( AwaitingServerResponse, Optional )
         stateVector =

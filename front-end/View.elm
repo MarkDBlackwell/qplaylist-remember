@@ -72,10 +72,7 @@ import Song
         ( SongBasic
         , SongRemembered
         , SongsRemembered
-        )
-import UpdateUtilities
-    exposing
-        ( songBasic2SongRemembered
+        , songBasic2SongRemembered
         )
 import ViewButton
     exposing

@@ -51,13 +51,13 @@ import Song
     exposing
         ( SongLikingOrCommenting
         , SongRemembered
+        , songRemembered2SongBasic
         )
 import UpdateUtilities
     exposing
         ( focusSet
         , httpErrorMessageScreen
         , msg2Cmd
-        , songRemembered2SongBasic
         )
 import UserIdentifier
     exposing

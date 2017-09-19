@@ -22,6 +22,7 @@ module Song
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
+        , SongRememberedIndex
         , SongsBasic
         , SongsLatestFew
         , SongsRemembered
@@ -29,8 +30,11 @@ module Song
         , Timestamp
         , Title
         , likedOrCommentedInit
+        , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
+        , songLikingOrCommentingNew
+        , songRemembered2SongBasic
         , songsLatestFewInit
         , songsRememberedInit
         )
@@ -80,6 +84,10 @@ type alias SongRemembered =
     }
 
 
+type alias SongRememberedIndex =
+    Int
+
+
 type alias SongsBasic =
     List SongBasic
 
@@ -109,6 +117,16 @@ likedOrCommentedInit =
     False
 
 
+songBasic2SongRemembered : SongBasic -> SongRemembered
+songBasic2SongRemembered song =
+    SongRemembered
+        song.artist
+        likedOrCommentedInit
+        song.time
+        song.timestamp
+        song.title
+
+
 songCommentingInit : SongCommenting
 songCommentingInit =
     Nothing
@@ -117,6 +135,25 @@ songCommentingInit =
 songLikingInit : SongLiking
 songLikingInit =
     Nothing
+
+
+songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
+songLikingOrCommentingNew songsRemembered songRememberedIndex =
+    case List.head (List.drop songRememberedIndex songsRemembered) of
+        Nothing ->
+            Nothing
+
+        Just songSelected ->
+            Just (songRemembered2SongBasic songSelected)
+
+
+songRemembered2SongBasic : SongRemembered -> SongBasic
+songRemembered2SongBasic song =
+    SongBasic
+        song.artist
+        song.time
+        song.timestamp
+        song.title
 
 
 songsLatestFewInit : SongsLatestFew

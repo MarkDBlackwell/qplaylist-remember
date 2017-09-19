@@ -54,10 +54,6 @@ import MessageDetails
             , SongsLatestFewRefreshHand
             )
         )
-import ModelDetailsUpdate
-    exposing
-        ( SongRememberedIndex
-        )
 import ModelDetailsView
     exposing
         ( Display
@@ -67,6 +63,10 @@ import ModelDetailsView
             , Remembered
             )
         , SongLatestFewOrRememberedIndex
+        )
+import Song
+    exposing
+        ( SongRememberedIndex
         )
 import ViewUtilities
     exposing

@@ -27,7 +27,6 @@ module ModelDetailsUpdate
         , RequestOrResponse
         , ResponseString
         , SongLatestFewIndex
-        , SongRememberedIndex
         , UriText
         )
 
@@ -96,10 +95,6 @@ type alias ResponseString =
 
 
 type alias SongLatestFewIndex =
-    Int
-
-
-type alias SongRememberedIndex =
     Int
 
 
