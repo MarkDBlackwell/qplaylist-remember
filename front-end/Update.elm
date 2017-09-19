@@ -81,6 +81,7 @@ import Song
         , SongRememberedIndex
         , SongsLatestFew
         , SongsRemembered
+        , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
@@ -100,7 +101,6 @@ import UpdateDetails
         , alertMessageTextUnexpectedError
         , focusInputPossibly
         , likeOrCommentRequestUriText
-        , likedOrCommentedShow
         , relative
         )
 import UpdateUtilities

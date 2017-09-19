@@ -30,6 +30,7 @@ module Song
         , Timestamp
         , Title
         , likedOrCommentedInit
+        , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
@@ -117,6 +118,21 @@ type alias Title =
 likedOrCommentedInit : LikedOrCommented
 likedOrCommentedInit =
     False
+
+
+likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
+likedOrCommentedShow songLikingOrCommenting song =
+    case songLikingOrCommenting of
+        Nothing ->
+            song
+
+        Just songLikingOrCommenting ->
+            if songLikingOrCommenting /= songRemembered2SongBasic song then
+                song
+            else
+                { song
+                    | likedOrCommented = True
+                }
 
 
 songBasic2SongRemembered : SongBasic -> SongRemembered

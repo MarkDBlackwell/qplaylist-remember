@@ -18,7 +18,6 @@ module UpdateDetails
         , alertMessageTextUnexpectedError
         , focusInputPossibly
         , likeOrCommentRequestUriText
-        , likedOrCommentedShow
         , relative
         )
 
@@ -50,8 +49,6 @@ import ModelDetailsUpdate
 import Song
     exposing
         ( SongLikingOrCommenting
-        , SongRemembered
-        , songRemembered2SongBasic
         )
 import UpdateUtilities
     exposing
@@ -129,21 +126,6 @@ likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentT
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]
-
-
-likedOrCommentedShow : SongLikingOrCommenting -> SongRemembered -> SongRemembered
-likedOrCommentedShow songLikingOrCommenting song =
-    case songLikingOrCommenting of
-        Nothing ->
-            song
-
-        Just songLikingOrCommenting ->
-            if songLikingOrCommenting /= songRemembered2SongBasic song then
-                song
-            else
-                { song
-                    | likedOrCommented = True
-                }
 
 
 relative : QueryBeforeList -> QueryPairs -> UriText
