@@ -25,20 +25,14 @@ module UpdateUtilities
 import Dom exposing (Id)
 import Http exposing (Error)
 import MessageDetails exposing (Msg(FocusSet))
-import ModelDetails
-    exposing
-        ( SongRemembered
-        )
-import ModelDetailsUpdate
-    exposing
-        ( HttpErrorMessageText
-        )
+import ModelDetailsUpdate exposing (HttpErrorMessageText)
 import ModelInitialize exposing (likedOrCommentedInit)
 import SongsBasic
     exposing
         ( SongBasic
         , SongsBasic
         )
+import SongsRemembered exposing (SongRemembered)
 import Task
     exposing
         ( Task

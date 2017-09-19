@@ -27,7 +27,6 @@ import Html.Attributes
         )
 import Html.Events exposing (onClick)
 import MessageDetails exposing (Msg(SongBuyAnchorProcessHand))
-import ModelDetails exposing (SongRemembered)
 import ModelDetailsUpdate
     exposing
         ( QueryBeforeList
@@ -35,6 +34,7 @@ import ModelDetailsUpdate
         , UriText
         )
 import ModelDetailsView exposing (HoverText)
+import SongsRemembered exposing (SongRemembered)
 import UpdateDetails exposing (relative)
 
 

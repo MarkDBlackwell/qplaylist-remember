@@ -45,9 +45,7 @@ import ModelDetails
         , SongLatestFew
         , SongLiking
         , SongLikingOrCommenting
-        , SongRemembered
         , SongsLatestFew
-        , SongsRemembered
         , UserIdentifier
         )
 import ModelDetailsUpdate
@@ -68,9 +66,11 @@ import ModelInitialize
         , songCommentingInit
         , songLikingInit
         )
-import SongsBasic
+import SongsBasic exposing (SongBasic)
+import SongsRemembered
     exposing
-        ( SongBasic
+        ( SongRemembered
+        , SongsRemembered
         )
 import Task
     exposing

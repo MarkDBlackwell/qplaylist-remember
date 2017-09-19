@@ -33,8 +33,6 @@ import ModelDetails
             , Open
             )
         , SongLikingOrCommenting
-        , SongRemembered
-        , SongsRemembered
         , UserIdentifier
         )
 import ModelDetailsUpdate
@@ -45,6 +43,7 @@ import ModelDetailsUpdate
         , QueryPairs
         , UriText
         )
+import SongsRemembered exposing (SongRemembered)
 import UpdateUtilities
     exposing
         ( focusSet

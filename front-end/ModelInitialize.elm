@@ -21,7 +21,6 @@ import ModelDetails
         ( AlertMessageText
         , AwaitingServerResponse
         , CommentText
-        , LikedOrCommented
         , Model
         , Optional
             ( Closed
@@ -31,10 +30,14 @@ import ModelDetails
         , SongCommenting
         , SongLiking
         , SongsLatestFew
-        , SongsRemembered
         , UserIdentifier
         )
 import Random exposing (generate)
+import SongsRemembered
+    exposing
+        ( LikedOrCommented
+        , SongsRemembered
+        )
 
 
 -- MODEL

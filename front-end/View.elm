@@ -12,10 +12,7 @@
 -}
 
 
-module View
-    exposing
-        ( view
-        )
+module View exposing (view)
 
 import Html
     exposing
@@ -50,12 +47,7 @@ import MessageDetails
             , CommentSendHand
             )
         )
-import ModelDetails
-    exposing
-        ( Model
-        , SongRemembered
-        , SongsRemembered
-        )
+import ModelDetails exposing (Model)
 import ModelDetailsView
     exposing
         ( HoverText
@@ -66,14 +58,13 @@ import ModelDetailsView
         , SongGroupLength
         , SongLatestFewOrRememberedIndex
         )
-import SongsBasic
+import SongsBasic exposing (SongBasic)
+import SongsRemembered
     exposing
-        ( SongBasic
+        ( SongRemembered
+        , SongsRemembered
         )
-import UpdateUtilities
-    exposing
-        ( songBasic2SongRemembered
-        )
+import UpdateUtilities exposing (songBasic2SongRemembered)
 import ViewButton
     exposing
         ( buttonComment

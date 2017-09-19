@@ -23,6 +23,11 @@ import SongsBasic
         , Timestamp
         , Title
         )
+import SongsRemembered
+    exposing
+        ( SongRemembered
+        , SongsRemembered
+        )
 
 
 -- MODEL
@@ -38,10 +43,6 @@ type alias AwaitingServerResponse =
 
 type alias CommentText =
     String
-
-
-type alias LikedOrCommented =
-    Bool
 
 
 type alias Model =
@@ -82,21 +83,8 @@ type alias SongLikingOrCommenting =
     Maybe SongBasic
 
 
-type alias SongRemembered =
-    { artist : Artist
-    , likedOrCommented : LikedOrCommented
-    , time : Time
-    , timestamp : Timestamp
-    , title : Title
-    }
-
-
 type alias SongsLatestFew =
     List SongLatestFew
-
-
-type alias SongsRemembered =
-    List SongRemembered
 
 
 type alias UserIdentifier =
