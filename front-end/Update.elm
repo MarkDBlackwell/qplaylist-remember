@@ -16,14 +16,10 @@ module Update exposing (update)
 
 import Alphabet
     exposing
-        ( caseLength
+        ( baseKeyCode
+        , caseLength
+        , keyCode2Char
         , letterSpace
-        )
-import Char
-    exposing
-        ( KeyCode
-        , fromCode
-        , toCode
         )
 import Debug exposing (log)
 import DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
@@ -335,26 +331,14 @@ update msg model =
                 userIdentifierNew : UserIdentifier
                 userIdentifierNew =
                     let
-                        digits : List Int
-                        digits =
+                        threeDigits : Int -> List Int
+                        threeDigits threeLetterSpace =
                             [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
                             , (threeLetterSpace // letterSpace) % letterSpace
                             , threeLetterSpace % letterSpace
                             ]
-
-                        keyCode2Char : KeyCode -> Char
-                        keyCode2Char keyCode =
-                            let
-                                baseKeyCode : KeyCode -> KeyCode
-                                baseKeyCode keyCode =
-                                    if keyCode < caseLength then
-                                        toCode 'a'
-                                    else
-                                        toCode 'A'
-                            in
-                            fromCode (baseKeyCode keyCode + (keyCode % caseLength))
                     in
-                    String.fromList (List.map keyCode2Char digits)
+                    String.fromList (List.map keyCode2Char (threeDigits threeLetterSpace))
             in
             ( { model
                 | userIdentifier = userIdentifierNew

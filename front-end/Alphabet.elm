@@ -14,15 +14,30 @@
 
 module Alphabet
     exposing
-        ( caseCount
+        ( baseKeyCode
+        , caseCount
         , caseLength
+        , keyCode2Char
         , letterSpace
         )
 
-import Char exposing (toCode)
+import Char
+    exposing
+        ( KeyCode
+        , fromCode
+        , toCode
+        )
 
 
 -- MODEL
+
+
+baseKeyCode : KeyCode -> KeyCode
+baseKeyCode keyCode =
+    if keyCode < caseLength then
+        toCode 'a'
+    else
+        toCode 'A'
 
 
 caseCount : Int
@@ -33,6 +48,11 @@ caseCount =
 caseLength : Int
 caseLength =
     1 + toCode 'Z' - toCode 'A'
+
+
+keyCode2Char : KeyCode -> Char
+keyCode2Char keyCode =
+    fromCode (baseKeyCode keyCode + (keyCode % caseLength))
 
 
 letterSpace : Int
