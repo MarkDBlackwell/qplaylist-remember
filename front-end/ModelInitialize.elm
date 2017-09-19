@@ -46,8 +46,8 @@ import Song
         )
 import UserIdentifier
     exposing
-        ( UserIdentifier
-        , letterSpace
+        ( letterSpace
+        , userIdentifierInit
         )
 
 
@@ -90,16 +90,6 @@ init =
     )
 
 
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
-
-
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
     False
-
-
-userIdentifierInit : UserIdentifier
-userIdentifierInit =
-    ""

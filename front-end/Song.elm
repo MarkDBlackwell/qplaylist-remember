@@ -28,6 +28,7 @@ module Song
         , Time
         , Timestamp
         , Title
+        , likedOrCommentedInit
         , songCommentingInit
         , songLikingInit
         , songsLatestFewInit
@@ -101,6 +102,11 @@ type alias Timestamp =
 
 type alias Title =
     String
+
+
+likedOrCommentedInit : LikedOrCommented
+likedOrCommentedInit =
+    False
 
 
 songCommentingInit : SongCommenting

@@ -40,15 +40,12 @@ import ModelDetailsUpdate
     exposing
         ( HttpErrorMessageText
         )
-import ModelInitialize
-    exposing
-        ( likedOrCommentedInit
-        )
 import Song
     exposing
         ( SongBasic
         , SongRemembered
         , SongsBasic
+        , likedOrCommentedInit
         )
 import Task
     exposing

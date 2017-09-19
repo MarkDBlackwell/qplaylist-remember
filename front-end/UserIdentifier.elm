@@ -18,6 +18,7 @@ module UserIdentifier
         , keyCode2Char
         , letterSpace
         , threeDigits
+        , userIdentifierInit
         )
 
 import Char
@@ -69,3 +70,8 @@ threeDigits threeLetterSpace =
     , (threeLetterSpace // letterSpace) % letterSpace
     , threeLetterSpace % letterSpace
     ]
+
+
+userIdentifierInit : UserIdentifier
+userIdentifierInit =
+    ""
