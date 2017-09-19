@@ -490,19 +490,19 @@ update msg model =
 
         SongForgetHand songRememberedIndex ->
             let
-                songRememberedCompare : Maybe SongBasic
-                songRememberedCompare =
+                songRememberedCompare : SongsRemembered -> Maybe SongBasic
+                songRememberedCompare songsRemembered =
                     let
-                        songRemembered : Maybe SongRemembered
-                        songRemembered =
-                            List.head (List.drop songRememberedIndex model.songsRemembered)
+                        songRememberedSelected : SongsRemembered -> Maybe SongRemembered
+                        songRememberedSelected songsRemembered =
+                            List.head (List.drop songRememberedIndex songsRemembered)
                     in
-                    case songRemembered of
+                    case songRememberedSelected songsRemembered of
                         Nothing ->
                             Nothing
 
-                        Just songRemembered ->
-                            Just (songRemembered2SongBasic songRemembered)
+                        Just songRememberedSelected ->
+                            Just (songRemembered2SongBasic songRememberedSelected)
 
                 songsRememberedWithoutOne : SongsRemembered
                 songsRememberedWithoutOne =
@@ -519,7 +519,7 @@ update msg model =
                     )
 
                 _ ->
-                    if model.songCommenting == songRememberedCompare then
+                    if model.songCommenting == songRememberedCompare model.songsRemembered then
                         ( { model
                             | alertMessageText = alertMessageTextInit
                           }

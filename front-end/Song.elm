@@ -139,7 +139,12 @@ songLikingInit =
 
 songLikingOrCommentingNew : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingNew songsRemembered songRememberedIndex =
-    case List.head (List.drop songRememberedIndex songsRemembered) of
+    let
+        songRememberedSelected : Maybe SongRemembered
+        songRememberedSelected =
+            List.head (List.drop songRememberedIndex songsRemembered)
+    in
+    case songRememberedSelected of
         Nothing ->
             Nothing
 
