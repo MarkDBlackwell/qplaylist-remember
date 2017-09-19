@@ -57,7 +57,6 @@ import UpdateUtilities
     exposing
         ( focusSet
         , httpErrorMessageScreen
-        , msg2Cmd
         )
 import UserIdentifier
     exposing

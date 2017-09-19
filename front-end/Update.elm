@@ -105,7 +105,7 @@ import UpdateUtilities
         ( focusSet
         , httpErrorMessageLogging
         , httpErrorMessageScreen
-        , msg2Cmd
+        , msg2CmdSucceed
         )
 import UserIdentifier
     exposing
@@ -212,7 +212,7 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
+                [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError))
                 , focusInputPossibly model
                 ]
             )
@@ -232,7 +232,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
                         , focusInputPossibly model
                         ]
                     )
@@ -251,7 +251,7 @@ update msg model =
                             , awaitingServerResponse = awaitingServerResponseInit
                           }
                         , Cmd.batch
-                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" responseString))
+                            [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" responseString)
                             , focusInputPossibly model
                             ]
                         )
@@ -268,7 +268,7 @@ update msg model =
                             , songCommenting = songCommentingInit
                             , songsRemembered = songsRememberedNew
                           }
-                        , msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                        , msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" "")
                         )
 
         CommentSendHand ->
@@ -303,7 +303,7 @@ update msg model =
                             , awaitingServerResponse = True
                           }
                         , Cmd.batch
-                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" commentRequestUriText))
+                            [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Request" commentRequestUriText)
                             , commentRequest
                             , focusInputPossibly model
                             ]
@@ -378,7 +378,7 @@ update msg model =
                         , songLiking = songLikingNew
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" likeRequestUriText))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Request" likeRequestUriText)
                         , likeRequest
                         , focusInputPossibly model
                         ]
@@ -391,7 +391,7 @@ update msg model =
                 , songLiking = songLikingInit
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
+                [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError))
                 , focusInputPossibly model
                 ]
             )
@@ -411,7 +411,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
                         , focusInputPossibly model
                         ]
                     )
@@ -431,7 +431,7 @@ update msg model =
                             , songLiking = songLikingInit
                           }
                         , Cmd.batch
-                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" responseString))
+                            [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" responseString)
                             , focusInputPossibly model
                             ]
                         )
@@ -448,7 +448,7 @@ update msg model =
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
-                            [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                            [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" "")
                             , focusInputPossibly model
                             ]
                         )
@@ -618,7 +618,7 @@ update msg model =
                         , awaitingServerResponse = True
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Request" requestUriText))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Request" requestUriText)
                         , songsLatestFewRequest
                         , focusInputPossibly model
                         ]
@@ -636,7 +636,7 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError)))
+                [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" (httpErrorMessageLogging httpError))
                 , focusInputPossibly model
                 ]
             )
@@ -656,7 +656,7 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
                         , focusInputPossibly model
                         ]
                     )
@@ -669,7 +669,7 @@ update msg model =
                       }
                       --Here, don't log the full response.
                     , Cmd.batch
-                        [ msg2Cmd (succeed (HttpRequestOrResponseTextLog "Response" ""))
+                        [ msg2CmdSucceed (HttpRequestOrResponseTextLog "Response" "")
                         , focusInputPossibly model
                         ]
                     )
