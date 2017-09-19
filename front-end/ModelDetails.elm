@@ -30,6 +30,10 @@ import SongsRemembered
         ( SongRemembered
         , SongsRemembered
         )
+import UserIdentifier
+    exposing
+        ( UserIdentifier
+        )
 
 
 -- MODEL
@@ -79,7 +83,3 @@ type alias SongLiking =
 
 type alias SongLikingOrCommenting =
     Maybe SongBasic
-
-
-type alias UserIdentifier =
-    String

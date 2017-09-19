@@ -28,7 +28,6 @@ import Http
 import ModelDetails
     exposing
         ( CommentText
-        , UserIdentifier
         )
 import ModelDetailsUpdate
     exposing

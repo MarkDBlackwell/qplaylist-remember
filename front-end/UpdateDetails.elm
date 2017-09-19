@@ -39,7 +39,6 @@ import ModelDetails
             , Open
             )
         , SongLikingOrCommenting
-        , UserIdentifier
         )
 import ModelDetailsUpdate
     exposing
@@ -59,6 +58,10 @@ import UpdateUtilities
         , httpErrorMessageScreen
         , msg2Cmd
         , songRemembered2SongBasic
+        )
+import UserIdentifier
+    exposing
+        ( UserIdentifier
         )
 
 

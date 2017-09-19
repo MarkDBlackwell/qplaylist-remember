@@ -14,10 +14,6 @@
 
 module ModelInitialize exposing (..)
 
-import Alphabet
-    exposing
-        ( letterSpace
-        )
 import MessageDetails
     exposing
         ( Msg
@@ -37,7 +33,6 @@ import ModelDetails
         , PageIsExpanded
         , SongCommenting
         , SongLiking
-        , UserIdentifier
         )
 import Random
     exposing
@@ -51,6 +46,11 @@ import SongsRemembered
     exposing
         ( LikedOrCommented
         , SongsRemembered
+        )
+import UserIdentifier
+    exposing
+        ( UserIdentifier
+        , letterSpace
         )
 
 

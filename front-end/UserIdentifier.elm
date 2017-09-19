@@ -12,9 +12,10 @@
 -}
 
 
-module Alphabet
+module UserIdentifier
     exposing
-        ( keyCode2Char
+        ( UserIdentifier
+        , keyCode2Char
         , letterSpace
         , threeDigits
         )
@@ -28,6 +29,10 @@ import Char
 
 
 -- MODEL
+
+
+type alias UserIdentifier =
+    String
 
 
 caseLength : Int

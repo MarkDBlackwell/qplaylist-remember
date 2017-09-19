@@ -17,11 +17,6 @@ module Update
         ( update
         )
 
-import Alphabet
-    exposing
-        ( keyCode2Char
-        , threeDigits
-        )
 import Debug
     exposing
         ( log
@@ -62,7 +57,6 @@ import ModelDetails
         , SongCommenting
         , SongLiking
         , SongLikingOrCommenting
-        , UserIdentifier
         )
 import ModelDetailsUpdate
     exposing
@@ -115,6 +109,12 @@ import UpdateUtilities
         , msg2Cmd
         , songBasic2SongRemembered
         , songRemembered2SongBasic
+        )
+import UserIdentifier
+    exposing
+        ( UserIdentifier
+        , keyCode2Char
+        , threeDigits
         )
 
 
