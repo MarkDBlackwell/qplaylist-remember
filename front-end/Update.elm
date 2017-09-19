@@ -345,14 +345,14 @@ update msg model =
                         keyCode2Char : KeyCode -> Char
                         keyCode2Char keyCode =
                             let
-                                base : KeyCode
-                                base =
+                                baseKeyCode : KeyCode -> KeyCode
+                                baseKeyCode keyCode =
                                     if keyCode < caseLength then
                                         toCode 'a'
                                     else
                                         toCode 'A'
                             in
-                            fromCode (base + (keyCode % caseLength))
+                            fromCode (baseKeyCode keyCode + (keyCode % caseLength))
                     in
                     String.fromList (List.map keyCode2Char digits)
             in
