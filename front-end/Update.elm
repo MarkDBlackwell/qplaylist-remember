@@ -70,8 +70,6 @@ import ModelInitialize
         ( alertMessageTextInit
         , awaitingServerResponseInit
         , commentTextInit
-        , songCommentingInit
-        , songLikingInit
         )
 import Song
     exposing
@@ -83,6 +81,8 @@ import Song
         , SongRemembered
         , SongsLatestFew
         , SongsRemembered
+        , songCommentingInit
+        , songLikingInit
         )
 import Task
     exposing

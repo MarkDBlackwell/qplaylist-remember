@@ -28,6 +28,10 @@ module Song
         , Time
         , Timestamp
         , Title
+        , songCommentingInit
+        , songLikingInit
+        , songsLatestFewInit
+        , songsRememberedInit
         )
 
 -- MODEL
@@ -97,3 +101,23 @@ type alias Timestamp =
 
 type alias Title =
     String
+
+
+songCommentingInit : SongCommenting
+songCommentingInit =
+    Nothing
+
+
+songLikingInit : SongLiking
+songLikingInit =
+    Nothing
+
+
+songsLatestFewInit : SongsLatestFew
+songsLatestFewInit =
+    []
+
+
+songsRememberedInit : SongsRemembered
+songsRememberedInit =
+    []

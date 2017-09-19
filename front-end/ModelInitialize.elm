@@ -39,10 +39,10 @@ import Random
 import Song
     exposing
         ( LikedOrCommented
-        , SongCommenting
-        , SongLiking
-        , SongsLatestFew
-        , SongsRemembered
+        , songCommentingInit
+        , songLikingInit
+        , songsLatestFewInit
+        , songsRememberedInit
         )
 import UserIdentifier
     exposing
@@ -98,26 +98,6 @@ likedOrCommentedInit =
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
     False
-
-
-songCommentingInit : SongCommenting
-songCommentingInit =
-    Nothing
-
-
-songLikingInit : SongLiking
-songLikingInit =
-    Nothing
-
-
-songsLatestFewInit : SongsLatestFew
-songsLatestFewInit =
-    []
-
-
-songsRememberedInit : SongsRemembered
-songsRememberedInit =
-    []
 
 
 userIdentifierInit : UserIdentifier
