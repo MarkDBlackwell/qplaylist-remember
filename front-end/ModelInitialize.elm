@@ -50,6 +50,16 @@ awaitingServerResponseInit =
     False
 
 
+caseCount : Int
+caseCount =
+    2
+
+
+caseLength : Int
+caseLength =
+    1 + toCode 'Z' - toCode 'A'
+
+
 commentTextInit : CommentText
 commentTextInit =
     ""
@@ -78,7 +88,7 @@ init =
 
 letterSpace : Int
 letterSpace =
-    rankCount * rankLength
+    caseCount * caseLength
 
 
 likedOrCommentedInit : LikedOrCommented
@@ -89,16 +99,6 @@ likedOrCommentedInit =
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
     False
-
-
-rankCount : Int
-rankCount =
-    2
-
-
-rankLength : Int
-rankLength =
-    1 + toCode 'Z' - toCode 'A'
 
 
 songCommentingInit : SongCommenting

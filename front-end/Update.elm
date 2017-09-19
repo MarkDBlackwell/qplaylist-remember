@@ -66,10 +66,9 @@ import ModelInitialize
     exposing
         ( alertMessageTextInit
         , awaitingServerResponseInit
+        , caseLength
         , commentTextInit
         , letterSpace
-        , rankCount
-        , rankLength
         , songCommentingInit
         , songLikingInit
         )
@@ -345,12 +344,12 @@ update msg model =
                             let
                                 base : KeyCode
                                 base =
-                                    if keyCode < rankLength then
+                                    if keyCode < caseLength then
                                         toCode 'a'
                                     else
                                         toCode 'A'
                             in
-                            fromCode (base + (keyCode % rankLength))
+                            fromCode (base + (keyCode % caseLength))
                     in
                     String.fromList (List.map keyCode2Char digits)
             in
