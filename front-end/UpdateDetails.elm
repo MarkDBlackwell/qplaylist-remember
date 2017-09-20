@@ -14,21 +14,11 @@
 
 module UpdateDetails
     exposing
-        ( alertMessageTextLikeOrCommentRequest
-        , focusInputPossibly
+        ( focusInputPossibly
         , likeOrCommentRequestUriText
         , relative
         )
 
-import AlertMessage
-    exposing
-        ( AlertMessageText
-        , alertMessageTextUnexpectedError
-        )
-import Http
-    exposing
-        ( Error
-        )
 import MessageDetails
     exposing
         ( Msg
@@ -52,7 +42,6 @@ import Song
 import UpdateUtilities
     exposing
         ( focusSet
-        , httpErrorMessageScreen
         )
 import UserIdentifier
     exposing
@@ -61,14 +50,6 @@ import UserIdentifier
 
 
 -- UPDATE
-
-
-alertMessageTextLikeOrCommentRequest : Error -> String -> AlertMessageText
-alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
-    httpErrorMessageScreen httpError
-        ++ " (while attempting to send "
-        ++ likeOrCommentName
-        ++ " to server)"
 
 
 focusInputPossibly : Model -> Cmd Msg

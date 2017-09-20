@@ -22,7 +22,9 @@ import AlertMessage
         ( AlertMessageText
         , alertMessageTextAwaitingServer
         , alertMessageTextInit
+        , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
+        , httpErrorMessageScreen
         )
 import Debug
     exposing
@@ -62,8 +64,7 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( HttpErrorMessageText
-        , HttpRequestText
+        ( HttpRequestText
         , UriText
         )
 import ModelInitialize
@@ -90,8 +91,7 @@ import Task
         )
 import UpdateDetails
     exposing
-        ( alertMessageTextLikeOrCommentRequest
-        , focusInputPossibly
+        ( focusInputPossibly
         , likeOrCommentRequestUriText
         , relative
         )
@@ -99,7 +99,6 @@ import UpdateUtilities
     exposing
         ( focusSet
         , httpErrorMessageLogging
-        , httpErrorMessageScreen
         , msg2Cmd
         )
 import UserIdentifier

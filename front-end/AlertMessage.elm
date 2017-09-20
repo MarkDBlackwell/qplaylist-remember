@@ -16,10 +16,24 @@ module AlertMessage
     exposing
         ( AlertMessageText
         , DecodeErrorMessageText
+        , HttpErrorMessageText
         , alertMessageTextAwaitingServer
         , alertMessageTextInit
+        , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
+        , httpErrorMessage
+        , httpErrorMessageScreen
         )
+
+import Http
+    exposing
+        ( Error
+        )
+import Tuple
+    exposing
+        ( second
+        )
+
 
 -- MODEL
 
@@ -29,6 +43,10 @@ type alias AlertMessageText =
 
 
 type alias DecodeErrorMessageText =
+    String
+
+
+type alias HttpErrorMessageText =
     String
 
 
@@ -42,9 +60,60 @@ alertMessageTextInit =
     ""
 
 
+alertMessageTextLikeOrCommentRequest : Error -> String -> AlertMessageText
+alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
+    httpErrorMessageScreen httpError
+        ++ " (while attempting to send "
+        ++ likeOrCommentName
+        ++ " to server)"
+
+
 alertMessageTextUnexpectedError : AlertMessageText -> DecodeErrorMessageText -> AlertMessageText
 alertMessageTextUnexpectedError alertMessageText decodeErrorMessageText =
     "Unexpected error "
         ++ alertMessageText
         ++ ": "
         ++ decodeErrorMessageText
+
+
+httpErrorMessage : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
+httpErrorMessage httpError =
+    let
+        prefix : HttpErrorMessageText
+        prefix =
+            "HttpError"
+
+        prefixColon : HttpErrorMessageText
+        prefixColon =
+            prefix ++ ": "
+    in
+    case httpError of
+        Http.BadPayload debuggingText httpResponseText ->
+            ( prefixColon ++ "BadPayload"
+            , debuggingText
+            )
+
+        Http.BadStatus httpResponseText ->
+            ( prefixColon ++ "BadStatus"
+            , toString httpResponseText.status
+            )
+
+        Http.BadUrl uriText ->
+            ( prefixColon ++ "BadUrl"
+            , uriText
+            )
+
+        Http.NetworkError ->
+            ( prefix
+            , "NetworkError"
+            )
+
+        Http.Timeout ->
+            ( prefix
+            , "Timeout"
+            )
+
+
+httpErrorMessageScreen : Error -> HttpErrorMessageText
+httpErrorMessageScreen httpError =
+    second (httpErrorMessage httpError)

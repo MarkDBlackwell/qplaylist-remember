@@ -14,8 +14,7 @@
 
 module ModelDetailsUpdate
     exposing
-        ( HttpErrorMessageText
-        , HttpRequestOrResponseText
+        ( HttpRequestOrResponseText
         , HttpRequestText
         , HttpResponseText
         , QueryBeforeList
@@ -27,10 +26,6 @@ module ModelDetailsUpdate
         )
 
 -- UPDATE
-
-
-type alias HttpErrorMessageText =
-    String
 
 
 type alias HttpRequestText =

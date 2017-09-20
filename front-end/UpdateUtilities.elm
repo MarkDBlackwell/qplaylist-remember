@@ -16,10 +16,14 @@ module UpdateUtilities
     exposing
         ( focusSet
         , httpErrorMessageLogging
-        , httpErrorMessageScreen
         , msg2Cmd
         )
 
+import AlertMessage
+    exposing
+        ( HttpErrorMessageText
+        , httpErrorMessage
+        )
 import Dom
     exposing
         ( Id
@@ -34,10 +38,6 @@ import MessageDetails
             ( FocusSet
             )
         )
-import ModelDetailsUpdate
-    exposing
-        ( HttpErrorMessageText
-        )
 import Task
     exposing
         ( Task
@@ -47,7 +47,6 @@ import Task
 import Tuple
     exposing
         ( first
-        , second
         )
 
 
@@ -59,52 +58,9 @@ focusSet id =
     msg2Cmd (FocusSet id)
 
 
-httpErrorMessage : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
-httpErrorMessage httpError =
-    let
-        prefix : HttpErrorMessageText
-        prefix =
-            "HttpError"
-
-        prefixColon : HttpErrorMessageText
-        prefixColon =
-            prefix ++ ": "
-    in
-    case httpError of
-        Http.BadPayload debuggingText httpResponseText ->
-            ( prefixColon ++ "BadPayload"
-            , debuggingText
-            )
-
-        Http.BadStatus httpResponseText ->
-            ( prefixColon ++ "BadStatus"
-            , toString httpResponseText.status
-            )
-
-        Http.BadUrl uriText ->
-            ( prefixColon ++ "BadUrl"
-            , uriText
-            )
-
-        Http.NetworkError ->
-            ( prefix
-            , "NetworkError"
-            )
-
-        Http.Timeout ->
-            ( prefix
-            , "Timeout"
-            )
-
-
 httpErrorMessageLogging : Error -> HttpErrorMessageText
 httpErrorMessageLogging httpError =
     first (httpErrorMessage httpError)
-
-
-httpErrorMessageScreen : Error -> HttpErrorMessageText
-httpErrorMessageScreen httpError =
-    second (httpErrorMessage httpError)
 
 
 msg2Cmd : Msg -> Cmd Msg
