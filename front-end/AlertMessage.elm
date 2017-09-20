@@ -45,30 +45,9 @@ type alias AlertMessageTextErrorHttp =
     String
 
 
-alertMessageTextServerAwaiting : AlertMessageText
-alertMessageTextServerAwaiting =
-    "Awaiting server"
-
-
 alertMessageTextInit : AlertMessageText
 alertMessageTextInit =
     ""
-
-
-alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
-alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
-    alertMessageTextErrorHttpScreen httpError
-        ++ " (while attempting to send "
-        ++ likeOrCommentName
-        ++ " to server)"
-
-
-alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageText -> AlertMessageText
-alertMessageTextErrorUnexpected alertMessageText alertMessageTextDecode =
-    "Unexpected error "
-        ++ alertMessageText
-        ++ ": "
-        ++ alertMessageTextDecode
 
 
 alertMessageTextErrorHttp : Error -> ( AlertMessageTextErrorHttp, AlertMessageTextErrorHttp )
@@ -117,3 +96,24 @@ alertMessageTextErrorHttpLogging httpError =
 alertMessageTextErrorHttpScreen : Error -> AlertMessageTextErrorHttp
 alertMessageTextErrorHttpScreen httpError =
     second (alertMessageTextErrorHttp httpError)
+
+
+alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageText -> AlertMessageText
+alertMessageTextErrorUnexpected alertMessageText alertMessageTextDecode =
+    "Unexpected error "
+        ++ alertMessageText
+        ++ ": "
+        ++ alertMessageTextDecode
+
+
+alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
+alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
+    alertMessageTextErrorHttpScreen httpError
+        ++ " (while attempting to send "
+        ++ likeOrCommentName
+        ++ " to server)"
+
+
+alertMessageTextServerAwaiting : AlertMessageText
+alertMessageTextServerAwaiting =
+    "Awaiting server"
