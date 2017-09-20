@@ -37,10 +37,6 @@ import ModelDetails
     exposing
         ( LikeOrCommentText
         , Model
-        , Optional
-            ( Closed
-            , Open
-            )
         )
 import ModelDetailsUpdate
     exposing

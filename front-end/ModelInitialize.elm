@@ -14,8 +14,7 @@
 
 module ModelInitialize
     exposing
-        ( alertMessageTextInit
-        , awaitingServerResponseInit
+        ( awaitingServerResponseInit
         , commentTextInit
         , init
         )
@@ -23,6 +22,7 @@ module ModelInitialize
 import AlertMessage
     exposing
         ( AlertMessageText
+        , alertMessageTextInit
         )
 import MessageDetails
     exposing
@@ -35,10 +35,6 @@ import ModelDetails
         ( AwaitingServerResponse
         , CommentText
         , Model
-        , Optional
-            ( Closed
-            , Open
-            )
         , PageIsExpanded
         )
 import Random
@@ -60,11 +56,6 @@ import UserIdentifier
 
 
 -- MODEL
-
-
-alertMessageTextInit : AlertMessageText
-alertMessageTextInit =
-    ""
 
 
 awaitingServerResponseInit : AwaitingServerResponse

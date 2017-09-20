@@ -14,8 +14,7 @@
 
 module ModelDetailsUpdate
     exposing
-        ( AlertMessageOptional
-        , DecodeErrorMessageText
+        ( DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestOrResponseText
         , HttpRequestText
@@ -28,20 +27,7 @@ module ModelDetailsUpdate
         , UriText
         )
 
-import ModelDetails
-    exposing
-        ( Optional
-            ( Closed
-            , Open
-            )
-        )
-
-
 -- UPDATE
-
-
-type alias AlertMessageOptional =
-    Optional
 
 
 type alias DecodeErrorMessageText =

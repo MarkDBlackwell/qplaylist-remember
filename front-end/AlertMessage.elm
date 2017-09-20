@@ -15,6 +15,8 @@
 module AlertMessage
     exposing
         ( AlertMessageText
+        , alertMessageTextAwaitingServer
+        , alertMessageTextInit
         )
 
 -- MODEL
@@ -22,3 +24,13 @@ module AlertMessage
 
 type alias AlertMessageText =
     String
+
+
+alertMessageTextAwaitingServer : AlertMessageText
+alertMessageTextAwaitingServer =
+    "Awaiting server"
+
+
+alertMessageTextInit : AlertMessageText
+alertMessageTextInit =
+    ""

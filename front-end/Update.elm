@@ -20,6 +20,8 @@ module Update
 import AlertMessage
     exposing
         ( AlertMessageText
+        , alertMessageTextAwaitingServer
+        , alertMessageTextInit
         )
 import Debug
     exposing
@@ -59,16 +61,14 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( AlertMessageOptional
-        , DecodeErrorMessageText
+        ( DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestText
         , UriText
         )
 import ModelInitialize
     exposing
-        ( alertMessageTextInit
-        , awaitingServerResponseInit
+        ( awaitingServerResponseInit
         , commentTextInit
         )
 import Song
@@ -117,10 +117,6 @@ import UserIdentifier
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        alertMessageTextAwaitingServer : AlertMessageText
-        alertMessageTextAwaitingServer =
-            "Awaiting server"
-
         stateVector : ( AwaitingServerResponse, Optional )
         stateVector =
             let
