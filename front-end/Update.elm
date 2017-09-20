@@ -74,15 +74,11 @@ import Song
     exposing
         ( SongCommenting
         , SongLikingOrCommenting
-        , SongsLatestFew
         , SongsRemembered
         , likedOrCommentedShow
-        , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
         , songLikingOrCommentingMaybe
-        , songsLatestFewSelectOne
-        , songsRemembered2SongsBasic
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
         )

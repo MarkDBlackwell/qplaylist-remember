@@ -25,14 +25,11 @@ module Song
         , SongsLatestFew
         , SongsRemembered
         , likedOrCommentedShow
-        , songBasic2SongRemembered
         , songCommentingInit
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songsBasic2SongsRemembered
         , songsLatestFewInit
-        , songsLatestFewSelectOne
-        , songsRemembered2SongsBasic
         , songsRememberedAppendOneUnique
         , songsRememberedInit
         , songsRememberedWithoutOne
