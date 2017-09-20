@@ -28,7 +28,6 @@ import Song
         , SongsRemembered
         , Time
         , Timestamp
-        , Title
         )
 import UserIdentifier
     exposing

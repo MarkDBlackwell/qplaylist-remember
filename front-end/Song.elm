@@ -29,15 +29,12 @@ module Song
         , SongsRemembered
         , Time
         , Timestamp
-        , Title
-        , likedOrCommentedInit
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
         , songLatestFewSelectOne
         , songLikingInit
         , songLikingOrCommentingMaybe
-        , songRemembered2SongBasic
         , songsBasic2SongsRemembered
         , songsLatestFewInit
         , songsRemembered2SongsBasic
