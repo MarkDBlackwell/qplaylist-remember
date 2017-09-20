@@ -532,12 +532,12 @@ update msg model =
 
         SongRememberHand songLatestFewIndex ->
             let
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
+                songsRememberedNew : SongsLatestFew -> SongsRemembered
+                songsRememberedNew songsLatestFew =
                     let
                         songLatestFewSelected : Maybe SongLatestFew
                         songLatestFewSelected =
-                            List.head (List.drop songLatestFewIndex model.songsLatestFew)
+                            List.head (List.drop songLatestFewIndex songsLatestFew)
                     in
                     case songLatestFewSelected of
                         Nothing ->
@@ -566,7 +566,7 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , songsRemembered = songsRememberedNew
+                        , songsRemembered = songsRememberedNew model.songsLatestFew
                       }
                     , focusInputPossibly model
                     )
