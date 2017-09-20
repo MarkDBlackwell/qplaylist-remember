@@ -37,8 +37,8 @@ import ModelDetailsUpdate
         )
 import Song
     exposing
-        ( SongLatestFewIndex
-        , SongRememberedIndex
+        ( SongsLatestFewIndex
+        , SongsRememberedIndex
         )
 
 
@@ -47,7 +47,7 @@ import Song
 
 type Msg
     = CommentAreaInputTextChangeCaptureHand CommentText
-    | CommentAreaOpenHand SongRememberedIndex
+    | CommentAreaOpenHand SongsRememberedIndex
     | CommentCancelHand
     | CommentResponse (Result Error HttpResponseText)
     | CommentSendHand
@@ -55,11 +55,11 @@ type Msg
     | FocusSet Id
     | HttpRequestOrResponseTextLog RequestOrResponse HttpRequestOrResponseText
     | InitialSetUp Int
-    | LikeButtonProcessHand SongRememberedIndex
+    | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse (Result Error HttpResponseText)
     | PageMorphHand
     | SongBuyAnchorProcessHand
-    | SongForgetHand SongRememberedIndex
-    | SongRememberHand SongLatestFewIndex
+    | SongForgetHand SongsRememberedIndex
+    | SongRememberHand SongsLatestFewIndex
     | SongsLatestFewRefreshHand
     | SongsLatestFewResponse (Result Error HttpResponseText)

@@ -62,11 +62,11 @@ import ModelDetailsView
             ( Played
             , Remembered
             )
-        , SongLatestFewOrRememberedIndex
+        , SongsLatestFewOrRememberedIndex
         )
 import Song
     exposing
-        ( SongRememberedIndex
+        ( SongsRememberedIndex
         )
 import ViewUtilities
     exposing
@@ -79,18 +79,18 @@ import ViewUtilities
 -- VIEW
 
 
-buttonComment : SongGroup -> SongRememberedIndex -> Html Msg
-buttonComment group songRememberedIndex =
+buttonComment : SongGroup -> SongsRememberedIndex -> Html Msg
+buttonComment group songsRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
-            CommentAreaOpenHand songRememberedIndex
+            CommentAreaOpenHand songsRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("buttonComment"
-                    ++ toString songRememberedIndex
+                    ++ toString songsRememberedIndex
                 )
 
         hoverText : HoverText
@@ -103,24 +103,24 @@ buttonComment group songRememberedIndex =
         htmlNodeNull
 
 
-buttonForgetRemember : SongGroup -> SongLatestFewOrRememberedIndex -> Html Msg
-buttonForgetRemember group songLatestFewOrRememberedIndex =
+buttonForgetRemember : SongGroup -> SongsLatestFewOrRememberedIndex -> Html Msg
+buttonForgetRemember group songsLatestFewOrRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
             case group of
                 Played ->
-                    SongRememberHand songLatestFewOrRememberedIndex
+                    SongRememberHand songsLatestFewOrRememberedIndex
 
                 Remembered ->
-                    SongForgetHand songLatestFewOrRememberedIndex
+                    SongForgetHand songsLatestFewOrRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("button"
                     ++ songGroup2String group
-                    ++ toString songLatestFewOrRememberedIndex
+                    ++ toString songsLatestFewOrRememberedIndex
                 )
 
         hoverText : HoverText
@@ -135,18 +135,18 @@ buttonForgetRemember group songLatestFewOrRememberedIndex =
     buttonMy buttonId hoverText buttonAction
 
 
-buttonLike : SongGroup -> SongRememberedIndex -> Html Msg
-buttonLike group songRememberedIndex =
+buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
+buttonLike group songsRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
-            LikeButtonProcessHand songRememberedIndex
+            LikeButtonProcessHand songsRememberedIndex
 
         buttonId : Maybe Id
         buttonId =
             Just
                 ("buttonLike"
-                    ++ toString songRememberedIndex
+                    ++ toString songsRememberedIndex
                 )
 
         hoverText : HoverText

@@ -21,7 +21,7 @@ module ModelDetailsView
             , Remembered
             )
         , SongGroupLength
-        , SongLatestFewOrRememberedIndex
+        , SongsLatestFewOrRememberedIndex
         )
 
 -- VIEW
@@ -44,5 +44,5 @@ type alias SongGroupLength =
     Int
 
 
-type alias SongLatestFewOrRememberedIndex =
+type alias SongsLatestFewOrRememberedIndex =
     Int

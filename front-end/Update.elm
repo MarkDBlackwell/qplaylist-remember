@@ -155,11 +155,11 @@ update msg model =
                     , Cmd.none
                     )
 
-        CommentAreaOpenHand songRememberedIndex ->
+        CommentAreaOpenHand songsRememberedIndex ->
             let
                 songCommentingNew : SongLikingOrCommenting
                 songCommentingNew =
-                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
+                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -348,7 +348,7 @@ update msg model =
             , Cmd.none
             )
 
-        LikeButtonProcessHand songRememberedIndex ->
+        LikeButtonProcessHand songsRememberedIndex ->
             let
                 likeRequest : Cmd Msg
                 likeRequest =
@@ -360,7 +360,7 @@ update msg model =
 
                 songLikingNew : SongLikingOrCommenting
                 songLikingNew =
-                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
+                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -488,15 +488,15 @@ update msg model =
             , focusInputPossibly model
             )
 
-        SongForgetHand songRememberedIndex ->
+        SongForgetHand songsRememberedIndex ->
             let
                 songRememberedCompare : SongCommenting
                 songRememberedCompare =
-                    songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
+                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedWithoutOne model.songsRemembered songRememberedIndex
+                    songsRememberedWithoutOne model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -522,11 +522,11 @@ update msg model =
                         , focusInputPossibly model
                         )
 
-        SongRememberHand songLatestFewIndex ->
+        SongRememberHand songsLatestFewIndex ->
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedAppendOneUnique model.songsLatestFew songLatestFewIndex model.songsRemembered
+                    songsRememberedAppendOneUnique model.songsLatestFew songsLatestFewIndex model.songsRemembered
             in
             --(awaitingServer, commentArea)
             case stateVector of

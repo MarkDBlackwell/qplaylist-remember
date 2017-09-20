@@ -16,14 +16,14 @@ module Song
     exposing
         ( SongBasic
         , SongCommenting
-        , SongLatestFewIndex
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
-        , SongRememberedIndex
         , SongsBasic
         , SongsLatestFew
+        , SongsLatestFewIndex
         , SongsRemembered
+        , SongsRememberedIndex
         , likedOrCommentedShow
         , songCommentingInit
         , songLikingInit
@@ -63,7 +63,7 @@ type alias SongLatestFew =
     SongBasic
 
 
-type alias SongLatestFewIndex =
+type alias SongsLatestFewIndex =
     Int
 
 
@@ -84,7 +84,7 @@ type alias SongRemembered =
     }
 
 
-type alias SongRememberedIndex =
+type alias SongsRememberedIndex =
     Int
 
 
@@ -157,9 +157,9 @@ songLikingInit =
     Nothing
 
 
-songLikingOrCommentingMaybe : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
-songLikingOrCommentingMaybe songsRemembered songRememberedIndex =
-    case songsRememberedSelectOne songsRemembered songRememberedIndex of
+songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
+songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
+    case songsRememberedSelectOne songsRemembered songsRememberedIndex of
         Nothing ->
             Nothing
 
@@ -186,14 +186,14 @@ songsLatestFewInit =
     []
 
 
-songsLatestFewSelectOne : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
-songsLatestFewSelectOne songsLatestFew songLatestFewIndex =
-    List.head (songsLatestFewStartingWith songsLatestFew songLatestFewIndex)
+songsLatestFewSelectOne : SongsLatestFew -> SongsLatestFewIndex -> Maybe SongLatestFew
+songsLatestFewSelectOne songsLatestFew songsLatestFewIndex =
+    List.head (songsLatestFewStartingWith songsLatestFew songsLatestFewIndex)
 
 
-songsLatestFewStartingWith : SongsLatestFew -> SongLatestFewIndex -> SongsLatestFew
-songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
-    List.drop songLatestFewIndex songsLatestFew
+songsLatestFewStartingWith : SongsLatestFew -> SongsLatestFewIndex -> SongsLatestFew
+songsLatestFewStartingWith songsLatestFew songsLatestFewIndex =
+    List.drop songsLatestFewIndex songsLatestFew
 
 
 songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
@@ -201,9 +201,9 @@ songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
 
 
-songsRememberedAppendOneUnique : SongsLatestFew -> SongLatestFewIndex -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUnique songsLatestFew songLatestFewIndex songsRemembered =
-    case songsLatestFewSelectOne songsLatestFew songLatestFewIndex of
+songsRememberedAppendOneUnique : SongsLatestFew -> SongsLatestFewIndex -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUnique songsLatestFew songsLatestFewIndex songsRemembered =
+    case songsLatestFewSelectOne songsLatestFew songsLatestFewIndex of
         Nothing ->
             songsRemembered
 
@@ -224,17 +224,17 @@ songsRememberedInit =
     []
 
 
-songsRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-songsRememberedSelectOne songsRemembered songRememberedIndex =
-    List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
+songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered
+songsRememberedSelectOne songsRemembered songsRememberedIndex =
+    List.head (songsRememberedStartingWith songsRemembered songsRememberedIndex)
 
 
-songsRememberedStartingWith : SongsRemembered -> SongRememberedIndex -> SongsRemembered
-songsRememberedStartingWith songsRemembered songRememberedIndex =
-    List.drop songRememberedIndex songsRemembered
+songsRememberedStartingWith : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedStartingWith songsRemembered songsRememberedIndex =
+    List.drop songsRememberedIndex songsRemembered
 
 
-songsRememberedWithoutOne : SongsRemembered -> SongRememberedIndex -> SongsRemembered
-songsRememberedWithoutOne songsRemembered songRememberedIndex =
-    List.take songRememberedIndex songsRemembered
-        ++ songsRememberedStartingWith songsRemembered (songRememberedIndex + 1)
+songsRememberedWithoutOne : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedWithoutOne songsRemembered songsRememberedIndex =
+    List.take songsRememberedIndex songsRemembered
+        ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)

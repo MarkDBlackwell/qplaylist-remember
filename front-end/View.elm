@@ -65,7 +65,7 @@ import ModelDetailsView
             , Remembered
             )
         , SongGroupLength
-        , SongLatestFewOrRememberedIndex
+        , SongsLatestFewOrRememberedIndex
         )
 import Song
     exposing
@@ -187,8 +187,8 @@ groupAttributes group =
     ]
 
 
-songView : Model -> SongGroup -> SongLatestFewOrRememberedIndex -> SongRemembered -> Html Msg
-songView model group songLatestFewOrRememberedIndex song =
+songView : Model -> SongGroup -> SongsLatestFewOrRememberedIndex -> SongRemembered -> Html Msg
+songView model group songsLatestFewOrRememberedIndex song =
     let
         likedOrCommentedIndicator : Html Msg
         likedOrCommentedIndicator =
@@ -223,16 +223,16 @@ songView model group songLatestFewOrRememberedIndex song =
             if model.pageIsExpanded then
                 []
             else
-                [ styleCalc group lengthRemembered songLatestFewOrRememberedIndex ]
+                [ styleCalc group lengthRemembered songsLatestFewOrRememberedIndex ]
     in
     div
         songAttributes
         [ p []
-            [ buttonForgetRemember group songLatestFewOrRememberedIndex
+            [ buttonForgetRemember group songsLatestFewOrRememberedIndex
             , span []
                 [ text song.time ]
-            , buttonComment group songLatestFewOrRememberedIndex
-            , buttonLike group songLatestFewOrRememberedIndex
+            , buttonComment group songsLatestFewOrRememberedIndex
+            , buttonLike group songsLatestFewOrRememberedIndex
             , likedOrCommentedIndicator
             , buySongAnchor song
             ]
