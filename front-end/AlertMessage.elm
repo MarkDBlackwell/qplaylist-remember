@@ -15,7 +15,6 @@
 module AlertMessage
     exposing
         ( AlertMessageText
-        , AlertMessageTextErrorDecode
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
@@ -42,10 +41,6 @@ type alias AlertMessageText =
     String
 
 
-type alias AlertMessageTextErrorDecode =
-    String
-
-
 type alias HttpErrorMessageText =
     String
 
@@ -68,7 +63,7 @@ alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
         ++ " to server)"
 
 
-alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageTextErrorDecode -> AlertMessageText
+alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageText -> AlertMessageText
 alertMessageTextErrorUnexpected alertMessageText decodeErrorMessageText =
     "Unexpected error "
         ++ alertMessageText

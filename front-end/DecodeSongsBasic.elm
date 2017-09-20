@@ -19,7 +19,7 @@ module DecodeSongsBasic
 
 import AlertMessage
     exposing
-        ( AlertMessageTextErrorDecode
+        ( AlertMessageText
         )
 import Json.Decode
     exposing
@@ -50,14 +50,14 @@ type alias SongsBasicWithDummyTag =
     { dummyTag : SongsBasic }
 
 
-decodeSongsBasic : HttpResponseText -> Result AlertMessageTextErrorDecode SongsBasic
+decodeSongsBasic : HttpResponseText -> Result AlertMessageText SongsBasic
 decodeSongsBasic jsonRawText =
     --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        asRecord : Result AlertMessageTextErrorDecode SongsBasicWithDummyTag
+        asRecord : Result AlertMessageText SongsBasicWithDummyTag
         asRecord =
             let
                 decodeSongsBasicWithDummyTag : Decoder SongsBasicWithDummyTag
