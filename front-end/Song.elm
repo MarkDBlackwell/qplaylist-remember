@@ -14,8 +14,7 @@
 
 module Song
     exposing
-        ( LikedOrCommented
-        , SongBasic
+        ( SongBasic
         , SongCommenting
         , SongLatestFewIndex
         , SongLiking

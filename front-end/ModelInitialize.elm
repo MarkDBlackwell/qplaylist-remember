@@ -38,8 +38,7 @@ import Random
         )
 import Song
     exposing
-        ( LikedOrCommented
-        , songCommentingInit
+        ( songCommentingInit
         , songLikingInit
         , songsLatestFewInit
         , songsRememberedInit

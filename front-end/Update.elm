@@ -73,10 +73,7 @@ import ModelInitialize
 import Song
     exposing
         ( SongCommenting
-        , SongLiking
         , SongLikingOrCommenting
-        , SongRemembered
-        , SongRememberedIndex
         , SongsLatestFew
         , SongsRemembered
         , likedOrCommentedShow

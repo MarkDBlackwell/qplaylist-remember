@@ -18,9 +18,6 @@ import Song
     exposing
         ( SongCommenting
         , SongLiking
-        , SongLikingOrCommenting
-        , SongRemembered
-        , SongsBasic
         , SongsLatestFew
         , SongsRemembered
         )
