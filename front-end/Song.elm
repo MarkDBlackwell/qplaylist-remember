@@ -198,14 +198,14 @@ songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
     List.drop songLatestFewIndex songsLatestFew
 
 
-songsRememberedInit : SongsRemembered
-songsRememberedInit =
-    []
-
-
 songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
 songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
+
+
+songsRememberedInit : SongsRemembered
+songsRememberedInit =
+    []
 
 
 songsRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
