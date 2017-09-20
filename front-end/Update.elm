@@ -79,9 +79,9 @@ import Song
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
-        , songLatestFewSelectOne
         , songLikingInit
         , songLikingOrCommentingMaybe
+        , songsLatestFewSelectOne
         , songsRemembered2SongsBasic
         , songsRememberedWithoutOne
         )
@@ -529,20 +529,20 @@ update msg model =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    case songLatestFewSelectOne model.songsLatestFew songLatestFewIndex of
+                    case songsLatestFewSelectOne model.songsLatestFew songLatestFewIndex of
                         Nothing ->
                             model.songsRemembered
 
-                        Just songLatestFewSelectOne ->
+                        Just songsLatestFewSelectOne ->
                             if
                                 List.member
-                                    songLatestFewSelectOne
+                                    songsLatestFewSelectOne
                                     (songsRemembered2SongsBasic model.songsRemembered)
                             then
                                 model.songsRemembered
                             else
                                 model.songsRemembered
-                                    ++ [ songBasic2SongRemembered songLatestFewSelectOne ]
+                                    ++ [ songBasic2SongRemembered songsLatestFewSelectOne ]
             in
             --(awaitingServer, commentArea)
             case stateVector of

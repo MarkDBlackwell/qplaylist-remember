@@ -27,11 +27,11 @@ module Song
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
-        , songLatestFewSelectOne
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songsBasic2SongsRemembered
         , songsLatestFewInit
+        , songsLatestFewSelectOne
         , songsRemembered2SongsBasic
         , songsRememberedInit
         , songsRememberedWithoutOne
@@ -154,11 +154,6 @@ songCommentingInit =
     Nothing
 
 
-songLatestFewSelectOne : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
-songLatestFewSelectOne songsLatestFew songLatestFewIndex =
-    List.head (songsLatestFewStartingWith songsLatestFew songLatestFewIndex)
-
-
 songLikingInit : SongLiking
 songLikingInit =
     Nothing
@@ -166,7 +161,7 @@ songLikingInit =
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songRememberedIndex =
-    case songRememberedSelectOne songsRemembered songRememberedIndex of
+    case songsRememberedSelectOne songsRemembered songRememberedIndex of
         Nothing ->
             Nothing
 
@@ -183,11 +178,6 @@ songRemembered2SongBasic song =
         song.title
 
 
-songRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-songRememberedSelectOne songsRemembered songRememberedIndex =
-    List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
-
-
 songsBasic2SongsRemembered : SongsBasic -> SongsRemembered
 songsBasic2SongsRemembered songsBasic =
     List.map songBasic2SongRemembered songsBasic
@@ -196,6 +186,11 @@ songsBasic2SongsRemembered songsBasic =
 songsLatestFewInit : SongsLatestFew
 songsLatestFewInit =
     []
+
+
+songsLatestFewSelectOne : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
+songsLatestFewSelectOne songsLatestFew songLatestFewIndex =
+    List.head (songsLatestFewStartingWith songsLatestFew songLatestFewIndex)
 
 
 songsLatestFewStartingWith : SongsLatestFew -> SongLatestFewIndex -> SongsLatestFew
@@ -211,6 +206,11 @@ songsRememberedInit =
 songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
 songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
+
+
+songsRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
+songsRememberedSelectOne songsRemembered songRememberedIndex =
+    List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
 
 
 songsRememberedStartingWith : SongsRemembered -> SongRememberedIndex -> SongsRemembered
