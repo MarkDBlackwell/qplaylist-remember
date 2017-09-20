@@ -75,6 +75,7 @@ import Song
         ( SongBasic
         , SongCommenting
         , SongLatestFew
+        , SongLatestFewIndex
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
@@ -84,6 +85,7 @@ import Song
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
+        , songLatestFewSelected
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
@@ -534,12 +536,7 @@ update msg model =
             let
                 songsRememberedNew : SongsLatestFew -> SongsRemembered
                 songsRememberedNew songsLatestFew =
-                    let
-                        songLatestFewSelected : Maybe SongLatestFew
-                        songLatestFewSelected =
-                            List.head (List.drop songLatestFewIndex songsLatestFew)
-                    in
-                    case songLatestFewSelected of
+                    case songLatestFewSelected songsLatestFew songLatestFewIndex of
                         Nothing ->
                             model.songsRemembered
 

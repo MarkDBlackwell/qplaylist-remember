@@ -34,11 +34,11 @@ import ModelDetailsUpdate
         ( HttpRequestOrResponseText
         , HttpResponseText
         , RequestOrResponse
-        , SongLatestFewIndex
         )
 import Song
     exposing
-        ( SongRememberedIndex
+        ( SongLatestFewIndex
+        , SongRememberedIndex
         )
 
 

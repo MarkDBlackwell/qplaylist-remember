@@ -26,7 +26,6 @@ module ModelDetailsUpdate
         , QueryPairs
         , RequestOrResponse
         , ResponseString
-        , SongLatestFewIndex
         , UriText
         )
 
@@ -92,10 +91,6 @@ type alias RequestOrResponse =
 
 type alias ResponseString =
     String
-
-
-type alias SongLatestFewIndex =
-    Int
 
 
 type alias UriText =

@@ -19,6 +19,7 @@ module Song
         , SongBasic
         , SongCommenting
         , SongLatestFew
+        , SongLatestFewIndex
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
@@ -33,6 +34,7 @@ module Song
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
+        , songLatestFewSelected
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
@@ -68,6 +70,10 @@ type alias SongCommenting =
 
 type alias SongLatestFew =
     SongBasic
+
+
+type alias SongLatestFewIndex =
+    Int
 
 
 type alias SongLiking =
@@ -155,6 +161,11 @@ songCommentingInit =
     Nothing
 
 
+songLatestFewSelected : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
+songLatestFewSelected songsLatestFew songLatestFewIndex =
+    List.head (List.drop songLatestFewIndex songsLatestFew)
+
+
 songLikingInit : SongLiking
 songLikingInit =
     Nothing
@@ -192,6 +203,11 @@ songsLatestFewInit =
 songsRememberedInit : SongsRemembered
 songsRememberedInit =
     []
+
+
+songsLatestFewStartingWith : SongsLatestFew -> SongLatestFewIndex -> SongsLatestFew
+songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
+    List.drop songLatestFewIndex songsLatestFew
 
 
 songsRememberedStartingWith : SongsRemembered -> SongRememberedIndex -> SongsRemembered
