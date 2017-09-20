@@ -16,12 +16,10 @@ module AlertMessage
     exposing
         ( AlertMessageText
         , DecodeErrorMessageText
-        , HttpErrorMessageText
         , alertMessageTextAwaitingServer
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
-        , httpErrorMessage
         , httpErrorMessageLogging
         , httpErrorMessageScreen
         )

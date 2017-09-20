@@ -21,8 +21,7 @@ module ModelInitialize
 
 import AlertMessage
     exposing
-        ( AlertMessageText
-        , alertMessageTextInit
+        ( alertMessageTextInit
         )
 import MessageDetails
     exposing
