@@ -527,9 +527,9 @@ update msg model =
 
         SongRememberHand songLatestFewIndex ->
             let
-                songsRememberedNew : SongsLatestFew -> SongsRemembered
-                songsRememberedNew songsLatestFew =
-                    case songLatestFewSelectOne songsLatestFew songLatestFewIndex of
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    case songLatestFewSelectOne model.songsLatestFew songLatestFewIndex of
                         Nothing ->
                             model.songsRemembered
 
@@ -556,7 +556,7 @@ update msg model =
                 _ ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
-                        , songsRemembered = songsRememberedNew model.songsLatestFew
+                        , songsRemembered = songsRememberedNew
                       }
                     , focusInputPossibly model
                     )
