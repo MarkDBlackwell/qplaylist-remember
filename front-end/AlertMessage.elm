@@ -89,12 +89,12 @@ alertMessageTextErrorHttpScreen httpError =
     second (alertMessageTextErrorHttp httpError)
 
 
-alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageText -> AlertMessageText
-alertMessageTextErrorUnexpected alertMessageTextLabel alertMessageTextDecode =
+alertMessageTextErrorUnexpected : List AlertMessageText -> AlertMessageText
+alertMessageTextErrorUnexpected alertMessageTextList =
     "Unexpected error "
-        ++ alertMessageTextLabel
-        ++ ": "
-        ++ alertMessageTextDecode
+        ++ String.join
+            ": "
+            alertMessageTextList
 
 
 alertMessageTextInit : AlertMessageText

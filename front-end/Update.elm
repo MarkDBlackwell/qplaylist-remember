@@ -219,8 +219,9 @@ update msg model =
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
-                                "while attempting to append your Comment"
-                                alertMessageTextDecode
+                                [ "while attempting to append your Comment"
+                                , alertMessageTextDecode
+                                ]
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
@@ -238,8 +239,9 @@ update msg model =
                             alertMessageTextNew : AlertMessageText
                             alertMessageTextNew =
                                 alertMessageTextErrorUnexpected
-                                    "while attempting to send your Like"
-                                    responseString
+                                    [ "while attempting to send your Like"
+                                    , responseString
+                                    ]
                         in
                         ( { model
                             | alertMessageText = alertMessageTextNew
@@ -398,8 +400,9 @@ update msg model =
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
-                                "while attempting to append your Like"
-                                alertMessageTextDecode
+                                [ "while attempting to append your Like"
+                                , alertMessageTextDecode
+                                ]
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
@@ -417,8 +420,9 @@ update msg model =
                             alertMessageTextNew : AlertMessageText
                             alertMessageTextNew =
                                 alertMessageTextErrorUnexpected
-                                    "while attempting to send your Like"
-                                    responseString
+                                    [ "while attempting to send your Like"
+                                    , responseString
+                                    ]
                         in
                         ( { model
                             | alertMessageText = alertMessageTextNew
@@ -614,8 +618,9 @@ update msg model =
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
-                                "while attempting to access the latest few songs"
-                                alertMessageTextDecode
+                                [ "while attempting to access the latest few songs"
+                                , alertMessageTextDecode
+                                ]
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
