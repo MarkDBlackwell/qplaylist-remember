@@ -18,11 +18,6 @@ module UpdateUtilities
         , msg2Cmd
         )
 
-import AlertMessage
-    exposing
-        ( HttpErrorMessageText
-        , httpErrorMessage
-        )
 import Dom
     exposing
         ( Id
