@@ -530,12 +530,7 @@ update msg model =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    case songsLatestFewSelectOne model.songsLatestFew songLatestFewIndex of
-                        Nothing ->
-                            model.songsRemembered
-
-                        Just songsLatestFewSelectOne ->
-                            songsRememberedAppendOneUnique songsLatestFewSelectOne model.songsRemembered
+                    songsRememberedAppendOneUnique model.songsLatestFew songLatestFewIndex model.songsRemembered
             in
             --(awaitingServer, commentArea)
             case stateVector of

@@ -204,17 +204,22 @@ songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
 
 
-songsRememberedAppendOneUnique : SongLatestFew -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUnique songLatestFew songsRemembered =
-    if
-        List.member
-            songLatestFew
-            (songsRemembered2SongsBasic songsRemembered)
-    then
-        songsRemembered
-    else
-        songsRemembered
-            ++ [ songBasic2SongRemembered songLatestFew ]
+songsRememberedAppendOneUnique : SongsLatestFew -> SongLatestFewIndex -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUnique songsLatestFew songLatestFewIndex songsRemembered =
+    case songsLatestFewSelectOne songsLatestFew songLatestFewIndex of
+        Nothing ->
+            songsRemembered
+
+        Just songsLatestFewSelectOne ->
+            if
+                List.member
+                    songsLatestFewSelectOne
+                    (songsRemembered2SongsBasic songsRemembered)
+            then
+                songsRemembered
+            else
+                songsRemembered
+                    ++ [ songBasic2SongRemembered songsLatestFewSelectOne ]
 
 
 songsRememberedInit : SongsRemembered
