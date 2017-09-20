@@ -88,7 +88,6 @@ import Song
         , songLatestFewSelectOne
         , songLikingInit
         , songLikingOrCommentingMaybe
-        , songRemembered2SongBasic
         , songsRemembered2SongsBasic
         , songsRememberedWithoutOne
         )
