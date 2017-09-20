@@ -15,14 +15,20 @@
 module AlertMessage
     exposing
         ( AlertMessageText
+        , DecodeErrorMessageText
         , alertMessageTextAwaitingServer
         , alertMessageTextInit
+        , alertMessageTextUnexpectedError
         )
 
 -- MODEL
 
 
 type alias AlertMessageText =
+    String
+
+
+type alias DecodeErrorMessageText =
     String
 
 
@@ -34,3 +40,11 @@ alertMessageTextAwaitingServer =
 alertMessageTextInit : AlertMessageText
 alertMessageTextInit =
     ""
+
+
+alertMessageTextUnexpectedError : AlertMessageText -> DecodeErrorMessageText -> AlertMessageText
+alertMessageTextUnexpectedError alertMessageText decodeErrorMessageText =
+    "Unexpected error "
+        ++ alertMessageText
+        ++ ": "
+        ++ decodeErrorMessageText

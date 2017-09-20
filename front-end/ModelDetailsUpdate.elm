@@ -14,8 +14,7 @@
 
 module ModelDetailsUpdate
     exposing
-        ( DecodeErrorMessageText
-        , HttpErrorMessageText
+        ( HttpErrorMessageText
         , HttpRequestOrResponseText
         , HttpRequestText
         , HttpResponseText
@@ -28,10 +27,6 @@ module ModelDetailsUpdate
         )
 
 -- UPDATE
-
-
-type alias DecodeErrorMessageText =
-    String
 
 
 type alias HttpErrorMessageText =

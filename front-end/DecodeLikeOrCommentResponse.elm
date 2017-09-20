@@ -17,6 +17,10 @@ module DecodeLikeOrCommentResponse
         ( decodeLikeOrCommentResponse
         )
 
+import AlertMessage
+    exposing
+        ( DecodeErrorMessageText
+        )
 import Json.Decode
     exposing
         ( Decoder
@@ -27,8 +31,7 @@ import Json.Decode
         )
 import ModelDetailsUpdate
     exposing
-        ( DecodeErrorMessageText
-        , HttpResponseText
+        ( HttpResponseText
         , ResponseString
         )
 

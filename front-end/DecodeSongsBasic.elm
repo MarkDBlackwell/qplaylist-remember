@@ -17,6 +17,10 @@ module DecodeSongsBasic
         ( decodeSongsBasic
         )
 
+import AlertMessage
+    exposing
+        ( DecodeErrorMessageText
+        )
 import Json.Decode
     exposing
         ( Decoder
@@ -29,8 +33,7 @@ import Json.Decode
         )
 import ModelDetailsUpdate
     exposing
-        ( DecodeErrorMessageText
-        , HttpResponseText
+        ( HttpResponseText
         )
 import Song
     exposing

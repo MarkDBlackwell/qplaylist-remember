@@ -22,6 +22,7 @@ import AlertMessage
         ( AlertMessageText
         , alertMessageTextAwaitingServer
         , alertMessageTextInit
+        , alertMessageTextUnexpectedError
         )
 import Debug
     exposing
@@ -61,8 +62,7 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( DecodeErrorMessageText
-        , HttpErrorMessageText
+        ( HttpErrorMessageText
         , HttpRequestText
         , UriText
         )
@@ -91,7 +91,6 @@ import Task
 import UpdateDetails
     exposing
         ( alertMessageTextLikeOrCommentRequest
-        , alertMessageTextUnexpectedError
         , focusInputPossibly
         , likeOrCommentRequestUriText
         , relative

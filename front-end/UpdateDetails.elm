@@ -15,7 +15,6 @@
 module UpdateDetails
     exposing
         ( alertMessageTextLikeOrCommentRequest
-        , alertMessageTextUnexpectedError
         , focusInputPossibly
         , likeOrCommentRequestUriText
         , relative
@@ -24,6 +23,7 @@ module UpdateDetails
 import AlertMessage
     exposing
         ( AlertMessageText
+        , alertMessageTextUnexpectedError
         )
 import Http
     exposing
@@ -40,8 +40,7 @@ import ModelDetails
         )
 import ModelDetailsUpdate
     exposing
-        ( DecodeErrorMessageText
-        , QueryBeforeList
+        ( QueryBeforeList
         , QueryPair
         , QueryPairs
         , UriText
@@ -70,14 +69,6 @@ alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
         ++ " (while attempting to send "
         ++ likeOrCommentName
         ++ " to server)"
-
-
-alertMessageTextUnexpectedError : AlertMessageText -> DecodeErrorMessageText -> AlertMessageText
-alertMessageTextUnexpectedError alertMessageText decodeErrorMessageText =
-    "Unexpected error "
-        ++ alertMessageText
-        ++ ": "
-        ++ decodeErrorMessageText
 
 
 focusInputPossibly : Model -> Cmd Msg
