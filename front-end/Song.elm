@@ -34,11 +34,10 @@ module Song
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit
-        , songLatestFewSelected
+        , songLatestFewSelectOne
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
-        , songRememberedSelected
         , songsLatestFewInit
         , songsRememberedInit
         , songsRememberedWithoutOne
@@ -161,8 +160,8 @@ songCommentingInit =
     Nothing
 
 
-songLatestFewSelected : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
-songLatestFewSelected songsLatestFew songLatestFewIndex =
+songLatestFewSelectOne : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
+songLatestFewSelectOne songsLatestFew songLatestFewIndex =
     List.head (songsLatestFewStartingWith songsLatestFew songLatestFewIndex)
 
 
@@ -173,7 +172,7 @@ songLikingInit =
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songRememberedIndex =
-    case songRememberedSelected songsRemembered songRememberedIndex of
+    case songRememberedSelectOne songsRemembered songRememberedIndex of
         Nothing ->
             Nothing
 
@@ -205,8 +204,8 @@ songsRememberedInit =
     []
 
 
-songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-songRememberedSelected songsRemembered songRememberedIndex =
+songRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
+songRememberedSelectOne songsRemembered songRememberedIndex =
     List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
 
 
