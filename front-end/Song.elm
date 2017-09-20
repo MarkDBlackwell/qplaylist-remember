@@ -39,6 +39,7 @@ module Song
         , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
         , songsLatestFewInit
+        , songsRemembered2SongsBasic
         , songsRememberedInit
         , songsRememberedWithoutOne
         )
@@ -207,6 +208,11 @@ songsRememberedInit =
 songRememberedSelectOne : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
 songRememberedSelectOne songsRemembered songRememberedIndex =
     List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
+
+
+songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
+songsRemembered2SongsBasic songsRemembered =
+    List.map songRemembered2SongBasic songsRemembered
 
 
 songsRememberedStartingWith : SongsRemembered -> SongRememberedIndex -> SongsRemembered

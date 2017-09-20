@@ -89,6 +89,7 @@ import Song
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songRemembered2SongBasic
+        , songsRemembered2SongsBasic
         , songsRememberedWithoutOne
         )
 import Task
@@ -543,7 +544,7 @@ update msg model =
                             if
                                 List.member
                                     songLatestFewSelectOne
-                                    (List.map songRemembered2SongBasic model.songsRemembered)
+                                    (songsRemembered2SongsBasic model.songsRemembered)
                             then
                                 model.songsRemembered
                             else
