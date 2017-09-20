@@ -16,9 +16,7 @@ module ModelDetails exposing (..)
 
 import Song
     exposing
-        ( SongBasic
-        , SongCommenting
-        , SongLatestFew
+        ( SongCommenting
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered

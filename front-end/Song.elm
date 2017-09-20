@@ -17,7 +17,6 @@ module Song
         ( LikedOrCommented
         , SongBasic
         , SongCommenting
-        , SongLatestFew
         , SongLatestFewIndex
         , SongLiking
         , SongLikingOrCommenting

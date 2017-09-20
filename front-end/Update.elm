@@ -72,10 +72,7 @@ import ModelInitialize
         )
 import Song
     exposing
-        ( SongBasic
-        , SongCommenting
-        , SongLatestFew
-        , SongLatestFewIndex
+        ( SongCommenting
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
