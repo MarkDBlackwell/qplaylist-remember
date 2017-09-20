@@ -12,7 +12,19 @@
 -}
 
 
-module ModelDetails exposing (..)
+module ModelDetails
+    exposing
+        ( AlertMessageText
+        , AwaitingServerResponse
+        , CommentText
+        , LikeOrCommentText
+        , Model
+        , Optional
+            ( Closed
+            , Open
+            )
+        , PageIsExpanded
+        )
 
 import Song
     exposing
@@ -39,6 +51,10 @@ type alias AwaitingServerResponse =
 
 
 type alias CommentText =
+    String
+
+
+type alias LikeOrCommentText =
     String
 
 

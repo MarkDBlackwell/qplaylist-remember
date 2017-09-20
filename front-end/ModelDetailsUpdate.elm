@@ -20,7 +20,6 @@ module ModelDetailsUpdate
         , HttpRequestOrResponseText
         , HttpRequestText
         , HttpResponseText
-        , LikeText
         , QueryBeforeList
         , QueryPair
         , QueryPairs
@@ -62,10 +61,6 @@ type alias HttpRequestOrResponseText =
 
 
 type alias HttpResponseText =
-    String
-
-
-type alias LikeText =
     String
 
 

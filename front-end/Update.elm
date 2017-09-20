@@ -47,7 +47,6 @@ import ModelDetails
     exposing
         ( AlertMessageText
         , AwaitingServerResponse
-        , CommentText
         , Model
         , Optional
             ( Closed
@@ -61,7 +60,6 @@ import ModelDetailsUpdate
         , DecodeErrorMessageText
         , HttpErrorMessageText
         , HttpRequestText
-        , LikeText
         , UriText
         )
 import ModelInitialize

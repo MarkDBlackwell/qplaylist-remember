@@ -32,6 +32,7 @@ import MessageDetails
 import ModelDetails
     exposing
         ( AlertMessageText
+        , LikeOrCommentText
         , Model
         , Optional
             ( Closed
@@ -90,7 +91,7 @@ focusInputPossibly model =
             focusSet "input"
 
 
-likeOrCommentRequestUriText : SongLikingOrCommenting -> UserIdentifier -> String -> UriText
+likeOrCommentRequestUriText : SongLikingOrCommenting -> UserIdentifier -> LikeOrCommentText -> UriText
 likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentText =
     let
         artistTimeTitle : UriText
