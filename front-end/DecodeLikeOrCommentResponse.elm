@@ -19,7 +19,7 @@ module DecodeLikeOrCommentResponse
 
 import AlertMessage
     exposing
-        ( DecodeErrorMessageText
+        ( AlertMessageTextDecodeError
         )
 import Json.Decode
     exposing
@@ -44,11 +44,11 @@ type alias LikeOrCommentResponseWithDummyTag =
     { dummyTag : ResponseString }
 
 
-decodeLikeOrCommentResponse : HttpResponseText -> Result DecodeErrorMessageText ResponseString
+decodeLikeOrCommentResponse : HttpResponseText -> Result AlertMessageTextDecodeError ResponseString
 decodeLikeOrCommentResponse jsonRawText =
     --For decoding JSON:
     let
-        asRecord : Result DecodeErrorMessageText LikeOrCommentResponseWithDummyTag
+        asRecord : Result AlertMessageTextDecodeError LikeOrCommentResponseWithDummyTag
         asRecord =
             let
                 decodeResponse : Decoder LikeOrCommentResponseWithDummyTag
