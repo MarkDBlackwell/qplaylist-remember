@@ -16,12 +16,12 @@ module AlertMessage
     exposing
         ( AlertMessageText
         , DecodeErrorMessageText
-        , alertMessageTextAwaitingServer
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
-        , alertMessageTextLikeOrCommentRequest
+        , alertMessageTextRequestLikeOrComment
+        , alertMessageTextServerAwaiting
         )
 
 import Http
@@ -50,8 +50,8 @@ type alias HttpErrorMessageText =
     String
 
 
-alertMessageTextAwaitingServer : AlertMessageText
-alertMessageTextAwaitingServer =
+alertMessageTextServerAwaiting : AlertMessageText
+alertMessageTextServerAwaiting =
     "Awaiting server"
 
 
@@ -60,8 +60,8 @@ alertMessageTextInit =
     ""
 
 
-alertMessageTextLikeOrCommentRequest : Error -> String -> AlertMessageText
-alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
+alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
+alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     alertMessageTextErrorHttpScreen httpError
         ++ " (while attempting to send "
         ++ likeOrCommentName

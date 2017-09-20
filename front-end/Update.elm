@@ -20,12 +20,12 @@ module Update
 import AlertMessage
     exposing
         ( AlertMessageText
-        , alertMessageTextAwaitingServer
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
-        , alertMessageTextLikeOrCommentRequest
+        , alertMessageTextRequestLikeOrComment
+        , alertMessageTextServerAwaiting
         )
 import Debug
     exposing
@@ -160,7 +160,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -187,7 +187,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -203,7 +203,7 @@ update msg model =
 
         CommentResponse (Err httpError) ->
             ( { model
-                | alertMessageText = alertMessageTextLikeOrCommentRequest httpError "comment"
+                | alertMessageText = alertMessageTextRequestLikeOrComment httpError "comment"
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
@@ -280,7 +280,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -361,7 +361,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -381,7 +381,7 @@ update msg model =
 
         LikeResponse (Err httpError) ->
             ( { model
-                | alertMessageText = alertMessageTextLikeOrCommentRequest httpError "Like"
+                | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songLiking = songLikingInit
               }
@@ -465,7 +465,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -497,7 +497,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -527,7 +527,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
@@ -573,7 +573,7 @@ update msg model =
             case stateVector of
                 ( True, _ ) ->
                     ( { model
-                        | alertMessageText = alertMessageTextAwaitingServer
+                        | alertMessageText = alertMessageTextServerAwaiting
                       }
                     , focusInputPossibly model
                     )
