@@ -63,10 +63,6 @@ type alias SongLatestFew =
     SongBasic
 
 
-type alias SongsLatestFewIndex =
-    Int
-
-
 type alias SongLiking =
     Maybe SongBasic
 
@@ -84,10 +80,6 @@ type alias SongRemembered =
     }
 
 
-type alias SongsRememberedIndex =
-    Int
-
-
 type alias SongsBasic =
     List SongBasic
 
@@ -96,8 +88,16 @@ type alias SongsLatestFew =
     List SongLatestFew
 
 
+type alias SongsLatestFewIndex =
+    Int
+
+
 type alias SongsRemembered =
     List SongRemembered
+
+
+type alias SongsRememberedIndex =
+    Int
 
 
 type alias Time =
@@ -123,16 +123,16 @@ likedOrCommentedShow songLikingOrCommenting songsRemembered =
 
 
 likedOrCommentedShowSong : SongLikingOrCommenting -> SongRemembered -> SongRemembered
-likedOrCommentedShowSong songLikingOrCommenting song =
+likedOrCommentedShowSong songLikingOrCommenting songRemembered =
     case songLikingOrCommenting of
         Nothing ->
-            song
+            songRemembered
 
         Just songLikingOrCommenting ->
-            if songLikingOrCommenting /= songRemembered2SongBasic song then
-                song
+            if songLikingOrCommenting /= songRemembered2SongBasic songRemembered then
+                songRemembered
             else
-                { song
+                { songRemembered
                     | likedOrCommented = True
                 }
 
@@ -207,16 +207,16 @@ songsRememberedAppendOneUnique songsLatestFew songsLatestFewIndex songsRemembere
         Nothing ->
             songsRemembered
 
-        Just songsLatestFewSelectOne ->
+        Just song ->
             if
                 List.member
-                    songsLatestFewSelectOne
+                    song
                     (songsRemembered2SongsBasic songsRemembered)
             then
                 songsRemembered
             else
                 songsRemembered
-                    ++ [ songBasic2SongRemembered songsLatestFewSelectOne ]
+                    ++ [ songBasic2SongRemembered song ]
 
 
 songsRememberedInit : SongsRemembered
