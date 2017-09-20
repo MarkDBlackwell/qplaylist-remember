@@ -214,20 +214,20 @@ update msg model =
 
         CommentResponse (Ok appendCommentJson) ->
             case decodeLikeOrCommentResponse appendCommentJson of
-                Err decodeErrorMessageText ->
+                Err alertMessageTextDecode ->
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
                                 "while attempting to append your Comment"
-                                decodeErrorMessageText
+                                alertMessageTextDecode
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
+                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
                         , focusInputPossibly model
                         ]
                     )
@@ -393,20 +393,20 @@ update msg model =
 
         LikeResponse (Ok appendLikeJson) ->
             case decodeLikeOrCommentResponse appendLikeJson of
-                Err decodeErrorMessageText ->
+                Err alertMessageTextDecode ->
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
                                 "while attempting to append your Like"
-                                decodeErrorMessageText
+                                alertMessageTextDecode
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
+                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
                         , focusInputPossibly model
                         ]
                     )
@@ -609,20 +609,20 @@ update msg model =
 
         SongsLatestFewResponse (Ok jsonRawText) ->
             case decodeSongsBasic jsonRawText of
-                Err decodeErrorMessageText ->
+                Err alertMessageTextDecode ->
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
                                 "while attempting to access the latest few songs"
-                                decodeErrorMessageText
+                                alertMessageTextDecode
                     in
                     ( { model
                         | alertMessageText = alertMessageTextNew
                         , awaitingServerResponse = awaitingServerResponseInit
                       }
                     , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" decodeErrorMessageText)
+                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
                         , focusInputPossibly model
                         ]
                     )
