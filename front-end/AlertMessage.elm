@@ -16,9 +16,9 @@ module AlertMessage
     exposing
         ( AlertMessageText
         , DecodeErrorMessageText
-        , alertMessageErrorHttpLogging
-        , alertMessageErrorHttpScreen
         , alertMessageTextAwaitingServer
+        , alertMessageTextErrorHttpLogging
+        , alertMessageTextErrorHttpScreen
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
@@ -62,7 +62,7 @@ alertMessageTextInit =
 
 alertMessageTextLikeOrCommentRequest : Error -> String -> AlertMessageText
 alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
-    alertMessageErrorHttpScreen httpError
+    alertMessageTextErrorHttpScreen httpError
         ++ " (while attempting to send "
         ++ likeOrCommentName
         ++ " to server)"
@@ -76,8 +76,8 @@ alertMessageTextUnexpectedError alertMessageText decodeErrorMessageText =
         ++ decodeErrorMessageText
 
 
-alertMessageErrorHttp : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
-alertMessageErrorHttp httpError =
+alertMessageTextErrorHttp : Error -> ( HttpErrorMessageText, HttpErrorMessageText )
+alertMessageTextErrorHttp httpError =
     let
         prefix : HttpErrorMessageText
         prefix =
@@ -114,11 +114,11 @@ alertMessageErrorHttp httpError =
             )
 
 
-alertMessageErrorHttpLogging : Error -> HttpErrorMessageText
-alertMessageErrorHttpLogging httpError =
-    first (alertMessageErrorHttp httpError)
+alertMessageTextErrorHttpLogging : Error -> HttpErrorMessageText
+alertMessageTextErrorHttpLogging httpError =
+    first (alertMessageTextErrorHttp httpError)
 
 
-alertMessageErrorHttpScreen : Error -> HttpErrorMessageText
-alertMessageErrorHttpScreen httpError =
-    second (alertMessageErrorHttp httpError)
+alertMessageTextErrorHttpScreen : Error -> HttpErrorMessageText
+alertMessageTextErrorHttpScreen httpError =
+    second (alertMessageTextErrorHttp httpError)

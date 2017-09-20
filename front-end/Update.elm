@@ -20,9 +20,9 @@ module Update
 import AlertMessage
     exposing
         ( AlertMessageText
-        , alertMessageErrorHttpLogging
-        , alertMessageErrorHttpScreen
         , alertMessageTextAwaitingServer
+        , alertMessageTextErrorHttpLogging
+        , alertMessageTextErrorHttpScreen
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
@@ -207,7 +207,7 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageErrorHttpLogging httpError))
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
                 , focusInputPossibly model
                 ]
             )
@@ -386,7 +386,7 @@ update msg model =
                 , songLiking = songLikingInit
               }
             , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageErrorHttpLogging httpError))
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
                 , focusInputPossibly model
                 ]
             )
@@ -594,7 +594,7 @@ update msg model =
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
-                    alertMessageErrorHttpScreen httpError
+                    alertMessageTextErrorHttpScreen httpError
                         ++ " (while attempting to access the latest few songs)"
             in
             ( { model
@@ -602,7 +602,7 @@ update msg model =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageErrorHttpLogging httpError))
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
                 , focusInputPossibly model
                 ]
             )
