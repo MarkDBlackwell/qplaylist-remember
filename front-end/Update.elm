@@ -17,6 +17,10 @@ module Update
         ( update
         )
 
+import AlertMessage
+    exposing
+        ( AlertMessageText
+        )
 import Debug
     exposing
         ( log
@@ -45,8 +49,7 @@ import MessageDetails
         )
 import ModelDetails
     exposing
-        ( AlertMessageText
-        , AwaitingServerResponse
+        ( AwaitingServerResponse
         , Model
         , Optional
             ( Closed

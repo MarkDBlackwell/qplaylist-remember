@@ -14,8 +14,7 @@
 
 module ModelDetails
     exposing
-        ( AlertMessageText
-        , AwaitingServerResponse
+        ( AwaitingServerResponse
         , CommentText
         , LikeOrCommentText
         , Model
@@ -26,6 +25,10 @@ module ModelDetails
         , PageIsExpanded
         )
 
+import AlertMessage
+    exposing
+        ( AlertMessageText
+        )
 import Song
     exposing
         ( SongCommenting
@@ -40,10 +43,6 @@ import UserIdentifier
 
 
 -- MODEL
-
-
-type alias AlertMessageText =
-    String
 
 
 type alias AwaitingServerResponse =

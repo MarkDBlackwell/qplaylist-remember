@@ -20,6 +20,10 @@ module ModelInitialize
         , init
         )
 
+import AlertMessage
+    exposing
+        ( AlertMessageText
+        )
 import MessageDetails
     exposing
         ( Msg
@@ -28,8 +32,7 @@ import MessageDetails
         )
 import ModelDetails
     exposing
-        ( AlertMessageText
-        , AwaitingServerResponse
+        ( AwaitingServerResponse
         , CommentText
         , Model
         , Optional

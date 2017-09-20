@@ -21,6 +21,10 @@ module UpdateDetails
         , relative
         )
 
+import AlertMessage
+    exposing
+        ( AlertMessageText
+        )
 import Http
     exposing
         ( Error
@@ -31,8 +35,7 @@ import MessageDetails
         )
 import ModelDetails
     exposing
-        ( AlertMessageText
-        , LikeOrCommentText
+        ( LikeOrCommentText
         , Model
         , Optional
             ( Closed
