@@ -15,7 +15,6 @@
 module UpdateUtilities
     exposing
         ( focusSet
-        , httpErrorMessageLogging
         , msg2Cmd
         )
 
@@ -27,10 +26,6 @@ import AlertMessage
 import Dom
     exposing
         ( Id
-        )
-import Http
-    exposing
-        ( Error
         )
 import MessageDetails
     exposing
@@ -44,10 +39,6 @@ import Task
         , perform
         , succeed
         )
-import Tuple
-    exposing
-        ( first
-        )
 
 
 -- UPDATE
@@ -56,11 +47,6 @@ import Tuple
 focusSet : Id -> Cmd Msg
 focusSet id =
     msg2Cmd (FocusSet id)
-
-
-httpErrorMessageLogging : Error -> HttpErrorMessageText
-httpErrorMessageLogging httpError =
-    first (httpErrorMessage httpError)
 
 
 msg2Cmd : Msg -> Cmd Msg

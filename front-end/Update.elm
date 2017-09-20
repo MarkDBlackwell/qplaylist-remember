@@ -24,6 +24,7 @@ import AlertMessage
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
+        , httpErrorMessageLogging
         , httpErrorMessageScreen
         )
 import Debug
@@ -98,7 +99,6 @@ import UpdateDetails
 import UpdateUtilities
     exposing
         ( focusSet
-        , httpErrorMessageLogging
         , msg2Cmd
         )
 import UserIdentifier

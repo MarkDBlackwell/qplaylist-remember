@@ -22,6 +22,7 @@ module AlertMessage
         , alertMessageTextLikeOrCommentRequest
         , alertMessageTextUnexpectedError
         , httpErrorMessage
+        , httpErrorMessageLogging
         , httpErrorMessageScreen
         )
 
@@ -31,7 +32,8 @@ import Http
         )
 import Tuple
     exposing
-        ( second
+        ( first
+        , second
         )
 
 
@@ -112,6 +114,11 @@ httpErrorMessage httpError =
             ( prefix
             , "Timeout"
             )
+
+
+httpErrorMessageLogging : Error -> HttpErrorMessageText
+httpErrorMessageLogging httpError =
+    first (httpErrorMessage httpError)
 
 
 httpErrorMessageScreen : Error -> HttpErrorMessageText
