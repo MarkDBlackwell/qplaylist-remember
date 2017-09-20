@@ -14,8 +14,7 @@
 
 module Song
     exposing
-        ( Artist
-        , LikedOrCommented
+        ( LikedOrCommented
         , SongBasic
         , SongCommenting
         , SongLatestFew
@@ -27,8 +26,6 @@ module Song
         , SongsBasic
         , SongsLatestFew
         , SongsRemembered
-        , Time
-        , Timestamp
         , likedOrCommentedShow
         , songBasic2SongRemembered
         , songCommentingInit

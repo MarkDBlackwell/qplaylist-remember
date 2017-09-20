@@ -16,8 +16,7 @@ module ModelDetails exposing (..)
 
 import Song
     exposing
-        ( Artist
-        , SongBasic
+        ( SongBasic
         , SongCommenting
         , SongLatestFew
         , SongLiking
@@ -26,8 +25,6 @@ import Song
         , SongsBasic
         , SongsLatestFew
         , SongsRemembered
-        , Time
-        , Timestamp
         )
 import UserIdentifier
     exposing
