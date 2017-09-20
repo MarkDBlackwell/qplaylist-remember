@@ -83,6 +83,7 @@ import Song
         , songLikingOrCommentingMaybe
         , songsLatestFewSelectOne
         , songsRemembered2SongsBasic
+        , songsRememberedAppendUnique
         , songsRememberedWithoutOne
         )
 import Task
@@ -534,15 +535,7 @@ update msg model =
                             model.songsRemembered
 
                         Just songsLatestFewSelectOne ->
-                            if
-                                List.member
-                                    songsLatestFewSelectOne
-                                    (songsRemembered2SongsBasic model.songsRemembered)
-                            then
-                                model.songsRemembered
-                            else
-                                model.songsRemembered
-                                    ++ [ songBasic2SongRemembered songsLatestFewSelectOne ]
+                            songsRememberedAppendUnique songsLatestFewSelectOne model.songsRemembered
             in
             --(awaitingServer, commentArea)
             case stateVector of

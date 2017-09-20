@@ -33,6 +33,7 @@ module Song
         , songsLatestFewInit
         , songsLatestFewSelectOne
         , songsRemembered2SongsBasic
+        , songsRememberedAppendUnique
         , songsRememberedInit
         , songsRememberedWithoutOne
         )
@@ -201,6 +202,19 @@ songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
 songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
 songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
+
+
+songsRememberedAppendUnique : SongLatestFew -> SongsRemembered -> SongsRemembered
+songsRememberedAppendUnique songLatestFew songsRemembered =
+    if
+        List.member
+            songLatestFew
+            (songsRemembered2SongsBasic songsRemembered)
+    then
+        songsRemembered
+    else
+        songsRemembered
+            ++ [ songBasic2SongRemembered songLatestFew ]
 
 
 songsRememberedInit : SongsRemembered
