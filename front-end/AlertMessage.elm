@@ -41,23 +41,19 @@ type alias AlertMessageText =
     String
 
 
-type alias AlertMessageTextErrorHttp =
-    String
-
-
 alertMessageTextInit : AlertMessageText
 alertMessageTextInit =
     ""
 
 
-alertMessageTextErrorHttp : Error -> ( AlertMessageTextErrorHttp, AlertMessageTextErrorHttp )
+alertMessageTextErrorHttp : Error -> ( AlertMessageText, AlertMessageText )
 alertMessageTextErrorHttp httpError =
     let
-        prefix : AlertMessageTextErrorHttp
+        prefix : AlertMessageText
         prefix =
             "HttpError"
 
-        prefixColon : AlertMessageTextErrorHttp
+        prefixColon : AlertMessageText
         prefixColon =
             prefix ++ ": "
     in
@@ -88,20 +84,20 @@ alertMessageTextErrorHttp httpError =
             )
 
 
-alertMessageTextErrorHttpLogging : Error -> AlertMessageTextErrorHttp
+alertMessageTextErrorHttpLogging : Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
     first (alertMessageTextErrorHttp httpError)
 
 
-alertMessageTextErrorHttpScreen : Error -> AlertMessageTextErrorHttp
+alertMessageTextErrorHttpScreen : Error -> AlertMessageText
 alertMessageTextErrorHttpScreen httpError =
     second (alertMessageTextErrorHttp httpError)
 
 
 alertMessageTextErrorUnexpected : AlertMessageText -> AlertMessageText -> AlertMessageText
-alertMessageTextErrorUnexpected alertMessageText alertMessageTextDecode =
+alertMessageTextErrorUnexpected alertMessageTextLabel alertMessageTextDecode =
     "Unexpected error "
-        ++ alertMessageText
+        ++ alertMessageTextLabel
         ++ ": "
         ++ alertMessageTextDecode
 
