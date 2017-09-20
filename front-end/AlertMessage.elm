@@ -19,9 +19,9 @@ module AlertMessage
         , alertMessageTextAwaitingServer
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
+        , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
-        , alertMessageTextUnexpectedError
         )
 
 import Http
@@ -68,8 +68,8 @@ alertMessageTextLikeOrCommentRequest httpError likeOrCommentName =
         ++ " to server)"
 
 
-alertMessageTextUnexpectedError : AlertMessageText -> DecodeErrorMessageText -> AlertMessageText
-alertMessageTextUnexpectedError alertMessageText decodeErrorMessageText =
+alertMessageTextErrorUnexpected : AlertMessageText -> DecodeErrorMessageText -> AlertMessageText
+alertMessageTextErrorUnexpected alertMessageText decodeErrorMessageText =
     "Unexpected error "
         ++ alertMessageText
         ++ ": "

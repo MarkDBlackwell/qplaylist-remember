@@ -23,9 +23,9 @@ import AlertMessage
         , alertMessageTextAwaitingServer
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
+        , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextLikeOrCommentRequest
-        , alertMessageTextUnexpectedError
         )
 import Debug
     exposing
@@ -218,7 +218,7 @@ update msg model =
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
-                            alertMessageTextUnexpectedError
+                            alertMessageTextErrorUnexpected
                                 "while attempting to append your Comment"
                                 decodeErrorMessageText
                     in
@@ -237,7 +237,7 @@ update msg model =
                         let
                             alertMessageTextNew : AlertMessageText
                             alertMessageTextNew =
-                                alertMessageTextUnexpectedError
+                                alertMessageTextErrorUnexpected
                                     "while attempting to send your Like"
                                     responseString
                         in
@@ -397,7 +397,7 @@ update msg model =
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
-                            alertMessageTextUnexpectedError
+                            alertMessageTextErrorUnexpected
                                 "while attempting to append your Like"
                                 decodeErrorMessageText
                     in
@@ -416,7 +416,7 @@ update msg model =
                         let
                             alertMessageTextNew : AlertMessageText
                             alertMessageTextNew =
-                                alertMessageTextUnexpectedError
+                                alertMessageTextErrorUnexpected
                                     "while attempting to send your Like"
                                     responseString
                         in
@@ -613,7 +613,7 @@ update msg model =
                     let
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
-                            alertMessageTextUnexpectedError
+                            alertMessageTextErrorUnexpected
                                 "while attempting to access the latest few songs"
                                 decodeErrorMessageText
                     in
