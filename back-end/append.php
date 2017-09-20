@@ -22,26 +22,24 @@ header("content-type:application/json");
 // Constants:
 $comments_filename = "comments.txt";
 $ip_address = $_SERVER['REMOTE_ADDR'];
+$my_query_keys = array('comment', 'song', 'user_identifier', 'timestamp')
 
-$response_file_bad_json              = json_encode(array('response' => 'Unable to open comments file!'));
-$response_ok_json                    = json_encode(array('response' => 'ok'));
-$response_request_parameter_bad_json = json_encode(array('response' => 'Unable to access POST parameter!'));
+$response_bad_file_json               = json_encode(array('response' => 'Unable to open comments file!'));
+$response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));
+$response_ok_json                     = json_encode(array('response' => 'ok'));
 
 // Depends upon the above:
 
-$myfile = fopen($comments_filename, "a") or die($response_file_bad_json);
+$myfile = fopen($comments_filename, "a") or die($response_bad_file_json);
 
 // TODO: For security, change to use POST instead of GET.
-isset             ($_GET['comment'        ]) or die($response_request_parameter_bad_json);
+count($my_query_keys) === count($_GET) or die($response_bad_request_parameters_json);
+foreach ($my_query_keys as $key)
+    isset($_GET[$key]) or die($response_bad_request_parameters_json);
+
 $comment         = $_GET['comment'        ];
-
-isset             ($_GET['song'           ]) or die($response_request_parameter_bad_json);
 $song            = $_GET['song'           ];
-
-isset             ($_GET['user_identifier']) or die($response_request_parameter_bad_json);
 $user_identifier = $_GET['user_identifier'];
-
-isset(             $_GET['timestamp'      ]) or die($response_request_parameter_bad_json);
 $timestamp       = $_GET['timestamp'      ];
 
 // Depends upon the above:
