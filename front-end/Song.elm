@@ -163,7 +163,7 @@ songCommentingInit =
 
 songLatestFewSelected : SongsLatestFew -> SongLatestFewIndex -> Maybe SongLatestFew
 songLatestFewSelected songsLatestFew songLatestFewIndex =
-    List.head (List.drop songLatestFewIndex songsLatestFew)
+    List.head (songsLatestFewStartingWith songsLatestFew songLatestFewIndex)
 
 
 songLikingInit : SongLiking
@@ -190,14 +190,14 @@ songRemembered2SongBasic song =
         song.title
 
 
-songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
-songRememberedSelected songsRemembered songRememberedIndex =
-    List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
-
-
 songsLatestFewInit : SongsLatestFew
 songsLatestFewInit =
     []
+
+
+songsLatestFewStartingWith : SongsLatestFew -> SongLatestFewIndex -> SongsLatestFew
+songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
+    List.drop songLatestFewIndex songsLatestFew
 
 
 songsRememberedInit : SongsRemembered
@@ -205,9 +205,9 @@ songsRememberedInit =
     []
 
 
-songsLatestFewStartingWith : SongsLatestFew -> SongLatestFewIndex -> SongsLatestFew
-songsLatestFewStartingWith songsLatestFew songLatestFewIndex =
-    List.drop songLatestFewIndex songsLatestFew
+songRememberedSelected : SongsRemembered -> SongRememberedIndex -> Maybe SongRemembered
+songRememberedSelected songsRemembered songRememberedIndex =
+    List.head (songsRememberedStartingWith songsRemembered songRememberedIndex)
 
 
 songsRememberedStartingWith : SongsRemembered -> SongRememberedIndex -> SongsRemembered
