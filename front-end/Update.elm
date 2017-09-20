@@ -498,7 +498,7 @@ update msg model =
 
         SongForgetHand songRememberedIndex ->
             let
-                songRememberedCompare : Maybe SongBasic
+                songRememberedCompare : SongCommenting
                 songRememberedCompare =
                     songLikingOrCommentingMaybe model.songsRemembered songRememberedIndex
 
