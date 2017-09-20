@@ -12,7 +12,13 @@
 -}
 
 
-module ModelInitialize exposing (..)
+module ModelInitialize
+    exposing
+        ( alertMessageTextInit
+        , awaitingServerResponseInit
+        , commentTextInit
+        , init
+        )
 
 import MessageDetails
     exposing
