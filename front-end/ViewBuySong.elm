@@ -38,19 +38,16 @@ import MessageType
             ( SongBuyAnchorProcessHand
             )
         )
-import Song
-    exposing
-        ( SongRemembered
-        )
-import UpdateDetails
-    exposing
-        ( relative
-        )
-import UpdateType
+import Request
     exposing
         ( QueryBeforeList
         , QueryPairs
         , UriText
+        , relative
+        )
+import Song
+    exposing
+        ( SongRemembered
         )
 import ViewType
     exposing

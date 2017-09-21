@@ -15,8 +15,6 @@
 module UpdateDetails
     exposing
         ( focusInputPossibly
-        , likeOrCommentRequestUriText
-        , relative
         )
 
 import MessageType
@@ -27,25 +25,9 @@ import ModelType
     exposing
         ( Model
         )
-import Song
-    exposing
-        ( SongLikingOrCommenting
-        )
-import UpdateType
-    exposing
-        ( LikeOrCommentText
-        , QueryBeforeList
-        , QueryPair
-        , QueryPairs
-        , UriText
-        )
 import UpdateUtilities
     exposing
         ( focusSet
-        )
-import UserIdentifier
-    exposing
-        ( UserIdentifier
         )
 
 
@@ -60,107 +42,3 @@ focusInputPossibly model =
 
         _ ->
             focusSet "input"
-
-
-likeOrCommentRequestUriText : SongLikingOrCommenting -> UserIdentifier -> LikeOrCommentText -> UriText
-likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentText =
-    let
-        artistTimeTitle : UriText
-        artistTimeTitle =
-            case songLikingOrCommenting of
-                Nothing ->
-                    ""
-
-                Just songLikingOrCommenting ->
-                    songLikingOrCommenting.time
-                        ++ " "
-                        ++ songLikingOrCommenting.artist
-                        ++ ": "
-                        ++ songLikingOrCommenting.title
-
-        basename : UriText
-        basename =
-            "append.json"
-
-        timestamp : UriText
-        timestamp =
-            case songLikingOrCommenting of
-                Nothing ->
-                    ""
-
-                Just songLikingOrCommenting ->
-                    songLikingOrCommenting.timestamp
-    in
-    relative
-        [ basename ]
-        [ ( "user_identifier", userIdentifier )
-        , ( "timestamp", timestamp )
-        , ( "song", artistTimeTitle )
-        , ( "comment", likeOrCommentText )
-        ]
-
-
-relative : QueryBeforeList -> QueryPairs -> UriText
-relative queryBeforeList queryPairs =
-    --See:
-    --https://github.com/elm-lang/http/issues/10
-    --https://github.com/elm-lang/url
-    --https://github.com/evancz/elm-http
-    --http://package.elm-lang.org/packages/elm-lang/http/latest
-    --TODO: When elm-lang/url is updated to contain 'relative',
-    --consider replacing this code:
-    let
-        query : UriText
-        query =
-            let
-                queryPairJoin : QueryPair -> UriText
-                queryPairJoin ( name, value ) =
-                    let
-                        escapeAll : UriText -> UriText
-                        escapeAll string =
-                            let
-                                escapeAmpersands : UriText -> UriText
-                                escapeAmpersands string =
-                                    String.join
-                                        "%26"
-                                        (String.split "&" string)
-
-                                escapeEqualsSigns : UriText -> UriText
-                                escapeEqualsSigns string =
-                                    String.join
-                                        "%3D"
-                                        (String.split "=" string)
-
-                                escapeHashes : UriText -> UriText
-                                escapeHashes string =
-                                    String.join
-                                        "%23"
-                                        (String.split "#" string)
-                            in
-                            --See:
-                            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
-                            --TODO: Possibly, use Http.encodeUri instead:
-                            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
-                    in
-                    name ++ "=" ++ escapeAll value
-            in
-            String.join
-                "&"
-                (List.map queryPairJoin queryPairs)
-
-        queryBefore : UriText
-        queryBefore =
-            String.join
-                "/"
-                queryBeforeList
-
-        queryStarter : UriText
-        queryStarter =
-            if String.isEmpty query then
-                ""
-            else
-                "?"
-    in
-    queryBefore
-        ++ queryStarter
-        ++ query

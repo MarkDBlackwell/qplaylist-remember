@@ -16,17 +16,18 @@ module UpdateType
     exposing
         ( HttpRequestText
         , HttpResponseText
-        , LikeOrCommentText
         , Optional
             ( Closed
             , Open
             )
-        , QueryBeforeList
-        , QueryPair
-        , QueryPairs
         , ResponseString
-        , UriText
         )
+
+import Request
+    exposing
+        ( UriText
+        )
+
 
 -- UPDATE
 
@@ -39,34 +40,10 @@ type alias HttpResponseText =
     String
 
 
-type alias LikeOrCommentText =
-    String
-
-
 type Optional
     = Closed
     | Open
 
 
-type alias QueryBeforeList =
-    --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
-    --When joined, then comprises a URI's scheme, authority, and path:
-    List UriText
-
-
-type alias QueryPair =
-    ( UriText, UriText )
-
-
-type alias QueryPairs =
-    List QueryPair
-
-
 type alias ResponseString =
-    String
-
-
-type alias UriText =
     String

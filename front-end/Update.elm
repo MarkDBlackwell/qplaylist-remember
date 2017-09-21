@@ -64,6 +64,12 @@ import ModelType
         , Model
         , PageIsExpanded
         )
+import Request
+    exposing
+        ( UriText
+        , likeOrCommentRequestUriText
+        , relative
+        )
 import Song
     exposing
         ( SongCommenting
@@ -84,8 +90,6 @@ import Task
 import UpdateDetails
     exposing
         ( focusInputPossibly
-        , likeOrCommentRequestUriText
-        , relative
         )
 import UpdateType
     exposing
@@ -94,7 +98,6 @@ import UpdateType
             ( Closed
             , Open
             )
-        , UriText
         )
 import UpdateUtilities
     exposing
