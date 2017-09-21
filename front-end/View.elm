@@ -57,16 +57,6 @@ import Model
     exposing
         ( Model
         )
-import ModelView
-    exposing
-        ( HoverText
-        , SongGroup
-            ( Played
-            , Remembered
-            )
-        , SongGroupLength
-        , SongsLatestOrRememberedIndex
-        )
 import Song
     exposing
         ( SongBasic
@@ -90,6 +80,16 @@ import ViewBuySong
 import ViewStyleCalc
     exposing
         ( styleCalc
+        )
+import ViewType
+    exposing
+        ( HoverText
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
+        , SongsLatestOrRememberedIndex
         )
 import ViewUtilities
     exposing

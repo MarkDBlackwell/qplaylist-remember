@@ -12,7 +12,7 @@
 -}
 
 
-module ModelView
+module ViewType
     exposing
         ( Display
         , HoverText

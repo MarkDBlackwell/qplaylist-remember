@@ -29,7 +29,7 @@ import Message
     exposing
         ( Msg
         )
-import ModelView
+import ViewType
     exposing
         ( SongGroup
             ( Played

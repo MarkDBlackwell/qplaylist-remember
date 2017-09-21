@@ -54,7 +54,11 @@ import Message
             , SongsLatestRefreshHand
             )
         )
-import ModelView
+import Song
+    exposing
+        ( SongsRememberedIndex
+        )
+import ViewType
     exposing
         ( Display
         , HoverText
@@ -63,10 +67,6 @@ import ModelView
             , Remembered
             )
         , SongsLatestOrRememberedIndex
-        )
-import Song
-    exposing
-        ( SongsRememberedIndex
         )
 import ViewUtilities
     exposing

@@ -38,10 +38,6 @@ import Message
             ( SongBuyAnchorProcessHand
             )
         )
-import ModelView
-    exposing
-        ( HoverText
-        )
 import Song
     exposing
         ( SongRemembered
@@ -55,6 +51,10 @@ import UpdateType
         ( QueryBeforeList
         , QueryPairs
         , UriText
+        )
+import ViewType
+    exposing
+        ( HoverText
         )
 
 
