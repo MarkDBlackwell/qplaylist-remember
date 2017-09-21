@@ -112,9 +112,28 @@ type alias Title =
     String
 
 
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
+songCommentingInit : SongCommenting
+songCommentingInit =
+    Nothing
+
+
+songLikingInit : SongLiking
+songLikingInit =
+    Nothing
+
+
+songsLatestInit : SongsLatest
+songsLatestInit =
+    []
+
+
+songsRememberedInit : SongsRemembered
+songsRememberedInit =
+    []
+
+
+
+-- UPDATE
 
 
 likedOrCommentedShow : SongLikingOrCommenting -> SongsRemembered -> SongsRemembered
@@ -137,6 +156,11 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 }
 
 
+likedOrCommentedInit : LikedOrCommented
+likedOrCommentedInit =
+    False
+
+
 songBasic2SongRemembered : SongBasic -> SongRemembered
 songBasic2SongRemembered song =
     SongRemembered
@@ -145,16 +169,6 @@ songBasic2SongRemembered song =
         song.time
         song.timestamp
         song.title
-
-
-songCommentingInit : SongCommenting
-songCommentingInit =
-    Nothing
-
-
-songLikingInit : SongLiking
-songLikingInit =
-    Nothing
 
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
@@ -179,11 +193,6 @@ songRemembered2SongBasic song =
 songsBasic2SongsRemembered : SongsBasic -> SongsRemembered
 songsBasic2SongsRemembered songsBasic =
     List.map songBasic2SongRemembered songsBasic
-
-
-songsLatestInit : SongsLatest
-songsLatestInit =
-    []
 
 
 songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
@@ -217,11 +226,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
             else
                 songsRemembered
                     ++ [ songBasic2SongRemembered song ]
-
-
-songsRememberedInit : SongsRemembered
-songsRememberedInit =
-    []
 
 
 songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered
