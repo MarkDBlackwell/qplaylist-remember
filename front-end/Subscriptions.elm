@@ -17,11 +17,11 @@ module Subscriptions
         ( subscriptions
         )
 
-import MessageDetails
+import Message
     exposing
         ( Msg
         )
-import ModelDetails
+import Model
     exposing
         ( Model
         )

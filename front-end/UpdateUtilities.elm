@@ -22,7 +22,7 @@ import Dom
     exposing
         ( Id
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
             ( FocusSet

@@ -49,11 +49,11 @@ import Http
         , getString
         , send
         )
-import MessageDetails
+import Message
     exposing
         ( Msg(..)
         )
-import ModelDetails
+import Model
     exposing
         ( AwaitingServerResponse
         , Model
@@ -63,15 +63,15 @@ import ModelDetails
             )
         , PageIsExpanded
         )
-import ModelDetailsUpdate
-    exposing
-        ( HttpRequestText
-        , UriText
-        )
 import ModelInitialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit
+        )
+import ModelUpdate
+    exposing
+        ( HttpRequestText
+        , UriText
         )
 import Song
     exposing

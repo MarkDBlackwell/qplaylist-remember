@@ -45,7 +45,7 @@ import Html.Events
     exposing
         ( onInput
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
             ( CommentAreaInputTextChangeCaptureHand
@@ -53,11 +53,11 @@ import MessageDetails
             , CommentSendHand
             )
         )
-import ModelDetails
+import Model
     exposing
         ( Model
         )
-import ModelDetailsView
+import ModelView
     exposing
         ( HoverText
         , SongGroup

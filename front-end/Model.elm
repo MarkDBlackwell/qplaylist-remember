@@ -12,7 +12,7 @@
 -}
 
 
-module ModelDetails
+module Model
     exposing
         ( AwaitingServerResponse
         , CommentText

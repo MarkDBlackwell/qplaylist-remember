@@ -25,7 +25,7 @@ import Html.Attributes
     exposing
         ( style
         )
-import ModelDetailsView
+import ModelView
     exposing
         ( SongGroup
             ( Played

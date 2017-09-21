@@ -43,7 +43,7 @@ import Html.Events
     exposing
         ( onClick
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
             ( CommentAreaOpenHand
@@ -54,7 +54,7 @@ import MessageDetails
             , SongsLatestFewRefreshHand
             )
         )
-import ModelDetailsView
+import ModelView
     exposing
         ( Display
         , HoverText

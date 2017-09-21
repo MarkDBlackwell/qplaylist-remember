@@ -19,16 +19,16 @@ module UpdateDetails
         , relative
         )
 
-import MessageDetails
+import Message
     exposing
         ( Msg
         )
-import ModelDetails
+import Model
     exposing
         ( LikeOrCommentText
         , Model
         )
-import ModelDetailsUpdate
+import ModelUpdate
     exposing
         ( QueryBeforeList
         , QueryPair

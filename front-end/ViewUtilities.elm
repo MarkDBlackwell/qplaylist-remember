@@ -25,11 +25,11 @@ import Html
         ( Html
         , text
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
         )
-import ModelDetailsView
+import ModelView
     exposing
         ( SongGroup
             ( Played

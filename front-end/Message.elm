@@ -12,7 +12,7 @@
 -}
 
 
-module MessageDetails
+module Message
     exposing
         ( Msg(..)
         )
@@ -25,11 +25,11 @@ import Http
     exposing
         ( Error
         )
-import ModelDetails
+import Model
     exposing
         ( CommentText
         )
-import ModelDetailsUpdate
+import ModelUpdate
     exposing
         ( HttpRequestOrResponseText
         , HttpResponseText

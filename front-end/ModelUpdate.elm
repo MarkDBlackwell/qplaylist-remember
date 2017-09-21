@@ -12,7 +12,7 @@
 -}
 
 
-module ModelDetailsUpdate
+module ModelUpdate
     exposing
         ( HttpRequestOrResponseText
         , HttpRequestText

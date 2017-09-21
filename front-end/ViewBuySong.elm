@@ -32,19 +32,19 @@ import Html.Events
     exposing
         ( onClick
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
             ( SongBuyAnchorProcessHand
             )
         )
-import ModelDetailsUpdate
+import ModelUpdate
     exposing
         ( QueryBeforeList
         , QueryPairs
         , UriText
         )
-import ModelDetailsView
+import ModelView
     exposing
         ( HoverText
         )

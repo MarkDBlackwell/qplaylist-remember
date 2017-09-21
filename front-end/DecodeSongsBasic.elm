@@ -31,7 +31,7 @@ import Json.Decode
         , map4
         , string
         )
-import ModelDetailsUpdate
+import ModelUpdate
     exposing
         ( HttpResponseText
         )

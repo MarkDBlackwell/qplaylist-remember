@@ -23,13 +23,13 @@ import Alert
     exposing
         ( alertMessageTextInit
         )
-import MessageDetails
+import Message
     exposing
         ( Msg
             ( InitialSetUp
             )
         )
-import ModelDetails
+import Model
     exposing
         ( AwaitingServerResponse
         , CommentText
