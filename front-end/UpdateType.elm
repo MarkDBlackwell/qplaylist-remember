@@ -23,12 +23,6 @@ module UpdateType
         , ResponseString
         )
 
-import Request
-    exposing
-        ( UriText
-        )
-
-
 -- UPDATE
 
 

@@ -14,9 +14,7 @@
 
 module Request
     exposing
-        ( LikeOrCommentText
-        , QueryBeforeList
-        , QueryPair
+        ( QueryBeforeList
         , QueryPairs
         , UriText
         , likeOrCommentRequestUriText
