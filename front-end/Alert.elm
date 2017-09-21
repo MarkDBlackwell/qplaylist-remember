@@ -41,6 +41,15 @@ type alias AlertMessageText =
     String
 
 
+alertMessageTextInit : AlertMessageText
+alertMessageTextInit =
+    ""
+
+
+
+-- UPDATE
+
+
 alertMessageTextErrorHttp : Error -> ( AlertMessageText, AlertMessageText )
 alertMessageTextErrorHttp httpError =
     let
@@ -95,11 +104,6 @@ alertMessageTextErrorUnexpected alertMessageTextList =
         ++ String.join
             ": "
             alertMessageTextList
-
-
-alertMessageTextInit : AlertMessageText
-alertMessageTextInit =
-    ""
 
 
 alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText

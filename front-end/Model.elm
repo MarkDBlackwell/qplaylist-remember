@@ -53,10 +53,6 @@ type alias CommentText =
     String
 
 
-type alias LikeOrCommentText =
-    String
-
-
 type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
@@ -70,10 +66,18 @@ type alias Model =
     }
 
 
+type alias PageIsExpanded =
+    Bool
+
+
+
+-- UPDATE
+
+
+type alias LikeOrCommentText =
+    String
+
+
 type Optional
     = Closed
     | Open
-
-
-type alias PageIsExpanded =
-    Bool
