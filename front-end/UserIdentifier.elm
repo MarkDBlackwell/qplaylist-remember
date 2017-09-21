@@ -41,6 +41,25 @@ caseLength =
     1 + toCode 'Z' - toCode 'A'
 
 
+letterSpace : Int
+letterSpace =
+    let
+        caseCount : Int
+        caseCount =
+            2
+    in
+    caseCount * caseLength
+
+
+userIdentifierInit : UserIdentifier
+userIdentifierInit =
+    ""
+
+
+
+-- UPDATE
+
+
 keyCode2Char : KeyCode -> Char
 keyCode2Char keyCode =
     let
@@ -54,24 +73,9 @@ keyCode2Char keyCode =
     fromCode (baseKeyCode keyCode + (keyCode % caseLength))
 
 
-letterSpace : Int
-letterSpace =
-    let
-        caseCount : Int
-        caseCount =
-            2
-    in
-    caseCount * caseLength
-
-
 threeDigits : Int -> List Int
 threeDigits threeLetterSpace =
     [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
     , (threeLetterSpace // letterSpace) % letterSpace
     , threeLetterSpace % letterSpace
     ]
-
-
-userIdentifierInit : UserIdentifier
-userIdentifierInit =
-    ""
