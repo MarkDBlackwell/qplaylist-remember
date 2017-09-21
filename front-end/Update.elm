@@ -66,7 +66,8 @@ import ModelType
         )
 import Request
     exposing
-        ( UriText
+        ( HttpRequestText
+        , UriText
         , likeOrCommentRequestUriText
         , relative
         )
@@ -93,8 +94,7 @@ import UpdateDetails
         )
 import UpdateType
     exposing
-        ( HttpRequestText
-        , Optional
+        ( Optional
             ( Closed
             , Open
             )

@@ -14,7 +14,8 @@
 
 module Request
     exposing
-        ( QueryBeforeList
+        ( HttpRequestText
+        , QueryBeforeList
         , QueryPairs
         , UriText
         , likeOrCommentRequestUriText
@@ -32,6 +33,10 @@ import UserIdentifier
 
 
 -- UPDATE
+
+
+type alias HttpRequestText =
+    String
 
 
 type alias LikeOrCommentText =
