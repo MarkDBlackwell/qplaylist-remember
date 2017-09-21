@@ -12,7 +12,7 @@
 -}
 
 
-module Subscriptions
+module Subscription
     exposing
         ( subscriptions
         )

@@ -18,7 +18,7 @@ import Html exposing (program)
 import MessageType exposing (Msg)
 import ModelInitialize exposing (init)
 import ModelType exposing (Model)
-import Subscriptions exposing (subscriptions)
+import Subscription exposing (subscriptions)
 import Update exposing (update)
 import View exposing (view)
 
