@@ -20,6 +20,7 @@ module Request
         , HttpResponseText
         , QueryBeforeList
         , QueryPairs
+        , RequestOrResponse
         , UriText
         , likeOrCommentRequestUriText
         , relative
@@ -40,6 +41,10 @@ import UserIdentifier
 
 type alias AwaitingServerResponse =
     Bool
+
+
+type alias RequestOrResponse =
+    String
 
 
 

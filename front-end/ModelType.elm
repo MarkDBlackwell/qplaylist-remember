@@ -17,7 +17,6 @@ module ModelType
         ( CommentText
         , Model
         , PageIsExpanded
-        , RequestOrResponse
         )
 
 import Alert
@@ -63,7 +62,3 @@ type alias Model =
 
 type alias PageIsExpanded =
     Bool
-
-
-type alias RequestOrResponse =
-    String
