@@ -42,7 +42,7 @@ import UpdateType
         )
 
 
--- UPDATE
+-- MODEL
 
 
 type Msg

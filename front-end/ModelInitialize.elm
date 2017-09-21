@@ -67,15 +67,6 @@ commentTextInit =
     ""
 
 
-pageIsExpandedInit : PageIsExpanded
-pageIsExpandedInit =
-    False
-
-
-
--- UPDATE
-
-
 init : ( Model, Cmd Msg )
 init =
     let
@@ -95,3 +86,8 @@ init =
         userIdentifierInit
     , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
     )
+
+
+pageIsExpandedInit : PageIsExpanded
+pageIsExpandedInit =
+    False
