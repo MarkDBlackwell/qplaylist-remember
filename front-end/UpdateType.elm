@@ -17,6 +17,11 @@ module UpdateType
         ( HttpRequestOrResponseText
         , HttpRequestText
         , HttpResponseText
+        , LikeOrCommentText
+        , Optional
+            ( Closed
+            , Open
+            )
         , QueryBeforeList
         , QueryPair
         , QueryPairs
@@ -38,6 +43,15 @@ type alias HttpRequestOrResponseText =
 
 type alias HttpResponseText =
     String
+
+
+type alias LikeOrCommentText =
+    String
+
+
+type Optional
+    = Closed
+    | Open
 
 
 type alias QueryBeforeList =

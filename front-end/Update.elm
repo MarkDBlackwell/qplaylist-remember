@@ -57,10 +57,6 @@ import Model
     exposing
         ( AwaitingServerResponse
         , Model
-        , Optional
-            ( Closed
-            , Open
-            )
         , PageIsExpanded
         )
 import ModelInitialize
@@ -94,6 +90,10 @@ import UpdateDetails
 import UpdateType
     exposing
         ( HttpRequestText
+        , Optional
+            ( Closed
+            , Open
+            )
         , UriText
         )
 import UpdateUtilities

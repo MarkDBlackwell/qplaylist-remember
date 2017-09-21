@@ -16,12 +16,7 @@ module Model
     exposing
         ( AwaitingServerResponse
         , CommentText
-        , LikeOrCommentText
         , Model
-        , Optional
-            ( Closed
-            , Open
-            )
         , PageIsExpanded
         )
 
@@ -68,16 +63,3 @@ type alias Model =
 
 type alias PageIsExpanded =
     Bool
-
-
-
--- UPDATE
-
-
-type alias LikeOrCommentText =
-    String
-
-
-type Optional
-    = Closed
-    | Open

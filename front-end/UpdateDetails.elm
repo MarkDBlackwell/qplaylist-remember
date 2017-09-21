@@ -25,8 +25,7 @@ import Message
         )
 import Model
     exposing
-        ( LikeOrCommentText
-        , Model
+        ( Model
         )
 import Song
     exposing
@@ -34,7 +33,8 @@ import Song
         )
 import UpdateType
     exposing
-        ( QueryBeforeList
+        ( LikeOrCommentText
+        , QueryBeforeList
         , QueryPair
         , QueryPairs
         , UriText
