@@ -49,7 +49,7 @@ import Http
         , getString
         , send
         )
-import Message
+import MessageType
     exposing
         ( Msg(..)
         )

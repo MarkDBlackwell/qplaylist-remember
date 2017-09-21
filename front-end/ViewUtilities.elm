@@ -25,7 +25,7 @@ import Html
         ( Html
         , text
         )
-import Message
+import MessageType
     exposing
         ( Msg
         )

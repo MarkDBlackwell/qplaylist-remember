@@ -17,7 +17,7 @@ module Subscriptions
         ( subscriptions
         )
 
-import Message
+import MessageType
     exposing
         ( Msg
         )

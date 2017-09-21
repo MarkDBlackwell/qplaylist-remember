@@ -32,7 +32,7 @@ import Html.Events
     exposing
         ( onClick
         )
-import Message
+import MessageType
     exposing
         ( Msg
             ( SongBuyAnchorProcessHand

@@ -12,7 +12,7 @@
 -}
 
 
-module Message
+module MessageType
     exposing
         ( Msg(..)
         )

@@ -45,7 +45,7 @@ import Html.Events
     exposing
         ( onInput
         )
-import Message
+import MessageType
     exposing
         ( Msg
             ( CommentAreaInputTextChangeCaptureHand

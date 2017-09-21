@@ -23,7 +23,7 @@ import Alert
     exposing
         ( alertMessageTextInit
         )
-import Message
+import MessageType
     exposing
         ( Msg
             ( InitialSetUp

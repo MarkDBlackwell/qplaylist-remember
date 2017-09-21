@@ -19,7 +19,7 @@ module UpdateDetails
         , relative
         )
 
-import Message
+import MessageType
     exposing
         ( Msg
         )
