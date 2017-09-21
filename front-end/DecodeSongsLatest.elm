@@ -31,14 +31,14 @@ import Json.Decode
         , map4
         , string
         )
+import Request
+    exposing
+        ( HttpResponseText
+        )
 import Song
     exposing
         ( SongLatest
         , SongsLatest
-        )
-import UpdateType
-    exposing
-        ( HttpResponseText
         )
 
 

@@ -14,8 +14,7 @@
 
 module UpdateType
     exposing
-        ( HttpResponseText
-        , Optional
+        ( Optional
             ( Closed
             , Open
             )
@@ -23,10 +22,6 @@ module UpdateType
         )
 
 -- UPDATE
-
-
-type alias HttpResponseText =
-    String
 
 
 type Optional

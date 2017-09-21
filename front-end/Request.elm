@@ -15,6 +15,7 @@
 module Request
     exposing
         ( HttpRequestText
+        , HttpResponseText
         , QueryBeforeList
         , QueryPairs
         , UriText
@@ -36,6 +37,10 @@ import UserIdentifier
 
 
 type alias HttpRequestText =
+    String
+
+
+type alias HttpResponseText =
     String
 
 

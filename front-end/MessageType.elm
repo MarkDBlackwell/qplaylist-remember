@@ -31,14 +31,14 @@ import ModelType
         , HttpRequestOrResponseText
         , RequestOrResponse
         )
+import Request
+    exposing
+        ( HttpResponseText
+        )
 import Song
     exposing
         ( SongsLatestIndex
         , SongsRememberedIndex
-        )
-import UpdateType
-    exposing
-        ( HttpResponseText
         )
 
 

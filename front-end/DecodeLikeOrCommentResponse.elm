@@ -29,10 +29,13 @@ import Json.Decode
         , map
         , string
         )
-import UpdateType
+import Request
     exposing
         ( HttpResponseText
-        , ResponseString
+        )
+import UpdateType
+    exposing
+        ( ResponseString
         )
 
 
