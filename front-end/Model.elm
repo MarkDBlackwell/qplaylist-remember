@@ -16,8 +16,10 @@ module Model
     exposing
         ( AwaitingServerResponse
         , CommentText
+        , HttpRequestOrResponseText
         , Model
         , PageIsExpanded
+        , RequestOrResponse
         )
 
 import Alert
@@ -48,6 +50,10 @@ type alias CommentText =
     String
 
 
+type alias HttpRequestOrResponseText =
+    String
+
+
 type alias Model =
     { alertMessageText : AlertMessageText
     , awaitingServerResponse : AwaitingServerResponse
@@ -63,3 +69,7 @@ type alias Model =
 
 type alias PageIsExpanded =
     Bool
+
+
+type alias RequestOrResponse =
+    String

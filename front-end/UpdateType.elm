@@ -14,8 +14,7 @@
 
 module UpdateType
     exposing
-        ( HttpRequestOrResponseText
-        , HttpRequestText
+        ( HttpRequestText
         , HttpResponseText
         , LikeOrCommentText
         , Optional
@@ -25,7 +24,6 @@ module UpdateType
         , QueryBeforeList
         , QueryPair
         , QueryPairs
-        , RequestOrResponse
         , ResponseString
         , UriText
         )
@@ -34,10 +32,6 @@ module UpdateType
 
 
 type alias HttpRequestText =
-    String
-
-
-type alias HttpRequestOrResponseText =
     String
 
 
@@ -68,10 +62,6 @@ type alias QueryPair =
 
 type alias QueryPairs =
     List QueryPair
-
-
-type alias RequestOrResponse =
-    String
 
 
 type alias ResponseString =

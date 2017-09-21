@@ -55,7 +55,7 @@ htmlNodeNull =
 
 showCommentButtons : Bool
 showCommentButtons =
-    --TODO: Possibly move to model.
+    --TODO: Possibly inject.
     True
 
 

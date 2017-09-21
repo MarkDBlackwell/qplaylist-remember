@@ -28,6 +28,8 @@ import Http
 import Model
     exposing
         ( CommentText
+        , HttpRequestOrResponseText
+        , RequestOrResponse
         )
 import Song
     exposing
@@ -36,9 +38,7 @@ import Song
         )
 import UpdateType
     exposing
-        ( HttpRequestOrResponseText
-        , HttpResponseText
-        , RequestOrResponse
+        ( HttpResponseText
         )
 
 
