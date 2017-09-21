@@ -17,7 +17,7 @@ module Update
         ( update
         )
 
-import AlertMessage
+import Alert
     exposing
         ( AlertMessageText
         , alertMessageTextErrorHttpLogging

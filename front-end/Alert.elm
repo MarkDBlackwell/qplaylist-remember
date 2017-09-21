@@ -12,7 +12,7 @@
 -}
 
 
-module AlertMessage
+module Alert
     exposing
         ( AlertMessageText
         , alertMessageTextErrorHttpLogging

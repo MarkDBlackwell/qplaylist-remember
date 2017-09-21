@@ -17,7 +17,7 @@ module DecodeLikeOrCommentResponse
         ( decodeLikeOrCommentResponse
         )
 
-import AlertMessage
+import Alert
     exposing
         ( AlertMessageText
         )

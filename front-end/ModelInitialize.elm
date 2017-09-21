@@ -19,7 +19,7 @@ module ModelInitialize
         , init
         )
 
-import AlertMessage
+import Alert
     exposing
         ( alertMessageTextInit
         )

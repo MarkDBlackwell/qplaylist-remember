@@ -17,7 +17,7 @@ module DecodeSongsBasic
         ( decodeSongsBasic
         )
 
-import AlertMessage
+import Alert
     exposing
         ( AlertMessageText
         )

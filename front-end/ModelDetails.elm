@@ -25,7 +25,7 @@ module ModelDetails
         , PageIsExpanded
         )
 
-import AlertMessage
+import Alert
     exposing
         ( AlertMessageText
         )
