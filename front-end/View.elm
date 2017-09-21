@@ -188,7 +188,7 @@ groupAttributes group =
 
 
 songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
-songView model group songsLatestFewOrRememberedIndex song =
+songView model group songsLatestOrRememberedIndex song =
     let
         likedOrCommentedIndicator : Html Msg
         likedOrCommentedIndicator =
@@ -223,16 +223,16 @@ songView model group songsLatestFewOrRememberedIndex song =
             if model.pageIsExpanded then
                 []
             else
-                [ styleCalc group lengthRemembered songsLatestFewOrRememberedIndex ]
+                [ styleCalc group lengthRemembered songsLatestOrRememberedIndex ]
     in
     div
         songAttributes
         [ p []
-            [ buttonForgetRemember group songsLatestFewOrRememberedIndex
+            [ buttonForgetRemember group songsLatestOrRememberedIndex
             , span []
                 [ text song.time ]
-            , buttonComment group songsLatestFewOrRememberedIndex
-            , buttonLike group songsLatestFewOrRememberedIndex
+            , buttonComment group songsLatestOrRememberedIndex
+            , buttonLike group songsLatestOrRememberedIndex
             , likedOrCommentedIndicator
             , buySongAnchor song
             ]
@@ -254,14 +254,14 @@ view model =
                     [ text model.alertMessageText ]
                 ]
 
-        songsLatestFewView : List (Html Msg)
-        songsLatestFewView =
+        songsLatestView : List (Html Msg)
+        songsLatestView =
             let
-                songsLatestFewExpanded : SongsRemembered
-                songsLatestFewExpanded =
-                    songsBasic2SongsRemembered model.songsLatestFew
+                songsLatestExpanded : SongsRemembered
+                songsLatestExpanded =
+                    songsBasic2SongsRemembered model.songsLatest
             in
-            List.indexedMap (songView model Played) songsLatestFewExpanded
+            List.indexedMap (songView model Played) songsLatestExpanded
 
         songsRememberedView : List (Html Msg)
         songsRememberedView =
@@ -284,6 +284,6 @@ view model =
             ([ p []
                 [ buttonPlayed ]
              ]
-                ++ songsLatestFewView
+                ++ songsLatestView
             )
         ]

@@ -44,7 +44,7 @@ import Song
     exposing
         ( songCommentingInit
         , songLikingInit
-        , songsLatestFewInit
+        , songsLatestInit
         , songsRememberedInit
         )
 import UserIdentifier
@@ -90,7 +90,7 @@ init =
         pageIsExpandedInit
         songCommentingInit
         songLikingInit
-        songsLatestFewInit
+        songsLatestInit
         songsRememberedInit
         userIdentifierInit
     , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)

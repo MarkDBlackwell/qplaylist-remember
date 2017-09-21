@@ -60,7 +60,7 @@ type alias Model =
     , pageIsExpanded : PageIsExpanded
     , songCommenting : SongCommenting
     , songLiking : SongLiking
-    , songsLatestFew : SongsLatest
+    , songsLatest : SongsLatest
     , songsRemembered : SongsRemembered
     , userIdentifier : UserIdentifier
     }

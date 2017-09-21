@@ -458,7 +458,7 @@ update msg model =
                 pageIsExpandedNew =
                     --Here, can't use List.all.
                     if
-                        List.isEmpty model.songsLatestFew
+                        List.isEmpty model.songsLatest
                             && List.isEmpty model.songsRemembered
                     then
                         model.pageIsExpanded
@@ -521,11 +521,11 @@ update msg model =
                         , focusInputPossibly model
                         )
 
-        SongRememberHand songsLatestFewIndex ->
+        SongRememberHand songsLatestIndex ->
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedAppendOneUnique model.songsLatestFew songsLatestFewIndex model.songsRemembered
+                    songsRememberedAppendOneUnique model.songsLatest songsLatestIndex model.songsRemembered
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -564,8 +564,8 @@ update msg model =
                         ]
                         []
 
-                songsLatestFewRequest : Cmd Msg
-                songsLatestFewRequest =
+                songsLatestRequest : Cmd Msg
+                songsLatestRequest =
                     let
                         request : Request HttpRequestText
                         request =
@@ -589,7 +589,7 @@ update msg model =
                       }
                     , Cmd.batch
                         [ msg2Cmd (HttpRequestOrResponseTextLog "Request" requestUriText)
-                        , songsLatestFewRequest
+                        , songsLatestRequest
                         , focusInputPossibly model
                         ]
                     )
@@ -632,11 +632,11 @@ update msg model =
                         ]
                     )
 
-                Ok songsLatestFewNew ->
+                Ok songsLatestNew ->
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = awaitingServerResponseInit
-                        , songsLatestFew = songsLatestFewNew
+                        , songsLatest = songsLatestNew
                       }
                       --Here, don't log the full response.
                     , Cmd.batch

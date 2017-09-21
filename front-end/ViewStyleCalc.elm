@@ -44,7 +44,7 @@ import ViewUtilities
 
 
 styleCalc : SongGroup -> SongGroupLength -> SongsLatestOrRememberedIndex -> Attribute msg
-styleCalc group songGroupLength songsLatestFewOrRememberedIndex =
+styleCalc group songGroupLength songsLatestOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
         backgroundColorStyling =
@@ -85,16 +85,16 @@ styleCalc group songGroupLength songsLatestFewOrRememberedIndex =
         scaleFactor : Float
         scaleFactor =
             let
-                songsLatestFewOrRememberedIndexReversed : SongsLatestOrRememberedIndex
-                songsLatestFewOrRememberedIndexReversed =
-                    songGroupLength - songsLatestFewOrRememberedIndex - 1
+                songsLatestOrRememberedIndexReversed : SongsLatestOrRememberedIndex
+                songsLatestOrRememberedIndexReversed =
+                    songGroupLength - songsLatestOrRememberedIndex - 1
             in
             case group of
                 Played ->
-                    goldenRatio ^ toFloat songsLatestFewOrRememberedIndex
+                    goldenRatio ^ toFloat songsLatestOrRememberedIndex
 
                 Remembered ->
-                    goldenRatio ^ toFloat songsLatestFewOrRememberedIndexReversed
+                    goldenRatio ^ toFloat songsLatestOrRememberedIndexReversed
     in
     style
         (backgroundColorStyling
