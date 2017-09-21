@@ -28,12 +28,12 @@ import Http
 import ModelType
     exposing
         ( CommentText
-        , HttpRequestOrResponseText
         , RequestOrResponse
         )
 import Request
     exposing
-        ( HttpResponseText
+        ( HttpRequestOrResponseText
+        , HttpResponseText
         )
 import Song
     exposing

@@ -14,7 +14,9 @@
 
 module Request
     exposing
-        ( HttpRequestText
+        ( AwaitingServerResponse
+        , HttpRequestOrResponseText
+        , HttpRequestText
         , HttpResponseText
         , QueryBeforeList
         , QueryPairs
@@ -33,10 +35,22 @@ import UserIdentifier
         )
 
 
+-- MODEL
+
+
+type alias AwaitingServerResponse =
+    Bool
+
+
+
 -- UPDATE
 
 
 type alias HttpRequestText =
+    String
+
+
+type alias HttpRequestOrResponseText =
     String
 
 

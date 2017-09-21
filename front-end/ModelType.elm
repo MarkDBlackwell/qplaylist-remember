@@ -14,9 +14,7 @@
 
 module ModelType
     exposing
-        ( AwaitingServerResponse
-        , CommentText
-        , HttpRequestOrResponseText
+        ( CommentText
         , Model
         , PageIsExpanded
         , RequestOrResponse
@@ -25,6 +23,10 @@ module ModelType
 import Alert
     exposing
         ( AlertMessageText
+        )
+import Request
+    exposing
+        ( AwaitingServerResponse
         )
 import Song
     exposing
@@ -42,15 +44,7 @@ import UserIdentifier
 -- MODEL
 
 
-type alias AwaitingServerResponse =
-    Bool
-
-
 type alias CommentText =
-    String
-
-
-type alias HttpRequestOrResponseText =
     String
 
 

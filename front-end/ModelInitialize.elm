@@ -31,14 +31,17 @@ import MessageType
         )
 import ModelType
     exposing
-        ( AwaitingServerResponse
-        , CommentText
+        ( CommentText
         , Model
         , PageIsExpanded
         )
 import Random
     exposing
         ( generate
+        )
+import Request
+    exposing
+        ( AwaitingServerResponse
         )
 import Song
     exposing

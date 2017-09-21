@@ -60,13 +60,13 @@ import ModelInitialize
         )
 import ModelType
     exposing
-        ( AwaitingServerResponse
-        , Model
+        ( Model
         , PageIsExpanded
         )
 import Request
     exposing
-        ( HttpRequestText
+        ( AwaitingServerResponse
+        , HttpRequestText
         , UriText
         , likeOrCommentRequestUriText
         , relative
