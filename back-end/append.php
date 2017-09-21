@@ -22,7 +22,7 @@ header("content-type:application/json");
 // Constants:
 $comments_filename = "comments.txt";
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$my_query_keys = array('comment', 'song', 'user_identifier', 'timestamp')
+$my_query_keys = array('comment', 'song', 'user_identifier', 'timestamp');
 
 $response_bad_file_json               = json_encode(array('response' => 'Unable to open comments file!'));
 $response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));
