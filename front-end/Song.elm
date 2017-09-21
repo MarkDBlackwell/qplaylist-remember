@@ -114,14 +114,14 @@ songCommentingInit =
     Nothing
 
 
-songLikingInit : SongLiking
-songLikingInit =
-    Nothing
-
-
 songsLatestInit : SongsLatest
 songsLatestInit =
     []
+
+
+songLikingInit : SongLiking
+songLikingInit =
+    Nothing
 
 
 songsRememberedInit : SongsRemembered
@@ -131,6 +131,11 @@ songsRememberedInit =
 
 
 -- UPDATE
+
+
+likedOrCommentedInit : LikedOrCommented
+likedOrCommentedInit =
+    False
 
 
 likedOrCommentedShow : SongLikingOrCommenting -> SongsRemembered -> SongsRemembered
@@ -151,11 +156,6 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 { songRemembered
                     | likedOrCommented = True
                 }
-
-
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
 
 
 songLatest2SongRemembered : SongLatest -> SongRemembered
