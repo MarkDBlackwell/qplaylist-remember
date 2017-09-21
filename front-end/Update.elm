@@ -35,9 +35,9 @@ import DecodeLikeOrCommentResponse
     exposing
         ( decodeLikeOrCommentResponse
         )
-import DecodeSongsBasic
+import DecodeSongsLatest
     exposing
-        ( decodeSongsBasic
+        ( decodeSongsLatest
         )
 import Dom
     exposing
@@ -612,7 +612,7 @@ update msg model =
             )
 
         SongsLatestResponse (Ok jsonRawText) ->
-            case decodeSongsBasic jsonRawText of
+            case decodeSongsLatest jsonRawText of
                 Err alertMessageTextDecode ->
                     let
                         alertMessageTextNew : AlertMessageText

@@ -59,12 +59,12 @@ import ModelType
         )
 import Song
     exposing
-        ( SongBasic
-        , SongGroup
+        ( SongGroup
             ( Played
             , Remembered
             )
         , SongGroupLength
+        , SongLatest
         , SongRemembered
         , SongsLatestOrRememberedIndex
         , SongsRemembered
@@ -102,7 +102,7 @@ import ViewUtilities
 -- VIEW
 
 
-commentArea : Model -> SongBasic -> Html Msg
+commentArea : Model -> SongLatest -> Html Msg
 commentArea model song =
     let
         hoverText : HoverText

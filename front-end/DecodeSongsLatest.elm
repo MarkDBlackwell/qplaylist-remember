@@ -12,9 +12,9 @@
 -}
 
 
-module DecodeSongsBasic
+module DecodeSongsLatest
     exposing
-        ( decodeSongsBasic
+        ( decodeSongsLatest
         )
 
 import Alert
@@ -34,7 +34,8 @@ import Json.Decode
 import Song
     exposing
         ( SongBasic
-        , SongsBasic
+        , SongLatest
+        , SongsLatest
         )
 import UpdateType
     exposing
@@ -45,26 +46,26 @@ import UpdateType
 -- UPDATE
 
 
-type alias SongsBasicWithDummyTag =
+type alias SongsLatestWithDummyTag =
     --TODO: Why do we need a tag?
-    { dummyTag : SongsBasic }
+    { dummyTag : SongsLatest }
 
 
-decodeSongsBasic : HttpResponseText -> Result AlertMessageText SongsBasic
-decodeSongsBasic jsonRawText =
+decodeSongsLatest : HttpResponseText -> Result AlertMessageText SongsLatest
+decodeSongsLatest jsonRawText =
     --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        asRecord : Result AlertMessageText SongsBasicWithDummyTag
+        asRecord : Result AlertMessageText SongsLatestWithDummyTag
         asRecord =
             let
-                decodeSongsBasicWithDummyTag : Decoder SongsBasicWithDummyTag
-                decodeSongsBasicWithDummyTag =
+                decodeSongsLatestWithDummyTag : Decoder SongsLatestWithDummyTag
+                decodeSongsLatestWithDummyTag =
                     let
-                        decodeSongBasic : Decoder SongBasic
-                        decodeSongBasic =
+                        decodeSongLatest : Decoder SongBasic
+                        decodeSongLatest =
                             map4 SongBasic
                                 (field "artist" string)
                                 (field "time" string)
@@ -75,10 +76,10 @@ decodeSongsBasic jsonRawText =
                         tag =
                             "latestFive"
                     in
-                    map SongsBasicWithDummyTag
-                        (field tag (list decodeSongBasic))
+                    map SongsLatestWithDummyTag
+                        (field tag (list decodeSongLatest))
             in
-            decodeString decodeSongsBasicWithDummyTag jsonRawText
+            decodeString decodeSongsLatestWithDummyTag jsonRawText
     in
     case asRecord of
         Err text ->

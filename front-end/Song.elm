@@ -21,10 +21,10 @@ module Song
             , Remembered
             )
         , SongGroupLength
+        , SongLatest
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
-        , SongsBasic
         , SongsLatest
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
