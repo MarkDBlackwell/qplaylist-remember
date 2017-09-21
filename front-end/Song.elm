@@ -14,8 +14,7 @@
 
 module Song
     exposing
-        ( SongBasic
-        , SongCommenting
+        ( SongCommenting
         , SongGroup
             ( Played
             , Remembered
@@ -34,7 +33,7 @@ module Song
         , songCommentingInit
         , songLikingInit
         , songLikingOrCommentingMaybe
-        , songsBasic2SongsRemembered
+        , songsLatest2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedInit
@@ -52,12 +51,8 @@ type alias LikedOrCommented =
     Bool
 
 
-type alias SongBasic =
-    SongLatest
-
-
 type alias SongCommenting =
-    Maybe SongBasic
+    Maybe SongLatest
 
 
 type alias SongLatest =
@@ -70,11 +65,11 @@ type alias SongLatest =
 
 
 type alias SongLiking =
-    Maybe SongBasic
+    Maybe SongLatest
 
 
 type alias SongLikingOrCommenting =
-    Maybe SongBasic
+    Maybe SongLatest
 
 
 type alias SongRemembered =
@@ -84,10 +79,6 @@ type alias SongRemembered =
     , timestamp : Timestamp
     , title : Title
     }
-
-
-type alias SongsBasic =
-    List SongBasic
 
 
 type alias SongsLatest =
@@ -154,7 +145,7 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
             songRemembered
 
         Just songLikingOrCommenting ->
-            if songLikingOrCommenting /= songRemembered2SongBasic songRemembered then
+            if songLikingOrCommenting /= songRemembered2SongLatest songRemembered then
                 songRemembered
             else
                 { songRemembered
@@ -167,8 +158,8 @@ likedOrCommentedInit =
     False
 
 
-songBasic2SongRemembered : SongBasic -> SongRemembered
-songBasic2SongRemembered song =
+songLatest2SongRemembered : SongLatest -> SongRemembered
+songLatest2SongRemembered song =
     SongRemembered
         song.artist
         likedOrCommentedInit
@@ -184,11 +175,11 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
             Nothing
 
         Just song ->
-            Just (songRemembered2SongBasic song)
+            Just (songRemembered2SongLatest song)
 
 
-songRemembered2SongBasic : SongRemembered -> SongBasic
-songRemembered2SongBasic song =
+songRemembered2SongLatest : SongRemembered -> SongLatest
+songRemembered2SongLatest song =
     SongLatest
         song.artist
         song.time
@@ -196,9 +187,9 @@ songRemembered2SongBasic song =
         song.title
 
 
-songsBasic2SongsRemembered : SongsBasic -> SongsRemembered
-songsBasic2SongsRemembered songsBasic =
-    List.map songBasic2SongRemembered songsBasic
+songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
+songsLatest2SongsRemembered songsLatest =
+    List.map songLatest2SongRemembered songsLatest
 
 
 songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
@@ -211,9 +202,9 @@ songsLatestStartingWith songsLatest songsLatestIndex =
     List.drop songsLatestIndex songsLatest
 
 
-songsRemembered2SongsBasic : SongsRemembered -> SongsBasic
-songsRemembered2SongsBasic songsRemembered =
-    List.map songRemembered2SongBasic songsRemembered
+songsRemembered2SongsLatest : SongsRemembered -> SongsLatest
+songsRemembered2SongsLatest songsRemembered =
+    List.map songRemembered2SongLatest songsRemembered
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
@@ -226,12 +217,12 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
             if
                 List.member
                     song
-                    (songsRemembered2SongsBasic songsRemembered)
+                    (songsRemembered2SongsLatest songsRemembered)
             then
                 songsRemembered
             else
                 songsRemembered
-                    ++ [ songBasic2SongRemembered song ]
+                    ++ [ songLatest2SongRemembered song ]
 
 
 songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered

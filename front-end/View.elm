@@ -68,7 +68,7 @@ import Song
         , SongRemembered
         , SongsLatestOrRememberedIndex
         , SongsRemembered
-        , songsBasic2SongsRemembered
+        , songsLatest2SongsRemembered
         )
 import ViewButton
     exposing
@@ -259,7 +259,7 @@ view model =
             let
                 songsLatestExpanded : SongsRemembered
                 songsLatestExpanded =
-                    songsBasic2SongsRemembered model.songsLatest
+                    songsLatest2SongsRemembered model.songsLatest
             in
             List.indexedMap (songView model Played) songsLatestExpanded
 
