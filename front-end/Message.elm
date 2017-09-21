@@ -37,7 +37,7 @@ import ModelUpdate
         )
 import Song
     exposing
-        ( SongsLatestFewIndex
+        ( SongsLatestIndex
         , SongsRememberedIndex
         )
 
@@ -60,6 +60,6 @@ type Msg
     | PageMorphHand
     | SongBuyAnchorProcessHand
     | SongForgetHand SongsRememberedIndex
-    | SongRememberHand SongsLatestFewIndex
-    | SongsLatestFewRefreshHand
-    | SongsLatestFewResponse (Result Error HttpResponseText)
+    | SongRememberHand SongsLatestIndex
+    | SongsLatestRefreshHand
+    | SongsLatestResponse (Result Error HttpResponseText)

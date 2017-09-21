@@ -33,7 +33,7 @@ import Song
     exposing
         ( SongCommenting
         , SongLiking
-        , SongsLatestFew
+        , SongsLatest
         , SongsRemembered
         )
 import UserIdentifier
@@ -60,7 +60,7 @@ type alias Model =
     , pageIsExpanded : PageIsExpanded
     , songCommenting : SongCommenting
     , songLiking : SongLiking
-    , songsLatestFew : SongsLatestFew
+    , songsLatestFew : SongsLatest
     , songsRemembered : SongsRemembered
     , userIdentifier : UserIdentifier
     }

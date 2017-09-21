@@ -544,7 +544,7 @@ update msg model =
                     , focusInputPossibly model
                     )
 
-        SongsLatestFewRefreshHand ->
+        SongsLatestRefreshHand ->
             let
                 requestUriText : UriText
                 requestUriText =
@@ -571,7 +571,7 @@ update msg model =
                         request =
                             getString requestUriText
                     in
-                    send SongsLatestFewResponse request
+                    send SongsLatestResponse request
             in
             --(awaitingServer, commentArea)
             case stateVector of
@@ -594,7 +594,7 @@ update msg model =
                         ]
                     )
 
-        SongsLatestFewResponse (Err httpError) ->
+        SongsLatestResponse (Err httpError) ->
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
@@ -611,7 +611,7 @@ update msg model =
                 ]
             )
 
-        SongsLatestFewResponse (Ok jsonRawText) ->
+        SongsLatestResponse (Ok jsonRawText) ->
             case decodeSongsBasic jsonRawText of
                 Err alertMessageTextDecode ->
                     let

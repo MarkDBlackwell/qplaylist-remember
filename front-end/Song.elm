@@ -20,8 +20,8 @@ module Song
         , SongLikingOrCommenting
         , SongRemembered
         , SongsBasic
-        , SongsLatestFew
-        , SongsLatestFewIndex
+        , SongsLatest
+        , SongsLatestIndex
         , SongsRemembered
         , SongsRememberedIndex
         , likedOrCommentedShow
@@ -84,11 +84,11 @@ type alias SongsBasic =
     List SongBasic
 
 
-type alias SongsLatestFew =
+type alias SongsLatest =
     List SongLatestFew
 
 
-type alias SongsLatestFewIndex =
+type alias SongsLatestIndex =
     Int
 
 
@@ -181,17 +181,17 @@ songsBasic2SongsRemembered songsBasic =
     List.map songBasic2SongRemembered songsBasic
 
 
-songsLatestFewInit : SongsLatestFew
+songsLatestFewInit : SongsLatest
 songsLatestFewInit =
     []
 
 
-songsLatestFewSelectOne : SongsLatestFew -> SongsLatestFewIndex -> Maybe SongLatestFew
+songsLatestFewSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatestFew
 songsLatestFewSelectOne songsLatestFew songsLatestFewIndex =
     List.head (songsLatestFewStartingWith songsLatestFew songsLatestFewIndex)
 
 
-songsLatestFewStartingWith : SongsLatestFew -> SongsLatestFewIndex -> SongsLatestFew
+songsLatestFewStartingWith : SongsLatest -> SongsLatestIndex -> SongsLatest
 songsLatestFewStartingWith songsLatestFew songsLatestFewIndex =
     List.drop songsLatestFewIndex songsLatestFew
 
@@ -201,7 +201,7 @@ songsRemembered2SongsBasic songsRemembered =
     List.map songRemembered2SongBasic songsRemembered
 
 
-songsRememberedAppendOneUnique : SongsLatestFew -> SongsLatestFewIndex -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatestFew songsLatestFewIndex songsRemembered =
     case songsLatestFewSelectOne songsLatestFew songsLatestFewIndex of
         Nothing ->

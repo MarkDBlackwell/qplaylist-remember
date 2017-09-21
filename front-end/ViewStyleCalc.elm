@@ -32,7 +32,7 @@ import ModelView
             , Remembered
             )
         , SongGroupLength
-        , SongsLatestFewOrRememberedIndex
+        , SongsLatestOrRememberedIndex
         )
 import ViewUtilities
     exposing
@@ -43,7 +43,7 @@ import ViewUtilities
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsLatestFewOrRememberedIndex -> Attribute msg
+styleCalc : SongGroup -> SongGroupLength -> SongsLatestOrRememberedIndex -> Attribute msg
 styleCalc group songGroupLength songsLatestFewOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
@@ -85,7 +85,7 @@ styleCalc group songGroupLength songsLatestFewOrRememberedIndex =
         scaleFactor : Float
         scaleFactor =
             let
-                songsLatestFewOrRememberedIndexReversed : SongsLatestFewOrRememberedIndex
+                songsLatestFewOrRememberedIndexReversed : SongsLatestOrRememberedIndex
                 songsLatestFewOrRememberedIndexReversed =
                     songGroupLength - songsLatestFewOrRememberedIndex - 1
             in

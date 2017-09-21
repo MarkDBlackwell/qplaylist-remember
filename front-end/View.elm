@@ -65,7 +65,7 @@ import ModelView
             , Remembered
             )
         , SongGroupLength
-        , SongsLatestFewOrRememberedIndex
+        , SongsLatestOrRememberedIndex
         )
 import Song
     exposing
@@ -187,7 +187,7 @@ groupAttributes group =
     ]
 
 
-songView : Model -> SongGroup -> SongsLatestFewOrRememberedIndex -> SongRemembered -> Html Msg
+songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
 songView model group songsLatestFewOrRememberedIndex song =
     let
         likedOrCommentedIndicator : Html Msg

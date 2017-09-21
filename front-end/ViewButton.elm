@@ -51,7 +51,7 @@ import Message
             , PageMorphHand
             , SongForgetHand
             , SongRememberHand
-            , SongsLatestFewRefreshHand
+            , SongsLatestRefreshHand
             )
         )
 import ModelView
@@ -62,7 +62,7 @@ import ModelView
             ( Played
             , Remembered
             )
-        , SongsLatestFewOrRememberedIndex
+        , SongsLatestOrRememberedIndex
         )
 import Song
     exposing
@@ -103,7 +103,7 @@ buttonComment group songsRememberedIndex =
         htmlNodeNull
 
 
-buttonForgetRemember : SongGroup -> SongsLatestFewOrRememberedIndex -> Html Msg
+buttonForgetRemember : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
 buttonForgetRemember group songsLatestFewOrRememberedIndex =
     let
         buttonAction : Msg
@@ -210,7 +210,7 @@ buttonPlayed =
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonMy buttonId hoverText SongsLatestFewRefreshHand
+    buttonMy buttonId hoverText SongsLatestRefreshHand
 
 
 buttonRemembered : Html Msg
