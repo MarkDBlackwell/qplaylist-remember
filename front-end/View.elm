@@ -60,7 +60,13 @@ import Model
 import Song
     exposing
         ( SongBasic
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
         , SongRemembered
+        , SongsLatestOrRememberedIndex
         , SongsRemembered
         , songsBasic2SongsRemembered
         )
@@ -84,12 +90,6 @@ import ViewStyleCalc
 import ViewType
     exposing
         ( HoverText
-        , SongGroup
-            ( Played
-            , Remembered
-            )
-        , SongGroupLength
-        , SongsLatestOrRememberedIndex
         )
 import ViewUtilities
     exposing

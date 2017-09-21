@@ -16,12 +16,18 @@ module Song
     exposing
         ( SongBasic
         , SongCommenting
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
         , SongLiking
         , SongLikingOrCommenting
         , SongRemembered
         , SongsBasic
         , SongsLatest
         , SongsLatestIndex
+        , SongsLatestOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
         , likedOrCommentedShow
@@ -242,3 +248,20 @@ songsRememberedWithoutOne : SongsRemembered -> SongsRememberedIndex -> SongsReme
 songsRememberedWithoutOne songsRemembered songsRememberedIndex =
     List.take songsRememberedIndex songsRemembered
         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
+
+
+
+-- VIEW
+
+
+type SongGroup
+    = Played
+    | Remembered
+
+
+type alias SongGroupLength =
+    Int
+
+
+type alias SongsLatestOrRememberedIndex =
+    Int

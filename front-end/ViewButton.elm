@@ -56,17 +56,17 @@ import Message
         )
 import Song
     exposing
-        ( SongsRememberedIndex
+        ( SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongsLatestOrRememberedIndex
+        , SongsRememberedIndex
         )
 import ViewType
     exposing
         ( Display
         , HoverText
-        , SongGroup
-            ( Played
-            , Remembered
-            )
-        , SongsLatestOrRememberedIndex
         )
 import ViewUtilities
     exposing

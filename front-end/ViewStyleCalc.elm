@@ -25,7 +25,7 @@ import Html.Attributes
     exposing
         ( style
         )
-import ViewType
+import Song
     exposing
         ( SongGroup
             ( Played

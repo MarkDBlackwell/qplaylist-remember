@@ -16,12 +16,6 @@ module ViewType
     exposing
         ( Display
         , HoverText
-        , SongGroup
-            ( Played
-            , Remembered
-            )
-        , SongGroupLength
-        , SongsLatestOrRememberedIndex
         )
 
 -- VIEW
@@ -33,16 +27,3 @@ type alias Display =
 
 type alias HoverText =
     String
-
-
-type SongGroup
-    = Played
-    | Remembered
-
-
-type alias SongGroupLength =
-    Int
-
-
-type alias SongsLatestOrRememberedIndex =
-    Int
