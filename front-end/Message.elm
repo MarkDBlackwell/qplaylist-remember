@@ -25,7 +25,7 @@ import Http
     exposing
         ( Error
         )
-import Model
+import ModelType
     exposing
         ( CommentText
         , HttpRequestOrResponseText

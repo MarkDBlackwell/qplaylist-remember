@@ -29,7 +29,7 @@ import Message
             ( InitialSetUp
             )
         )
-import Model
+import ModelType
     exposing
         ( AwaitingServerResponse
         , CommentText

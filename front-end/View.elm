@@ -53,7 +53,7 @@ import Message
             , CommentSendHand
             )
         )
-import Model
+import ModelType
     exposing
         ( Model
         )

@@ -21,7 +21,7 @@ import Message
     exposing
         ( Msg
         )
-import Model
+import ModelType
     exposing
         ( Model
         )

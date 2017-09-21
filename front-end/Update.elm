@@ -53,16 +53,16 @@ import Message
     exposing
         ( Msg(..)
         )
-import Model
-    exposing
-        ( AwaitingServerResponse
-        , Model
-        , PageIsExpanded
-        )
 import ModelInitialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit
+        )
+import ModelType
+    exposing
+        ( AwaitingServerResponse
+        , Model
+        , PageIsExpanded
         )
 import Song
     exposing
