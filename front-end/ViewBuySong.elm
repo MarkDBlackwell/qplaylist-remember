@@ -38,12 +38,6 @@ import Message
             ( SongBuyAnchorProcessHand
             )
         )
-import ModelUpdate
-    exposing
-        ( QueryBeforeList
-        , QueryPairs
-        , UriText
-        )
 import ModelView
     exposing
         ( HoverText
@@ -55,6 +49,12 @@ import Song
 import UpdateDetails
     exposing
         ( relative
+        )
+import UpdateType
+    exposing
+        ( QueryBeforeList
+        , QueryPairs
+        , UriText
         )
 
 

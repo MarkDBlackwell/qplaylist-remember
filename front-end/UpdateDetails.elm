@@ -28,16 +28,16 @@ import Model
         ( LikeOrCommentText
         , Model
         )
-import ModelUpdate
+import Song
+    exposing
+        ( SongLikingOrCommenting
+        )
+import UpdateType
     exposing
         ( QueryBeforeList
         , QueryPair
         , QueryPairs
         , UriText
-        )
-import Song
-    exposing
-        ( SongLikingOrCommenting
         )
 import UpdateUtilities
     exposing

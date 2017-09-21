@@ -29,7 +29,7 @@ import Json.Decode
         , map
         , string
         )
-import ModelUpdate
+import UpdateType
     exposing
         ( HttpResponseText
         , ResponseString

@@ -31,14 +31,14 @@ import Json.Decode
         , map4
         , string
         )
-import ModelUpdate
-    exposing
-        ( HttpResponseText
-        )
 import Song
     exposing
         ( SongBasic
         , SongsBasic
+        )
+import UpdateType
+    exposing
+        ( HttpResponseText
         )
 
 

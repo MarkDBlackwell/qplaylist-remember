@@ -68,11 +68,6 @@ import ModelInitialize
         ( awaitingServerResponseInit
         , commentTextInit
         )
-import ModelUpdate
-    exposing
-        ( HttpRequestText
-        , UriText
-        )
 import Song
     exposing
         ( SongCommenting
@@ -95,6 +90,11 @@ import UpdateDetails
         ( focusInputPossibly
         , likeOrCommentRequestUriText
         , relative
+        )
+import UpdateType
+    exposing
+        ( HttpRequestText
+        , UriText
         )
 import UpdateUtilities
     exposing
