@@ -59,7 +59,7 @@ type alias SongCommenting =
     Maybe SongBasic
 
 
-type alias SongLatestFew =
+type alias SongLatest =
     SongBasic
 
 
@@ -85,7 +85,7 @@ type alias SongsBasic =
 
 
 type alias SongsLatest =
-    List SongLatestFew
+    List SongLatest
 
 
 type alias SongsLatestIndex =
@@ -186,7 +186,7 @@ songsLatestFewInit =
     []
 
 
-songsLatestFewSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatestFew
+songsLatestFewSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
 songsLatestFewSelectOne songsLatestFew songsLatestFewIndex =
     List.head (songsLatestFewStartingWith songsLatestFew songsLatestFewIndex)
 
