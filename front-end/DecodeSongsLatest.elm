@@ -33,8 +33,7 @@ import Json.Decode
         )
 import Song
     exposing
-        ( SongBasic
-        , SongLatest
+        ( SongLatest
         , SongsLatest
         )
 import UpdateType
@@ -64,9 +63,9 @@ decodeSongsLatest jsonRawText =
                 decodeSongsLatestWithDummyTag : Decoder SongsLatestWithDummyTag
                 decodeSongsLatestWithDummyTag =
                     let
-                        decodeSongLatest : Decoder SongBasic
+                        decodeSongLatest : Decoder SongLatest
                         decodeSongLatest =
-                            map4 SongBasic
+                            map4 SongLatest
                                 (field "artist" string)
                                 (field "time" string)
                                 (field "timeStamp" string)

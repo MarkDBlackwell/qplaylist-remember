@@ -53,12 +53,7 @@ type alias LikedOrCommented =
 
 
 type alias SongBasic =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timestamp : Timestamp
-    , title : Title
-    }
+    SongLatest
 
 
 type alias SongCommenting =
@@ -66,7 +61,12 @@ type alias SongCommenting =
 
 
 type alias SongLatest =
-    SongBasic
+    --Keep order (for JSON decoding):
+    { artist : Artist
+    , time : Time
+    , timestamp : Timestamp
+    , title : Title
+    }
 
 
 type alias SongLiking =
@@ -189,7 +189,7 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
 
 songRemembered2SongBasic : SongRemembered -> SongBasic
 songRemembered2SongBasic song =
-    SongBasic
+    SongLatest
         song.artist
         song.time
         song.timestamp
