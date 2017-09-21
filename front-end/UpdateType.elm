@@ -18,7 +18,6 @@ module UpdateType
             ( Closed
             , Open
             )
-        , ResponseString
         )
 
 -- UPDATE
@@ -27,7 +26,3 @@ module UpdateType
 type Optional
     = Closed
     | Open
-
-
-type alias ResponseString =
-    String

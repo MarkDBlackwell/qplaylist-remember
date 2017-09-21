@@ -33,10 +33,6 @@ import Request
     exposing
         ( HttpResponseText
         )
-import UpdateType
-    exposing
-        ( ResponseString
-        )
 
 
 -- UPDATE
@@ -45,6 +41,10 @@ import UpdateType
 type alias LikeOrCommentResponseWithDummyTag =
     --TODO: Why do we need a tag?
     { dummyTag : ResponseString }
+
+
+type alias ResponseString =
+    String
 
 
 decodeLikeOrCommentResponse : HttpResponseText -> Result AlertMessageText ResponseString
