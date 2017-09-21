@@ -23,6 +23,9 @@ import Update exposing (update)
 import View exposing (view)
 
 
+-- MODEL
+
+
 main : Program Never Model Msg
 main =
     program
