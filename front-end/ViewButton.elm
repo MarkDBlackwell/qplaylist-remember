@@ -54,6 +54,10 @@ import MessageType
             , SongsLatestRefreshHand
             )
         )
+import ModelType
+    exposing
+        ( ShowCommentButtons
+        )
 import Song
     exposing
         ( SongGroup
@@ -71,7 +75,6 @@ import ViewType
 import ViewUtilities
     exposing
         ( htmlNodeNull
-        , showCommentButtons
         , songGroup2String
         )
 
@@ -79,8 +82,8 @@ import ViewUtilities
 -- VIEW
 
 
-buttonComment : SongGroup -> SongsRememberedIndex -> Html Msg
-buttonComment group songsRememberedIndex =
+buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html Msg
+buttonComment group songsRememberedIndex showCommentButtons =
     let
         buttonAction : Msg
         buttonAction =
@@ -98,7 +101,7 @@ buttonComment group songsRememberedIndex =
             "Share a comment (with the DJ) about this song"
     in
     if Remembered == group then
-        buttonMy buttonId hoverText buttonAction
+        buttonMyComment buttonId hoverText buttonAction showCommentButtons
     else
         htmlNodeNull
 
@@ -163,6 +166,11 @@ buttonLike group songsRememberedIndex =
 
 buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
 buttonMy buttonId hoverText action =
+    buttonMyComment buttonId hoverText action False
+
+
+buttonMyComment : Maybe Id -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
+buttonMyComment buttonId hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
         buttonIdView =

@@ -14,7 +14,8 @@
 
 module ModelInitialize
     exposing
-        ( awaitingServerResponseInit
+        ( Flags
+        , awaitingServerResponseInit
         , commentTextInit
         , init
         )
@@ -34,6 +35,7 @@ import ModelType
         ( CommentText
         , Model
         , PageIsExpanded
+        , ShowCommentButtons
         )
 import Random
     exposing
@@ -60,6 +62,11 @@ import UserIdentifier
 -- MODEL
 
 
+type alias Flags =
+    { showCommentButtons : ShowCommentButtons
+    }
+
+
 awaitingServerResponseInit : AwaitingServerResponse
 awaitingServerResponseInit =
     False
@@ -70,8 +77,8 @@ commentTextInit =
     ""
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     let
         threeLetterSpaceHighest : Int
         threeLetterSpaceHighest =
@@ -82,6 +89,7 @@ init =
         awaitingServerResponseInit
         commentTextInit
         pageIsExpandedInit
+        flags.showCommentButtons
         songCommentingInit
         songLikingInit
         songsLatestInit

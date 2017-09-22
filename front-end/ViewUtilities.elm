@@ -16,7 +16,6 @@ module ViewUtilities
     exposing
         ( goldenRatio
         , htmlNodeNull
-        , showCommentButtons
         , songGroup2String
         )
 
@@ -51,12 +50,6 @@ goldenRatio =
 htmlNodeNull : Html Msg
 htmlNodeNull =
     text ""
-
-
-showCommentButtons : Bool
-showCommentButtons =
-    --TODO: Possibly inject.
-    True
 
 
 songGroup2String : SongGroup -> String

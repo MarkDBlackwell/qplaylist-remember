@@ -14,9 +14,13 @@
 
 module Main exposing (main)
 
-import Html exposing (program)
+import Html exposing (programWithFlags)
 import MessageType exposing (Msg)
-import ModelInitialize exposing (init)
+import ModelInitialize
+    exposing
+        ( Flags
+        , init
+        )
 import ModelType exposing (Model)
 import Subscription exposing (subscriptions)
 import Update exposing (update)
@@ -26,9 +30,9 @@ import View exposing (view)
 -- MODEL
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
+    programWithFlags
         { init = init
         , subscriptions = subscriptions
         , update = update

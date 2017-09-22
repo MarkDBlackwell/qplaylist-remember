@@ -94,7 +94,6 @@ import ViewType
 import ViewUtilities
     exposing
         ( htmlNodeNull
-        , showCommentButtons
         , songGroup2String
         )
 
@@ -198,7 +197,7 @@ songView model group songsLatestOrRememberedIndex song =
                     let
                         likedOrCommentedIndicatorHoverTextCommentButton : HoverText
                         likedOrCommentedIndicatorHoverTextCommentButton =
-                            if showCommentButtons then
+                            if model.showCommentButtons then
                                 " (or a comment)"
                             else
                                 ""
@@ -231,7 +230,7 @@ songView model group songsLatestOrRememberedIndex song =
             [ buttonForgetRemember group songsLatestOrRememberedIndex
             , span []
                 [ text song.time ]
-            , buttonComment group songsLatestOrRememberedIndex
+            , buttonComment group songsLatestOrRememberedIndex model.showCommentButtons
             , buttonLike group songsLatestOrRememberedIndex
             , likedOrCommentedIndicator
             , buySongAnchor song

@@ -17,6 +17,7 @@ module ModelType
         ( CommentText
         , Model
         , PageIsExpanded
+        , ShowCommentButtons
         )
 
 import Alert
@@ -52,6 +53,7 @@ type alias Model =
     , awaitingServerResponse : AwaitingServerResponse
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
+    , showCommentButtons : ShowCommentButtons
     , songCommenting : SongCommenting
     , songLiking : SongLiking
     , songsLatest : SongsLatest
@@ -61,4 +63,8 @@ type alias Model =
 
 
 type alias PageIsExpanded =
+    Bool
+
+
+type alias ShowCommentButtons =
     Bool
