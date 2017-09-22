@@ -52,8 +52,6 @@ import Initialize
 import MessageType
     exposing
         ( Msg
-            ( HttpRequestOrResponseTextLog
-            )
         )
 import ModelType
     exposing
@@ -74,10 +72,7 @@ import UpdateResponseDetails
     exposing
         ( logAndFocus
         , logMakeRequestAndFocus
-        )
-import UpdateUtilities
-    exposing
-        ( msg2Cmd
+        , logWithoutFocus
         )
 
 
@@ -131,8 +126,7 @@ updateCommentResponseOk model httpResponseText =
                     , songCommenting = songCommentingInit
                     , songsRemembered = songsRememberedNew
                   }
-                  --Here, don't focus.
-                , msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
+                , logWithoutFocus "Response"
                 )
 
 

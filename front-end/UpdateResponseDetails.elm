@@ -16,6 +16,7 @@ module UpdateResponseDetails
     exposing
         ( logAndFocus
         , logMakeRequestAndFocus
+        , logWithoutFocus
         )
 
 import Alert
@@ -60,3 +61,8 @@ logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
         , commandMessageRequest
         , focusInputPossibly model
         ]
+
+
+logWithoutFocus : AlertMessageText -> Cmd Msg
+logWithoutFocus actionName =
+    msg2Cmd (HttpRequestOrResponseTextLog actionName "")
