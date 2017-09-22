@@ -82,6 +82,15 @@ import UpdateUtilities
 -- UPDATE
 
 
+alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
+alertMessageTextSend action details =
+    alertMessageTextErrorUnexpected
+        [ "while attempting to "
+            ++ action
+        , details
+        ]
+
+
 updateCommentResponseErr : Model -> Error -> ( Model, Cmd Msg )
 updateCommentResponseErr model httpError =
     ( { model
@@ -169,15 +178,6 @@ updateLikeResponseErr model httpError =
 
 updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateLikeResponseOk model httpResponseText =
-    let
-        alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
-        alertMessageTextSend action details =
-            alertMessageTextErrorUnexpected
-                [ "while attempting to "
-                    ++ action
-                , details
-                ]
-    in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             let
