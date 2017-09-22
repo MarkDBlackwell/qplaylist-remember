@@ -19,8 +19,7 @@ module Update
 
 import Alert
     exposing
-        ( AlertMessageText
-        , alertMessageTextInit
+        ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
 import Http
@@ -87,10 +86,6 @@ import UpdateType
             ( Closed
             , Open
             )
-        )
-import UpdateUtilities
-    exposing
-        ( msg2Cmd
         )
 import UserIdentifier
     exposing
@@ -282,11 +277,7 @@ update msg model =
                         , awaitingServerResponse = True
                         , songLiking = songLikingNew
                       }
-                    , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Request" likeRequestUriText)
-                        , likeRequest
-                        , focusInputPossibly model
-                        ]
+                    , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
                     )
 
         LikeResponse (Err httpError) ->
@@ -430,11 +421,7 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
                       }
-                    , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Request" requestUriText)
-                        , songsLatestRequest
-                        , focusInputPossibly model
-                        ]
+                    , logMakeRequestAndFocus model songsLatestRequest "Request" requestUriText
                     )
 
         SongsLatestResponse (Err httpError) ->
