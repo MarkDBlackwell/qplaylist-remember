@@ -18,12 +18,14 @@ module UpdateResponse
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
+        , updateSongsLatestResponseErr
         )
 
 import Alert
     exposing
         ( AlertMessageText
         , alertMessageTextErrorHttpLogging
+        , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
@@ -219,3 +221,22 @@ updateLikeResponseOk model httpResponseText =
                     , focusInputPossibly model
                     ]
                 )
+
+
+updateSongsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
+updateSongsLatestResponseErr model httpError =
+    let
+        alertMessageTextNew : AlertMessageText
+        alertMessageTextNew =
+            alertMessageTextErrorHttpScreen httpError
+                ++ " (while attempting to access the latest few songs)"
+    in
+    ( { model
+        | alertMessageText = alertMessageTextNew
+        , awaitingServerResponse = awaitingServerResponseInit
+      }
+    , Cmd.batch
+        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
+        , focusInputPossibly model
+        ]
+    )

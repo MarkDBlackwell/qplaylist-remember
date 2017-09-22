@@ -21,7 +21,6 @@ import Alert
     exposing
         ( AlertMessageText
         , alertMessageTextErrorHttpLogging
-        , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
@@ -88,6 +87,7 @@ import UpdateResponse
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
+        , updateSongsLatestResponseErr
         )
 import UpdateType
     exposing
@@ -450,21 +450,7 @@ update msg model =
                     )
 
         SongsLatestResponse (Err httpError) ->
-            let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    alertMessageTextErrorHttpScreen httpError
-                        ++ " (while attempting to access the latest few songs)"
-            in
-            ( { model
-                | alertMessageText = alertMessageTextNew
-                , awaitingServerResponse = awaitingServerResponseInit
-              }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-                , focusInputPossibly model
-                ]
-            )
+            updateSongsLatestResponseErr model httpError
 
         SongsLatestResponse (Ok jsonRawText) ->
             case decodeSongsLatest jsonRawText of
