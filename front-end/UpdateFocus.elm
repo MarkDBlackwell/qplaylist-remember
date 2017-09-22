@@ -14,7 +14,8 @@
 
 module UpdateFocus
     exposing
-        ( focusSet
+        ( focusInputPossibly
+        , focusSet
         , updateFocusResult
         , updateFocusSet
         )
@@ -46,6 +47,16 @@ import UpdateUtilities
 
 
 -- UPDATE
+
+
+focusInputPossibly : Model -> Cmd Msg
+focusInputPossibly model =
+    case model.songCommenting of
+        Nothing ->
+            Cmd.none
+
+        _ ->
+            focusSet "input"
 
 
 focusSet : Id -> Cmd Msg

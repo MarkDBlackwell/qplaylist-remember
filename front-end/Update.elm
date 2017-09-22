@@ -79,13 +79,10 @@ import Song
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
         )
-import UpdateDetails
-    exposing
-        ( focusInputPossibly
-        )
 import UpdateFocus
     exposing
-        ( focusSet
+        ( focusInputPossibly
+        , focusSet
         , updateFocusResult
         , updateFocusSet
         )
