@@ -39,10 +39,6 @@ import DecodeSongsLatest
     exposing
         ( decodeSongsLatest
         )
-import Dom
-    exposing
-        ( focus
-        )
 import Http
     exposing
         ( Request
@@ -83,18 +79,14 @@ import Song
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
         )
-import Task
-    exposing
-        ( attempt
-        , succeed
-        )
 import UpdateDetails
     exposing
         ( focusInputPossibly
         )
 import UpdateFocus
     exposing
-        ( focusResult
+        ( updateFocusResult
+        , updateFocusSet
         )
 import UpdateType
     exposing
@@ -314,15 +306,10 @@ update msg model =
                         )
 
         FocusResult _ ->
-            focusResult model
+            updateFocusResult model
 
         FocusSet id ->
-            --See:
-            --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-            --https://stackoverflow.com/a/39419640/1136063
-            ( model
-            , attempt FocusResult (focus id)
-            )
+            updateFocusSet model id
 
         HttpRequestOrResponseTextLog labelText httpRequestOrResponseText ->
             let

@@ -14,24 +14,46 @@
 
 module UpdateFocus
     exposing
-        ( focusResult
+        ( updateFocusResult
+        , updateFocusSet
         )
 
+import Dom
+    exposing
+        ( Id
+        , focus
+        )
 import MessageType
     exposing
         ( Msg
+            ( FocusResult
+            )
         )
 import ModelType
     exposing
         ( Model
+        )
+import Task
+    exposing
+        ( attempt
         )
 
 
 -- UPDATE
 
 
-focusResult : Model -> ( Model, Cmd Msg )
-focusResult model =
+updateFocusResult : Model -> ( Model, Cmd Msg )
+updateFocusResult model =
     ( model
     , Cmd.none
+    )
+
+
+updateFocusSet : Model -> Id -> ( Model, Cmd Msg )
+updateFocusSet model id =
+    --See:
+    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+    --https://stackoverflow.com/a/39419640/1136063
+    ( model
+    , attempt FocusResult (focus id)
     )
