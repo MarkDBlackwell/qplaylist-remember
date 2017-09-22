@@ -322,7 +322,7 @@ update msg model =
                         alertMessageTextNew : AlertMessageText
                         alertMessageTextNew =
                             alertMessageTextErrorUnexpected
-                                [ "while attempting to append your Like"
+                                [ "while attempting to send your Like"
                                 , alertMessageTextDecode
                                 ]
                     in

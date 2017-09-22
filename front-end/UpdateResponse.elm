@@ -93,7 +93,7 @@ updateCommentResponseOk model httpResponseText =
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
                     alertMessageTextErrorUnexpected
-                        [ "while attempting to append your Comment"
+                        [ "while attempting to send your Comment"
                         , alertMessageTextDecode
                         ]
             in
@@ -113,7 +113,7 @@ updateCommentResponseOk model httpResponseText =
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
                         alertMessageTextErrorUnexpected
-                            [ "while attempting to send your Like"
+                            [ "while attempting to send your Comment"
                             , responseString
                             ]
                 in
