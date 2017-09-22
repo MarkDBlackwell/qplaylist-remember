@@ -14,8 +14,7 @@
 
 module UpdateResponse
     exposing
-        ( logMakeRequestAndFocus
-        , updateCommentResponseErr
+        ( updateCommentResponseErr
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
@@ -71,9 +70,10 @@ import Song
         , songCommentingInit
         , songLikingInit
         )
-import UpdateFocus
+import UpdateResponseDetails
     exposing
-        ( focusInputPossibly
+        ( logAndFocus
+        , logMakeRequestAndFocus
         )
 import UpdateUtilities
     exposing
@@ -82,23 +82,6 @@ import UpdateUtilities
 
 
 -- UPDATE
-
-
-logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
-logAndFocus model actionName alertMessageText =
-    Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
-        , focusInputPossibly model
-        ]
-
-
-logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
-logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
-    Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
-        , commandMessageRequest
-        , focusInputPossibly model
-        ]
 
 
 updateCommentResponseErr : Model -> Error -> ( Model, Cmd Msg )

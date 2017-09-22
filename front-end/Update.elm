@@ -72,13 +72,16 @@ import UpdateLog
         )
 import UpdateResponse
     exposing
-        ( logMakeRequestAndFocus
-        , updateCommentResponseErr
+        ( updateCommentResponseErr
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
         , updateSongsLatestResponseErr
         , updateSongsLatestResponseOk
+        )
+import UpdateResponseDetails
+    exposing
+        ( logMakeRequestAndFocus
         )
 import UpdateType
     exposing
