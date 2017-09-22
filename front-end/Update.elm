@@ -19,11 +19,7 @@ module Update
 
 import Alert
     exposing
-        ( AlertMessageText
-        , alertMessageTextErrorHttpLogging
-        , alertMessageTextErrorUnexpected
-        , alertMessageTextInit
-        , alertMessageTextRequestLikeOrComment
+        ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
 import Http
@@ -34,8 +30,7 @@ import Http
         )
 import Initialize
     exposing
-        ( awaitingServerResponseInit
-        , commentTextInit
+        ( commentTextInit
         )
 import MessageType
     exposing
@@ -59,9 +54,7 @@ import Song
         ( SongCommenting
         , SongLikingOrCommenting
         , SongsRemembered
-        , likedOrCommentedShow
         , songCommentingInit
-        , songLikingInit
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
