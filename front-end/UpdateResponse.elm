@@ -106,15 +106,17 @@ updateCommentResponseErr model httpError =
 
 updateCommentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateCommentResponseOk model httpResponseText =
+    let
+        alertMessageTextNew : AlertMessageText -> AlertMessageText
+        alertMessageTextNew alertMessageText =
+            alertMessageTextSend
+                "send your Comment"
+                alertMessageText
+    in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
-            let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    alertMessageTextSend "send your Comment" alertMessageTextDecode
-            in
             ( { model
-                | alertMessageText = alertMessageTextNew
+                | alertMessageText = alertMessageTextNew alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
@@ -125,13 +127,8 @@ updateCommentResponseOk model httpResponseText =
 
         Ok responseString ->
             if "ok" /= responseString then
-                let
-                    alertMessageTextNew : AlertMessageText
-                    alertMessageTextNew =
-                        alertMessageTextSend "send your Comment" responseString
-                in
                 ( { model
-                    | alertMessageText = alertMessageTextNew
+                    | alertMessageText = alertMessageTextNew responseString
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , Cmd.batch
@@ -172,15 +169,17 @@ updateLikeResponseErr model httpError =
 
 updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateLikeResponseOk model httpResponseText =
+    let
+        alertMessageTextNew : AlertMessageText -> AlertMessageText
+        alertMessageTextNew alertMessageText =
+            alertMessageTextSend
+                "send your Like"
+                alertMessageText
+    in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
-            let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    alertMessageTextSend "send your Like" alertMessageTextDecode
-            in
             ( { model
-                | alertMessageText = alertMessageTextNew
+                | alertMessageText = alertMessageTextNew alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
@@ -191,13 +190,8 @@ updateLikeResponseOk model httpResponseText =
 
         Ok responseString ->
             if "ok" /= responseString then
-                let
-                    alertMessageTextNew : AlertMessageText
-                    alertMessageTextNew =
-                        alertMessageTextSend "send your Like" responseString
-                in
                 ( { model
-                    | alertMessageText = alertMessageTextNew
+                    | alertMessageText = alertMessageTextNew responseString
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLiking = songLikingInit
                   }
@@ -251,7 +245,9 @@ updateSongsLatestResponseOk model httpResponseText =
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
-                    alertMessageTextSend "access the latest few songs" alertMessageTextDecode
+                    alertMessageTextSend
+                        "access the latest few songs"
+                        alertMessageTextDecode
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
