@@ -90,6 +90,7 @@ import UpdateResponse
     exposing
         ( updateCommentResponseErr
         , updateCommentResponseOk
+        , updateLikeResponseErr
         )
 import UpdateType
     exposing
@@ -304,16 +305,7 @@ update msg model =
                     )
 
         LikeResponse (Err httpError) ->
-            ( { model
-                | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
-                , awaitingServerResponse = awaitingServerResponseInit
-                , songLiking = songLikingInit
-              }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-                , focusInputPossibly model
-                ]
-            )
+            updateLikeResponseErr model httpError
 
         LikeResponse (Ok appendLikeJson) ->
             case decodeLikeOrCommentResponse appendLikeJson of

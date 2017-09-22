@@ -16,6 +16,7 @@ module UpdateResponse
     exposing
         ( updateCommentResponseErr
         , updateCommentResponseOk
+        , updateLikeResponseErr
         )
 
 import Alert
@@ -58,6 +59,7 @@ import Song
         ( SongsRemembered
         , likedOrCommentedShow
         , songCommentingInit
+        , songLikingInit
         )
 import UpdateFocus
     exposing
@@ -141,3 +143,17 @@ updateCommentResponseOk model httpResponseText =
                   }
                 , msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
                 )
+
+
+updateLikeResponseErr : Model -> Error -> ( Model, Cmd Msg )
+updateLikeResponseErr model httpError =
+    ( { model
+        | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
+        , awaitingServerResponse = awaitingServerResponseInit
+        , songLiking = songLikingInit
+      }
+    , Cmd.batch
+        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
+        , focusInputPossibly model
+        ]
+    )
