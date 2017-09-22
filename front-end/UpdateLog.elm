@@ -32,7 +32,7 @@ import ModelType
 import Request
     exposing
         ( HttpRequestOrResponseText
-        , RequestOrResponse
+        , RequestOrResponseLabelText
         )
 import UpdateFocus
     exposing
@@ -43,16 +43,16 @@ import UpdateFocus
 -- UPDATE
 
 
-updateHttpRequestOrResponseTextLog : Model -> RequestOrResponse -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
-updateHttpRequestOrResponseTextLog model requestOrResponse httpRequestOrResponseText =
+updateHttpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
+updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText =
     let
         --Keep for console logging:
         a : String
         a =
             if String.isEmpty httpRequestOrResponseText then
-                log requestOrResponse "Ok"
+                log requestOrResponseLabelText "Ok"
             else
-                log requestOrResponse httpRequestOrResponseText
+                log requestOrResponseLabelText httpRequestOrResponseText
     in
     ( model
     , focusInputPossibly model

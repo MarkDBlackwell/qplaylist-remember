@@ -33,7 +33,7 @@ import Request
     exposing
         ( HttpRequestOrResponseText
         , HttpResponseText
-        , RequestOrResponse
+        , RequestOrResponseLabelText
         )
 import Song
     exposing
@@ -53,7 +53,7 @@ type Msg
     | CommentSendHand
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | HttpRequestOrResponseTextLog RequestOrResponse HttpRequestOrResponseText
+    | HttpRequestOrResponseTextLog RequestOrResponseLabelText HttpRequestOrResponseText
     | InitialSetUp Int
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse (Result Error HttpResponseText)

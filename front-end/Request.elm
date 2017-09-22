@@ -20,7 +20,7 @@ module Request
         , HttpResponseText
         , QueryBeforeList
         , QueryPairs
-        , RequestOrResponse
+        , RequestOrResponseLabelText
         , UriText
         , likeOrCommentRequestUriText
         , relative
@@ -43,7 +43,7 @@ type alias AwaitingServerResponse =
     Bool
 
 
-type alias RequestOrResponse =
+type alias RequestOrResponseLabelText =
     String
 
 

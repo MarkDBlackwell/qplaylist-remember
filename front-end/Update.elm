@@ -308,8 +308,8 @@ update msg model =
         FocusSet id ->
             updateFocusSet model id
 
-        HttpRequestOrResponseTextLog requestOrResponse httpRequestOrResponseText ->
-            updateHttpRequestOrResponseTextLog model requestOrResponse httpRequestOrResponseText
+        HttpRequestOrResponseTextLog requestOrResponseLabelText httpRequestOrResponseText ->
+            updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText
 
         InitialSetUp threeLetterSpace ->
             let
