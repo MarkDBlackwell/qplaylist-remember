@@ -85,7 +85,8 @@ import UpdateDetails
         )
 import UpdateFocus
     exposing
-        ( updateFocusResult
+        ( focusSet
+        , updateFocusResult
         , updateFocusSet
         )
 import UpdateType
@@ -97,8 +98,7 @@ import UpdateType
         )
 import UpdateUtilities
     exposing
-        ( focusSet
-        , msg2Cmd
+        ( msg2Cmd
         )
 import UserIdentifier
     exposing

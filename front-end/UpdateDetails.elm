@@ -25,7 +25,7 @@ import ModelType
     exposing
         ( Model
         )
-import UpdateUtilities
+import UpdateFocus
     exposing
         ( focusSet
         )

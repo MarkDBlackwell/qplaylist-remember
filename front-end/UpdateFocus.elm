@@ -14,7 +14,8 @@
 
 module UpdateFocus
     exposing
-        ( updateFocusResult
+        ( focusSet
+        , updateFocusResult
         , updateFocusSet
         )
 
@@ -27,6 +28,7 @@ import MessageType
     exposing
         ( Msg
             ( FocusResult
+            , FocusSet
             )
         )
 import ModelType
@@ -37,9 +39,18 @@ import Task
     exposing
         ( attempt
         )
+import UpdateUtilities
+    exposing
+        ( msg2Cmd
+        )
 
 
 -- UPDATE
+
+
+focusSet : Id -> Cmd Msg
+focusSet id =
+    msg2Cmd (FocusSet id)
 
 
 updateFocusResult : Model -> ( Model, Cmd Msg )

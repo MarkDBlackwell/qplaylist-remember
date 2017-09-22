@@ -14,19 +14,12 @@
 
 module UpdateUtilities
     exposing
-        ( focusSet
-        , msg2Cmd
+        ( msg2Cmd
         )
 
-import Dom
-    exposing
-        ( Id
-        )
 import MessageType
     exposing
         ( Msg
-            ( FocusSet
-            )
         )
 import Task
     exposing
@@ -37,11 +30,6 @@ import Task
 
 
 -- UPDATE
-
-
-focusSet : Id -> Cmd Msg
-focusSet id =
-    msg2Cmd (FocusSet id)
 
 
 msg2Cmd : Msg -> Cmd Msg
