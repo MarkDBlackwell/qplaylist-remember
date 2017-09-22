@@ -169,15 +169,21 @@ updateLikeResponseErr model httpError =
 
 updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateLikeResponseOk model httpResponseText =
+    let
+        alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
+        alertMessageTextSend action details =
+            alertMessageTextErrorUnexpected
+                [ "while attempting to "
+                    ++ action
+                , details
+                ]
+    in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
-                    alertMessageTextErrorUnexpected
-                        [ "while attempting to send your Like"
-                        , alertMessageTextDecode
-                        ]
+                    alertMessageTextSend "send your Like" alertMessageTextDecode
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
@@ -194,10 +200,7 @@ updateLikeResponseOk model httpResponseText =
                 let
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
-                        alertMessageTextErrorUnexpected
-                            [ "while attempting to send your Like"
-                            , responseString
-                            ]
+                        alertMessageTextSend "send your Like" responseString
                 in
                 ( { model
                     | alertMessageText = alertMessageTextNew
