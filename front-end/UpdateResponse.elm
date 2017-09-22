@@ -19,6 +19,7 @@ module UpdateResponse
         , updateLikeResponseErr
         , updateLikeResponseOk
         , updateSongsLatestResponseErr
+        , updateSongsLatestResponseOk
         )
 
 import Alert
@@ -33,6 +34,10 @@ import Alert
 import DecodeLikeOrCommentResponse
     exposing
         ( decodeLikeOrCommentResponse
+        )
+import DecodeSongsLatest
+    exposing
+        ( decodeSongsLatest
         )
 import Http
     exposing
@@ -240,3 +245,39 @@ updateSongsLatestResponseErr model httpError =
         , focusInputPossibly model
         ]
     )
+
+
+updateSongsLatestResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+updateSongsLatestResponseOk model httpResponseText =
+    case decodeSongsLatest httpResponseText of
+        Err alertMessageTextDecode ->
+            let
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    alertMessageTextErrorUnexpected
+                        [ "while attempting to access the latest few songs"
+                        , alertMessageTextDecode
+                        ]
+            in
+            ( { model
+                | alertMessageText = alertMessageTextNew
+                , awaitingServerResponse = awaitingServerResponseInit
+              }
+            , Cmd.batch
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
+                , focusInputPossibly model
+                ]
+            )
+
+        Ok songsLatestNew ->
+            ( { model
+                | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = awaitingServerResponseInit
+                , songsLatest = songsLatestNew
+              }
+            , Cmd.batch
+                --Here, don't log the full response.
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
+                , focusInputPossibly model
+                ]
+            )

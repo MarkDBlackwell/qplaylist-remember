@@ -26,10 +26,6 @@ import Alert
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextServerAwaiting
         )
-import DecodeSongsLatest
-    exposing
-        ( decodeSongsLatest
-        )
 import Http
     exposing
         ( Request
@@ -88,6 +84,7 @@ import UpdateResponse
         , updateLikeResponseErr
         , updateLikeResponseOk
         , updateSongsLatestResponseErr
+        , updateSongsLatestResponseOk
         )
 import UpdateType
     exposing
@@ -452,36 +449,5 @@ update msg model =
         SongsLatestResponse (Err httpError) ->
             updateSongsLatestResponseErr model httpError
 
-        SongsLatestResponse (Ok jsonRawText) ->
-            case decodeSongsLatest jsonRawText of
-                Err alertMessageTextDecode ->
-                    let
-                        alertMessageTextNew : AlertMessageText
-                        alertMessageTextNew =
-                            alertMessageTextErrorUnexpected
-                                [ "while attempting to access the latest few songs"
-                                , alertMessageTextDecode
-                                ]
-                    in
-                    ( { model
-                        | alertMessageText = alertMessageTextNew
-                        , awaitingServerResponse = awaitingServerResponseInit
-                      }
-                    , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
-                        , focusInputPossibly model
-                        ]
-                    )
-
-                Ok songsLatestNew ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = awaitingServerResponseInit
-                        , songsLatest = songsLatestNew
-                      }
-                    , Cmd.batch
-                        --Here, don't log the full response.
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
-                        , focusInputPossibly model
-                        ]
-                    )
+        SongsLatestResponse (Ok httpResponseText) ->
+            updateSongsLatestResponseOk model httpResponseText
