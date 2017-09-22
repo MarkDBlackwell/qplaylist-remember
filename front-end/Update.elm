@@ -86,6 +86,10 @@ import UpdateLog
     exposing
         ( updateHttpRequestOrResponseTextLog
         )
+import UpdateResponse
+    exposing
+        ( updateCommentResponseErr
+        )
 import UpdateType
     exposing
         ( Optional
@@ -198,15 +202,7 @@ update msg model =
                     )
 
         CommentResponse (Err httpError) ->
-            ( { model
-                | alertMessageText = alertMessageTextRequestLikeOrComment httpError "comment"
-                , awaitingServerResponse = awaitingServerResponseInit
-              }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-                , focusInputPossibly model
-                ]
-            )
+            updateCommentResponseErr model httpError
 
         CommentResponse (Ok appendCommentJson) ->
             case decodeLikeOrCommentResponse appendCommentJson of
@@ -616,8 +612,8 @@ update msg model =
                         , awaitingServerResponse = awaitingServerResponseInit
                         , songsLatest = songsLatestNew
                       }
-                      --Here, don't log the full response.
                     , Cmd.batch
+                        --Here, don't log the full response.
                         [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
                         , focusInputPossibly model
                         ]
