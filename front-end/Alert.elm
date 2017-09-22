@@ -110,9 +110,9 @@ alertMessageTextErrorUnexpected alertMessageTextList =
 alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     alertMessageTextErrorHttpScreen httpError
-        ++ " (while attempting to send "
+        ++ " (while attempting to send your "
         ++ likeOrCommentName
-        ++ " to server)"
+        ++ ")"
 
 
 alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
