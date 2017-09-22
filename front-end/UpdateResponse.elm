@@ -111,10 +111,7 @@ updateCommentResponseOk model httpResponseText =
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
-                    alertMessageTextErrorUnexpected
-                        [ "while attempting to send your Comment"
-                        , alertMessageTextDecode
-                        ]
+                    alertMessageTextSend "send your Comment" alertMessageTextDecode
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
@@ -131,10 +128,7 @@ updateCommentResponseOk model httpResponseText =
                 let
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
-                        alertMessageTextErrorUnexpected
-                            [ "while attempting to send your Comment"
-                            , responseString
-                            ]
+                        alertMessageTextSend "send your Comment" responseString
                 in
                 ( { model
                     | alertMessageText = alertMessageTextNew
@@ -257,10 +251,7 @@ updateSongsLatestResponseOk model httpResponseText =
             let
                 alertMessageTextNew : AlertMessageText
                 alertMessageTextNew =
-                    alertMessageTextErrorUnexpected
-                        [ "while attempting to access the latest few songs"
-                        , alertMessageTextDecode
-                        ]
+                    alertMessageTextSend "access the latest few songs" alertMessageTextDecode
             in
             ( { model
                 | alertMessageText = alertMessageTextNew
