@@ -89,6 +89,7 @@ import UpdateLog
 import UpdateResponse
     exposing
         ( updateCommentResponseErr
+        , updateCommentResponseOk
         )
 import UpdateType
     exposing
@@ -204,61 +205,8 @@ update msg model =
         CommentResponse (Err httpError) ->
             updateCommentResponseErr model httpError
 
-        CommentResponse (Ok appendCommentJson) ->
-            case decodeLikeOrCommentResponse appendCommentJson of
-                Err alertMessageTextDecode ->
-                    let
-                        alertMessageTextNew : AlertMessageText
-                        alertMessageTextNew =
-                            alertMessageTextErrorUnexpected
-                                [ "while attempting to append your Comment"
-                                , alertMessageTextDecode
-                                ]
-                    in
-                    ( { model
-                        | alertMessageText = alertMessageTextNew
-                        , awaitingServerResponse = awaitingServerResponseInit
-                      }
-                    , Cmd.batch
-                        [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
-                        , focusInputPossibly model
-                        ]
-                    )
-
-                Ok responseString ->
-                    if "ok" /= responseString then
-                        let
-                            alertMessageTextNew : AlertMessageText
-                            alertMessageTextNew =
-                                alertMessageTextErrorUnexpected
-                                    [ "while attempting to send your Like"
-                                    , responseString
-                                    ]
-                        in
-                        ( { model
-                            | alertMessageText = alertMessageTextNew
-                            , awaitingServerResponse = awaitingServerResponseInit
-                          }
-                        , Cmd.batch
-                            [ msg2Cmd (HttpRequestOrResponseTextLog "Response" responseString)
-                            , focusInputPossibly model
-                            ]
-                        )
-                    else
-                        let
-                            songsRememberedNew : SongsRemembered
-                            songsRememberedNew =
-                                likedOrCommentedShow model.songCommenting model.songsRemembered
-                        in
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = awaitingServerResponseInit
-                            , commentText = commentTextInit
-                            , songCommenting = songCommentingInit
-                            , songsRemembered = songsRememberedNew
-                          }
-                        , msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
-                        )
+        CommentResponse (Ok httpResponseText) ->
+            updateCommentResponseOk model httpResponseText
 
         CommentSendHand ->
             let
