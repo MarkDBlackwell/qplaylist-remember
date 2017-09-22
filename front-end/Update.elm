@@ -19,7 +19,8 @@ module Update
 
 import Alert
     exposing
-        ( alertMessageTextInit
+        ( AlertMessageText
+        , alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
 import Http
@@ -104,6 +105,14 @@ import UserIdentifier
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
+        logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
+        logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
+            Cmd.batch
+                [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
+                , commandMessageRequest
+                , focusInputPossibly model
+                ]
+
         stateVector : ( AwaitingServerResponse, Optional )
         stateVector =
             let
@@ -227,11 +236,12 @@ update msg model =
                             | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = True
                           }
-                        , Cmd.batch
-                            [ msg2Cmd (HttpRequestOrResponseTextLog "Request" commentRequestUriText)
-                            , commentRequest
-                            , focusInputPossibly model
-                            ]
+                          --, Cmd.batch
+                          --[ msg2Cmd (HttpRequestOrResponseTextLog "Request" commentRequestUriText)
+                          --, commentRequest
+                          --, focusInputPossibly model
+                          --]
+                        , logMakeRequestAndFocus model commentRequest "Request" commentRequestUriText
                         )
 
         FocusResult _ ->

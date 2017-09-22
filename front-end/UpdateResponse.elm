@@ -92,9 +92,9 @@ alertMessageTextSend action details =
 
 
 logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
-logAndFocus model action alertMessageText =
+logAndFocus model actionName alertMessageText =
     Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog action alertMessageText)
+        [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
         , focusInputPossibly model
         ]
 
@@ -148,6 +148,7 @@ updateCommentResponseOk model httpResponseText =
                     , songCommenting = songCommentingInit
                     , songsRemembered = songsRememberedNew
                   }
+                  --Here, don't focus.
                 , msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
                 )
 
