@@ -49,14 +49,14 @@ import Http
         , getString
         , send
         )
-import MessageType
-    exposing
-        ( Msg(..)
-        )
-import ModelInitialize
+import Initialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit
+        )
+import MessageType
+    exposing
+        ( Msg(..)
         )
 import ModelType
     exposing

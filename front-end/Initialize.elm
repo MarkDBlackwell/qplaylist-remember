@@ -12,7 +12,7 @@
 -}
 
 
-module ModelInitialize
+module Initialize
     exposing
         ( Flags
         , awaitingServerResponseInit

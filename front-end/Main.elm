@@ -15,12 +15,12 @@
 module Main exposing (main)
 
 import Html exposing (programWithFlags)
-import MessageType exposing (Msg)
-import ModelInitialize
+import Initialize
     exposing
         ( Flags
         , init
         )
+import MessageType exposing (Msg)
 import ModelType exposing (Model)
 import Subscription exposing (subscriptions)
 import Update exposing (update)
