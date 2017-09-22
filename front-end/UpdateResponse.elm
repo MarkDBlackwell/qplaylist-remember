@@ -14,7 +14,8 @@
 
 module UpdateResponse
     exposing
-        ( updateCommentResponseErr
+        ( logMakeRequestAndFocus
+        , updateCommentResponseErr
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
@@ -95,6 +96,15 @@ logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
 logAndFocus model actionName alertMessageText =
     Cmd.batch
         [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
+        , focusInputPossibly model
+        ]
+
+
+logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
+logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
+    Cmd.batch
+        [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
+        , commandMessageRequest
         , focusInputPossibly model
         ]
 

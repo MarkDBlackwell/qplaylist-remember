@@ -73,7 +73,8 @@ import UpdateLog
         )
 import UpdateResponse
     exposing
-        ( updateCommentResponseErr
+        ( logMakeRequestAndFocus
+        , updateCommentResponseErr
         , updateCommentResponseOk
         , updateLikeResponseErr
         , updateLikeResponseOk
@@ -105,14 +106,6 @@ import UserIdentifier
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
-        logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
-            Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
-                , commandMessageRequest
-                , focusInputPossibly model
-                ]
-
         stateVector : ( AwaitingServerResponse, Optional )
         stateVector =
             let
@@ -236,11 +229,6 @@ update msg model =
                             | alertMessageText = alertMessageTextInit
                             , awaitingServerResponse = True
                           }
-                          --, Cmd.batch
-                          --[ msg2Cmd (HttpRequestOrResponseTextLog "Request" commentRequestUriText)
-                          --, commentRequest
-                          --, focusInputPossibly model
-                          --]
                         , logMakeRequestAndFocus model commentRequest "Request" commentRequestUriText
                         )
 
