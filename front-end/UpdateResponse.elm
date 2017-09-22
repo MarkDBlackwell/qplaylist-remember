@@ -91,16 +91,21 @@ alertMessageTextSend action details =
         ]
 
 
+logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
+logAndFocus model action alertMessageText =
+    Cmd.batch
+        [ msg2Cmd (HttpRequestOrResponseTextLog action alertMessageText)
+        , focusInputPossibly model
+        ]
+
+
 updateCommentResponseErr : Model -> Error -> ( Model, Cmd Msg )
 updateCommentResponseErr model httpError =
     ( { model
         | alertMessageText = alertMessageTextRequestLikeOrComment httpError "comment"
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-        , focusInputPossibly model
-        ]
+    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
     )
 
 
@@ -119,10 +124,7 @@ updateCommentResponseOk model httpResponseText =
                 | alertMessageText = alertMessageTextNew alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
-                , focusInputPossibly model
-                ]
+            , logAndFocus model "Decoding" alertMessageTextDecode
             )
 
         Ok responseString ->
@@ -131,10 +133,7 @@ updateCommentResponseOk model httpResponseText =
                     | alertMessageText = alertMessageTextNew responseString
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , Cmd.batch
-                    [ msg2Cmd (HttpRequestOrResponseTextLog "Response" responseString)
-                    , focusInputPossibly model
-                    ]
+                , logAndFocus model "Response" responseString
                 )
             else
                 let
@@ -160,10 +159,7 @@ updateLikeResponseErr model httpError =
         , awaitingServerResponse = awaitingServerResponseInit
         , songLiking = songLikingInit
       }
-    , Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-        , focusInputPossibly model
-        ]
+    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
     )
 
 
@@ -182,10 +178,7 @@ updateLikeResponseOk model httpResponseText =
                 | alertMessageText = alertMessageTextNew alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
-                , focusInputPossibly model
-                ]
+            , logAndFocus model "Decoding" alertMessageTextDecode
             )
 
         Ok responseString ->
@@ -195,10 +188,7 @@ updateLikeResponseOk model httpResponseText =
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLiking = songLikingInit
                   }
-                , Cmd.batch
-                    [ msg2Cmd (HttpRequestOrResponseTextLog "Response" responseString)
-                    , focusInputPossibly model
-                    ]
+                , logAndFocus model "Response" responseString
                 )
             else
                 let
@@ -212,10 +202,7 @@ updateLikeResponseOk model httpResponseText =
                     , songLiking = songLikingInit
                     , songsRemembered = songsRememberedNew
                   }
-                , Cmd.batch
-                    [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
-                    , focusInputPossibly model
-                    ]
+                , logAndFocus model "Response" ""
                 )
 
 
@@ -231,10 +218,7 @@ updateSongsLatestResponseErr model httpError =
         | alertMessageText = alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog "Response" (alertMessageTextErrorHttpLogging httpError))
-        , focusInputPossibly model
-        ]
+    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
     )
 
 
@@ -253,10 +237,7 @@ updateSongsLatestResponseOk model httpResponseText =
                 | alertMessageText = alertMessageTextNew
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , Cmd.batch
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
-                , focusInputPossibly model
-                ]
+            , logAndFocus model "Decoding" alertMessageTextDecode
             )
 
         Ok songsLatestNew ->
@@ -265,9 +246,6 @@ updateSongsLatestResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
                 , songsLatest = songsLatestNew
               }
-            , Cmd.batch
-                --Here, don't log the full response.
-                [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
-                , focusInputPossibly model
-                ]
+              --Here, don't log the full response.
+            , logAndFocus model "Response" ""
             )
