@@ -122,16 +122,14 @@ updateCommentResponseErr model httpError =
 updateCommentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateCommentResponseOk model httpResponseText =
     let
-        alertMessageTextNew : AlertMessageText -> AlertMessageText
-        alertMessageTextNew alertMessageText =
-            alertMessageTextSend
-                "send your Comment"
-                alertMessageText
+        actionDescription : AlertMessageText
+        actionDescription =
+            "send your Comment"
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = alertMessageTextNew alertMessageTextDecode
+                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode
@@ -140,7 +138,7 @@ updateCommentResponseOk model httpResponseText =
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = alertMessageTextNew responseString
+                    | alertMessageText = alertMessageTextSend actionDescription responseString
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , logAndFocus model "Response" responseString
