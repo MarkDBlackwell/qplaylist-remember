@@ -175,16 +175,14 @@ updateLikeResponseErr model httpError =
 updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 updateLikeResponseOk model httpResponseText =
     let
-        alertMessageTextNew : AlertMessageText -> AlertMessageText
-        alertMessageTextNew alertMessageText =
-            alertMessageTextSend
-                "send your Like"
-                alertMessageText
+        actionDescription : AlertMessageText
+        actionDescription =
+            "send your Like"
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = alertMessageTextNew alertMessageTextDecode
+                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode
@@ -193,7 +191,7 @@ updateLikeResponseOk model httpResponseText =
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = alertMessageTextNew responseString
+                    | alertMessageText = alertMessageTextSend actionDescription responseString
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLiking = songLikingInit
                   }
@@ -218,10 +216,16 @@ updateLikeResponseOk model httpResponseText =
 updateSongsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
 updateSongsLatestResponseErr model httpError =
     let
+        actionDescription : AlertMessageText
+        actionDescription =
+            "access the latest few songs"
+
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
             alertMessageTextErrorHttpScreen httpError
-                ++ " (while attempting to access the latest few songs)"
+                ++ " (while attempting to "
+                ++ actionDescription
+                ++ ")"
     in
     ( { model
         | alertMessageText = alertMessageTextNew
@@ -236,14 +240,12 @@ updateSongsLatestResponseOk model httpResponseText =
     case decodeSongsLatest httpResponseText of
         Err alertMessageTextDecode ->
             let
-                alertMessageTextNew : AlertMessageText
-                alertMessageTextNew =
-                    alertMessageTextSend
-                        "access the latest few songs"
-                        alertMessageTextDecode
+                actionDescription : AlertMessageText
+                actionDescription =
+                    "access the latest few songs"
             in
             ( { model
-                | alertMessageText = alertMessageTextNew
+                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode
