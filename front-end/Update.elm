@@ -92,6 +92,10 @@ import UpdateDetails
     exposing
         ( focusInputPossibly
         )
+import UpdateFocus
+    exposing
+        ( focusResult
+        )
 import UpdateType
     exposing
         ( Optional
@@ -310,9 +314,7 @@ update msg model =
                         )
 
         FocusResult _ ->
-            ( model
-            , Cmd.none
-            )
+            focusResult model
 
         FocusSet id ->
             --See:
