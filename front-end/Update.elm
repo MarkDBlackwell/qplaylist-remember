@@ -27,10 +27,6 @@ import Alert
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextServerAwaiting
         )
-import Debug
-    exposing
-        ( log
-        )
 import DecodeLikeOrCommentResponse
     exposing
         ( decodeLikeOrCommentResponse
@@ -85,6 +81,10 @@ import UpdateFocus
         , focusSet
         , updateFocusResult
         , updateFocusSet
+        )
+import UpdateLog
+    exposing
+        ( updateHttpRequestOrResponseTextLog
         )
 import UpdateType
     exposing
@@ -308,19 +308,8 @@ update msg model =
         FocusSet id ->
             updateFocusSet model id
 
-        HttpRequestOrResponseTextLog labelText httpRequestOrResponseText ->
-            let
-                --Keep for console logging:
-                a : String
-                a =
-                    if String.isEmpty httpRequestOrResponseText then
-                        log labelText "Ok"
-                    else
-                        log labelText httpRequestOrResponseText
-            in
-            ( model
-            , focusInputPossibly model
-            )
+        HttpRequestOrResponseTextLog requestOrResponse httpRequestOrResponseText ->
+            updateHttpRequestOrResponseTextLog model requestOrResponse httpRequestOrResponseText
 
         InitialSetUp threeLetterSpace ->
             let
