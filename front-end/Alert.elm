@@ -20,6 +20,7 @@ module Alert
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
+        , alertMessageTextSend
         , alertMessageTextServerAwaiting
         )
 
@@ -112,6 +113,15 @@ alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
         ++ " (while attempting to send "
         ++ likeOrCommentName
         ++ " to server)"
+
+
+alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
+alertMessageTextSend action details =
+    alertMessageTextErrorUnexpected
+        [ "while attempting to "
+            ++ action
+        , details
+        ]
 
 
 alertMessageTextServerAwaiting : AlertMessageText

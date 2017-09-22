@@ -31,6 +31,7 @@ import Alert
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
+        , alertMessageTextSend
         )
 import DecodeLikeOrCommentResponse
     exposing
@@ -81,15 +82,6 @@ import UpdateUtilities
 
 
 -- UPDATE
-
-
-alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
-alertMessageTextSend action details =
-    alertMessageTextErrorUnexpected
-        [ "while attempting to "
-            ++ action
-        , details
-        ]
 
 
 logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
