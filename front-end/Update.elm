@@ -68,7 +68,8 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( updateHttpRequestOrResponseTextLog
+        ( logMakeRequestAndFocus
+        , updateHttpRequestOrResponseTextLog
         )
 import UpdateResponse
     exposing
@@ -78,10 +79,6 @@ import UpdateResponse
         , updateLikeResponseOk
         , updateSongsLatestResponseErr
         , updateSongsLatestResponseOk
-        )
-import UpdateResponseDetails
-    exposing
-        ( logMakeRequestAndFocus
         )
 import UpdateType
     exposing

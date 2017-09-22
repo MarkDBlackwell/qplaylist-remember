@@ -68,7 +68,7 @@ import Song
         , songCommentingInit
         , songLikingInit
         )
-import UpdateResponseDetails
+import UpdateLog
     exposing
         ( logAndFocus
         , logMakeRequestAndFocus
