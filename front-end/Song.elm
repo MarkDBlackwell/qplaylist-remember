@@ -36,7 +36,6 @@ module Song
         , songsLatest2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
-        , songsRememberedInit
         , songsRememberedWithoutOne
         )
 
@@ -122,11 +121,6 @@ songsLatestInit =
 songLikingInit : SongLiking
 songLikingInit =
     Nothing
-
-
-songsRememberedInit : SongsRemembered
-songsRememberedInit =
-    []
 
 
 

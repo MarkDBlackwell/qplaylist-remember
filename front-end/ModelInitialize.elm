@@ -47,10 +47,10 @@ import Request
         )
 import Song
     exposing
-        ( songCommentingInit
+        ( SongsRemembered
+        , songCommentingInit
         , songLikingInit
         , songsLatestInit
-        , songsRememberedInit
         )
 import UserIdentifier
     exposing
@@ -64,6 +64,7 @@ import UserIdentifier
 
 type alias Flags =
     { showCommentButtons : ShowCommentButtons
+    , songsRemembered : SongsRemembered
     }
 
 
@@ -93,7 +94,7 @@ init flags =
         songCommentingInit
         songLikingInit
         songsLatestInit
-        songsRememberedInit
+        flags.songsRemembered
         userIdentifierInit
     , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
     )
