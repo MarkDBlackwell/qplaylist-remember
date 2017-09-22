@@ -17,6 +17,7 @@ module UpdateResponse
         ( updateCommentResponseErr
         , updateCommentResponseOk
         , updateLikeResponseErr
+        , updateLikeResponseOk
         )
 
 import Alert
@@ -157,3 +158,64 @@ updateLikeResponseErr model httpError =
         , focusInputPossibly model
         ]
     )
+
+
+updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+updateLikeResponseOk model httpResponseText =
+    case decodeLikeOrCommentResponse httpResponseText of
+        Err alertMessageTextDecode ->
+            let
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    alertMessageTextErrorUnexpected
+                        [ "while attempting to send your Like"
+                        , alertMessageTextDecode
+                        ]
+            in
+            ( { model
+                | alertMessageText = alertMessageTextNew
+                , awaitingServerResponse = awaitingServerResponseInit
+              }
+            , Cmd.batch
+                [ msg2Cmd (HttpRequestOrResponseTextLog "Decoding" alertMessageTextDecode)
+                , focusInputPossibly model
+                ]
+            )
+
+        Ok responseString ->
+            if "ok" /= responseString then
+                let
+                    alertMessageTextNew : AlertMessageText
+                    alertMessageTextNew =
+                        alertMessageTextErrorUnexpected
+                            [ "while attempting to send your Like"
+                            , responseString
+                            ]
+                in
+                ( { model
+                    | alertMessageText = alertMessageTextNew
+                    , awaitingServerResponse = awaitingServerResponseInit
+                    , songLiking = songLikingInit
+                  }
+                , Cmd.batch
+                    [ msg2Cmd (HttpRequestOrResponseTextLog "Response" responseString)
+                    , focusInputPossibly model
+                    ]
+                )
+            else
+                let
+                    songsRememberedNew : SongsRemembered
+                    songsRememberedNew =
+                        likedOrCommentedShow model.songLiking model.songsRemembered
+                in
+                ( { model
+                    | alertMessageText = alertMessageTextInit
+                    , awaitingServerResponse = awaitingServerResponseInit
+                    , songLiking = songLikingInit
+                    , songsRemembered = songsRememberedNew
+                  }
+                , Cmd.batch
+                    [ msg2Cmd (HttpRequestOrResponseTextLog "Response" "")
+                    , focusInputPossibly model
+                    ]
+                )
