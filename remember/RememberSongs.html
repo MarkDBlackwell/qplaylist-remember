@@ -27,27 +27,56 @@
 <script type="text/javascript" src="RememberSongs.js"></script>
 </body>
 <script>
-var node = document.getElementById('main');
-var app = Elm.Main.embed(node, {
-  showCommentButtons: true,
-  songsRemembered: [
-    {
-      artist: "Vance Joy",
-      likedOrCommented: true,
-      title: "Lay It On Me",
-      time: "7:26 AM",
-      timestamp: "2017 08 31 07 26"
-    },
-    {
-      artist: "The Family Crest",
-      likedOrCommented: false,
-      title: "Mirror Love",
-      time: "7:22 AM",
-      timestamp: "2017 08 31 07 22"
-    },
-  ]
-});
-// Note: if your Elm module is named "MyThing.Root" you
-// would call "Elm.MyThing.Root.embed(node)" instead.
+//See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
+//Hide everything from the global namespace, by using an IIFE (Immediately
+//    Invokable Function Expression).
+(function(){
+    var keyStorage = 'RememberSongs';
+
+    var tempSongs = [
+        {
+          artist: "Vance Joy",
+          likedOrCommented: true,
+          title: "Lay It On Me",
+          time: "7:26 AM",
+          timestamp: "2017 08 31 07 26"
+        },
+        {
+          artist: "The Family Crest",
+          likedOrCommented: false,
+          title: "Mirror Love",
+          time: "7:22 AM",
+          timestamp: "2017 08 31 07 22"
+        },
+      ];
+    var tempSongsAsString = JSON.stringify(tempSongs);
+
+    //Save data to sessionStorage.
+    //TODO: remove this.
+    window.sessionStorage.setItem(keyStorage, tempSongsAsString);
+    
+    var retrieveSongsFromStorage = function(){
+        try {
+            return window.sessionStorage.getItem(keyStorage);
+        } catch (exception) {
+            return "[]";
+        }
+    };
+    //Retrieve data from sessionStorage.
+    //TODO: If localStorage becomes too small, then use IndexedDB, instead.
+    //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+    var songsAsString = retrieveSongsFromStorage();
+//window.alert(songsAsString);
+
+    var songs = JSON.parse(songsAsString);
+    
+    var node = document.getElementById('main');
+    var app = Elm.Main.embed(node, {
+      showCommentButtons: true,
+      songsRemembered: songs
+    });
+    //Note: if your Elm module is named "MyThing.Root" you
+    //would call "Elm.MyThing.Root.embed(node)" instead.
+})();
 </script>
 </html>
