@@ -22,10 +22,6 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
-import Initialize
-    exposing
-        ( commentTextInit
-        )
 import MessageType
     exposing
         ( Msg(..)
@@ -49,6 +45,7 @@ import UpdateCommentArea
     exposing
         ( updateCommentAreaInputTextChangeCaptureHand
         , updateCommentAreaOpenHand
+        , updateCommentCancelHand
         )
 import UpdateFocus
     exposing
@@ -101,23 +98,7 @@ update msg model =
             updateCommentAreaOpenHand model songsRememberedIndex
 
         CommentCancelHand ->
-            --(awaitingServer, commentArea)
-            case stateVector model of
-                ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
-
-                _ ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , commentText = commentTextInit
-                        , songCommenting = songCommentingInit
-                      }
-                    , Cmd.none
-                    )
+            updateCommentCancelHand model
 
         CommentResponse (Err httpError) ->
             updateCommentResponseErr model httpError

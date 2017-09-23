@@ -16,6 +16,7 @@ module UpdateCommentArea
     exposing
         ( updateCommentAreaInputTextChangeCaptureHand
         , updateCommentAreaOpenHand
+        , updateCommentCancelHand
         )
 
 import Alert
@@ -39,6 +40,7 @@ import Song
     exposing
         ( SongLikingOrCommenting
         , SongsRememberedIndex
+        , songCommentingInit
         , songLikingOrCommentingMaybe
         )
 import UpdateFocus
@@ -112,4 +114,25 @@ updateCommentAreaOpenHand model songsRememberedIndex =
               }
               --'focusInputPossibly' doesn't work, here:
             , focusSet "input"
+            )
+
+
+updateCommentCancelHand : Model -> ( Model, Cmd Msg )
+updateCommentCancelHand model =
+    --(awaitingServer, commentArea)
+    case stateVector model of
+        ( True, _ ) ->
+            ( { model
+                | alertMessageText = alertMessageTextServerAwaiting
+              }
+            , focusInputPossibly model
+            )
+
+        _ ->
+            ( { model
+                | alertMessageText = alertMessageTextInit
+                , commentText = commentTextInit
+                , songCommenting = songCommentingInit
+              }
+            , Cmd.none
             )
