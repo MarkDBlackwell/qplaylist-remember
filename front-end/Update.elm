@@ -98,29 +98,29 @@ import UserIdentifier
 -- UPDATE
 
 
+stateVector : Model -> ( AwaitingServerResponse, Optional )
+stateVector model =
+    let
+        commentOptional : Optional
+        commentOptional =
+            case model.songCommenting of
+                Nothing ->
+                    Closed
+
+                Just songCommenting ->
+                    Open
+    in
+    ( model.awaitingServerResponse
+    , commentOptional
+    )
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    let
-        stateVector : ( AwaitingServerResponse, Optional )
-        stateVector =
-            let
-                commentOptional : Optional
-                commentOptional =
-                    case model.songCommenting of
-                        Nothing ->
-                            Closed
-
-                        Just songCommenting ->
-                            Open
-            in
-            ( model.awaitingServerResponse
-            , commentOptional
-            )
-    in
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | commentText = text
@@ -143,7 +143,7 @@ update msg model =
                     songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -170,7 +170,7 @@ update msg model =
 
         CommentCancelHand ->
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -204,7 +204,7 @@ update msg model =
                     likeOrCommentRequestUriText model.songCommenting model.userIdentifier model.commentText
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -263,7 +263,7 @@ update msg model =
                     songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -300,7 +300,7 @@ update msg model =
                         not model.pageIsExpanded
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -332,7 +332,7 @@ update msg model =
                     songsRememberedWithoutOne model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -362,7 +362,7 @@ update msg model =
                     songsRememberedAppendOneUnique model.songsLatest songsLatestIndex model.songsRemembered
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
@@ -408,7 +408,7 @@ update msg model =
                     send SongsLatestResponse request
             in
             --(awaitingServer, commentArea)
-            case stateVector of
+            case stateVector model of
                 ( True, _ ) ->
                     ( { model
                         | alertMessageText = alertMessageTextServerAwaiting
