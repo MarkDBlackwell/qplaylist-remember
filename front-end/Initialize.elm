@@ -18,7 +18,6 @@ module Initialize
         , awaitingServerResponseInit
         , commentTextInit
         , init
-        , updateInitialSetUp
         )
 
 import Alert
@@ -55,11 +54,7 @@ import Song
         )
 import UserIdentifier
     exposing
-        ( ThreeLetterSpaceInt
-        , UserIdentifier
-        , keyCode2Char
-        , letterSpace
-        , threeDigits
+        ( threeLetterSpaceHighest
         , userIdentifierInit
         )
 
@@ -85,11 +80,6 @@ commentTextInit =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    let
-        threeLetterSpaceHighest : ThreeLetterSpaceInt
-        threeLetterSpaceHighest =
-            (letterSpace ^ 3) - 1
-    in
     ( Model
         alertMessageTextInit
         awaitingServerResponseInit
@@ -108,17 +98,3 @@ init flags =
 pageIsExpandedInit : PageIsExpanded
 pageIsExpandedInit =
     False
-
-
-updateInitialSetUp : Model -> ThreeLetterSpaceInt -> ( Model, Cmd Msg )
-updateInitialSetUp model threeLetterSpaceInt =
-    let
-        userIdentifierNew : UserIdentifier
-        userIdentifierNew =
-            String.fromList (List.map keyCode2Char (threeDigits threeLetterSpaceInt))
-    in
-    ( { model
-        | userIdentifier = userIdentifierNew
-      }
-    , Cmd.none
-    )

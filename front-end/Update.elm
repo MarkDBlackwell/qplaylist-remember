@@ -22,10 +22,6 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
-import Initialize
-    exposing
-        ( updateInitialSetUp
-        )
 import MessageType
     exposing
         ( Msg(..)
@@ -78,6 +74,10 @@ import UpdateStateVector
     exposing
         ( stateVector
         )
+import UserIdentifier
+    exposing
+        ( updateInitialSetUp
+        )
 
 
 -- UPDATE
@@ -114,7 +114,11 @@ update msg model =
             updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText
 
         InitialSetUp threeLetterSpaceInt ->
-            updateInitialSetUp model threeLetterSpaceInt
+            ( { model
+                | userIdentifier = updateInitialSetUp threeLetterSpaceInt
+              }
+            , Cmd.none
+            )
 
         LikeButtonProcessHand songsRememberedIndex ->
             updateLikeButtonProcessHand model songsRememberedIndex

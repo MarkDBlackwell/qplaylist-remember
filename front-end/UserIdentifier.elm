@@ -14,11 +14,9 @@
 
 module UserIdentifier
     exposing
-        ( ThreeLetterSpaceInt
-        , UserIdentifier
-        , keyCode2Char
-        , letterSpace
-        , threeDigits
+        ( UserIdentifier
+        , threeLetterSpaceHighest
+        , updateInitialSetUp
         , userIdentifierInit
         )
 
@@ -84,3 +82,13 @@ threeDigits threeLetterSpaceInt =
     , (threeLetterSpaceInt // letterSpace) % letterSpace
     , threeLetterSpaceInt % letterSpace
     ]
+
+
+threeLetterSpaceHighest : ThreeLetterSpaceInt
+threeLetterSpaceHighest =
+    (letterSpace ^ 3) - 1
+
+
+updateInitialSetUp : ThreeLetterSpaceInt -> UserIdentifier
+updateInitialSetUp threeLetterSpaceInt =
+    String.fromList (List.map keyCode2Char (threeDigits threeLetterSpaceInt))
