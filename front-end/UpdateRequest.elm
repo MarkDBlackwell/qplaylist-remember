@@ -16,6 +16,7 @@ module UpdateRequest
     exposing
         ( updateCommentSendHand
         , updateLikeButtonProcessHand
+        , updateSongsLatestRefreshHand
         )
 
 import Alert
@@ -25,7 +26,8 @@ import Alert
         )
 import Http
     exposing
-        ( getString
+        ( Request
+        , getString
         , send
         )
 import MessageType
@@ -33,6 +35,7 @@ import MessageType
         ( Msg
             ( CommentResponse
             , LikeResponse
+            , SongsLatestResponse
             )
         )
 import ModelType
@@ -41,8 +44,10 @@ import ModelType
         )
 import Request
     exposing
-        ( UriText
+        ( HttpRequestText
+        , UriText
         , likeOrCommentRequestUriText
+        , relative
         )
 import Song
     exposing
@@ -134,4 +139,52 @@ updateLikeButtonProcessHand model songsRememberedIndex =
                 , songLiking = songLikingNew
               }
             , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
+            )
+
+
+updateSongsLatestRefreshHand : Model -> ( Model, Cmd Msg )
+updateSongsLatestRefreshHand model =
+    let
+        requestUriText : UriText
+        requestUriText =
+            let
+                basename : UriText
+                basename =
+                    "LatestFive.json"
+
+                subUri : UriText
+                subUri =
+                    "wtmdapp"
+            in
+            relative
+                [ ".."
+                , subUri
+                , basename
+                ]
+                []
+
+        songsLatestRequest : Cmd Msg
+        songsLatestRequest =
+            let
+                request : Request HttpRequestText
+                request =
+                    getString requestUriText
+            in
+            send SongsLatestResponse request
+    in
+    --(awaitingServer, commentArea)
+    case stateVector model of
+        ( True, _ ) ->
+            ( { model
+                | alertMessageText = alertMessageTextServerAwaiting
+              }
+            , focusInputPossibly model
+            )
+
+        _ ->
+            ( { model
+                | alertMessageText = alertMessageTextInit
+                , awaitingServerResponse = True
+              }
+            , logMakeRequestAndFocus model songsLatestRequest "Request" requestUriText
             )
