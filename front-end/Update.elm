@@ -70,6 +70,10 @@ import UpdateLog
         ( logMakeRequestAndFocus
         , updateHttpRequestOrResponseTextLog
         )
+import UpdateRequest
+    exposing
+        ( updateCommentSendHand
+        )
 import UpdateResponse
     exposing
         ( updateCommentResponseErr
@@ -179,38 +183,7 @@ update msg model =
             updateCommentResponseOk model httpResponseText
 
         CommentSendHand ->
-            let
-                commentRequest : Cmd Msg
-                commentRequest =
-                    send CommentResponse (getString commentRequestUriText)
-
-                commentRequestUriText : UriText
-                commentRequestUriText =
-                    likeOrCommentRequestUriText model.songCommenting model.userIdentifier model.commentText
-            in
-            --(awaitingServer, commentArea)
-            case stateVector model of
-                ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
-
-                _ ->
-                    if String.isEmpty model.commentText then
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                          }
-                        , focusInputPossibly model
-                        )
-                    else
-                        ( { model
-                            | alertMessageText = alertMessageTextInit
-                            , awaitingServerResponse = True
-                          }
-                        , logMakeRequestAndFocus model commentRequest "Request" commentRequestUriText
-                        )
+            updateCommentSendHand model
 
         FocusResult _ ->
             updateFocusResult model
