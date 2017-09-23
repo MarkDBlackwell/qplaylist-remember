@@ -45,6 +45,11 @@ import Song
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
         )
+import UpdateCommentArea
+    exposing
+        ( updateCommentAreaInputTextChangeCaptureHand
+        , updateCommentAreaOpenHand
+        )
 import UpdateFocus
     exposing
         ( focusInputPossibly
@@ -75,12 +80,6 @@ import UpdateStateVector
     exposing
         ( stateVector
         )
-import UpdateType
-    exposing
-        ( Optional
-            ( Open
-            )
-        )
 import UserIdentifier
     exposing
         ( UserIdentifier
@@ -96,54 +95,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
-            --(awaitingServer, commentArea)
-            case stateVector model of
-                ( True, _ ) ->
-                    ( { model
-                        | commentText = text
-                      }
-                    , Cmd.none
-                    )
-
-                _ ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , commentText = text
-                      }
-                    , Cmd.none
-                    )
+            updateCommentAreaInputTextChangeCaptureHand model text
 
         CommentAreaOpenHand songsRememberedIndex ->
-            let
-                songCommentingNew : SongLikingOrCommenting
-                songCommentingNew =
-                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
-            in
-            --(awaitingServer, commentArea)
-            case stateVector model of
-                ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
-
-                ( _, Open ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                      }
-                    , focusInputPossibly model
-                    )
-
-                _ ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , commentText = commentTextInit
-                        , songCommenting = songCommentingNew
-                      }
-                      --'focusInputPossibly' doesn't work, here:
-                    , focusSet "input"
-                    )
+            updateCommentAreaOpenHand model songsRememberedIndex
 
         CommentCancelHand ->
             --(awaitingServer, commentArea)
