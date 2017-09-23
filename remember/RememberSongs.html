@@ -33,6 +33,7 @@
 (function(){
     var keyStorage = 'RememberSongs';
 
+/*
     var tempSongs = [
         {
           artist: "Vance Joy",
@@ -51,18 +52,56 @@
       ];
     var tempSongsAsString = JSON.stringify(tempSongs);
 
-    //Save data to sessionStorage.
+    //Save data to localStorage.
     //TODO: remove this.
-    window.sessionStorage.setItem(keyStorage, tempSongsAsString);
-    
-    var retrieveSongsFromStorage = function(){
+    window.localStorage.setItem(keyStorage, tempSongsAsString);
+*/
+
+    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+    var storageAvailableShow = function(type) {
         try {
-            return window.sessionStorage.getItem(keyStorage);
-        } catch (exception) {
+            var storage = window[type],
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+        }
+        catch(e) {
+            window.alert(e);
+        }
+    }
+    storageAvailableShow('localStorage');
+
+    var storageAvailable = function(type) {
+        try {
+            var storage = window[type],
+                x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return e instanceof DOMException && (
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                storage.length !== 0;
+        }
+    }
+    var retrieveSongsFromStorage = function(){
+        if (storageAvailable('localStorage')) {
+            return window.localStorage.getItem(keyStorage);
+        } else {
             return "[]";
         }
     };
-    //Retrieve data from sessionStorage.
+    //Retrieve data from localStorage.
     //TODO: If localStorage becomes too small, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
     var songsAsString = retrieveSongsFromStorage();
