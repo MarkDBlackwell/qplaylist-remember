@@ -54,6 +54,11 @@ letterSpace =
     caseCount * caseLength
 
 
+threeLetterSpaceHighest : ThreeLetterSpaceInt
+threeLetterSpaceHighest =
+    (letterSpace ^ 3) - 1
+
+
 userIdentifierInit : UserIdentifier
 userIdentifierInit =
     ""
@@ -63,32 +68,26 @@ userIdentifierInit =
 -- UPDATE
 
 
-keyCode2Char : KeyCode -> Char
-keyCode2Char keyCode =
-    let
-        baseKeyCode : KeyCode -> KeyCode
-        baseKeyCode keyCode =
-            if keyCode < caseLength then
-                toCode 'a'
-            else
-                toCode 'A'
-    in
-    fromCode (baseKeyCode keyCode + (keyCode % caseLength))
-
-
-threeDigits : ThreeLetterSpaceInt -> List Int
-threeDigits threeLetterSpaceInt =
-    [ (threeLetterSpaceInt // letterSpace // letterSpace) % letterSpace
-    , (threeLetterSpaceInt // letterSpace) % letterSpace
-    , threeLetterSpaceInt % letterSpace
-    ]
-
-
-threeLetterSpaceHighest : ThreeLetterSpaceInt
-threeLetterSpaceHighest =
-    (letterSpace ^ 3) - 1
-
-
 updateInitialSetUp : ThreeLetterSpaceInt -> UserIdentifier
 updateInitialSetUp threeLetterSpaceInt =
+    let
+        keyCode2Char : KeyCode -> Char
+        keyCode2Char keyCode =
+            let
+                baseKeyCode : KeyCode -> KeyCode
+                baseKeyCode keyCode =
+                    if keyCode < caseLength then
+                        toCode 'a'
+                    else
+                        toCode 'A'
+            in
+            fromCode (baseKeyCode keyCode + (keyCode % caseLength))
+
+        threeDigits : ThreeLetterSpaceInt -> List Int
+        threeDigits threeLetterSpaceInt =
+            [ (threeLetterSpaceInt // letterSpace // letterSpace) % letterSpace
+            , (threeLetterSpaceInt // letterSpace) % letterSpace
+            , threeLetterSpaceInt % letterSpace
+            ]
+    in
     String.fromList (List.map keyCode2Char (threeDigits threeLetterSpaceInt))
