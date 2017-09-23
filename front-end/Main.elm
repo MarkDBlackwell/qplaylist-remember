@@ -12,19 +12,40 @@
 -}
 
 
-module Main exposing (main)
+module Main
+    exposing
+        ( main
+        )
 
-import Html exposing (programWithFlags)
+import Html
+    exposing
+        ( programWithFlags
+        )
 import Initialize
     exposing
         ( Flags
         , init
         )
-import MessageType exposing (Msg)
-import ModelType exposing (Model)
-import Subscription exposing (subscriptions)
-import Update exposing (update)
-import View exposing (view)
+import MessageType
+    exposing
+        ( Msg
+        )
+import ModelType
+    exposing
+        ( Model
+        )
+import Subscription
+    exposing
+        ( subscriptions
+        )
+import Update
+    exposing
+        ( update
+        )
+import View
+    exposing
+        ( view
+        )
 
 
 -- MODEL
