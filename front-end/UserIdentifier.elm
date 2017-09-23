@@ -15,7 +15,7 @@
 module UserIdentifier
     exposing
         ( UserIdentifier
-        , threeLetterSpaceRandom
+        , threeLetterSpaceIntRandom
         , updateInitialSetUp
         , userIdentifierInit
         )
@@ -59,8 +59,8 @@ letterSpace =
     caseCount * caseLength
 
 
-threeLetterSpaceRandom : Generator ThreeLetterSpaceInt
-threeLetterSpaceRandom =
+threeLetterSpaceIntRandom : Generator ThreeLetterSpaceInt
+threeLetterSpaceIntRandom =
     let
         highest : ThreeLetterSpaceInt
         highest =
