@@ -34,9 +34,7 @@ import ModelType
 import Song
     exposing
         ( SongCommenting
-        , SongLikingOrCommenting
         , SongsRemembered
-        , songCommentingInit
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
@@ -50,7 +48,6 @@ import UpdateCommentArea
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusSet
         , updateFocusResult
         , updateFocusSet
         )
