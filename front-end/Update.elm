@@ -54,8 +54,7 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logMakeRequestAndFocus
-        , updateHttpRequestOrResponseTextLog
+        ( updateHttpRequestOrResponseTextLog
         )
 import UpdateRequest
     exposing
