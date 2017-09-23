@@ -43,8 +43,7 @@ import ModelType
         )
 import Request
     exposing
-        ( AwaitingServerResponse
-        , HttpRequestText
+        ( HttpRequestText
         , UriText
         , likeOrCommentRequestUriText
         , relative
@@ -80,11 +79,14 @@ import UpdateResponse
         , updateSongsLatestResponseErr
         , updateSongsLatestResponseOk
         )
+import UpdateStateVector
+    exposing
+        ( stateVector
+        )
 import UpdateType
     exposing
         ( Optional
-            ( Closed
-            , Open
+            ( Open
             )
         )
 import UserIdentifier
@@ -96,23 +98,6 @@ import UserIdentifier
 
 
 -- UPDATE
-
-
-stateVector : Model -> ( AwaitingServerResponse, Optional )
-stateVector model =
-    let
-        commentOptional : Optional
-        commentOptional =
-            case model.songCommenting of
-                Nothing ->
-                    Closed
-
-                Just songCommenting ->
-                    Open
-    in
-    ( model.awaitingServerResponse
-    , commentOptional
-    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
