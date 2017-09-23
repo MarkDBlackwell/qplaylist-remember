@@ -15,7 +15,7 @@
 module UserIdentifier
     exposing
         ( UserIdentifier
-        , threeLetterSpaceHighest
+        , threeLetterSpaceRandom
         , updateInitialSetUp
         , userIdentifierInit
         )
@@ -25,6 +25,10 @@ import Char
         ( KeyCode
         , fromCode
         , toCode
+        )
+import Random
+    exposing
+        ( Generator
         )
 
 
@@ -54,9 +58,14 @@ letterSpace =
     caseCount * caseLength
 
 
-threeLetterSpaceHighest : ThreeLetterSpaceInt
-threeLetterSpaceHighest =
-    (letterSpace ^ 3) - 1
+threeLetterSpaceRandom : Generator Int
+threeLetterSpaceRandom =
+    let
+        threeLetterSpaceHighest : ThreeLetterSpaceInt
+        threeLetterSpaceHighest =
+            (letterSpace ^ 3) - 1
+    in
+    Random.int 0 threeLetterSpaceHighest
 
 
 userIdentifierInit : UserIdentifier

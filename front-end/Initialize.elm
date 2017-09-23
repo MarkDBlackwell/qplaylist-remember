@@ -54,7 +54,7 @@ import Song
         )
 import UserIdentifier
     exposing
-        ( threeLetterSpaceHighest
+        ( threeLetterSpaceRandom
         , userIdentifierInit
         )
 
@@ -91,7 +91,7 @@ init flags =
         songsLatestInit
         flags.songsRemembered
         userIdentifierInit
-    , generate InitialSetUp (Random.int 0 threeLetterSpaceHighest)
+    , generate InitialSetUp threeLetterSpaceRandom
     )
 
 
