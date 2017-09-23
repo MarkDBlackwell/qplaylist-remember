@@ -14,7 +14,8 @@
 
 module UserIdentifier
     exposing
-        ( UserIdentifier
+        ( ThreeLetterSpaceInt
+        , UserIdentifier
         , keyCode2Char
         , letterSpace
         , threeDigits
@@ -30,6 +31,10 @@ import Char
 
 
 -- MODEL
+
+
+type alias ThreeLetterSpaceInt =
+    Int
 
 
 type alias UserIdentifier =
@@ -73,9 +78,9 @@ keyCode2Char keyCode =
     fromCode (baseKeyCode keyCode + (keyCode % caseLength))
 
 
-threeDigits : Int -> List Int
-threeDigits threeLetterSpace =
-    [ (threeLetterSpace // letterSpace // letterSpace) % letterSpace
-    , (threeLetterSpace // letterSpace) % letterSpace
-    , threeLetterSpace % letterSpace
+threeDigits : ThreeLetterSpaceInt -> List Int
+threeDigits threeLetterSpaceInt =
+    [ (threeLetterSpaceInt // letterSpace // letterSpace) % letterSpace
+    , (threeLetterSpaceInt // letterSpace) % letterSpace
+    , threeLetterSpaceInt % letterSpace
     ]

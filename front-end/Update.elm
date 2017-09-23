@@ -22,6 +22,10 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
+import Initialize
+    exposing
+        ( updateInitialSetUp
+        )
 import MessageType
     exposing
         ( Msg(..)
@@ -74,12 +78,6 @@ import UpdateStateVector
     exposing
         ( stateVector
         )
-import UserIdentifier
-    exposing
-        ( UserIdentifier
-        , keyCode2Char
-        , threeDigits
-        )
 
 
 -- UPDATE
@@ -115,17 +113,8 @@ update msg model =
         HttpRequestOrResponseTextLog requestOrResponseLabelText httpRequestOrResponseText ->
             updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText
 
-        InitialSetUp threeLetterSpace ->
-            let
-                userIdentifierNew : UserIdentifier
-                userIdentifierNew =
-                    String.fromList (List.map keyCode2Char (threeDigits threeLetterSpace))
-            in
-            ( { model
-                | userIdentifier = userIdentifierNew
-              }
-            , Cmd.none
-            )
+        InitialSetUp threeLetterSpaceInt ->
+            updateInitialSetUp model threeLetterSpaceInt
 
         LikeButtonProcessHand songsRememberedIndex ->
             updateLikeButtonProcessHand model songsRememberedIndex
