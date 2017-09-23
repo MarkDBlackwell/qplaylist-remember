@@ -29,6 +29,7 @@ import Char
 import Random
     exposing
         ( Generator
+        , int
         )
 
 
@@ -58,14 +59,14 @@ letterSpace =
     caseCount * caseLength
 
 
-threeLetterSpaceRandom : Generator Int
+threeLetterSpaceRandom : Generator ThreeLetterSpaceInt
 threeLetterSpaceRandom =
     let
-        threeLetterSpaceHighest : ThreeLetterSpaceInt
-        threeLetterSpaceHighest =
+        highest : ThreeLetterSpaceInt
+        highest =
             (letterSpace ^ 3) - 1
     in
-    Random.int 0 threeLetterSpaceHighest
+    int 0 highest
 
 
 userIdentifierInit : UserIdentifier
