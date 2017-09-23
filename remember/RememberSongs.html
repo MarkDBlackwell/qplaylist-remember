@@ -30,7 +30,7 @@
 //See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
 //Hide everything from the global namespace, by using an IIFE (Immediately
 //    Invokable Function Expression).
-(function(){
+(function() {
     var keyStorage = 'RememberSongs';
 
 /*
@@ -52,31 +52,31 @@
       ];
     var tempSongsAsString = JSON.stringify(tempSongs);
 
-    //Save data to localStorage.
     //TODO: remove this.
+    //Save data to localStorage.
     window.localStorage.setItem(keyStorage, tempSongsAsString);
 */
 
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-    var storageAvailableShow = function(type) {
+    var storageAvailableCheck = function() {
+        var storage = window['localStorage'],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+    }
+    var storageAvailablePopupMaybe = function() {
         try {
-            var storage = window[type],
-                x = '__storage_test__';
-            storage.setItem(x, x);
-            storage.removeItem(x);
+            storageAvailableCheck();
         }
         catch(e) {
-            window.alert(e);
+            window.alert('Remembering songs (across sessions) is disabled:  ' + e);
         }
     }
-    storageAvailableShow('localStorage');
+    storageAvailablePopupMaybe();
 
-    var storageAvailable = function(type) {
+    var storageAvailable = function() {
         try {
-            var storage = window[type],
-                x = '__storage_test__';
-            storage.setItem(x, x);
-            storage.removeItem(x);
+            storageAvailableCheck();
             return true;
         }
         catch(e) {
@@ -94,18 +94,18 @@
                 storage.length !== 0;
         }
     }
-    var retrieveSongsFromStorage = function(){
-        if (storageAvailable('localStorage')) {
+    var retrieveSongsFromStorage = function() {
+        if (storageAvailable()) {
             return window.localStorage.getItem(keyStorage);
         } else {
             return "[]";
         }
     };
-    //Retrieve data from localStorage.
-    //TODO: If localStorage becomes too small, then use IndexedDB, instead.
+    //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+    //Retrieve data from localStorage.
     var songsAsString = retrieveSongsFromStorage();
-//window.alert(songsAsString);
+//window.alert('Remembered songs: ' + songsAsString);
 
     var songs = JSON.parse(songsAsString);
     
