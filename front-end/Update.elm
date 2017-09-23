@@ -73,6 +73,7 @@ import UpdateLog
 import UpdateRequest
     exposing
         ( updateCommentSendHand
+        , updateLikeButtonProcessHand
         )
 import UpdateResponse
     exposing
@@ -207,36 +208,7 @@ update msg model =
             )
 
         LikeButtonProcessHand songsRememberedIndex ->
-            let
-                likeRequest : Cmd Msg
-                likeRequest =
-                    send LikeResponse (getString likeRequestUriText)
-
-                likeRequestUriText : UriText
-                likeRequestUriText =
-                    likeOrCommentRequestUriText songLikingNew model.userIdentifier "Loved it!"
-
-                songLikingNew : SongLikingOrCommenting
-                songLikingNew =
-                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
-            in
-            --(awaitingServer, commentArea)
-            case stateVector model of
-                ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
-
-                _ ->
-                    ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , awaitingServerResponse = True
-                        , songLiking = songLikingNew
-                      }
-                    , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
-                    )
+            updateLikeButtonProcessHand model songsRememberedIndex
 
         LikeResponse (Err httpError) ->
             updateLikeResponseErr model httpError
