@@ -67,11 +67,15 @@
         }
     }
     var retrieveSongsFromStorage = function() {
-        if (storageIsAvailable()) {
-            return window.localStorage.getItem(keyStorage);
-        } else {
-            return "[]";
+        var defaultValue = "[]";
+        if (! storageIsAvailable()) {
+            return defaultValue;
         }
+        var storage = window.localStorage.getItem(keyStorage);
+        if (null === storage || "" == storage) {
+            return defaultValue;
+        }
+        return storage;
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
     var storageIsAvailable = function() {
@@ -109,9 +113,9 @@
         storage.removeItem(x);
     }
 
-    var keyStorage = 'RememberSongs';
-
     storagePopupMaybe();
+
+    var keyStorage = 'RememberSongs';
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
