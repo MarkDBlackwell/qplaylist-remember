@@ -52,6 +52,8 @@ import Initialize
 import MessageType
     exposing
         ( Msg
+            ( SongsRememberedSave
+            )
         )
 import ModelType
     exposing
@@ -73,6 +75,10 @@ import UpdateLog
         ( logAndFocus
         , logMakeRequestAndFocus
         , logWithoutFocus
+        )
+import UpdateUtilities
+    exposing
+        ( msg2Cmd
         )
 
 
@@ -126,7 +132,10 @@ updateCommentResponseOk model httpResponseText =
                     , songCommenting = songCommentingInit
                     , songsRemembered = songsRememberedNew
                   }
-                , logWithoutFocus "Response"
+                , Cmd.batch
+                    [ msg2Cmd SongsRememberedSave
+                    , logWithoutFocus "Response"
+                    ]
                 )
 
 
@@ -178,7 +187,10 @@ updateLikeResponseOk model httpResponseText =
                     , songLiking = songLikingInit
                     , songsRemembered = songsRememberedNew
                   }
-                , logAndFocus model "Response" ""
+                , Cmd.batch
+                    [ msg2Cmd SongsRememberedSave
+                    , logAndFocus model "Response" ""
+                    ]
                 )
 
 

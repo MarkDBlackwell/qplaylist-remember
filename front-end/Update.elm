@@ -74,6 +74,10 @@ import UpdateStateVector
     exposing
         ( stateVector
         )
+import UpdateUtilities
+    exposing
+        ( msg2Cmd
+        )
 import UserIdentifier
     exposing
         ( updateInitialSetUp
@@ -195,7 +199,10 @@ update msg model =
                             | alertMessageText = alertMessageTextInit
                             , songsRemembered = songsRememberedNew
                           }
-                        , focusInputPossibly model
+                        , Cmd.batch
+                            [ msg2Cmd SongsRememberedSave
+                            , focusInputPossibly model
+                            ]
                         )
 
         SongRememberHand songsLatestIndex ->
@@ -218,7 +225,10 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , songsRemembered = songsRememberedNew
                       }
-                    , focusInputPossibly model
+                    , Cmd.batch
+                        [ msg2Cmd SongsRememberedSave
+                        , focusInputPossibly model
+                        ]
                     )
 
         SongsLatestRefreshHand ->
@@ -229,3 +239,8 @@ update msg model =
 
         SongsLatestResponse (Ok httpResponseText) ->
             updateSongsLatestResponseOk model httpResponseText
+
+        SongsRememberedSave ->
+            ( model
+            , Cmd.none
+            )
