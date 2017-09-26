@@ -31,8 +31,6 @@
 //Hide everything from the global namespace, by using an IIFE (Immediately
 //    Invokable Function Expression).
 (function() {
-    var keyStorage = 'RememberSongs';
-
 /*
     var tempSongs = [
         {
@@ -56,24 +54,26 @@
     //Save data to localStorage.
     window.localStorage.setItem(keyStorage, tempSongsAsString);
 */
-
-    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-    var storageAvailableCheck = function() {
-        var storage = window['localStorage'],
-            x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-    }
-    var storageAvailablePopupMaybe = function() {
+    var retrieveQueryParameterCommentButtons = function() {
+        var queryParametersWithQuestionMark = window.location.search;
+        //Question mark is present, always.
+        var queryParameters = queryParametersWithQuestionMark.slice(1);
         try {
-            storageAvailableCheck();
+            var queryParametersArray = new URLSearchParams(queryParameters);
+            return queryParametersArray.has('comment');
         }
+        //IE and Edge lack the URLSearchParams function.
         catch(e) {
-            window.alert('Remembering songs (across sessions) is disabled:  ' + e);
+            return false;
         }
     }
-    storageAvailablePopupMaybe();
-
+    var retrieveSongsFromStorage = function() {
+        if (storageAvailable()) {
+            return window.localStorage.getItem(keyStorage);
+        } else {
+            return "[]";
+        }
+    }
     var storageAvailable = function() {
         try {
             storageAvailableCheck();
@@ -94,13 +94,26 @@
                 storage.length !== 0;
         }
     }
-    var retrieveSongsFromStorage = function() {
-        if (storageAvailable()) {
-            return window.localStorage.getItem(keyStorage);
-        } else {
-            return "[]";
+    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+    var storageAvailableCheck = function() {
+        var storage = window['localStorage'],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+    }
+    var storageAvailablePopupMaybe = function() {
+        try {
+            storageAvailableCheck();
         }
-    };
+        catch(e) {
+            window.alert('Remembering songs (across sessions) is disabled:  ' + e);
+        }
+    }
+
+    var keyStorage = 'RememberSongs';
+
+    storageAvailablePopupMaybe();
+
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
     //Retrieve data from localStorage.
@@ -109,9 +122,12 @@
 
     var songs = JSON.parse(songsAsString);
     
+    var showCommentButtons = retrieveQueryParameterCommentButtons();
+//window.alert(showCommentButtons);
+
     var node = document.getElementById('main');
     var app = Elm.Main.embed(node, {
-      showCommentButtons: true,
+      showCommentButtons: showCommentButtons,
       songsRemembered: songs
     });
     //Note: if your Elm module is named "MyThing.Root" you
