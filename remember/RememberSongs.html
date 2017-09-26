@@ -54,29 +54,29 @@
     //Save data to localStorage.
     window.localStorage.setItem(keyStorage, tempSongsAsString);
 */
-    var retrieveQueryParameterCommentButtons = function() {
-        var queryParametersWithQuestionMark = window.location.search;
-        //Question mark is present, always.
-        var queryParameters = queryParametersWithQuestionMark.slice(1);
+    var retrieveQueryParameterComment = function() {
+        //Always includes the leading question mark.
+        var queryParameters = window.location.search.slice(1);
+        //IE and Edge lack the URLSearchParams function.
         try {
             var queryParametersArray = new URLSearchParams(queryParameters);
             return queryParametersArray.has('comment');
         }
-        //IE and Edge lack the URLSearchParams function.
         catch(e) {
             return false;
         }
     }
     var retrieveSongsFromStorage = function() {
-        if (storageAvailable()) {
+        if (storageIsAvailable()) {
             return window.localStorage.getItem(keyStorage);
         } else {
             return "[]";
         }
     }
-    var storageAvailable = function() {
+    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+    var storageIsAvailable = function() {
         try {
-            storageAvailableCheck();
+            storageTry();
             return true;
         }
         catch(e) {
@@ -94,25 +94,24 @@
                 storage.length !== 0;
         }
     }
-    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-    var storageAvailableCheck = function() {
-        var storage = window['localStorage'],
-            x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
-    }
-    var storageAvailablePopupMaybe = function() {
+    var storagePopupMaybe = function() {
         try {
-            storageAvailableCheck();
+            storageTry();
         }
         catch(e) {
             window.alert('Remembering songs (across sessions) is disabled:  ' + e);
         }
     }
+    var storageTry = function() {
+        var storage = window['localStorage'],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+    }
 
     var keyStorage = 'RememberSongs';
 
-    storageAvailablePopupMaybe();
+    storagePopupMaybe();
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
@@ -122,7 +121,7 @@
 
     var songs = JSON.parse(songsAsString);
     
-    var showCommentButtons = retrieveQueryParameterCommentButtons();
+    var showCommentButtons = retrieveQueryParameterComment();
 //window.alert(showCommentButtons);
 
     var node = document.getElementById('main');
