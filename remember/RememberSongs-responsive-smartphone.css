@@ -12,3 +12,19 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+@media (max-width: 1024px) {
+    section#comment > button {
+        border-width: .16666667rem;
+/* Override browser & user settings: */
+        font-size: 1.0666667rem; /* basis for em and percentage calculations */
+    }
+    section.songs-group > div > p > button {
+/* Override browser & user settings: */
+        font-size: 11000%;
+    }
+    section.songs-group > p > button {
+/* Override browser & user settings: */
+        font-size: .73333333rem; /* basis for em and percentage calculations */
+    }
+}
