@@ -34,12 +34,6 @@
         }
         return storage;
     }
-    var saveSongs = function(songsRememberedNew) {
-//window.alert('songsRememberedNew: ' + songsRememberedNew);
-        if (storageIsAvailable()) {
-            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
-        }
-    }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
     var storageIsAvailable = function() {
         try {
@@ -88,7 +82,11 @@
       songsRemembered: songsRemembered
     });
 
-    app.ports.updateLocalStorage.subscribe(songsRememberedNew => {
-        saveSongs(songsRememberedNew);
+    //Don't use arrow function (fat tag), because IE 11 doesn't support it.
+    app.ports.updateLocalStorage.subscribe(function(songsRememberedNew) {
+//window.alert('songsRememberedNew: ' + songsRememberedNew);
+        if (storageIsAvailable()) {
+            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
+        }
     });
 })();
