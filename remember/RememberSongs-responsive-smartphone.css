@@ -13,47 +13,17 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@media (orientation: landscape) and (max-width:  1024px) and (min-width:  767.5px),
-       (orientation: portrait ) and (max-height: 1024px) and (min-height: 767.5px) {
+@media (orientation: portrait ) and (max-height: 1024px) and (min-height: 0px),
+       (orientation: landscape) and (max-width:  1024px) and (min-width:  0px) {
     :root {
-        font-size: 13px; /* basis for rem calculations */
+        font-size: 19px; /* basis for rem calculations */
     }
-/*
-        font-size: 1.3rem; /* basis for em and percentage calculations */
-*/
-    section#comment > button {
-/* Override browser & user settings: */
-    }
-/*
-        font-size: 15000%;
-*/
     section.songs-group > div > p > button {
 /* Override browser & user settings: */
+        font-size: 14000%;
     }
-/*
-        font-size: 1.1rem; /* basis for em and percentage calculations */
-*/
     section.songs-group > p > button {
 /* Override browser & user settings: */
+        font-size: .9rem; /* basis for em and percentage calculations */
     }
-}
-@media (orientation: landscape) and (max-width:  425px) and (min-width:  374.5px),
-       (orientation: portrait ) and (max-height: 425px) and (min-height: 374.5px) {
-    :root {
-        font-size: 11px; /* basis for rem calculations */
-    }
-}
-@media (orientation: landscape) and (max-width:  768px) and (min-width:  424.5px),
-       (orientation: portrait ) and (max-height: 768px) and (min-height: 424.5px) {
-    :root {
-        font-size: 9px; /* basis for rem calculations */
-    }
-}
-@media (orientation: landscape) and (max-width:  375px) and (min-width:  319.5px),
-       (orientation: portrait ) and (max-height: 375px) and (min-height: 319.5px) {
-        font-size: 7px; /* basis for rem calculations */
-}
-@media (orientation: landscape) and (max-width:  320px),
-       (orientation: portrait ) and (max-height: 320px) {
-        font-size: 5px; /* basis for rem calculations */
 }
