@@ -8,6 +8,7 @@
 /index.html
 /remember/Main.js
 /remember/comments.txt
+/remember/php_errorlog
 /wtmdapp/LatestFive.json
 
 *.stackdump
