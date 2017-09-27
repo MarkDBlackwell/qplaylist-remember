@@ -241,6 +241,11 @@ update msg model =
             updateSongsLatestResponseOk model httpResponseText
 
         SongsRememberedSave ->
-            ( model
-            , Cmd.none
-            )
+            updateSongsRememberedSave model
+
+
+updateSongsRememberedSave : Model -> ( Model, Cmd Msg )
+updateSongsRememberedSave model =
+    ( model
+    , Cmd.none
+    )
