@@ -11,11 +11,10 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-   See http://trentwalton.com/2013/01/16/windows-phone-8-viewport-fix/
-
-   Keep this as the first script in <head>.
 */
+
+//See http://trentwalton.com/2013/01/16/windows-phone-8-viewport-fix/
+//Keep this as the first script in <head>.
 
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 	var msViewportStyle = document.createElement('style');
