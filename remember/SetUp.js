@@ -36,15 +36,21 @@
     }
     var saveSongs = function(songsRememberedNew) {
 //window.alert('songsRememberedNew: ' + songsRememberedNew);
-        window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
+        if (storageIsAvailable()) {
+            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
+        }
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
     var storageIsAvailable = function() {
         try {
-            storageTry();
+            var storage = window.localStorage;
+            var x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
             return true;
         }
         catch(e) {
+            storagePopup(e);
             return e instanceof DOMException && (
                 // everything except Firefox
                 e.code === 22 ||
@@ -56,25 +62,13 @@
                 // Firefox
                 e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
                 // acknowledge QuotaExceededError only if there's something already stored
-                storage.length !== 0;
+                storageMy.length !== 0;
         }
     }
-    var storagePopupMaybe = function() {
-        try {
-            storageTry();
-        }
-        catch(e) {
-            window.alert('Remembering songs (across sessions) is disabled:  ' + e);
-        }
-    }
-    var storageTry = function() {
-        var storage = window['localStorage'],
-            x = '__storage_test__';
-        storage.setItem(x, x);
-        storage.removeItem(x);
+    var storagePopup = function(e) {
+        window.alert('Remembering songs (across sessions) is disabled:  ' + e);
     }
 
-    storagePopupMaybe();
     //resetSongsDevelopmentOnly();
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
