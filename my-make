@@ -2,4 +2,4 @@
 # Copyright (C) 2017 Mark D. Blackwell.
 
 elm-format --yes front-end/ && \
-elm-make --warn --output=remember/RememberSongs.js front-end/Main.elm
+elm-make --warn --output=remember/Main.js front-end/Main.elm
