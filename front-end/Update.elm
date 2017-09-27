@@ -12,7 +12,7 @@
 -}
 
 
-port module Update
+module Update
     exposing
         ( update
         )
@@ -38,6 +38,10 @@ import Song
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
         , songsRememberedWithoutOne
+        )
+import SongPort
+    exposing
+        ( songsRememberedSave
         )
 import UpdateCommentArea
     exposing
@@ -241,14 +245,4 @@ update msg model =
             updateSongsLatestResponseOk model httpResponseText
 
         SongsRememberedSave ->
-            updateSongsRememberedSave model
-
-
-port updateLocalStorage : SongsRemembered -> Cmd msg
-
-
-updateSongsRememberedSave : Model -> ( Model, Cmd Msg )
-updateSongsRememberedSave model =
-    ( model
-    , updateLocalStorage model.songsRemembered
-    )
+            songsRememberedSave model
