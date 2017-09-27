@@ -12,7 +12,7 @@
 -}
 
 
-module Update
+port module Update
     exposing
         ( update
         )
@@ -244,8 +244,11 @@ update msg model =
             updateSongsRememberedSave model
 
 
+port updateLocalStorage : SongsRemembered -> Cmd msg
+
+
 updateSongsRememberedSave : Model -> ( Model, Cmd Msg )
 updateSongsRememberedSave model =
     ( model
-    , Cmd.none
+    , updateLocalStorage model.songsRemembered
     )
