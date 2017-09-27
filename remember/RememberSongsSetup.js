@@ -5,28 +5,9 @@
 
     var keyStorage = 'RememberSongs';
 
-    //TODO: remove this.
-    var resetSongs = function() {
-        var tempSongs = [
-            {
-              artist: "Vance Joy",
-              likedOrCommented: true,
-              title: "Lay It On Me",
-              time: "7:26 AM",
-              timestamp: "2017 08 31 07 26"
-            },
-            {
-              artist: "The Family Crest",
-              likedOrCommented: false,
-              title: "Mirror Love",
-              time: "7:22 AM",
-              timestamp: "2017 08 31 07 22"
-            },
-          ];
+    var resetSongsDevelopmentOnly = function() {
+        var tempSongs = [];
         var tempSongsAsString = JSON.stringify(tempSongs);
-
-        //Save data to localStorage.
-//window.alert('keyStorage: ' + keyStorage);
         window.localStorage.setItem(keyStorage, tempSongsAsString);
     }
     var retrieveQueryParameterComment = function() {
@@ -47,12 +28,15 @@
             return defaultValue;
         }
         var storage = window.localStorage.getItem(keyStorage);
-//window.alert('keyStorage: ' + keyStorage);
 //window.alert('storage: ' + storage);
         if (null === storage || "" == storage) {
             return defaultValue;
         }
         return storage;
+    }
+    var saveSongs = function(songsRememberedNew) {
+//window.alert('songsRememberedNew: ' + songsRememberedNew);
+        window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
     var storageIsAvailable = function() {
@@ -89,14 +73,9 @@
         storage.setItem(x, x);
         storage.removeItem(x);
     }
-    var saveNewSongs = function(songsRememberedNew) {
-//window.alert('songsRememberedNew: ' + songsRememberedNew);
-        window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
-    }
 
     storagePopupMaybe();
-
-    //resetSongs();
+    //resetSongsDevelopmentOnly();
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
@@ -104,7 +83,7 @@
     var songsAsString = retrieveSongsFromStorage();
 //window.alert('songsAsString: ' + songsAsString);
 
-    var songs = JSON.parse(songsAsString);
+    var songsRemembered = JSON.parse(songsAsString);
     
     var showCommentButtons = retrieveQueryParameterComment();
 //window.alert(showCommentButtons);
@@ -112,9 +91,10 @@
     var node = document.getElementById('main');
     var app = Elm.Main.embed(node, {
       showCommentButtons: showCommentButtons,
-      songsRemembered: songs
+      songsRemembered: songsRemembered
     });
-    //Note: if your Elm module is named "MyThing.Root" you
-    //would call "Elm.MyThing.Root.embed(node)" instead.
-    //app.ports.updateLocalStorage.subscribe(saveNewSongs(songsRememberedNew));
+
+    app.ports.updateLocalStorage.subscribe(songsRememberedNew => {
+        saveSongs(songsRememberedNew);
+    });
 })();
