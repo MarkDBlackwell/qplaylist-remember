@@ -307,24 +307,24 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             List.head (songsLatestIndexFilterMap songRemembered)
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
-        songsRememberedSwapOne songRemembered songLatest =
+        songsRememberedSwapOne songRememberedSelected songLatest =
             let
-                songRememberedUpdated : SongRemembered
-                songRememberedUpdated =
+                songRememberedSelectedUpdated : SongRemembered
+                songRememberedSelectedUpdated =
                     SongRemembered
-                        songRemembered.artist
-                        songRemembered.likedOrCommented
+                        songRememberedSelected.artist
+                        songRememberedSelected.likedOrCommented
                         songLatest.time
                         songLatest.timestamp
-                        songRemembered.title
+                        songRememberedSelected.title
             in
-            case songsLatestIndexFilterMapIndex songRemembered of
+            case songsLatestIndexFilterMapIndex songRememberedSelected of
                 Nothing ->
                     songsRemembered
 
                 Just songsLatestIndexFilterMapIndex ->
                     List.take songsRememberedIndex songsRemembered
-                        ++ [ songRememberedUpdated ]
+                        ++ [ songRememberedSelectedUpdated ]
                         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
     in
     case songRememberedSelected of
