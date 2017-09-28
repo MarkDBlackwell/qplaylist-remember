@@ -276,8 +276,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 Just songsLatestIndex ->
                     songsLatestSelectOne songsLatest songsLatestIndex
 
-        songRememberedSelected : Maybe SongRemembered
-        songRememberedSelected =
+        songRememberedSelectedMaybe : Maybe SongRemembered
+        songRememberedSelectedMaybe =
             songsRememberedSelectOne songsRemembered songsRememberedIndex
 
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
@@ -327,7 +327,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         ++ [ songUpdated ]
                         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
     in
-    case songRememberedSelected of
+    case songRememberedSelectedMaybe of
         Nothing ->
             songsRemembered
 
