@@ -39,9 +39,14 @@ import ModelType
 import Song
     exposing
         ( SongLikingOrCommenting
+        , SongsRemembered
         , SongsRememberedIndex
         , songCommentingInit
         , songLikingOrCommentingMaybe
+        )
+import SongUpdate
+    exposing
+        ( songsRememberedUpdateTimestamp
         )
 import UpdateFocus
     exposing
@@ -88,7 +93,11 @@ updateCommentAreaOpenHand model songsRememberedIndex =
     let
         songCommentingNew : SongLikingOrCommenting
         songCommentingNew =
-            songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
+            songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
+
+        songsRememberedNew : SongsRemembered
+        songsRememberedNew =
+            songsRememberedUpdateTimestamp model songsRememberedIndex
     in
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -111,6 +120,7 @@ updateCommentAreaOpenHand model songsRememberedIndex =
                 | alertMessageText = alertMessageTextInit
                 , commentText = commentTextInit
                 , songCommenting = songCommentingNew
+                , songsRemembered = songsRememberedNew
               }
               --'focusInputPossibly' doesn't work, here:
             , focusSet "input"

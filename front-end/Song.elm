@@ -35,7 +35,10 @@ module Song
         , songLikingOrCommentingMaybe
         , songsLatest2SongsRemembered
         , songsLatestInit
+        , songsLatestSelectOne
         , songsRememberedAppendOneUnique
+        , songsRememberedSelectOne
+        , songsRememberedStartingWith
         , songsRememberedWithoutOne
         )
 
