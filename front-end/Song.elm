@@ -163,8 +163,8 @@ songLatest2SongRemembered song =
         song.title
 
 
-songLatestTimeless : SongLatest -> SongLatest
-songLatestTimeless songLatest =
+songLatest2SongTimeless : SongLatest -> SongLatest
+songLatest2SongTimeless songLatest =
     SongLatest
         songLatest.artist
         ""
@@ -191,8 +191,8 @@ songRemembered2SongLatest song =
         song.title
 
 
-songRememberedTimeless : SongRemembered -> SongLatest
-songRememberedTimeless songRemembered =
+songRemembered2SongTimeless : SongRemembered -> SongLatest
+songRemembered2SongTimeless songRemembered =
     SongLatest
         songRemembered.artist
         ""
@@ -222,7 +222,7 @@ songsRemembered2SongsLatest songsRemembered =
 
 songsRemembered2SongsTimeless : SongsRemembered -> SongsLatest
 songsRemembered2SongsTimeless songsRemembered =
-    List.map songRememberedTimeless songsRemembered
+    List.map songRemembered2SongTimeless songsRemembered
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
@@ -234,7 +234,7 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
         Just song ->
             if
                 List.member
-                    (songLatestTimeless song)
+                    (songLatest2SongTimeless song)
                     (songsRemembered2SongsTimeless songsRemembered)
             then
                 songsRemembered
@@ -273,7 +273,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                         songsMatchTimeless : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatchTimeless songRemembered ( songLatestIndex, songLatest ) =
-                            if songRememberedTimeless songRemembered == songLatestTimeless songLatest then
+                            if songRemembered2SongTimeless songRemembered == songLatest2SongTimeless songLatest then
                                 Just songLatestIndex
                             else
                                 Nothing
