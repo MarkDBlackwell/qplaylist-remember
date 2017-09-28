@@ -13,8 +13,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-@media (orientation: portrait ) and (max-height: 1024px) and (min-height: 0px),
-       (orientation: landscape) and (max-width:  1024px) and (min-width:  0px) {
+@media (orientation: landscape) and (max-width:  1023.9px),
+       (orientation: portrait ) and (max-height: 1023.9px) {
     :root {
         font-size: 19px; /* basis for rem calculations */
     }
@@ -29,4 +29,8 @@
 /* Override browser & user settings: */
         font-size: .9rem; /* basis for em and percentage calculations */
     }
+    section#songs-remembered > p > button {
+        margin-bottom: 1.2em;
+    }
+
 }
