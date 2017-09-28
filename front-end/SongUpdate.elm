@@ -37,15 +37,6 @@ import Song
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songRememberedUpdated : SongRemembered -> SongLatest -> SongRemembered
-        songRememberedUpdated songRemembered songLatest =
-            SongRemembered
-                songRemembered.artist
-                songRemembered.likedOrCommented
-                songLatest.time
-                songLatest.timestamp
-                songRemembered.title
-
         songsLatestIndexes : List SongsLatestIndex
         songsLatestIndexes =
             List.range 0 (List.length songsLatest - 1)
@@ -104,6 +95,16 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRemembered songLatest =
+            let
+                songRememberedUpdated : SongRemembered -> SongLatest -> SongRemembered
+                songRememberedUpdated songRemembered songLatest =
+                    SongRemembered
+                        songRemembered.artist
+                        songRemembered.likedOrCommented
+                        songLatest.time
+                        songLatest.timestamp
+                        songRemembered.title
+            in
             case songsLatestIndexFilterMapIndex songRemembered of
                 Nothing ->
                     songsRemembered
