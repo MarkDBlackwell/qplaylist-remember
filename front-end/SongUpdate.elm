@@ -37,22 +37,6 @@ import Song
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songLatestStrip : SongLatest -> SongLatest
-        songLatestStrip songLatest =
-            SongLatest
-                songLatest.artist
-                ""
-                ""
-                songLatest.title
-
-        songRememberedStrip : SongRemembered -> SongLatest
-        songRememberedStrip songRemembered =
-            SongLatest
-                songRemembered.artist
-                ""
-                ""
-                songRemembered.title
-
         songRememberedUpdated : SongRemembered -> SongLatest -> SongRemembered
         songRememberedUpdated songRemembered songLatest =
             SongRemembered
@@ -79,6 +63,23 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                         songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatch songRemembered ( songLatestIndex, songLatest ) =
+                            let
+                                songLatestStrip : SongLatest -> SongLatest
+                                songLatestStrip songLatest =
+                                    SongLatest
+                                        songLatest.artist
+                                        ""
+                                        ""
+                                        songLatest.title
+
+                                songRememberedStrip : SongRemembered -> SongLatest
+                                songRememberedStrip songRemembered =
+                                    SongLatest
+                                        songRemembered.artist
+                                        ""
+                                        ""
+                                        songRemembered.title
+                            in
                             if songRememberedStrip songRemembered == songLatestStrip songLatest then
                                 Just songLatestIndex
                             else
