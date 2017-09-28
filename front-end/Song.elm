@@ -220,6 +220,11 @@ songsRemembered2SongsLatest songsRemembered =
     List.map songRemembered2SongLatest songsRemembered
 
 
+songsRemembered2SongsTimeless : SongsRemembered -> SongsLatest
+songsRemembered2SongsTimeless songsRemembered =
+    List.map songRememberedTimeless songsRemembered
+
+
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
     case songsLatestSelectOne songsLatest songsLatestIndex of
@@ -229,8 +234,8 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
         Just song ->
             if
                 List.member
-                    song
-                    (songsRemembered2SongsLatest songsRemembered)
+                    (songLatestTimeless song)
+                    (songsRemembered2SongsTimeless songsRemembered)
             then
                 songsRemembered
             else
