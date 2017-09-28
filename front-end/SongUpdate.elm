@@ -37,11 +37,6 @@ import Song
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsLatestIndexes : List SongsLatestIndex
-        songsLatestIndexes =
-            List.range 0 (List.length songsLatest - 1)
-
-        --------
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndex songRemembered =
             let
@@ -50,6 +45,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     let
                         songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
                         songsLatestWithIndexes =
+                            let
+                                songsLatestIndexes : List SongsLatestIndex
+                                songsLatestIndexes =
+                                    List.range 0 (List.length songsLatest - 1)
+                            in
                             List.map2 (,) songsLatestIndexes songsLatest
 
                         songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
