@@ -216,6 +216,11 @@ songsLatest2SongsRemembered songsLatest =
     List.map songLatest2SongRemembered songsLatest
 
 
+songsLatestIndexes : SongsLatest -> List SongsLatestIndex
+songsLatestIndexes songsLatest =
+    List.range 0 (List.length songsLatest - 1)
+
+
 songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
 songsLatestSelectOne songsLatest songsLatestIndex =
     List.head (songsLatestStartingWith songsLatest songsLatestIndex)
@@ -224,6 +229,11 @@ songsLatestSelectOne songsLatest songsLatestIndex =
 songsLatestStartingWith : SongsLatest -> SongsLatestIndex -> SongsLatest
 songsLatestStartingWith songsLatest songsLatestIndex =
     List.drop songsLatestIndex songsLatest
+
+
+songsLatestWithIndexes : SongsLatest -> List ( SongsLatestIndex, SongLatest )
+songsLatestWithIndexes songsLatest =
+    List.map2 (,) (songsLatestIndexes songsLatest) songsLatest
 
 
 songsRemembered2SongsLatest : SongsRemembered -> SongsLatest
@@ -286,15 +296,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
                 songsLatestIndexFilterMap songRemembered =
                     let
-                        songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
-                        songsLatestWithIndexes =
-                            let
-                                songsLatestIndexes : List SongsLatestIndex
-                                songsLatestIndexes =
-                                    List.range 0 (List.length songsLatest - 1)
-                            in
-                            List.map2 (,) songsLatestIndexes songsLatest
-
                         songsMatchTimelessWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatchTimelessWithIndex ( songLatestIndex, songLatest ) =
                             if songLatestRememberedMatchTimeless songLatest songRemembered then
@@ -302,7 +303,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             else
                                 Nothing
                     in
-                    List.filterMap songsMatchTimelessWithIndex songsLatestWithIndexes
+                    List.filterMap songsMatchTimelessWithIndex (songsLatestWithIndexes songsLatest)
             in
             List.head (songsLatestIndexFilterMap songRemembered)
 
