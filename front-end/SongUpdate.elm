@@ -70,19 +70,20 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestWithIndexes =
             List.map2 (,) songsLatestIndexes songsLatest
 
-        songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
-        songsMatch songRemembered ( songLatestIndex, songLatest ) =
-            if songRememberedStrip songRemembered == songLatestStrip songLatest then
-                Just songLatestIndex
-            else
-                Nothing
-
         --------
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndex songRemembered =
             let
                 songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
                 songsLatestIndexFilterMap songRemembered =
+                    let
+                        songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
+                        songsMatch songRemembered ( songLatestIndex, songLatest ) =
+                            if songRememberedStrip songRemembered == songLatestStrip songLatest then
+                                Just songLatestIndex
+                            else
+                                Nothing
+                    in
                     List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
             in
             List.head (songsLatestIndexFilterMap songRemembered)
