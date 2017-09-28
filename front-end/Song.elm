@@ -163,6 +163,15 @@ songLatest2SongRemembered song =
         song.title
 
 
+songLatestTimeless : SongLatest -> SongLatest
+songLatestTimeless songLatest =
+    SongLatest
+        songLatest.artist
+        ""
+        ""
+        songLatest.title
+
+
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     case songsRememberedSelectOne songsRemembered songsRememberedIndex of
@@ -180,6 +189,15 @@ songRemembered2SongLatest song =
         song.time
         song.timestamp
         song.title
+
+
+songRememberedTimeless : SongRemembered -> SongLatest
+songRememberedTimeless songRemembered =
+    SongLatest
+        songRemembered.artist
+        ""
+        ""
+        songRemembered.title
 
 
 songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
@@ -250,24 +268,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                         songsMatchTimeless : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatchTimeless songRemembered ( songLatestIndex, songLatest ) =
-                            let
-                                songLatestStrip : SongLatest -> SongLatest
-                                songLatestStrip songLatest =
-                                    SongLatest
-                                        songLatest.artist
-                                        ""
-                                        ""
-                                        songLatest.title
-
-                                songRememberedStrip : SongRemembered -> SongLatest
-                                songRememberedStrip songRemembered =
-                                    SongLatest
-                                        songRemembered.artist
-                                        ""
-                                        ""
-                                        songRemembered.title
-                            in
-                            if songRememberedStrip songRemembered == songLatestStrip songLatest then
+                            if songRememberedTimeless songRemembered == songLatestTimeless songLatest then
                                 Just songLatestIndex
                             else
                                 Nothing
