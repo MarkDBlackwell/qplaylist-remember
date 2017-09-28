@@ -81,6 +81,12 @@ type alias SongRemembered =
     }
 
 
+type alias SongTimeless =
+    { artist : Artist
+    , title : Title
+    }
+
+
 type alias SongsLatest =
     List SongLatest
 
@@ -95,6 +101,10 @@ type alias SongsRemembered =
 
 type alias SongsRememberedIndex =
     Int
+
+
+type alias SongsTimeless =
+    List SongTimeless
 
 
 type alias Time =
@@ -163,12 +173,10 @@ songLatest2SongRemembered song =
         song.title
 
 
-songLatest2SongTimeless : SongLatest -> SongLatest
+songLatest2SongTimeless : SongLatest -> SongTimeless
 songLatest2SongTimeless songLatest =
-    SongLatest
+    SongTimeless
         songLatest.artist
-        ""
-        ""
         songLatest.title
 
 
@@ -191,12 +199,10 @@ songRemembered2SongLatest song =
         song.title
 
 
-songRemembered2SongTimeless : SongRemembered -> SongLatest
+songRemembered2SongTimeless : SongRemembered -> SongTimeless
 songRemembered2SongTimeless songRemembered =
-    SongLatest
+    SongTimeless
         songRemembered.artist
-        ""
-        ""
         songRemembered.title
 
 
@@ -220,7 +226,7 @@ songsRemembered2SongsLatest songsRemembered =
     List.map songRemembered2SongLatest songsRemembered
 
 
-songsRemembered2SongsTimeless : SongsRemembered -> SongsLatest
+songsRemembered2SongsTimeless : SongsRemembered -> SongsTimeless
 songsRemembered2SongsTimeless songsRemembered =
     List.map songRemembered2SongTimeless songsRemembered
 
