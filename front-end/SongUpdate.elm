@@ -75,10 +75,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songLatest.timestamp
                 songRemembered.title
 
-        songsLatestIndexes : List SongsLatestIndex
-        songsLatestIndexes =
-            List.range 0 (List.length songsLatest - 1)
-
         songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
         songsLatestIndexFilterMap songRemembered =
             List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
@@ -86,6 +82,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndex songRemembered =
             List.head (songsLatestIndexFilterMap songRemembered)
+
+        songsLatestIndexes : List SongsLatestIndex
+        songsLatestIndexes =
+            List.range 0 (List.length songsLatest - 1)
 
         songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
         songsLatestWithIndexes =
