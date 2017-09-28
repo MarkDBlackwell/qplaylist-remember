@@ -52,7 +52,7 @@ import Initialize
 import MessageType
     exposing
         ( Msg
-            ( SongsRememberedUpdate
+            ( SongsRememberedStore
             )
         )
 import ModelType
@@ -133,7 +133,7 @@ commentResponseOk model httpResponseText =
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch
-                    [ msg2Cmd SongsRememberedUpdate
+                    [ msg2Cmd SongsRememberedStore
                     , logWithoutFocus "Response"
                     ]
                 )
@@ -188,7 +188,7 @@ likeResponseOk model httpResponseText =
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch
-                    [ msg2Cmd SongsRememberedUpdate
+                    [ msg2Cmd SongsRememberedStore
                     , logAndFocus model "Response" ""
                     ]
                 )
