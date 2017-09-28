@@ -281,14 +281,14 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             in
                             List.map2 (,) songsLatestIndexes songsLatest
 
-                        songsMatchTimelessWithIndex : SongTimeless -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
-                        songsMatchTimelessWithIndex songTimeless ( songLatestIndex, songLatest ) =
-                            if songTimeless == songLatest2SongTimeless songLatest then
+                        songsMatchTimelessWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
+                        songsMatchTimelessWithIndex ( songLatestIndex, songLatest ) =
+                            if songRememberedTimeless == songLatest2SongTimeless songLatest then
                                 Just songLatestIndex
                             else
                                 Nothing
                     in
-                    List.filterMap (songsMatchTimelessWithIndex songRememberedTimeless) songsLatestWithIndexes
+                    List.filterMap songsMatchTimelessWithIndex songsLatestWithIndexes
             in
             List.head (songsLatestIndexFilterMap songRemembered)
 
