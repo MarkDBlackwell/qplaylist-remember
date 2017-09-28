@@ -180,6 +180,11 @@ songLatest2SongTimeless songLatest =
         songLatest.title
 
 
+songLatestRememberedMatchTimeless : SongLatest -> SongRemembered -> Bool
+songLatestRememberedMatchTimeless songLatest songRemembered =
+    songLatest2SongTimeless songLatest == songRemembered2SongTimeless songRemembered
+
+
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     case songsRememberedSelectOne songsRemembered songsRememberedIndex of
@@ -268,10 +273,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
                 songsLatestIndexFilterMap songRemembered =
                     let
-                        songRememberedTimeless : SongTimeless
-                        songRememberedTimeless =
-                            songRemembered2SongTimeless songRemembered
-
                         songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
                         songsLatestWithIndexes =
                             let
@@ -281,11 +282,9 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             in
                             List.map2 (,) songsLatestIndexes songsLatest
 
-                        --songLatestRememberedMatchTimeless : SongLatest -> SongRemembered -> Bool
-                        --songLatestRememberedMatchTimeless songLatest songRemembered =
                         songsMatchTimelessWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatchTimelessWithIndex ( songLatestIndex, songLatest ) =
-                            if songRememberedTimeless == songLatest2SongTimeless songLatest then
+                            if songLatestRememberedMatchTimeless songLatest songRemembered then
                                 Just songLatestIndex
                             else
                                 Nothing
