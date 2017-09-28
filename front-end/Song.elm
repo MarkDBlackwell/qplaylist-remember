@@ -248,8 +248,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             in
                             List.map2 (,) songsLatestIndexes songsLatest
 
-                        songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
-                        songsMatch songRemembered ( songLatestIndex, songLatest ) =
+                        songsMatchTimeless : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
+                        songsMatchTimeless songRemembered ( songLatestIndex, songLatest ) =
                             let
                                 songLatestStrip : SongLatest -> SongLatest
                                 songLatestStrip songLatest =
@@ -272,7 +272,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             else
                                 Nothing
                     in
-                    List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
+                    List.filterMap (songsMatchTimeless songRemembered) songsLatestWithIndexes
             in
             List.head (songsLatestIndexFilterMap songRemembered)
 
