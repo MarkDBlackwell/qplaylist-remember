@@ -307,15 +307,15 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             List.head (songsLatestIndexFilterMap songRemembered)
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
-        songsRememberedSwapOne songRememberedSelected songLatest =
+        songsRememberedSwapOne songRememberedSelected songLatestSelected =
             let
-                songRememberedSelectedUpdated : SongRemembered
-                songRememberedSelectedUpdated =
+                songUpdated : SongRemembered
+                songUpdated =
                     SongRemembered
                         songRememberedSelected.artist
                         songRememberedSelected.likedOrCommented
-                        songLatest.time
-                        songLatest.timestamp
+                        songLatestSelected.time
+                        songLatestSelected.timestamp
                         songRememberedSelected.title
             in
             case songsLatestIndexFilterMapIndex songRememberedSelected of
@@ -324,7 +324,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                 Just songsLatestIndexFilterMapIndex ->
                     List.take songsRememberedIndex songsRemembered
-                        ++ [ songRememberedSelectedUpdated ]
+                        ++ [ songUpdated ]
                         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
     in
     case songRememberedSelected of
@@ -332,7 +332,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRememberedSelected ->
-            case songLatestSelected (songsLatestIndexFilterMapIndex songRememberedSelected) of
+            let
+                songsLatestIndexMaybe : Maybe SongsLatestIndex
+                songsLatestIndexMaybe =
+                    songsLatestIndexFilterMapIndex songRememberedSelected
+            in
+            case songLatestSelected songsLatestIndexMaybe of
                 Nothing ->
                     songsRemembered
 
