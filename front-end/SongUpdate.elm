@@ -37,15 +37,6 @@ import Song
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
-        songLatestSelected songsLatestIndex =
-            case songsLatestIndex of
-                Nothing ->
-                    Nothing
-
-                Just songsLatestIndex ->
-                    songsLatestSelectOne songsLatest songsLatestIndex
-
         songLatestStrip : SongLatest -> SongLatest
         songLatestStrip songLatest =
             SongLatest
@@ -53,10 +44,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 ""
                 ""
                 songLatest.title
-
-        songRememberedSelected : Maybe SongRemembered
-        songRememberedSelected =
-            songsRememberedSelectOne songsRemembered songsRememberedIndex
 
         songRememberedStrip : SongRemembered -> SongLatest
         songRememberedStrip songRemembered =
@@ -75,14 +62,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songLatest.timestamp
                 songRemembered.title
 
-        songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
-        songsLatestIndexFilterMap songRemembered =
-            List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
-
-        songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
-        songsLatestIndexFilterMapIndex songRemembered =
-            List.head (songsLatestIndexFilterMap songRemembered)
-
         songsLatestIndexes : List SongsLatestIndex
         songsLatestIndexes =
             List.range 0 (List.length songsLatest - 1)
@@ -97,6 +76,29 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 Just songLatestIndex
             else
                 Nothing
+
+        --------
+        songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
+        songsLatestIndexFilterMapIndex songRemembered =
+            let
+                songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
+                songsLatestIndexFilterMap songRemembered =
+                    List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
+            in
+            List.head (songsLatestIndexFilterMap songRemembered)
+
+        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
+        songLatestSelected songsLatestIndex =
+            case songsLatestIndex of
+                Nothing ->
+                    Nothing
+
+                Just songsLatestIndex ->
+                    songsLatestSelectOne songsLatest songsLatestIndex
+
+        songRememberedSelected : Maybe SongRemembered
+        songRememberedSelected =
+            songsRememberedSelectOne songsRemembered songsRememberedIndex
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRemembered songLatest =
