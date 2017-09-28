@@ -267,6 +267,19 @@ songsRememberedStartingWith songsRemembered songsRememberedIndex =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
+        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
+        songLatestSelected songsLatestIndex =
+            case songsLatestIndex of
+                Nothing ->
+                    Nothing
+
+                Just songsLatestIndex ->
+                    songsLatestSelectOne songsLatest songsLatestIndex
+
+        songRememberedSelected : Maybe SongRemembered
+        songRememberedSelected =
+            songsRememberedSelectOne songsRemembered songsRememberedIndex
+
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndex songRemembered =
             let
@@ -293,24 +306,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             in
             List.head (songsLatestIndexFilterMap songRemembered)
 
-        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
-        songLatestSelected songsLatestIndex =
-            case songsLatestIndex of
-                Nothing ->
-                    Nothing
-
-                Just songsLatestIndex ->
-                    songsLatestSelectOne songsLatest songsLatestIndex
-
-        songRememberedSelected : Maybe SongRemembered
-        songRememberedSelected =
-            songsRememberedSelectOne songsRemembered songsRememberedIndex
-
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRemembered songLatest =
             let
-                songRememberedUpdated : SongRemembered -> SongLatest -> SongRemembered
-                songRememberedUpdated songRemembered songLatest =
+                songRememberedUpdated : SongRemembered
+                songRememberedUpdated =
                     SongRemembered
                         songRemembered.artist
                         songRemembered.likedOrCommented
@@ -324,7 +324,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                 Just songsLatestIndexFilterMapIndex ->
                     List.take songsRememberedIndex songsRemembered
-                        ++ [ songRememberedUpdated songRemembered songLatest ]
+                        ++ [ songRememberedUpdated ]
                         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
     in
     case songRememberedSelected of
