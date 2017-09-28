@@ -97,7 +97,7 @@ updateCommentAreaOpenHand model songsRememberedIndex =
 
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
-            songsRememberedUpdateTimestamp model songsRememberedIndex
+            songsRememberedUpdateTimestamp model.songsLatest model.songsRemembered songsRememberedIndex
     in
     --(awaitingServer, commentArea)
     case stateVector model of

@@ -17,14 +17,11 @@ module SongUpdate
         ( songsRememberedUpdateTimestamp
         )
 
-import ModelType
-    exposing
-        ( Model
-        )
 import Song
     exposing
         ( SongLatest
         , SongRemembered
+        , SongsLatest
         , SongsLatestIndex
         , SongsRemembered
         , SongsRememberedIndex
@@ -37,8 +34,8 @@ import Song
 -- UPDATE
 
 
-songsRememberedUpdateTimestamp : Model -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestamp model songsRememberedIndex =
+songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
         songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
         songLatestSelected songsLatestIndex =
@@ -47,7 +44,7 @@ songsRememberedUpdateTimestamp model songsRememberedIndex =
                     Nothing
 
                 Just songsLatestIndex ->
-                    songsLatestSelectOne model.songsLatest songsLatestIndex
+                    songsLatestSelectOne songsLatest songsLatestIndex
 
         songLatestStrip : SongLatest -> SongLatest
         songLatestStrip songLatest =
@@ -59,7 +56,7 @@ songsRememberedUpdateTimestamp model songsRememberedIndex =
 
         songRememberedSelected : Maybe SongRemembered
         songRememberedSelected =
-            songsRememberedSelectOne model.songsRemembered songsRememberedIndex
+            songsRememberedSelectOne songsRemembered songsRememberedIndex
 
         songRememberedStrip : SongRemembered -> SongLatest
         songRememberedStrip songRemembered =
@@ -80,7 +77,7 @@ songsRememberedUpdateTimestamp model songsRememberedIndex =
 
         songsLatestIndexes : List SongsLatestIndex
         songsLatestIndexes =
-            List.range 0 (List.length model.songsLatest - 1)
+            List.range 0 (List.length songsLatest - 1)
 
         songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
         songsLatestIndexFilterMap songRemembered =
@@ -92,7 +89,7 @@ songsRememberedUpdateTimestamp model songsRememberedIndex =
 
         songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
         songsLatestWithIndexes =
-            List.map2 (,) songsLatestIndexes model.songsLatest
+            List.map2 (,) songsLatestIndexes songsLatest
 
         songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
         songsMatch songRemembered ( songLatestIndex, songLatest ) =
@@ -105,21 +102,21 @@ songsRememberedUpdateTimestamp model songsRememberedIndex =
         songsRememberedSwapOne songRemembered songLatest =
             case songsLatestIndexFilterMapIndex songRemembered of
                 Nothing ->
-                    model.songsRemembered
+                    songsRemembered
 
                 Just songsLatestIndexFilterMapIndex ->
-                    List.take songsRememberedIndex model.songsRemembered
+                    List.take songsRememberedIndex songsRemembered
                         ++ [ songRememberedUpdated songRemembered songLatest ]
-                        ++ songsRememberedStartingWith model.songsRemembered (songsRememberedIndex + 1)
+                        ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
     in
     case songRememberedSelected of
         Nothing ->
-            model.songsRemembered
+            songsRemembered
 
         Just songRememberedSelected ->
             case songLatestSelected (songsLatestIndexFilterMapIndex songRememberedSelected) of
                 Nothing ->
-                    model.songsRemembered
+                    songsRemembered
 
                 Just songLatestSelected ->
                     songsRememberedSwapOne songRememberedSelected songLatestSelected
