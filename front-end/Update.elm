@@ -41,7 +41,7 @@ import Song
         )
 import SongPort
     exposing
-        ( songsRememberedSave
+        ( songsRememberedUpdate
         )
 import UpdateCommentArea
     exposing
@@ -204,7 +204,7 @@ update msg model =
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
-                            [ msg2Cmd SongsRememberedSave
+                            [ msg2Cmd SongsRememberedUpdate
                             , focusInputPossibly model
                             ]
                         )
@@ -230,7 +230,7 @@ update msg model =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ msg2Cmd SongsRememberedSave
+                        [ msg2Cmd SongsRememberedUpdate
                         , focusInputPossibly model
                         ]
                     )
@@ -244,5 +244,5 @@ update msg model =
         SongsLatestResponse (Ok httpResponseText) ->
             songsLatestResponseOk model httpResponseText
 
-        SongsRememberedSave ->
-            songsRememberedSave model
+        SongsRememberedUpdate ->
+            songsRememberedUpdate model

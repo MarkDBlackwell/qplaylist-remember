@@ -63,4 +63,4 @@ type Msg
     | SongRememberHand SongsLatestIndex
     | SongsLatestRefreshHand
     | SongsLatestResponse (Result Error HttpResponseText)
-    | SongsRememberedSave
+    | SongsRememberedUpdate

@@ -14,7 +14,7 @@
 
 port module SongPort
     exposing
-        ( songsRememberedSave
+        ( songsRememberedUpdate
         )
 
 import MessageType
@@ -37,8 +37,8 @@ import Song
 port updateLocalStorage : SongsRemembered -> Cmd msg
 
 
-songsRememberedSave : Model -> ( Model, Cmd Msg )
-songsRememberedSave model =
+songsRememberedUpdate : Model -> ( Model, Cmd Msg )
+songsRememberedUpdate model =
     ( model
     , updateLocalStorage model.songsRemembered
     )
