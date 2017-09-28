@@ -15,7 +15,7 @@
 module UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusSet
+        , focusSetId
         , updateFocusResult
         , updateFocusSet
         )
@@ -56,11 +56,11 @@ focusInputPossibly model =
             Cmd.none
 
         _ ->
-            focusSet "input"
+            focusSetId "input"
 
 
-focusSet : Id -> Cmd Msg
-focusSet id =
+focusSetId : Id -> Cmd Msg
+focusSetId id =
     msg2Cmd (FocusSet id)
 
 
