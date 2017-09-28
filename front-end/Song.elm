@@ -277,8 +277,8 @@ songsRememberedStartingWith songsRemembered songsRememberedIndex =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
-        songLatestSelected songsLatestIndex =
+        songLatestSelectedMaybe : Maybe SongsLatestIndex -> Maybe SongLatest
+        songLatestSelectedMaybe songsLatestIndex =
             case songsLatestIndex of
                 Nothing ->
                     Nothing
@@ -338,7 +338,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestIndexMaybe =
                     songsLatestIndexFilterMapIndexMaybe songRememberedSelected
             in
-            case songLatestSelected songsLatestIndexMaybe of
+            case songLatestSelectedMaybe songsLatestIndexMaybe of
                 Nothing ->
                     songsRemembered
 
