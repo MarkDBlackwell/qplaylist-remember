@@ -52,8 +52,10 @@ import Request
 import Song
     exposing
         ( SongLikingOrCommenting
+        , SongsRemembered
         , SongsRememberedIndex
         , songLikingOrCommentingMaybe
+        , songsRememberedUpdateTimestamp
         )
 import UpdateFocus
     exposing
@@ -121,7 +123,11 @@ likeButtonProcessHand model songsRememberedIndex =
 
         songLikingNew : SongLikingOrCommenting
         songLikingNew =
-            songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
+            songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
+
+        songsRememberedNew : SongsRemembered
+        songsRememberedNew =
+            songsRememberedUpdateTimestamp model.songsLatest model.songsRemembered songsRememberedIndex
     in
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -137,6 +143,7 @@ likeButtonProcessHand model songsRememberedIndex =
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
                 , songLiking = songLikingNew
+                , songsRemembered = songsRememberedNew
               }
             , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
             )
