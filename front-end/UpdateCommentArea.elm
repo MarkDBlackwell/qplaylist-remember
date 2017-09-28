@@ -43,10 +43,7 @@ import Song
         , SongsRememberedIndex
         , songCommentingInit
         , songLikingOrCommentingMaybe
-        )
-import SongUpdate
-    exposing
-        ( songsRememberedUpdateTimestamp
+        , songsRememberedUpdateTimestamp
         )
 import UpdateFocus
     exposing

@@ -35,10 +35,8 @@ module Song
         , songLikingOrCommentingMaybe
         , songsLatest2SongsRemembered
         , songsLatestInit
-        , songsLatestSelectOne
         , songsRememberedAppendOneUnique
-        , songsRememberedSelectOne
-        , songsRememberedStartingWith
+        , songsRememberedUpdateTimestamp
         , songsRememberedWithoutOne
         )
 
@@ -230,6 +228,99 @@ songsRememberedSelectOne songsRemembered songsRememberedIndex =
 songsRememberedStartingWith : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedStartingWith songsRemembered songsRememberedIndex =
     List.drop songsRememberedIndex songsRemembered
+
+
+songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
+    let
+        songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
+        songsLatestIndexFilterMapIndex songRemembered =
+            let
+                songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
+                songsLatestIndexFilterMap songRemembered =
+                    let
+                        songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
+                        songsLatestWithIndexes =
+                            let
+                                songsLatestIndexes : List SongsLatestIndex
+                                songsLatestIndexes =
+                                    List.range 0 (List.length songsLatest - 1)
+                            in
+                            List.map2 (,) songsLatestIndexes songsLatest
+
+                        songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
+                        songsMatch songRemembered ( songLatestIndex, songLatest ) =
+                            let
+                                songLatestStrip : SongLatest -> SongLatest
+                                songLatestStrip songLatest =
+                                    SongLatest
+                                        songLatest.artist
+                                        ""
+                                        ""
+                                        songLatest.title
+
+                                songRememberedStrip : SongRemembered -> SongLatest
+                                songRememberedStrip songRemembered =
+                                    SongLatest
+                                        songRemembered.artist
+                                        ""
+                                        ""
+                                        songRemembered.title
+                            in
+                            if songRememberedStrip songRemembered == songLatestStrip songLatest then
+                                Just songLatestIndex
+                            else
+                                Nothing
+                    in
+                    List.filterMap (songsMatch songRemembered) songsLatestWithIndexes
+            in
+            List.head (songsLatestIndexFilterMap songRemembered)
+
+        songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
+        songLatestSelected songsLatestIndex =
+            case songsLatestIndex of
+                Nothing ->
+                    Nothing
+
+                Just songsLatestIndex ->
+                    songsLatestSelectOne songsLatest songsLatestIndex
+
+        songRememberedSelected : Maybe SongRemembered
+        songRememberedSelected =
+            songsRememberedSelectOne songsRemembered songsRememberedIndex
+
+        songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
+        songsRememberedSwapOne songRemembered songLatest =
+            let
+                songRememberedUpdated : SongRemembered -> SongLatest -> SongRemembered
+                songRememberedUpdated songRemembered songLatest =
+                    SongRemembered
+                        songRemembered.artist
+                        songRemembered.likedOrCommented
+                        songLatest.time
+                        songLatest.timestamp
+                        songRemembered.title
+            in
+            case songsLatestIndexFilterMapIndex songRemembered of
+                Nothing ->
+                    songsRemembered
+
+                Just songsLatestIndexFilterMapIndex ->
+                    List.take songsRememberedIndex songsRemembered
+                        ++ [ songRememberedUpdated songRemembered songLatest ]
+                        ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
+    in
+    case songRememberedSelected of
+        Nothing ->
+            songsRemembered
+
+        Just songRememberedSelected ->
+            case songLatestSelected (songsLatestIndexFilterMapIndex songRememberedSelected) of
+                Nothing ->
+                    songsRemembered
+
+                Just songLatestSelected ->
+                    songsRememberedSwapOne songRememberedSelected songLatestSelected
 
 
 songsRememberedWithoutOne : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
