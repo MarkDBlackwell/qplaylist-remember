@@ -40,16 +40,6 @@ import Song
 songsRememberedUpdateTimestamp : Model -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp model songsRememberedIndex =
     let
-        {-
-                 songsLatestStripped : SongLatest
-                 songsLatestStripped =
-                     List.map songLatestStrip model.songsLatest
-
-                 songsMatchIndex : SongRemembered -> SongLatest -> Bool
-                 songsMatchIndex songRemembered songLatest =
-
-           List.indexedMap songsMatchIndex songRememberedSelected songsLatestStripped
-        -}
         songLatestSelected : Maybe SongsLatestIndex -> Maybe SongLatest
         songLatestSelected songsLatestIndex =
             case songsLatestIndex of
