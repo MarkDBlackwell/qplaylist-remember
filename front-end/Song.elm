@@ -281,6 +281,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             in
                             List.map2 (,) songsLatestIndexes songsLatest
 
+                        --songLatestRememberedMatchTimeless : SongLatest -> SongRemembered -> Bool
+                        --songLatestRememberedMatchTimeless songLatest songRemembered =
                         songsMatchTimelessWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatchTimelessWithIndex ( songLatestIndex, songLatest ) =
                             if songRememberedTimeless == songLatest2SongTimeless songLatest then
