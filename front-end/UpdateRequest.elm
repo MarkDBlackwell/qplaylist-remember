@@ -14,9 +14,9 @@
 
 module UpdateRequest
     exposing
-        ( updateCommentSendHand
-        , updateLikeButtonProcessHand
-        , updateSongsLatestRefreshHand
+        ( commentSendHand
+        , likeButtonProcessHand
+        , songsLatestRefreshHand
         )
 
 import Alert
@@ -72,8 +72,8 @@ import UpdateStateVector
 -- UPDATE
 
 
-updateCommentSendHand : Model -> ( Model, Cmd Msg )
-updateCommentSendHand model =
+commentSendHand : Model -> ( Model, Cmd Msg )
+commentSendHand model =
     let
         commentRequest : Cmd Msg
         commentRequest =
@@ -108,8 +108,8 @@ updateCommentSendHand model =
                 )
 
 
-updateLikeButtonProcessHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
-updateLikeButtonProcessHand model songsRememberedIndex =
+likeButtonProcessHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
+likeButtonProcessHand model songsRememberedIndex =
     let
         likeRequest : Cmd Msg
         likeRequest =
@@ -142,8 +142,8 @@ updateLikeButtonProcessHand model songsRememberedIndex =
             )
 
 
-updateSongsLatestRefreshHand : Model -> ( Model, Cmd Msg )
-updateSongsLatestRefreshHand model =
+songsLatestRefreshHand : Model -> ( Model, Cmd Msg )
+songsLatestRefreshHand model =
     let
         requestUriText : UriText
         requestUriText =

@@ -14,9 +14,9 @@
 
 module UpdateCommentArea
     exposing
-        ( updateCommentAreaInputTextChangeCaptureHand
-        , updateCommentAreaOpenHand
-        , updateCommentCancelHand
+        ( commentAreaInputTextChangeCaptureHand
+        , commentAreaOpenHand
+        , commentCancelHand
         )
 
 import Alert
@@ -65,8 +65,8 @@ import UpdateType
 -- UPDATE
 
 
-updateCommentAreaInputTextChangeCaptureHand : Model -> String -> ( Model, Cmd Msg )
-updateCommentAreaInputTextChangeCaptureHand model text =
+commentAreaInputTextChangeCaptureHand : Model -> String -> ( Model, Cmd Msg )
+commentAreaInputTextChangeCaptureHand model text =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
@@ -85,8 +85,8 @@ updateCommentAreaInputTextChangeCaptureHand model text =
             )
 
 
-updateCommentAreaOpenHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
-updateCommentAreaOpenHand model songsRememberedIndex =
+commentAreaOpenHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
+commentAreaOpenHand model songsRememberedIndex =
     let
         songCommentingNew : SongLikingOrCommenting
         songCommentingNew =
@@ -124,8 +124,8 @@ updateCommentAreaOpenHand model songsRememberedIndex =
             )
 
 
-updateCommentCancelHand : Model -> ( Model, Cmd Msg )
-updateCommentCancelHand model =
+commentCancelHand : Model -> ( Model, Cmd Msg )
+commentCancelHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->

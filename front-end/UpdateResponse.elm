@@ -14,12 +14,12 @@
 
 module UpdateResponse
     exposing
-        ( updateCommentResponseErr
-        , updateCommentResponseOk
-        , updateLikeResponseErr
-        , updateLikeResponseOk
-        , updateSongsLatestResponseErr
-        , updateSongsLatestResponseOk
+        ( commentResponseErr
+        , commentResponseOk
+        , likeResponseErr
+        , likeResponseOk
+        , songsLatestResponseErr
+        , songsLatestResponseOk
         )
 
 import Alert
@@ -85,8 +85,8 @@ import UpdateUtilities
 -- UPDATE
 
 
-updateCommentResponseErr : Model -> Error -> ( Model, Cmd Msg )
-updateCommentResponseErr model httpError =
+commentResponseErr : Model -> Error -> ( Model, Cmd Msg )
+commentResponseErr model httpError =
     ( { model
         | alertMessageText = alertMessageTextRequestLikeOrComment httpError "comment"
         , awaitingServerResponse = awaitingServerResponseInit
@@ -95,8 +95,8 @@ updateCommentResponseErr model httpError =
     )
 
 
-updateCommentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
-updateCommentResponseOk model httpResponseText =
+commentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+commentResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
         actionDescription =
@@ -139,8 +139,8 @@ updateCommentResponseOk model httpResponseText =
                 )
 
 
-updateLikeResponseErr : Model -> Error -> ( Model, Cmd Msg )
-updateLikeResponseErr model httpError =
+likeResponseErr : Model -> Error -> ( Model, Cmd Msg )
+likeResponseErr model httpError =
     ( { model
         | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
         , awaitingServerResponse = awaitingServerResponseInit
@@ -150,8 +150,8 @@ updateLikeResponseErr model httpError =
     )
 
 
-updateLikeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
-updateLikeResponseOk model httpResponseText =
+likeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+likeResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
         actionDescription =
@@ -194,8 +194,8 @@ updateLikeResponseOk model httpResponseText =
                 )
 
 
-updateSongsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
-updateSongsLatestResponseErr model httpError =
+songsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
+songsLatestResponseErr model httpError =
     let
         actionDescription : AlertMessageText
         actionDescription =
@@ -216,8 +216,8 @@ updateSongsLatestResponseErr model httpError =
     )
 
 
-updateSongsLatestResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
-updateSongsLatestResponseOk model httpResponseText =
+songsLatestResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+songsLatestResponseOk model httpResponseText =
     case decodeSongsLatest httpResponseText of
         Err alertMessageTextDecode ->
             let

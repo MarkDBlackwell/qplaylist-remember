@@ -45,34 +45,34 @@ import SongPort
         )
 import UpdateCommentArea
     exposing
-        ( updateCommentAreaInputTextChangeCaptureHand
-        , updateCommentAreaOpenHand
-        , updateCommentCancelHand
+        ( commentAreaInputTextChangeCaptureHand
+        , commentAreaOpenHand
+        , commentCancelHand
         )
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , updateFocusResult
-        , updateFocusSet
+        , focusResult
+        , focusSet
         )
 import UpdateLog
     exposing
-        ( updateHttpRequestOrResponseTextLog
+        ( httpRequestOrResponseTextLog
         )
 import UpdateRequest
     exposing
-        ( updateCommentSendHand
-        , updateLikeButtonProcessHand
-        , updateSongsLatestRefreshHand
+        ( commentSendHand
+        , likeButtonProcessHand
+        , songsLatestRefreshHand
         )
 import UpdateResponse
     exposing
-        ( updateCommentResponseErr
-        , updateCommentResponseOk
-        , updateLikeResponseErr
-        , updateLikeResponseOk
-        , updateSongsLatestResponseErr
-        , updateSongsLatestResponseOk
+        ( commentResponseErr
+        , commentResponseOk
+        , likeResponseErr
+        , likeResponseOk
+        , songsLatestResponseErr
+        , songsLatestResponseOk
         )
 import UpdateStateVector
     exposing
@@ -95,31 +95,31 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
-            updateCommentAreaInputTextChangeCaptureHand model text
+            commentAreaInputTextChangeCaptureHand model text
 
         CommentAreaOpenHand songsRememberedIndex ->
-            updateCommentAreaOpenHand model songsRememberedIndex
+            commentAreaOpenHand model songsRememberedIndex
 
         CommentCancelHand ->
-            updateCommentCancelHand model
+            commentCancelHand model
 
         CommentResponse (Err httpError) ->
-            updateCommentResponseErr model httpError
+            commentResponseErr model httpError
 
         CommentResponse (Ok httpResponseText) ->
-            updateCommentResponseOk model httpResponseText
+            commentResponseOk model httpResponseText
 
         CommentSendHand ->
-            updateCommentSendHand model
+            commentSendHand model
 
         FocusResult _ ->
-            updateFocusResult model
+            focusResult model
 
         FocusSet id ->
-            updateFocusSet model id
+            focusSet model id
 
         HttpRequestOrResponseTextLog requestOrResponseLabelText httpRequestOrResponseText ->
-            updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText
+            httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText
 
         InitialSetUp threeLetterSpaceInt ->
             ( { model
@@ -129,13 +129,13 @@ update msg model =
             )
 
         LikeButtonProcessHand songsRememberedIndex ->
-            updateLikeButtonProcessHand model songsRememberedIndex
+            likeButtonProcessHand model songsRememberedIndex
 
         LikeResponse (Err httpError) ->
-            updateLikeResponseErr model httpError
+            likeResponseErr model httpError
 
         LikeResponse (Ok httpResponseText) ->
-            updateLikeResponseOk model httpResponseText
+            likeResponseOk model httpResponseText
 
         PageMorphHand ->
             let
@@ -236,13 +236,13 @@ update msg model =
                     )
 
         SongsLatestRefreshHand ->
-            updateSongsLatestRefreshHand model
+            songsLatestRefreshHand model
 
         SongsLatestResponse (Err httpError) ->
-            updateSongsLatestResponseErr model httpError
+            songsLatestResponseErr model httpError
 
         SongsLatestResponse (Ok httpResponseText) ->
-            updateSongsLatestResponseOk model httpResponseText
+            songsLatestResponseOk model httpResponseText
 
         SongsRememberedSave ->
             songsRememberedSave model

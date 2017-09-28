@@ -14,10 +14,10 @@
 
 module UpdateLog
     exposing
-        ( logAndFocus
+        ( httpRequestOrResponseTextLog
+        , logAndFocus
         , logMakeRequestAndFocus
         , logWithoutFocus
-        , updateHttpRequestOrResponseTextLog
         )
 
 import Alert
@@ -78,8 +78,8 @@ logWithoutFocus actionName =
     msg2Cmd (HttpRequestOrResponseTextLog actionName "")
 
 
-updateHttpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
-updateHttpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText =
+httpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
+httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText =
     let
         --Keep for console logging:
         a : String

@@ -15,9 +15,9 @@
 module UpdateFocus
     exposing
         ( focusInputPossibly
+        , focusResult
+        , focusSet
         , focusSetId
-        , updateFocusResult
-        , updateFocusSet
         )
 
 import Dom
@@ -64,15 +64,15 @@ focusSetId id =
     msg2Cmd (FocusSet id)
 
 
-updateFocusResult : Model -> ( Model, Cmd Msg )
-updateFocusResult model =
+focusResult : Model -> ( Model, Cmd Msg )
+focusResult model =
     ( model
     , Cmd.none
     )
 
 
-updateFocusSet : Model -> Id -> ( Model, Cmd Msg )
-updateFocusSet model id =
+focusSet : Model -> Id -> ( Model, Cmd Msg )
+focusSet model id =
     --See:
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
