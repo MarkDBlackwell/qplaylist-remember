@@ -66,10 +66,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestIndexes =
             List.range 0 (List.length songsLatest - 1)
 
-        songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
-        songsLatestWithIndexes =
-            List.map2 (,) songsLatestIndexes songsLatest
-
         --------
         songsLatestIndexFilterMapIndex : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndex songRemembered =
@@ -77,6 +73,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
                 songsLatestIndexFilterMap songRemembered =
                     let
+                        songsLatestWithIndexes : List ( SongsLatestIndex, SongLatest )
+                        songsLatestWithIndexes =
+                            List.map2 (,) songsLatestIndexes songsLatest
+
                         songsMatch : SongRemembered -> ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
                         songsMatch songRemembered ( songLatestIndex, songLatest ) =
                             if songRememberedStrip songRemembered == songLatestStrip songLatest then
