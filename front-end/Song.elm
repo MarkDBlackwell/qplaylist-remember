@@ -310,19 +310,19 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
             let
-                songsTimelessMatchIndexes : SongsLatest -> SongTimeless -> List SongsLatestIndex
-                songsTimelessMatchIndexes songsLatest songTimelessOther =
+                songsTimelessMatchIndexes : SongTimeless -> SongsTimeless -> List SongsTimelessIndex
+                songsTimelessMatchIndexes songTimeless songsTimeless =
                     let
                         songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
-                        songsTimelessMatchWithIndex ( songTimelessIndex, songTimeless ) =
+                        songsTimelessMatchWithIndex ( songsTimelessIndex, songTimelessOther ) =
                             if songTimeless == songTimelessOther then
-                                Just songTimelessIndex
+                                Just songsTimelessIndex
                             else
                                 Nothing
                     in
-                    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes (songsLatest2SongsTimeless songsLatest))
+                    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes songsTimeless)
             in
-            List.head (songsTimelessMatchIndexes songsLatest (songRemembered2SongTimeless songRemembered))
+            List.head (songsTimelessMatchIndexes (songRemembered2SongTimeless songRemembered) (songsLatest2SongsTimeless songsLatest))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
