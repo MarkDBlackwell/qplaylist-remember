@@ -286,7 +286,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 Nothing ->
                     songsRemembered
 
-                Just songsLatestIndexFilterMapIndex ->
+                Just _ ->
                     List.take songsRememberedIndex songsRemembered
                         ++ [ songUpdated songRememberedSelected songLatestSelected ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
