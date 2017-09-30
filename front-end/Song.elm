@@ -184,15 +184,6 @@ songLatest2SongTimeless songLatest =
         songLatest.title
 
 
-
---Possibly unneeded.
-
-
-songTimelessRememberedMatchTimeless : SongTimeless -> SongRemembered -> Bool
-songTimelessRememberedMatchTimeless songTimeless songRemembered =
-    songTimeless == songRemembered2SongTimeless songRemembered
-
-
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     case songsRememberedSelectOne songsRemembered songsRememberedIndex of
@@ -252,15 +243,6 @@ songsLatestStartingWith songsLatest songsLatestIndex =
 startingWith : List a -> Int -> List a
 startingWith listA index =
     List.drop index listA
-
-
-
---Possibly unneeded.
-
-
-songsLatestWithIndexes : SongsLatest -> List ( SongsLatestIndex, SongLatest )
-songsLatestWithIndexes songsLatest =
-    withIndexes songsLatest
 
 
 songsRemembered2SongsLatest : SongsRemembered -> SongsLatest
