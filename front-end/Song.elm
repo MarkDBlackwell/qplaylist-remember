@@ -318,11 +318,6 @@ matchIndexes listA a =
     List.filterMap matchWithIndex (withIndexes listA)
 
 
-songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
-songsTimelessWithIndexes songsTimeless =
-    withIndexes songsTimeless
-
-
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
     List.map2 (,) (indexes listA) listA
