@@ -364,19 +364,42 @@ songsTimelessIndexes songsTimeless =
 songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
 songsTimelessMatchIndexes songsTimeless songTimeless =
     let
-        songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
-        songsTimelessMatchWithIndex ( songsTimelessIndex, songTimelessOther ) =
-            if songTimeless == songTimelessOther then
-                Just songsTimelessIndex
+        matchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
+        matchWithIndex ( index, songTimelessAnother ) =
+            if songTimelessAnother == songTimeless then
+                Just index
             else
                 Nothing
     in
-    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes songsTimeless)
+    List.filterMap matchWithIndex (songsTimelessWithIndexes songsTimeless)
 
 
 songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
 songsTimelessWithIndexes songsTimeless =
     List.map2 (,) (songsTimelessIndexes songsTimeless) songsTimeless
+
+
+indexes : List a -> List Int
+indexes listA =
+    List.range 0 (List.length listA - 1)
+
+
+matchIndexes : List a -> a -> List Int
+matchIndexes listA a =
+    let
+        matchWithIndex : ( Int, a ) -> Maybe Int
+        matchWithIndex ( index, another ) =
+            if another == a then
+                Just index
+            else
+                Nothing
+    in
+    List.filterMap matchWithIndex (withIndexes listA)
+
+
+withIndexes : List a -> List ( Int, a )
+withIndexes listA =
+    List.map2 (,) (indexes listA) listA
 
 
 
