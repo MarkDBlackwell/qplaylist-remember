@@ -159,7 +159,7 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
             songRemembered
 
         Just songLikingOrCommenting ->
-            if songLikingOrCommenting /= songRemembered2SongLatest songRemembered then
+            if songLikingOrCommenting /= song2SongLatest songRemembered then
                 songRemembered
             else
                 { songRemembered
@@ -184,12 +184,7 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
             Nothing
 
         Just song ->
-            Just (songRemembered2SongLatest song)
-
-
-songRemembered2SongLatest : SongRemembered -> SongLatest
-songRemembered2SongLatest songRemembered =
-    song2SongLatest songRemembered
+            Just (song2SongLatest song)
 
 
 song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
