@@ -358,30 +358,17 @@ songsRememberedWithoutOne songsRemembered songsRememberedIndex =
 
 songsTimelessIndexes : SongsTimeless -> List SongsTimelessIndex
 songsTimelessIndexes songsTimeless =
-    List.range 0 (List.length songsTimeless - 1)
-
-
-songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
-songsTimelessMatchIndexes songsTimeless songTimeless =
-    let
-        matchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
-        matchWithIndex ( index, songTimelessAnother ) =
-            if songTimelessAnother == songTimeless then
-                Just index
-            else
-                Nothing
-    in
-    List.filterMap matchWithIndex (songsTimelessWithIndexes songsTimeless)
-
-
-songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
-songsTimelessWithIndexes songsTimeless =
-    List.map2 (,) (songsTimelessIndexes songsTimeless) songsTimeless
+    indexes songsTimeless
 
 
 indexes : List a -> List Int
 indexes listA =
     List.range 0 (List.length listA - 1)
+
+
+songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
+songsTimelessMatchIndexes songsTimeless songTimeless =
+    matchIndexes songsTimeless songTimeless
 
 
 matchIndexes : List a -> a -> List Int
@@ -395,6 +382,11 @@ matchIndexes listA a =
                 Nothing
     in
     List.filterMap matchWithIndex (withIndexes listA)
+
+
+songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
+songsTimelessWithIndexes songsTimeless =
+    withIndexes songsTimeless
 
 
 withIndexes : List a -> List ( Int, a )
