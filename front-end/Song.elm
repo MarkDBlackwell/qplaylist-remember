@@ -259,15 +259,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songLatestSelectedMaybe : Maybe SongsLatestIndex -> Maybe SongLatest
-        songLatestSelectedMaybe songsLatestIndex =
-            case songsLatestIndex of
-                Nothing ->
-                    Nothing
-
-                Just songsLatestIndex ->
-                    selectOne songsLatest songsLatestIndex
-
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
             List.head (matchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
@@ -290,18 +281,27 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     List.take songsRememberedIndex songsRemembered
                         ++ [ songUpdated songRememberedSelected songLatestSelected ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
+
+        songLatestSelectedMaybe : SongsLatestIndex -> Maybe SongLatest
+        songLatestSelectedMaybe songsLatestIndex =
+            selectOne songsLatest songsLatestIndex
     in
     case selectOne songsRemembered songsRememberedIndex of
         Nothing ->
             songsRemembered
 
         Just songRemembered ->
-            case songLatestSelectedMaybe (songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered) of
+            case songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered of
                 Nothing ->
                     songsRemembered
 
-                Just songLatest ->
-                    songsRememberedSwapOne songRemembered songLatest
+                Just songsLatestIndex ->
+                    case songLatestSelectedMaybe songsLatestIndex of
+                        Nothing ->
+                            songsRemembered
+
+                        Just songLatest ->
+                            songsRememberedSwapOne songRemembered songLatest
 
 
 startingWith : List a -> Int -> List a
