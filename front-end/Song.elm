@@ -168,20 +168,23 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
 
 
 songLatest2SongRemembered : SongLatest -> SongRemembered
-songLatest2SongRemembered song =
-    SongRemembered
-        song.artist
-        likedOrCommentedInit
-        song.time
-        song.timestamp
-        song.title
+songLatest2SongRemembered songLatest =
+    song2SongRemembered songLatest
+
+
+song2SongRemembered : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongRemembered
+song2SongRemembered { artist, time, timestamp, title } =
+    SongRemembered artist likedOrCommentedInit time timestamp title
 
 
 songLatest2SongTimeless : SongLatest -> SongTimeless
 songLatest2SongTimeless songLatest =
-    SongTimeless
-        songLatest.artist
-        songLatest.title
+    song2SongTimeless songLatest
+
+
+song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
+song2SongTimeless { artist, title } =
+    SongTimeless artist title
 
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
@@ -195,19 +198,18 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
 
 
 songRemembered2SongLatest : SongRemembered -> SongLatest
-songRemembered2SongLatest song =
-    SongLatest
-        song.artist
-        song.time
-        song.timestamp
-        song.title
+songRemembered2SongLatest songRemembered =
+    song2SongLatest songRemembered
+
+
+song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
+song2SongLatest { artist, time, timestamp, title } =
+    SongLatest artist time timestamp title
 
 
 songRemembered2SongTimeless : SongRemembered -> SongTimeless
 songRemembered2SongTimeless songRemembered =
-    SongTimeless
-        songRemembered.artist
-        songRemembered.title
+    song2SongTimeless songRemembered
 
 
 songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
