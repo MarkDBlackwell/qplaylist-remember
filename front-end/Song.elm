@@ -309,19 +309,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
-            let
-                songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
-                songsTimelessMatchIndexes songsTimeless songTimeless =
-                    let
-                        songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
-                        songsTimelessMatchWithIndex ( songsTimelessIndex, songTimelessOther ) =
-                            if songTimeless == songTimelessOther then
-                                Just songsTimelessIndex
-                            else
-                                Nothing
-                    in
-                    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes songsTimeless)
-            in
             List.head (songsTimelessMatchIndexes (songsLatest2SongsTimeless songsLatest) (songRemembered2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
@@ -372,6 +359,19 @@ songsRememberedWithoutOne songsRemembered songsRememberedIndex =
 songsTimelessIndexes : SongsTimeless -> List SongsTimelessIndex
 songsTimelessIndexes songsTimeless =
     List.range 0 (List.length songsTimeless - 1)
+
+
+songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
+songsTimelessMatchIndexes songsTimeless songTimeless =
+    let
+        songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
+        songsTimelessMatchWithIndex ( songsTimelessIndex, songTimelessOther ) =
+            if songTimeless == songTimelessOther then
+                Just songsTimelessIndex
+            else
+                Nothing
+    in
+    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes songsTimeless)
 
 
 songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
