@@ -167,11 +167,6 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 }
 
 
-songLatest2SongRemembered : SongLatest -> SongRemembered
-songLatest2SongRemembered songLatest =
-    song2SongRemembered songLatest
-
-
 song2SongRemembered : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
@@ -292,7 +287,7 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
                 songsRemembered
             else
                 songsRemembered
-                    ++ [ songLatest2SongRemembered song ]
+                    ++ [ song2SongRemembered song ]
 
 
 songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered
