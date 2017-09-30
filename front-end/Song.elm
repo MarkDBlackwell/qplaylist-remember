@@ -240,11 +240,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
                     ++ [ song2SongRemembered song ]
 
 
-songsRememberedStartingWith : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedStartingWith songsRemembered songsRememberedIndex =
-    startingWith songsRemembered songsRememberedIndex
-
-
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
@@ -284,7 +279,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 Just songsLatestIndexFilterMapIndex ->
                     List.take songsRememberedIndex songsRemembered
                         ++ [ songUpdated ]
-                        ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
+                        ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
     case songRememberedSelectedMaybe of
         Nothing ->
