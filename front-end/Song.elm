@@ -202,19 +202,9 @@ songs2SongsTimeless listComplex =
     List.map song2SongTimeless listComplex
 
 
-songsLatestIndexes : SongsLatest -> List SongsLatestIndex
-songsLatestIndexes songsLatest =
-    indexes songsLatest
-
-
 indexes : List a -> List Int
 indexes listA =
     List.range 0 (List.length listA - 1)
-
-
-songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
-songsLatestSelectOne songsLatest songsLatestIndex =
-    selectOne songsLatest songsLatestIndex
 
 
 selectOne : List a -> Int -> Maybe a
@@ -249,7 +239,7 @@ songsRemembered2SongsTimeless songsRemembered =
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
-    case songsLatestSelectOne songsLatest songsLatestIndex of
+    case selectOne songsLatest songsLatestIndex of
         Nothing ->
             songsRemembered
 
@@ -285,7 +275,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     Nothing
 
                 Just songsLatestIndex ->
-                    songsLatestSelectOne songsLatest songsLatestIndex
+                    selectOne songsLatest songsLatestIndex
 
         songRememberedSelectedMaybe : Maybe SongRemembered
         songRememberedSelectedMaybe =
