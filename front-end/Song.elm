@@ -172,8 +172,8 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 }
 
 
-matchIndexes : List a -> a -> List Int
-matchIndexes listA a =
+matchingIndexes : List a -> a -> List Int
+matchingIndexes listA a =
     let
         matchWithIndex : ( Int, a ) -> Maybe Int
         matchWithIndex ( index, another ) =
@@ -261,7 +261,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     let
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
-            List.head (matchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
+            List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOneLatest songRememberedSelected songLatestSelected =
