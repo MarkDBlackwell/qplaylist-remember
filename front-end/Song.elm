@@ -190,12 +190,16 @@ selectOne listA index =
     List.head (startingWith listA index)
 
 
-song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
+song2SongLatest :
+    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongLatest
 song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
-song2SongRemembered : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongRemembered
+song2SongRemembered :
+    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
@@ -215,12 +219,16 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
             Just (song2SongLatest songRemembered)
 
 
-songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
+songs2SongsLatest :
+    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongsLatest
 songs2SongsLatest listComplex =
     List.map song2SongLatest listComplex
 
 
-songs2SongsRemembered : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsRemembered
+songs2SongsRemembered :
+    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongsRemembered
 songs2SongsRemembered listComplex =
     List.map song2SongRemembered listComplex
 
@@ -267,14 +275,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
             let
-                songUpdated : SongRemembered -> SongLatest -> SongRemembered
-                songUpdated songRememberedSelected songLatestSelected =
-                    SongRemembered
-                        songRememberedSelected.artist
-                        songRememberedSelected.likedOrCommented
-                        songLatestSelected.time
-                        songLatestSelected.timestamp
-                        songRememberedSelected.title
+                songUpdated :
+                    { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
+                    -> { b | time : Time, timestamp : Timestamp }
+                    -> SongRemembered
+                songUpdated { artist, likedOrCommented, title } { time, timestamp } =
+                    SongRemembered artist likedOrCommented time timestamp title
             in
             case songsLatestIndexFilterMapIndexMaybe songsLatest songRememberedSelected of
                 Nothing ->
