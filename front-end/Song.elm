@@ -222,11 +222,6 @@ songs2SongsLatest listComplex =
     List.map song2SongLatest listComplex
 
 
-songsRemembered2SongsTimeless : SongsRemembered -> SongsTimeless
-songsRemembered2SongsTimeless songsRemembered =
-    songs2SongsTimeless songsRemembered
-
-
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
     case selectOne songsLatest songsLatestIndex of
@@ -237,7 +232,7 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
             if
                 List.member
                     (song2SongTimeless song)
-                    (songsRemembered2SongsTimeless songsRemembered)
+                    (songs2SongsTimeless songsRemembered)
             then
                 songsRemembered
             else
