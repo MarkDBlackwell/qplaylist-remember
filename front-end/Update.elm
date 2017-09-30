@@ -37,7 +37,7 @@ import Song
         , SongsRemembered
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
-        , songsRememberedWithoutOne
+        , withoutOne
         )
 import SongPort
     exposing
@@ -180,7 +180,7 @@ update msg model =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedWithoutOne model.songsRemembered songsRememberedIndex
+                    withoutOne model.songsRemembered songsRememberedIndex
             in
             --(awaitingServer, commentArea)
             case stateVector model of

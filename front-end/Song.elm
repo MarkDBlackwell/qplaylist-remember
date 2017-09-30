@@ -37,7 +37,7 @@ module Song
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
-        , songsRememberedWithoutOne
+        , withoutOne
         )
 
 -- MODEL
@@ -297,11 +297,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                 Just songLatestSelected ->
                     songsRememberedSwapOne songRememberedSelected songLatestSelected
-
-
-songsRememberedWithoutOne : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedWithoutOne songsRemembered songsRememberedIndex =
-    withoutOne songsRemembered songsRememberedIndex
 
 
 withoutOne : List a -> Int -> List a
