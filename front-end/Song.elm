@@ -107,6 +107,10 @@ type alias SongsTimeless =
     List SongTimeless
 
 
+type alias SongsTimelessIndex =
+    Int
+
+
 type alias Time =
     String
 
@@ -180,9 +184,13 @@ songLatest2SongTimeless songLatest =
         songLatest.title
 
 
-songLatestRememberedMatchTimeless : SongLatest -> SongRemembered -> Bool
-songLatestRememberedMatchTimeless songLatest songRemembered =
-    songLatest2SongTimeless songLatest == songRemembered2SongTimeless songRemembered
+
+--Possibly unneeded.
+
+
+songTimelessRememberedMatchTimeless : SongTimeless -> SongRemembered -> Bool
+songTimelessRememberedMatchTimeless songTimeless songRemembered =
+    songTimeless == songRemembered2SongTimeless songRemembered
 
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
@@ -216,6 +224,11 @@ songsLatest2SongsRemembered songsLatest =
     List.map songLatest2SongRemembered songsLatest
 
 
+songsLatest2SongsTimeless : SongsLatest -> SongsTimeless
+songsLatest2SongsTimeless songsLatest =
+    List.map songLatest2SongTimeless songsLatest
+
+
 songsLatestIndexes : SongsLatest -> List SongsLatestIndex
 songsLatestIndexes songsLatest =
     List.range 0 (List.length songsLatest - 1)
@@ -229,6 +242,10 @@ songsLatestSelectOne songsLatest songsLatestIndex =
 songsLatestStartingWith : SongsLatest -> SongsLatestIndex -> SongsLatest
 songsLatestStartingWith songsLatest songsLatestIndex =
     List.drop songsLatestIndex songsLatest
+
+
+
+--Possibly unneeded.
 
 
 songsLatestWithIndexes : SongsLatest -> List ( SongsLatestIndex, SongLatest )
@@ -293,19 +310,19 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestIndexFilterMapIndexMaybe : SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songRemembered =
             let
-                songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
-                songsLatestIndexFilterMap songRemembered =
+                songsLatestIndexFilterMap : SongTimeless -> List SongsLatestIndex
+                songsLatestIndexFilterMap songTimeless =
                     let
-                        songsTimelessMatchWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
-                        songsTimelessMatchWithIndex ( songLatestIndex, songLatest ) =
-                            if songLatestRememberedMatchTimeless songLatest songRemembered then
-                                Just songLatestIndex
+                        songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
+                        songsTimelessMatchWithIndex ( songTimelessIndex, songTimelessOther ) =
+                            if songTimeless == songTimelessOther then
+                                Just songTimelessIndex
                             else
                                 Nothing
                     in
-                    List.filterMap songsTimelessMatchWithIndex (songsLatestWithIndexes songsLatest)
+                    List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes (songsLatest2SongsTimeless songsLatest))
             in
-            List.head (songsLatestIndexFilterMap songRemembered)
+            List.head (songsLatestIndexFilterMap (songRemembered2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
@@ -350,6 +367,16 @@ songsRememberedWithoutOne : SongsRemembered -> SongsRememberedIndex -> SongsReme
 songsRememberedWithoutOne songsRemembered songsRememberedIndex =
     List.take songsRememberedIndex songsRemembered
         ++ songsRememberedStartingWith songsRemembered (songsRememberedIndex + 1)
+
+
+songsTimelessIndexes : SongsTimeless -> List SongsTimelessIndex
+songsTimelessIndexes songsTimeless =
+    List.range 0 (List.length songsTimeless - 1)
+
+
+songsTimelessWithIndexes : SongsTimeless -> List ( SongsTimelessIndex, SongTimeless )
+songsTimelessWithIndexes songsTimeless =
+    List.map2 (,) (songsTimelessIndexes songsTimeless) songsTimeless
 
 
 
