@@ -263,6 +263,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songRememberedLatestFirstIndex songsLatest songRemembered =
             List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
+        songRememberedLatestIndexes : SongsLatest -> SongRemembered -> List SongsLatestIndex
+        songRememberedLatestIndexes songsLatest songRemembered =
+            matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered)
+
         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOneLatest songRemembered songLatestSelected =
             let
@@ -273,14 +277,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            case songRememberedLatestFirstIndex songsLatest songRemembered of
-                Nothing ->
-                    songsRemembered
-
-                Just _ ->
-                    List.take songsRememberedIndex songsRemembered
-                        ++ [ songUpdated songRemembered songLatestSelected ]
-                        ++ startingWith songsRemembered (songsRememberedIndex + 1)
+            if List.isEmpty (songRememberedLatestIndexes songsLatest songRemembered) then
+                songsRemembered
+            else
+                List.take songsRememberedIndex songsRemembered
+                    ++ [ songUpdated songRemembered songLatestSelected ]
+                    ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
     case selectOne songsRemembered songsRememberedIndex of
         Nothing ->
