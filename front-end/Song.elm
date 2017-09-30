@@ -258,7 +258,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
-            List.head (songsTimelessMatchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
+            List.head (matchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
@@ -303,16 +303,6 @@ withoutOne : List a -> Int -> List a
 withoutOne listA index =
     List.take index listA
         ++ startingWith listA (index + 1)
-
-
-songsTimelessIndexes : SongsTimeless -> List SongsTimelessIndex
-songsTimelessIndexes songsTimeless =
-    indexes songsTimeless
-
-
-songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
-songsTimelessMatchIndexes songsTimeless songTimeless =
-    matchIndexes songsTimeless songTimeless
 
 
 matchIndexes : List a -> a -> List Int
