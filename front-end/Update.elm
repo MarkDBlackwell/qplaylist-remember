@@ -37,7 +37,6 @@ import Song
         , SongsRemembered
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
-        , withoutOne
         )
 import SongPort
     exposing
@@ -85,6 +84,10 @@ import UpdateUtilities
 import UserIdentifier
     exposing
         ( updateInitialSetUp
+        )
+import Utilities
+    exposing
+        ( withoutOne
         )
 
 

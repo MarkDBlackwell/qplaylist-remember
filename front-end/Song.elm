@@ -37,8 +37,18 @@ module Song
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
+        )
+
+import Utilities
+    exposing
+        ( indexes
+        , matchingIndexes
+        , selectOne
+        , startingWith
+        , withIndexes
         , withoutOne
         )
+
 
 -- MODEL
 
@@ -142,11 +152,6 @@ songsLatestInit =
 -- UPDATE
 
 
-indexes : List a -> List Int
-indexes listA =
-    List.range 0 (List.length listA - 1)
-
-
 likedOrCommentedInit : LikedOrCommented
 likedOrCommentedInit =
     False
@@ -170,24 +175,6 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 { songRemembered
                     | likedOrCommented = True
                 }
-
-
-matchingIndexes : List a -> a -> List Int
-matchingIndexes listA a =
-    let
-        matchWithIndex : ( Int, a ) -> Maybe Int
-        matchWithIndex ( index, another ) =
-            if another == a then
-                Just index
-            else
-                Nothing
-    in
-    List.filterMap matchWithIndex (withIndexes listA)
-
-
-selectOne : List a -> Int -> Maybe a
-selectOne listA index =
-    List.head (startingWith listA index)
 
 
 song2SongLatest :
@@ -296,22 +283,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                 Just songLatest ->
                     songsRememberedSwapOneLatest songRemembered songLatest
-
-
-startingWith : List a -> Int -> List a
-startingWith listA index =
-    List.drop index listA
-
-
-withIndexes : List a -> List ( Int, a )
-withIndexes listA =
-    List.map2 (,) (indexes listA) listA
-
-
-withoutOne : List a -> Int -> List a
-withoutOne listA index =
-    List.take index listA
-        ++ startingWith listA (index + 1)
 
 
 
