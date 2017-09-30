@@ -172,11 +172,6 @@ song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
 
-songLatest2SongTimeless : SongLatest -> SongTimeless
-songLatest2SongTimeless songLatest =
-    song2SongTimeless songLatest
-
-
 song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
@@ -281,7 +276,7 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
         Just song ->
             if
                 List.member
-                    (songLatest2SongTimeless song)
+                    (song2SongTimeless song)
                     (songsRemembered2SongsTimeless songsRemembered)
             then
                 songsRemembered
