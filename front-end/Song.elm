@@ -214,7 +214,12 @@ songRemembered2SongTimeless songRemembered =
 
 songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
 songsLatest2SongsRemembered songsLatest =
-    List.map songLatest2SongRemembered songsLatest
+    songs2SongsRemembered songsLatest
+
+
+songs2SongsRemembered : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsRemembered
+songs2SongsRemembered listComplex =
+    List.map song2SongRemembered listComplex
 
 
 songsLatest2SongsTimeless : SongsLatest -> SongsTimeless
