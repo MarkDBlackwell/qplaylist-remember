@@ -128,18 +128,23 @@ songCommentingInit =
     Nothing
 
 
-songsLatestInit : SongsLatest
-songsLatestInit =
-    []
-
-
 songLikingInit : SongLiking
 songLikingInit =
     Nothing
 
 
+songsLatestInit : SongsLatest
+songsLatestInit =
+    []
+
+
 
 -- UPDATE
+
+
+indexes : List a -> List Int
+indexes listA =
+    List.range 0 (List.length listA - 1)
 
 
 likedOrCommentedInit : LikedOrCommented
@@ -167,6 +172,29 @@ likedOrCommentedShowSong songLikingOrCommenting songRemembered =
                 }
 
 
+matchIndexes : List a -> a -> List Int
+matchIndexes listA a =
+    let
+        matchWithIndex : ( Int, a ) -> Maybe Int
+        matchWithIndex ( index, another ) =
+            if another == a then
+                Just index
+            else
+                Nothing
+    in
+    List.filterMap matchWithIndex (withIndexes listA)
+
+
+selectOne : List a -> Int -> Maybe a
+selectOne listA index =
+    List.head (startingWith listA index)
+
+
+song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
+song2SongLatest { artist, time, timestamp, title } =
+    SongLatest artist time timestamp title
+
+
 song2SongRemembered : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
@@ -187,9 +215,9 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
             Just (song2SongLatest song)
 
 
-song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
-song2SongLatest { artist, time, timestamp, title } =
-    SongLatest artist time timestamp title
+songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
+songs2SongsLatest listComplex =
+    List.map song2SongLatest listComplex
 
 
 songs2SongsRemembered : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsRemembered
@@ -200,26 +228,6 @@ songs2SongsRemembered listComplex =
 songs2SongsTimeless : List { a | artist : Artist, title : Title } -> SongsTimeless
 songs2SongsTimeless listComplex =
     List.map song2SongTimeless listComplex
-
-
-indexes : List a -> List Int
-indexes listA =
-    List.range 0 (List.length listA - 1)
-
-
-selectOne : List a -> Int -> Maybe a
-selectOne listA index =
-    List.head (startingWith listA index)
-
-
-startingWith : List a -> Int -> List a
-startingWith listA index =
-    List.drop index listA
-
-
-songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
-songs2SongsLatest listComplex =
-    List.map song2SongLatest listComplex
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
@@ -299,28 +307,20 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     songsRememberedSwapOne songRememberedSelected songLatestSelected
 
 
-withoutOne : List a -> Int -> List a
-withoutOne listA index =
-    List.take index listA
-        ++ startingWith listA (index + 1)
-
-
-matchIndexes : List a -> a -> List Int
-matchIndexes listA a =
-    let
-        matchWithIndex : ( Int, a ) -> Maybe Int
-        matchWithIndex ( index, another ) =
-            if another == a then
-                Just index
-            else
-                Nothing
-    in
-    List.filterMap matchWithIndex (withIndexes listA)
+startingWith : List a -> Int -> List a
+startingWith listA index =
+    List.drop index listA
 
 
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
     List.map2 (,) (indexes listA) listA
+
+
+withoutOne : List a -> Int -> List a
+withoutOne listA index =
+    List.take index listA
+        ++ startingWith listA (index + 1)
 
 
 
