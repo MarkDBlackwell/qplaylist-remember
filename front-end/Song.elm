@@ -259,8 +259,8 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsLatestMatchingRemembered : SongsLatest -> SongRemembered -> SongsLatest
-        songsLatestMatchingRemembered songsLatest songRemembered =
+        songsLatestMatchesRemembered : SongsLatest -> SongRemembered -> SongsLatest
+        songsLatestMatchesRemembered songsLatest songRemembered =
             let
                 compare : SongLatest -> Bool
                 compare songLatest =
@@ -278,7 +278,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            if List.isEmpty (songsLatestMatchingRemembered songsLatest songRemembered) then
+            if List.isEmpty (songsLatestMatchesRemembered songsLatest songRemembered) then
                 songsRemembered
             else
                 List.take songsRememberedIndex songsRemembered
@@ -290,7 +290,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRemembered ->
-            case List.head (songsLatestMatchingRemembered songsLatest songRemembered) of
+            case List.head (songsLatestMatchesRemembered songsLatest songRemembered) of
                 Nothing ->
                     songsRemembered
 
