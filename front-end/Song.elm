@@ -307,14 +307,14 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songRememberedSelectedMaybe =
             songsRememberedSelectOne songsRemembered songsRememberedIndex
 
-        songsLatestIndexFilterMapIndexMaybe : SongRemembered -> Maybe SongsLatestIndex
-        songsLatestIndexFilterMapIndexMaybe songRemembered =
+        songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
+        songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
             let
-                songsLatestIndexFilterMap : SongTimeless -> List SongsLatestIndex
-                songsLatestIndexFilterMap songTimeless =
+                songsTimelessMatchIndexes : SongTimeless -> List SongsLatestIndex
+                songsTimelessMatchIndexes songTimelessOther =
                     let
                         songsTimelessMatchWithIndex : ( SongsTimelessIndex, SongTimeless ) -> Maybe SongsTimelessIndex
-                        songsTimelessMatchWithIndex ( songTimelessIndex, songTimelessOther ) =
+                        songsTimelessMatchWithIndex ( songTimelessIndex, songTimeless ) =
                             if songTimeless == songTimelessOther then
                                 Just songTimelessIndex
                             else
@@ -322,7 +322,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     in
                     List.filterMap songsTimelessMatchWithIndex (songsTimelessWithIndexes (songsLatest2SongsTimeless songsLatest))
             in
-            List.head (songsLatestIndexFilterMap (songRemembered2SongTimeless songRemembered))
+            List.head (songsTimelessMatchIndexes (songRemembered2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
@@ -336,7 +336,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songLatestSelected.timestamp
                         songRememberedSelected.title
             in
-            case songsLatestIndexFilterMapIndexMaybe songRememberedSelected of
+            case songsLatestIndexFilterMapIndexMaybe songsLatest songRememberedSelected of
                 Nothing ->
                     songsRemembered
 
@@ -353,7 +353,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             let
                 songsLatestIndexMaybe : Maybe SongsLatestIndex
                 songsLatestIndexMaybe =
-                    songsLatestIndexFilterMapIndexMaybe songRememberedSelected
+                    songsLatestIndexFilterMapIndexMaybe songsLatest songRememberedSelected
             in
             case songLatestSelectedMaybe songsLatestIndexMaybe of
                 Nothing ->
