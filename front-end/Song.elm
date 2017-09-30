@@ -296,14 +296,14 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestIndexFilterMap : SongRemembered -> List SongsLatestIndex
                 songsLatestIndexFilterMap songRemembered =
                     let
-                        songsMatchTimelessWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
-                        songsMatchTimelessWithIndex ( songLatestIndex, songLatest ) =
+                        songsTimelessMatchWithIndex : ( SongsLatestIndex, SongLatest ) -> Maybe SongsLatestIndex
+                        songsTimelessMatchWithIndex ( songLatestIndex, songLatest ) =
                             if songLatestRememberedMatchTimeless songLatest songRemembered then
                                 Just songLatestIndex
                             else
                                 Nothing
                     in
-                    List.filterMap songsMatchTimelessWithIndex (songsLatestWithIndexes songsLatest)
+                    List.filterMap songsTimelessMatchWithIndex (songsLatestWithIndexes songsLatest)
             in
             List.head (songsLatestIndexFilterMap songRemembered)
 
