@@ -179,7 +179,7 @@ song2SongTimeless { artist, title } =
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
-    case songsRememberedSelectOne songsRemembered songsRememberedIndex of
+    case selectOne songsRemembered songsRememberedIndex of
         Nothing ->
             Nothing
 
@@ -240,11 +240,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
                     ++ [ song2SongRemembered song ]
 
 
-songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered
-songsRememberedSelectOne songsRemembered songsRememberedIndex =
-    selectOne songsRemembered songsRememberedIndex
-
-
 songsRememberedStartingWith : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedStartingWith songsRemembered songsRememberedIndex =
     startingWith songsRemembered songsRememberedIndex
@@ -264,7 +259,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songRememberedSelectedMaybe : Maybe SongRemembered
         songRememberedSelectedMaybe =
-            songsRememberedSelectOne songsRemembered songsRememberedIndex
+            selectOne songsRemembered songsRememberedIndex
 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
