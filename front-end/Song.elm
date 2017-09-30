@@ -281,10 +281,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     List.take songsRememberedIndex songsRemembered
                         ++ [ songUpdated songRememberedSelected songLatestSelected ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
-
-        songLatestSelectedMaybe : SongsLatestIndex -> Maybe SongLatest
-        songLatestSelectedMaybe songsLatestIndex =
-            selectOne songsLatest songsLatestIndex
     in
     case selectOne songsRemembered songsRememberedIndex of
         Nothing ->
@@ -296,7 +292,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     songsRemembered
 
                 Just songsLatestIndex ->
-                    case songLatestSelectedMaybe songsLatestIndex of
+                    case selectOne songsLatest songsLatestIndex of
                         Nothing ->
                             songsRemembered
 
