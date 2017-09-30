@@ -237,6 +237,11 @@ songsLatestIndexes songsLatest =
     indexes songsLatest
 
 
+indexes : List a -> List Int
+indexes listA =
+    List.range 0 (List.length listA - 1)
+
+
 songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
 songsLatestSelectOne songsLatest songsLatestIndex =
     selectOne songsLatest songsLatestIndex
@@ -259,12 +264,17 @@ startingWith listA index =
 
 songsRemembered2SongsLatest : SongsRemembered -> SongsLatest
 songsRemembered2SongsLatest songsRemembered =
-    List.map songRemembered2SongLatest songsRemembered
+    songs2SongsLatest songsRemembered
+
+
+songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
+songs2SongsLatest listComplex =
+    List.map song2SongLatest listComplex
 
 
 songsRemembered2SongsTimeless : SongsRemembered -> SongsTimeless
 songsRemembered2SongsTimeless songsRemembered =
-    List.map songRemembered2SongTimeless songsRemembered
+    songs2SongsTimeless songsRemembered
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
@@ -368,11 +378,6 @@ withoutOne listA index =
 songsTimelessIndexes : SongsTimeless -> List SongsTimelessIndex
 songsTimelessIndexes songsTimeless =
     indexes songsTimeless
-
-
-indexes : List a -> List Int
-indexes listA =
-    List.range 0 (List.length listA - 1)
 
 
 songsTimelessMatchIndexes : SongsTimeless -> SongTimeless -> List SongsTimelessIndex
