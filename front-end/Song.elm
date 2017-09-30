@@ -192,11 +192,6 @@ song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
-songRemembered2SongTimeless : SongRemembered -> SongTimeless
-songRemembered2SongTimeless songRemembered =
-    song2SongTimeless songRemembered
-
-
 songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
 songsLatest2SongsRemembered songsLatest =
     songs2SongsRemembered songsLatest
@@ -308,7 +303,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
-            List.head (songsTimelessMatchIndexes (songsLatest2SongsTimeless songsLatest) (songRemembered2SongTimeless songRemembered))
+            List.head (songsTimelessMatchIndexes (songsLatest2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
