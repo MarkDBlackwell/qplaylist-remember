@@ -259,12 +259,14 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        --songRememberedLatestFirstIndex : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
-        --songRememberedLatestFirstIndex songsLatest songRemembered =
-        --List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
-        songRememberedSongsLatestIndexes : SongsLatest -> SongRemembered -> List SongsLatestIndex
-        songRememberedSongsLatestIndexes songsLatest songRemembered =
-            matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered)
+        songsLatestMatchingRemembered : SongsLatest -> SongRemembered -> SongsLatest
+        songsLatestMatchingRemembered songsLatest songRemembered =
+            let
+                compare : SongLatest -> Bool
+                compare songLatest =
+                    song2SongTimeless songRemembered == song2SongTimeless songLatest
+            in
+            List.filter compare songsLatest
 
         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOneLatest songRemembered songLatest =
@@ -276,7 +278,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            if List.isEmpty (songRememberedSongsLatestIndexes songsLatest songRemembered) then
+            if List.isEmpty (songsLatestMatchingRemembered songsLatest songRemembered) then
                 songsRemembered
             else
                 List.take songsRememberedIndex songsRemembered
@@ -288,17 +290,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRemembered ->
-            case List.head (songRememberedSongsLatestIndexes songsLatest songRemembered) of
+            case List.head (songsLatestMatchingRemembered songsLatest songRemembered) of
                 Nothing ->
                     songsRemembered
 
-                Just songsLatestIndex ->
-                    case selectOne songsLatest songsLatestIndex of
-                        Nothing ->
-                            songsRemembered
-
-                        Just songLatest ->
-                            songsRememberedSwapOneLatest songRemembered songLatest
+                Just songLatest ->
+                    songsRememberedSwapOneLatest songRemembered songLatest
 
 
 startingWith : List a -> Int -> List a
