@@ -197,11 +197,6 @@ songs2SongsRemembered listComplex =
     List.map song2SongRemembered listComplex
 
 
-songsLatest2SongsTimeless : SongsLatest -> SongsTimeless
-songsLatest2SongsTimeless songsLatest =
-    songs2SongsTimeless songsLatest
-
-
 songs2SongsTimeless : List { a | artist : Artist, title : Title } -> SongsTimeless
 songs2SongsTimeless listComplex =
     List.map song2SongTimeless listComplex
@@ -298,7 +293,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
-            List.head (songsTimelessMatchIndexes (songsLatest2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
+            List.head (songsTimelessMatchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
