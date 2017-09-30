@@ -33,7 +33,7 @@ module Song
         , songCommentingInit
         , songLikingInit
         , songLikingOrCommentingMaybe
-        , songsLatest2SongsRemembered
+        , songs2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
@@ -190,11 +190,6 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
 song2SongLatest : { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongLatest
 song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
-
-
-songsLatest2SongsRemembered : SongsLatest -> SongsRemembered
-songsLatest2SongsRemembered songsLatest =
-    songs2SongsRemembered songsLatest
 
 
 songs2SongsRemembered : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsRemembered
