@@ -259,16 +259,15 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songRememberedLatestFirstIndex : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
-        songRememberedLatestFirstIndex songsLatest songRemembered =
-            List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
-
-        songRememberedLatestIndexes : SongsLatest -> SongRemembered -> List SongsLatestIndex
-        songRememberedLatestIndexes songsLatest songRemembered =
+        --songRememberedLatestFirstIndex : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
+        --songRememberedLatestFirstIndex songsLatest songRemembered =
+        --List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
+        songRememberedSongsLatestIndexes : SongsLatest -> SongRemembered -> List SongsLatestIndex
+        songRememberedSongsLatestIndexes songsLatest songRemembered =
             matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered)
 
         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
-        songsRememberedSwapOneLatest songRemembered songLatestSelected =
+        songsRememberedSwapOneLatest songRemembered songLatest =
             let
                 songUpdated :
                     { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
@@ -277,11 +276,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            if List.isEmpty (songRememberedLatestIndexes songsLatest songRemembered) then
+            if List.isEmpty (songRememberedSongsLatestIndexes songsLatest songRemembered) then
                 songsRemembered
             else
                 List.take songsRememberedIndex songsRemembered
-                    ++ [ songUpdated songRemembered songLatestSelected ]
+                    ++ [ songUpdated songRemembered songLatest ]
                     ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
     case selectOne songsRemembered songsRememberedIndex of
@@ -289,7 +288,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRemembered ->
-            case songRememberedLatestFirstIndex songsLatest songRemembered of
+            case List.head (songRememberedSongsLatestIndexes songsLatest songRemembered) of
                 Nothing ->
                     songsRemembered
 
