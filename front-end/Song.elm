@@ -297,12 +297,12 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 
 songsRememberedSelectOne : SongsRemembered -> SongsRememberedIndex -> Maybe SongRemembered
 songsRememberedSelectOne songsRemembered songsRememberedIndex =
-    List.head (songsRememberedStartingWith songsRemembered songsRememberedIndex)
+    selectOne songsRemembered songsRememberedIndex
 
 
 songsRememberedStartingWith : SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedStartingWith songsRemembered songsRememberedIndex =
-    List.drop songsRememberedIndex songsRemembered
+    startingWith songsRemembered songsRememberedIndex
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
