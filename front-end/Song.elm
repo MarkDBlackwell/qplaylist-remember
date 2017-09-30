@@ -236,12 +236,22 @@ songsLatestIndexes songsLatest =
 
 songsLatestSelectOne : SongsLatest -> SongsLatestIndex -> Maybe SongLatest
 songsLatestSelectOne songsLatest songsLatestIndex =
-    List.head (songsLatestStartingWith songsLatest songsLatestIndex)
+    selectOne songsLatest songsLatestIndex
+
+
+selectOne : List a -> Int -> Maybe a
+selectOne listA index =
+    List.head (startingWith listA index)
 
 
 songsLatestStartingWith : SongsLatest -> SongsLatestIndex -> SongsLatest
 songsLatestStartingWith songsLatest songsLatestIndex =
-    List.drop songsLatestIndex songsLatest
+    startingWith songsLatest songsLatestIndex
+
+
+startingWith : List a -> Int -> List a
+startingWith listA index =
+    List.drop index listA
 
 
 
