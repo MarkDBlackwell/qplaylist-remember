@@ -296,17 +296,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRemembered ->
-            let
-                songsLatestIndexMaybe : Maybe SongsLatestIndex
-                songsLatestIndexMaybe =
-                    songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered
-            in
-            case songLatestSelectedMaybe songsLatestIndexMaybe of
+            case songLatestSelectedMaybe (songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered) of
                 Nothing ->
                     songsRemembered
 
-                Just songLatestSelected ->
-                    songsRememberedSwapOne songRemembered songLatestSelected
+                Just songLatest ->
+                    songsRememberedSwapOne songRemembered songLatest
 
 
 startingWith : List a -> Int -> List a
