@@ -211,8 +211,8 @@ songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
         Nothing ->
             Nothing
 
-        Just song ->
-            Just (song2SongLatest song)
+        Just songRemembered ->
+            Just (song2SongLatest songRemembered)
 
 
 songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
@@ -236,16 +236,16 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
         Nothing ->
             songsRemembered
 
-        Just song ->
+        Just songLatest ->
             if
                 List.member
-                    (song2SongTimeless song)
+                    (song2SongTimeless songLatest)
                     (songs2SongsTimeless songsRemembered)
             then
                 songsRemembered
             else
                 songsRemembered
-                    ++ [ song2SongRemembered song ]
+                    ++ [ song2SongRemembered songLatest ]
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
