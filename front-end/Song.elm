@@ -267,8 +267,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
         songsRememberedSwapOne songRememberedSelected songLatestSelected =
             let
-                songUpdated : SongRemembered
-                songUpdated =
+                songUpdated : SongRemembered -> SongLatest -> SongRemembered
+                songUpdated songRememberedSelected songLatestSelected =
                     SongRemembered
                         songRememberedSelected.artist
                         songRememberedSelected.likedOrCommented
@@ -282,7 +282,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
                 Just songsLatestIndexFilterMapIndex ->
                     List.take songsRememberedIndex songsRemembered
-                        ++ [ songUpdated ]
+                        ++ [ songUpdated songRememberedSelected songLatestSelected ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
     case selectOne songsRemembered songsRememberedIndex of
