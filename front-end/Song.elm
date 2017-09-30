@@ -263,8 +263,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
             List.head (matchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
-        songsRememberedSwapOne : SongRemembered -> SongLatest -> SongsRemembered
-        songsRememberedSwapOne songRememberedSelected songLatestSelected =
+        songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
+        songsRememberedSwapOneLatest songRememberedSelected songLatestSelected =
             let
                 songUpdated :
                     { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
@@ -297,7 +297,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             songsRemembered
 
                         Just songLatest ->
-                            songsRememberedSwapOne songRemembered songLatest
+                            songsRememberedSwapOneLatest songRemembered songLatest
 
 
 startingWith : List a -> Int -> List a
