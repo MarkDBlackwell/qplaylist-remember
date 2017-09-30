@@ -260,10 +260,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 Just songsLatestIndex ->
                     selectOne songsLatest songsLatestIndex
 
-        songRememberedSelectedMaybe : Maybe SongRemembered
-        songRememberedSelectedMaybe =
-            selectOne songsRemembered songsRememberedIndex
-
         songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
         songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
             List.head (matchIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
@@ -289,22 +285,22 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         ++ [ songUpdated ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
-    case songRememberedSelectedMaybe of
+    case selectOne songsRemembered songsRememberedIndex of
         Nothing ->
             songsRemembered
 
-        Just songRememberedSelected ->
+        Just songRemembered ->
             let
                 songsLatestIndexMaybe : Maybe SongsLatestIndex
                 songsLatestIndexMaybe =
-                    songsLatestIndexFilterMapIndexMaybe songsLatest songRememberedSelected
+                    songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered
             in
             case songLatestSelectedMaybe songsLatestIndexMaybe of
                 Nothing ->
                     songsRemembered
 
                 Just songLatestSelected ->
-                    songsRememberedSwapOne songRememberedSelected songLatestSelected
+                    songsRememberedSwapOne songRemembered songLatestSelected
 
 
 startingWith : List a -> Int -> List a
