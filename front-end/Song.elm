@@ -259,12 +259,12 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsLatestIndexFilterMapIndexMaybe : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
-        songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered =
+        songRememberedLatestFirstIndex : SongsLatest -> SongRemembered -> Maybe SongsLatestIndex
+        songRememberedLatestFirstIndex songsLatest songRemembered =
             List.head (matchingIndexes (songs2SongsTimeless songsLatest) (song2SongTimeless songRemembered))
 
         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> SongsRemembered
-        songsRememberedSwapOneLatest songRememberedSelected songLatestSelected =
+        songsRememberedSwapOneLatest songRemembered songLatestSelected =
             let
                 songUpdated :
                     { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
@@ -273,13 +273,13 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            case songsLatestIndexFilterMapIndexMaybe songsLatest songRememberedSelected of
+            case songRememberedLatestFirstIndex songsLatest songRemembered of
                 Nothing ->
                     songsRemembered
 
                 Just _ ->
                     List.take songsRememberedIndex songsRemembered
-                        ++ [ songUpdated songRememberedSelected songLatestSelected ]
+                        ++ [ songUpdated songRemembered songLatestSelected ]
                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
     in
     case selectOne songsRemembered songsRememberedIndex of
@@ -287,7 +287,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             songsRemembered
 
         Just songRemembered ->
-            case songsLatestIndexFilterMapIndexMaybe songsLatest songRemembered of
+            case songRememberedLatestFirstIndex songsLatest songRemembered of
                 Nothing ->
                     songsRemembered
 
