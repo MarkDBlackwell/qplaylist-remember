@@ -212,19 +212,9 @@ selectOne listA index =
     List.head (startingWith listA index)
 
 
-songsLatestStartingWith : SongsLatest -> SongsLatestIndex -> SongsLatest
-songsLatestStartingWith songsLatest songsLatestIndex =
-    startingWith songsLatest songsLatestIndex
-
-
 startingWith : List a -> Int -> List a
 startingWith listA index =
     List.drop index listA
-
-
-songsRemembered2SongsLatest : SongsRemembered -> SongsLatest
-songsRemembered2SongsLatest songsRemembered =
-    songs2SongsLatest songsRemembered
 
 
 songs2SongsLatest : List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title } -> SongsLatest
