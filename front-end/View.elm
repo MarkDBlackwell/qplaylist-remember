@@ -68,7 +68,12 @@ import Song
         , SongRemembered
         , SongsLatestOrRememberedIndex
         , SongsRemembered
+        , Time
         , songs2SongsRemembered
+        )
+import Utilities
+    exposing
+        ( selectOne
         )
 import ViewButton
     exposing
@@ -223,13 +228,45 @@ songView model group songsLatestOrRememberedIndex song =
                 []
             else
                 [ styleCalc group lengthRemembered songsLatestOrRememberedIndex ]
+
+        songTime : Time
+        songTime =
+            let
+                prefix : String
+                prefix =
+                    select 0
+                        ++ " "
+                        ++ select 1
+                        ++ "-"
+                        ++ select 2
+                        ++ " "
+
+                select : Int -> String
+                select index =
+                    case selectOne stampList index of
+                        Nothing ->
+                            ""
+
+                        Just selectOne ->
+                            selectOne
+
+                stampList : List String
+                stampList =
+                    String.split " " song.timestamp
+            in
+            case group of
+                Played ->
+                    song.time
+
+                Remembered ->
+                    prefix ++ song.time
     in
     div
         songAttributes
         [ p []
             [ buttonForgetRemember group songsLatestOrRememberedIndex
             , span []
-                [ text song.time ]
+                [ text songTime ]
             , buttonComment group songsLatestOrRememberedIndex model.showCommentButtons
             , buttonLike group songsLatestOrRememberedIndex
             , likedOrCommentedIndicator

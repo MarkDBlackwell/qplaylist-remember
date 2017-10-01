@@ -29,6 +29,7 @@ module Song
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
+        , Time
         , likedOrCommentedShow
         , songCommentingInit
         , songLikingInit
