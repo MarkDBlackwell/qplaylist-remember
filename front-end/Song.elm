@@ -264,8 +264,8 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsLatestSongRememberedMatches : SongsLatest -> SongRemembered -> SongsLatest
-        songsLatestSongRememberedMatches songsLatest songRemembered =
+        songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
+        songsLatestSongRememberedMatches songRemembered =
             let
                 compare : SongLatest -> Bool
                 compare songLatest =
@@ -283,18 +283,18 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                     SongRemembered artist likedOrCommented time timestamp title
             in
-            if List.isEmpty (songsLatestSongRememberedMatches songsLatest songRemembered) then
+            if List.isEmpty (songsLatestSongRememberedMatches songRemembered) then
                 songsRemembered
             else
                 List.take songsRememberedIndex songsRemembered
                     ++ [ songUpdated songRemembered songLatest ]
                     ++ startingWith songsRemembered (songsRememberedIndex + 1)
 
-        swap : SongRemembered -> SongsRemembered
-        swap songRemembered =
-            Maybe.withDefault songsRemembered (Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songsLatest songRemembered)))
+        swapUnlessNoLatestMatches : SongRemembered -> SongsRemembered
+        swapUnlessNoLatestMatches songRemembered =
+            Maybe.withDefault songsRemembered (Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered)))
     in
-    Maybe.withDefault songsRemembered (Maybe.map swap (selectOne songsRemembered songsRememberedIndex))
+    Maybe.withDefault songsRemembered (Maybe.map swapUnlessNoLatestMatches (selectOne songsRemembered songsRememberedIndex))
 
 
 
