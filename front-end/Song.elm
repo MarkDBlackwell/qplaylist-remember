@@ -264,28 +264,28 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
-        songsLatestSongRememberedMatches songRemembered =
-            let
-                compare : SongLatest -> Bool
-                compare songLatest =
-                    song2SongTimeless songRemembered == song2SongTimeless songLatest
-            in
-            List.filter compare songsLatest
-
-        selectOneSongsRemembered : Maybe SongRemembered
-        selectOneSongsRemembered =
-            selectOne songsRemembered songsRememberedIndex
-
         swapUnlessNoSongRememberedSelected : Maybe SongsRemembered
         swapUnlessNoSongRememberedSelected =
             let
+                selectOneSongsRemembered : Maybe SongRemembered
+                selectOneSongsRemembered =
+                    selectOne songsRemembered songsRememberedIndex
+
                 swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
                 swapUnlessListHeadEmpty songRemembered =
                     let
                         listHead : SongRemembered -> Maybe SongLatest
                         listHead songRemembered =
                             List.head (songsLatestSongRememberedMatches songRemembered)
+
+                        songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
+                        songsLatestSongRememberedMatches songRemembered =
+                            let
+                                compare : SongLatest -> Bool
+                                compare songLatest =
+                                    song2SongTimeless songRemembered == song2SongTimeless songLatest
+                            in
+                            List.filter compare songsLatest
 
                         swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
                         swapOneLatest songRemembered songLatest =
