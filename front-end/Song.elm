@@ -272,26 +272,26 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     selectOne songsRemembered songsRememberedIndex
 
                 swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
-                swapUnlessListHeadEmpty songRemembered =
+                swapUnlessListHeadEmpty songRememberedSwapUnlessListHeadEmpty =
                     let
                         listHead : SongRemembered -> Maybe SongLatest
-                        listHead songRemembered =
-                            List.head (songsLatestSongRememberedMatches songRemembered)
+                        listHead songRememberedListHead =
+                            List.head (songsLatestSongRememberedMatches songRememberedListHead)
 
                         songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
-                        songsLatestSongRememberedMatches songRemembered =
+                        songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
                             let
                                 compare : SongLatest -> Bool
                                 compare songLatest =
-                                    song2SongTimeless songRemembered == song2SongTimeless songLatest
+                                    song2SongTimeless songRememberedSongsLatestSongRememberedMatches == song2SongTimeless songLatest
                             in
                             List.filter compare songsLatest
 
                         swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                        swapOneLatest songRemembered songLatest =
+                        swapOneLatest songRememberedSwapOneLatest songLatest =
                             let
                                 songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                                songsRememberedSwapOneLatest songRemembered songLatest =
+                                songsRememberedSwapOneLatest songRememberedSongsRememberedSwapOneLatest songLatest =
                                     let
                                         songUpdated :
                                             { a
@@ -308,18 +308,18 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                         songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                                             SongRemembered artist likedOrCommented time timestamp title
                                     in
-                                    if List.isEmpty (songsLatestSongRememberedMatches songRemembered) then
+                                    if List.isEmpty (songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest) then
                                         Nothing
                                     else
                                         Just
                                             (List.take songsRememberedIndex songsRemembered
-                                                ++ [ songUpdated songRemembered songLatest ]
+                                                ++ [ songUpdated songRememberedSongsRememberedSwapOneLatest songLatest ]
                                                 ++ startingWith songsRemembered (songsRememberedIndex + 1)
                                             )
                             in
-                            songsRememberedSwapOneLatest songRemembered songLatest
+                            songsRememberedSwapOneLatest songRememberedSwapOneLatest songLatest
                     in
-                    Maybe.withDefault Nothing (Maybe.map (swapOneLatest songRemembered) (listHead songRemembered))
+                    Maybe.withDefault Nothing (Maybe.map (swapOneLatest songRememberedSwapUnlessListHeadEmpty) (listHead songRememberedSwapUnlessListHeadEmpty))
             in
             Maybe.withDefault Nothing (Maybe.map swapUnlessListHeadEmpty selectOneSongsRemembered)
     in
