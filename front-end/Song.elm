@@ -242,11 +242,9 @@ songs2SongsTimeless listComplex =
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
-    case selectOne songsLatest songsLatestIndex of
-        Nothing ->
-            songsRemembered
-
-        Just songLatest ->
+    let
+        appendUnlessRemembered : SongLatest -> SongsRemembered
+        appendUnlessRemembered songLatest =
             if
                 List.member
                     (song2SongTimeless songLatest)
@@ -256,6 +254,8 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
             else
                 songsRemembered
                     ++ [ song2SongRemembered songLatest ]
+    in
+    Maybe.withDefault songsRemembered (Maybe.map appendUnlessRemembered (selectOne songsLatest songsLatestIndex))
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
