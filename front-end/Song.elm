@@ -273,10 +273,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             in
             List.filter compare songsLatest
 
-        swapUnlessNoLatestMatchesMaybe : Maybe SongsRemembered
-        swapUnlessNoLatestMatchesMaybe =
-            Maybe.map swapUnlessNoLatestMatches (selectOne songsRemembered songsRememberedIndex)
-
         swapUnlessNoLatestMatches : SongRemembered -> SongsRemembered
         swapUnlessNoLatestMatches songRemembered =
             let
@@ -298,6 +294,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             ++ startingWith songsRemembered (songsRememberedIndex + 1)
             in
             Maybe.withDefault songsRemembered (Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered)))
+
+        swapUnlessNoLatestMatchesMaybe : Maybe SongsRemembered
+        swapUnlessNoLatestMatchesMaybe =
+            Maybe.map swapUnlessNoLatestMatches (selectOne songsRemembered songsRememberedIndex)
     in
     Maybe.withDefault songsRemembered swapUnlessNoLatestMatchesMaybe
 
