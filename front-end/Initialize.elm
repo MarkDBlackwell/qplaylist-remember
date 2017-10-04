@@ -49,7 +49,7 @@ import Song
     exposing
         ( SongsRemembered
         , songCommentingMaybeInit
-        , songLikingInit
+        , songLikingMaybeInit
         , songsLatestInit
         )
 import UserIdentifier
@@ -87,7 +87,7 @@ init flags =
         pageIsExpandedInit
         flags.showCommentButtons
         songCommentingMaybeInit
-        songLikingInit
+        songLikingMaybeInit
         songsLatestInit
         flags.songsRemembered
         userIdentifierInit

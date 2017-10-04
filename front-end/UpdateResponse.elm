@@ -68,7 +68,7 @@ import Song
         ( SongsRemembered
         , likedOrCommentedShow
         , songCommentingMaybeInit
-        , songLikingInit
+        , songLikingMaybeInit
         )
 import UpdateLog
     exposing
@@ -144,7 +144,7 @@ likeResponseErr model httpError =
     ( { model
         | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
         , awaitingServerResponse = awaitingServerResponseInit
-        , songLiking = songLikingInit
+        , songLikingMaybe = songLikingMaybeInit
       }
     , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
     )
@@ -171,7 +171,7 @@ likeResponseOk model httpResponseText =
                 ( { model
                     | alertMessageText = alertMessageTextSend actionDescription responseString
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , songLiking = songLikingInit
+                    , songLikingMaybe = songLikingMaybeInit
                   }
                 , logAndFocus model "Response" responseString
                 )
@@ -179,12 +179,12 @@ likeResponseOk model httpResponseText =
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        likedOrCommentedShow model.songLiking model.songsRemembered
+                        likedOrCommentedShow model.songLikingMaybe model.songsRemembered
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , songLiking = songLikingInit
+                    , songLikingMaybe = songLikingMaybeInit
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch

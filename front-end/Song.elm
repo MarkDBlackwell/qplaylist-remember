@@ -33,7 +33,7 @@ module Song
         , Time
         , likedOrCommentedShow
         , songCommentingMaybeInit
-        , songLikingInit
+        , songLikingMaybeInit
         , songLikingOrCommentingMaybe
         , songLikingOrCommentingNew
         , songs2SongsRemembered
@@ -150,8 +150,8 @@ songCommentingMaybeInit =
     Nothing
 
 
-songLikingInit : SongLikingMaybe
-songLikingInit =
+songLikingMaybeInit : SongLikingMaybe
+songLikingMaybeInit =
     Nothing
 
 

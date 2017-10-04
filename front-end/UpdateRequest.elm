@@ -119,10 +119,10 @@ likeButtonProcessHand model songsRememberedIndex =
 
         likeRequestUriText : UriText
         likeRequestUriText =
-            likeOrCommentRequestUriText songLikingNew model.userIdentifier "Loved it!"
+            likeOrCommentRequestUriText songLikingMaybeNew model.userIdentifier "Loved it!"
 
-        songLikingNew : SongLikingOrCommentingMaybe
-        songLikingNew =
+        songLikingMaybeNew : SongLikingOrCommentingMaybe
+        songLikingMaybeNew =
             songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
 
         songsRememberedNew : SongsRemembered
@@ -142,7 +142,7 @@ likeButtonProcessHand model songsRememberedIndex =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
-                , songLiking = songLikingNew
+                , songLikingMaybe = songLikingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
             , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
