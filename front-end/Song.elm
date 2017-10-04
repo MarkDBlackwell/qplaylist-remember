@@ -245,11 +245,14 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
     let
         appendUnlessRemembered : SongLatest -> SongsRemembered
         appendUnlessRemembered songLatest =
-            if
-                List.member
-                    (song2SongTimeless songLatest)
-                    (songs2SongsTimeless songsRemembered)
-            then
+            let
+                remembered : Bool
+                remembered =
+                    List.member
+                        (song2SongTimeless songLatest)
+                        (songs2SongsTimeless songsRemembered)
+            in
+            if remembered then
                 songsRemembered
             else
                 songsRemembered
