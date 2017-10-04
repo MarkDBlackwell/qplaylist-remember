@@ -292,12 +292,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         swap : SongRemembered -> SongsRemembered
         swap songRemembered =
-            case List.head (songsLatestSongRememberedMatches songsLatest songRemembered) of
-                Nothing ->
-                    songsRemembered
-
-                Just songLatest ->
-                    songsRememberedSwapOneLatest songRemembered songLatest
+            Maybe.withDefault songsRemembered (Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songsLatest songRemembered)))
     in
     Maybe.withDefault songsRemembered (Maybe.map swap (selectOne songsRemembered songsRememberedIndex))
 
