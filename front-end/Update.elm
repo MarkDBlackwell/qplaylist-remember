@@ -33,7 +33,7 @@ import ModelType
         )
 import Song
     exposing
-        ( SongCommenting
+        ( SongCommentingMaybe
         , SongsRemembered
         , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
@@ -177,7 +177,7 @@ update msg model =
 
         SongForgetHand songsRememberedIndex ->
             let
-                songRememberedCompare : SongCommenting
+                songRememberedCompare : SongCommentingMaybe
                 songRememberedCompare =
                     songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
 

@@ -14,14 +14,14 @@
 
 module Song
     exposing
-        ( SongCommenting
+        ( SongCommentingMaybe
         , SongGroup
             ( Played
             , Remembered
             )
         , SongGroupLength
         , SongLatest
-        , SongLiking
+        , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
         , SongRemembered
@@ -64,7 +64,7 @@ type alias LikedOrCommented =
     Bool
 
 
-type alias SongCommenting =
+type alias SongCommentingMaybe =
     Maybe SongLatest
 
 
@@ -77,7 +77,7 @@ type alias SongLatest =
     }
 
 
-type alias SongLiking =
+type alias SongLikingMaybe =
     Maybe SongLatest
 
 
@@ -145,12 +145,12 @@ type alias Title =
     String
 
 
-songCommentingInit : SongCommenting
+songCommentingInit : SongCommentingMaybe
 songCommentingInit =
     Nothing
 
 
-songLikingInit : SongLiking
+songLikingInit : SongLikingMaybe
 songLikingInit =
     Nothing
 

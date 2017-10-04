@@ -30,8 +30,8 @@ import Request
         )
 import Song
     exposing
-        ( SongCommenting
-        , SongLiking
+        ( SongCommentingMaybe
+        , SongLikingMaybe
         , SongsLatest
         , SongsRemembered
         )
@@ -54,8 +54,8 @@ type alias Model =
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , showCommentButtons : ShowCommentButtons
-    , songCommenting : SongCommenting
-    , songLiking : SongLiking
+    , songCommenting : SongCommentingMaybe
+    , songLiking : SongLikingMaybe
     , songsLatest : SongsLatest
     , songsRemembered : SongsRemembered
     , userIdentifier : UserIdentifier
