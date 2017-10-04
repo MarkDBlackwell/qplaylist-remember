@@ -264,10 +264,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songRememberedSelectedMaybe : Maybe SongRemembered
-        songRememberedSelectedMaybe =
-            selectOne songsRemembered songsRememberedIndex
-
         songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
         songsLatestSongRememberedMatches songRemembered =
             let
@@ -279,7 +275,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
 
         swapUnlessNoLatestMatchesMaybe : Maybe SongsRemembered
         swapUnlessNoLatestMatchesMaybe =
-            Maybe.map swapUnlessNoLatestMatches songRememberedSelectedMaybe
+            Maybe.map swapUnlessNoLatestMatches (selectOne songsRemembered songsRememberedIndex)
 
         swapUnlessNoLatestMatches : SongRemembered -> SongsRemembered
         swapUnlessNoLatestMatches songRemembered =
