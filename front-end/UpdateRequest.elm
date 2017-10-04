@@ -51,7 +51,7 @@ import Request
         )
 import Song
     exposing
-        ( SongLikingOrCommenting
+        ( SongLikingOrCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndex
         , songLikingOrCommentingMaybe
@@ -121,7 +121,7 @@ likeButtonProcessHand model songsRememberedIndex =
         likeRequestUriText =
             likeOrCommentRequestUriText songLikingNew model.userIdentifier "Loved it!"
 
-        songLikingNew : SongLikingOrCommenting
+        songLikingNew : SongLikingOrCommentingMaybe
         songLikingNew =
             songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
 

@@ -29,7 +29,7 @@ module Request
 import Song
     exposing
         ( SongLatest
-        , SongLikingOrCommenting
+        , SongLikingOrCommentingMaybe
         )
 import UserIdentifier
     exposing
@@ -88,7 +88,7 @@ type alias UriText =
     String
 
 
-likeOrCommentRequestUriText : SongLikingOrCommenting -> UserIdentifier -> LikeOrCommentText -> UriText
+likeOrCommentRequestUriText : SongLikingOrCommentingMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
 likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentText =
     let
         artistTimeTitle : UriText

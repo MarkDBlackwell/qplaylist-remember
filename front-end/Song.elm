@@ -22,7 +22,7 @@ module Song
         , SongGroupLength
         , SongLatest
         , SongLiking
-        , SongLikingOrCommenting
+        , SongLikingOrCommentingMaybe
         , SongRemembered
         , SongsLatest
         , SongsLatestIndex
@@ -79,7 +79,7 @@ type alias SongLiking =
     Maybe SongLatest
 
 
-type alias SongLikingOrCommenting =
+type alias SongLikingOrCommentingMaybe =
     Maybe SongLatest
 
 
@@ -158,12 +158,12 @@ likedOrCommentedInit =
     False
 
 
-likedOrCommentedShow : SongLikingOrCommenting -> SongsRemembered -> SongsRemembered
+likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
 likedOrCommentedShow songLikingOrCommenting songsRemembered =
     List.map (likedOrCommentedShowSong songLikingOrCommenting) songsRemembered
 
 
-likedOrCommentedShowSong : SongLikingOrCommenting -> SongRemembered -> SongRemembered
+likedOrCommentedShowSong : SongLikingOrCommentingMaybe -> SongRemembered -> SongRemembered
 likedOrCommentedShowSong songLikingOrCommenting songRemembered =
     case songLikingOrCommenting of
         Nothing ->
@@ -197,7 +197,7 @@ song2SongTimeless { artist, title } =
     SongTimeless artist title
 
 
-songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommenting
+songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     case selectOne songsRemembered songsRememberedIndex of
         Nothing ->

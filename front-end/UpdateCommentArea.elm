@@ -38,7 +38,7 @@ import ModelType
         )
 import Song
     exposing
-        ( SongLikingOrCommenting
+        ( SongLikingOrCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndex
         , songCommentingInit
@@ -88,7 +88,7 @@ commentAreaInputTextChangeCaptureHand model text =
 commentAreaOpenHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
 commentAreaOpenHand model songsRememberedIndex =
     let
-        songCommentingNew : SongLikingOrCommenting
+        songCommentingNew : SongLikingOrCommentingMaybe
         songCommentingNew =
             songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
 
