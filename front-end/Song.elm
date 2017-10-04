@@ -22,6 +22,7 @@ module Song
         , SongGroupLength
         , SongLatest
         , SongLiking
+        , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
         , SongRemembered
         , SongsLatest
@@ -34,6 +35,7 @@ module Song
         , songCommentingInit
         , songLikingInit
         , songLikingOrCommentingMaybe
+        , songLikingOrCommentingNew
         , songs2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
@@ -77,6 +79,15 @@ type alias SongLatest =
 
 type alias SongLiking =
     Maybe SongLatest
+
+
+type alias SongLikingOrCommenting =
+    SongLatest
+
+
+songLikingOrCommentingNew : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
+songLikingOrCommentingNew artist time timestamp title =
+    SongLatest artist time timestamp title
 
 
 type alias SongLikingOrCommentingMaybe =

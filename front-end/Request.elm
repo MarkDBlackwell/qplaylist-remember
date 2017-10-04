@@ -28,8 +28,9 @@ module Request
 
 import Song
     exposing
-        ( SongLatest
+        ( SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
+        , songLikingOrCommentingNew
         )
 import UserIdentifier
     exposing
@@ -89,7 +90,7 @@ type alias UriText =
 
 
 likeOrCommentRequestUriText : SongLikingOrCommentingMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
-likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentText =
+likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCommentText =
     let
         artistTimeTitle : UriText
         artistTimeTitle =
@@ -103,11 +104,11 @@ likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentT
         basename =
             "append.json"
 
-        song : SongLatest
+        song : SongLikingOrCommenting
         song =
             Maybe.withDefault
-                (SongLatest "" "" "" "")
-                songLikingOrCommenting
+                (songLikingOrCommentingNew "" "" "" "")
+                songLikingOrCommentingMaybe
     in
     relative
         [ basename ]
