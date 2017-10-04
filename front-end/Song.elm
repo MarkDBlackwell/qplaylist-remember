@@ -64,8 +64,12 @@ type alias LikedOrCommented =
     Bool
 
 
+type alias SongCommenting =
+    SongLatest
+
+
 type alias SongCommentingMaybe =
-    Maybe SongLatest
+    Maybe SongCommenting
 
 
 type alias SongLatest =
@@ -77,21 +81,20 @@ type alias SongLatest =
     }
 
 
+type alias SongLiking =
+    SongLatest
+
+
 type alias SongLikingMaybe =
-    Maybe SongLatest
+    Maybe SongLiking
 
 
 type alias SongLikingOrCommenting =
     SongLatest
 
 
-songLikingOrCommentingConstructor : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
-songLikingOrCommentingConstructor artist time timestamp title =
-    SongLatest artist time timestamp title
-
-
 type alias SongLikingOrCommentingMaybe =
-    Maybe SongLatest
+    Maybe SongLikingOrCommenting
 
 
 type alias SongRemembered =
@@ -153,6 +156,11 @@ songCommentingMaybeInit =
 songLikingMaybeInit : SongLikingMaybe
 songLikingMaybeInit =
     Nothing
+
+
+songLikingOrCommentingConstructor : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
+songLikingOrCommentingConstructor artist time timestamp title =
+    SongLatest artist time timestamp title
 
 
 songsLatestInit : SongsLatest
