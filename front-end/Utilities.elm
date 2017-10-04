@@ -16,6 +16,7 @@ module Utilities
     exposing
         ( indexes
         , matchingIndexes
+        , maybeDefaultNothing
         , selectOne
         , startingWith
         , withIndexes
@@ -41,6 +42,11 @@ matchingIndexes listA a =
                 Nothing
     in
     List.filterMap matchWithIndex (withIndexes listA)
+
+
+maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
+maybeDefaultNothing function value =
+    Maybe.withDefault Nothing (Maybe.map function value)
 
 
 selectOne : List a -> Int -> Maybe a

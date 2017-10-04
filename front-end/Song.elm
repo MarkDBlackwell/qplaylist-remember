@@ -46,6 +46,7 @@ import Utilities
     exposing
         ( indexes
         , matchingIndexes
+        , maybeDefaultNothing
         , selectOne
         , startingWith
         , withIndexes
@@ -319,9 +320,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                             in
                             songsRememberedSwapOneLatest songRememberedSwapOneLatest songLatest
                     in
-                    Maybe.withDefault Nothing (Maybe.map (swapOneLatest songRememberedSwapUnlessListHeadEmpty) (listHead songRememberedSwapUnlessListHeadEmpty))
+                    maybeDefaultNothing
+                        (swapOneLatest songRememberedSwapUnlessListHeadEmpty)
+                        (listHead songRememberedSwapUnlessListHeadEmpty)
             in
-            Maybe.withDefault Nothing (Maybe.map swapUnlessListHeadEmpty selectOneSongsRemembered)
+            maybeDefaultNothing swapUnlessListHeadEmpty selectOneSongsRemembered
     in
     Maybe.withDefault songsRemembered swapUnlessNoSongRememberedSelected
 
