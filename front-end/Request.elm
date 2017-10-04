@@ -28,7 +28,8 @@ module Request
 
 import Song
     exposing
-        ( SongLikingOrCommenting
+        ( SongLatest
+        , SongLikingOrCommenting
         )
 import UserIdentifier
     exposing
@@ -92,34 +93,26 @@ likeOrCommentRequestUriText songLikingOrCommenting userIdentifier likeOrCommentT
     let
         artistTimeTitle : UriText
         artistTimeTitle =
-            case songLikingOrCommenting of
-                Nothing ->
-                    ""
-
-                Just songLikingOrCommenting ->
-                    songLikingOrCommenting.time
-                        ++ " "
-                        ++ songLikingOrCommenting.artist
-                        ++ ": "
-                        ++ songLikingOrCommenting.title
+            song.time
+                ++ " "
+                ++ song.artist
+                ++ ": "
+                ++ song.title
 
         basename : UriText
         basename =
             "append.json"
 
-        timestamp : UriText
-        timestamp =
-            case songLikingOrCommenting of
-                Nothing ->
-                    ""
-
-                Just songLikingOrCommenting ->
-                    songLikingOrCommenting.timestamp
+        song : SongLatest
+        song =
+            Maybe.withDefault
+                (SongLatest "" "" "" "")
+                songLikingOrCommenting
     in
     relative
         [ basename ]
         [ ( "user_identifier", userIdentifier )
-        , ( "timestamp", timestamp )
+        , ( "timestamp", song.timestamp )
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]
