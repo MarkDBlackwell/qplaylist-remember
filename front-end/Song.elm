@@ -289,18 +289,17 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 List.take songsRememberedIndex songsRemembered
                     ++ [ songUpdated songRemembered songLatest ]
                     ++ startingWith songsRemembered (songsRememberedIndex + 1)
-    in
-    case selectOne songsRemembered songsRememberedIndex of
-        Nothing ->
-            songsRemembered
 
-        Just songRemembered ->
+        swap : SongRemembered -> SongsRemembered
+        swap songRemembered =
             case List.head (songsLatestSongRememberedMatches songsLatest songRemembered) of
                 Nothing ->
                     songsRemembered
 
                 Just songLatest ->
                     songsRememberedSwapOneLatest songRemembered songLatest
+    in
+    Maybe.withDefault songsRemembered (Maybe.map swap (selectOne songsRemembered songsRememberedIndex))
 
 
 
