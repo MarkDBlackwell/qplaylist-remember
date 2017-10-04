@@ -83,7 +83,7 @@ commentSendHand model =
 
         commentRequestUriText : UriText
         commentRequestUriText =
-            likeOrCommentRequestUriText model.songCommenting model.userIdentifier model.commentText
+            likeOrCommentRequestUriText model.songCommentingMaybe model.userIdentifier model.commentText
     in
     --(awaitingServer, commentArea)
     case stateVector model of

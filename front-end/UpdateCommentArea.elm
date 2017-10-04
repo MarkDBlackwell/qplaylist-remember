@@ -41,7 +41,7 @@ import Song
         ( SongLikingOrCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndex
-        , songCommentingInit
+        , songCommentingMaybeInit
         , songLikingOrCommentingMaybe
         , songsRememberedUpdateTimestamp
         )
@@ -88,8 +88,8 @@ commentAreaInputTextChangeCaptureHand model text =
 commentAreaOpenHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
 commentAreaOpenHand model songsRememberedIndex =
     let
-        songCommentingNew : SongLikingOrCommentingMaybe
-        songCommentingNew =
+        songCommentingMaybeNew : SongLikingOrCommentingMaybe
+        songCommentingMaybeNew =
             songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
 
         songsRememberedNew : SongsRemembered
@@ -116,7 +116,7 @@ commentAreaOpenHand model songsRememberedIndex =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , commentText = commentTextInit
-                , songCommenting = songCommentingNew
+                , songCommentingMaybe = songCommentingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
               --'focusInputPossibly' doesn't work, here:
@@ -139,7 +139,7 @@ commentCancelHand model =
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , commentText = commentTextInit
-                , songCommenting = songCommentingInit
+                , songCommentingMaybe = songCommentingMaybeInit
               }
             , Cmd.none
             )

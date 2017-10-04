@@ -173,7 +173,7 @@ commentArea model song =
 
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
-    case model.songCommenting of
+    case model.songCommentingMaybe of
         Nothing ->
             htmlNodeNull
 

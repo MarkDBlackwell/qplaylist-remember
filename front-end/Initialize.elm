@@ -48,7 +48,7 @@ import Request
 import Song
     exposing
         ( SongsRemembered
-        , songCommentingInit
+        , songCommentingMaybeInit
         , songLikingInit
         , songsLatestInit
         )
@@ -86,7 +86,7 @@ init flags =
         commentTextInit
         pageIsExpandedInit
         flags.showCommentButtons
-        songCommentingInit
+        songCommentingMaybeInit
         songLikingInit
         songsLatestInit
         flags.songsRemembered

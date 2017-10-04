@@ -32,7 +32,7 @@ module Song
         , SongsRememberedIndex
         , Time
         , likedOrCommentedShow
-        , songCommentingInit
+        , songCommentingMaybeInit
         , songLikingInit
         , songLikingOrCommentingMaybe
         , songLikingOrCommentingNew
@@ -145,8 +145,8 @@ type alias Title =
     String
 
 
-songCommentingInit : SongCommentingMaybe
-songCommentingInit =
+songCommentingMaybeInit : SongCommentingMaybe
+songCommentingMaybeInit =
     Nothing
 
 

@@ -67,7 +67,7 @@ import Song
     exposing
         ( SongsRemembered
         , likedOrCommentedShow
-        , songCommentingInit
+        , songCommentingMaybeInit
         , songLikingInit
         )
 import UpdateLog
@@ -123,13 +123,13 @@ commentResponseOk model httpResponseText =
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        likedOrCommentedShow model.songCommenting model.songsRemembered
+                        likedOrCommentedShow model.songCommentingMaybe model.songsRemembered
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                     , commentText = commentTextInit
-                    , songCommenting = songCommentingInit
+                    , songCommentingMaybe = songCommentingMaybeInit
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch

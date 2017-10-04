@@ -195,7 +195,7 @@ update msg model =
                     )
 
                 _ ->
-                    if model.songCommenting == songRememberedCompare then
+                    if model.songCommentingMaybe == songRememberedCompare then
                         ( { model
                             | alertMessageText = alertMessageTextInit
                           }

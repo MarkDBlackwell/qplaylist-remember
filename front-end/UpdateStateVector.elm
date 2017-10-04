@@ -42,11 +42,11 @@ stateVector model =
     let
         commentOptional : Optional
         commentOptional =
-            case model.songCommenting of
+            case model.songCommentingMaybe of
                 Nothing ->
                     Closed
 
-                Just songCommenting ->
+                Just _ ->
                     Open
     in
     ( model.awaitingServerResponse

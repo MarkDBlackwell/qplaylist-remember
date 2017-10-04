@@ -51,7 +51,7 @@ import UpdateUtilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    case model.songCommenting of
+    case model.songCommentingMaybe of
         Nothing ->
             Cmd.none
 

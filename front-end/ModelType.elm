@@ -54,7 +54,7 @@ type alias Model =
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , showCommentButtons : ShowCommentButtons
-    , songCommenting : SongCommentingMaybe
+    , songCommentingMaybe : SongCommentingMaybe
     , songLiking : SongLikingMaybe
     , songsLatest : SongsLatest
     , songsRemembered : SongsRemembered
