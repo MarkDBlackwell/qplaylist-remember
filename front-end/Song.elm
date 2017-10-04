@@ -273,64 +273,44 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             in
             List.filter compare songsLatest
 
-        songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-        songsRememberedSwapOneLatest songRemembered songLatest =
-            let
-                songUpdated :
-                    { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
-                    -> { b | time : Time, timestamp : Timestamp }
-                    -> SongRemembered
-                songUpdated { artist, likedOrCommented, title } { time, timestamp } =
-                    SongRemembered artist likedOrCommented time timestamp title
-            in
-            if List.isEmpty (songsLatestSongRememberedMatches songRemembered) then
-                Nothing
-            else
-                Just
-                    (List.take songsRememberedIndex songsRemembered
-                        ++ [ songUpdated songRemembered songLatest ]
-                        ++ startingWith songsRemembered (songsRememberedIndex + 1)
-                    )
-
-        --swapUnlessNoLatestMatches : SongRemembered -> Maybe SongsRemembered
-        --swapUnlessNoLatestMatches songRemembered =
-        --let
-        --swapUnlessListHeadEmptyTwo : SongsRemembered
-        --swapUnlessListHeadEmptyTwo =
-        --Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered))
-        --Maybe.map (songsRememberedSwapOneLatest songRemembered) (listHead songRemembered)
-        --songsRememberedSwapOneLatest songRemembered (listHead songRemembered)
-        --in
-        --Maybe.withDefault songsRemembered swapUnlessListHeadEmptyTwo
-        --swapUnlessListHeadEmptyTwo
-        --Maybe.withDefault Nothing (Maybe.map (songsRememberedSwapOneLatest songRemembered) (listHead songRemembered))
-        listHead : SongRemembered -> Maybe SongLatest
-        listHead songRemembered =
-            List.head (songsLatestSongRememberedMatches songRemembered)
-
-        swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-        swapOneLatest songRemembered songLatest =
-            --swapUnlessNoLatestMatches (songsRememberedSwapOneLatest songRemembered songLatest)
-            --Maybe.withDefault Nothing (Maybe.map swapUnlessNoLatestMatches (songsRememberedSwapOneLatest songRemembered songLatest))
-            --Maybe.withDefault Nothing (songsRememberedSwapOneLatest songRemembered songLatest)
-            songsRememberedSwapOneLatest songRemembered songLatest
-
-        selectOneSongsRemembered : Maybe SongRemembered
-        selectOneSongsRemembered =
-            selectOne songsRemembered songsRememberedIndex
-
-        swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
-        swapUnlessListHeadEmpty songRemembered =
-            --Maybe.withDefault songsRemembered ((Maybe.map (swapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered))))
-            --Maybe.withDefault songsRemembered ((swapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered)))
-            --(Maybe.withDefault songsRemembered ((Maybe.map (swapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered)))))
-            --Maybe.map (swapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered))
-            Maybe.withDefault Nothing (Maybe.map (swapOneLatest songRemembered) (listHead songRemembered))
-
         swapUnlessNoSongRememberedSelected : Maybe SongsRemembered
         swapUnlessNoSongRememberedSelected =
-            --swapUnlessListHeadEmpty selectOneSongsRemembered
-            --Maybe.withDefault Nothing (Just (Maybe.map swapUnlessListHeadEmpty selectOneSongsRemembered))
+            let
+                songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                songsRememberedSwapOneLatest songRemembered songLatest =
+                    let
+                        songUpdated :
+                            { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
+                            -> { b | time : Time, timestamp : Timestamp }
+                            -> SongRemembered
+                        songUpdated { artist, likedOrCommented, title } { time, timestamp } =
+                            SongRemembered artist likedOrCommented time timestamp title
+                    in
+                    if List.isEmpty (songsLatestSongRememberedMatches songRemembered) then
+                        Nothing
+                    else
+                        Just
+                            (List.take songsRememberedIndex songsRemembered
+                                ++ [ songUpdated songRemembered songLatest ]
+                                ++ startingWith songsRemembered (songsRememberedIndex + 1)
+                            )
+
+                listHead : SongRemembered -> Maybe SongLatest
+                listHead songRemembered =
+                    List.head (songsLatestSongRememberedMatches songRemembered)
+
+                swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                swapOneLatest songRemembered songLatest =
+                    songsRememberedSwapOneLatest songRemembered songLatest
+
+                selectOneSongsRemembered : Maybe SongRemembered
+                selectOneSongsRemembered =
+                    selectOne songsRemembered songsRememberedIndex
+
+                swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
+                swapUnlessListHeadEmpty songRemembered =
+                    Maybe.withDefault Nothing (Maybe.map (swapOneLatest songRemembered) (listHead songRemembered))
+            in
             Maybe.withDefault Nothing (Maybe.map swapUnlessListHeadEmpty selectOneSongsRemembered)
     in
     Maybe.withDefault songsRemembered swapUnlessNoSongRememberedSelected
