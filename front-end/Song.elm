@@ -218,12 +218,7 @@ song2SongTimeless { artist, title } =
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
-    case selectOne songsRemembered songsRememberedIndex of
-        Nothing ->
-            Nothing
-
-        Just songRemembered ->
-            Just (song2SongLatest songRemembered)
+    Maybe.map song2SongLatest (selectOne songsRemembered songsRememberedIndex)
 
 
 songs2SongsLatest :
