@@ -170,13 +170,13 @@ likedOrCommentedInit =
 
 
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
-likedOrCommentedShow songLikingOrCommenting songsRemembered =
-    List.map (likedOrCommentedShowSong songLikingOrCommenting) songsRemembered
+likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
+    List.map (likedOrCommentedShowSong songLikingOrCommentingMaybe) songsRemembered
 
 
 likedOrCommentedShowSong : SongLikingOrCommentingMaybe -> SongRemembered -> SongRemembered
-likedOrCommentedShowSong songLikingOrCommenting songRemembered =
-    case songLikingOrCommenting of
+likedOrCommentedShowSong songLikingOrCommentingMaybe songRemembered =
+    case songLikingOrCommentingMaybe of
         Nothing ->
             songRemembered
 
