@@ -34,8 +34,8 @@ module Song
         , likedOrCommentedShow
         , songCommentingMaybeInit
         , songLikingMaybeInit
+        , songLikingOrCommentingConstructor
         , songLikingOrCommentingMaybe
-        , songLikingOrCommentingNew
         , songs2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
@@ -85,8 +85,8 @@ type alias SongLikingOrCommenting =
     SongLatest
 
 
-songLikingOrCommentingNew : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
-songLikingOrCommentingNew artist time timestamp title =
+songLikingOrCommentingConstructor : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
+songLikingOrCommentingConstructor artist time timestamp title =
     SongLatest artist time timestamp title
 
 

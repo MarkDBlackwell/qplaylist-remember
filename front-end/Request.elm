@@ -30,7 +30,7 @@ import Song
     exposing
         ( SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
-        , songLikingOrCommentingNew
+        , songLikingOrCommentingConstructor
         )
 import UserIdentifier
     exposing
@@ -107,7 +107,7 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         song : SongLikingOrCommenting
         song =
             Maybe.withDefault
-                (songLikingOrCommentingNew "" "" "" "")
+                (songLikingOrCommentingConstructor "" "" "" "")
                 songLikingOrCommentingMaybe
     in
     relative
