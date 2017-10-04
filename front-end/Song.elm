@@ -292,8 +292,12 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         List.take songsRememberedIndex songsRemembered
                             ++ [ songUpdated songRemembered songLatest ]
                             ++ startingWith songsRemembered (songsRememberedIndex + 1)
+
+                swapUnlessListHeadEmpty : Maybe SongsRemembered
+                swapUnlessListHeadEmpty =
+                    Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered))
             in
-            Maybe.withDefault songsRemembered (Maybe.map (songsRememberedSwapOneLatest songRemembered) (List.head (songsLatestSongRememberedMatches songRemembered)))
+            Maybe.withDefault songsRemembered swapUnlessListHeadEmpty
 
         swapUnlessNoLatestMatchesMaybe : Maybe SongsRemembered
         swapUnlessNoLatestMatchesMaybe =
