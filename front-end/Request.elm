@@ -94,11 +94,13 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
     let
         artistTimeTitle : UriText
         artistTimeTitle =
-            song.time
-                ++ " "
-                ++ song.artist
-                ++ ": "
-                ++ song.title
+            String.concat
+                [ song.time
+                , " "
+                , song.artist
+                , ": "
+                , song.title
+                ]
 
         basename : UriText
         basename =
@@ -161,7 +163,11 @@ relative queryBeforeList queryPairs =
                             --TODO: Possibly, use Http.encodeUri instead:
                             escapeHashes (escapeEqualsSigns (escapeAmpersands string))
                     in
-                    name ++ "=" ++ escapeAll value
+                    String.concat
+                        [ name
+                        , "="
+                        , escapeAll value
+                        ]
             in
             String.join
                 "&"

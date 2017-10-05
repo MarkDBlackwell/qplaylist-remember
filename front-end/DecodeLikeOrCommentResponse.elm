@@ -61,7 +61,8 @@ decodeLikeOrCommentResponse jsonRawText =
                         tag =
                             "response"
                     in
-                    map LikeOrCommentResponseWithDummyTag
+                    map
+                        LikeOrCommentResponseWithDummyTag
                         (field tag string)
             in
             decodeString decodeResponse jsonRawText

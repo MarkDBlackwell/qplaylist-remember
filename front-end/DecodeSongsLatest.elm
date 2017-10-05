@@ -65,7 +65,8 @@ decodeSongsLatest jsonRawText =
                     let
                         decodeSongLatest : Decoder SongLatest
                         decodeSongLatest =
-                            map4 SongLatest
+                            map4
+                                SongLatest
                                 (field "artist" string)
                                 (field "time" string)
                                 (field "timeStamp" string)
@@ -75,8 +76,11 @@ decodeSongsLatest jsonRawText =
                         tag =
                             "latestFive"
                     in
-                    map SongsLatestWithDummyTag
-                        (field tag (list decodeSongLatest))
+                    map
+                        SongsLatestWithDummyTag
+                        (list decodeSongLatest
+                            |> field tag
+                        )
             in
             decodeString decodeSongsLatestWithDummyTag jsonRawText
     in
