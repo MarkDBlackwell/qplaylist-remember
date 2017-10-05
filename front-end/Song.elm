@@ -47,6 +47,7 @@ import Utilities
         ( indexes
         , matchingIndexes
         , maybeDefaultNothing
+        , maybeMapWithDefault
         , selectOne
         , startingWith
         , withIndexes
@@ -195,7 +196,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             in
             List.map songRememberedTweak songsRemembered
     in
-    Maybe.withDefault songsRemembered (Maybe.map songsRememberedTweak songLikingOrCommentingMaybe)
+    maybeMapWithDefault songsRemembered songsRememberedTweak songLikingOrCommentingMaybe
 
 
 song2SongLatest :
@@ -259,12 +260,10 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
                 songsRemembered
                     ++ [ song2SongRemembered songLatest ]
     in
-    Maybe.withDefault
+    maybeMapWithDefault
         songsRemembered
-        (Maybe.map
-            appendUnlessRemembered
-            (selectOne songsLatest songsLatestIndex)
-        )
+        appendUnlessRemembered
+        (selectOne songsLatest songsLatestIndex)
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
