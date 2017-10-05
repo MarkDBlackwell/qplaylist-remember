@@ -144,10 +144,14 @@ update msg model =
             let
                 pageIsExpandedNew : PageIsExpanded
                 pageIsExpandedNew =
-                    --Here, can't use List.all.
                     if
-                        List.isEmpty model.songsLatest
-                            && List.isEmpty model.songsRemembered
+                        List.foldl
+                            (&&)
+                            True
+                            --Here, can't use List.all.
+                            [ List.isEmpty model.songsLatest
+                            , List.isEmpty model.songsRemembered
+                            ]
                     then
                         model.pageIsExpanded
                     else
