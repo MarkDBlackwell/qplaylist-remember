@@ -57,14 +57,10 @@ alertMessageTextErrorHttp httpError =
         prefix : AlertMessageText
         prefix =
             "HttpError"
-
-        prefixColon : AlertMessageText
-        prefixColon =
-            prefix ++ ": "
     in
     case httpError of
         Http.BadPayload debuggingText httpResponseText ->
-            ( prefixColon ++ "BadPayload"
+            ( prefix ++ prefixColon ++ "BadPayload"
             , debuggingText
             )
 
@@ -91,35 +87,42 @@ alertMessageTextErrorHttp httpError =
 
 alertMessageTextErrorHttpLogging : Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
-    first (alertMessageTextErrorHttp httpError)
+    alertMessageTextErrorHttp httpError
+        |> first
 
 
 alertMessageTextErrorHttpScreen : Error -> AlertMessageText
 alertMessageTextErrorHttpScreen httpError =
-    second (alertMessageTextErrorHttp httpError)
+    alertMessageTextErrorHttp httpError
+        |> second
 
 
 alertMessageTextErrorUnexpected : List AlertMessageText -> AlertMessageText
 alertMessageTextErrorUnexpected alertMessageTextList =
-    "Unexpected error "
-        ++ String.join
-            ": "
+    (++)
+        "Unexpected error "
+        (String.join
+            prefixColon
             alertMessageTextList
+        )
 
 
 alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
-    alertMessageTextErrorHttpScreen httpError
-        ++ " (while attempting to send your "
-        ++ likeOrCommentName
-        ++ ")"
+    (++)
+        (alertMessageTextErrorHttpScreen httpError)
+        (String.concat
+            [ " (while attempting to send your "
+            , likeOrCommentName
+            , ")"
+            ]
+        )
 
 
 alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
 alertMessageTextSend action details =
     alertMessageTextErrorUnexpected
-        [ "while attempting to "
-            ++ action
+        [ "while attempting to " ++ action
         , details
         ]
 
@@ -127,3 +130,8 @@ alertMessageTextSend action details =
 alertMessageTextServerAwaiting : AlertMessageText
 alertMessageTextServerAwaiting =
     "Awaiting server"
+
+
+prefixColon : AlertMessageText
+prefixColon =
+    ": "
