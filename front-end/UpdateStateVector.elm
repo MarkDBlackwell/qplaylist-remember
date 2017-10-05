@@ -32,6 +32,10 @@ import UpdateType
             , Open
             )
         )
+import Utilities
+    exposing
+        ( maybeMapWithDefault
+        )
 
 
 -- UPDATE
@@ -42,12 +46,7 @@ stateVector model =
     let
         commentOptional : Optional
         commentOptional =
-            case model.songCommentingMaybe of
-                Nothing ->
-                    Closed
-
-                Just _ ->
-                    Open
+            maybeMapWithDefault Closed (\x -> Open) model.songCommentingMaybe
     in
     ( model.awaitingServerResponse
     , commentOptional
