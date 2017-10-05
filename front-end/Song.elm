@@ -48,7 +48,7 @@ import Utilities
         , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
-        , selectOne
+        , selectOneMaybe
         , startingWith
         , withIndexes
         , withoutOne
@@ -220,7 +220,7 @@ song2SongTimeless { artist, title } =
 
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
-    Maybe.map song2SongLatest (selectOne songsRemembered songsRememberedIndex)
+    Maybe.map song2SongLatest (selectOneMaybe songsRemembered songsRememberedIndex)
 
 
 songs2SongsLatest :
@@ -263,7 +263,7 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
     maybeMapWithDefault
         songsRemembered
         appendUnlessRemembered
-        (selectOne songsLatest songsLatestIndex)
+        (selectOneMaybe songsLatest songsLatestIndex)
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
@@ -271,7 +271,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     let
         songsRememberedSelectOneMaybe : Maybe SongRemembered
         songsRememberedSelectOneMaybe =
-            selectOne songsRemembered songsRememberedIndex
+            selectOneMaybe songsRemembered songsRememberedIndex
 
         swapUnlessListHeadEmptyMaybe : SongRemembered -> Maybe SongsRemembered
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =

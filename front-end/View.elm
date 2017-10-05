@@ -74,7 +74,7 @@ import Song
 import Utilities
     exposing
         ( maybeMapWithDefault
-        , selectOne
+        , selectOneMaybe
         )
 import ViewButton
     exposing
@@ -239,7 +239,7 @@ songView model group songsLatestOrRememberedIndex song =
 
                 select : Int -> String
                 select index =
-                    Maybe.withDefault "" (selectOne stampList index)
+                    Maybe.withDefault "" (selectOneMaybe stampList index)
 
                 stampList : List String
                 stampList =
