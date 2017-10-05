@@ -73,7 +73,8 @@ import Song
         )
 import Utilities
     exposing
-        ( selectOne
+        ( maybeMapWithDefault
+        , selectOne
         )
 import ViewButton
     exposing
@@ -173,12 +174,7 @@ commentArea model song =
 
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
-    case model.songCommentingMaybe of
-        Nothing ->
-            htmlNodeNull
-
-        Just songCommenting ->
-            commentArea model songCommenting
+    maybeMapWithDefault htmlNodeNull (\x -> commentArea model x) model.songCommentingMaybe
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
