@@ -185,7 +185,9 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             songsRemembered
 
         Just songLikingOrCommenting ->
-            List.map (likedOrCommentedShowSong songLikingOrCommenting) songsRemembered
+            List.map
+                (likedOrCommentedShowSong songLikingOrCommenting)
+                songsRemembered
 
 
 likedOrCommentedShowSong : SongLikingOrCommenting -> SongRemembered -> SongRemembered
@@ -259,7 +261,12 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
                 songsRemembered
                     ++ [ song2SongRemembered songLatest ]
     in
-    Maybe.withDefault songsRemembered (Maybe.map appendUnlessRemembered (selectOne songsLatest songsLatestIndex))
+    Maybe.withDefault
+        songsRemembered
+        (Maybe.map
+            appendUnlessRemembered
+            (selectOne songsLatest songsLatestIndex)
+        )
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
@@ -274,14 +281,18 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             let
                 listHeadMaybe : Maybe SongLatest
                 listHeadMaybe =
-                    List.head (songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty)
+                    List.head
+                        (songsLatestSongRememberedMatches
+                            songRememberedSwapUnlessListHeadEmpty
+                        )
 
                 songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
                 songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
                     let
                         compare : SongLatest -> Bool
                         compare songLatest =
-                            song2SongTimeless songRememberedSongsLatestSongRememberedMatches == song2SongTimeless songLatest
+                            song2SongTimeless songRememberedSongsLatestSongRememberedMatches
+                                == song2SongTimeless songLatest
                     in
                     List.filter compare songsLatest
 
@@ -298,20 +309,31 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                                     SongRemembered artist likedOrCommented time timestamp title
                             in
-                            if List.isEmpty (songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest) then
+                            if
+                                List.isEmpty
+                                    (songsLatestSongRememberedMatches
+                                        songRememberedSongsRememberedSwapOneLatest
+                                    )
+                            then
                                 Nothing
                             else
                                 Just
                                     (List.take songsRememberedIndex songsRemembered
                                         ++ [ songUpdated songRememberedSongsRememberedSwapOneLatest songLatest ]
-                                        ++ startingWith songsRemembered (songsRememberedIndex + 1)
+                                        ++ startingWith
+                                            songsRemembered
+                                            (songsRememberedIndex + 1)
                                     )
                     in
-                    songsRememberedSwapOneLatestMaybe songRememberedSwapUnlessListHeadEmpty songLatest
+                    songsRememberedSwapOneLatestMaybe
+                        songRememberedSwapUnlessListHeadEmpty
+                        songLatest
             in
             maybeDefaultNothing swapOneLatestMaybe listHeadMaybe
     in
-    Maybe.withDefault songsRemembered (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
+    Maybe.withDefault
+        songsRemembered
+        (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
 
 
 
