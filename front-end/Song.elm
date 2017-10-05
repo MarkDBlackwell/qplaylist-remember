@@ -285,8 +285,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     in
                     List.filter compare songsLatest
 
-                swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                swapOneLatest songRememberedSwapOneLatest songLatest =
+                swapOneLatest : SongLatest -> Maybe SongsRemembered
+                swapOneLatest songLatest =
                     let
                         songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
                         songsRememberedSwapOneLatest songRememberedSongsRememberedSwapOneLatest songLatest =
@@ -315,11 +315,9 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
                                     )
                     in
-                    songsRememberedSwapOneLatest songRememberedSwapOneLatest songLatest
+                    songsRememberedSwapOneLatest songRememberedSwapUnlessListHeadEmpty songLatest
             in
-            maybeDefaultNothing
-                (swapOneLatest songRememberedSwapUnlessListHeadEmpty)
-                listHead
+            maybeDefaultNothing swapOneLatest listHead
     in
     Maybe.withDefault songsRemembered (maybeDefaultNothing swapUnlessListHeadEmpty selectOneSongsRemembered)
 
