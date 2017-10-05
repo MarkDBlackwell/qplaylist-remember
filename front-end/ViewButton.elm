@@ -67,6 +67,10 @@ import Song
         , SongsLatestOrRememberedIndex
         , SongsRememberedIndex
         )
+import Utilities
+    exposing
+        ( maybeMapWithDefault
+        )
 import ViewType
     exposing
         ( Display
@@ -174,20 +178,12 @@ buttonMyComment buttonId hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
         buttonIdView =
-            case buttonId of
-                Nothing ->
-                    []
-
-                Just buttonId ->
-                    [ id buttonId ]
+            maybeMapWithDefault [] (\x -> [ id x ]) buttonId
 
         display : Display
         display =
-            case buttonId of
-                Nothing ->
-                    "inline-block"
-
-                Just buttonId ->
+            let
+                nonePossibly buttonId =
                     if
                         String.startsWith "buttonComment" buttonId
                             && not showCommentButtons
@@ -195,6 +191,8 @@ buttonMyComment buttonId hoverText action showCommentButtons =
                         "none"
                     else
                         "inline-block"
+            in
+            maybeMapWithDefault "inline-block" nonePossibly buttonId
     in
     button
         ([ style [ ( "display", display ) ]
