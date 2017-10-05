@@ -265,15 +265,15 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        selectOneSongsRemembered : Maybe SongRemembered
-        selectOneSongsRemembered =
+        songsRememberedSelectOneMaybe : Maybe SongRemembered
+        songsRememberedSelectOneMaybe =
             selectOne songsRemembered songsRememberedIndex
 
-        swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
-        swapUnlessListHeadEmpty songRememberedSwapUnlessListHeadEmpty =
+        swapUnlessListHeadEmptyMaybe : SongRemembered -> Maybe SongsRemembered
+        swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
-                listHead : Maybe SongLatest
-                listHead =
+                listHeadMaybe : Maybe SongLatest
+                listHeadMaybe =
                     List.head (songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty)
 
                 songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
@@ -285,23 +285,15 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     in
                     List.filter compare songsLatest
 
-                swapOneLatest : SongLatest -> Maybe SongsRemembered
-                swapOneLatest songLatest =
+                swapOneLatestMaybe : SongLatest -> Maybe SongsRemembered
+                swapOneLatestMaybe songLatest =
                     let
-                        songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                        songsRememberedSwapOneLatest songRememberedSongsRememberedSwapOneLatest songLatest =
+                        songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                        songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
                             let
                                 songUpdated :
-                                    { a
-                                        | artist : Artist
-                                        , likedOrCommented : LikedOrCommented
-                                        , title : Title
-                                    }
-                                    ->
-                                        { b
-                                            | time : Time
-                                            , timestamp : Timestamp
-                                        }
+                                    { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
+                                    -> { b | time : Time, timestamp : Timestamp }
                                     -> SongRemembered
                                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                                     SongRemembered artist likedOrCommented time timestamp title
@@ -315,11 +307,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                         ++ startingWith songsRemembered (songsRememberedIndex + 1)
                                     )
                     in
-                    songsRememberedSwapOneLatest songRememberedSwapUnlessListHeadEmpty songLatest
+                    songsRememberedSwapOneLatestMaybe songRememberedSwapUnlessListHeadEmpty songLatest
             in
-            maybeDefaultNothing swapOneLatest listHead
+            maybeDefaultNothing swapOneLatestMaybe listHeadMaybe
     in
-    Maybe.withDefault songsRemembered (maybeDefaultNothing swapUnlessListHeadEmpty selectOneSongsRemembered)
+    Maybe.withDefault songsRemembered (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
 
 
 
