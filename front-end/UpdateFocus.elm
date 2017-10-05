@@ -44,6 +44,10 @@ import UpdateUtilities
     exposing
         ( msg2Cmd
         )
+import Utilities
+    exposing
+        ( maybeMapWithDefault
+        )
 
 
 -- UPDATE
@@ -51,7 +55,7 @@ import UpdateUtilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    Maybe.withDefault Cmd.none (Maybe.map (\x -> focusSetId "input") model.songCommentingMaybe)
+    maybeMapWithDefault Cmd.none (\x -> focusSetId "input") model.songCommentingMaybe
 
 
 focusSetId : Id -> Cmd Msg

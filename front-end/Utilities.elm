@@ -17,6 +17,7 @@ module Utilities
         ( indexes
         , matchingIndexes
         , maybeDefaultNothing
+        , maybeMapWithDefault
         , selectOne
         , startingWith
         , withIndexes
@@ -47,6 +48,11 @@ matchingIndexes listA a =
 maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
 maybeDefaultNothing function value =
     Maybe.withDefault Nothing (Maybe.map function value)
+
+
+maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
+maybeMapWithDefault default function value =
+    Maybe.withDefault default (Maybe.map function value)
 
 
 selectOne : List a -> Int -> Maybe a
