@@ -51,12 +51,7 @@ import UpdateUtilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    case model.songCommentingMaybe of
-        Nothing ->
-            Cmd.none
-
-        _ ->
-            focusSetId "input"
+    Maybe.withDefault Cmd.none (Maybe.map (\x -> focusSetId "input") model.songCommentingMaybe)
 
 
 focusSetId : Id -> Cmd Msg
