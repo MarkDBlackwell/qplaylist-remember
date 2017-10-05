@@ -180,24 +180,22 @@ likedOrCommentedInit =
 
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
 likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
-    case songLikingOrCommentingMaybe of
-        Nothing ->
-            songsRemembered
-
-        Just songLikingOrCommenting ->
-            List.map
-                (likedOrCommentedShowSong songLikingOrCommenting)
-                songsRemembered
-
-
-likedOrCommentedShowSong : SongLikingOrCommenting -> SongRemembered -> SongRemembered
-likedOrCommentedShowSong songLikingOrCommenting songRemembered =
-    if songLikingOrCommenting /= song2SongLatest songRemembered then
-        songRemembered
-    else
-        { songRemembered
-            | likedOrCommented = True
-        }
+    let
+        songsRememberedTweak : SongLikingOrCommenting -> SongsRemembered
+        songsRememberedTweak songLikingOrCommenting =
+            let
+                songRememberedTweak : SongRemembered -> SongRemembered
+                songRememberedTweak songRemembered =
+                    if songLikingOrCommenting /= song2SongLatest songRemembered then
+                        songRemembered
+                    else
+                        { songRemembered
+                            | likedOrCommented = True
+                        }
+            in
+            List.map songRememberedTweak songsRemembered
+    in
+    Maybe.withDefault songsRemembered (Maybe.map songsRememberedTweak songLikingOrCommentingMaybe)
 
 
 song2SongLatest :
