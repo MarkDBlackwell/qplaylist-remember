@@ -265,68 +265,63 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        swapUnlessNoSongRememberedSelected : Maybe SongsRemembered
-        swapUnlessNoSongRememberedSelected =
+        selectOneSongsRemembered : Maybe SongRemembered
+        selectOneSongsRemembered =
+            selectOne songsRemembered songsRememberedIndex
+
+        swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
+        swapUnlessListHeadEmpty songRememberedSwapUnlessListHeadEmpty =
             let
-                selectOneSongsRemembered : Maybe SongRemembered
-                selectOneSongsRemembered =
-                    selectOne songsRemembered songsRememberedIndex
+                listHead : SongRemembered -> Maybe SongLatest
+                listHead songRememberedListHead =
+                    List.head (songsLatestSongRememberedMatches songRememberedListHead)
 
-                swapUnlessListHeadEmpty : SongRemembered -> Maybe SongsRemembered
-                swapUnlessListHeadEmpty songRememberedSwapUnlessListHeadEmpty =
+                songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
+                songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
                     let
-                        listHead : SongRemembered -> Maybe SongLatest
-                        listHead songRememberedListHead =
-                            List.head (songsLatestSongRememberedMatches songRememberedListHead)
-
-                        songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
-                        songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
-                            let
-                                compare : SongLatest -> Bool
-                                compare songLatest =
-                                    song2SongTimeless songRememberedSongsLatestSongRememberedMatches == song2SongTimeless songLatest
-                            in
-                            List.filter compare songsLatest
-
-                        swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                        swapOneLatest songRememberedSwapOneLatest songLatest =
-                            let
-                                songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
-                                songsRememberedSwapOneLatest songRememberedSongsRememberedSwapOneLatest songLatest =
-                                    let
-                                        songUpdated :
-                                            { a
-                                                | artist : Artist
-                                                , likedOrCommented : LikedOrCommented
-                                                , title : Title
-                                            }
-                                            ->
-                                                { b
-                                                    | time : Time
-                                                    , timestamp : Timestamp
-                                                }
-                                            -> SongRemembered
-                                        songUpdated { artist, likedOrCommented, title } { time, timestamp } =
-                                            SongRemembered artist likedOrCommented time timestamp title
-                                    in
-                                    if List.isEmpty (songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest) then
-                                        Nothing
-                                    else
-                                        Just
-                                            (List.take songsRememberedIndex songsRemembered
-                                                ++ [ songUpdated songRememberedSongsRememberedSwapOneLatest songLatest ]
-                                                ++ startingWith songsRemembered (songsRememberedIndex + 1)
-                                            )
-                            in
-                            songsRememberedSwapOneLatest songRememberedSwapOneLatest songLatest
+                        compare : SongLatest -> Bool
+                        compare songLatest =
+                            song2SongTimeless songRememberedSongsLatestSongRememberedMatches == song2SongTimeless songLatest
                     in
-                    maybeDefaultNothing
-                        (swapOneLatest songRememberedSwapUnlessListHeadEmpty)
-                        (listHead songRememberedSwapUnlessListHeadEmpty)
+                    List.filter compare songsLatest
+
+                swapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                swapOneLatest songRememberedSwapOneLatest songLatest =
+                    let
+                        songsRememberedSwapOneLatest : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                        songsRememberedSwapOneLatest songRememberedSongsRememberedSwapOneLatest songLatest =
+                            let
+                                songUpdated :
+                                    { a
+                                        | artist : Artist
+                                        , likedOrCommented : LikedOrCommented
+                                        , title : Title
+                                    }
+                                    ->
+                                        { b
+                                            | time : Time
+                                            , timestamp : Timestamp
+                                        }
+                                    -> SongRemembered
+                                songUpdated { artist, likedOrCommented, title } { time, timestamp } =
+                                    SongRemembered artist likedOrCommented time timestamp title
+                            in
+                            if List.isEmpty (songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest) then
+                                Nothing
+                            else
+                                Just
+                                    (List.take songsRememberedIndex songsRemembered
+                                        ++ [ songUpdated songRememberedSongsRememberedSwapOneLatest songLatest ]
+                                        ++ startingWith songsRemembered (songsRememberedIndex + 1)
+                                    )
+                    in
+                    songsRememberedSwapOneLatest songRememberedSwapOneLatest songLatest
             in
-            maybeDefaultNothing swapUnlessListHeadEmpty selectOneSongsRemembered
+            maybeDefaultNothing
+                (swapOneLatest songRememberedSwapUnlessListHeadEmpty)
+                (listHead songRememberedSwapUnlessListHeadEmpty)
     in
-    Maybe.withDefault songsRemembered swapUnlessNoSongRememberedSelected
+    Maybe.withDefault songsRemembered (maybeDefaultNothing swapUnlessListHeadEmpty selectOneSongsRemembered)
 
 
 
