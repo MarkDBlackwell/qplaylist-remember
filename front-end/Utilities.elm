@@ -35,14 +35,14 @@ indexes listA =
 matchingIndexes : List a -> a -> List Int
 matchingIndexes listA a =
     let
-        matchWithIndex : ( Int, a ) -> Maybe Int
-        matchWithIndex ( index, another ) =
+        matchWithIndexMaybe : ( Int, a ) -> Maybe Int
+        matchWithIndexMaybe ( index, another ) =
             if another == a then
                 Just index
             else
                 Nothing
     in
-    List.filterMap matchWithIndex (withIndexes listA)
+    List.filterMap matchWithIndexMaybe (withIndexes listA)
 
 
 maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
