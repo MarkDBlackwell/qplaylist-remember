@@ -239,12 +239,7 @@ songView model group songsLatestOrRememberedIndex song =
 
                 select : Int -> String
                 select index =
-                    case selectOne stampList index of
-                        Nothing ->
-                            ""
-
-                        Just selectOne ->
-                            selectOne
+                    Maybe.withDefault "" (selectOne stampList index)
 
                 stampList : List String
                 stampList =
