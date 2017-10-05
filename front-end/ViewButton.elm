@@ -174,15 +174,16 @@ buttonMy buttonId hoverText action =
 
 
 buttonMyComment : Maybe Id -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
-buttonMyComment buttonId hoverText action showCommentButtons =
+buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
         buttonIdView =
-            maybeMapWithDefault [] (\x -> [ id x ]) buttonId
+            maybeMapWithDefault [] (\x -> [ id x ]) buttonIdMaybe
 
         display : Display
         display =
             let
+                nonePossibly : Id -> HoverText
                 nonePossibly buttonId =
                     if
                         String.startsWith "buttonComment" buttonId
@@ -192,7 +193,7 @@ buttonMyComment buttonId hoverText action showCommentButtons =
                     else
                         "inline-block"
             in
-            maybeMapWithDefault "inline-block" nonePossibly buttonId
+            maybeMapWithDefault "inline-block" nonePossibly buttonIdMaybe
     in
     button
         ([ style [ ( "display", display ) ]
