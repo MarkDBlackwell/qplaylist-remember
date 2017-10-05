@@ -47,7 +47,7 @@ matchingIndexes listA a =
 
 maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
 maybeDefaultNothing function value =
-    Maybe.withDefault Nothing (Maybe.map function value)
+    maybeMapWithDefault Nothing function value
 
 
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
