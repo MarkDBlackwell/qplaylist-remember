@@ -93,8 +93,8 @@ buttonComment group songsRememberedIndex showCommentButtons =
         buttonAction =
             CommentAreaOpenHand songsRememberedIndex
 
-        buttonId : Maybe Id
-        buttonId =
+        buttonIdMaybe : Maybe Id
+        buttonIdMaybe =
             Just
                 ("buttonComment"
                     ++ toString songsRememberedIndex
@@ -105,7 +105,7 @@ buttonComment group songsRememberedIndex showCommentButtons =
             "Share a comment (with the DJ) about this song"
     in
     if Remembered == group then
-        buttonMyComment buttonId hoverText buttonAction showCommentButtons
+        buttonMyComment buttonIdMaybe hoverText buttonAction showCommentButtons
     else
         htmlNodeNull
 
@@ -122,8 +122,8 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
                 Remembered ->
                     SongForgetHand songsLatestOrRememberedIndex
 
-        buttonId : Maybe Id
-        buttonId =
+        buttonIdMaybe : Maybe Id
+        buttonIdMaybe =
             Just
                 ("button"
                     ++ songGroup2String group
@@ -139,7 +139,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonMy buttonId hoverText buttonAction
+    buttonMy buttonIdMaybe hoverText buttonAction
 
 
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
@@ -149,8 +149,8 @@ buttonLike group songsRememberedIndex =
         buttonAction =
             LikeButtonProcessHand songsRememberedIndex
 
-        buttonId : Maybe Id
-        buttonId =
+        buttonIdMaybe : Maybe Id
+        buttonIdMaybe =
             Just
                 ("buttonLike"
                     ++ toString songsRememberedIndex
@@ -165,12 +165,12 @@ buttonLike group songsRememberedIndex =
             htmlNodeNull
 
         Remembered ->
-            buttonMy buttonId hoverText buttonAction
+            buttonMy buttonIdMaybe hoverText buttonAction
 
 
 buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
-buttonMy buttonId hoverText action =
-    buttonMyComment buttonId hoverText action False
+buttonMy buttonIdMaybe hoverText action =
+    buttonMyComment buttonIdMaybe hoverText action False
 
 
 buttonMyComment : Maybe Id -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
@@ -209,26 +209,26 @@ buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
 buttonPlayed : Html Msg
 buttonPlayed =
     let
-        buttonId : Maybe Id
-        buttonId =
+        buttonIdMaybe : Maybe Id
+        buttonIdMaybe =
             Just "refresh"
 
         hoverText : HoverText
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonMy buttonId hoverText SongsLatestRefreshHand
+    buttonMy buttonIdMaybe hoverText SongsLatestRefreshHand
 
 
 buttonRemembered : Html Msg
 buttonRemembered =
     let
-        buttonId : Maybe Id
-        buttonId =
+        buttonIdMaybe : Maybe Id
+        buttonIdMaybe =
             Just "morph"
 
         hoverText : HoverText
         hoverText =
             "Morph this page's shape"
     in
-    buttonMy buttonId hoverText PageMorphHand
+    buttonMy buttonIdMaybe hoverText PageMorphHand
