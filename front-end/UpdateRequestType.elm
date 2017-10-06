@@ -23,6 +23,7 @@ module UpdateRequestType
         , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
+        , LikeOrCommentResponseText
         , LikeOrCommentText
         , QueryBeforeList
         , QueryPair
@@ -60,6 +61,10 @@ type alias HttpRequestOrResponseTextMaybe =
 
 
 type alias HttpResponseText =
+    String
+
+
+type alias LikeOrCommentResponseText =
     String
 
 

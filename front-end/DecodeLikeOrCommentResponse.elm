@@ -32,6 +32,7 @@ import Json.Decode
 import UpdateRequestType
     exposing
         ( HttpResponseText
+        , LikeOrCommentResponseText
         )
 
 
@@ -40,14 +41,10 @@ import UpdateRequestType
 
 type alias LikeOrCommentResponseWithDummyTag =
     --TODO: Why do we need a tag?
-    { dummyTag : ResponseString }
+    { dummyTag : LikeOrCommentResponseText }
 
 
-type alias ResponseString =
-    String
-
-
-decodeLikeOrCommentResponse : HttpResponseText -> Result AlertMessageText ResponseString
+decodeLikeOrCommentResponse : HttpResponseText -> Result AlertMessageText LikeOrCommentResponseText
 decodeLikeOrCommentResponse jsonRawText =
     --For decoding JSON:
     let

@@ -41,7 +41,7 @@ import DecodeLikeOrCommentResponse
         )
 import DecodeSongsLatest
     exposing
-        ( decodeSongsLatest
+        ( decodeSongsLatestResponse
         )
 import Http
     exposing
@@ -84,6 +84,7 @@ import UpdateRequestType
             , ActionResponse
             )
         , HttpResponseText
+        , LikeOrCommentResponseText
         )
 import UpdateUtilities
     exposing
@@ -255,7 +256,7 @@ songsLatestResponseErr model httpError =
 
 songsLatestResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 songsLatestResponseOk model httpResponseText =
-    case decodeSongsLatest httpResponseText of
+    case decodeSongsLatestResponse httpResponseText of
         Err alertMessageTextDecode ->
             let
                 actionDescription : AlertMessageText

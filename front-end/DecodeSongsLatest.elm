@@ -14,7 +14,7 @@
 
 module DecodeSongsLatest
     exposing
-        ( decodeSongsLatest
+        ( decodeSongsLatestResponse
         )
 
 import AlertType
@@ -50,8 +50,8 @@ type alias SongsLatestWithDummyTag =
     { dummyTag : SongsLatest }
 
 
-decodeSongsLatest : HttpResponseText -> Result AlertMessageText SongsLatest
-decodeSongsLatest jsonRawText =
+decodeSongsLatestResponse : HttpResponseText -> Result AlertMessageText SongsLatest
+decodeSongsLatestResponse jsonRawText =
     --See:
     --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
