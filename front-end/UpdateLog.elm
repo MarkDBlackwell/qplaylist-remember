@@ -64,6 +64,25 @@ import UpdateUtilities
 -- UPDATE
 
 
+httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
+httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
+    let
+        --Keep for console logging:
+        a : String
+        a =
+            log
+                (actionName2String actionName)
+                logText
+
+        logText : String
+        logText =
+            Maybe.withDefault "Ok" httpRequestOrResponseTextMaybe
+    in
+    ( model
+    , focusInputPossibly model
+    )
+
+
 logAndFocus : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAndFocus model actionName alertMessageTextMaybe =
     Cmd.batch
@@ -88,22 +107,3 @@ logWithoutFocus : Cmd Msg
 logWithoutFocus =
     HttpRequestOrResponseTextLog ActionResponse Nothing
         |> msg2Cmd
-
-
-httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
-httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
-    let
-        --Keep for console logging:
-        a : String
-        a =
-            log
-                (actionName2String actionName)
-                logText
-
-        logText : String
-        logText =
-            Maybe.withDefault "Ok" httpRequestOrResponseTextMaybe
-    in
-    ( model
-    , focusInputPossibly model
-    )
