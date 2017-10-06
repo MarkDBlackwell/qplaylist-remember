@@ -17,7 +17,6 @@ module Alert
         ( ActionName
         , AlertMessageText
         , AlertMessageTextMaybe
-        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
@@ -108,11 +107,20 @@ alertMessageTextErrorHttp httpError =
             )
 
 
-alertMessageTextErrorHttpLogging : Error -> AlertMessageTextMaybe
-alertMessageTextErrorHttpLogging httpError =
+
+--alertMessageTextErrorHttpLogging : Error -> AlertMessageTextMaybe
+--alertMessageTextErrorHttpLogging httpError =
+--alertMessageTextErrorHttp httpError
+--|> first
+--|> Just
+
+
+alertMessageTextLogging : Error -> AlertMessageText
+alertMessageTextLogging httpError =
     alertMessageTextErrorHttp httpError
         |> first
         |> Just
+        |> Maybe.withDefault ""
 
 
 alertMessageTextErrorHttpScreen : Error -> AlertMessageText
@@ -129,12 +137,6 @@ alertMessageTextErrorUnexpected alertMessageTextList =
             prefixSeparator
             alertMessageTextList
         )
-
-
-alertMessageTextLogging : Error -> AlertMessageText
-alertMessageTextLogging httpError =
-    alertMessageTextErrorHttpLogging httpError
-        |> Maybe.withDefault ""
 
 
 alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText

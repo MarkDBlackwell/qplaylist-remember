@@ -25,7 +25,6 @@ module UpdateResponse
 import Alert
     exposing
         ( AlertMessageText
-        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
