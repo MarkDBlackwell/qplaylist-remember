@@ -22,7 +22,7 @@ module ModelType
 
 import Alert
     exposing
-        ( AlertMessageText
+        ( AlertMessageTextMaybe
         )
 import Request
     exposing
@@ -49,7 +49,7 @@ type alias CommentText =
 
 
 type alias Model =
-    { alertMessageText : AlertMessageText
+    { alertMessageText : AlertMessageTextMaybe
     , awaitingServerResponse : AwaitingServerResponse
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded

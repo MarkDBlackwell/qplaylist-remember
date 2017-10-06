@@ -88,7 +88,7 @@ import UpdateUtilities
 commentResponseErr : Model -> Error -> ( Model, Cmd Msg )
 commentResponseErr model httpError =
     ( { model
-        | alertMessageText = alertMessageTextRequestLikeOrComment httpError "comment"
+        | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "comment")
         , awaitingServerResponse = awaitingServerResponseInit
       }
     , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
@@ -105,7 +105,7 @@ commentResponseOk model httpResponseText =
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
+                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode
@@ -114,7 +114,7 @@ commentResponseOk model httpResponseText =
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = alertMessageTextSend actionDescription responseString
+                    | alertMessageText = Just (alertMessageTextSend actionDescription responseString)
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , logAndFocus model "Response" responseString
@@ -142,7 +142,7 @@ commentResponseOk model httpResponseText =
 likeResponseErr : Model -> Error -> ( Model, Cmd Msg )
 likeResponseErr model httpError =
     ( { model
-        | alertMessageText = alertMessageTextRequestLikeOrComment httpError "Like"
+        | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "Like")
         , awaitingServerResponse = awaitingServerResponseInit
         , songLikingMaybe = songLikingMaybeInit
       }
@@ -160,7 +160,7 @@ likeResponseOk model httpResponseText =
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
+                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode
@@ -169,7 +169,7 @@ likeResponseOk model httpResponseText =
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = alertMessageTextSend actionDescription responseString
+                    | alertMessageText = Just (alertMessageTextSend actionDescription responseString)
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLikingMaybe = songLikingMaybeInit
                   }
@@ -197,7 +197,7 @@ likeResponseOk model httpResponseText =
 songsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
 songsLatestResponseErr model httpError =
     let
-        actionDescription : AlertMessageText
+        actionDescription : String
         actionDescription =
             "access the latest few songs"
 
@@ -209,7 +209,7 @@ songsLatestResponseErr model httpError =
                 ++ ")"
     in
     ( { model
-        | alertMessageText = alertMessageTextNew
+        | alertMessageText = Just alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
     , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
@@ -226,7 +226,7 @@ songsLatestResponseOk model httpResponseText =
                     "access the latest few songs"
             in
             ( { model
-                | alertMessageText = alertMessageTextSend actionDescription alertMessageTextDecode
+                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , logAndFocus model "Decoding" alertMessageTextDecode

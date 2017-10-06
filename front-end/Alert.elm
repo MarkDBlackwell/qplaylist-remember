@@ -15,6 +15,7 @@
 module Alert
     exposing
         ( AlertMessageText
+        , AlertMessageTextMaybe
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
@@ -38,13 +39,33 @@ import Tuple
 -- MODEL
 
 
+type alias ActionText =
+    String
+
+
 type alias AlertMessageText =
     String
 
 
-alertMessageTextInit : AlertMessageText
+type alias AlertMessageTextMaybe =
+    Maybe AlertMessageText
+
+
+type alias DetailsText =
+    String
+
+
+type alias LikeOrCommentName =
+    String
+
+
+type alias PrefixSeparatorText =
+    String
+
+
+alertMessageTextInit : AlertMessageTextMaybe
 alertMessageTextInit =
-    ""
+    Nothing
 
 
 
@@ -54,23 +75,23 @@ alertMessageTextInit =
 alertMessageTextErrorHttp : Error -> ( AlertMessageText, AlertMessageText )
 alertMessageTextErrorHttp httpError =
     let
-        prefix : AlertMessageText
+        prefix : PrefixSeparatorText
         prefix =
             "HttpError"
     in
     case httpError of
         Http.BadPayload debuggingText httpResponseText ->
-            ( prefix ++ prefixColon ++ "BadPayload"
+            ( prefix ++ prefixSeparator ++ "BadPayload"
             , debuggingText
             )
 
         Http.BadStatus httpResponseText ->
-            ( prefixColon ++ "BadStatus"
+            ( prefixSeparator ++ "BadStatus"
             , toString httpResponseText.status
             )
 
         Http.BadUrl uriText ->
-            ( prefixColon ++ "BadUrl"
+            ( prefixSeparator ++ "BadUrl"
             , uriText
             )
 
@@ -102,12 +123,12 @@ alertMessageTextErrorUnexpected alertMessageTextList =
     (++)
         "Unexpected error "
         (String.join
-            prefixColon
+            prefixSeparator
             alertMessageTextList
         )
 
 
-alertMessageTextRequestLikeOrComment : Error -> String -> AlertMessageText
+alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     (++)
         (alertMessageTextErrorHttpScreen httpError)
@@ -119,19 +140,19 @@ alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
         )
 
 
-alertMessageTextSend : AlertMessageText -> AlertMessageText -> AlertMessageText
-alertMessageTextSend action details =
+alertMessageTextSend : ActionText -> DetailsText -> AlertMessageText
+alertMessageTextSend actionText detailsText =
     alertMessageTextErrorUnexpected
-        [ "while attempting to " ++ action
-        , details
+        [ "while attempting to " ++ actionText
+        , detailsText
         ]
 
 
-alertMessageTextServerAwaiting : AlertMessageText
+alertMessageTextServerAwaiting : AlertMessageTextMaybe
 alertMessageTextServerAwaiting =
-    "Awaiting server"
+    Just "Awaiting server"
 
 
-prefixColon : AlertMessageText
-prefixColon =
+prefixSeparator : PrefixSeparatorText
+prefixSeparator =
     ": "
