@@ -14,12 +14,14 @@
 
 module Alert
     exposing
-        ( AlertMessageText
+        ( ActionName
+        , AlertMessageText
         , AlertMessageTextMaybe
         , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
+        , alertMessageTextLogging
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
         , alertMessageTextServerAwaiting
@@ -39,7 +41,7 @@ import Tuple
 -- MODEL
 
 
-type alias ActionText =
+type alias ActionName =
     String
 
 
@@ -106,10 +108,11 @@ alertMessageTextErrorHttp httpError =
             )
 
 
-alertMessageTextErrorHttpLogging : Error -> AlertMessageText
+alertMessageTextErrorHttpLogging : Error -> AlertMessageTextMaybe
 alertMessageTextErrorHttpLogging httpError =
     alertMessageTextErrorHttp httpError
         |> first
+        |> Just
 
 
 alertMessageTextErrorHttpScreen : Error -> AlertMessageText
@@ -128,6 +131,12 @@ alertMessageTextErrorUnexpected alertMessageTextList =
         )
 
 
+alertMessageTextLogging : Error -> AlertMessageText
+alertMessageTextLogging httpError =
+    alertMessageTextErrorHttpLogging httpError
+        |> Maybe.withDefault ""
+
+
 alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     (++)
@@ -140,7 +149,7 @@ alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
         )
 
 
-alertMessageTextSend : ActionText -> DetailsText -> AlertMessageText
+alertMessageTextSend : ActionName -> DetailsText -> AlertMessageText
 alertMessageTextSend actionText detailsText =
     alertMessageTextErrorUnexpected
         [ "while attempting to " ++ actionText

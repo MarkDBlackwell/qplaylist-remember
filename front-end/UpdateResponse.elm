@@ -29,6 +29,7 @@ import Alert
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
+        , alertMessageTextLogging
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
         )
@@ -72,7 +73,11 @@ import Song
         )
 import UpdateLog
     exposing
-        ( logAndFocus
+        ( ActionName
+            ( Decoding
+            , Response
+            )
+        , logAndFocus
         , logMakeRequestAndFocus
         , logWithoutFocus
         )
@@ -91,7 +96,7 @@ commentResponseErr model httpError =
         | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "comment")
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
+    , logAndFocus model Response (alertMessageTextLogging httpError)
     )
 
 
@@ -108,7 +113,7 @@ commentResponseOk model httpResponseText =
                 | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model "Decoding" alertMessageTextDecode
+            , logAndFocus model Decoding alertMessageTextDecode
             )
 
         Ok responseString ->
@@ -117,7 +122,7 @@ commentResponseOk model httpResponseText =
                     | alertMessageText = Just (alertMessageTextSend actionDescription responseString)
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , logAndFocus model "Response" responseString
+                , logAndFocus model Response responseString
                 )
             else
                 let
@@ -134,7 +139,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logWithoutFocus "Response"
+                    , logWithoutFocus
                     ]
                 )
 
@@ -146,7 +151,7 @@ likeResponseErr model httpError =
         , awaitingServerResponse = awaitingServerResponseInit
         , songLikingMaybe = songLikingMaybeInit
       }
-    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
+    , logAndFocus model Response (alertMessageTextLogging httpError)
     )
 
 
@@ -163,7 +168,7 @@ likeResponseOk model httpResponseText =
                 | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model "Decoding" alertMessageTextDecode
+            , logAndFocus model Decoding alertMessageTextDecode
             )
 
         Ok responseString ->
@@ -173,7 +178,7 @@ likeResponseOk model httpResponseText =
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLikingMaybe = songLikingMaybeInit
                   }
-                , logAndFocus model "Response" responseString
+                , logAndFocus model Response responseString
                 )
             else
                 let
@@ -189,7 +194,7 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocus model "Response" ""
+                    , logAndFocus model Response ""
                     ]
                 )
 
@@ -212,7 +217,7 @@ songsLatestResponseErr model httpError =
         | alertMessageText = Just alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model "Response" (alertMessageTextErrorHttpLogging httpError)
+    , logAndFocus model Response (alertMessageTextLogging httpError)
     )
 
 
@@ -229,7 +234,7 @@ songsLatestResponseOk model httpResponseText =
                 | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model "Decoding" alertMessageTextDecode
+            , logAndFocus model Decoding alertMessageTextDecode
             )
 
         Ok songsLatestNew ->
@@ -239,5 +244,5 @@ songsLatestResponseOk model httpResponseText =
                 , songsLatest = songsLatestNew
               }
               --Here, don't log the full response.
-            , logAndFocus model "Response" ""
+            , logAndFocus model Response ""
             )

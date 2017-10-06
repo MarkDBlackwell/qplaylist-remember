@@ -14,7 +14,11 @@
 
 module UpdateLog
     exposing
-        ( httpRequestOrResponseTextLog
+        ( ActionName
+            ( Decoding
+            , Response
+            )
+        , httpRequestOrResponseTextLog
         , logAndFocus
         , logMakeRequestAndFocus
         , logWithoutFocus
@@ -22,7 +26,8 @@ module UpdateLog
 
 import Alert
     exposing
-        ( AlertMessageText
+        ( ActionName
+        , AlertMessageText
         )
 import Debug
     exposing
@@ -56,10 +61,25 @@ import UpdateUtilities
 -- UPDATE
 
 
-logAndFocus : Model -> AlertMessageText -> AlertMessageText -> Cmd Msg
+type ActionName
+    = Decoding
+    | Response
+
+
+actionName2String : ActionName -> String
+actionName2String actionName =
+    case actionName of
+        Decoding ->
+            "Decoding"
+
+        Response ->
+            "Response"
+
+
+logAndFocus : Model -> ActionName -> AlertMessageText -> Cmd Msg
 logAndFocus model actionName alertMessageText =
     Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog actionName alertMessageText)
+        [ msg2Cmd (HttpRequestOrResponseTextLog (actionName2String actionName) alertMessageText)
         , focusInputPossibly model
         ]
 
@@ -73,9 +93,9 @@ logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
         ]
 
 
-logWithoutFocus : AlertMessageText -> Cmd Msg
-logWithoutFocus actionName =
-    msg2Cmd (HttpRequestOrResponseTextLog actionName "")
+logWithoutFocus : Cmd Msg
+logWithoutFocus =
+    msg2Cmd (HttpRequestOrResponseTextLog (actionName2String Response) "")
 
 
 httpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
