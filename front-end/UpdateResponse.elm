@@ -61,7 +61,11 @@ import ModelType
         )
 import Request
     exposing
-        ( HttpResponseText
+        ( ActionName
+            ( Decoding
+            , Response
+            )
+        , HttpResponseText
         )
 import Song
     exposing
@@ -72,11 +76,7 @@ import Song
         )
 import UpdateLog
     exposing
-        ( ActionName
-            ( Decoding
-            , Response
-            )
-        , logAndFocus
+        ( logAndFocus
         , logWithoutFocus
         )
 import UpdateUtilities

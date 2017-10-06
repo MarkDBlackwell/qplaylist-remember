@@ -14,14 +14,19 @@
 
 module Request
     exposing
-        ( AwaitingServerResponse
+        ( ActionName
+            ( Decoding
+            , Request
+            , Response
+            )
+        , AwaitingServerResponse
         , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
         , QueryBeforeList
         , QueryPairs
-        , RequestOrResponseLabelText
         , UriText
+        , actionName2String
         , likeOrCommentRequestUriText
         , relative
         )
@@ -45,12 +50,14 @@ type alias AwaitingServerResponse =
     Bool
 
 
-type alias RequestOrResponseLabelText =
-    String
-
-
 
 -- UPDATE
+
+
+type ActionName
+    = Decoding
+    | Request
+    | Response
 
 
 type alias HttpRequestText =
@@ -91,6 +98,19 @@ type alias QueryPairs =
 
 type alias UriText =
     String
+
+
+actionName2String : ActionName -> String
+actionName2String actionName =
+    case actionName of
+        Decoding ->
+            "Decoding"
+
+        Request ->
+            "Request"
+
+        Response ->
+            "Response"
 
 
 likeOrCommentRequestUriText : SongLikingOrCommentingMaybe -> UserIdentifier -> LikeOrCommentText -> UriText

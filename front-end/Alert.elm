@@ -14,7 +14,7 @@
 
 module Alert
     exposing
-        ( ActionName
+        ( ActionDescription
         , AlertMessageText
         , AlertMessageTextMaybe
         , alertMessageTextErrorHttpLogging
@@ -40,7 +40,7 @@ import Tuple
 -- MODEL
 
 
-type alias ActionName =
+type alias ActionDescription =
     String
 
 
@@ -141,10 +141,10 @@ alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
         )
 
 
-alertMessageTextSend : ActionName -> DetailsText -> AlertMessageText
-alertMessageTextSend actionText detailsText =
+alertMessageTextSend : ActionDescription -> DetailsText -> AlertMessageText
+alertMessageTextSend actionDescription detailsText =
     alertMessageTextErrorUnexpected
-        [ "while attempting to " ++ actionText
+        [ "while attempting to " ++ actionDescription
         , detailsText
         ]
 

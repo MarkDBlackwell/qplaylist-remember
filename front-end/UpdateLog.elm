@@ -14,11 +14,7 @@
 
 module UpdateLog
     exposing
-        ( ActionName
-            ( Decoding
-            , Response
-            )
-        , httpRequestOrResponseTextLog
+        ( httpRequestOrResponseTextLog
         , logAndFocus
         , logMakeRequestAndFocus
         , logWithoutFocus
@@ -26,8 +22,7 @@ module UpdateLog
 
 import Alert
     exposing
-        ( ActionName
-        , AlertMessageText
+        ( AlertMessageText
         , AlertMessageTextMaybe
         )
 import Debug
@@ -46,8 +41,12 @@ import ModelType
         )
 import Request
     exposing
-        ( HttpRequestOrResponseTextMaybe
-        , RequestOrResponseLabelText
+        ( ActionName
+            ( Request
+            , Response
+            )
+        , HttpRequestOrResponseTextMaybe
+        , actionName2String
         )
 import UpdateFocus
     exposing
@@ -62,27 +61,10 @@ import UpdateUtilities
 -- UPDATE
 
 
-type ActionName
-    = Decoding
-    | Response
-
-
-actionName2String : ActionName -> String
-actionName2String actionName =
-    case actionName of
-        Decoding ->
-            "Decoding"
-
-        Response ->
-            "Response"
-
-
 logAndFocus : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAndFocus model actionName alertMessageTextMaybe =
     Cmd.batch
-        [ HttpRequestOrResponseTextLog
-            (actionName2String actionName)
-            alertMessageTextMaybe
+        [ HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
             |> msg2Cmd
         , focusInputPossibly model
         ]
@@ -92,7 +74,7 @@ logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> Cmd Msg
 logMakeRequestAndFocus model commandMessageRequest alertMessageText =
     Cmd.batch
         [ Just alertMessageText
-            |> HttpRequestOrResponseTextLog "Request"
+            |> HttpRequestOrResponseTextLog Request
             |> msg2Cmd
         , commandMessageRequest
         , focusInputPossibly model
@@ -101,19 +83,19 @@ logMakeRequestAndFocus model commandMessageRequest alertMessageText =
 
 logWithoutFocus : Cmd Msg
 logWithoutFocus =
-    HttpRequestOrResponseTextLog
-        (actionName2String Response)
-        Nothing
+    HttpRequestOrResponseTextLog Response Nothing
         |> msg2Cmd
 
 
-httpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
-httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseTextMaybe =
+httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
+httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
     let
         --Keep for console logging:
         a : String
         a =
-            log requestOrResponseLabelText logText
+            log
+                (actionName2String actionName)
+                logText
 
         logText : String
         logText =

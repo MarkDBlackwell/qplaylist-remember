@@ -121,8 +121,8 @@ update msg model =
         FocusSet id ->
             focusSet model id
 
-        HttpRequestOrResponseTextLog requestOrResponseLabelText httpRequestOrResponseTextMaybe ->
-            httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseTextMaybe
+        HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
+            httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe
 
         InitialSetUp threeLetterSpaceInt ->
             ( { model
