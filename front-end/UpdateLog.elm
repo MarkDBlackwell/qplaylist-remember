@@ -42,7 +42,7 @@ import ModelType
 import Request
     exposing
         ( ActionName
-            ( Request
+            ( ActionRequest
             , Response
             )
         , HttpRequestOrResponseTextMaybe
@@ -74,7 +74,7 @@ logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> Cmd Msg
 logMakeRequestAndFocus model commandMessageRequest alertMessageText =
     Cmd.batch
         [ Just alertMessageText
-            |> HttpRequestOrResponseTextLog Request
+            |> HttpRequestOrResponseTextLog ActionRequest
             |> msg2Cmd
         , commandMessageRequest
         , focusInputPossibly model

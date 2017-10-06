@@ -62,7 +62,7 @@ import ModelType
 import Request
     exposing
         ( ActionName
-            ( Decoding
+            ( ActionDecoding
             , Response
             )
         , HttpResponseText
@@ -118,7 +118,7 @@ commentResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model Decoding
+                |> logAndFocus model ActionDecoding
             )
 
         Ok responseString ->
@@ -185,7 +185,7 @@ likeResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model Decoding
+                |> logAndFocus model ActionDecoding
             )
 
         Ok responseString ->
@@ -263,7 +263,7 @@ songsLatestResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model Decoding
+                |> logAndFocus model ActionDecoding
             )
 
         Ok songsLatestNew ->

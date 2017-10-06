@@ -15,8 +15,8 @@
 module Request
     exposing
         ( ActionName
-            ( Decoding
-            , Request
+            ( ActionDecoding
+            , ActionRequest
             , Response
             )
         , AwaitingServerResponse
@@ -55,8 +55,8 @@ type alias AwaitingServerResponse =
 
 
 type ActionName
-    = Decoding
-    | Request
+    = ActionDecoding
+    | ActionRequest
     | Response
 
 
@@ -103,10 +103,10 @@ type alias UriText =
 actionName2String : ActionName -> String
 actionName2String actionName =
     case actionName of
-        Decoding ->
+        ActionDecoding ->
             "Decoding"
 
-        Request ->
+        ActionRequest ->
             "Request"
 
         Response ->
