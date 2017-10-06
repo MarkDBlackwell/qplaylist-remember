@@ -124,8 +124,8 @@ commentArea model song =
                 commentTextLength =
                     String.length model.commentText
             in
-            " – "
-                ++ toString commentTextLength
+            toString commentTextLength
+                |> (++) " – "
 
         yearMonthDay : String
         yearMonthDay =
@@ -149,15 +149,18 @@ commentArea model song =
         [ id "comment" ]
         [ p []
             [ text
-                (song.artist
-                    ++ ": "
-                    ++ song.title
-                    ++ " ("
-                    ++ song.time
-                    ++ " on "
-                    ++ yearMonthDay
-                    ++ ")"
-                 --++ statistics
+                (String.concat
+                    [ song.artist
+                    , ": "
+                    , song.title
+                    , " ("
+                    , song.time
+                    , " on "
+                    , yearMonthDay
+                    , ")"
+
+                    --, statistics
+                    ]
                 )
             ]
         , input
@@ -177,15 +180,18 @@ commentArea model song =
 
 commentAreaPossibly : Model -> Html Msg
 commentAreaPossibly model =
-    maybeMapWithDefault htmlNodeNull (\x -> commentArea model x) model.songCommentingMaybe
+    maybeMapWithDefault
+        htmlNodeNull
+        (\x -> commentArea model x)
+        model.songCommentingMaybe
 
 
 groupAttributes : SongGroup -> List (Attribute msg)
 groupAttributes group =
     [ class "songs-group"
     , id
-        ("songs-"
-            ++ songGroup2String group
+        (songGroup2String group
+            |> (++) "songs-"
         )
     ]
 
@@ -206,9 +212,11 @@ songView model group songsLatestOrRememberedIndex song =
                             else
                                 ""
                     in
-                    "You've shared a 'Like'"
-                        ++ likedOrCommentedIndicatorHoverTextCommentButton
-                        ++ " about this song (with the DJ)"
+                    String.concat
+                        [ "You've shared a 'Like'"
+                        , likedOrCommentedIndicatorHoverTextCommentButton
+                        , " about this song (with the DJ)"
+                        ]
             in
             if song.likedOrCommented then
                 em [ title likedOrCommentedIndicatorHoverText ]
@@ -233,16 +241,19 @@ songView model group songsLatestOrRememberedIndex song =
             let
                 prefix : String
                 prefix =
-                    select 0
-                        ++ " "
-                        ++ select 1
-                        ++ "-"
-                        ++ select 2
-                        ++ " "
+                    String.concat
+                        [ select 0
+                        , " "
+                        , select 1
+                        , "-"
+                        , select 2
+                        , " "
+                        ]
 
                 select : Int -> String
                 select index =
-                    Maybe.withDefault "" (selectOneMaybe stampList index)
+                    selectOneMaybe stampList index
+                        |> Maybe.withDefault ""
 
                 stampList : List String
                 stampList =
@@ -291,11 +302,15 @@ view model =
                 songsLatestExpanded =
                     songs2SongsRemembered model.songsLatest
             in
-            List.indexedMap (songView model Played) songsLatestExpanded
+            List.indexedMap
+                (songView model Played)
+                songsLatestExpanded
 
         songsRememberedView : List (Html Msg)
         songsRememberedView =
-            List.indexedMap (songView model Remembered) model.songsRemembered
+            List.indexedMap
+                (songView model Remembered)
+                model.songsRemembered
     in
     main_
         []

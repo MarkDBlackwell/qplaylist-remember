@@ -56,9 +56,13 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                         saturation =
                             scaleFactor * 0.5
                     in
-                    "hsl(0,"
-                        ++ toString (saturation * 100.0)
-                        ++ "%,50%"
+                    String.concat
+                        [ "hsl(0,"
+                        , saturation
+                            * 100.0
+                            |> toString
+                        , "%,50%"
+                        ]
             in
             case group of
                 Played ->
@@ -77,8 +81,12 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                         base =
                             1.0666666666666667
                     in
-                    toString (scaleFactor * base)
-                        ++ "rem"
+                    String.concat
+                        [ scaleFactor
+                            * base
+                            |> toString
+                        , "rem"
+                        ]
             in
             [ ( "font-size", fontSizeValue ) ]
 
@@ -97,6 +105,8 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                     goldenRatio ^ toFloat songsLatestOrRememberedIndexReversed
     in
     style
-        (backgroundColorStyling
-            ++ fontSizeStyling
+        (List.concat
+            [ backgroundColorStyling
+            , fontSizeStyling
+            ]
         )

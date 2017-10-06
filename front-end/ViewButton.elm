@@ -95,10 +95,9 @@ buttonComment group songsRememberedIndex showCommentButtons =
 
         buttonIdMaybe : Maybe Id
         buttonIdMaybe =
-            Just
-                ("buttonComment"
-                    ++ toString songsRememberedIndex
-                )
+            toString songsRememberedIndex
+                |> (++) "buttonComment"
+                |> Just
 
         hoverText : HoverText
         hoverText =
@@ -125,9 +124,11 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
         buttonIdMaybe : Maybe Id
         buttonIdMaybe =
             Just
-                ("button"
-                    ++ songGroup2String group
-                    ++ toString songsLatestOrRememberedIndex
+                (String.concat
+                    [ "button"
+                    , songGroup2String group
+                    , toString songsLatestOrRememberedIndex
+                    ]
                 )
 
         hoverText : HoverText
@@ -152,8 +153,8 @@ buttonLike group songsRememberedIndex =
         buttonIdMaybe : Maybe Id
         buttonIdMaybe =
             Just
-                ("buttonLike"
-                    ++ toString songsRememberedIndex
+                (toString songsRememberedIndex
+                    |> (++) "buttonLike"
                 )
 
         hoverText : HoverText
@@ -178,7 +179,10 @@ buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
         buttonIdView =
-            maybeMapWithDefault [] (\x -> [ id x ]) buttonIdMaybe
+            maybeMapWithDefault
+                []
+                (\x -> [ id x ])
+                buttonIdMaybe
 
         display : Display
         display =
