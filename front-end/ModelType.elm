@@ -36,7 +36,7 @@ import UpdateRequestType
     exposing
         ( AwaitingServerResponse
         )
-import UserIdentifier
+import UserIdentifierType
     exposing
         ( UserIdentifier
         )

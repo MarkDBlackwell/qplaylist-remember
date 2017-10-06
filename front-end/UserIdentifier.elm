@@ -14,8 +14,7 @@
 
 module UserIdentifier
     exposing
-        ( UserIdentifier
-        , threeLetterSpaceIntRandom
+        ( threeLetterSpaceIntRandom
         , updateInitialSetUp
         , userIdentifierInit
         )
@@ -31,17 +30,14 @@ import Random
         ( Generator
         , int
         )
+import UserIdentifierType
+    exposing
+        ( ThreeLetterSpaceInt
+        , UserIdentifier
+        )
 
 
 -- MODEL
-
-
-type alias ThreeLetterSpaceInt =
-    Int
-
-
-type alias UserIdentifier =
-    String
 
 
 caseLength : Int

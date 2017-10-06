@@ -45,7 +45,7 @@ import UpdateRequestType
         , QueryPairs
         , UriText
         )
-import UserIdentifier
+import UserIdentifierType
     exposing
         ( UserIdentifier
         )
