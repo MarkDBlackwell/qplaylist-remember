@@ -147,23 +147,20 @@ relative queryBeforeList queryPairs =
                         , escapeAll value
                         ]
             in
-            String.join
-                "&"
-                (List.map queryPairJoin queryPairs)
+            if List.isEmpty queryPairs then
+                ""
+            else
+                List.map queryPairJoin queryPairs
+                    |> String.join "&"
+                    |> String.cons '?'
 
         queryBefore : UriText
         queryBefore =
             String.join
                 "/"
                 queryBeforeList
-
-        queryStarter : UriText
-        queryStarter =
-            if String.isEmpty query then
-                ""
-            else
-                "?"
     in
-    queryBefore
-        ++ queryStarter
-        ++ query
+    String.concat
+        [ queryBefore
+        , query
+        ]
