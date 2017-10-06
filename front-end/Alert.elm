@@ -111,8 +111,6 @@ alertMessageTextErrorHttpLogging : Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
     alertMessageTextErrorHttp httpError
         |> first
-        |> Just
-        |> Maybe.withDefault ""
 
 
 alertMessageTextErrorHttpScreen : Error -> AlertMessageText
