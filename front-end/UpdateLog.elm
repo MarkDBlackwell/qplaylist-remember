@@ -28,6 +28,7 @@ import Alert
     exposing
         ( ActionName
         , AlertMessageText
+        , AlertMessageTextMaybe
         )
 import Debug
     exposing
@@ -76,10 +77,10 @@ actionName2String actionName =
             "Response"
 
 
-logAndFocus : Model -> ActionName -> AlertMessageText -> Cmd Msg
-logAndFocus model actionName alertMessageText =
+logAndFocus : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
+logAndFocus model actionName alertMessageTextMaybe =
     Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog (actionName2String actionName) alertMessageText)
+        [ msg2Cmd (HttpRequestOrResponseTextLog (actionName2String actionName) (Maybe.withDefault "" alertMessageTextMaybe))
         , focusInputPossibly model
         ]
 
