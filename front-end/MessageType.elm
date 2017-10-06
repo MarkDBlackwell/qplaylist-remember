@@ -31,7 +31,7 @@ import ModelType
         )
 import Request
     exposing
-        ( HttpRequestOrResponseText
+        ( HttpRequestOrResponseTextMaybe
         , HttpResponseText
         , RequestOrResponseLabelText
         )
@@ -53,7 +53,7 @@ type Msg
     | CommentSendHand
     | FocusResult (Result Dom.Error ())
     | FocusSet Id
-    | HttpRequestOrResponseTextLog RequestOrResponseLabelText HttpRequestOrResponseText
+    | HttpRequestOrResponseTextLog RequestOrResponseLabelText HttpRequestOrResponseTextMaybe
     | InitialSetUp Int
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse (Result Error HttpResponseText)

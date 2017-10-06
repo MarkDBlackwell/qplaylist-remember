@@ -15,7 +15,7 @@
 module Request
     exposing
         ( AwaitingServerResponse
-        , HttpRequestOrResponseText
+        , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
         , QueryBeforeList
@@ -59,6 +59,10 @@ type alias HttpRequestText =
 
 type alias HttpRequestOrResponseText =
     String
+
+
+type alias HttpRequestOrResponseTextMaybe =
+    Maybe HttpRequestOrResponseText
 
 
 type alias HttpResponseText =

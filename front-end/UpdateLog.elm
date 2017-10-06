@@ -46,7 +46,7 @@ import ModelType
         )
 import Request
     exposing
-        ( HttpRequestOrResponseText
+        ( HttpRequestOrResponseTextMaybe
         , RequestOrResponseLabelText
         )
 import UpdateFocus
@@ -82,7 +82,7 @@ logAndFocus model actionName alertMessageTextMaybe =
     Cmd.batch
         [ HttpRequestOrResponseTextLog
             (actionName2String actionName)
-            (Maybe.withDefault "" alertMessageTextMaybe)
+            alertMessageTextMaybe
             |> msg2Cmd
         , focusInputPossibly model
         ]
@@ -91,7 +91,7 @@ logAndFocus model actionName alertMessageTextMaybe =
 logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
 logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
     Cmd.batch
-        [ HttpRequestOrResponseTextLog actionName alertMessageText
+        [ HttpRequestOrResponseTextLog actionName (Just alertMessageText)
             |> msg2Cmd
         , commandMessageRequest
         , focusInputPossibly model
@@ -102,12 +102,12 @@ logWithoutFocus : Cmd Msg
 logWithoutFocus =
     HttpRequestOrResponseTextLog
         (actionName2String Response)
-        ""
+        Nothing
         |> msg2Cmd
 
 
-httpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseText -> ( Model, Cmd Msg )
-httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseText =
+httpRequestOrResponseTextLog : Model -> RequestOrResponseLabelText -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
+httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrResponseTextMaybe =
     let
         --Keep for console logging:
         a : String
@@ -116,10 +116,7 @@ httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrRespo
 
         logText : String
         logText =
-            if String.isEmpty httpRequestOrResponseText then
-                "Ok"
-            else
-                httpRequestOrResponseText
+            Maybe.withDefault "Ok" httpRequestOrResponseTextMaybe
     in
     ( model
     , focusInputPossibly model
