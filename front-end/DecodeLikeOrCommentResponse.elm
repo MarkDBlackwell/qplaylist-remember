@@ -29,7 +29,7 @@ import Json.Decode
         , map
         , string
         )
-import Request
+import UpdateRequestHelper
     exposing
         ( HttpResponseText
         )

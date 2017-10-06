@@ -24,16 +24,16 @@ import Alert
     exposing
         ( AlertMessageTextMaybe
         )
-import Request
-    exposing
-        ( AwaitingServerResponse
-        )
 import Song
     exposing
         ( SongCommentingMaybe
         , SongLikingMaybe
         , SongsLatest
         , SongsRemembered
+        )
+import UpdateRequestHelper
+    exposing
+        ( AwaitingServerResponse
         )
 import UserIdentifier
     exposing

@@ -12,7 +12,7 @@
 -}
 
 
-module Request
+module UpdateRequestHelper
     exposing
         ( ActionName
             ( ActionDecoding

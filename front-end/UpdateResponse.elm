@@ -59,14 +59,6 @@ import ModelType
     exposing
         ( Model
         )
-import Request
-    exposing
-        ( ActionName
-            ( ActionDecoding
-            , ActionResponse
-            )
-        , HttpResponseText
-        )
 import Song
     exposing
         ( SongsRemembered
@@ -78,6 +70,14 @@ import UpdateLog
     exposing
         ( logAndFocus
         , logWithoutFocus
+        )
+import UpdateRequestHelper
+    exposing
+        ( ActionName
+            ( ActionDecoding
+            , ActionResponse
+            )
+        , HttpResponseText
         )
 import UpdateUtilities
     exposing

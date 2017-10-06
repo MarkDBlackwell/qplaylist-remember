@@ -42,13 +42,6 @@ import ModelType
     exposing
         ( Model
         )
-import Request
-    exposing
-        ( HttpRequestText
-        , UriText
-        , likeOrCommentRequestUriText
-        , relative
-        )
 import Song
     exposing
         ( SongLikingOrCommentingMaybe
@@ -64,6 +57,13 @@ import UpdateFocus
 import UpdateLog
     exposing
         ( logMakeRequestAndFocus
+        )
+import UpdateRequestHelper
+    exposing
+        ( HttpRequestText
+        , UriText
+        , likeOrCommentRequestUriText
+        , relative
         )
 import UpdateStateVector
     exposing

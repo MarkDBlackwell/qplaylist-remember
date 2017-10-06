@@ -41,16 +41,16 @@ import Random
     exposing
         ( generate
         )
-import Request
-    exposing
-        ( AwaitingServerResponse
-        )
 import Song
     exposing
         ( SongsRemembered
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songsLatestInit
+        )
+import UpdateRequestHelper
+    exposing
+        ( AwaitingServerResponse
         )
 import UserIdentifier
     exposing

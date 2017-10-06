@@ -21,7 +21,7 @@ import ModelType
     exposing
         ( Model
         )
-import Request
+import UpdateRequestHelper
     exposing
         ( AwaitingServerResponse
         )

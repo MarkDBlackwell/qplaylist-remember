@@ -29,16 +29,16 @@ import ModelType
     exposing
         ( CommentText
         )
-import Request
-    exposing
-        ( ActionName
-        , HttpRequestOrResponseTextMaybe
-        , HttpResponseText
-        )
 import Song
     exposing
         ( SongsLatestIndex
         , SongsRememberedIndex
+        )
+import UpdateRequestHelper
+    exposing
+        ( ActionName
+        , HttpRequestOrResponseTextMaybe
+        , HttpResponseText
         )
 
 

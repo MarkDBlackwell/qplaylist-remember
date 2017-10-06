@@ -39,7 +39,11 @@ import ModelType
     exposing
         ( Model
         )
-import Request
+import UpdateFocus
+    exposing
+        ( focusInputPossibly
+        )
+import UpdateRequestHelper
     exposing
         ( ActionName
             ( ActionRequest
@@ -47,10 +51,6 @@ import Request
             )
         , HttpRequestOrResponseTextMaybe
         , actionName2String
-        )
-import UpdateFocus
-    exposing
-        ( focusInputPossibly
         )
 import UpdateUtilities
     exposing
