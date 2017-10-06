@@ -14,8 +14,7 @@
 
 module Initialize
     exposing
-        ( Flags
-        , awaitingServerResponseInit
+        ( awaitingServerResponseInit
         , commentTextInit
         , init
         )
@@ -33,9 +32,9 @@ import MessageType
 import ModelType
     exposing
         ( CommentText
+        , Flags
         , Model
         , PageIsExpanded
-        , ShowCommentButtons
         )
 import Random
     exposing
@@ -46,10 +45,6 @@ import Song
         ( songCommentingMaybeInit
         , songLikingMaybeInit
         , songsLatestInit
-        )
-import SongType
-    exposing
-        ( SongsRemembered
         )
 import UpdateRequestType
     exposing
@@ -63,12 +58,6 @@ import UserIdentifier
 
 
 -- MODEL
-
-
-type alias Flags =
-    { showCommentButtons : ShowCommentButtons
-    , songsRemembered : SongsRemembered
-    }
 
 
 awaitingServerResponseInit : AwaitingServerResponse

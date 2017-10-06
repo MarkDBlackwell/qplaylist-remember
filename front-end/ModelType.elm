@@ -15,6 +15,7 @@
 module ModelType
     exposing
         ( CommentText
+        , Flags
         , Model
         , PageIsExpanded
         , ShowCommentButtons
@@ -46,6 +47,12 @@ import UserIdentifier
 
 type alias CommentText =
     String
+
+
+type alias Flags =
+    { showCommentButtons : ShowCommentButtons
+    , songsRemembered : SongsRemembered
+    }
 
 
 type alias Model =

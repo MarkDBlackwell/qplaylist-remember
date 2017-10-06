@@ -23,8 +23,7 @@ import Html
         )
 import Initialize
     exposing
-        ( Flags
-        , init
+        ( init
         )
 import MessageType
     exposing
@@ -32,7 +31,8 @@ import MessageType
         )
 import ModelType
     exposing
-        ( Model
+        ( Flags
+        , Model
         )
 import Subscription
     exposing
