@@ -43,12 +43,15 @@ import Random
         )
 import Song
     exposing
-        ( SongsRemembered
-        , songCommentingMaybeInit
+        ( songCommentingMaybeInit
         , songLikingMaybeInit
         , songsLatestInit
         )
-import UpdateRequestHelper
+import SongType
+    exposing
+        ( SongsRemembered
+        )
+import UpdateRequestType
     exposing
         ( AwaitingServerResponse
         )

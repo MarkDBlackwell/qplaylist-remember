@@ -33,14 +33,17 @@ import ModelType
         )
 import Song
     exposing
-        ( SongCommentingMaybe
-        , SongsRemembered
-        , songLikingOrCommentingMaybe
+        ( songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
         )
 import SongPort
     exposing
         ( songsRememberedStore
+        )
+import SongType
+    exposing
+        ( SongCommentingMaybe
+        , SongsRemembered
         )
 import UpdateCommentArea
     exposing

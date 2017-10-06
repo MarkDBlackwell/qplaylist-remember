@@ -14,24 +14,7 @@
 
 module Song
     exposing
-        ( SongCommentingMaybe
-        , SongGroup
-            ( Played
-            , Remembered
-            )
-        , SongGroupLength
-        , SongLatest
-        , SongLikingMaybe
-        , SongLikingOrCommenting
-        , SongLikingOrCommentingMaybe
-        , SongRemembered
-        , SongsLatest
-        , SongsLatestIndex
-        , SongsLatestOrRememberedIndex
-        , SongsRemembered
-        , SongsRememberedIndex
-        , Time
-        , likedOrCommentedShow
+        ( likedOrCommentedShow
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songLikingOrCommentingConstructor
@@ -42,6 +25,32 @@ module Song
         , songsRememberedUpdateTimestamp
         )
 
+import SongType
+    exposing
+        ( Artist
+        , LikedOrCommented
+        , SongCommentingMaybe
+        , SongGroup
+            ( Played
+            , Remembered
+            )
+        , SongGroupLength
+        , SongLatest
+        , SongLikingMaybe
+        , SongLikingOrCommenting
+        , SongLikingOrCommentingMaybe
+        , SongRemembered
+        , SongTimeless
+        , SongsLatest
+        , SongsLatestIndex
+        , SongsLatestOrRememberedIndex
+        , SongsRemembered
+        , SongsRememberedIndex
+        , SongsTimeless
+        , Time
+        , Timestamp
+        , Title
+        )
 import Utilities
     exposing
         ( indexes
@@ -56,98 +65,6 @@ import Utilities
 
 
 -- MODEL
-
-
-type alias Artist =
-    String
-
-
-type alias LikedOrCommented =
-    Bool
-
-
-type alias SongCommenting =
-    SongLatest
-
-
-type alias SongCommentingMaybe =
-    Maybe SongCommenting
-
-
-type alias SongLatest =
-    --Keep order (for JSON decoding):
-    { artist : Artist
-    , time : Time
-    , timestamp : Timestamp
-    , title : Title
-    }
-
-
-type alias SongLiking =
-    SongLatest
-
-
-type alias SongLikingMaybe =
-    Maybe SongLiking
-
-
-type alias SongLikingOrCommenting =
-    SongLatest
-
-
-type alias SongLikingOrCommentingMaybe =
-    Maybe SongLikingOrCommenting
-
-
-type alias SongRemembered =
-    { artist : Artist
-    , likedOrCommented : LikedOrCommented
-    , time : Time
-    , timestamp : Timestamp
-    , title : Title
-    }
-
-
-type alias SongTimeless =
-    { artist : Artist
-    , title : Title
-    }
-
-
-type alias SongsLatest =
-    List SongLatest
-
-
-type alias SongsLatestIndex =
-    Int
-
-
-type alias SongsRemembered =
-    List SongRemembered
-
-
-type alias SongsRememberedIndex =
-    Int
-
-
-type alias SongsTimeless =
-    List SongTimeless
-
-
-type alias SongsTimelessIndex =
-    Int
-
-
-type alias Time =
-    String
-
-
-type alias Timestamp =
-    String
-
-
-type alias Title =
-    String
 
 
 songCommentingMaybeInit : SongCommentingMaybe
@@ -331,20 +248,3 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     Maybe.withDefault
         songsRemembered
         (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
-
-
-
--- VIEW
-
-
-type SongGroup
-    = Played
-    | Remembered
-
-
-type alias SongGroupLength =
-    Int
-
-
-type alias SongsLatestOrRememberedIndex =
-    Int

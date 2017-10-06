@@ -59,6 +59,10 @@ import ModelType
         )
 import Song
     exposing
+        ( songs2SongsRemembered
+        )
+import SongType
+    exposing
         ( SongGroup
             ( Played
             , Remembered
@@ -69,7 +73,6 @@ import Song
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , Time
-        , songs2SongsRemembered
         )
 import Utilities
     exposing

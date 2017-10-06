@@ -44,11 +44,14 @@ import ModelType
         )
 import Song
     exposing
+        ( songLikingOrCommentingMaybe
+        , songsRememberedUpdateTimestamp
+        )
+import SongType
+    exposing
         ( SongLikingOrCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndex
-        , songLikingOrCommentingMaybe
-        , songsRememberedUpdateTimestamp
         )
 import UpdateFocus
     exposing
@@ -60,10 +63,13 @@ import UpdateLog
         )
 import UpdateRequestHelper
     exposing
+        ( likeOrCommentRequestUriText
+        , relative
+        )
+import UpdateRequestType
+    exposing
         ( HttpRequestText
         , UriText
-        , likeOrCommentRequestUriText
-        , relative
         )
 import UpdateStateVector
     exposing

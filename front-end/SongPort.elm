@@ -25,7 +25,7 @@ import ModelType
     exposing
         ( Model
         )
-import Song
+import SongType
     exposing
         ( SongsRemembered
         )

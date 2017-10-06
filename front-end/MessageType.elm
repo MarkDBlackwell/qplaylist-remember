@@ -29,12 +29,12 @@ import ModelType
     exposing
         ( CommentText
         )
-import Song
+import SongType
     exposing
         ( SongsLatestIndex
         , SongsRememberedIndex
         )
-import UpdateRequestHelper
+import UpdateRequestType
     exposing
         ( ActionName
         , HttpRequestOrResponseTextMaybe

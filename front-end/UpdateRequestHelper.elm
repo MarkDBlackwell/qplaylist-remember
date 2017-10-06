@@ -14,6 +14,22 @@
 
 module UpdateRequestHelper
     exposing
+        ( actionName2String
+        , likeOrCommentRequestUriText
+        , relative
+        )
+
+import Song
+    exposing
+        ( songLikingOrCommentingConstructor
+        )
+import SongType
+    exposing
+        ( SongLikingOrCommenting
+        , SongLikingOrCommentingMaybe
+        )
+import UpdateRequestType
+    exposing
         ( ActionName
             ( ActionDecoding
             , ActionRequest
@@ -23,19 +39,11 @@ module UpdateRequestHelper
         , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
+        , LikeOrCommentText
         , QueryBeforeList
+        , QueryPair
         , QueryPairs
         , UriText
-        , actionName2String
-        , likeOrCommentRequestUriText
-        , relative
-        )
-
-import Song
-    exposing
-        ( SongLikingOrCommenting
-        , SongLikingOrCommentingMaybe
-        , songLikingOrCommentingConstructor
         )
 import UserIdentifier
     exposing
@@ -44,60 +52,7 @@ import UserIdentifier
 
 
 -- MODEL
-
-
-type alias AwaitingServerResponse =
-    Bool
-
-
-
 -- UPDATE
-
-
-type ActionName
-    = ActionDecoding
-    | ActionRequest
-    | ActionResponse
-
-
-type alias HttpRequestText =
-    String
-
-
-type alias HttpRequestOrResponseText =
-    String
-
-
-type alias HttpRequestOrResponseTextMaybe =
-    Maybe HttpRequestOrResponseText
-
-
-type alias HttpResponseText =
-    String
-
-
-type alias LikeOrCommentText =
-    String
-
-
-type alias QueryBeforeList =
-    --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
-    --When joined, then comprises a URI's scheme, authority, and path:
-    List UriText
-
-
-type alias QueryPair =
-    ( UriText, UriText )
-
-
-type alias QueryPairs =
-    List QueryPair
-
-
-type alias UriText =
-    String
 
 
 actionName2String : ActionName -> String

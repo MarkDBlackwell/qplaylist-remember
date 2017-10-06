@@ -61,17 +61,20 @@ import ModelType
         )
 import Song
     exposing
-        ( SongsRemembered
-        , likedOrCommentedShow
+        ( likedOrCommentedShow
         , songCommentingMaybeInit
         , songLikingMaybeInit
+        )
+import SongType
+    exposing
+        ( SongsRemembered
         )
 import UpdateLog
     exposing
         ( logAndFocus
         , logWithoutFocus
         )
-import UpdateRequestHelper
+import UpdateRequestType
     exposing
         ( ActionName
             ( ActionDecoding

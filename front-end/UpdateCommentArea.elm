@@ -38,12 +38,15 @@ import ModelType
         )
 import Song
     exposing
+        ( songCommentingMaybeInit
+        , songLikingOrCommentingMaybe
+        , songsRememberedUpdateTimestamp
+        )
+import SongType
+    exposing
         ( SongLikingOrCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndex
-        , songCommentingMaybeInit
-        , songLikingOrCommentingMaybe
-        , songsRememberedUpdateTimestamp
         )
 import UpdateFocus
     exposing

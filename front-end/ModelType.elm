@@ -24,14 +24,14 @@ import Alert
     exposing
         ( AlertMessageTextMaybe
         )
-import Song
+import SongType
     exposing
         ( SongCommentingMaybe
         , SongLikingMaybe
         , SongsLatest
         , SongsRemembered
         )
-import UpdateRequestHelper
+import UpdateRequestType
     exposing
         ( AwaitingServerResponse
         )

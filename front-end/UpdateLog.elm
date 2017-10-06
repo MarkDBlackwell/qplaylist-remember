@@ -45,12 +45,15 @@ import UpdateFocus
         )
 import UpdateRequestHelper
     exposing
+        ( actionName2String
+        )
+import UpdateRequestType
+    exposing
         ( ActionName
             ( ActionRequest
             , ActionResponse
             )
         , HttpRequestOrResponseTextMaybe
-        , actionName2String
         )
 import UpdateUtilities
     exposing

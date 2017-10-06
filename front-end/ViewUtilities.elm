@@ -28,7 +28,7 @@ import MessageType
     exposing
         ( Msg
         )
-import Song
+import SongType
     exposing
         ( SongGroup
             ( Played

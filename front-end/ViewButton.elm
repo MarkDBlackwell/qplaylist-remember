@@ -58,7 +58,7 @@ import ModelType
     exposing
         ( ShowCommentButtons
         )
-import Song
+import SongType
     exposing
         ( SongGroup
             ( Played
