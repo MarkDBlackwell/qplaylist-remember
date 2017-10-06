@@ -11,7 +11,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -}
 
-NEXT TO DO
 
 module UpdateCommentArea
     exposing

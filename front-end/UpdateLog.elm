@@ -84,10 +84,14 @@ httpRequestOrResponseTextLog model requestOrResponseLabelText httpRequestOrRespo
         --Keep for console logging:
         a : String
         a =
+            log requestOrResponseLabelText logText
+
+        logText : String
+        logText =
             if String.isEmpty httpRequestOrResponseText then
-                log requestOrResponseLabelText "Ok"
+                "Ok"
             else
-                log requestOrResponseLabelText httpRequestOrResponseText
+                httpRequestOrResponseText
     in
     ( model
     , focusInputPossibly model
