@@ -80,7 +80,10 @@ actionName2String actionName =
 logAndFocus : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAndFocus model actionName alertMessageTextMaybe =
     Cmd.batch
-        [ msg2Cmd (HttpRequestOrResponseTextLog (actionName2String actionName) (Maybe.withDefault "" alertMessageTextMaybe))
+        [ HttpRequestOrResponseTextLog
+            (actionName2String actionName)
+            (Maybe.withDefault "" alertMessageTextMaybe)
+            |> msg2Cmd
         , focusInputPossibly model
         ]
 
