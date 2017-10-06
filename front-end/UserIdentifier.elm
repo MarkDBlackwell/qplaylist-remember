@@ -87,7 +87,11 @@ updateInitialSetUp threeLetterSpaceInt =
                     else
                         toCode 'A'
             in
-            fromCode (baseKeyCode keyCode + (keyCode % caseLength))
+            keyCode
+                % caseLength
+                |> (+) keyCode
+                |> baseKeyCode
+                |> fromCode
 
         threeDigits : ThreeLetterSpaceInt -> List Int
         threeDigits threeLetterSpaceInt =
@@ -96,4 +100,6 @@ updateInitialSetUp threeLetterSpaceInt =
             , threeLetterSpaceInt % letterSpace
             ]
     in
-    String.fromList (List.map keyCode2Char (threeDigits threeLetterSpaceInt))
+    threeDigits threeLetterSpaceInt
+        |> List.map keyCode2Char
+        |> String.fromList

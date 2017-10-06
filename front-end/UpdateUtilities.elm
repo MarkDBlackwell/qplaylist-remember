@@ -37,4 +37,5 @@ msg2Cmd msg =
     --See:
     --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
-    perform identity (succeed msg)
+    succeed msg
+        |> perform identity

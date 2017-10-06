@@ -29,7 +29,9 @@ module Utilities
 
 indexes : List a -> List Int
 indexes listA =
-    List.range 0 (List.length listA - 1)
+    List.length listA
+        - 1
+        |> List.range 0
 
 
 matchingIndexes : List a -> a -> List Int
@@ -42,7 +44,8 @@ matchingIndexes listA a =
             else
                 Nothing
     in
-    List.filterMap matchWithIndexMaybe (withIndexes listA)
+    withIndexes listA
+        |> List.filterMap matchWithIndexMaybe
 
 
 maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
@@ -52,12 +55,14 @@ maybeDefaultNothing function value =
 
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
 maybeMapWithDefault default function value =
-    Maybe.withDefault default (Maybe.map function value)
+    Maybe.map function value
+        |> Maybe.withDefault default
 
 
 selectOneMaybe : List a -> Int -> Maybe a
 selectOneMaybe listA index =
-    List.head (startingWith listA index)
+    startingWith listA index
+        |> List.head
 
 
 startingWith : List a -> Int -> List a
@@ -72,5 +77,7 @@ withIndexes listA =
 
 withoutOne : List a -> Int -> List a
 withoutOne listA index =
-    List.take index listA
-        ++ startingWith listA (index + 1)
+    index
+        + 1
+        |> startingWith listA
+        |> (++) (List.take index listA)
