@@ -20,7 +20,7 @@ module ModelType
         , ShowCommentButtons
         )
 
-import Alert
+import AlertType
     exposing
         ( AlertMessageTextMaybe
         )

@@ -14,10 +14,7 @@
 
 module Alert
     exposing
-        ( ActionDescription
-        , AlertMessageText
-        , AlertMessageTextMaybe
-        , alertMessageTextErrorHttpLogging
+        ( alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
@@ -26,6 +23,15 @@ module Alert
         , alertMessageTextServerAwaiting
         )
 
+import AlertType
+    exposing
+        ( ActionDescription
+        , AlertMessageText
+        , AlertMessageTextMaybe
+        , DetailsText
+        , LikeOrCommentName
+        , PrefixSeparatorText
+        )
 import Http
     exposing
         ( Error
@@ -38,30 +44,6 @@ import Tuple
 
 
 -- MODEL
-
-
-type alias ActionDescription =
-    String
-
-
-type alias AlertMessageText =
-    String
-
-
-type alias AlertMessageTextMaybe =
-    Maybe AlertMessageText
-
-
-type alias DetailsText =
-    String
-
-
-type alias LikeOrCommentName =
-    String
-
-
-type alias PrefixSeparatorText =
-    String
 
 
 alertMessageTextInit : AlertMessageTextMaybe

@@ -17,7 +17,7 @@ module DecodeSongsLatest
         ( decodeSongsLatest
         )
 
-import Alert
+import AlertType
     exposing
         ( AlertMessageText
         )

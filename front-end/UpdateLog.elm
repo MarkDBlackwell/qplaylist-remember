@@ -20,7 +20,7 @@ module UpdateLog
         , logWithoutFocus
         )
 
-import Alert
+import AlertType
     exposing
         ( AlertMessageText
         , AlertMessageTextMaybe

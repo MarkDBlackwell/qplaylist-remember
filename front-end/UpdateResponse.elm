@@ -24,13 +24,16 @@ module UpdateResponse
 
 import Alert
     exposing
-        ( AlertMessageText
-        , alertMessageTextErrorHttpLogging
+        ( alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
+        )
+import AlertType
+    exposing
+        ( AlertMessageText
         )
 import DecodeLikeOrCommentResponse
     exposing
