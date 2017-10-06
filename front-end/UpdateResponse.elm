@@ -91,10 +91,14 @@ import UpdateUtilities
 commentResponseErr : Model -> Error -> ( Model, Cmd Msg )
 commentResponseErr model httpError =
     ( { model
-        | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "comment")
+        | alertMessageText =
+            alertMessageTextRequestLikeOrComment httpError "comment"
+                |> Just
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model Response (Just (alertMessageTextErrorHttpLogging httpError))
+    , alertMessageTextErrorHttpLogging httpError
+        |> Just
+        |> logAndFocus model Response
     )
 
 
@@ -108,25 +112,33 @@ commentResponseOk model httpResponseText =
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
+                | alertMessageText =
+                    alertMessageTextSend actionDescription alertMessageTextDecode
+                        |> Just
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model Decoding (Just alertMessageTextDecode)
+            , Just alertMessageTextDecode
+                |> logAndFocus model Decoding
             )
 
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = Just (alertMessageTextSend actionDescription responseString)
+                    | alertMessageText =
+                        alertMessageTextSend actionDescription responseString
+                            |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , logAndFocus model Response (Just responseString)
+                , Just responseString
+                    |> logAndFocus model Response
                 )
             else
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        likedOrCommentedShow model.songCommentingMaybe model.songsRemembered
+                        likedOrCommentedShow
+                            model.songCommentingMaybe
+                            model.songsRemembered
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -145,11 +157,15 @@ commentResponseOk model httpResponseText =
 likeResponseErr : Model -> Error -> ( Model, Cmd Msg )
 likeResponseErr model httpError =
     ( { model
-        | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "Like")
+        | alertMessageText =
+            alertMessageTextRequestLikeOrComment httpError "Like"
+                |> Just
         , awaitingServerResponse = awaitingServerResponseInit
         , songLikingMaybe = songLikingMaybeInit
       }
-    , logAndFocus model Response (Just (alertMessageTextErrorHttpLogging httpError))
+    , alertMessageTextErrorHttpLogging httpError
+        |> Just
+        |> logAndFocus model Response
     )
 
 
@@ -163,26 +179,34 @@ likeResponseOk model httpResponseText =
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
-                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
+                | alertMessageText =
+                    alertMessageTextSend actionDescription alertMessageTextDecode
+                        |> Just
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model Decoding (Just alertMessageTextDecode)
+            , Just alertMessageTextDecode
+                |> logAndFocus model Decoding
             )
 
         Ok responseString ->
             if "ok" /= responseString then
                 ( { model
-                    | alertMessageText = Just (alertMessageTextSend actionDescription responseString)
+                    | alertMessageText =
+                        alertMessageTextSend actionDescription responseString
+                            |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLikingMaybe = songLikingMaybeInit
                   }
-                , logAndFocus model Response (Just responseString)
+                , Just responseString
+                    |> logAndFocus model Response
                 )
             else
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        likedOrCommentedShow model.songLikingMaybe model.songsRemembered
+                        likedOrCommentedShow
+                            model.songLikingMaybe
+                            model.songsRemembered
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -206,16 +230,20 @@ songsLatestResponseErr model httpError =
 
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
-            alertMessageTextErrorHttpScreen httpError
-                ++ " (while attempting to "
-                ++ actionDescription
-                ++ ")"
+            String.concat
+                [ alertMessageTextErrorHttpScreen httpError
+                , " (while attempting to "
+                , actionDescription
+                , ")"
+                ]
     in
     ( { model
         | alertMessageText = Just alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model Response (Just (alertMessageTextErrorHttpLogging httpError))
+    , alertMessageTextErrorHttpLogging httpError
+        |> Just
+        |> logAndFocus model Response
     )
 
 
@@ -229,10 +257,13 @@ songsLatestResponseOk model httpResponseText =
                     "access the latest few songs"
             in
             ( { model
-                | alertMessageText = Just (alertMessageTextSend actionDescription alertMessageTextDecode)
+                | alertMessageText =
+                    alertMessageTextSend actionDescription alertMessageTextDecode
+                        |> Just
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , logAndFocus model Decoding (Just alertMessageTextDecode)
+            , Just alertMessageTextDecode
+                |> logAndFocus model Decoding
             )
 
         Ok songsLatestNew ->

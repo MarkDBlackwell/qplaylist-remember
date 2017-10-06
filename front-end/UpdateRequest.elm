@@ -84,7 +84,10 @@ commentSendHand model =
 
         commentRequestUriText : UriText
         commentRequestUriText =
-            likeOrCommentRequestUriText model.songCommentingMaybe model.userIdentifier model.commentText
+            likeOrCommentRequestUriText
+                model.songCommentingMaybe
+                model.userIdentifier
+                model.commentText
     in
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -116,11 +119,15 @@ likeButtonProcessHand model songsRememberedIndex =
     let
         likeRequest : Cmd Msg
         likeRequest =
-            send LikeResponse (getString likeRequestUriText)
+            getString likeRequestUriText
+                |> send LikeResponse
 
         likeRequestUriText : UriText
         likeRequestUriText =
-            likeOrCommentRequestUriText songLikingMaybeNew model.userIdentifier "Loved it!"
+            likeOrCommentRequestUriText
+                songLikingMaybeNew
+                model.userIdentifier
+                "Loved it!"
 
         songLikingMaybeNew : SongLikingOrCommentingMaybe
         songLikingMaybeNew =
@@ -128,7 +135,10 @@ likeButtonProcessHand model songsRememberedIndex =
 
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
-            songsRememberedUpdateTimestamp model.songsLatest model.songsRemembered songsRememberedIndex
+            songsRememberedUpdateTimestamp
+                model.songsLatest
+                model.songsRemembered
+                songsRememberedIndex
     in
     --(awaitingServer, commentArea)
     case stateVector model of
