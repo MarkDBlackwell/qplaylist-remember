@@ -79,7 +79,8 @@ commentSendHand model =
     let
         commentRequest : Cmd Msg
         commentRequest =
-            send CommentResponse (getString commentRequestUriText)
+            getString commentRequestUriText
+                |> send CommentResponse
 
         commentRequestUriText : UriText
         commentRequestUriText =
@@ -106,7 +107,7 @@ commentSendHand model =
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = True
                   }
-                , logMakeRequestAndFocus model commentRequest "Request" commentRequestUriText
+                , logMakeRequestAndFocus model commentRequest commentRequestUriText
                 )
 
 
@@ -145,7 +146,7 @@ likeButtonProcessHand model songsRememberedIndex =
                 , songLikingMaybe = songLikingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
-            , logMakeRequestAndFocus model likeRequest "Request" likeRequestUriText
+            , logMakeRequestAndFocus model likeRequest likeRequestUriText
             )
 
 
@@ -193,5 +194,5 @@ songsLatestRefreshHand model =
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
               }
-            , logMakeRequestAndFocus model songsLatestRequest "Request" requestUriText
+            , logMakeRequestAndFocus model songsLatestRequest requestUriText
             )

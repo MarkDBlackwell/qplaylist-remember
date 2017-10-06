@@ -88,10 +88,11 @@ logAndFocus model actionName alertMessageTextMaybe =
         ]
 
 
-logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> AlertMessageText -> Cmd Msg
-logMakeRequestAndFocus model commandMessageRequest actionName alertMessageText =
+logMakeRequestAndFocus : Model -> Cmd Msg -> AlertMessageText -> Cmd Msg
+logMakeRequestAndFocus model commandMessageRequest alertMessageText =
     Cmd.batch
-        [ HttpRequestOrResponseTextLog actionName (Just alertMessageText)
+        [ Just alertMessageText
+            |> HttpRequestOrResponseTextLog "Request"
             |> msg2Cmd
         , commandMessageRequest
         , focusInputPossibly model

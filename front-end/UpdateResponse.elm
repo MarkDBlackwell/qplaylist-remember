@@ -77,7 +77,6 @@ import UpdateLog
             , Response
             )
         , logAndFocus
-        , logMakeRequestAndFocus
         , logWithoutFocus
         )
 import UpdateUtilities
