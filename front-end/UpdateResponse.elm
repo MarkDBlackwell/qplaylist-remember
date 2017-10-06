@@ -25,10 +25,10 @@ module UpdateResponse
 import Alert
     exposing
         ( AlertMessageText
+        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
-        , alertMessageTextLogging
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
         )
@@ -95,7 +95,7 @@ commentResponseErr model httpError =
         | alertMessageText = Just (alertMessageTextRequestLikeOrComment httpError "comment")
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model Response (alertMessageTextLogging httpError)
+    , logAndFocus model Response (alertMessageTextErrorHttpLogging httpError)
     )
 
 
@@ -150,7 +150,7 @@ likeResponseErr model httpError =
         , awaitingServerResponse = awaitingServerResponseInit
         , songLikingMaybe = songLikingMaybeInit
       }
-    , logAndFocus model Response (alertMessageTextLogging httpError)
+    , logAndFocus model Response (alertMessageTextErrorHttpLogging httpError)
     )
 
 
@@ -216,7 +216,7 @@ songsLatestResponseErr model httpError =
         | alertMessageText = Just alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , logAndFocus model Response (alertMessageTextLogging httpError)
+    , logAndFocus model Response (alertMessageTextErrorHttpLogging httpError)
     )
 
 

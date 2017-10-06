@@ -17,10 +17,10 @@ module Alert
         ( ActionName
         , AlertMessageText
         , AlertMessageTextMaybe
+        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextErrorUnexpected
         , alertMessageTextInit
-        , alertMessageTextLogging
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
         , alertMessageTextServerAwaiting
@@ -107,16 +107,8 @@ alertMessageTextErrorHttp httpError =
             )
 
 
-
---alertMessageTextErrorHttpLogging : Error -> AlertMessageTextMaybe
---alertMessageTextErrorHttpLogging httpError =
---alertMessageTextErrorHttp httpError
---|> first
---|> Just
-
-
-alertMessageTextLogging : Error -> AlertMessageText
-alertMessageTextLogging httpError =
+alertMessageTextErrorHttpLogging : Error -> AlertMessageText
+alertMessageTextErrorHttpLogging httpError =
     alertMessageTextErrorHttp httpError
         |> first
         |> Just
