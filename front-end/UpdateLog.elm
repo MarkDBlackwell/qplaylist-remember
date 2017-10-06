@@ -43,7 +43,7 @@ import Request
     exposing
         ( ActionName
             ( ActionRequest
-            , Response
+            , ActionResponse
             )
         , HttpRequestOrResponseTextMaybe
         , actionName2String
@@ -83,7 +83,7 @@ logMakeRequestAndFocus model commandMessageRequest alertMessageText =
 
 logWithoutFocus : Cmd Msg
 logWithoutFocus =
-    HttpRequestOrResponseTextLog Response Nothing
+    HttpRequestOrResponseTextLog ActionResponse Nothing
         |> msg2Cmd
 
 

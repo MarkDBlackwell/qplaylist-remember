@@ -63,7 +63,7 @@ import Request
     exposing
         ( ActionName
             ( ActionDecoding
-            , Response
+            , ActionResponse
             )
         , HttpResponseText
         )
@@ -98,7 +98,7 @@ commentResponseErr model httpError =
       }
     , alertMessageTextErrorHttpLogging httpError
         |> Just
-        |> logAndFocus model Response
+        |> logAndFocus model ActionResponse
     )
 
 
@@ -130,7 +130,7 @@ commentResponseOk model httpResponseText =
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , Just responseString
-                    |> logAndFocus model Response
+                    |> logAndFocus model ActionResponse
                 )
             else
                 let
@@ -165,7 +165,7 @@ likeResponseErr model httpError =
       }
     , alertMessageTextErrorHttpLogging httpError
         |> Just
-        |> logAndFocus model Response
+        |> logAndFocus model ActionResponse
     )
 
 
@@ -198,7 +198,7 @@ likeResponseOk model httpResponseText =
                     , songLikingMaybe = songLikingMaybeInit
                   }
                 , Just responseString
-                    |> logAndFocus model Response
+                    |> logAndFocus model ActionResponse
                 )
             else
                 let
@@ -216,7 +216,7 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocus model Response Nothing
+                    , logAndFocus model ActionResponse Nothing
                     ]
                 )
 
@@ -243,7 +243,7 @@ songsLatestResponseErr model httpError =
       }
     , alertMessageTextErrorHttpLogging httpError
         |> Just
-        |> logAndFocus model Response
+        |> logAndFocus model ActionResponse
     )
 
 
@@ -273,5 +273,5 @@ songsLatestResponseOk model httpResponseText =
                 , songsLatest = songsLatestNew
               }
               --Here, don't log the full response.
-            , logAndFocus model Response Nothing
+            , logAndFocus model ActionResponse Nothing
             )

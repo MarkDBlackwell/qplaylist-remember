@@ -17,7 +17,7 @@ module Request
         ( ActionName
             ( ActionDecoding
             , ActionRequest
-            , Response
+            , ActionResponse
             )
         , AwaitingServerResponse
         , HttpRequestOrResponseTextMaybe
@@ -57,7 +57,7 @@ type alias AwaitingServerResponse =
 type ActionName
     = ActionDecoding
     | ActionRequest
-    | Response
+    | ActionResponse
 
 
 type alias HttpRequestText =
@@ -109,7 +109,7 @@ actionName2String actionName =
         ActionRequest ->
             "Request"
 
-        Response ->
+        ActionResponse ->
             "Response"
 
 
