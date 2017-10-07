@@ -69,17 +69,14 @@ import SongType
         )
 import Utilities
     exposing
-        ( maybeMapWithDefault
+        ( htmlNodeNull
+        , maybeMapWithDefault
+        , songGroup2String
         )
 import ViewType
     exposing
         ( Display
         , HoverText
-        )
-import ViewUtilities
-    exposing
-        ( htmlNodeNull
-        , songGroup2String
         )
 
 

@@ -34,7 +34,7 @@ import SongType
         , SongGroupLength
         , SongsLatestOrRememberedIndex
         )
-import ViewUtilities
+import Utilities
     exposing
         ( goldenRatio
         )

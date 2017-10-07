@@ -76,8 +76,10 @@ import SongType
         )
 import Utilities
     exposing
-        ( maybeMapWithDefault
+        ( htmlNodeNull
+        , maybeMapWithDefault
         , selectOneMaybe
+        , songGroup2String
         )
 import ViewButton
     exposing
@@ -99,11 +101,6 @@ import ViewStyleCalc
 import ViewType
     exposing
         ( HoverText
-        )
-import ViewUtilities
-    exposing
-        ( htmlNodeNull
-        , songGroup2String
         )
 
 

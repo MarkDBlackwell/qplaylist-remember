@@ -14,20 +14,35 @@
 
 module Utilities
     exposing
-        ( indexes
+        ( goldenRatio
+        , htmlNodeNull
+        , indexes
         , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
         , msg2Cmd
         , selectOneMaybe
+        , songGroup2String
         , startingWith
         , withIndexes
         , withoutOne
         )
 
+import Html
+    exposing
+        ( Html
+        , text
+        )
 import MessageType
     exposing
         ( Msg
+        )
+import SongType
+    exposing
+        ( SongGroup
+            ( Played
+            , Remembered
+            )
         )
 import Task
     exposing
@@ -102,3 +117,29 @@ withoutOne listA index =
         + 1
         |> startingWith listA
         |> (++) (List.take index listA)
+
+
+
+-- VIEW
+
+
+goldenRatio : Float
+goldenRatio =
+    --See:
+    --https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+    0.6180339887498949
+
+
+htmlNodeNull : Html Msg
+htmlNodeNull =
+    text ""
+
+
+songGroup2String : SongGroup -> String
+songGroup2String group =
+    case group of
+        Played ->
+            "played"
+
+        Remembered ->
+            "remembered"
