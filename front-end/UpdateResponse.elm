@@ -86,7 +86,7 @@ import UpdateRequestType
         , HttpResponseText
         , LikeOrCommentResponseText
         )
-import UpdateUtilities
+import Utilities
     exposing
         ( msg2Cmd
         )

@@ -80,17 +80,14 @@ import UpdateStateVector
     exposing
         ( stateVector
         )
-import UpdateUtilities
-    exposing
-        ( msg2Cmd
-        )
 import UserIdentifier
     exposing
         ( updateInitialSetUp
         )
 import Utilities
     exposing
-        ( withoutOne
+        ( msg2Cmd
+        , withoutOne
         )
 
 

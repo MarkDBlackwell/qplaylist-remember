@@ -55,7 +55,7 @@ import UpdateRequestType
             )
         , HttpRequestOrResponseTextMaybe
         )
-import UpdateUtilities
+import Utilities
     exposing
         ( msg2Cmd
         )

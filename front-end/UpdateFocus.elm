@@ -40,13 +40,10 @@ import Task
     exposing
         ( attempt
         )
-import UpdateUtilities
-    exposing
-        ( msg2Cmd
-        )
 import Utilities
     exposing
         ( maybeMapWithDefault
+        , msg2Cmd
         )
 
 
