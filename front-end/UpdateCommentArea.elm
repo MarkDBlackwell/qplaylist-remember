@@ -144,5 +144,5 @@ commentCancelHand model =
                 , commentText = commentTextInit
                 , songCommentingMaybe = songCommentingMaybeInit
               }
-            , Cmd.none
+            , focusSetIdMsg "refresh"
             )
