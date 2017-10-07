@@ -34,10 +34,6 @@ import ModelType
         ( Flags
         , Model
         )
-import Subscription
-    exposing
-        ( subscriptions
-        )
 import Update
     exposing
         ( update
@@ -59,3 +55,12 @@ main =
         , update = update
         , view = view
         }
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.none
