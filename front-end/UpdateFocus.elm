@@ -17,7 +17,7 @@ module UpdateFocus
         ( focusInputPossibly
         , focusResult
         , focusSet
-        , focusSetId
+        , focusSetIdMsg
         )
 
 import Dom
@@ -54,14 +54,8 @@ focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
     maybeMapWithDefault
         Cmd.none
-        (\x -> focusSetId "input")
+        (\x -> focusSetIdMsg "input")
         model.songCommentingMaybe
-
-
-focusSetId : Id -> Cmd Msg
-focusSetId id =
-    FocusSet id
-        |> msg2Cmd
 
 
 focusResult : Model -> ( Model, Cmd Msg )
@@ -80,3 +74,9 @@ focusSet model id =
     , focus id
         |> attempt FocusResult
     )
+
+
+focusSetIdMsg : Id -> Cmd Msg
+focusSetIdMsg id =
+    FocusSet id
+        |> msg2Cmd

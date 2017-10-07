@@ -51,7 +51,7 @@ import SongType
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusSetId
+        , focusSetIdMsg
         )
 import UpdateStateVector
     exposing
@@ -123,7 +123,7 @@ commentAreaOpenHand model songsRememberedIndex =
                 , songsRemembered = songsRememberedNew
               }
               --'focusInputPossibly' doesn't work, here:
-            , focusSetId "input"
+            , focusSetIdMsg "input"
             )
 
 
