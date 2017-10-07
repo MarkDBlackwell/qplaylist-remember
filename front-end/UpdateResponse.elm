@@ -77,6 +77,7 @@ import Song
 import SongType
     exposing
         ( SongCommenting
+        , SongCommentingMaybe
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndex
@@ -120,31 +121,31 @@ commentResponseErr model httpError =
     )
 
 
-commentingIndexMaybe : Model -> SongCommenting -> Maybe SongsRememberedIndex
-commentingIndexMaybe model songCommenting =
+buttonIdCreate : Id -> Int -> Id
+buttonIdCreate idFragment index =
+    String.concat
+        [ "button"
+        , idFragment
+        , toString index
+        ]
+
+
+commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex
+commentingIndexMaybe songsRemembered songCommenting =
     let
         songsRememberedTimeless : SongsTimeless
         songsRememberedTimeless =
-            songs2SongsTimeless model.songsRemembered
+            songs2SongsTimeless songsRemembered
     in
     song2SongTimeless songCommenting
         |> matchingIndexes songsRememberedTimeless
         |> List.head
 
 
-buttonIdCreate : Id -> SongsRememberedIndex -> Id
-buttonIdCreate idFragment songsRememberedIndex =
-    String.concat
-        [ "button"
-        , idFragment
-        , toString songsRememberedIndex
-        ]
-
-
-focusButtonId : Model -> Id -> Id
-focusButtonId model idFragment =
-    model.songCommentingMaybe
-        |> Maybe.andThen (commentingIndexMaybe model)
+focusButtonId : SongsRemembered -> SongCommentingMaybe -> Id -> Id
+focusButtonId songsRemembered songCommentingMaybe idFragment =
+    songCommentingMaybe
+        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
         |> Maybe.map (buttonIdCreate idFragment)
         |> Maybe.withDefault "refresh"
 
@@ -196,7 +197,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , focusButtonId model "Comment"
+                    , focusButtonId model.songsRemembered model.songCommentingMaybe "Comment"
                         |> logAndFocusId model
                     ]
                 )
