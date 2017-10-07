@@ -148,13 +148,13 @@ commentResponseOk model httpResponseText =
                         [ "buttonComment"
                         , toString songsRememberedIndex
                         ]
-            in
-            case model.songCommentingMaybe of
-                Nothing ->
-                    "refresh"
 
-                Just songCommenting ->
-                    Maybe.withDefault "refresh" (Maybe.map (\songsRememberedIndex -> createButtonId songsRememberedIndex) (commentingIndexMaybe model songCommenting))
+                handleSongCommenting songCommenting =
+                    commentingIndexMaybe model songCommenting
+                        |> Maybe.map (\x -> createButtonId x)
+                        |> Maybe.withDefault "refresh"
+            in
+            Maybe.withDefault "refresh" (Maybe.map (\x -> handleSongCommenting x) model.songCommentingMaybe)
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
