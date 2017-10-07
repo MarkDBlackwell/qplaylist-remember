@@ -148,14 +148,10 @@ commentResponseOk model httpResponseText =
                         [ "buttonComment"
                         , toString songsRememberedIndex
                         ]
-
-                handleSongCommentingMaybe : SongCommenting -> Maybe Id
-                handleSongCommentingMaybe songCommenting =
-                    commentingIndexMaybe model songCommenting
-                        |> Maybe.map (\x -> createButtonId x)
             in
             model.songCommentingMaybe
-                |> Maybe.andThen handleSongCommentingMaybe
+                |> Maybe.andThen (commentingIndexMaybe model)
+                |> Maybe.map (\x -> createButtonId x)
                 |> Maybe.withDefault "refresh"
     in
     case decodeLikeOrCommentResponse httpResponseText of
