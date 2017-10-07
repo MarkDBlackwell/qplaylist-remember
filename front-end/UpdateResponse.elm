@@ -141,20 +141,20 @@ commentResponseOk model httpResponseText =
 
         idToFocusOn : Id
         idToFocusOn =
+            let
+                createButtonId : SongsRememberedIndex -> Id
+                createButtonId songsRememberedIndex =
+                    String.concat
+                        [ "buttonComment"
+                        , toString songsRememberedIndex
+                        ]
+            in
             case model.songCommentingMaybe of
                 Nothing ->
                     "refresh"
 
                 Just songCommenting ->
-                    case commentingIndexMaybe model songCommenting of
-                        Nothing ->
-                            "refresh"
-
-                        Just commentingIndex ->
-                            String.concat
-                                [ "buttonComment"
-                                , toString commentingIndex
-                                ]
+                    Maybe.withDefault "refresh" (Maybe.map (\songsRememberedIndex -> createButtonId songsRememberedIndex) (commentingIndexMaybe model songCommenting))
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
