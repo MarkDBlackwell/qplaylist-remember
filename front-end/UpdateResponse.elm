@@ -149,6 +149,7 @@ commentResponseOk model httpResponseText =
                         , toString songsRememberedIndex
                         ]
 
+                handleSongCommenting : SongCommenting -> Id
                 handleSongCommenting songCommenting =
                     commentingIndexMaybe model songCommenting
                         |> Maybe.map (\x -> createButtonId x)
