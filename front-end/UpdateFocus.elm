@@ -52,12 +52,16 @@ import Utilities
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    maybeMapWithDefault Cmd.none (\x -> focusSetId "input") model.songCommentingMaybe
+    maybeMapWithDefault
+        Cmd.none
+        (\x -> focusSetId "input")
+        model.songCommentingMaybe
 
 
 focusSetId : Id -> Cmd Msg
 focusSetId id =
-    msg2Cmd (FocusSet id)
+    FocusSet id
+        |> msg2Cmd
 
 
 focusResult : Model -> ( Model, Cmd Msg )
@@ -73,5 +77,6 @@ focusSet model id =
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
     ( model
-    , attempt FocusResult (focus id)
+    , focus id
+        |> attempt FocusResult
     )
