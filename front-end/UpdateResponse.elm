@@ -196,7 +196,8 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocusId model (focusButtonId model "Comment")
+                    , focusButtonId model "Comment"
+                        |> logAndFocusId model
                     ]
                 )
 
