@@ -57,7 +57,7 @@ import Task
 indexes : List a -> List Int
 indexes listA =
     List.length listA
-        - 1
+        |> flip (-) 1
         |> List.range 0
 
 
@@ -108,13 +108,13 @@ startingWith listA index =
 
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
-    List.map2 (,) (indexes listA) listA
+    indexes listA
+        |> List.map2 (flip (,)) listA
 
 
 withoutOne : List a -> Int -> List a
 withoutOne listA index =
-    index
-        + 1
+    (index + 1)
         |> startingWith listA
         |> (++) (List.take index listA)
 
