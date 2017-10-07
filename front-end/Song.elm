@@ -14,15 +14,22 @@
 
 module Song
     exposing
-        ( likedOrCommentedShow
+        ( artistInit
+        , likedOrCommentedInit
+        , likedOrCommentedShow
+        , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songLikingOrCommentingConstructor
         , songLikingOrCommentingMaybe
         , songs2SongsRemembered
+        , songs2SongsTimeless
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
+        , timeInit
+        , timestampInit
+        , titleInit
         )
 
 import SongType
@@ -77,9 +84,9 @@ songLikingMaybeInit =
     Nothing
 
 
-songLikingOrCommentingConstructor : Artist -> Time -> Timestamp -> Title -> SongLikingOrCommenting
-songLikingOrCommentingConstructor artist time timestamp title =
-    SongLatest artist time timestamp title
+songLikingOrCommentingConstructor : Artist -> LikedOrCommented -> Time -> Timestamp -> Title -> SongLikingOrCommenting
+songLikingOrCommentingConstructor artist likedOrCommented time timestamp title =
+    SongRemembered artist likedOrCommented time timestamp title
 
 
 songsLatestInit : SongsLatest
@@ -89,6 +96,11 @@ songsLatestInit =
 
 
 -- UPDATE
+
+
+artistInit : Artist
+artistInit =
+    ""
 
 
 likedOrCommentedInit : LikedOrCommented
@@ -104,7 +116,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             let
                 songRememberedTweak : SongRemembered -> SongRemembered
                 songRememberedTweak songRemembered =
-                    if songLikingOrCommenting /= song2SongLatest songRemembered then
+                    if song2SongLatest songLikingOrCommenting /= song2SongLatest songRemembered then
                         songRemembered
                     else
                         { songRemembered
@@ -138,7 +150,6 @@ song2SongTimeless { artist, title } =
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     selectOneMaybe songsRemembered songsRememberedIndex
-        |> Maybe.map song2SongLatest
 
 
 songs2SongsLatest :
@@ -247,3 +258,18 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     Maybe.withDefault
         songsRemembered
         (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
+
+
+timeInit : Time
+timeInit =
+    ""
+
+
+timestampInit : Timestamp
+timestampInit =
+    ""
+
+
+titleInit : Title
+titleInit =
+    ""

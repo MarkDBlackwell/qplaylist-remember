@@ -43,6 +43,10 @@ import DecodeSongsLatest
     exposing
         ( decodeSongsLatestResponse
         )
+import Dom
+    exposing
+        ( Id
+        )
 import Http
     exposing
         ( Error
@@ -65,17 +69,22 @@ import ModelType
 import Song
     exposing
         ( likedOrCommentedShow
+        , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
+        , songs2SongsTimeless
         )
 import SongType
     exposing
-        ( SongsRemembered
+        ( SongCommenting
+        , SongTimeless
+        , SongsRemembered
+        , SongsRememberedIndex
         )
 import UpdateLog
     exposing
         ( logAndFocus
-        , logWithoutFocus
+        , logAndFocusId
         )
 import UpdateRequestType
     exposing
@@ -88,7 +97,8 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( msg2Cmd
+        ( matchingIndexes
+        , msg2Cmd
         )
 
 
@@ -109,12 +119,43 @@ commentResponseErr model httpError =
     )
 
 
+commentingIndexMaybe : Model -> SongCommenting -> Maybe SongsRememberedIndex
+commentingIndexMaybe model songCommenting =
+    {-
+       let
+           compare : SongTimeless -> Bool
+           compare songTimeless =
+               song2SongTimeless songCommenting
+                   |> (==) songTimeless
+       in
+       List.mapWith songs2SongsTimeless model.songsRemembered
+           |> List.filter compare
+           |> List.head
+    -}
+    matchingIndexes (songs2SongsTimeless model.songsRemembered) (song2SongTimeless songCommenting)
+        |> List.head
+
+
 commentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 commentResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
         actionDescription =
             "send your Comment"
+
+        idToFocusOn : Id
+        idToFocusOn =
+            case model.songCommentingMaybe of
+                Nothing ->
+                    "refresh"
+
+                Just songCommenting ->
+                    case commentingIndexMaybe model songCommenting of
+                        Nothing ->
+                            "refresh"
+
+                        Just commentingIndex ->
+                            "buttonComment" ++ toString commentingIndex
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -156,7 +197,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logWithoutFocus
+                    , logAndFocusId model idToFocusOn
                     ]
                 )
 

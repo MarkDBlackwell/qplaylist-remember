@@ -16,6 +16,7 @@ module SongType
     exposing
         ( Artist
         , LikedOrCommented
+        , SongCommenting
         , SongCommentingMaybe
         , SongGroup
             ( Played
@@ -51,7 +52,7 @@ type alias LikedOrCommented =
 
 
 type alias SongCommenting =
-    SongLatest
+    SongRemembered
 
 
 type alias SongCommentingMaybe =
@@ -68,7 +69,7 @@ type alias SongLatest =
 
 
 type alias SongLiking =
-    SongLatest
+    SongCommenting
 
 
 type alias SongLikingMaybe =
@@ -76,7 +77,7 @@ type alias SongLikingMaybe =
 
 
 type alias SongLikingOrCommenting =
-    SongLatest
+    SongCommenting
 
 
 type alias SongLikingOrCommentingMaybe =

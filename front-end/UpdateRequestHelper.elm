@@ -21,7 +21,12 @@ module UpdateRequestHelper
 
 import Song
     exposing
-        ( songLikingOrCommentingConstructor
+        ( artistInit
+        , likedOrCommentedInit
+        , songLikingOrCommentingConstructor
+        , timeInit
+        , timestampInit
+        , titleInit
         )
 import SongType
     exposing
@@ -87,7 +92,7 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         song : SongLikingOrCommenting
         song =
             Maybe.withDefault
-                (songLikingOrCommentingConstructor "" "" "" "")
+                (songLikingOrCommentingConstructor artistInit likedOrCommentedInit timeInit timestampInit titleInit)
                 songLikingOrCommentingMaybe
     in
     relative
