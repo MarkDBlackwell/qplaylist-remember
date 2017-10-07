@@ -80,6 +80,7 @@ import SongType
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndex
+        , SongsTimeless
         )
 import UpdateLog
     exposing
@@ -121,18 +122,13 @@ commentResponseErr model httpError =
 
 commentingIndexMaybe : Model -> SongCommenting -> Maybe SongsRememberedIndex
 commentingIndexMaybe model songCommenting =
-    {-
-       let
-           compare : SongTimeless -> Bool
-           compare songTimeless =
-               song2SongTimeless songCommenting
-                   |> (==) songTimeless
-       in
-       List.mapWith songs2SongsTimeless model.songsRemembered
-           |> List.filter compare
-           |> List.head
-    -}
-    matchingIndexes (songs2SongsTimeless model.songsRemembered) (song2SongTimeless songCommenting)
+    let
+        songsRememberedTimeless : SongsTimeless
+        songsRememberedTimeless =
+            songs2SongsTimeless model.songsRemembered
+    in
+    song2SongTimeless songCommenting
+        |> matchingIndexes songsRememberedTimeless
         |> List.head
 
 
@@ -155,7 +151,10 @@ commentResponseOk model httpResponseText =
                             "refresh"
 
                         Just commentingIndex ->
-                            "buttonComment" ++ toString commentingIndex
+                            String.concat
+                                [ "buttonComment"
+                                , toString commentingIndex
+                                ]
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
