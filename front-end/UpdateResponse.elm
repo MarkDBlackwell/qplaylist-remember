@@ -132,27 +132,29 @@ commentingIndexMaybe model songCommenting =
         |> List.head
 
 
+buttonIdCreate : Id -> SongsRememberedIndex -> Id
+buttonIdCreate idFragment songsRememberedIndex =
+    String.concat
+        [ "button"
+        , idFragment
+        , toString songsRememberedIndex
+        ]
+
+
+focusButtonId : Model -> Id -> Id
+focusButtonId model idFragment =
+    model.songCommentingMaybe
+        |> Maybe.andThen (commentingIndexMaybe model)
+        |> Maybe.map (buttonIdCreate idFragment)
+        |> Maybe.withDefault "refresh"
+
+
 commentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
 commentResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
         actionDescription =
             "send your Comment"
-
-        idToFocusOn : Id
-        idToFocusOn =
-            let
-                createButtonId : SongsRememberedIndex -> Id
-                createButtonId songsRememberedIndex =
-                    String.concat
-                        [ "buttonComment"
-                        , toString songsRememberedIndex
-                        ]
-            in
-            model.songCommentingMaybe
-                |> Maybe.andThen (commentingIndexMaybe model)
-                |> Maybe.map createButtonId
-                |> Maybe.withDefault "refresh"
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -194,7 +196,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocusId model idToFocusOn
+                    , logAndFocusId model (focusButtonId model "Comment")
                     ]
                 )
 
