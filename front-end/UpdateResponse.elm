@@ -151,7 +151,7 @@ commentResponseOk model httpResponseText =
             in
             model.songCommentingMaybe
                 |> Maybe.andThen (commentingIndexMaybe model)
-                |> Maybe.map (\x -> createButtonId x)
+                |> Maybe.map createButtonId
                 |> Maybe.withDefault "refresh"
     in
     case decodeLikeOrCommentResponse httpResponseText of
