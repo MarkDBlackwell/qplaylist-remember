@@ -154,7 +154,8 @@ commentResponseOk model httpResponseText =
                         |> Maybe.map (\x -> createButtonId x)
                         |> Maybe.withDefault "refresh"
             in
-            Maybe.withDefault "refresh" (Maybe.map (\x -> handleSongCommenting x) model.songCommentingMaybe)
+            Maybe.map (\x -> handleSongCommenting x) model.songCommentingMaybe
+                |> Maybe.withDefault "refresh"
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
