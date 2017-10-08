@@ -68,7 +68,8 @@ import ModelType
         )
 import Song
     exposing
-        ( likedOrCommentedShow
+        ( commentingIndexMaybe
+        , likedOrCommentedShow
         , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
@@ -76,8 +77,7 @@ import Song
         )
 import SongType
     exposing
-        ( SongCommenting
-        , SongCommentingMaybe
+        ( SongCommentingMaybe
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndex
@@ -120,18 +120,6 @@ commentResponseErr model httpError =
         |> Just
         |> logAndFocus model ActionResponse
     )
-
-
-commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex
-commentingIndexMaybe songsRemembered songCommenting =
-    let
-        songsRememberedTimeless : SongsTimeless
-        songsRememberedTimeless =
-            songs2SongsTimeless songsRemembered
-    in
-    song2SongTimeless songCommenting
-        |> matchingIndexes songsRememberedTimeless
-        |> List.head
 
 
 focusButtonId : SongsRemembered -> SongCommentingMaybe -> Id -> Id

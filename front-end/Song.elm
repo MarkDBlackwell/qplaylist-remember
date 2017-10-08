@@ -15,6 +15,7 @@
 module Song
     exposing
         ( artistInit
+        , commentingIndexMaybe
         , likedOrCommentedInit
         , likedOrCommentedShow
         , song2SongTimeless
@@ -36,6 +37,7 @@ import SongType
     exposing
         ( Artist
         , LikedOrCommented
+        , SongCommenting
         , SongCommentingMaybe
         , SongGroup
             ( Played
@@ -101,6 +103,18 @@ songsLatestInit =
 artistInit : Artist
 artistInit =
     ""
+
+
+commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex
+commentingIndexMaybe songsRemembered songCommenting =
+    let
+        songsRememberedTimeless : SongsTimeless
+        songsRememberedTimeless =
+            songs2SongsTimeless songsRemembered
+    in
+    song2SongTimeless songCommenting
+        |> matchingIndexes songsRememberedTimeless
+        |> List.head
 
 
 likedOrCommentedInit : LikedOrCommented
