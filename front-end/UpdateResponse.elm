@@ -43,10 +43,6 @@ import DecodeSongsLatest
     exposing
         ( decodeSongsLatestResponse
         )
-import Dom
-    exposing
-        ( Id
-        )
 import Http
     exposing
         ( Error
@@ -68,8 +64,7 @@ import ModelType
         )
 import Song
     exposing
-        ( commentingIndexMaybe
-        , likedOrCommentedShow
+        ( likedOrCommentedShow
         , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
@@ -77,11 +72,14 @@ import Song
         )
 import SongType
     exposing
-        ( SongCommentingMaybe
-        , SongTimeless
+        ( SongTimeless
         , SongsRemembered
         , SongsRememberedIndex
         , SongsTimeless
+        )
+import UpdateFocus
+    exposing
+        ( focusButtonId
         )
 import UpdateLog
     exposing
@@ -99,8 +97,7 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( buttonIdCreate
-        , matchingIndexes
+        ( matchingIndexes
         , msg2Cmd
         )
 
@@ -120,14 +117,6 @@ commentResponseErr model httpError =
         |> Just
         |> logAndFocus model ActionResponse
     )
-
-
-focusButtonId : SongsRemembered -> SongCommentingMaybe -> Id -> Id
-focusButtonId songsRemembered songCommentingMaybe idFragment =
-    songCommentingMaybe
-        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
-        |> Maybe.map (buttonIdCreate idFragment)
-        |> Maybe.withDefault "refresh"
 
 
 commentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
