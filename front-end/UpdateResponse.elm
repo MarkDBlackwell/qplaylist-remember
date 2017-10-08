@@ -99,7 +99,8 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( matchingIndexes
+        ( buttonIdCreate
+        , matchingIndexes
         , msg2Cmd
         )
 
@@ -119,15 +120,6 @@ commentResponseErr model httpError =
         |> Just
         |> logAndFocus model ActionResponse
     )
-
-
-buttonIdCreate : Id -> Int -> Id
-buttonIdCreate idFragment index =
-    String.concat
-        [ "button"
-        , idFragment
-        , toString index
-        ]
 
 
 commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex
