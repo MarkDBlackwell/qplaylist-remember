@@ -15,6 +15,7 @@
 module Song
     exposing
         ( artistInit
+        , buttonIdReconstruct
         , commentingIndexMaybe
         , likedOrCommentedInit
         , likedOrCommentedShow
@@ -33,6 +34,10 @@ module Song
         , titleInit
         )
 
+import Dom
+    exposing
+        ( Id
+        )
 import SongType
     exposing
         ( Artist
@@ -62,7 +67,8 @@ import SongType
         )
 import Utilities
     exposing
-        ( indexes
+        ( buttonIdCreate
+        , indexes
         , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
@@ -103,6 +109,14 @@ songsLatestInit =
 artistInit : Artist
 artistInit =
     ""
+
+
+buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
+buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
+    songCommentingMaybe
+        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
+        |> Maybe.map (buttonIdCreate idFragment)
+        |> Maybe.withDefault "refresh"
 
 
 commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex

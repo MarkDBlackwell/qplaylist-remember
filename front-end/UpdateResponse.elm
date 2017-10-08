@@ -64,7 +64,8 @@ import ModelType
         )
 import Song
     exposing
-        ( likedOrCommentedShow
+        ( buttonIdReconstruct
+        , likedOrCommentedShow
         , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
@@ -76,10 +77,6 @@ import SongType
         , SongsRemembered
         , SongsRememberedIndex
         , SongsTimeless
-        )
-import UpdateFocus
-    exposing
-        ( buttonIdReconstruct
         )
 import UpdateLog
     exposing

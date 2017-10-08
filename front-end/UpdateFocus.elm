@@ -14,8 +14,7 @@
 
 module UpdateFocus
     exposing
-        ( buttonIdReconstruct
-        , focusInputPossibly
+        ( focusInputPossibly
         , focusResult
         , focusSet
         , focusSetIdMsg
@@ -37,36 +36,18 @@ import ModelType
     exposing
         ( Model
         )
-import Song
-    exposing
-        ( commentingIndexMaybe
-        )
-import SongType
-    exposing
-        ( SongCommentingMaybe
-        , SongsRemembered
-        )
 import Task
     exposing
         ( attempt
         )
 import Utilities
     exposing
-        ( buttonIdCreate
-        , maybeMapWithDefault
+        ( maybeMapWithDefault
         , msg2Cmd
         )
 
 
 -- UPDATE
-
-
-buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
-buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
-    songCommentingMaybe
-        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
-        |> Maybe.map (buttonIdCreate idFragment)
-        |> Maybe.withDefault "refresh"
 
 
 focusInputPossibly : Model -> Cmd Msg
