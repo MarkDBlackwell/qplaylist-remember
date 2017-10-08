@@ -79,7 +79,7 @@ import SongType
         )
 import UpdateFocus
     exposing
-        ( focusButtonId
+        ( buttonIdReconstruct
         )
 import UpdateLog
     exposing
@@ -166,7 +166,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , focusButtonId model.songsRemembered model.songCommentingMaybe "Comment"
+                    , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
                         |> logAndFocusId model
                     ]
                 )

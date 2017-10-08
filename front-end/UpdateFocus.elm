@@ -14,7 +14,7 @@
 
 module UpdateFocus
     exposing
-        ( focusButtonId
+        ( buttonIdReconstruct
         , focusInputPossibly
         , focusResult
         , focusSet
@@ -61,8 +61,8 @@ import Utilities
 -- UPDATE
 
 
-focusButtonId : SongsRemembered -> SongCommentingMaybe -> Id -> Id
-focusButtonId songsRemembered songCommentingMaybe idFragment =
+buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
+buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
     songCommentingMaybe
         |> Maybe.andThen (commentingIndexMaybe songsRemembered)
         |> Maybe.map (buttonIdCreate idFragment)
