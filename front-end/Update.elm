@@ -116,13 +116,13 @@ update msg model =
         CommentSendHand ->
             commentSendHand model
 
+        FocusAttempt id ->
+            focusAttempt model id
+
         FocusResult _ ->
             ( model
             , Cmd.none
             )
-
-        FocusAttempt id ->
-            focusAttempt model id
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
             httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe

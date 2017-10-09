@@ -50,14 +50,6 @@ import Utilities
 -- UPDATE
 
 
-focusInputPossibly : Model -> Cmd Msg
-focusInputPossibly model =
-    maybeMapWithDefault
-        Cmd.none
-        (\x -> focusSetId "input")
-        model.songCommentingMaybe
-
-
 focusAttempt : Model -> Id -> ElmCycle
 focusAttempt model id =
     --See:
@@ -67,6 +59,14 @@ focusAttempt model id =
     , focus id
         |> attempt FocusResult
     )
+
+
+focusInputPossibly : Model -> Cmd Msg
+focusInputPossibly model =
+    maybeMapWithDefault
+        Cmd.none
+        (\x -> focusSetId "input")
+        model.songCommentingMaybe
 
 
 focusSetId : Id -> Cmd Msg
