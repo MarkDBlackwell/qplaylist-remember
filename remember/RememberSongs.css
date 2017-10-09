@@ -220,10 +220,10 @@ section.songs-group > p {
     margin: 0;
 }
 section#songs-played > p:after {
-    content: "Latest:";
+    content: "Latest";
 }
 section#songs-remembered > p:after {
-    content: "Remembered:";
+    content: "Remembered";
 }
 section.songs-group > p > button {
     vertical-align: text-top;
