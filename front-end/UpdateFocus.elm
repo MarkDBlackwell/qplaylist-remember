@@ -15,7 +15,6 @@
 module UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusResult
         , focusSet
         , focusSetIdMsg
         )
@@ -56,13 +55,6 @@ focusInputPossibly model =
         Cmd.none
         (\x -> focusSetIdMsg "input")
         model.songCommentingMaybe
-
-
-focusResult : Model -> ( Model, Cmd Msg )
-focusResult model =
-    ( model
-    , Cmd.none
-    )
 
 
 focusSet : Model -> Id -> ( Model, Cmd Msg )

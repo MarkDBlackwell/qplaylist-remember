@@ -54,7 +54,6 @@ import UpdateCommentArea
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusResult
         , focusSet
         , focusSetIdMsg
         )
@@ -117,7 +116,9 @@ update msg model =
             commentSendHand model
 
         FocusResult _ ->
-            focusResult model
+            ( model
+            , Cmd.none
+            )
 
         FocusSet id ->
             focusSet model id
