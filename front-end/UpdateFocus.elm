@@ -28,7 +28,7 @@ import MessageType
     exposing
         ( Msg
             ( FocusResult
-            , FocusSet
+            , FocusSetId
             )
         )
 import ModelType
@@ -70,5 +70,5 @@ focusSetId model id =
 
 focusSetIdMsg : Id -> Cmd Msg
 focusSetIdMsg id =
-    FocusSet id
+    FocusSetId id
         |> msg2Cmd

@@ -120,7 +120,7 @@ update msg model =
             , Cmd.none
             )
 
-        FocusSet id ->
+        FocusSetId id ->
             focusSetId model id
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
