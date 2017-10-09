@@ -14,7 +14,7 @@
 
 module UpdateFocus
     exposing
-        ( focusCycle
+        ( focusAttempt
         , focusInputPossibly
         , focusSetId
         )
@@ -28,7 +28,7 @@ import MessageType
     exposing
         ( ElmCycle
         , Msg
-            ( FocusCycle
+            ( FocusAttempt
             , FocusResult
             )
         )
@@ -58,8 +58,8 @@ focusInputPossibly model =
         model.songCommentingMaybe
 
 
-focusCycle : Model -> Id -> ElmCycle
-focusCycle model id =
+focusAttempt : Model -> Id -> ElmCycle
+focusAttempt model id =
     --See:
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
@@ -71,5 +71,5 @@ focusCycle model id =
 
 focusSetId : Id -> Cmd Msg
 focusSetId id =
-    FocusCycle id
+    FocusAttempt id
         |> msg2Cmd
