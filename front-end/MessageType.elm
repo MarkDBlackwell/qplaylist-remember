@@ -14,7 +14,8 @@
 
 module MessageType
     exposing
-        ( Msg(..)
+        ( ElmCycle
+        , Msg(..)
         )
 
 import Dom
@@ -28,6 +29,7 @@ import Http
 import ModelType
     exposing
         ( CommentText
+        , Model
         )
 import SongType
     exposing
@@ -43,6 +45,10 @@ import UpdateRequestType
 
 
 -- MODEL
+
+
+type alias ElmCycle =
+    ( Model, Cmd Msg )
 
 
 type Msg

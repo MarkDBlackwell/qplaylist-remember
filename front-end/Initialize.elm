@@ -25,7 +25,8 @@ import Alert
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
+        , Msg
             ( InitialSetUp
             )
         )
@@ -70,7 +71,7 @@ commentTextInit =
     ""
 
 
-init : Flags -> ( Model, Cmd Msg )
+init : Flags -> ElmCycle
 init flags =
     ( Model
         alertMessageTextInit
