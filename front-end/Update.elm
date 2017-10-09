@@ -56,7 +56,7 @@ import UpdateFocus
     exposing
         ( focusInputPossibly
         , focusSetId
-        , focusSetIdModelCmdMsg
+        , focusSetIdCycle
         )
 import UpdateLog
     exposing
@@ -121,8 +121,8 @@ update msg model =
             , Cmd.none
             )
 
-        FocusSetIdModelCmdMsg id ->
-            focusSetIdModelCmdMsg model id
+        FocusSetIdCycle id ->
+            focusSetIdCycle model id
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
             httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe
