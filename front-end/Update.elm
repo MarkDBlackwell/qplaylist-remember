@@ -54,7 +54,7 @@ import UpdateCommentArea
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusSet
+        , focusSetId
         , focusSetIdMsg
         )
 import UpdateLog
@@ -121,7 +121,7 @@ update msg model =
             )
 
         FocusSet id ->
-            focusSet model id
+            focusSetId model id
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
             httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe
