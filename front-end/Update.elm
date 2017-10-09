@@ -125,7 +125,17 @@ update msg model =
             )
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
-            httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe
+            let
+                logAction : Cmd Msg
+                logAction =
+                    httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe
+            in
+            ( model
+            , Cmd.batch
+                [ logAction
+                , focusInputPossibly model
+                ]
+            )
 
         InitialSetUp threeLetterSpaceInt ->
             ( { model

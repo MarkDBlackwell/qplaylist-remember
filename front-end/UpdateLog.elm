@@ -71,8 +71,8 @@ import Utilities
 -- UPDATE
 
 
-httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ElmCycle
-httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
+httpRequestOrResponseTextLog : ActionName -> HttpRequestOrResponseTextMaybe -> Cmd Msg
+httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
     let
         --Keep for console logging:
         a : String
@@ -85,9 +85,7 @@ httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
         logText =
             Maybe.withDefault "Ok" httpRequestOrResponseTextMaybe
     in
-    ( model
-    , focusInputPossibly model
-    )
+    Cmd.none
 
 
 logAndFocus : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
