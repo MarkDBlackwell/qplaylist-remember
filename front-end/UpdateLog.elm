@@ -47,7 +47,7 @@ import ModelType
 import UpdateFocus
     exposing
         ( focusInputPossibly
-        , focusSetIdMsg
+        , focusSetId
         )
 import UpdateRequestHelper
     exposing
@@ -103,7 +103,7 @@ logAndFocusId model id =
     Cmd.batch
         [ HttpRequestOrResponseTextLog ActionResponse Nothing
             |> msg2Cmd
-        , focusSetIdMsg id
+        , focusSetId id
         , focusInputPossibly model
         ]
 

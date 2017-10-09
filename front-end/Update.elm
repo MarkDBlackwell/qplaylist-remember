@@ -54,8 +54,8 @@ import UpdateCommentArea
 import UpdateFocus
     exposing
         ( focusInputPossibly
+        , focusSetId
         , focusSetIdModelCmdMsg
-        , focusSetIdMsg
         )
 import UpdateLog
     exposing
@@ -214,7 +214,7 @@ update msg model =
                           }
                         , Cmd.batch
                             [ msg2Cmd SongsRememberedStore
-                            , focusSetIdMsg "refresh"
+                            , focusSetId "refresh"
                             , focusInputPossibly model
                             ]
                         )
