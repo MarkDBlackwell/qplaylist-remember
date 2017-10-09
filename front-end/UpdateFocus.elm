@@ -26,7 +26,8 @@ import Dom
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
+        , Msg
             ( FocusResult
             , FocusSetIdModelCmdMsg
             )
@@ -57,7 +58,7 @@ focusInputPossibly model =
         model.songCommentingMaybe
 
 
-focusSetIdModelCmdMsg : Model -> Id -> ( Model, Cmd Msg )
+focusSetIdModelCmdMsg : Model -> Id -> ElmCycle
 focusSetIdModelCmdMsg model id =
     --See:
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/

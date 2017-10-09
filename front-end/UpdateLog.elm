@@ -36,7 +36,8 @@ import Dom
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
+        , Msg
             ( HttpRequestOrResponseTextLog
             )
         )
@@ -70,7 +71,7 @@ import Utilities
 -- UPDATE
 
 
-httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ( Model, Cmd Msg )
+httpRequestOrResponseTextLog : Model -> ActionName -> HttpRequestOrResponseTextMaybe -> ElmCycle
 httpRequestOrResponseTextLog model actionName httpRequestOrResponseTextMaybe =
     let
         --Keep for console logging:

@@ -24,7 +24,8 @@ import Alert
         )
 import MessageType
     exposing
-        ( Msg(..)
+        ( ElmCycle
+        , Msg(..)
         )
 import ModelType
     exposing
@@ -94,7 +95,7 @@ import Utilities
 -- UPDATE
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> ElmCycle
 update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->

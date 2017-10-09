@@ -19,7 +19,7 @@ port module SongPort
 
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
         )
 import ModelType
     exposing
@@ -37,7 +37,7 @@ import SongType
 port updateLocalStorage : SongsRemembered -> Cmd msg
 
 
-songsRememberedStore : Model -> ( Model, Cmd Msg )
+songsRememberedStore : Model -> ElmCycle
 songsRememberedStore model =
     ( model
     , updateLocalStorage model.songsRemembered

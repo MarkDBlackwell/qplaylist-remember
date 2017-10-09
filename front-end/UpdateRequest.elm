@@ -32,7 +32,8 @@ import Http
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
+        , Msg
             ( CommentResponse
             , LikeResponse
             , SongsLatestResponse
@@ -80,7 +81,7 @@ import UpdateStateVector
 -- UPDATE
 
 
-commentSendHand : Model -> ( Model, Cmd Msg )
+commentSendHand : Model -> ElmCycle
 commentSendHand model =
     let
         commentRequest : Cmd Msg
@@ -120,7 +121,7 @@ commentSendHand model =
                 )
 
 
-likeButtonProcessHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
+likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle
 likeButtonProcessHand model songsRememberedIndex =
     let
         likeRequest : Cmd Msg
@@ -166,7 +167,7 @@ likeButtonProcessHand model songsRememberedIndex =
             )
 
 
-songsLatestRefreshHand : Model -> ( Model, Cmd Msg )
+songsLatestRefreshHand : Model -> ElmCycle
 songsLatestRefreshHand model =
     let
         requestUriText : UriText

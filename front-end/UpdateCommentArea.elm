@@ -30,7 +30,7 @@ import Initialize
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
         )
 import ModelType
     exposing
@@ -68,7 +68,7 @@ import UpdateType
 -- UPDATE
 
 
-commentAreaInputTextChangeCaptureHand : Model -> String -> ( Model, Cmd Msg )
+commentAreaInputTextChangeCaptureHand : Model -> String -> ElmCycle
 commentAreaInputTextChangeCaptureHand model text =
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -88,7 +88,7 @@ commentAreaInputTextChangeCaptureHand model text =
             )
 
 
-commentAreaOpenHand : Model -> SongsRememberedIndex -> ( Model, Cmd Msg )
+commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle
 commentAreaOpenHand model songsRememberedIndex =
     let
         songCommentingMaybeNew : SongLikingOrCommentingMaybe
@@ -127,7 +127,7 @@ commentAreaOpenHand model songsRememberedIndex =
             )
 
 
-commentCancelHand : Model -> ( Model, Cmd Msg )
+commentCancelHand : Model -> ElmCycle
 commentCancelHand model =
     --(awaitingServer, commentArea)
     case stateVector model of

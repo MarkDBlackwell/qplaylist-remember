@@ -54,7 +54,8 @@ import Initialize
         )
 import MessageType
     exposing
-        ( Msg
+        ( ElmCycle
+        , Msg
             ( SongsRememberedStore
             )
         )
@@ -102,7 +103,7 @@ import Utilities
 -- UPDATE
 
 
-commentResponseErr : Model -> Error -> ( Model, Cmd Msg )
+commentResponseErr : Model -> Error -> ElmCycle
 commentResponseErr model httpError =
     ( { model
         | alertMessageText =
@@ -116,7 +117,7 @@ commentResponseErr model httpError =
     )
 
 
-commentResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+commentResponseOk : Model -> HttpResponseText -> ElmCycle
 commentResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
@@ -169,7 +170,7 @@ commentResponseOk model httpResponseText =
                 )
 
 
-likeResponseErr : Model -> Error -> ( Model, Cmd Msg )
+likeResponseErr : Model -> Error -> ElmCycle
 likeResponseErr model httpError =
     ( { model
         | alertMessageText =
@@ -184,7 +185,7 @@ likeResponseErr model httpError =
     )
 
 
-likeResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+likeResponseOk : Model -> HttpResponseText -> ElmCycle
 likeResponseOk model httpResponseText =
     let
         actionDescription : AlertMessageText
@@ -236,7 +237,7 @@ likeResponseOk model httpResponseText =
                 )
 
 
-songsLatestResponseErr : Model -> Error -> ( Model, Cmd Msg )
+songsLatestResponseErr : Model -> Error -> ElmCycle
 songsLatestResponseErr model httpError =
     let
         actionDescription : String
@@ -262,7 +263,7 @@ songsLatestResponseErr model httpError =
     )
 
 
-songsLatestResponseOk : Model -> HttpResponseText -> ( Model, Cmd Msg )
+songsLatestResponseOk : Model -> HttpResponseText -> ElmCycle
 songsLatestResponseOk model httpResponseText =
     case decodeSongsLatestResponse httpResponseText of
         Err alertMessageTextDecode ->
