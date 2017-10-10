@@ -60,7 +60,7 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logMakeRequestAndFocus
+        ( logMakeRequestAndFocusOld
         )
 import UpdateRequestHelper
     exposing
@@ -117,7 +117,7 @@ commentSendHand model =
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = True
                   }
-                , logMakeRequestAndFocus model commentRequest commentRequestUriText
+                , logMakeRequestAndFocusOld model commentRequest commentRequestUriText
                 )
 
 
@@ -163,7 +163,7 @@ likeButtonProcessHand model songsRememberedIndex =
                 , songLikingMaybe = songLikingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
-            , logMakeRequestAndFocus model likeRequest likeRequestUriText
+            , logMakeRequestAndFocusOld model likeRequest likeRequestUriText
             )
 
 
@@ -211,5 +211,5 @@ songsLatestRefreshHand model =
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
               }
-            , logMakeRequestAndFocus model songsLatestRequest requestUriText
+            , logMakeRequestAndFocusOld model songsLatestRequest requestUriText
             )
