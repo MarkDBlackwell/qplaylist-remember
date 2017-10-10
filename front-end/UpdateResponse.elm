@@ -56,8 +56,7 @@ import MessageType
     exposing
         ( ElmCycle
         , Msg
-            ( HttpRequestOrResponseTextLog
-            , SongsRememberedStore
+            ( SongsRememberedStore
             )
         )
 import ModelType
@@ -178,8 +177,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , HttpRequestOrResponseTextLog ActionResponse Nothing
-                        |> msg2Cmd
+                    , logResponse Nothing
                     , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
                         |> focusSetId
                     , focusInputPossibly model
