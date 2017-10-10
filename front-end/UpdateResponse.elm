@@ -154,11 +154,6 @@ commentResponseOk model httpResponseText =
                 )
             else
                 let
-                    buttonFocus : Cmd Msg
-                    buttonFocus =
-                        buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
-                            |> focusSetId
-
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
                         likedOrCommentedShow
@@ -176,7 +171,8 @@ commentResponseOk model httpResponseText =
                     [ msg2Cmd SongsRememberedStore
                     , HttpRequestOrResponseTextLog ActionResponse Nothing
                         |> msg2Cmd
-                    , buttonFocus
+                    , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
+                        |> focusSetId
                     , focusInputPossibly model
                     ]
                 )
