@@ -60,8 +60,8 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logAndMakeRequest
-        , logMakeRequestAndFocusOld
+        ( logMakeRequestAndFocusOld
+        , logRequest
         )
 import UpdateRequestHelper
     exposing
@@ -119,7 +119,7 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ logAndMakeRequest commentRequestUriText
+                    [ logRequest commentRequestUriText
                     , commentRequest
                     , focusInputPossibly model
                     ]
@@ -168,7 +168,12 @@ likeButtonProcessHand model songsRememberedIndex =
                 , songLikingMaybe = songLikingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
-            , logMakeRequestAndFocusOld model likeRequest likeRequestUriText
+              --, logMakeRequestAndFocusOld model likeRequest likeRequestUriText
+            , Cmd.batch
+                [ logRequest likeRequestUriText
+                , likeRequest
+                , focusInputPossibly model
+                ]
             )
 
 
