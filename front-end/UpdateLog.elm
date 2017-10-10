@@ -16,6 +16,7 @@ module UpdateLog
     exposing
         ( httpRequestOrResponseTextLog
         , logAndFocus
+        , logAndMakeRequest
         , logMakeRequestAndFocusOld
         , logWithoutFocus
         )
@@ -89,6 +90,13 @@ logAndFocus model actionName alertMessageTextMaybe =
             |> msg2Cmd
         , focusInputPossibly model
         ]
+
+
+logAndMakeRequest : AlertMessageText -> Cmd Msg
+logAndMakeRequest alertMessageText =
+    Just alertMessageText
+        |> HttpRequestOrResponseTextLog ActionRequest
+        |> msg2Cmd
 
 
 logMakeRequestAndFocusOld : Model -> Cmd Msg -> AlertMessageText -> Cmd Msg

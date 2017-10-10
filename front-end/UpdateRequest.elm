@@ -60,7 +60,8 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logMakeRequestAndFocusOld
+        ( logAndMakeRequest
+        , logMakeRequestAndFocusOld
         )
 import UpdateRequestHelper
     exposing
@@ -117,7 +118,11 @@ commentSendHand model =
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = True
                   }
-                , logMakeRequestAndFocusOld model commentRequest commentRequestUriText
+                , Cmd.batch
+                    [ logAndMakeRequest commentRequestUriText
+                    , commentRequest
+                    , focusInputPossibly model
+                    ]
                 )
 
 
