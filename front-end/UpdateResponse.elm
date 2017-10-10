@@ -323,5 +323,8 @@ songsLatestResponseOk model httpResponseText =
                 , songsLatest = songsLatestNew
               }
               --Here, don't log the full response.
-            , logAndFocusOld model ActionResponse Nothing
+            , Cmd.batch
+                [ logAction ActionResponse Nothing
+                , focusInputPossibly model
+                ]
             )
