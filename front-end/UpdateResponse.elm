@@ -87,14 +87,13 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logAction
+        ( logDecoding
         , logResponse
         )
 import UpdateRequestType
     exposing
         ( ActionName
-            ( ActionDecoding
-            , ActionResponse
+            ( ActionResponse
             )
         , HttpResponseText
         , LikeOrCommentResponseText
@@ -143,7 +142,7 @@ commentResponseOk model httpResponseText =
               }
             , Cmd.batch
                 [ Just alertMessageTextDecode
-                    |> logAction ActionDecoding
+                    |> logDecoding
                 , focusInputPossibly model
                 ]
             )
@@ -223,7 +222,7 @@ likeResponseOk model httpResponseText =
               }
             , Cmd.batch
                 [ Just alertMessageTextDecode
-                    |> logAction ActionDecoding
+                    |> logDecoding
                 , focusInputPossibly model
                 ]
             )
@@ -311,7 +310,7 @@ songsLatestResponseOk model httpResponseText =
               }
             , Cmd.batch
                 [ Just alertMessageTextDecode
-                    |> logAction ActionDecoding
+                    |> logDecoding
                 , focusInputPossibly model
                 ]
             )

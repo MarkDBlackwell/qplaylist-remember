@@ -15,7 +15,7 @@
 module UpdateLog
     exposing
         ( httpRequestOrResponseTextLog
-        , logAction
+        , logDecoding
         , logRequest
         , logResponse
         )
@@ -43,7 +43,8 @@ import UpdateRequestHelper
 import UpdateRequestType
     exposing
         ( ActionName
-            ( ActionRequest
+            ( ActionDecoding
+            , ActionRequest
             , ActionResponse
             )
         , HttpRequestOrResponseTextMaybe
@@ -79,6 +80,12 @@ logAction actionName alertMessageTextMaybe =
     alertMessageTextMaybe
         |> HttpRequestOrResponseTextLog actionName
         |> msg2Cmd
+
+
+logDecoding : AlertMessageTextMaybe -> Cmd Msg
+logDecoding alertMessageTextMaybe =
+    alertMessageTextMaybe
+        |> logAction ActionDecoding
 
 
 logRequest : AlertMessageText -> Cmd Msg
