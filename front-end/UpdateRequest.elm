@@ -60,8 +60,7 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logMakeRequestAndFocusOld
-        , logRequest
+        ( logRequest
         )
 import UpdateRequestHelper
     exposing
@@ -220,5 +219,9 @@ songsLatestRefreshHand model =
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
               }
-            , logMakeRequestAndFocusOld model songsLatestRequest requestUriText
+            , Cmd.batch
+                [ logRequest requestUriText
+                , songsLatestRequest
+                , focusInputPossibly model
+                ]
             )
