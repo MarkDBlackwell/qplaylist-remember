@@ -156,8 +156,11 @@ commentResponseOk model httpResponseText =
                             |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
-                , Just responseString
-                    |> logAndFocusOld model ActionResponse
+                , Cmd.batch
+                    [ Just responseString
+                        |> logAction ActionResponse
+                    , focusInputPossibly model
+                    ]
                 )
             else
                 let
