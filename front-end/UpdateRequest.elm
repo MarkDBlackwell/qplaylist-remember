@@ -168,7 +168,6 @@ likeButtonProcessHand model songsRememberedIndex =
                 , songLikingMaybe = songLikingMaybeNew
                 , songsRemembered = songsRememberedNew
               }
-              --, logMakeRequestAndFocusOld model likeRequest likeRequestUriText
             , Cmd.batch
                 [ logRequest likeRequestUriText
                 , likeRequest
