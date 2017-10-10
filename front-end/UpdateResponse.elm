@@ -141,8 +141,11 @@ commentResponseOk model httpResponseText =
                         |> Just
                 , awaitingServerResponse = awaitingServerResponseInit
               }
-            , Just alertMessageTextDecode
-                |> logAndFocusOld model ActionDecoding
+            , Cmd.batch
+                [ Just alertMessageTextDecode
+                    |> logAction ActionDecoding
+                , focusInputPossibly model
+                ]
             )
 
         Ok responseString ->
