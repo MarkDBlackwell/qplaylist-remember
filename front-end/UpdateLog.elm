@@ -77,15 +77,13 @@ httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
 
 logAction : ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAction actionName alertMessageTextMaybe =
-    alertMessageTextMaybe
-        |> HttpRequestOrResponseTextLog actionName
+    HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
         |> msg2Cmd
 
 
 logDecoding : AlertMessageTextMaybe -> Cmd Msg
 logDecoding alertMessageTextMaybe =
-    alertMessageTextMaybe
-        |> logAction ActionDecoding
+    logAction ActionDecoding alertMessageTextMaybe
 
 
 logRequest : AlertMessageText -> Cmd Msg
@@ -96,5 +94,4 @@ logRequest alertMessageText =
 
 logResponse : AlertMessageTextMaybe -> Cmd Msg
 logResponse alertMessageTextMaybe =
-    alertMessageTextMaybe
-        |> logAction ActionResponse
+    logAction ActionResponse alertMessageTextMaybe
