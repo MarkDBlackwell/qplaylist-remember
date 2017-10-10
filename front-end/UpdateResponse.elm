@@ -259,7 +259,8 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocusOld model ActionResponse Nothing
+                    , logAction ActionResponse Nothing
+                    , focusInputPossibly model
                     ]
                 )
 
