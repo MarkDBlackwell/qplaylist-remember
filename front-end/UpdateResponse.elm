@@ -285,9 +285,12 @@ songsLatestResponseErr model httpError =
         | alertMessageText = Just alertMessageTextNew
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , alertMessageTextErrorHttpLogging httpError
-        |> Just
-        |> logAndFocusOld model ActionResponse
+    , Cmd.batch
+        [ alertMessageTextErrorHttpLogging httpError
+            |> Just
+            |> logAction ActionResponse
+        , focusInputPossibly model
+        ]
     )
 
 
