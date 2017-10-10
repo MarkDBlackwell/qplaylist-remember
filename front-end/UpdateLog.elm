@@ -17,6 +17,7 @@ module UpdateLog
         ( httpRequestOrResponseTextLog
         , logAction
         , logRequest
+        , logResponse
         )
 
 import AlertType
@@ -84,3 +85,9 @@ logRequest : AlertMessageText -> Cmd Msg
 logRequest alertMessageText =
     Just alertMessageText
         |> logAction ActionRequest
+
+
+logResponse : AlertMessageTextMaybe -> Cmd Msg
+logResponse alertMessageTextMaybe =
+    alertMessageTextMaybe
+        |> logAction ActionResponse

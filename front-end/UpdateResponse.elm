@@ -88,6 +88,7 @@ import UpdateFocus
 import UpdateLog
     exposing
         ( logAction
+        , logResponse
         )
 import UpdateRequestType
     exposing
@@ -119,7 +120,7 @@ commentResponseErr model httpError =
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
             |> Just
-            |> logAction ActionResponse
+            |> logResponse
         , focusInputPossibly model
         ]
     )
@@ -157,7 +158,7 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ Just responseString
-                        |> logAction ActionResponse
+                        |> logResponse
                     , focusInputPossibly model
                     ]
                 )
@@ -199,7 +200,7 @@ likeResponseErr model httpError =
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
             |> Just
-            |> logAction ActionResponse
+            |> logResponse
         , focusInputPossibly model
         ]
     )
@@ -238,7 +239,7 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ Just responseString
-                        |> logAction ActionResponse
+                        |> logResponse
                     , focusInputPossibly model
                     ]
                 )
@@ -258,7 +259,7 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAction ActionResponse Nothing
+                    , logResponse Nothing
                     , focusInputPossibly model
                     ]
                 )
@@ -287,7 +288,7 @@ songsLatestResponseErr model httpError =
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
             |> Just
-            |> logAction ActionResponse
+            |> logResponse
         , focusInputPossibly model
         ]
     )
@@ -323,7 +324,7 @@ songsLatestResponseOk model httpResponseText =
               }
               --Here, don't log the full response.
             , Cmd.batch
-                [ logAction ActionResponse Nothing
+                [ logResponse Nothing
                 , focusInputPossibly model
                 ]
             )
