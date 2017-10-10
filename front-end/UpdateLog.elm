@@ -76,7 +76,8 @@ httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
 
 logAction : ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAction actionName alertMessageTextMaybe =
-    HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
+    alertMessageTextMaybe
+        |> HttpRequestOrResponseTextLog actionName
         |> msg2Cmd
 
 
