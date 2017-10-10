@@ -56,7 +56,8 @@ import MessageType
     exposing
         ( ElmCycle
         , Msg
-            ( SongsRememberedStore
+            ( HttpRequestOrResponseTextLog
+            , SongsRememberedStore
             )
         )
 import ModelType
@@ -79,10 +80,14 @@ import SongType
         , SongsRememberedIndex
         , SongsTimeless
         )
+import UpdateFocus
+    exposing
+        ( focusInputPossibly
+        , focusSetId
+        )
 import UpdateLog
     exposing
         ( logAndFocus
-        , logAndFocusId
         )
 import UpdateRequestType
     exposing
@@ -149,6 +154,16 @@ commentResponseOk model httpResponseText =
                 )
             else
                 let
+                    buttonFocus : Cmd Msg
+                    buttonFocus =
+                        buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
+                            |> focusSetId
+
+                    httpRequest : Cmd Msg
+                    httpRequest =
+                        HttpRequestOrResponseTextLog ActionResponse Nothing
+                            |> msg2Cmd
+
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
                         likedOrCommentedShow
@@ -164,8 +179,9 @@ commentResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
-                        |> logAndFocusId model
+                    , httpRequest
+                    , buttonFocus
+                    , focusInputPossibly model
                     ]
                 )
 
