@@ -17,7 +17,6 @@ module UpdateLog
         ( httpRequestOrResponseTextLog
         , logAction
         , logRequest
-        , logWithoutFocus
         )
 
 import AlertType
@@ -84,13 +83,4 @@ logAction actionName alertMessageTextMaybe =
 logRequest : AlertMessageText -> Cmd Msg
 logRequest alertMessageText =
     Just alertMessageText
-        |> HttpRequestOrResponseTextLog ActionRequest
-        |> msg2Cmd
-
-
-logWithoutFocus : Cmd Msg
-logWithoutFocus =
-    --TODO: Maybe this is no longer used.
-    Nothing
-        |> HttpRequestOrResponseTextLog ActionResponse
-        |> msg2Cmd
+        |> logAction ActionRequest
