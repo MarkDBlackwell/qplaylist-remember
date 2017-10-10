@@ -126,13 +126,13 @@ update msg model =
 
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
             let
-                logAction : Cmd Msg
-                logAction =
+                logThisAction : Cmd Msg
+                logThisAction =
                     httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe
             in
             ( model
             , Cmd.batch
-                [ logAction
+                [ logThisAction
                 , focusInputPossibly model
                 ]
             )

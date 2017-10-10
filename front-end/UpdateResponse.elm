@@ -87,7 +87,8 @@ import UpdateFocus
         )
 import UpdateLog
     exposing
-        ( logAndFocus
+        ( logAction
+        , logAndFocusOld
         )
 import UpdateRequestType
     exposing
@@ -116,9 +117,12 @@ commentResponseErr model httpError =
                 |> Just
         , awaitingServerResponse = awaitingServerResponseInit
       }
-    , alertMessageTextErrorHttpLogging httpError
-        |> Just
-        |> logAndFocus model ActionResponse
+    , Cmd.batch
+        [ alertMessageTextErrorHttpLogging httpError
+            |> Just
+            |> logAction ActionResponse
+        , focusInputPossibly model
+        ]
     )
 
 
@@ -138,7 +142,7 @@ commentResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model ActionDecoding
+                |> logAndFocusOld model ActionDecoding
             )
 
         Ok responseString ->
@@ -150,7 +154,7 @@ commentResponseOk model httpResponseText =
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , Just responseString
-                    |> logAndFocus model ActionResponse
+                    |> logAndFocusOld model ActionResponse
                 )
             else
                 let
@@ -189,7 +193,7 @@ likeResponseErr model httpError =
       }
     , alertMessageTextErrorHttpLogging httpError
         |> Just
-        |> logAndFocus model ActionResponse
+        |> logAndFocusOld model ActionResponse
     )
 
 
@@ -209,7 +213,7 @@ likeResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model ActionDecoding
+                |> logAndFocusOld model ActionDecoding
             )
 
         Ok responseString ->
@@ -222,7 +226,7 @@ likeResponseOk model httpResponseText =
                     , songLikingMaybe = songLikingMaybeInit
                   }
                 , Just responseString
-                    |> logAndFocus model ActionResponse
+                    |> logAndFocusOld model ActionResponse
                 )
             else
                 let
@@ -240,7 +244,7 @@ likeResponseOk model httpResponseText =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logAndFocus model ActionResponse Nothing
+                    , logAndFocusOld model ActionResponse Nothing
                     ]
                 )
 
@@ -267,7 +271,7 @@ songsLatestResponseErr model httpError =
       }
     , alertMessageTextErrorHttpLogging httpError
         |> Just
-        |> logAndFocus model ActionResponse
+        |> logAndFocusOld model ActionResponse
     )
 
 
@@ -287,7 +291,7 @@ songsLatestResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Just alertMessageTextDecode
-                |> logAndFocus model ActionDecoding
+                |> logAndFocusOld model ActionDecoding
             )
 
         Ok songsLatestNew ->
@@ -297,5 +301,5 @@ songsLatestResponseOk model httpResponseText =
                 , songsLatest = songsLatestNew
               }
               --Here, don't log the full response.
-            , logAndFocus model ActionResponse Nothing
+            , logAndFocusOld model ActionResponse Nothing
             )
