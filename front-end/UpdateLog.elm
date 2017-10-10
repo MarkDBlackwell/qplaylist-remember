@@ -16,7 +16,6 @@ module UpdateLog
     exposing
         ( httpRequestOrResponseTextLog
         , logAction
-        , logAndFocusOld
         , logRequest
         , logWithoutFocus
         )
@@ -36,14 +35,6 @@ import MessageType
         , Msg
             ( HttpRequestOrResponseTextLog
             )
-        )
-import ModelType
-    exposing
-        ( Model
-        )
-import UpdateFocus
-    exposing
-        ( focusInputPossibly
         )
 import UpdateRequestHelper
     exposing
@@ -87,15 +78,6 @@ logAction : ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAction actionName alertMessageTextMaybe =
     HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
         |> msg2Cmd
-
-
-logAndFocusOld : Model -> ActionName -> AlertMessageTextMaybe -> Cmd Msg
-logAndFocusOld model actionName alertMessageTextMaybe =
-    Cmd.batch
-        [ HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
-            |> msg2Cmd
-        , focusInputPossibly model
-        ]
 
 
 logRequest : AlertMessageText -> Cmd Msg

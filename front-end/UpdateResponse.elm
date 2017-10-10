@@ -88,7 +88,6 @@ import UpdateFocus
 import UpdateLog
     exposing
         ( logAction
-        , logAndFocusOld
         )
 import UpdateRequestType
     exposing
