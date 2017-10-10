@@ -197,9 +197,12 @@ likeResponseErr model httpError =
         , awaitingServerResponse = awaitingServerResponseInit
         , songLikingMaybe = songLikingMaybeInit
       }
-    , alertMessageTextErrorHttpLogging httpError
-        |> Just
-        |> logAndFocusOld model ActionResponse
+    , Cmd.batch
+        [ alertMessageTextErrorHttpLogging httpError
+            |> Just
+            |> logAction ActionResponse
+        , focusInputPossibly model
+        ]
     )
 
 
