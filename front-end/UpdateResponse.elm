@@ -237,8 +237,11 @@ likeResponseOk model httpResponseText =
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLikingMaybe = songLikingMaybeInit
                   }
-                , Just responseString
-                    |> logAndFocusOld model ActionResponse
+                , Cmd.batch
+                    [ Just responseString
+                        |> logAction ActionResponse
+                    , focusInputPossibly model
+                    ]
                 )
             else
                 let
