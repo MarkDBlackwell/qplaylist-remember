@@ -101,5 +101,6 @@ logRequest alertMessageText =
 logWithoutFocus : Cmd Msg
 logWithoutFocus =
     --TODO: Maybe this is no longer used.
-    HttpRequestOrResponseTextLog ActionResponse Nothing
+    Nothing
+        |> HttpRequestOrResponseTextLog ActionResponse
         |> msg2Cmd
