@@ -15,14 +15,20 @@
 module SongHelper
     exposing
         ( buttonIdReconstruct
+        , song2SongRemembered
         , song2SongTimeless
         , songGroup2String
+        , songs2SongsRemembered
         , songs2SongsTimeless
         )
 
 import Dom
     exposing
         ( Id
+        )
+import SongInitialize
+    exposing
+        ( likedOrCommentedInit
         )
 import SongType
     exposing
@@ -33,10 +39,13 @@ import SongType
             ( Played
             , Remembered
             )
+        , SongRemembered
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndexMaybe
         , SongsTimeless
+        , Time
+        , Timestamp
         , Title
         )
 import Utilities
@@ -77,9 +86,23 @@ commentingIndexMaybe songsRemembered songCommenting =
         |> List.head
 
 
+song2SongRemembered :
+    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongRemembered
+song2SongRemembered { artist, time, timestamp, title } =
+    SongRemembered artist likedOrCommentedInit time timestamp title
+
+
 song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
+
+
+songs2SongsRemembered :
+    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongsRemembered
+songs2SongsRemembered listComplex =
+    List.map song2SongRemembered listComplex
 
 
 songs2SongsTimeless : List { a | artist : Artist, title : Title } -> SongsTimeless

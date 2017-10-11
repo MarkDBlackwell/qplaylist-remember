@@ -16,23 +16,15 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songLikingOrCommentingMaybe
-        , songs2SongsRemembered
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
         )
 
 import SongHelper
     exposing
-        ( song2SongTimeless
+        ( song2SongRemembered
+        , song2SongTimeless
         , songs2SongsTimeless
-        )
-import SongInitialize
-    exposing
-        ( likedOrCommentedInit
-        , songCommentingMaybeInit
-        , songLikingMaybeInit
-        , songLikingOrCommentingInit
-        , songsLatestInit
         )
 import SongType
     exposing
@@ -68,6 +60,9 @@ import Utilities
         )
 
 
+-- UPDATE
+
+
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
 likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     let
@@ -95,13 +90,6 @@ song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
-song2SongRemembered :
-    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
-    -> SongRemembered
-song2SongRemembered { artist, time, timestamp, title } =
-    SongRemembered artist likedOrCommentedInit time timestamp title
-
-
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     selectOneMaybe songsRemembered songsRememberedIndex
@@ -112,13 +100,6 @@ songs2SongsLatest :
     -> SongsLatest
 songs2SongsLatest listComplex =
     List.map song2SongLatest listComplex
-
-
-songs2SongsRemembered :
-    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
-    -> SongsRemembered
-songs2SongsRemembered listComplex =
-    List.map song2SongRemembered listComplex
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
