@@ -40,32 +40,31 @@ import UpdateRequestType
 -- UPDATE
 
 
-action2String : Action -> String
-action2String action =
-    case action of
-        ActionDecoding ->
-            "Decoding"
-
-        ActionRequest ->
-            "Request"
-
-        ActionResponse ->
-            "Response"
-
-
 logAction : Action -> Maybe String -> Cmd Msg
 logAction action textMaybe =
     let
-        --Keep for console logging:
-        a : String
-        a =
+        keepForConsoleLogging : String
+        keepForConsoleLogging =
+            let
+                action2String : Action -> String
+                action2String action =
+                    case action of
+                        ActionDecoding ->
+                            "Decoding"
+
+                        ActionRequest ->
+                            "Request"
+
+                        ActionResponse ->
+                            "Response"
+
+                logText : String
+                logText =
+                    Maybe.withDefault "Ok" textMaybe
+            in
             log
                 (action2String action)
                 logText
-
-        logText : String
-        logText =
-            Maybe.withDefault "Ok" textMaybe
     in
     Cmd.none
 
