@@ -46,8 +46,8 @@ logAction action textMaybe =
         keepForConsoleLogging : String
         keepForConsoleLogging =
             let
-                action2String : Action -> String
-                action2String action =
+                actionString : String
+                actionString =
                     case action of
                         ActionDecoding ->
                             "Decoding"
@@ -58,12 +58,11 @@ logAction action textMaybe =
                         ActionResponse ->
                             "Response"
 
-                logText : String
-                logText =
+                text : String
+                text =
                     Maybe.withDefault "Ok" textMaybe
             in
-            action2String action
-                |> flip log logText
+            log actionString text
     in
     Cmd.none
 
