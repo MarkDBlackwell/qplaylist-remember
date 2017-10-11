@@ -51,25 +51,25 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         artistTimeTitle : UriText
         artistTimeTitle =
             String.concat
-                [ song.time
+                [ songLikingOrCommenting.time
                 , " "
-                , song.artist
+                , songLikingOrCommenting.artist
                 , ": "
-                , song.title
+                , songLikingOrCommenting.title
                 ]
 
         basename : UriText
         basename =
             "append.json"
 
-        song : SongLikingOrCommenting
-        song =
+        songLikingOrCommenting : SongLikingOrCommenting
+        songLikingOrCommenting =
             Maybe.withDefault songLikingOrCommentingInit songLikingOrCommentingMaybe
     in
     relative
         [ basename ]
         [ ( "user_identifier", userIdentifier )
-        , ( "timestamp", song.timestamp )
+        , ( "timestamp", songLikingOrCommenting.timestamp )
         , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]
