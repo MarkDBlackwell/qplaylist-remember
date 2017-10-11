@@ -58,7 +58,7 @@ import ModelType
     exposing
         ( ShowCommentButtons
         )
-import Song
+import SongHelper
     exposing
         ( songGroup2String
         )

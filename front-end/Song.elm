@@ -14,19 +14,17 @@
 
 module Song
     exposing
-        ( buttonIdReconstruct
-        , commentingIndexMaybe
-        , likedOrCommentedShow
-        , songGroup2String
+        ( likedOrCommentedShow
         , songLikingOrCommentingMaybe
         , songs2SongsRemembered
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
         )
 
-import Dom
+import SongHelper
     exposing
-        ( Id
+        ( song2SongTimeless
+        , songs2SongsTimeless
         )
 import SongInitialize
     exposing
@@ -40,12 +38,6 @@ import SongType
     exposing
         ( Artist
         , LikedOrCommented
-        , SongCommenting
-        , SongCommentingMaybe
-        , SongGroup
-            ( Played
-            , Remembered
-            )
         , SongGroupLength
         , SongLatest
         , SongLatestMaybe
@@ -54,15 +46,12 @@ import SongType
         , SongLikingOrCommentingMaybe
         , SongRemembered
         , SongRememberedMaybe
-        , SongTimeless
         , SongsLatest
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
-        , SongsRememberedIndexMaybe
         , SongsRememberedMaybe
-        , SongsTimeless
         , Time
         , Timestamp
         , Title
@@ -70,7 +59,6 @@ import SongType
 import Utilities
     exposing
         ( indexes
-        , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
         , selectOneMaybe
@@ -78,38 +66,6 @@ import Utilities
         , withIndexes
         , withoutOne
         )
-
-
--- UPDATE
-
-
-buttonIdCreate : Id -> Int -> Id
-buttonIdCreate idFragment index =
-    String.concat
-        [ "button"
-        , idFragment
-        , toString index
-        ]
-
-
-buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
-buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
-    songCommentingMaybe
-        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
-        |> Maybe.map (buttonIdCreate idFragment)
-        |> Maybe.withDefault "refresh"
-
-
-commentingIndexMaybe : SongsRemembered -> SongCommenting -> SongsRememberedIndexMaybe
-commentingIndexMaybe songsRemembered songCommenting =
-    let
-        songsRememberedTimeless : SongsTimeless
-        songsRememberedTimeless =
-            songs2SongsTimeless songsRemembered
-    in
-    song2SongTimeless songCommenting
-        |> matchingIndexes songsRememberedTimeless
-        |> List.head
 
 
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
@@ -146,11 +102,6 @@ song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
 
-song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
-song2SongTimeless { artist, title } =
-    SongTimeless artist title
-
-
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     selectOneMaybe songsRemembered songsRememberedIndex
@@ -168,11 +119,6 @@ songs2SongsRemembered :
     -> SongsRemembered
 songs2SongsRemembered listComplex =
     List.map song2SongRemembered listComplex
-
-
-songs2SongsTimeless : List { a | artist : Artist, title : Title } -> SongsTimeless
-songs2SongsTimeless listComplex =
-    List.map song2SongTimeless listComplex
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
@@ -262,17 +208,3 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     Maybe.withDefault
         songsRemembered
         (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
-
-
-
--- VIEW
-
-
-songGroup2String : SongGroup -> String
-songGroup2String group =
-    case group of
-        Played ->
-            "played"
-
-        Remembered ->
-            "remembered"

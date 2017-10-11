@@ -64,8 +64,11 @@ import ModelType
         )
 import Song
     exposing
+        ( likedOrCommentedShow
+        )
+import SongHelper
+    exposing
         ( buttonIdReconstruct
-        , likedOrCommentedShow
         )
 import SongInitialize
     exposing

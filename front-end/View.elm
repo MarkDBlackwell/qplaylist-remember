@@ -59,8 +59,11 @@ import ModelType
         )
 import Song
     exposing
+        ( songs2SongsRemembered
+        )
+import SongHelper
+    exposing
         ( songGroup2String
-        , songs2SongsRemembered
         )
 import SongType
     exposing
