@@ -39,7 +39,6 @@ import SongType
 import UpdateRequestType
     exposing
         ( ActionName
-        , HttpRequestOrResponseTextMaybe
         , HttpResponseText
         )
 

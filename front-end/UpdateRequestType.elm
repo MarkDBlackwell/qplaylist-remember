@@ -20,7 +20,6 @@ module UpdateRequestType
             , ActionResponse
             )
         , AwaitingServerResponse
-        , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
         , LikeOrCommentResponseText
@@ -54,10 +53,6 @@ type alias HttpRequestText =
 
 type alias HttpRequestOrResponseText =
     String
-
-
-type alias HttpRequestOrResponseTextMaybe =
-    Maybe HttpRequestOrResponseText
 
 
 type alias HttpResponseText =

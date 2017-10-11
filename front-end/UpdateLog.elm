@@ -14,17 +14,11 @@
 
 module UpdateLog
     exposing
-        ( httpRequestOrResponseTextLog
-        , logDecoding
+        ( logDecoding
         , logRequest
         , logResponse
         )
 
-import AlertType
-    exposing
-        ( AlertMessageText
-        , AlertMessageTextMaybe
-        )
 import Debug
     exposing
         ( log
@@ -45,15 +39,14 @@ import UpdateRequestType
             , ActionRequest
             , ActionResponse
             )
-        , HttpRequestOrResponseTextMaybe
         )
 
 
 -- UPDATE
 
 
-httpRequestOrResponseTextLog : ActionName -> HttpRequestOrResponseTextMaybe -> Cmd Msg
-httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
+httpRequestOrResponseTextLog : ActionName -> Maybe String -> Cmd Msg
+httpRequestOrResponseTextLog actionName textMaybe =
     let
         --Keep for console logging:
         a : String
@@ -64,27 +57,27 @@ httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
 
         logText : String
         logText =
-            Maybe.withDefault "Ok" httpRequestOrResponseTextMaybe
+            Maybe.withDefault "Ok" textMaybe
     in
     Cmd.none
 
 
-logAction : ActionName -> AlertMessageTextMaybe -> Cmd Msg
-logAction actionName alertMessageTextMaybe =
-    httpRequestOrResponseTextLog actionName alertMessageTextMaybe
+logAction : ActionName -> Maybe String -> Cmd Msg
+logAction actionName textMaybe =
+    httpRequestOrResponseTextLog actionName textMaybe
 
 
-logDecoding : AlertMessageTextMaybe -> Cmd Msg
-logDecoding alertMessageTextMaybe =
-    logAction ActionDecoding alertMessageTextMaybe
+logDecoding : Maybe String -> Cmd Msg
+logDecoding textMaybe =
+    logAction ActionDecoding textMaybe
 
 
-logRequest : AlertMessageText -> Cmd Msg
-logRequest alertMessageText =
-    Just alertMessageText
+logRequest : String -> Cmd Msg
+logRequest text =
+    Just text
         |> logAction ActionRequest
 
 
-logResponse : AlertMessageTextMaybe -> Cmd Msg
-logResponse alertMessageTextMaybe =
-    logAction ActionResponse alertMessageTextMaybe
+logResponse : Maybe String -> Cmd Msg
+logResponse textMaybe =
+    logAction ActionResponse textMaybe

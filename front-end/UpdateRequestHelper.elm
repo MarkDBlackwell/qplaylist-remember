@@ -41,7 +41,6 @@ import UpdateRequestType
             , ActionResponse
             )
         , AwaitingServerResponse
-        , HttpRequestOrResponseTextMaybe
         , HttpRequestText
         , HttpResponseText
         , LikeOrCommentText
