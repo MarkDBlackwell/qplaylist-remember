@@ -145,8 +145,16 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
                             let
                                 songUpdated :
-                                    { a | artist : Artist, likedOrCommented : LikedOrCommented, title : Title }
-                                    -> { b | time : Time, timestamp : Timestamp }
+                                    { a
+                                        | artist : Artist
+                                        , likedOrCommented : LikedOrCommented
+                                        , title : Title
+                                    }
+                                    ->
+                                        { b
+                                            | time : Time
+                                            , timestamp : Timestamp
+                                        }
                                     -> SongRemembered
                                 songUpdated { artist, likedOrCommented, title } { time, timestamp } =
                                     SongRemembered artist likedOrCommented time timestamp title
