@@ -38,9 +38,12 @@ import ModelType
         )
 import Song
     exposing
-        ( songCommentingMaybeInit
-        , songLikingOrCommentingMaybe
+        ( songLikingOrCommentingMaybe
         , songsRememberedUpdateTimestamp
+        )
+import SongInitialize
+    exposing
+        ( songCommentingMaybeInit
         )
 import SongType
     exposing

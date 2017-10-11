@@ -18,7 +18,7 @@ module UpdateRequestHelper
         , relative
         )
 
-import Song
+import SongInitialize
     exposing
         ( likedOrCommentedInit
         , songLikingOrCommentingInit

@@ -16,15 +16,10 @@ module Song
     exposing
         ( buttonIdReconstruct
         , commentingIndexMaybe
-        , likedOrCommentedInit
         , likedOrCommentedShow
-        , songCommentingMaybeInit
         , songGroup2String
-        , songLikingMaybeInit
-        , songLikingOrCommentingInit
         , songLikingOrCommentingMaybe
         , songs2SongsRemembered
-        , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
         )
@@ -32,6 +27,14 @@ module Song
 import Dom
     exposing
         ( Id
+        )
+import SongInitialize
+    exposing
+        ( likedOrCommentedInit
+        , songCommentingMaybeInit
+        , songLikingMaybeInit
+        , songLikingOrCommentingInit
+        , songsLatestInit
         )
 import SongType
     exposing
@@ -77,36 +80,7 @@ import Utilities
         )
 
 
--- MODEL
-
-
-songCommentingMaybeInit : SongCommentingMaybe
-songCommentingMaybeInit =
-    Nothing
-
-
-songLikingMaybeInit : SongLikingMaybe
-songLikingMaybeInit =
-    Nothing
-
-
-songLikingOrCommentingInit : SongLikingOrCommenting
-songLikingOrCommentingInit =
-    SongRemembered artistInit likedOrCommentedInit timeInit timestampInit titleInit
-
-
-songsLatestInit : SongsLatest
-songsLatestInit =
-    []
-
-
-
 -- UPDATE
-
-
-artistInit : Artist
-artistInit =
-    ""
 
 
 buttonIdCreate : Id -> Int -> Id
@@ -136,11 +110,6 @@ commentingIndexMaybe songsRemembered songCommenting =
     song2SongTimeless songCommenting
         |> matchingIndexes songsRememberedTimeless
         |> List.head
-
-
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
 
 
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
@@ -293,21 +262,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
     Maybe.withDefault
         songsRemembered
         (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
-
-
-timeInit : Time
-timeInit =
-    ""
-
-
-timestampInit : Timestamp
-timestampInit =
-    ""
-
-
-titleInit : Title
-titleInit =
-    ""
 
 
 

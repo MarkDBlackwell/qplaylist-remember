@@ -41,7 +41,7 @@ import Random
     exposing
         ( generate
         )
-import Song
+import SongInitialize
     exposing
         ( songCommentingMaybeInit
         , songLikingMaybeInit

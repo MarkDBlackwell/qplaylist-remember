@@ -66,7 +66,10 @@ import Song
     exposing
         ( buttonIdReconstruct
         , likedOrCommentedShow
-        , songCommentingMaybeInit
+        )
+import SongInitialize
+    exposing
+        ( songCommentingMaybeInit
         , songLikingMaybeInit
         )
 import SongType
