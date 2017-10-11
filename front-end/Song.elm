@@ -14,22 +14,18 @@
 
 module Song
     exposing
-        ( artistInit
-        , buttonIdReconstruct
+        ( buttonIdReconstruct
         , commentingIndexMaybe
         , likedOrCommentedInit
         , likedOrCommentedShow
         , songCommentingMaybeInit
         , songLikingMaybeInit
-        , songLikingOrCommentingConstructor
+        , songLikingOrCommentingInit
         , songLikingOrCommentingMaybe
         , songs2SongsRemembered
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
-        , timeInit
-        , timestampInit
-        , titleInit
         )
 
 import Dom
@@ -94,9 +90,9 @@ songLikingMaybeInit =
     Nothing
 
 
-songLikingOrCommentingConstructor : Artist -> LikedOrCommented -> Time -> Timestamp -> Title -> SongLikingOrCommenting
-songLikingOrCommentingConstructor artist likedOrCommented time timestamp title =
-    SongRemembered artist likedOrCommented time timestamp title
+songLikingOrCommentingInit : SongLikingOrCommenting
+songLikingOrCommentingInit =
+    SongRemembered artistInit likedOrCommentedInit timeInit timestampInit titleInit
 
 
 songsLatestInit : SongsLatest
