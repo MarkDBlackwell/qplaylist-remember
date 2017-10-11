@@ -65,8 +65,7 @@ import SongType
         )
 import Utilities
     exposing
-        ( buttonIdCreate
-        , indexes
+        ( indexes
         , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
@@ -107,6 +106,15 @@ songsLatestInit =
 artistInit : Artist
 artistInit =
     ""
+
+
+buttonIdCreate : Id -> Int -> Id
+buttonIdCreate idFragment index =
+    String.concat
+        [ "button"
+        , idFragment
+        , toString index
+        ]
 
 
 buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id

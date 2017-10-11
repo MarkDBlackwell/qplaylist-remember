@@ -67,14 +67,6 @@ type alias LikeOrCommentText =
     String
 
 
-type alias UrlBeforeQueryList =
-    --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
-    --When joined, then comprises a URI's scheme, authority, and path:
-    List UriText
-
-
 type alias QueryPair =
     ( UriText, UriText )
 
@@ -85,3 +77,11 @@ type alias QueryPairs =
 
 type alias UriText =
     String
+
+
+type alias UrlBeforeQueryList =
+    --See:
+    --https://github.com/elm-lang/url
+    --https://tools.ietf.org/html/rfc3986
+    --When joined, then comprises a URI's scheme, authority, and path:
+    List UriText

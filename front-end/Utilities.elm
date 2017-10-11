@@ -14,8 +14,7 @@
 
 module Utilities
     exposing
-        ( buttonIdCreate
-        , goldenRatio
+        ( goldenRatio
         , htmlNodeNull
         , indexes
         , matchingIndexes
@@ -29,10 +28,6 @@ module Utilities
         , withoutOne
         )
 
-import Dom
-    exposing
-        ( Id
-        )
 import ElmCycle
     exposing
         ( Msg
@@ -57,15 +52,6 @@ import Task
 
 
 -- UPDATE
-
-
-buttonIdCreate : Id -> Int -> Id
-buttonIdCreate idFragment index =
-    String.concat
-        [ "button"
-        , idFragment
-        , toString index
-        ]
 
 
 indexes : List a -> List Int
