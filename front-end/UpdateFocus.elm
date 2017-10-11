@@ -21,7 +21,8 @@ module UpdateFocus
 
 import Dom
     exposing
-        ( Id
+        ( Error
+        , Id
         , focus
         )
 import MessageType
@@ -38,7 +39,8 @@ import ModelType
         )
 import Task
     exposing
-        ( attempt
+        ( Task
+        , attempt
         )
 import Utilities
     exposing
@@ -53,6 +55,10 @@ import Utilities
 focusAttempt : Model -> Id -> ElmCycle
 focusAttempt model id =
     let
+        focusOnId : Task Error ()
+        focusOnId =
+            focus id
+
         ignoreResult : Result x a -> Msg
         ignoreResult _ =
             None
@@ -61,8 +67,7 @@ focusAttempt model id =
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
     ( model
-    , focus id
-        |> attempt ignoreResult
+    , attempt ignoreResult focusOnId
     )
 
 
@@ -70,7 +75,7 @@ focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
     maybeMapWithDefault
         Cmd.none
-        (\x -> focusSetId "input")
+        (\_ -> focusSetId "input")
         model.songCommentingMaybe
 
 
