@@ -14,7 +14,7 @@
 
 module UpdateRequestType
     exposing
-        ( ActionName
+        ( Action
             ( ActionDecoding
             , ActionRequest
             , ActionResponse
@@ -41,7 +41,7 @@ type alias AwaitingServerResponse =
 -- UPDATE
 
 
-type ActionName
+type Action
     = ActionDecoding
     | ActionRequest
     | ActionResponse

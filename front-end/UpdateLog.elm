@@ -29,7 +29,7 @@ import MessageType
         )
 import UpdateRequestType
     exposing
-        ( ActionName
+        ( Action
             ( ActionDecoding
             , ActionRequest
             , ActionResponse
@@ -40,9 +40,9 @@ import UpdateRequestType
 -- UPDATE
 
 
-action2String : ActionName -> String
-action2String actionName =
-    case actionName of
+action2String : Action -> String
+action2String action =
+    case action of
         ActionDecoding ->
             "Decoding"
 
@@ -53,14 +53,14 @@ action2String actionName =
             "Response"
 
 
-logAction : ActionName -> Maybe String -> Cmd Msg
-logAction actionName textMaybe =
+logAction : Action -> Maybe String -> Cmd Msg
+logAction action textMaybe =
     let
         --Keep for console logging:
         a : String
         a =
             log
-                (action2String actionName)
+                (action2String action)
                 logText
 
         logText : String

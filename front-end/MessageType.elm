@@ -38,8 +38,7 @@ import SongType
         )
 import UpdateRequestType
     exposing
-        ( ActionName
-        , HttpResponseText
+        ( HttpResponseText
         )
 
 
