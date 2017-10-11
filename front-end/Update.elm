@@ -58,10 +58,6 @@ import UpdateFocus
         , focusInputPossibly
         , focusSetId
         )
-import UpdateLog
-    exposing
-        ( httpRequestOrResponseTextLog
-        )
 import UpdateRequest
     exposing
         ( commentSendHand
@@ -118,11 +114,6 @@ update msg model =
 
         FocusAttempt id ->
             focusAttempt model id
-
-        HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
-            ( model
-            , httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe
-            )
 
         InitialSetUp threeLetterSpaceInt ->
             ( { model

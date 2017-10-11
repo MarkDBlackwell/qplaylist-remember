@@ -33,8 +33,6 @@ import MessageType
     exposing
         ( ElmCycle
         , Msg
-            ( HttpRequestOrResponseTextLog
-            )
         )
 import UpdateRequestHelper
     exposing
@@ -48,10 +46,6 @@ import UpdateRequestType
             , ActionResponse
             )
         , HttpRequestOrResponseTextMaybe
-        )
-import Utilities
-    exposing
-        ( msg2Cmd
         )
 
 
@@ -77,8 +71,7 @@ httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe =
 
 logAction : ActionName -> AlertMessageTextMaybe -> Cmd Msg
 logAction actionName alertMessageTextMaybe =
-    HttpRequestOrResponseTextLog actionName alertMessageTextMaybe
-        |> msg2Cmd
+    httpRequestOrResponseTextLog actionName alertMessageTextMaybe
 
 
 logDecoding : AlertMessageTextMaybe -> Cmd Msg
