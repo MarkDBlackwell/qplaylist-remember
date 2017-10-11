@@ -34,15 +34,7 @@ import SongType
         )
 import UpdateRequestType
     exposing
-        ( ActionName
-            ( ActionDecoding
-            , ActionRequest
-            , ActionResponse
-            )
-        , AwaitingServerResponse
-        , HttpRequestText
-        , HttpResponseText
-        , LikeOrCommentText
+        ( LikeOrCommentText
         , QueryBeforeList
         , QueryPair
         , QueryPairs
