@@ -25,8 +25,7 @@ import Debug
         )
 import MessageType
     exposing
-        ( ElmCycle
-        , Msg
+        ( Msg
         )
 import UpdateRequestHelper
     exposing
@@ -45,8 +44,8 @@ import UpdateRequestType
 -- UPDATE
 
 
-httpRequestOrResponseTextLog : ActionName -> Maybe String -> Cmd Msg
-httpRequestOrResponseTextLog actionName textMaybe =
+logAction : ActionName -> Maybe String -> Cmd Msg
+logAction actionName textMaybe =
     let
         --Keep for console logging:
         a : String
@@ -60,11 +59,6 @@ httpRequestOrResponseTextLog actionName textMaybe =
             Maybe.withDefault "Ok" textMaybe
     in
     Cmd.none
-
-
-logAction : ActionName -> Maybe String -> Cmd Msg
-logAction actionName textMaybe =
-    httpRequestOrResponseTextLog actionName textMaybe
 
 
 logDecoding : Maybe String -> Cmd Msg
