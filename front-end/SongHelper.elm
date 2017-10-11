@@ -91,39 +91,72 @@ commentingIndexMaybe songsRemembered songCommenting =
 
 
 song2SongLatest :
-    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    { a
+        | artist : Artist
+        , time : Time
+        , timestamp : Timestamp
+        , title : Title
+    }
     -> SongLatest
 song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
 song2SongRemembered :
-    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    { a
+        | artist : Artist
+        , time : Time
+        , timestamp : Timestamp
+        , title : Title
+    }
     -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
 
-song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
+song2SongTimeless :
+    { a
+        | artist : Artist
+        , title : Title
+    }
+    -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
 
 
 songs2SongsLatest :
-    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    List
+        { a
+            | artist : Artist
+            , time : Time
+            , timestamp : Timestamp
+            , title : Title
+        }
     -> SongsLatest
 songs2SongsLatest listComplex =
     List.map song2SongLatest listComplex
 
 
 songs2SongsRemembered :
-    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    List
+        { a
+            | artist : Artist
+            , time : Time
+            , timestamp : Timestamp
+            , title : Title
+        }
     -> SongsRemembered
 songs2SongsRemembered listComplex =
     List.map song2SongRemembered listComplex
 
 
-songs2SongsTimeless : List { a | artist : Artist, title : Title } -> SongsTimeless
+songs2SongsTimeless :
+    List
+        { a
+            | artist : Artist
+            , title : Title
+        }
+    -> SongsTimeless
 songs2SongsTimeless listComplex =
     List.map song2SongTimeless listComplex
 
