@@ -58,6 +58,10 @@ import ModelType
     exposing
         ( ShowCommentButtons
         )
+import Song
+    exposing
+        ( songGroup2String
+        )
 import SongType
     exposing
         ( SongGroup
@@ -71,7 +75,6 @@ import Utilities
     exposing
         ( htmlNodeNull
         , maybeMapWithDefault
-        , songGroup2String
         )
 import ViewType
     exposing

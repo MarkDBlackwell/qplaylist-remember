@@ -19,6 +19,7 @@ module Song
         , likedOrCommentedInit
         , likedOrCommentedShow
         , songCommentingMaybeInit
+        , songGroup2String
         , songLikingMaybeInit
         , songLikingOrCommentingInit
         , songLikingOrCommentingMaybe
@@ -307,3 +308,17 @@ timestampInit =
 titleInit : Title
 titleInit =
     ""
+
+
+
+-- VIEW
+
+
+songGroup2String : SongGroup -> String
+songGroup2String group =
+    case group of
+        Played ->
+            "played"
+
+        Remembered ->
+            "remembered"

@@ -59,7 +59,8 @@ import ModelType
         )
 import Song
     exposing
-        ( songs2SongsRemembered
+        ( songGroup2String
+        , songs2SongsRemembered
         )
 import SongType
     exposing
@@ -79,7 +80,6 @@ import Utilities
         ( htmlNodeNull
         , maybeMapWithDefault
         , selectOneMaybe
-        , songGroup2String
         )
 import ViewButton
     exposing

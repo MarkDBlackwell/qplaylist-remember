@@ -22,7 +22,6 @@ module Utilities
         , maybeMapWithDefault
         , msg2Cmd
         , selectOneMaybe
-        , songGroup2String
         , startingWith
         , withIndexes
         , withoutOne
@@ -36,13 +35,6 @@ import Html
     exposing
         ( Html
         , text
-        )
-import SongType
-    exposing
-        ( SongGroup
-            ( Played
-            , Remembered
-            )
         )
 import Task
     exposing
@@ -133,13 +125,3 @@ goldenRatio =
 htmlNodeNull : Html Msg
 htmlNodeNull =
     text ""
-
-
-songGroup2String : SongGroup -> String
-songGroup2String group =
-    case group of
-        Played ->
-            "played"
-
-        Remembered ->
-            "remembered"
