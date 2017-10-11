@@ -48,9 +48,9 @@ import UpdateRequestHelper
         )
 import UpdateRequestType
     exposing
-        ( QueryBeforeList
-        , QueryPairs
+        ( QueryPairs
         , UriText
+        , UrlBeforeQueryList
         )
 import ViewType
     exposing
@@ -71,8 +71,8 @@ buySongAnchor song =
         uriText : UriText
         uriText =
             let
-                queryBeforeList : QueryBeforeList
-                queryBeforeList =
+                urlBeforeQueryList : UrlBeforeQueryList
+                urlBeforeQueryList =
                     [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
 
                 queryPairs : QueryPairs
@@ -93,7 +93,7 @@ buySongAnchor song =
                       )
                     ]
             in
-            relative queryBeforeList queryPairs
+            relative urlBeforeQueryList queryPairs
     in
     a
         [ href uriText

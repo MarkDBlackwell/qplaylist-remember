@@ -31,10 +31,10 @@ import SongType
 import UpdateRequestType
     exposing
         ( LikeOrCommentText
-        , QueryBeforeList
         , QueryPair
         , QueryPairs
         , UriText
+        , UrlBeforeQueryList
         )
 import UserIdentifierType
     exposing
@@ -75,8 +75,8 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         ]
 
 
-relative : QueryBeforeList -> QueryPairs -> UriText
-relative queryBeforeList queryPairs =
+relative : UrlBeforeQueryList -> QueryPairs -> UriText
+relative urlBeforeQueryList queryPairs =
     --See:
     --https://github.com/elm-lang/http/issues/10
     --https://github.com/elm-lang/url
@@ -130,13 +130,13 @@ relative queryBeforeList queryPairs =
                     |> String.join "&"
                     |> String.cons '?'
 
-        queryBefore : UriText
-        queryBefore =
+        urlBeforeQuery : UriText
+        urlBeforeQuery =
             String.join
                 "/"
-                queryBeforeList
+                urlBeforeQueryList
     in
     String.concat
-        [ queryBefore
+        [ urlBeforeQuery
         , query
         ]

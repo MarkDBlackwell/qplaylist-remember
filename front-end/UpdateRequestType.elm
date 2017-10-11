@@ -24,10 +24,10 @@ module UpdateRequestType
         , HttpResponseText
         , LikeOrCommentResponseText
         , LikeOrCommentText
-        , QueryBeforeList
         , QueryPair
         , QueryPairs
         , UriText
+        , UrlBeforeQueryList
         )
 
 -- MODEL
@@ -67,7 +67,7 @@ type alias LikeOrCommentText =
     String
 
 
-type alias QueryBeforeList =
+type alias UrlBeforeQueryList =
     --See:
     --https://github.com/elm-lang/url
     --https://tools.ietf.org/html/rfc3986
