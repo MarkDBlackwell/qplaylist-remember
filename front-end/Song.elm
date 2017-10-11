@@ -19,13 +19,11 @@ module Song
         , commentingIndexMaybe
         , likedOrCommentedInit
         , likedOrCommentedShow
-        , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songLikingOrCommentingConstructor
         , songLikingOrCommentingMaybe
         , songs2SongsRemembered
-        , songs2SongsTimeless
         , songsLatestInit
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp

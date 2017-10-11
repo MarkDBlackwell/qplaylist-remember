@@ -26,7 +26,6 @@ import Alert
     exposing
         ( alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
-        , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
@@ -67,17 +66,12 @@ import Song
     exposing
         ( buttonIdReconstruct
         , likedOrCommentedShow
-        , song2SongTimeless
         , songCommentingMaybeInit
         , songLikingMaybeInit
-        , songs2SongsTimeless
         )
 import SongType
     exposing
-        ( SongTimeless
-        , SongsRemembered
-        , SongsRememberedIndex
-        , SongsTimeless
+        ( SongsRemembered
         )
 import UpdateFocus
     exposing
@@ -91,16 +85,11 @@ import UpdateLog
         )
 import UpdateRequestType
     exposing
-        ( ActionName
-            ( ActionResponse
-            )
-        , HttpResponseText
-        , LikeOrCommentResponseText
+        ( HttpResponseText
         )
 import Utilities
     exposing
-        ( matchingIndexes
-        , msg2Cmd
+        ( msg2Cmd
         )
 
 

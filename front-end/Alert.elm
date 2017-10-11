@@ -16,7 +16,6 @@ module Alert
     exposing
         ( alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
-        , alertMessageTextErrorUnexpected
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
