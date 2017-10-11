@@ -29,7 +29,7 @@ import MessageType
         ( ElmCycle
         , Msg
             ( FocusAttempt
-            , FocusResult
+            , None
             )
         )
 import ModelType
@@ -52,12 +52,17 @@ import Utilities
 
 focusAttempt : Model -> Id -> ElmCycle
 focusAttempt model id =
+    let
+        ignoreResult : Result x a -> Msg
+        ignoreResult _ =
+            None
+    in
     --See:
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
     ( model
     , focus id
-        |> attempt FocusResult
+        |> attempt ignoreResult
     )
 
 

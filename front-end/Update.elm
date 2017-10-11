@@ -119,11 +119,6 @@ update msg model =
         FocusAttempt id ->
             focusAttempt model id
 
-        FocusResult _ ->
-            ( model
-            , Cmd.none
-            )
-
         HttpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe ->
             ( model
             , httpRequestOrResponseTextLog actionName httpRequestOrResponseTextMaybe

@@ -58,7 +58,6 @@ type Msg
     | CommentResponse (Result Error HttpResponseText)
     | CommentSendHand
     | FocusAttempt Id
-    | FocusResult (Result Dom.Error ())
     | HttpRequestOrResponseTextLog ActionName HttpRequestOrResponseTextMaybe
     | InitialSetUp Int
     | LikeButtonProcessHand SongsRememberedIndex
