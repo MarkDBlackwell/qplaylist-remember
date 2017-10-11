@@ -33,14 +33,14 @@ import Dom
     exposing
         ( Id
         )
+import ElmCycle
+    exposing
+        ( Msg
+        )
 import Html
     exposing
         ( Html
         , text
-        )
-import MessageType
-    exposing
-        ( Msg
         )
 import SongType
     exposing

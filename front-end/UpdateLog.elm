@@ -23,7 +23,7 @@ import Debug
     exposing
         ( log
         )
-import MessageType
+import ElmCycle
     exposing
         ( Msg
         )

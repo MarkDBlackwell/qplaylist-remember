@@ -17,6 +17,14 @@ module View
         ( view
         )
 
+import ElmCycle
+    exposing
+        ( Msg
+            ( CommentAreaInputTextChangeCaptureHand
+            , CommentCancelHand
+            , CommentSendHand
+            )
+        )
 import Html
     exposing
         ( Attribute
@@ -44,14 +52,6 @@ import Html.Attributes
 import Html.Events
     exposing
         ( onInput
-        )
-import MessageType
-    exposing
-        ( Msg
-            ( CommentAreaInputTextChangeCaptureHand
-            , CommentCancelHand
-            , CommentSendHand
-            )
         )
 import ModelType
     exposing

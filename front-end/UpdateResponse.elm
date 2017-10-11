@@ -42,6 +42,13 @@ import DecodeSongsLatest
     exposing
         ( decodeSongsLatestResponse
         )
+import ElmCycle
+    exposing
+        ( ElmCycle
+        , Msg
+            ( SongsRememberedStore
+            )
+        )
 import Http
     exposing
         ( Error
@@ -50,13 +57,6 @@ import Initialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit
-        )
-import MessageType
-    exposing
-        ( ElmCycle
-        , Msg
-            ( SongsRememberedStore
-            )
         )
 import ModelType
     exposing

@@ -12,7 +12,7 @@
 -}
 
 
-module MessageType
+module ElmCycle
     exposing
         ( ElmCycle
         , Msg(..)

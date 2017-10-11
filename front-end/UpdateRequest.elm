@@ -24,13 +24,7 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
-import Http
-    exposing
-        ( Request
-        , getString
-        , send
-        )
-import MessageType
+import ElmCycle
     exposing
         ( ElmCycle
         , Msg
@@ -38,6 +32,12 @@ import MessageType
             , LikeResponse
             , SongsLatestResponse
             )
+        )
+import Http
+    exposing
+        ( Request
+        , getString
+        , send
         )
 import ModelType
     exposing

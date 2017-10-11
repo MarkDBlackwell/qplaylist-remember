@@ -17,6 +17,10 @@ module Main
         ( main
         )
 
+import ElmCycle
+    exposing
+        ( Msg
+        )
 import Html
     exposing
         ( programWithFlags
@@ -24,10 +28,6 @@ import Html
 import Initialize
     exposing
         ( init
-        )
-import MessageType
-    exposing
-        ( Msg
         )
 import ModelType
     exposing

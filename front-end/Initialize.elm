@@ -23,7 +23,7 @@ import Alert
     exposing
         ( alertMessageTextInit
         )
-import MessageType
+import ElmCycle
     exposing
         ( ElmCycle
         , Msg

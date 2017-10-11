@@ -24,13 +24,13 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
+import ElmCycle
+    exposing
+        ( ElmCycle
+        )
 import Initialize
     exposing
         ( commentTextInit
-        )
-import MessageType
-    exposing
-        ( ElmCycle
         )
 import ModelType
     exposing

@@ -25,7 +25,7 @@ import Dom
         , Id
         , focus
         )
-import MessageType
+import ElmCycle
     exposing
         ( ElmCycle
         , Msg

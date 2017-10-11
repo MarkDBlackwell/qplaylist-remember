@@ -26,6 +26,17 @@ import Dom
     exposing
         ( Id
         )
+import ElmCycle
+    exposing
+        ( Msg
+            ( CommentAreaOpenHand
+            , LikeButtonProcessHand
+            , PageMorphHand
+            , SongForgetHand
+            , SongRememberHand
+            , SongsLatestRefreshHand
+            )
+        )
 import Html
     exposing
         ( Attribute
@@ -42,17 +53,6 @@ import Html.Attributes
 import Html.Events
     exposing
         ( onClick
-        )
-import MessageType
-    exposing
-        ( Msg
-            ( CommentAreaOpenHand
-            , LikeButtonProcessHand
-            , PageMorphHand
-            , SongForgetHand
-            , SongRememberHand
-            , SongsLatestRefreshHand
-            )
         )
 import ModelType
     exposing

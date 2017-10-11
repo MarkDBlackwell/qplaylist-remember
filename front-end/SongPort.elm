@@ -17,7 +17,7 @@ port module SongPort
         ( songsRememberedStore
         )
 
-import MessageType
+import ElmCycle
     exposing
         ( ElmCycle
         )

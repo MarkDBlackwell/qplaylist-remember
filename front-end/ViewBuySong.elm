@@ -17,6 +17,12 @@ module ViewBuySong
         ( buySongAnchor
         )
 
+import ElmCycle
+    exposing
+        ( Msg
+            ( None
+            )
+        )
 import Html
     exposing
         ( Html
@@ -31,12 +37,6 @@ import Html.Attributes
 import Html.Events
     exposing
         ( onClick
-        )
-import MessageType
-    exposing
-        ( Msg
-            ( None
-            )
         )
 import SongType
     exposing
