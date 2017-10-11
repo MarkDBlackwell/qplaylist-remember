@@ -48,16 +48,20 @@ import SongType
             )
         , SongGroupLength
         , SongLatest
+        , SongLatestMaybe
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
         , SongRemembered
+        , SongRememberedMaybe
         , SongTimeless
         , SongsLatest
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
+        , SongsRememberedIndexMaybe
+        , SongsRememberedMaybe
         , SongsTimeless
         , Time
         , Timestamp
@@ -117,7 +121,7 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
         |> Maybe.withDefault "refresh"
 
 
-commentingIndexMaybe : SongsRemembered -> SongCommenting -> Maybe SongsRememberedIndex
+commentingIndexMaybe : SongsRemembered -> SongCommenting -> SongsRememberedIndexMaybe
 commentingIndexMaybe songsRemembered songCommenting =
     let
         songsRememberedTimeless : SongsTimeless
@@ -223,14 +227,14 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsRememberedSelectOneMaybe : Maybe SongRemembered
+        songsRememberedSelectOneMaybe : SongRememberedMaybe
         songsRememberedSelectOneMaybe =
             selectOneMaybe songsRemembered songsRememberedIndex
 
-        swapUnlessListHeadEmptyMaybe : SongRemembered -> Maybe SongsRemembered
+        swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
-                listHeadMaybe : Maybe SongLatest
+                listHeadMaybe : SongLatestMaybe
                 listHeadMaybe =
                     songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
                         |> List.head
@@ -245,10 +249,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     in
                     List.filter compare songsLatest
 
-                swapOneLatestMaybe : SongLatest -> Maybe SongsRemembered
+                swapOneLatestMaybe : SongLatest -> SongsRememberedMaybe
                 swapOneLatestMaybe songLatest =
                     let
-                        songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> Maybe SongsRemembered
+                        songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
                         songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
                             let
                                 songUpdated :

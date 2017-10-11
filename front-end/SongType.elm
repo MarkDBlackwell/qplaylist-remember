@@ -24,16 +24,20 @@ module SongType
             )
         , SongGroupLength
         , SongLatest
+        , SongLatestMaybe
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
         , SongRemembered
+        , SongRememberedMaybe
         , SongTimeless
         , SongsLatest
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
+        , SongsRememberedIndexMaybe
+        , SongsRememberedMaybe
         , SongsTimeless
         , Time
         , Timestamp
@@ -68,6 +72,10 @@ type alias SongLatest =
     }
 
 
+type alias SongLatestMaybe =
+    Maybe SongLatest
+
+
 type alias SongLiking =
     SongCommenting
 
@@ -93,6 +101,10 @@ type alias SongRemembered =
     }
 
 
+type alias SongRememberedMaybe =
+    Maybe SongRemembered
+
+
 type alias SongTimeless =
     { artist : Artist
     , title : Title
@@ -113,6 +125,14 @@ type alias SongsRemembered =
 
 type alias SongsRememberedIndex =
     Int
+
+
+type alias SongsRememberedIndexMaybe =
+    Maybe SongsRememberedIndex
+
+
+type alias SongsRememberedMaybe =
+    Maybe SongsRemembered
 
 
 type alias SongsTimeless =
