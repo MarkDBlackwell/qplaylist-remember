@@ -40,8 +40,8 @@ import UpdateRequestType
 -- UPDATE
 
 
-actionName2String : ActionName -> String
-actionName2String actionName =
+action2String : ActionName -> String
+action2String actionName =
     case actionName of
         ActionDecoding ->
             "Decoding"
@@ -60,7 +60,7 @@ logAction actionName textMaybe =
         a : String
         a =
             log
-                (actionName2String actionName)
+                (action2String actionName)
                 logText
 
         logText : String
