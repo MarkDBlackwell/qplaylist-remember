@@ -145,19 +145,26 @@ update msg model =
         LikeResponse (Ok httpResponseText) ->
             likeResponseOk model httpResponseText
 
+        None ->
+            ( model
+            , focusInputPossibly model
+            )
+
         PageMorphHand ->
             let
+                bothListsAreEmpty : Bool
+                bothListsAreEmpty =
+                    List.foldl
+                        (&&)
+                        True
+                        --Here, can't use List.all.
+                        [ List.isEmpty model.songsLatest
+                        , List.isEmpty model.songsRemembered
+                        ]
+
                 pageIsExpandedNew : PageIsExpanded
                 pageIsExpandedNew =
-                    if
-                        List.foldl
-                            (&&)
-                            True
-                            --Here, can't use List.all.
-                            [ List.isEmpty model.songsLatest
-                            , List.isEmpty model.songsRemembered
-                            ]
-                    then
+                    if bothListsAreEmpty then
                         model.pageIsExpanded
                     else
                         not model.pageIsExpanded
@@ -178,11 +185,6 @@ update msg model =
                       }
                     , focusInputPossibly model
                     )
-
-        SongBuyAnchorProcessHand ->
-            ( model
-            , focusInputPossibly model
-            )
 
         SongForgetHand songsRememberedIndex ->
             let

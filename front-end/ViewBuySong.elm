@@ -35,7 +35,7 @@ import Html.Events
 import MessageType
     exposing
         ( Msg
-            ( SongBuyAnchorProcessHand
+            ( None
             )
         )
 import SongType
@@ -97,7 +97,7 @@ buySongAnchor song =
     in
     a
         [ href uriText
-        , onClick SongBuyAnchorProcessHand
+        , onClick None
         , target "_blank"
         , title hoverText
         ]

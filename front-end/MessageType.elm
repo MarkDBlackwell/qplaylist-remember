@@ -63,8 +63,8 @@ type Msg
     | InitialSetUp Int
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse (Result Error HttpResponseText)
+    | None
     | PageMorphHand
-    | SongBuyAnchorProcessHand
     | SongForgetHand SongsRememberedIndex
     | SongRememberHand SongsLatestIndex
     | SongsLatestRefreshHand
