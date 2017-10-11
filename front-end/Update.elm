@@ -140,9 +140,8 @@ update msg model =
             let
                 bothListsAreEmpty : Bool
                 bothListsAreEmpty =
-                    List.foldl
-                        (&&)
-                        True
+                    List.any
+                        identity
                         --Here, can't use List.all.
                         [ List.isEmpty model.songsLatest
                         , List.isEmpty model.songsRemembered
