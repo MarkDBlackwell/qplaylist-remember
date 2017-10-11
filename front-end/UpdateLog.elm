@@ -62,9 +62,8 @@ logAction action textMaybe =
                 logText =
                     Maybe.withDefault "Ok" textMaybe
             in
-            log
-                (action2String action)
-                logText
+            action2String action
+                |> flip log logText
     in
     Cmd.none
 
