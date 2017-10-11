@@ -27,10 +27,6 @@ import MessageType
     exposing
         ( Msg
         )
-import UpdateRequestHelper
-    exposing
-        ( actionName2String
-        )
 import UpdateRequestType
     exposing
         ( ActionName
@@ -42,6 +38,19 @@ import UpdateRequestType
 
 
 -- UPDATE
+
+
+actionName2String : ActionName -> String
+actionName2String actionName =
+    case actionName of
+        ActionDecoding ->
+            "Decoding"
+
+        ActionRequest ->
+            "Request"
+
+        ActionResponse ->
+            "Response"
 
 
 logAction : ActionName -> Maybe String -> Cmd Msg

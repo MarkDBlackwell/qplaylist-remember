@@ -14,8 +14,7 @@
 
 module UpdateRequestHelper
     exposing
-        ( actionName2String
-        , likeOrCommentRequestUriText
+        ( likeOrCommentRequestUriText
         , relative
         )
 
@@ -56,19 +55,6 @@ import UserIdentifierType
 
 
 -- UPDATE
-
-
-actionName2String : ActionName -> String
-actionName2String actionName =
-    case actionName of
-        ActionDecoding ->
-            "Decoding"
-
-        ActionRequest ->
-            "Request"
-
-        ActionResponse ->
-            "Response"
 
 
 likeOrCommentRequestUriText : SongLikingOrCommentingMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
