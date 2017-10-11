@@ -67,6 +67,7 @@ focusAttempt model id =
     --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
     --https://stackoverflow.com/a/39419640/1136063
     ( model
+      --Here, unlike logging, executing the task requires the Elm runtime.
     , attempt ignoreResult focusOnId
     )
 
