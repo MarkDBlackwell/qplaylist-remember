@@ -46,7 +46,7 @@ stateVector model =
     let
         commentOptional : Optional
         commentOptional =
-            maybeMapWithDefault Closed (\x -> Open) model.songCommentingMaybe
+            maybeMapWithDefault Closed (\_ -> Open) model.songCommentingMaybe
     in
     ( model.awaitingServerResponse
     , commentOptional
