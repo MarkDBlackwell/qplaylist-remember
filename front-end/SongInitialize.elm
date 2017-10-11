@@ -21,10 +21,6 @@ module SongInitialize
         , songsLatestInit
         )
 
-import Dom
-    exposing
-        ( Id
-        )
 import SongType
     exposing
         ( Artist
