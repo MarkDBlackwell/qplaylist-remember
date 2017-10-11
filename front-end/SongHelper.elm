@@ -15,9 +15,11 @@
 module SongHelper
     exposing
         ( buttonIdReconstruct
+        , song2SongLatest
         , song2SongRemembered
         , song2SongTimeless
         , songGroup2String
+        , songs2SongsLatest
         , songs2SongsRemembered
         , songs2SongsTimeless
         )
@@ -39,8 +41,10 @@ import SongType
             ( Played
             , Remembered
             )
+        , SongLatest
         , SongRemembered
         , SongTimeless
+        , SongsLatest
         , SongsRemembered
         , SongsRememberedIndexMaybe
         , SongsTimeless
@@ -86,6 +90,13 @@ commentingIndexMaybe songsRemembered songCommenting =
         |> List.head
 
 
+song2SongLatest :
+    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongLatest
+song2SongLatest { artist, time, timestamp, title } =
+    SongLatest artist time timestamp title
+
+
 song2SongRemembered :
     { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
     -> SongRemembered
@@ -96,6 +107,13 @@ song2SongRemembered { artist, time, timestamp, title } =
 song2SongTimeless : { a | artist : Artist, title : Title } -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
+
+
+songs2SongsLatest :
+    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
+    -> SongsLatest
+songs2SongsLatest listComplex =
+    List.map song2SongLatest listComplex
 
 
 songs2SongsRemembered :

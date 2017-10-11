@@ -22,8 +22,10 @@ module Song
 
 import SongHelper
     exposing
-        ( song2SongRemembered
+        ( song2SongLatest
+        , song2SongRemembered
         , song2SongTimeless
+        , songs2SongsLatest
         , songs2SongsTimeless
         )
 import SongType
@@ -83,23 +85,9 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered songsRememberedTweak songLikingOrCommentingMaybe
 
 
-song2SongLatest :
-    { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
-    -> SongLatest
-song2SongLatest { artist, time, timestamp, title } =
-    SongLatest artist time timestamp title
-
-
 songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
 songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
     selectOneMaybe songsRemembered songsRememberedIndex
-
-
-songs2SongsLatest :
-    List { a | artist : Artist, time : Time, timestamp : Timestamp, title : Title }
-    -> SongsLatest
-songs2SongsLatest listComplex =
-    List.map song2SongLatest listComplex
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
