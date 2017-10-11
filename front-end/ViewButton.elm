@@ -77,6 +77,7 @@ import ViewType
     exposing
         ( Display
         , HoverText
+        , IdMaybe
         )
 
 
@@ -90,7 +91,7 @@ buttonComment group songsRememberedIndex showCommentButtons =
         buttonAction =
             CommentAreaOpenHand songsRememberedIndex
 
-        buttonIdMaybe : Maybe Id
+        buttonIdMaybe : IdMaybe
         buttonIdMaybe =
             toString songsRememberedIndex
                 |> (++) "buttonComment"
@@ -118,7 +119,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
                 Remembered ->
                     SongForgetHand songsLatestOrRememberedIndex
 
-        buttonIdMaybe : Maybe Id
+        buttonIdMaybe : IdMaybe
         buttonIdMaybe =
             Just
                 (String.concat
@@ -147,7 +148,7 @@ buttonLike group songsRememberedIndex =
         buttonAction =
             LikeButtonProcessHand songsRememberedIndex
 
-        buttonIdMaybe : Maybe Id
+        buttonIdMaybe : IdMaybe
         buttonIdMaybe =
             Just
                 (toString songsRememberedIndex
@@ -166,12 +167,12 @@ buttonLike group songsRememberedIndex =
             buttonMy buttonIdMaybe hoverText buttonAction
 
 
-buttonMy : Maybe Id -> HoverText -> Msg -> Html Msg
+buttonMy : IdMaybe -> HoverText -> Msg -> Html Msg
 buttonMy buttonIdMaybe hoverText action =
     buttonMyComment buttonIdMaybe hoverText action False
 
 
-buttonMyComment : Maybe Id -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
+buttonMyComment : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
 buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
@@ -210,7 +211,7 @@ buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
 buttonPlayed : Html Msg
 buttonPlayed =
     let
-        buttonIdMaybe : Maybe Id
+        buttonIdMaybe : IdMaybe
         buttonIdMaybe =
             Just "refresh"
 
@@ -224,7 +225,7 @@ buttonPlayed =
 buttonRemembered : Html Msg
 buttonRemembered =
     let
-        buttonIdMaybe : Maybe Id
+        buttonIdMaybe : IdMaybe
         buttonIdMaybe =
             Just "morph"
 

@@ -16,7 +16,14 @@ module ViewType
     exposing
         ( Display
         , HoverText
+        , IdMaybe
         )
+
+import Dom
+    exposing
+        ( Id
+        )
+
 
 -- VIEW
 
@@ -27,3 +34,7 @@ type alias Display =
 
 type alias HoverText =
     String
+
+
+type alias IdMaybe =
+    Maybe Id
