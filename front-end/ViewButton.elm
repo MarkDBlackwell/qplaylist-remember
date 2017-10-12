@@ -184,6 +184,20 @@ buttonForgetRemember songGroup songsLatestOrRememberedIndex =
     buttonView buttonIdMaybe hoverText buttonAction
 
 
+buttonLatest : Html Msg
+buttonLatest =
+    let
+        buttonIdMaybe : IdMaybe
+        buttonIdMaybe =
+            Just "refresh"
+
+        hoverText : HoverText
+        hoverText =
+            "Refresh the latest few songs"
+    in
+    buttonView buttonIdMaybe hoverText SongsLatestRefreshHand
+
+
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
 buttonLike songGroup songsRememberedIndex =
     let
@@ -210,25 +224,6 @@ buttonLike songGroup songsRememberedIndex =
             buttonView buttonIdMaybe hoverText buttonAction
 
 
-buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
-buttonView buttonIdMaybe hoverText action =
-    buttonCommentView buttonIdMaybe hoverText action False
-
-
-buttonLatest : Html Msg
-buttonLatest =
-    let
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
-            Just "refresh"
-
-        hoverText : HoverText
-        hoverText =
-            "Refresh the latest few songs"
-    in
-    buttonView buttonIdMaybe hoverText SongsLatestRefreshHand
-
-
 buttonRemembered : Html Msg
 buttonRemembered =
     let
@@ -241,3 +236,8 @@ buttonRemembered =
             "Morph this page's shape"
     in
     buttonView buttonIdMaybe hoverText PageMorphHand
+
+
+buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
+buttonView buttonIdMaybe hoverText action =
+    buttonCommentView buttonIdMaybe hoverText action False
