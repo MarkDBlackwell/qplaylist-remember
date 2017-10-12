@@ -175,24 +175,6 @@ commentArea model song =
         ]
 
 
-commentAreaPossibly : Model -> Html Msg
-commentAreaPossibly model =
-    maybeMapWithDefault
-        htmlNodeNull
-        (\x -> commentArea model x)
-        model.songCommentingMaybe
-
-
-groupAttributes : SongGroup -> List (Attribute msg)
-groupAttributes group =
-    [ class "songs-group"
-    , id
-        (songGroup2String group
-            |> (++) "songs-"
-        )
-    ]
-
-
 songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
 songView model group songsLatestOrRememberedIndex song =
     let
@@ -292,13 +274,32 @@ view model =
                     [ text (Maybe.withDefault "" model.alertMessageText) ]
                 ]
 
+        commentAreaPossibly : Model -> Html Msg
+        commentAreaPossibly model =
+            maybeMapWithDefault
+                htmlNodeNull
+                (\x -> commentArea model x)
+                model.songCommentingMaybe
+
+        groupAttributes : SongGroup -> List (Attribute msg)
+        groupAttributes group =
+            [ class "songs-group"
+            , id
+                (songGroup2String group
+                    |> (++) "songs-"
+                )
+            ]
+
+        songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
+        songGroupView songGroup songsRemembered =
+            List.indexedMap (songView model songGroup) songsRemembered
+
+        songsLatestExpanded : SongsRemembered
+        songsLatestExpanded =
+            songs2SongsRemembered model.songsLatest
+
         songsLatestView : List (Html Msg)
         songsLatestView =
-            let
-                songsLatestExpanded : SongsRemembered
-                songsLatestExpanded =
-                    songs2SongsRemembered model.songsLatest
-            in
             List.indexedMap
                 (songView model Played)
                 songsLatestExpanded
