@@ -15,9 +15,9 @@
 module ViewButton
     exposing
         ( buttonComment
-        , buttonForgetRemember
         , buttonLatest
         , buttonLike
+        , buttonRememberForget
         , buttonRemembered
         , buttonView
         )
@@ -150,40 +150,6 @@ buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
         []
 
 
-buttonForgetRemember : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
-buttonForgetRemember songGroup songsLatestOrRememberedIndex =
-    let
-        buttonAction : Msg
-        buttonAction =
-            case songGroup of
-                Latest ->
-                    SongRememberHand songsLatestOrRememberedIndex
-
-                Remembered ->
-                    SongForgetHand songsLatestOrRememberedIndex
-
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
-            Just
-                (String.concat
-                    [ "button"
-                    , songGroup2String songGroup
-                    , toString songsLatestOrRememberedIndex
-                    ]
-                )
-
-        hoverText : HoverText
-        hoverText =
-            case songGroup of
-                Latest ->
-                    "Add this song (to remembered songs)"
-
-                Remembered ->
-                    "Drop this song (from remembered songs)"
-    in
-    buttonView buttonIdMaybe hoverText buttonAction
-
-
 buttonLatest : Html Msg
 buttonLatest =
     let
@@ -222,6 +188,40 @@ buttonLike songGroup songsRememberedIndex =
 
         Remembered ->
             buttonView buttonIdMaybe hoverText buttonAction
+
+
+buttonRememberForget : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
+buttonRememberForget songGroup songsLatestOrRememberedIndex =
+    let
+        buttonAction : Msg
+        buttonAction =
+            case songGroup of
+                Latest ->
+                    SongRememberHand songsLatestOrRememberedIndex
+
+                Remembered ->
+                    SongForgetHand songsLatestOrRememberedIndex
+
+        buttonIdMaybe : IdMaybe
+        buttonIdMaybe =
+            Just
+                (String.concat
+                    [ "button"
+                    , songGroup2String songGroup
+                    , toString songsLatestOrRememberedIndex
+                    ]
+                )
+
+        hoverText : HoverText
+        hoverText =
+            case songGroup of
+                Latest ->
+                    "Add this song (to remembered songs)"
+
+                Remembered ->
+                    "Drop this song (from remembered songs)"
+    in
+    buttonView buttonIdMaybe hoverText buttonAction
 
 
 buttonRemembered : Html Msg

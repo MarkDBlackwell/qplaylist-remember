@@ -84,9 +84,9 @@ import Utilities
 import ViewButton
     exposing
         ( buttonComment
-        , buttonForgetRemember
         , buttonLatest
         , buttonLike
+        , buttonRememberForget
         , buttonRemembered
         , buttonView
         )
@@ -272,7 +272,7 @@ view model =
                     div
                         songAttributes
                         [ p []
-                            [ buttonForgetRemember songGroup songsLatestOrRememberedIndex
+                            [ buttonRememberForget songGroup songsLatestOrRememberedIndex
                             , span []
                                 [ text songTime ]
                             , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
