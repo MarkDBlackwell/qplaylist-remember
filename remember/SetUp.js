@@ -11,26 +11,21 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
+Hide everything from the global namespace, by using an IIFE (Immediately
+Invokable Function Expression).
 */
 
-//See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
-//Hide everything from the global namespace, by using an IIFE (Immediately
-//    Invokable Function Expression).
-
 (function() {
-
+    //Keep keyStorage before functions.
     var keyStorage = 'RememberSongs';
 
-    var resetSongsDevelopmentOnly = function() {
-        var tempSongs = [];
-        var tempSongsAsString = JSON.stringify(tempSongs);
-        window.localStorage.setItem(keyStorage, tempSongsAsString);
-    }
     var retrieveQueryParameterComment = function() {
-        //Always includes the leading question mark.
+        //queryParameters always includes a leading question mark.
         var queryParameters = window.location.search.slice(1);
-        //IE and Edge lack the URLSearchParams function.
         try {
+            //IE and Edge lack the URLSearchParams function.
             var queryParametersArray = new URLSearchParams(queryParameters);
             return queryParametersArray.has('comment');
         }
@@ -40,57 +35,101 @@
     }
     var retrieveSongsFromStorage = function() {
         var defaultValue = "[]";
-        if (! storageIsAvailable()) {
+        if (! storageIsAccessible()) {
             return defaultValue;
         }
         var storage = window.localStorage.getItem(keyStorage);
-//window.alert('storage: ' + storage);
+        //window.alert('storage: ' + storage);
+
         if (null === storage || "" == storage) {
             return defaultValue;
         }
         return storage;
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-    var storageIsAvailable = function() {
+    var storageIsAccessible = function() {
+        var hostname;
+        var somethingWrongWithHostnameMessage;
+        var storage;
+        var suggestOperaMessage;
+
+        somethingWrongWithHostnameMessage = 'Something wrong with window.hostname: ';
+        suggestOperaMessage = 'Localhost is fine on Opera, but it lacks localStorage in Firefox, etc.';
         try {
-            var storage = window.localStorage;
+            storage = window.localStorage;
+            if (null === storage) {
+                hostname = window.location.hostname;
+                if (null === hostname) {
+                    window.alert(somethingWrongWithHostnameMessage + hostname);
+                    return false;
+                }
+                if ('localhost' == hostname) {
+                    window.alert(suggestOperaMessage);
+                    return false;
+                }
+                return false;
+            }
             var x = '__storage_test__';
             storage.setItem(x, x);
             storage.removeItem(x);
             return true;
         }
         catch(e) {
+            //First, do the popup.
             storagePopup(e);
-            return e instanceof DOMException && (
-                // everything except Firefox
-                e.code === 22 ||
-                // Firefox
-                e.code === 1014 ||
-                // test name field too, because code might not be present
-                // everything except Firefox
-                e.name === 'QuotaExceededError' ||
-                // Firefox
-                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-                // acknowledge QuotaExceededError only if there's something already stored
-                storageMy.length !== 0;
+
+            //Avoid QuotaExceededError, but only if the exception is a DOMException...
+            return e instanceof DOMException &&
+
+                //and storage exists...
+                null !== storage &&
+
+                //and storage isn't undefined...
+                undefined !== storage &&
+
+                //and there's something already stored...
+                storage.length !== 0 && (
+
+                    //and the exception is one of certain, known ones:
+                    //Because the name field might not be set, first check the error code...
+                    //for Firefox:
+                    //Legacy constant name: NS_ERROR_DOM_QUOTA_REACHED.
+                    e.code === 1014 ||
+
+                    //for everything except Firefox:
+                    //Legacy constant name: QUOTA_EXCEEDED_ERR.
+                    e.code === 22 ||
+
+                    //Because the error code might not be set, also check the name field...
+                    //for Firefox:
+                    e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ||
+
+                    //for everything except Firefox:
+                    e.name === 'QuotaExceededError'
+                );
         }
     }
     var storagePopup = function(e) {
         window.alert('Remembering songs (across sessions) is disabled:  ' + e);
     }
 
+    var resetSongsDevelopmentOnly = function() {
+        var tempSongs = [];
+        var tempSongsAsString = JSON.stringify(tempSongs);
+        window.localStorage.setItem(keyStorage, tempSongsAsString);
+    }
     //resetSongsDevelopmentOnly();
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
     //Retrieve data from localStorage.
     var songsAsString = retrieveSongsFromStorage();
-//window.alert('songsAsString: ' + songsAsString);
+    //window.alert('songsAsString: ' + songsAsString);
 
     var songsRemembered = JSON.parse(songsAsString);
     
     var showCommentButtons = retrieveQueryParameterComment();
-//window.alert(showCommentButtons);
+    //window.alert(showCommentButtons);
 
     var node = document.getElementById('main');
     var app = Elm.Main.embed(node, {
@@ -98,10 +137,11 @@
       songsRemembered: songsRemembered
     });
 
-    //Don't use arrow function (fat tag), because IE 11 doesn't support it.
+    //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
     app.ports.updateLocalStorage.subscribe(function(songsRememberedNew) {
-//window.alert('songsRememberedNew: ' + songsRememberedNew);
-        if (storageIsAvailable()) {
+        //window.alert('songsRememberedNew: ' + songsRememberedNew);
+
+        if (storageIsAccessible()) {
             window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
         }
     });

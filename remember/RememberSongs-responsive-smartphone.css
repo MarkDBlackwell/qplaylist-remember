@@ -11,6 +11,8 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
 */
 
 @media (orientation: landscape) and (max-width:  1023.9px),
