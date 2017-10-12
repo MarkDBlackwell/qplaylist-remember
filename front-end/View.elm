@@ -300,15 +300,17 @@ view model =
 
         songsLatestView : List (Html Msg)
         songsLatestView =
-            List.indexedMap
-                (songView model Played)
-                songsLatestExpanded
+            --List.indexedMap
+            --    (songView model Played)
+            --    songsLatestExpanded
+            songGroupView Played songsLatestExpanded
 
         songsRememberedView : List (Html Msg)
         songsRememberedView =
-            List.indexedMap
-                (songView model Remembered)
-                model.songsRemembered
+            --List.indexedMap
+            --    (songView model Remembered)
+            --    model.songsRemembered
+            songGroupView Remembered model.songsRemembered
     in
     main_
         []
