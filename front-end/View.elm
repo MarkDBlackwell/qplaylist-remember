@@ -130,12 +130,6 @@ view model =
 
                         statistics : String
                         statistics =
-                            --let
-                            --    commentTextLength : Int
-                            --    commentTextLength =
-                            --        String.length model.commentText
-                            --in
-                            --toString commentTextLength
                             String.length model.commentText
                                 |> toString
                                 |> (++) " – "
@@ -149,12 +143,7 @@ view model =
                                         howManyToTake : Int
                                         howManyToTake =
                                             3
-
-                                        --timestampList : List String
-                                        --timestampList =
-                                        --    String.split " " song.timestamp
                                     in
-                                    --List.take howManyToTake timestampList
                                     String.split " " song.timestamp
                                         |> List.take howManyToTake
                             in
@@ -174,6 +163,7 @@ view model =
                                     , yearMonthDay
                                     , ")"
 
+                                    --For development, keep this statistics line.
                                     --, statistics
                                     ]
                                 )
