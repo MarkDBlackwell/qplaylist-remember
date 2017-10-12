@@ -18,8 +18,8 @@ module ViewButton
         , buttonForgetRemember
         , buttonLatest
         , buttonLike
-        , buttonMy
         , buttonRemembered
+        , buttonView
         )
 
 import Dom
@@ -141,7 +141,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonMy buttonIdMaybe hoverText buttonAction
+    buttonView buttonIdMaybe hoverText buttonAction
 
 
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
@@ -167,11 +167,11 @@ buttonLike group songsRememberedIndex =
             htmlNodeNull
 
         Remembered ->
-            buttonMy buttonIdMaybe hoverText buttonAction
+            buttonView buttonIdMaybe hoverText buttonAction
 
 
-buttonMy : IdMaybe -> HoverText -> Msg -> Html Msg
-buttonMy buttonIdMaybe hoverText action =
+buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
+buttonView buttonIdMaybe hoverText action =
     buttonViewShowCommentButtonsPossibly buttonIdMaybe hoverText action False
 
 
@@ -222,7 +222,7 @@ buttonLatest =
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonMy buttonIdMaybe hoverText SongsLatestRefreshHand
+    buttonView buttonIdMaybe hoverText SongsLatestRefreshHand
 
 
 buttonRemembered : Html Msg
@@ -236,4 +236,4 @@ buttonRemembered =
         hoverText =
             "Morph this page's shape"
     in
-    buttonMy buttonIdMaybe hoverText PageMorphHand
+    buttonView buttonIdMaybe hoverText PageMorphHand

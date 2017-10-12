@@ -87,8 +87,8 @@ import ViewButton
         , buttonForgetRemember
         , buttonLatest
         , buttonLike
-        , buttonMy
         , buttonRemembered
+        , buttonView
         )
 import ViewBuySong
     exposing
@@ -178,8 +178,8 @@ view model =
                             , type_ "text"
                             ]
                             []
-                        , buttonMy Nothing "Submit your comment" CommentSendHand
-                        , buttonMy Nothing "Cancel this comment" CommentCancelHand
+                        , buttonView Nothing "Submit your comment" CommentSendHand
+                        , buttonView Nothing "Cancel this comment" CommentCancelHand
                         ]
             in
             maybeMapWithDefault
