@@ -88,7 +88,7 @@ import ViewType
 
 
 buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html Msg
-buttonComment group songsRememberedIndex showCommentButtons =
+buttonComment songGroup songsRememberedIndex showCommentButtons =
     let
         buttonAction : Msg
         buttonAction =
@@ -104,10 +104,46 @@ buttonComment group songsRememberedIndex showCommentButtons =
         hoverText =
             "Share a comment (with the DJ) about this song"
     in
-    if Remembered == group then
-        buttonCommentView buttonIdMaybe hoverText buttonAction showCommentButtons
-    else
+    if Latest == songGroup then
         htmlNodeNull
+    else
+        buttonCommentView buttonIdMaybe hoverText buttonAction showCommentButtons
+
+
+buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
+buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
+    let
+        buttonIdView : List (Attribute msg)
+        buttonIdView =
+            maybeMapWithDefault
+                []
+                (\x -> [ id x ])
+                buttonIdMaybe
+
+        display : Display
+        display =
+            let
+                nonePossibly : Id -> HoverText
+                nonePossibly buttonId =
+                    if
+                        String.startsWith "buttonComment" buttonId
+                            && not showCommentButtons
+                    then
+                        "none"
+                    else
+                        "inline-block"
+            in
+            maybeMapWithDefault "inline-block" nonePossibly buttonIdMaybe
+    in
+    button
+        ([ style [ ( "display", display ) ]
+         , onClick action
+         , title hoverText
+         , type_ "button"
+         ]
+            ++ buttonIdView
+        )
+        []
 
 
 buttonForgetRemember : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
@@ -173,42 +209,6 @@ buttonLike group songsRememberedIndex =
 buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
 buttonView buttonIdMaybe hoverText action =
     buttonCommentView buttonIdMaybe hoverText action False
-
-
-buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
-buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
-    let
-        buttonIdView : List (Attribute msg)
-        buttonIdView =
-            maybeMapWithDefault
-                []
-                (\x -> [ id x ])
-                buttonIdMaybe
-
-        display : Display
-        display =
-            let
-                nonePossibly : Id -> HoverText
-                nonePossibly buttonId =
-                    if
-                        String.startsWith "buttonComment" buttonId
-                            && not showCommentButtons
-                    then
-                        "none"
-                    else
-                        "inline-block"
-            in
-            maybeMapWithDefault "inline-block" nonePossibly buttonIdMaybe
-    in
-    button
-        ([ style [ ( "display", display ) ]
-         , onClick action
-         , title hoverText
-         , type_ "button"
-         ]
-            ++ buttonIdView
-        )
-        []
 
 
 buttonLatest : Html Msg
