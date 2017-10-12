@@ -90,36 +90,33 @@ commentingIndexMaybe songsRemembered songCommenting =
         |> List.head
 
 
-song2SongLatest :
+type alias Song2SongLatestComplex a =
     { a
         | artist : Artist
         , time : Time
         , timestamp : Timestamp
         , title : Title
     }
-    -> SongLatest
+
+
+song2SongLatest : Song2SongLatestComplex a -> SongLatest
 song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
-song2SongRemembered :
-    { a
-        | artist : Artist
-        , time : Time
-        , timestamp : Timestamp
-        , title : Title
-    }
-    -> SongRemembered
+song2SongRemembered : Song2SongLatestComplex a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
 
-song2SongTimeless :
+type alias Song2SongTimelessComplex a =
     { a
         | artist : Artist
         , title : Title
     }
-    -> SongTimeless
+
+
+song2SongTimeless : Song2SongTimelessComplex a -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
 
