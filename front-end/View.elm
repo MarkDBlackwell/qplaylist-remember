@@ -274,30 +274,31 @@ view model =
                     [ text (Maybe.withDefault "" model.alertMessageText) ]
                 ]
 
-        commentAreaPossibly : Model -> Html Msg
-        commentAreaPossibly model =
+        commentAreaPossibly : Html Msg
+        commentAreaPossibly =
             maybeMapWithDefault
                 htmlNodeNull
                 (\x -> commentArea model x)
                 model.songCommentingMaybe
 
         groupAttributes : SongGroup -> List (Attribute msg)
-        groupAttributes group =
+        groupAttributes songGroup =
             [ class "songs-group"
             , id
-                (songGroup2String group
+                (songGroup2String songGroup
                     |> (++) "songs-"
                 )
             ]
 
         songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
         songGroupView songGroup songsRemembered =
-            List.indexedMap (songView model songGroup) songsRemembered
+            songView model songGroup
+                |> flip List.indexedMap songsRemembered
     in
     main_
         []
         [ alertArea
-        , commentAreaPossibly model
+        , commentAreaPossibly
         , section
             (groupAttributes Remembered)
             ([ p []
