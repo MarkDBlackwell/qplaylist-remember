@@ -121,21 +121,23 @@ view model =
         commentAreaPossibly : Html Msg
         commentAreaPossibly =
             let
-                commentArea : Model -> SongCommenting -> Html Msg
-                commentArea model song =
+                commentArea : SongCommenting -> Html Msg
+                commentArea song =
                     let
-                        hoverText : HoverText
-                        hoverText =
+                        inputHoverText : HoverText
+                        inputHoverText =
                             "Type your (additional) comment here!"
 
                         statistics : String
                         statistics =
-                            let
-                                commentTextLength : Int
-                                commentTextLength =
-                                    String.length model.commentText
-                            in
-                            toString commentTextLength
+                            --let
+                            --    commentTextLength : Int
+                            --    commentTextLength =
+                            --        String.length model.commentText
+                            --in
+                            --toString commentTextLength
+                            String.length model.commentText
+                                |> toString
                                 |> (++) " – "
 
                         yearMonthDay : String
@@ -148,11 +150,13 @@ view model =
                                         howManyToTake =
                                             3
 
-                                        timestampList : List String
-                                        timestampList =
-                                            String.split " " song.timestamp
+                                        --timestampList : List String
+                                        --timestampList =
+                                        --    String.split " " song.timestamp
                                     in
-                                    List.take howManyToTake timestampList
+                                    --List.take howManyToTake timestampList
+                                    String.split " " song.timestamp
+                                        |> List.take howManyToTake
                             in
                             String.join "-" timestampFieldsSelected
                     in
@@ -178,9 +182,9 @@ view model =
                             [ autocomplete False
                             , id "input"
                             , onInput CommentAreaInputTextChangeCaptureHand
-                            , placeholder hoverText
+                            , placeholder inputHoverText
                             , required True
-                            , title hoverText
+                            , title inputHoverText
                             , type_ "text"
                             ]
                             []
@@ -190,7 +194,7 @@ view model =
             in
             maybeMapWithDefault
                 htmlNodeNull
-                (\x -> commentArea model x)
+                (\x -> commentArea x)
                 model.songCommentingMaybe
 
         groupAttributes : SongGroup -> List (Attribute msg)
@@ -211,11 +215,11 @@ view model =
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
                             let
-                                likedOrCommentedIndicatorHoverText : HoverText
-                                likedOrCommentedIndicatorHoverText =
+                                indicatorHoverText : HoverText
+                                indicatorHoverText =
                                     let
-                                        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
-                                        likedOrCommentedIndicatorHoverTextCommentButton =
+                                        orAComment : HoverText
+                                        orAComment =
                                             if model.showCommentButtons then
                                                 " (or a comment)"
                                             else
@@ -223,12 +227,12 @@ view model =
                                     in
                                     String.concat
                                         [ "You've shared a 'Like'"
-                                        , likedOrCommentedIndicatorHoverTextCommentButton
+                                        , orAComment
                                         , " about this song (with the DJ)"
                                         ]
                             in
                             if song.likedOrCommented then
-                                em [ title likedOrCommentedIndicatorHoverText ]
+                                em [ title indicatorHoverText ]
                                     []
                             else
                                 htmlNodeNull
