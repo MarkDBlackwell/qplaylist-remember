@@ -66,7 +66,7 @@ import SongType
     exposing
         ( SongCommenting
         , SongGroup
-            ( Played
+            ( Latest
             , Remembered
             )
         , SongGroupLength
@@ -263,7 +263,7 @@ view model =
                                     String.split " " songPlayedOrRemembered.timestamp
                             in
                             case songGroup of
-                                Played ->
+                                Latest ->
                                     songPlayedOrRemembered.time
 
                                 Remembered ->
@@ -301,12 +301,12 @@ view model =
             )
         , hr [] []
         , section
-            (songGroupAttributes Played)
+            (songGroupAttributes Latest)
             ([ p []
                 [ buttonPlayed ]
              ]
                 ++ (songs2SongsRemembered model.songsLatest
-                        |> songGroupView Played
+                        |> songGroupView Latest
                    )
             )
         ]

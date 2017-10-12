@@ -28,7 +28,7 @@ import Html.Attributes
 import SongType
     exposing
         ( SongGroup
-            ( Played
+            ( Latest
             , Remembered
             )
         , SongGroupLength
@@ -65,7 +65,7 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                         ]
             in
             case group of
-                Played ->
+                Latest ->
                     []
 
                 Remembered ->
@@ -98,7 +98,7 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                     songGroupLength - songsLatestOrRememberedIndex - 1
             in
             case group of
-                Played ->
+                Latest ->
                     goldenRatio ^ toFloat songsLatestOrRememberedIndex
 
                 Remembered ->

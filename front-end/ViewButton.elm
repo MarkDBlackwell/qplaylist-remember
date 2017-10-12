@@ -65,7 +65,7 @@ import SongHelper
 import SongType
     exposing
         ( SongGroup
-            ( Played
+            ( Latest
             , Remembered
             )
         , SongsLatestOrRememberedIndex
@@ -116,7 +116,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
         buttonAction : Msg
         buttonAction =
             case group of
-                Played ->
+                Latest ->
                     SongRememberHand songsLatestOrRememberedIndex
 
                 Remembered ->
@@ -135,7 +135,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
         hoverText : HoverText
         hoverText =
             case group of
-                Played ->
+                Latest ->
                     "Add this song (to remembered songs)"
 
                 Remembered ->
@@ -163,7 +163,7 @@ buttonLike group songsRememberedIndex =
             "Share a 'Like' (with the DJ) about this song"
     in
     case group of
-        Played ->
+        Latest ->
             htmlNodeNull
 
         Remembered ->

@@ -19,7 +19,7 @@ module SongType
         , SongCommenting
         , SongCommentingMaybe
         , SongGroup
-            ( Played
+            ( Latest
             , Remembered
             )
         , SongGroupLength
@@ -189,7 +189,7 @@ type alias Title =
 
 
 type SongGroup
-    = Played
+    = Latest
     | Remembered
 
 

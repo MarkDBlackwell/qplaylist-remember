@@ -38,7 +38,7 @@ import SongType
         , SongCommenting
         , SongCommentingMaybe
         , SongGroup
-            ( Played
+            ( Latest
             , Remembered
             )
         , SongLatest
@@ -129,7 +129,7 @@ songs2SongsTimeless songTimelessBaseList =
 songGroup2String : SongGroup -> String
 songGroup2String group =
     case group of
-        Played ->
+        Latest ->
             "played"
 
         Remembered ->
