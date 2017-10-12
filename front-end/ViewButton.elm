@@ -147,11 +147,11 @@ buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
 
 
 buttonForgetRemember : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
-buttonForgetRemember group songsLatestOrRememberedIndex =
+buttonForgetRemember songGroup songsLatestOrRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
-            case group of
+            case songGroup of
                 Latest ->
                     SongRememberHand songsLatestOrRememberedIndex
 
@@ -163,14 +163,14 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
             Just
                 (String.concat
                     [ "button"
-                    , songGroup2String group
+                    , songGroup2String songGroup
                     , toString songsLatestOrRememberedIndex
                     ]
                 )
 
         hoverText : HoverText
         hoverText =
-            case group of
+            case songGroup of
                 Latest ->
                     "Add this song (to remembered songs)"
 
@@ -181,7 +181,7 @@ buttonForgetRemember group songsLatestOrRememberedIndex =
 
 
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
-buttonLike group songsRememberedIndex =
+buttonLike songGroup songsRememberedIndex =
     let
         buttonAction : Msg
         buttonAction =
@@ -198,7 +198,7 @@ buttonLike group songsRememberedIndex =
         hoverText =
             "Share a 'Like' (with the DJ) about this song"
     in
-    case group of
+    case songGroup of
         Latest ->
             htmlNodeNull
 
