@@ -105,7 +105,7 @@ buttonComment group songsRememberedIndex showCommentButtons =
             "Share a comment (with the DJ) about this song"
     in
     if Remembered == group then
-        buttonViewShowCommentButtonsPossibly buttonIdMaybe hoverText buttonAction showCommentButtons
+        buttonCommentView buttonIdMaybe hoverText buttonAction showCommentButtons
     else
         htmlNodeNull
 
@@ -172,11 +172,11 @@ buttonLike group songsRememberedIndex =
 
 buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
 buttonView buttonIdMaybe hoverText action =
-    buttonViewShowCommentButtonsPossibly buttonIdMaybe hoverText action False
+    buttonCommentView buttonIdMaybe hoverText action False
 
 
-buttonViewShowCommentButtonsPossibly : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
-buttonViewShowCommentButtonsPossibly buttonIdMaybe hoverText action showCommentButtons =
+buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
+buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
     let
         buttonIdView : List (Attribute msg)
         buttonIdView =
