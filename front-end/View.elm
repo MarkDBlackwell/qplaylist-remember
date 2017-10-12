@@ -72,7 +72,7 @@ import SongType
         , SongGroupLength
         , SongPlayedOrRemembered
         , SongsLatestOrRememberedIndex
-        , SongsRemembered
+        , SongsPlayedOrRemembered
         , Time
         )
 import Utilities
@@ -196,8 +196,8 @@ view model =
                 )
             ]
 
-        songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
-        songGroupView songGroup songsRemembered =
+        songGroupView : SongGroup -> SongsPlayedOrRemembered -> List (Html Msg)
+        songGroupView songGroup songsPlayedOrRemembered =
             let
                 songView : SongsLatestOrRememberedIndex -> SongPlayedOrRemembered -> Html Msg
                 songView songsLatestOrRememberedIndex songPlayedOrRemembered =
@@ -286,7 +286,7 @@ view model =
                             [ text songPlayedOrRemembered.artist ]
                         ]
             in
-            List.indexedMap songView songsRemembered
+            List.indexedMap songView songsPlayedOrRemembered
     in
     main_
         []

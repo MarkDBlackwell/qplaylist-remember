@@ -37,6 +37,7 @@ module SongType
         , SongsLatest
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
+        , SongsPlayedOrRemembered
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedIndexMaybe
@@ -140,6 +141,10 @@ type alias SongsLatest =
 
 type alias SongsLatestIndex =
     Int
+
+
+type alias SongsPlayedOrRemembered =
+    SongsRemembered
 
 
 type alias SongsRemembered =
