@@ -311,6 +311,8 @@ view model =
             ([ p []
                 [ buttonPlayed ]
              ]
-                ++ songGroupView Played (songs2SongsRemembered model.songsLatest)
+                ++ (songs2SongsRemembered model.songsLatest
+                        |> songGroupView Played
+                   )
             )
         ]
