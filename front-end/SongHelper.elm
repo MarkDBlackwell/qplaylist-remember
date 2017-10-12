@@ -61,6 +61,22 @@ import Utilities
 -- UPDATE
 
 
+type alias SongLatestBase a =
+    { a
+        | artist : Artist
+        , time : Time
+        , timestamp : Timestamp
+        , title : Title
+    }
+
+
+type alias SongTimelessBase a =
+    { a
+        | artist : Artist
+        , title : Title
+    }
+
+
 buttonIdCreate : Id -> Int -> Id
 buttonIdCreate idFragment index =
     String.concat
@@ -90,72 +106,34 @@ commentingIndexMaybe songsRemembered songCommenting =
         |> List.head
 
 
-type alias Song2SongLatestComplex a =
-    { a
-        | artist : Artist
-        , time : Time
-        , timestamp : Timestamp
-        , title : Title
-    }
-
-
-song2SongLatest : Song2SongLatestComplex a -> SongLatest
+song2SongLatest : SongLatestBase a -> SongLatest
 song2SongLatest { artist, time, timestamp, title } =
     SongLatest artist time timestamp title
 
 
-song2SongRemembered : Song2SongLatestComplex a -> SongRemembered
+song2SongRemembered : SongLatestBase a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
 
-type alias Song2SongTimelessComplex a =
-    { a
-        | artist : Artist
-        , title : Title
-    }
-
-
-song2SongTimeless : Song2SongTimelessComplex a -> SongTimeless
+song2SongTimeless : SongTimelessBase a -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
 
 
-songs2SongsLatest :
-    List
-        { a
-            | artist : Artist
-            , time : Time
-            , timestamp : Timestamp
-            , title : Title
-        }
-    -> SongsLatest
-songs2SongsLatest listComplex =
-    List.map song2SongLatest listComplex
+songs2SongsLatest : List (SongLatestBase a) -> SongsLatest
+songs2SongsLatest songLatestBaseList =
+    List.map song2SongLatest songLatestBaseList
 
 
-songs2SongsRemembered :
-    List
-        { a
-            | artist : Artist
-            , time : Time
-            , timestamp : Timestamp
-            , title : Title
-        }
-    -> SongsRemembered
-songs2SongsRemembered listComplex =
-    List.map song2SongRemembered listComplex
+songs2SongsRemembered : List (SongLatestBase a) -> SongsRemembered
+songs2SongsRemembered songLatestBaseList =
+    List.map song2SongRemembered songLatestBaseList
 
 
-songs2SongsTimeless :
-    List
-        { a
-            | artist : Artist
-            , title : Title
-        }
-    -> SongsTimeless
-songs2SongsTimeless listComplex =
-    List.map song2SongTimeless listComplex
+songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
+songs2SongsTimeless songTimelessBaseList =
+    List.map song2SongTimeless songTimelessBaseList
 
 
 
