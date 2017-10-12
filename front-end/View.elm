@@ -71,8 +71,8 @@ import SongType
             )
         , SongGroupLength
         , SongPlayedOrRemembered
-        , SongsLatestOrRememberedIndex
         , SongsPlayedOrRemembered
+        , SongsPlayedOrRememberedIndex
         , Time
         )
 import Utilities
@@ -199,8 +199,8 @@ view model =
         songGroupView : SongGroup -> SongsPlayedOrRemembered -> List (Html Msg)
         songGroupView songGroup songsPlayedOrRemembered =
             let
-                songView : SongsLatestOrRememberedIndex -> SongPlayedOrRemembered -> Html Msg
-                songView songsLatestOrRememberedIndex songPlayedOrRemembered =
+                songView : SongsPlayedOrRememberedIndex -> SongPlayedOrRemembered -> Html Msg
+                songView songsPlayedOrRememberedIndex songPlayedOrRemembered =
                     let
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
@@ -237,7 +237,7 @@ view model =
                             if model.pageIsExpanded then
                                 []
                             else
-                                [ styleCalc songGroup lengthRemembered songsLatestOrRememberedIndex ]
+                                [ styleCalc songGroup lengthRemembered songsPlayedOrRememberedIndex ]
 
                         songTime : Time
                         songTime =
@@ -272,11 +272,11 @@ view model =
                     div
                         songAttributes
                         [ p []
-                            [ buttonForgetRemember songGroup songsLatestOrRememberedIndex
+                            [ buttonForgetRemember songGroup songsPlayedOrRememberedIndex
                             , span []
                                 [ text songTime ]
-                            , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
-                            , buttonLike songGroup songsLatestOrRememberedIndex
+                            , buttonComment songGroup songsPlayedOrRememberedIndex model.showCommentButtons
+                            , buttonLike songGroup songsPlayedOrRememberedIndex
                             , likedOrCommentedIndicator
                             , buySongAnchor songPlayedOrRemembered
                             ]

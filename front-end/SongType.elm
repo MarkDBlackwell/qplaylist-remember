@@ -38,6 +38,7 @@ module SongType
         , SongsLatestIndex
         , SongsLatestOrRememberedIndex
         , SongsPlayedOrRemembered
+        , SongsPlayedOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedIndexMaybe
@@ -197,4 +198,8 @@ type alias SongGroupLength =
 
 
 type alias SongsLatestOrRememberedIndex =
+    Int
+
+
+type alias SongsPlayedOrRememberedIndex =
     Int
