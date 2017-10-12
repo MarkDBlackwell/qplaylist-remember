@@ -16,9 +16,9 @@ module ViewButton
     exposing
         ( buttonComment
         , buttonForgetRemember
+        , buttonLatest
         , buttonLike
         , buttonMy
-        , buttonPlayed
         , buttonRemembered
         )
 
@@ -211,8 +211,8 @@ buttonMyComment buttonIdMaybe hoverText action showCommentButtons =
         []
 
 
-buttonPlayed : Html Msg
-buttonPlayed =
+buttonLatest : Html Msg
+buttonLatest =
     let
         buttonIdMaybe : IdMaybe
         buttonIdMaybe =

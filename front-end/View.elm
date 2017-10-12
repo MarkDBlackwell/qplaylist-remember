@@ -85,9 +85,9 @@ import ViewButton
     exposing
         ( buttonComment
         , buttonForgetRemember
+        , buttonLatest
         , buttonLike
         , buttonMy
-        , buttonPlayed
         , buttonRemembered
         )
 import ViewBuySong
@@ -303,7 +303,7 @@ view model =
         , section
             (songGroupAttributes Latest)
             ([ p []
-                [ buttonPlayed ]
+                [ buttonLatest ]
              ]
                 ++ (songs2SongsRemembered model.songsLatest
                         |> songGroupView Latest
