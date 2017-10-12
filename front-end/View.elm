@@ -197,10 +197,10 @@ view model =
             ]
 
         songGroupView : SongGroup -> SongsLatestOrRemembered -> List (Html Msg)
-        songGroupView songGroup songsPlayedOrRemembered =
+        songGroupView songGroup songsLatestOrRemembered =
             let
                 songView : SongsLatestOrRememberedIndex -> SongLatestOrRemembered -> Html Msg
-                songView songsPlayedOrRememberedIndex songPlayedOrRemembered =
+                songView songsLatestOrRememberedIndex songLatestOrRemembered =
                     let
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
@@ -221,7 +221,7 @@ view model =
                                         , " about this song (with the DJ)"
                                         ]
                             in
-                            if songPlayedOrRemembered.likedOrCommented then
+                            if songLatestOrRemembered.likedOrCommented then
                                 em [ title indicatorHoverText ]
                                     []
                             else
@@ -237,7 +237,7 @@ view model =
                             if model.pageIsExpanded then
                                 []
                             else
-                                [ styleCalc songGroup lengthRemembered songsPlayedOrRememberedIndex ]
+                                [ styleCalc songGroup lengthRemembered songsLatestOrRememberedIndex ]
 
                         songTime : Time
                         songTime =
@@ -260,33 +260,33 @@ view model =
 
                                 stampList : List String
                                 stampList =
-                                    String.split " " songPlayedOrRemembered.timestamp
+                                    String.split " " songLatestOrRemembered.timestamp
                             in
                             case songGroup of
                                 Latest ->
-                                    songPlayedOrRemembered.time
+                                    songLatestOrRemembered.time
 
                                 Remembered ->
-                                    prefix ++ songPlayedOrRemembered.time
+                                    prefix ++ songLatestOrRemembered.time
                     in
                     div
                         songAttributes
                         [ p []
-                            [ buttonForgetRemember songGroup songsPlayedOrRememberedIndex
+                            [ buttonForgetRemember songGroup songsLatestOrRememberedIndex
                             , span []
                                 [ text songTime ]
-                            , buttonComment songGroup songsPlayedOrRememberedIndex model.showCommentButtons
-                            , buttonLike songGroup songsPlayedOrRememberedIndex
+                            , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
+                            , buttonLike songGroup songsLatestOrRememberedIndex
                             , likedOrCommentedIndicator
-                            , buySongAnchor songPlayedOrRemembered
+                            , buySongAnchor songLatestOrRemembered
                             ]
                         , p []
-                            [ text songPlayedOrRemembered.title ]
+                            [ text songLatestOrRemembered.title ]
                         , p []
-                            [ text songPlayedOrRemembered.artist ]
+                            [ text songLatestOrRemembered.artist ]
                         ]
             in
-            List.indexedMap songView songsPlayedOrRemembered
+            List.indexedMap songView songsLatestOrRemembered
     in
     main_
         []
