@@ -293,24 +293,6 @@ view model =
         songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
         songGroupView songGroup songsRemembered =
             List.indexedMap (songView model songGroup) songsRemembered
-
-        songsLatestExpanded : SongsRemembered
-        songsLatestExpanded =
-            songs2SongsRemembered model.songsLatest
-
-        songsLatestView : List (Html Msg)
-        songsLatestView =
-            --List.indexedMap
-            --    (songView model Played)
-            --    songsLatestExpanded
-            songGroupView Played songsLatestExpanded
-
-        songsRememberedView : List (Html Msg)
-        songsRememberedView =
-            --List.indexedMap
-            --    (songView model Remembered)
-            --    model.songsRemembered
-            songGroupView Remembered model.songsRemembered
     in
     main_
         []
@@ -321,7 +303,7 @@ view model =
             ([ p []
                 [ buttonRemembered ]
              ]
-                ++ songsRememberedView
+                ++ songGroupView Remembered model.songsRemembered
             )
         , hr [] []
         , section
@@ -329,6 +311,6 @@ view model =
             ([ p []
                 [ buttonPlayed ]
              ]
-                ++ songsLatestView
+                ++ songGroupView Played (songs2SongsRemembered model.songsLatest)
             )
         ]
