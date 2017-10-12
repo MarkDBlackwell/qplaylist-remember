@@ -107,162 +107,6 @@ import ViewType
 -- VIEW
 
 
-commentArea : Model -> SongCommenting -> Html Msg
-commentArea model song =
-    let
-        hoverText : HoverText
-        hoverText =
-            "Type your (additional) comment here!"
-
-        statistics : String
-        statistics =
-            let
-                commentTextLength : Int
-                commentTextLength =
-                    String.length model.commentText
-            in
-            toString commentTextLength
-                |> (++) " – "
-
-        yearMonthDay : String
-        yearMonthDay =
-            let
-                timestampFieldsSelected : List String
-                timestampFieldsSelected =
-                    let
-                        howManyToTake : Int
-                        howManyToTake =
-                            3
-
-                        timestampList : List String
-                        timestampList =
-                            String.split " " song.timestamp
-                    in
-                    List.take howManyToTake timestampList
-            in
-            String.join "-" timestampFieldsSelected
-    in
-    section
-        [ id "comment" ]
-        [ p []
-            [ text
-                (String.concat
-                    [ song.artist
-                    , ": "
-                    , song.title
-                    , " ("
-                    , song.time
-                    , " on "
-                    , yearMonthDay
-                    , ")"
-
-                    --, statistics
-                    ]
-                )
-            ]
-        , input
-            [ autocomplete False
-            , id "input"
-            , onInput CommentAreaInputTextChangeCaptureHand
-            , placeholder hoverText
-            , required True
-            , title hoverText
-            , type_ "text"
-            ]
-            []
-        , buttonMy Nothing "Submit your comment" CommentSendHand
-        , buttonMy Nothing "Cancel this comment" CommentCancelHand
-        ]
-
-
-songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
-songView model group songsLatestOrRememberedIndex song =
-    let
-        likedOrCommentedIndicator : Html Msg
-        likedOrCommentedIndicator =
-            let
-                likedOrCommentedIndicatorHoverText : HoverText
-                likedOrCommentedIndicatorHoverText =
-                    let
-                        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
-                        likedOrCommentedIndicatorHoverTextCommentButton =
-                            if model.showCommentButtons then
-                                " (or a comment)"
-                            else
-                                ""
-                    in
-                    String.concat
-                        [ "You've shared a 'Like'"
-                        , likedOrCommentedIndicatorHoverTextCommentButton
-                        , " about this song (with the DJ)"
-                        ]
-            in
-            if song.likedOrCommented then
-                em [ title likedOrCommentedIndicatorHoverText ]
-                    []
-            else
-                htmlNodeNull
-
-        songAttributes : List (Attribute msg)
-        songAttributes =
-            let
-                lengthRemembered : SongGroupLength
-                lengthRemembered =
-                    List.length model.songsRemembered
-            in
-            if model.pageIsExpanded then
-                []
-            else
-                [ styleCalc group lengthRemembered songsLatestOrRememberedIndex ]
-
-        songTime : Time
-        songTime =
-            let
-                prefix : String
-                prefix =
-                    String.concat
-                        [ select 0
-                        , " "
-                        , select 1
-                        , "-"
-                        , select 2
-                        , " "
-                        ]
-
-                select : Int -> String
-                select index =
-                    selectOneMaybe stampList index
-                        |> Maybe.withDefault ""
-
-                stampList : List String
-                stampList =
-                    String.split " " song.timestamp
-            in
-            case group of
-                Played ->
-                    song.time
-
-                Remembered ->
-                    prefix ++ song.time
-    in
-    div
-        songAttributes
-        [ p []
-            [ buttonForgetRemember group songsLatestOrRememberedIndex
-            , span []
-                [ text songTime ]
-            , buttonComment group songsLatestOrRememberedIndex model.showCommentButtons
-            , buttonLike group songsLatestOrRememberedIndex
-            , likedOrCommentedIndicator
-            , buySongAnchor song
-            ]
-        , p []
-            [ text song.title ]
-        , p []
-            [ text song.artist ]
-        ]
-
-
 view : Model -> Html Msg
 view model =
     let
@@ -276,6 +120,74 @@ view model =
 
         commentAreaPossibly : Html Msg
         commentAreaPossibly =
+            let
+                commentArea : Model -> SongCommenting -> Html Msg
+                commentArea model song =
+                    let
+                        hoverText : HoverText
+                        hoverText =
+                            "Type your (additional) comment here!"
+
+                        statistics : String
+                        statistics =
+                            let
+                                commentTextLength : Int
+                                commentTextLength =
+                                    String.length model.commentText
+                            in
+                            toString commentTextLength
+                                |> (++) " – "
+
+                        yearMonthDay : String
+                        yearMonthDay =
+                            let
+                                timestampFieldsSelected : List String
+                                timestampFieldsSelected =
+                                    let
+                                        howManyToTake : Int
+                                        howManyToTake =
+                                            3
+
+                                        timestampList : List String
+                                        timestampList =
+                                            String.split " " song.timestamp
+                                    in
+                                    List.take howManyToTake timestampList
+                            in
+                            String.join "-" timestampFieldsSelected
+                    in
+                    section
+                        [ id "comment" ]
+                        [ p []
+                            [ text
+                                (String.concat
+                                    [ song.artist
+                                    , ": "
+                                    , song.title
+                                    , " ("
+                                    , song.time
+                                    , " on "
+                                    , yearMonthDay
+                                    , ")"
+
+                                    --, statistics
+                                    ]
+                                )
+                            ]
+                        , input
+                            [ autocomplete False
+                            , id "input"
+                            , onInput CommentAreaInputTextChangeCaptureHand
+                            , placeholder hoverText
+                            , required True
+                            , title hoverText
+                            , type_ "text"
+                            ]
+                            []
+                        , buttonMy Nothing "Submit your comment" CommentSendHand
+                        , buttonMy Nothing "Cancel this comment" CommentCancelHand
+                        ]
+            in
             maybeMapWithDefault
                 htmlNodeNull
                 (\x -> commentArea model x)
@@ -292,6 +204,94 @@ view model =
 
         songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
         songGroupView songGroup songsRemembered =
+            let
+                songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
+                songView model group songsLatestOrRememberedIndex song =
+                    let
+                        likedOrCommentedIndicator : Html Msg
+                        likedOrCommentedIndicator =
+                            let
+                                likedOrCommentedIndicatorHoverText : HoverText
+                                likedOrCommentedIndicatorHoverText =
+                                    let
+                                        likedOrCommentedIndicatorHoverTextCommentButton : HoverText
+                                        likedOrCommentedIndicatorHoverTextCommentButton =
+                                            if model.showCommentButtons then
+                                                " (or a comment)"
+                                            else
+                                                ""
+                                    in
+                                    String.concat
+                                        [ "You've shared a 'Like'"
+                                        , likedOrCommentedIndicatorHoverTextCommentButton
+                                        , " about this song (with the DJ)"
+                                        ]
+                            in
+                            if song.likedOrCommented then
+                                em [ title likedOrCommentedIndicatorHoverText ]
+                                    []
+                            else
+                                htmlNodeNull
+
+                        songAttributes : List (Attribute msg)
+                        songAttributes =
+                            let
+                                lengthRemembered : SongGroupLength
+                                lengthRemembered =
+                                    List.length model.songsRemembered
+                            in
+                            if model.pageIsExpanded then
+                                []
+                            else
+                                [ styleCalc group lengthRemembered songsLatestOrRememberedIndex ]
+
+                        songTime : Time
+                        songTime =
+                            let
+                                prefix : String
+                                prefix =
+                                    String.concat
+                                        [ select 0
+                                        , " "
+                                        , select 1
+                                        , "-"
+                                        , select 2
+                                        , " "
+                                        ]
+
+                                select : Int -> String
+                                select index =
+                                    selectOneMaybe stampList index
+                                        |> Maybe.withDefault ""
+
+                                stampList : List String
+                                stampList =
+                                    String.split " " song.timestamp
+                            in
+                            case group of
+                                Played ->
+                                    song.time
+
+                                Remembered ->
+                                    prefix ++ song.time
+                    in
+                    div
+                        songAttributes
+                        [ p []
+                            [ buttonForgetRemember group songsLatestOrRememberedIndex
+                            , span []
+                                [ text songTime ]
+                            , buttonComment group songsLatestOrRememberedIndex model.showCommentButtons
+                            , buttonLike group songsLatestOrRememberedIndex
+                            , likedOrCommentedIndicator
+                            , buySongAnchor song
+                            ]
+                        , p []
+                            [ text song.title ]
+                        , p []
+                            [ text song.artist ]
+                        ]
+            in
             songView model songGroup
                 |> flip List.indexedMap songsRemembered
     in
