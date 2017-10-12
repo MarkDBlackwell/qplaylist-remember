@@ -70,9 +70,9 @@ import SongType
             , Remembered
             )
         , SongGroupLength
-        , SongPlayedOrRemembered
-        , SongsPlayedOrRemembered
-        , SongsPlayedOrRememberedIndex
+        , SongLatestOrRemembered
+        , SongsLatestOrRemembered
+        , SongsLatestOrRememberedIndex
         , Time
         )
 import Utilities
@@ -196,10 +196,10 @@ view model =
                 )
             ]
 
-        songGroupView : SongGroup -> SongsPlayedOrRemembered -> List (Html Msg)
+        songGroupView : SongGroup -> SongsLatestOrRemembered -> List (Html Msg)
         songGroupView songGroup songsPlayedOrRemembered =
             let
-                songView : SongsPlayedOrRememberedIndex -> SongPlayedOrRemembered -> Html Msg
+                songView : SongsLatestOrRememberedIndex -> SongLatestOrRemembered -> Html Msg
                 songView songsPlayedOrRememberedIndex songPlayedOrRemembered =
                     let
                         likedOrCommentedIndicator : Html Msg

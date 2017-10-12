@@ -26,19 +26,18 @@ module SongType
         , SongLatest
         , SongLatestBase
         , SongLatestMaybe
+        , SongLatestOrRemembered
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
-        , SongPlayedOrRemembered
         , SongRemembered
         , SongRememberedMaybe
         , SongTimeless
         , SongTimelessBase
         , SongsLatest
         , SongsLatestIndex
+        , SongsLatestOrRemembered
         , SongsLatestOrRememberedIndex
-        , SongsPlayedOrRemembered
-        , SongsPlayedOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedIndexMaybe
@@ -106,7 +105,7 @@ type alias SongLikingOrCommentingMaybe =
     Maybe SongLikingOrCommenting
 
 
-type alias SongPlayedOrRemembered =
+type alias SongLatestOrRemembered =
     SongRemembered
 
 
@@ -144,7 +143,7 @@ type alias SongsLatestIndex =
     Int
 
 
-type alias SongsPlayedOrRemembered =
+type alias SongsLatestOrRemembered =
     SongsRemembered
 
 
@@ -198,8 +197,4 @@ type alias SongGroupLength =
 
 
 type alias SongsLatestOrRememberedIndex =
-    Int
-
-
-type alias SongsPlayedOrRememberedIndex =
     Int
