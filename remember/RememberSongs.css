@@ -103,7 +103,7 @@ section.songs-group > div {
     border-radius: .5em;
     font-size: .66666667rem; /* basis for em and percentage calculations */
 }
-section#songs-played > div {
+section#songs-latest > div {
     background-color: rgb(17,17,17);
 }
 section#songs-remembered > div {
@@ -113,7 +113,7 @@ section.songs-group > div:first-of-type {
     padding-top: 0;
 }
 /* To remove striping, use same background as plain <div>. */
-section#songs-played > div:nth-of-type(even) {
+section#songs-latest > div:nth-of-type(even) {
     background-color: rgb(36,36,36);
 }
 section.songs-group > div:last-of-type {
@@ -185,7 +185,7 @@ section.songs-group > div > p > button:first-of-type {
 section.songs-group > div > p > button:nth-of-type(2) {
     margin: 0 .290909em 0 0;
 }
-section#songs-played > div > p > button:before {
+section#songs-latest > div > p > button:before {
     content: "REMEMBER";
 }
 section#songs-remembered > div > p > button:first-of-type:before {
@@ -219,7 +219,7 @@ section.songs-group > p {
 /* Override browser & user settings: */
     margin: 0;
 }
-section#songs-played > p:after {
+section#songs-latest > p:after {
     content: "Latest";
 }
 section#songs-remembered > p:after {
@@ -235,7 +235,7 @@ section.songs-group > p > button {
     font-weight: 400;
     letter-spacing: .227273em;
 }
-section#songs-played > p > button:before {
+section#songs-latest > p > button:before {
     content: "refresh";
 }
 section#songs-remembered > p > button:before {

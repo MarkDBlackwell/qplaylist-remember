@@ -130,7 +130,7 @@ songGroup2String : SongGroup -> String
 songGroup2String group =
     case group of
         Latest ->
-            "played"
+            "latest"
 
         Remembered ->
             "remembered"
