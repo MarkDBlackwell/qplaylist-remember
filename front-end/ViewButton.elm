@@ -123,6 +123,10 @@ buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
         display : Display
         display =
             let
+                default : Display
+                default =
+                    "inline-block"
+
                 nonePossibly : Id -> HoverText
                 nonePossibly buttonId =
                     if
@@ -131,9 +135,9 @@ buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
                     then
                         "none"
                     else
-                        "inline-block"
+                        default
             in
-            maybeMapWithDefault "inline-block" nonePossibly buttonIdMaybe
+            maybeMapWithDefault default nonePossibly buttonIdMaybe
     in
     button
         ([ style [ ( "display", display ) ]
