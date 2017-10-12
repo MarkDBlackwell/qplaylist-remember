@@ -42,8 +42,10 @@ import SongType
             , Remembered
             )
         , SongLatest
+        , SongLatestBase
         , SongRemembered
         , SongTimeless
+        , SongTimelessBase
         , SongsLatest
         , SongsRemembered
         , SongsRememberedIndexMaybe
@@ -59,22 +61,6 @@ import Utilities
 
 
 -- UPDATE
-
-
-type alias SongLatestBase a =
-    { a
-        | artist : Artist
-        , time : Time
-        , timestamp : Timestamp
-        , title : Title
-    }
-
-
-type alias SongTimelessBase a =
-    { a
-        | artist : Artist
-        , title : Title
-    }
 
 
 buttonIdCreate : Id -> Int -> Id
