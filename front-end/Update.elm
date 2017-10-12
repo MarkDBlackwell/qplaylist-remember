@@ -34,8 +34,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songLikingOrCommentingMaybe
-        , songsRememberedAppendOneUnique
+        ( songsRememberedAppendOneUnique
         )
 import SongPort
     exposing
@@ -84,6 +83,7 @@ import UserIdentifier
 import Utilities
     exposing
         ( msg2Cmd
+        , selectOneMaybe
         , withoutOne
         )
 
@@ -175,7 +175,7 @@ update msg model =
             let
                 songRememberedCompareMaybe : SongCommentingMaybe
                 songRememberedCompareMaybe =
-                    songLikingOrCommentingMaybe model.songsRemembered songsRememberedIndex
+                    selectOneMaybe model.songsRemembered songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =

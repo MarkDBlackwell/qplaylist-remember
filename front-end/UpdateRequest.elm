@@ -45,8 +45,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songLikingOrCommentingMaybe
-        , songsRememberedUpdateTimestamp
+        ( songsRememberedUpdateTimestamp
         )
 import SongType
     exposing
@@ -75,6 +74,10 @@ import UpdateRequestType
 import UpdateStateVector
     exposing
         ( stateVector
+        )
+import Utilities
+    exposing
+        ( selectOneMaybe
         )
 
 
@@ -142,7 +145,7 @@ likeButtonProcessHand model songsRememberedIndex =
 
         songLikingMaybeNew : SongLikingOrCommentingMaybe
         songLikingMaybeNew =
-            songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
+            selectOneMaybe songsRememberedNew songsRememberedIndex
 
         songsRememberedNew : SongsRemembered
         songsRememberedNew =

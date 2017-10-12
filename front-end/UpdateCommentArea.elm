@@ -38,8 +38,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songLikingOrCommentingMaybe
-        , songsRememberedUpdateTimestamp
+        ( songsRememberedUpdateTimestamp
         )
 import SongInitialize
     exposing
@@ -65,6 +64,10 @@ import UpdateType
         ( Optional
             ( Open
             )
+        )
+import Utilities
+    exposing
+        ( selectOneMaybe
         )
 
 
@@ -96,7 +99,7 @@ commentAreaOpenHand model songsRememberedIndex =
     let
         songCommentingMaybeNew : SongLikingOrCommentingMaybe
         songCommentingMaybeNew =
-            songLikingOrCommentingMaybe songsRememberedNew songsRememberedIndex
+            selectOneMaybe songsRememberedNew songsRememberedIndex
 
         songsRememberedNew : SongsRemembered
         songsRememberedNew =

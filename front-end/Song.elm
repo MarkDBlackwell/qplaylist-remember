@@ -15,7 +15,6 @@
 module Song
     exposing
         ( likedOrCommentedShow
-        , songLikingOrCommentingMaybe
         , songsRememberedAppendOneUnique
         , songsRememberedUpdateTimestamp
         )
@@ -83,11 +82,6 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             List.map songRememberedTweak songsRemembered
     in
     maybeMapWithDefault songsRemembered songsRememberedTweak songLikingOrCommentingMaybe
-
-
-songLikingOrCommentingMaybe : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
-songLikingOrCommentingMaybe songsRemembered songsRememberedIndex =
-    selectOneMaybe songsRemembered songsRememberedIndex
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
