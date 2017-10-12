@@ -187,8 +187,8 @@ view model =
                 (\x -> commentArea x)
                 model.songCommentingMaybe
 
-        groupAttributes : SongGroup -> List (Attribute msg)
-        groupAttributes songGroup =
+        songGroupAttributes : SongGroup -> List (Attribute msg)
+        songGroupAttributes songGroup =
             [ class "songs-group"
             , id
                 (songGroup2String songGroup
@@ -199,8 +199,8 @@ view model =
         songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
         songGroupView songGroup songsRemembered =
             let
-                songView : Model -> SongGroup -> SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
-                songView model group songsLatestOrRememberedIndex song =
+                songView : SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
+                songView songsLatestOrRememberedIndex song =
                     let
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
@@ -237,7 +237,7 @@ view model =
                             if model.pageIsExpanded then
                                 []
                             else
-                                [ styleCalc group lengthRemembered songsLatestOrRememberedIndex ]
+                                [ styleCalc songGroup lengthRemembered songsLatestOrRememberedIndex ]
 
                         songTime : Time
                         songTime =
@@ -262,7 +262,7 @@ view model =
                                 stampList =
                                     String.split " " song.timestamp
                             in
-                            case group of
+                            case songGroup of
                                 Played ->
                                     song.time
 
@@ -272,11 +272,11 @@ view model =
                     div
                         songAttributes
                         [ p []
-                            [ buttonForgetRemember group songsLatestOrRememberedIndex
+                            [ buttonForgetRemember songGroup songsLatestOrRememberedIndex
                             , span []
                                 [ text songTime ]
-                            , buttonComment group songsLatestOrRememberedIndex model.showCommentButtons
-                            , buttonLike group songsLatestOrRememberedIndex
+                            , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
+                            , buttonLike songGroup songsLatestOrRememberedIndex
                             , likedOrCommentedIndicator
                             , buySongAnchor song
                             ]
@@ -286,15 +286,14 @@ view model =
                             [ text song.artist ]
                         ]
             in
-            songView model songGroup
-                |> flip List.indexedMap songsRemembered
+            List.indexedMap songView songsRemembered
     in
     main_
         []
         [ alertArea
         , commentAreaPossibly
         , section
-            (groupAttributes Remembered)
+            (songGroupAttributes Remembered)
             ([ p []
                 [ buttonRemembered ]
              ]
@@ -302,7 +301,7 @@ view model =
             )
         , hr [] []
         , section
-            (groupAttributes Played)
+            (songGroupAttributes Played)
             ([ p []
                 [ buttonPlayed ]
              ]
