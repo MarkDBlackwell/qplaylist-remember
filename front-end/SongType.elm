@@ -29,6 +29,7 @@ module SongType
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
+        , SongPlayedOrRemembered
         , SongRemembered
         , SongRememberedMaybe
         , SongTimeless
@@ -101,6 +102,10 @@ type alias SongLikingOrCommenting =
 
 type alias SongLikingOrCommentingMaybe =
     Maybe SongLikingOrCommenting
+
+
+type alias SongPlayedOrRemembered =
+    SongRemembered
 
 
 type alias SongRemembered =

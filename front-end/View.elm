@@ -70,7 +70,7 @@ import SongType
             , Remembered
             )
         , SongGroupLength
-        , SongRemembered
+        , SongPlayedOrRemembered
         , SongsLatestOrRememberedIndex
         , SongsRemembered
         , Time
@@ -199,8 +199,8 @@ view model =
         songGroupView : SongGroup -> SongsRemembered -> List (Html Msg)
         songGroupView songGroup songsRemembered =
             let
-                songView : SongsLatestOrRememberedIndex -> SongRemembered -> Html Msg
-                songView songsLatestOrRememberedIndex song =
+                songView : SongsLatestOrRememberedIndex -> SongPlayedOrRemembered -> Html Msg
+                songView songsLatestOrRememberedIndex songPlayedOrRemembered =
                     let
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
@@ -221,7 +221,7 @@ view model =
                                         , " about this song (with the DJ)"
                                         ]
                             in
-                            if song.likedOrCommented then
+                            if songPlayedOrRemembered.likedOrCommented then
                                 em [ title indicatorHoverText ]
                                     []
                             else
@@ -260,14 +260,14 @@ view model =
 
                                 stampList : List String
                                 stampList =
-                                    String.split " " song.timestamp
+                                    String.split " " songPlayedOrRemembered.timestamp
                             in
                             case songGroup of
                                 Played ->
-                                    song.time
+                                    songPlayedOrRemembered.time
 
                                 Remembered ->
-                                    prefix ++ song.time
+                                    prefix ++ songPlayedOrRemembered.time
                     in
                     div
                         songAttributes
@@ -278,12 +278,12 @@ view model =
                             , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
                             , buttonLike songGroup songsLatestOrRememberedIndex
                             , likedOrCommentedIndicator
-                            , buySongAnchor song
+                            , buySongAnchor songPlayedOrRemembered
                             ]
                         , p []
-                            [ text song.title ]
+                            [ text songPlayedOrRemembered.title ]
                         , p []
-                            [ text song.artist ]
+                            [ text songPlayedOrRemembered.artist ]
                         ]
             in
             List.indexedMap songView songsRemembered
