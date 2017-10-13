@@ -77,7 +77,8 @@ import SongType
         )
 import Utilities
     exposing
-        ( htmlNodeNull
+        ( attributesEmpty
+        , htmlNodeNull
         , innerHtmlEmpty
         , maybeMapWithDefault
         , selectOneMaybe
@@ -115,7 +116,7 @@ view model =
         alertArea =
             section
                 [ id "alert" ]
-                [ p []
+                [ p attributesEmpty
                     [ text (Maybe.withDefault "" model.alertMessageText) ]
                 ]
 
@@ -152,7 +153,7 @@ view model =
                     in
                     section
                         [ id "comment" ]
-                        [ p []
+                        [ p attributesEmpty
                             [ text
                                 (String.concat
                                     [ song.artist
@@ -236,7 +237,7 @@ view model =
                                     List.length model.songsRemembered
                             in
                             if model.pageIsExpanded then
-                                []
+                                attributesEmpty
                             else
                                 [ styleCalc songGroup lengthRemembered songsLatestOrRememberedIndex ]
 
@@ -272,38 +273,38 @@ view model =
                     in
                     div
                         songAttributes
-                        [ p []
+                        [ p attributesEmpty
                             [ buttonRememberForget songGroup songsLatestOrRememberedIndex
-                            , span []
+                            , span attributesEmpty
                                 [ text songTime ]
                             , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
                             , buttonLike songGroup songsLatestOrRememberedIndex
                             , likedOrCommentedIndicator
                             , buySongAnchor songLatestOrRemembered
                             ]
-                        , p []
+                        , p attributesEmpty
                             [ text songLatestOrRemembered.title ]
-                        , p []
+                        , p attributesEmpty
                             [ text songLatestOrRemembered.artist ]
                         ]
             in
             List.indexedMap songView songsLatestOrRemembered
     in
     main_
-        []
+        attributesEmpty
         [ alertArea
         , commentAreaPossibly
         , section
             (songGroupAttributes Remembered)
-            ([ p []
+            ([ p attributesEmpty
                 [ buttonRemembered ]
              ]
                 ++ songGroupView Remembered model.songsRemembered
             )
-        , hr [] innerHtmlEmpty
+        , hr attributesEmpty innerHtmlEmpty
         , section
             (songGroupAttributes Latest)
-            ([ p []
+            ([ p attributesEmpty
                 [ buttonLatest ]
              ]
                 ++ (songs2SongsRemembered model.songsLatest

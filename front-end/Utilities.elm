@@ -15,6 +15,7 @@
 module Utilities
     exposing
         ( attributeIdFromMaybe
+        , attributesEmpty
         , goldenRatio
         , htmlNodeNull
         , indexes
@@ -129,9 +130,14 @@ withoutOne listA index =
 attributeIdFromMaybe : IdMaybe -> List (Attribute msg)
 attributeIdFromMaybe attributeIdMaybe =
     maybeMapWithDefault
-        []
+        attributesEmpty
         (\x -> [ id x ])
         attributeIdMaybe
+
+
+attributesEmpty : List (Attribute msg)
+attributesEmpty =
+    []
 
 
 goldenRatio : Float
