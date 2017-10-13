@@ -98,13 +98,13 @@ updateInitialSetUp threeLetterSpaceInt =
             let
                 tempList : List Int
                 tempList =
-                    --[ threeLetterSpaceInt // letterSpace // letterSpace
-                    --, threeLetterSpaceInt // letterSpace
-                    --, threeLetterSpaceInt
-                    --]
-                    List.scanl (//) threeLetterSpaceInt [ letterSpace, letterSpace ]
+                    --List.scanl (//) threeLetterSpaceInt [ letterSpace, letterSpace ]
+                    List.repeat 2 letterSpace
+                        |> List.scanl (//) threeLetterSpaceInt
             in
-            List.map (\x -> x % letterSpace) tempList
+            --List.map (\x -> x % letterSpace) tempList
+            tempList
+                |> List.map (\x -> x % letterSpace)
     in
     List.map keyCode2Char threeDigits
         |> String.fromList
