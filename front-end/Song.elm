@@ -175,7 +175,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songRememberedSwapUnlessListHeadEmpty
                         songLatest
             in
-            maybeDefaultNothing swapOneLatestMaybe listHeadMaybe
+            listHeadMaybe
+                |> maybeDefaultNothing swapOneLatestMaybe
     in
     selectOneMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapUnlessListHeadEmptyMaybe
