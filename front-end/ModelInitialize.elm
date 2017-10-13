@@ -53,7 +53,7 @@ import UpdateRequestType
         )
 import UserIdentifier
     exposing
-        ( threeLetterSpaceIntRandom
+        ( threeLetterNumberSpaceIntRandom
         , userIdentifierInit
         )
 
@@ -84,7 +84,7 @@ init flags =
         songsLatestInit
         flags.songsRemembered
         userIdentifierInit
-    , generate InitialSetUp threeLetterSpaceIntRandom
+    , generate InitialSetUp threeLetterNumberSpaceIntRandom
     )
 
 

@@ -14,7 +14,7 @@
 
 module UserIdentifier
     exposing
-        ( threeLetterSpaceIntRandom
+        ( threeLetterNumberSpaceIntRandom
         , updateInitialSetUp
         , userIdentifierInit
         )
@@ -61,8 +61,8 @@ letterSpace =
     caseCount * caseLength
 
 
-threeLetterSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
-threeLetterSpaceIntRandom =
+threeLetterNumberSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
+threeLetterNumberSpaceIntRandom =
     let
         highest : ThreeLetterNumberSpaceInt
         highest =
@@ -81,7 +81,7 @@ userIdentifierInit =
 
 
 updateInitialSetUp : ThreeLetterNumberSpaceInt -> UserIdentifier
-updateInitialSetUp threeLetterSpaceInt =
+updateInitialSetUp threeLetterNumberSpaceInt =
     let
         keyCode2Char : KeyCode -> Char
         keyCode2Char digit =
@@ -102,7 +102,7 @@ updateInitialSetUp threeLetterSpaceInt =
             --List.repeat (digitCount - 1) letterSpace
             (digitCount - 1)
                 |> flip List.repeat letterSpace
-                |> List.scanl (//) threeLetterSpaceInt
+                |> List.scanl (//) threeLetterNumberSpaceInt
                 |> List.map (\x -> x % letterSpace)
     in
     threeDigits

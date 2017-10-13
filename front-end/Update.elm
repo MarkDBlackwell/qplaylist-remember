@@ -115,9 +115,9 @@ update msg model =
         FocusAttempt id ->
             focusAttempt model id
 
-        InitialSetUp threeLetterSpaceInt ->
+        InitialSetUp threeLetterNumberSpaceInt ->
             ( { model
-                | userIdentifier = updateInitialSetUp threeLetterSpaceInt
+                | userIdentifier = updateInitialSetUp threeLetterNumberSpaceInt
               }
             , Cmd.none
             )
