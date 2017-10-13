@@ -95,16 +95,13 @@ updateInitialSetUp threeLetterSpaceInt =
 
         threeDigits : ThreeLetterSpaceInt -> List Int
         threeDigits threeLetterSpaceInt =
-            [ threeLetterSpaceInt
-                // letterSpace
-                // letterSpace
-                |> flip (%) letterSpace
-            , threeLetterSpaceInt
-                // letterSpace
-                |> flip (%) letterSpace
-            , threeLetterSpaceInt
-                |> flip (%) letterSpace
-            ]
+            List.map
+                (\x -> x % letterSpace)
+                [ threeLetterSpaceInt // letterSpace // letterSpace
+                , threeLetterSpaceInt // letterSpace
+                , threeLetterSpaceInt
+                ]
+
     in
     threeDigits threeLetterSpaceInt
         |> List.map keyCode2Char
