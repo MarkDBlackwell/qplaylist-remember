@@ -58,7 +58,7 @@ import UpdateFocus
         ( focusInputPossibly
         , focusSetId
         )
-import UpdateStateVector
+import UpdateHelper
     exposing
         ( stateVector
         )

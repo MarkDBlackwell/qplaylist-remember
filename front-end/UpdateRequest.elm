@@ -61,6 +61,7 @@ import UpdateHelper
     exposing
         ( likeOrCommentRequestUriText
         , relative
+        , stateVector
         )
 import UpdateLog
     exposing
@@ -70,10 +71,6 @@ import UpdateRequestType
     exposing
         ( HttpRequestText
         , UriText
-        )
-import UpdateStateVector
-    exposing
-        ( stateVector
         )
 import Utilities
     exposing

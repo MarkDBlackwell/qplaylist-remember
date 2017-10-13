@@ -57,6 +57,10 @@ import UpdateFocus
         , focusInputPossibly
         , focusSetId
         )
+import UpdateHelper
+    exposing
+        ( stateVector
+        )
 import UpdateRequest
     exposing
         ( commentSendHand
@@ -71,10 +75,6 @@ import UpdateResponse
         , likeResponseOk
         , songsLatestResponseErr
         , songsLatestResponseOk
-        )
-import UpdateStateVector
-    exposing
-        ( stateVector
         )
 import UserIdentifier
     exposing

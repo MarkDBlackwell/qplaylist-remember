@@ -16,8 +16,17 @@ module UpdateHelper
     exposing
         ( likeOrCommentRequestUriText
         , relative
+        , stateVector
         )
 
+import ModelType
+    exposing
+        ( Model
+        , Optional
+            ( Closed
+            , Open
+            )
+        )
 import SongInitialize
     exposing
         ( likedOrCommentedInit
@@ -30,7 +39,8 @@ import SongType
         )
 import UpdateRequestType
     exposing
-        ( LikeOrCommentText
+        ( AwaitingServerResponse
+        , LikeOrCommentText
         , QueryPair
         , QueryPairs
         , UriText
@@ -39,6 +49,10 @@ import UpdateRequestType
 import UserIdentifierType
     exposing
         ( UserIdentifier
+        )
+import Utilities
+    exposing
+        ( maybeMapWithDefault
         )
 
 
@@ -139,3 +153,15 @@ relative urlBeforeQueryList queryPairs =
         [ urlBeforeQuery
         , query
         ]
+
+
+stateVector : Model -> ( AwaitingServerResponse, Optional )
+stateVector model =
+    let
+        commentOptional : Optional
+        commentOptional =
+            maybeMapWithDefault Closed (\_ -> Open) model.songCommentingMaybe
+    in
+    ( model.awaitingServerResponse
+    , commentOptional
+    )
