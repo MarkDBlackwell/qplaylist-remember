@@ -141,7 +141,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                         (songRememberedUpdate songRememberedSongsRememberedSwapOneLatest songLatest
                                             |> List.singleton
                                         )
-                                    |> (++) (List.take songsRememberedIndex songsRemembered)
+                                    |> (++)
+                                        (List.take songsRememberedIndex songsRemembered)
                                     |> Just
                     in
                     songsRememberedSwapOneLatestMaybe
