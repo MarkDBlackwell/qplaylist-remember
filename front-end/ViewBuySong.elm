@@ -42,7 +42,7 @@ import SongType
     exposing
         ( SongRemembered
         )
-import UpdateRequestHelper
+import UpdateHelper
     exposing
         ( relative
         )

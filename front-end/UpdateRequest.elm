@@ -57,14 +57,14 @@ import UpdateFocus
     exposing
         ( focusInputPossibly
         )
-import UpdateLog
-    exposing
-        ( logRequest
-        )
-import UpdateRequestHelper
+import UpdateHelper
     exposing
         ( likeOrCommentRequestUriText
         , relative
+        )
+import UpdateLog
+    exposing
+        ( logRequest
         )
 import UpdateRequestType
     exposing

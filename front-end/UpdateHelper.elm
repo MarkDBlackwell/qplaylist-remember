@@ -12,7 +12,7 @@
 -}
 
 
-module UpdateRequestHelper
+module UpdateHelper
     exposing
         ( likeOrCommentRequestUriText
         , relative
