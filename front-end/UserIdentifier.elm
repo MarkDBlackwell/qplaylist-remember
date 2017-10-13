@@ -98,10 +98,11 @@ updateInitialSetUp threeLetterSpaceInt =
             let
                 tempList : List Int
                 tempList =
-                    [ threeLetterSpaceInt // letterSpace // letterSpace
-                    , threeLetterSpaceInt // letterSpace
-                    , threeLetterSpaceInt
-                    ]
+                    --[ threeLetterSpaceInt // letterSpace // letterSpace
+                    --, threeLetterSpaceInt // letterSpace
+                    --, threeLetterSpaceInt
+                    --]
+                    List.scanl (//) threeLetterSpaceInt [ letterSpace, letterSpace ]
             in
             List.map (\x -> x % letterSpace) tempList
     in
