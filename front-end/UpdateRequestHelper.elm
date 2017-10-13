@@ -88,8 +88,8 @@ relative urlBeforeQueryList queryPairs =
         query : UriText
         query =
             let
-                queryPairJoin : QueryPair -> UriText
-                queryPairJoin ( name, value ) =
+                joinAndEscape : QueryPair -> UriText
+                joinAndEscape ( name, value ) =
                     let
                         escapeAll : UriText -> UriText
                         escapeAll string =
@@ -126,7 +126,7 @@ relative urlBeforeQueryList queryPairs =
             if List.isEmpty queryPairs then
                 ""
             else
-                List.map queryPairJoin queryPairs
+                List.map joinAndEscape queryPairs
                     |> String.join "&"
                     |> String.cons '?'
 
