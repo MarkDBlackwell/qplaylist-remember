@@ -67,21 +67,26 @@ import Utilities
 likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
 likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     let
-        songsRememberedTweak : SongLikingOrCommenting -> SongsRemembered
-        songsRememberedTweak songLikingOrCommenting =
+        process : SongLikingOrCommenting -> SongsRemembered
+        process songLikingOrCommenting =
             let
-                songRememberedTweak : SongRemembered -> SongRemembered
-                songRememberedTweak songRemembered =
-                    if song2SongLatest songLikingOrCommenting /= song2SongLatest songRemembered then
+                tweakPossibly : SongRemembered -> SongRemembered
+                tweakPossibly songRemembered =
+                    let
+                        songDesired : SongLatest
+                        songDesired =
+                            song2SongLatest songLikingOrCommenting
+                    in
+                    if song2SongLatest songRemembered /= songDesired then
                         songRemembered
                     else
                         { songRemembered
                             | likedOrCommented = True
                         }
             in
-            List.map songRememberedTweak songsRemembered
+            List.map tweakPossibly songsRemembered
     in
-    maybeMapWithDefault songsRemembered songsRememberedTweak songLikingOrCommentingMaybe
+    maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
