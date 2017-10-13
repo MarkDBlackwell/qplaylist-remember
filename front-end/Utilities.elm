@@ -87,10 +87,10 @@ matchingIndexes listA a =
     let
         matchWithIndexMaybe : ( Int, a ) -> Maybe Int
         matchWithIndexMaybe ( index, another ) =
-            if another == a then
-                Just index
-            else
+            if another /= a then
                 Nothing
+            else
+                Just index
     in
     withIndexes listA
         |> List.filterMap matchWithIndexMaybe
