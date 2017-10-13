@@ -181,6 +181,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             in
             maybeDefaultNothing swapOneLatestMaybe listHeadMaybe
     in
-    Maybe.withDefault
-        songsRemembered
-        (maybeDefaultNothing swapUnlessListHeadEmptyMaybe songsRememberedSelectOneMaybe)
+    songsRememberedSelectOneMaybe
+        |> maybeDefaultNothing swapUnlessListHeadEmptyMaybe
+        |> Maybe.withDefault songsRemembered
