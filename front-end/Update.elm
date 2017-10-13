@@ -51,6 +51,7 @@ import SongType
         ( SongCommentingMaybe
         , SongsRemembered
         , SongsRememberedIndexMaybe
+        , SongsTimeless
         )
 import UpdateComment
     exposing
@@ -227,17 +228,16 @@ update msg model =
                         songsLatestIndex
                         model.songsRemembered
 
+                songsRememberedAppendedTimeless : SongsTimeless
+                songsRememberedAppendedTimeless =
+                    songs2SongsTimeless songsRememberedAppended
+
                 songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                 songsRememberedIndexMaybe =
-                    case selectOneMaybe model.songsLatest songsLatestIndex of
-                        Nothing ->
-                            Nothing
-
-                        Just songLatest ->
-                            matchingIndexes
-                                (songs2SongsTimeless songsRememberedAppended)
-                                (song2SongTimeless songLatest)
-                                |> List.head
+                    selectOneMaybe model.songsLatest songsLatestIndex
+                        |> Maybe.map song2SongTimeless
+                        |> Maybe.map (matchingIndexes songsRememberedAppendedTimeless)
+                        |> Maybe.andThen List.head
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
