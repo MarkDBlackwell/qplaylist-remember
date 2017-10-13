@@ -99,7 +99,6 @@ updateInitialSetUp threeLetterNumberSpaceInt =
 
         threeDigits : List Int
         threeDigits =
-            --List.repeat (digitCount - 1) letterSpace
             (digitCount - 1)
                 |> flip List.repeat letterSpace
                 |> List.scanl (//) threeLetterNumberSpaceInt
