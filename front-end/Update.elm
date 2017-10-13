@@ -234,7 +234,10 @@ update msg model =
                             Nothing
 
                         Just songLatest ->
-                            List.head (matchingIndexes (songs2SongsTimeless songsRememberedAppended) (song2SongTimeless songLatest))
+                            matchingIndexes
+                                (songs2SongsTimeless songsRememberedAppended)
+                                (song2SongTimeless songLatest)
+                                |> List.head
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
