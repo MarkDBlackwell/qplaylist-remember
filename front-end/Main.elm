@@ -25,7 +25,7 @@ import Html
     exposing
         ( programWithFlags
         )
-import Initialize
+import ModelInitialize
     exposing
         ( init
         )

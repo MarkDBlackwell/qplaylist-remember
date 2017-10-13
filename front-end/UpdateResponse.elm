@@ -53,7 +53,7 @@ import Http
     exposing
         ( Error
         )
-import Initialize
+import ModelInitialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit

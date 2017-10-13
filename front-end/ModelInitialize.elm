@@ -12,7 +12,7 @@
 -}
 
 
-module Initialize
+module ModelInitialize
     exposing
         ( awaitingServerResponseInit
         , commentTextInit

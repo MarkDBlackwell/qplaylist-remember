@@ -28,7 +28,7 @@ import ElmCycle
     exposing
         ( ElmCycle
         )
-import Initialize
+import ModelInitialize
     exposing
         ( commentTextInit
         )
