@@ -32,7 +32,7 @@ import Random
         )
 import UserIdentifierType
     exposing
-        ( ThreeLetterSpaceInt
+        ( ThreeLetterNumberSpaceInt
         , UserIdentifier
         )
 
@@ -45,22 +45,28 @@ caseLength =
     1 + toCode 'Z' - toCode 'A'
 
 
+digitCount : Int
+digitCount =
+    3
+
+
 letterSpace : Int
 letterSpace =
     let
         caseCount : Int
         caseCount =
+            --Upper and lower case (letters).
             2
     in
     caseCount * caseLength
 
 
-threeLetterSpaceIntRandom : Generator ThreeLetterSpaceInt
+threeLetterSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
 threeLetterSpaceIntRandom =
     let
-        highest : ThreeLetterSpaceInt
+        highest : ThreeLetterNumberSpaceInt
         highest =
-            (letterSpace ^ 3) - 1
+            (letterSpace ^ digitCount) - 1
     in
     int 0 highest
 
@@ -74,7 +80,7 @@ userIdentifierInit =
 -- UPDATE
 
 
-updateInitialSetUp : ThreeLetterSpaceInt -> UserIdentifier
+updateInitialSetUp : ThreeLetterNumberSpaceInt -> UserIdentifier
 updateInitialSetUp threeLetterSpaceInt =
     let
         keyCode2Char : KeyCode -> Char
@@ -93,7 +99,9 @@ updateInitialSetUp threeLetterSpaceInt =
 
         threeDigits : List Int
         threeDigits =
-            List.repeat 2 letterSpace
+            --List.repeat (digitCount - 1) letterSpace
+            (digitCount - 1)
+                |> flip List.repeat letterSpace
                 |> List.scanl (//) threeLetterSpaceInt
                 |> List.map (\x -> x % letterSpace)
     in

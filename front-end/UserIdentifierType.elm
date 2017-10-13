@@ -14,14 +14,14 @@
 
 module UserIdentifierType
     exposing
-        ( ThreeLetterSpaceInt
+        ( ThreeLetterNumberSpaceInt
         , UserIdentifier
         )
 
 -- MODEL
 
 
-type alias ThreeLetterSpaceInt =
+type alias ThreeLetterNumberSpaceInt =
     Int
 
 
