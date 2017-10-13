@@ -115,7 +115,10 @@ relative urlBeforeQueryList queryPairs =
                             --See:
                             --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
                             --TODO: Possibly, use Http.encodeUri instead:
-                            escapeHashes (escapeEqualsSigns (escapeAmpersands string))
+                            string
+                                |> escapeAmpersands
+                                |> escapeEqualsSigns
+                                |> escapeHashes
                     in
                     String.concat
                         [ name
