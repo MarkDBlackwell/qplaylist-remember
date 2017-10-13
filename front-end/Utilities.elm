@@ -83,11 +83,11 @@ indexes listA =
 
 
 matchingIndexes : List a -> a -> List Int
-matchingIndexes listA a =
+matchingIndexes listA thing =
     let
         matchWithIndexMaybe : ( Int, a ) -> Maybe Int
-        matchWithIndexMaybe ( index, another ) =
-            if another /= a then
+        matchWithIndexMaybe ( index, variable ) =
+            if thing /= variable then
                 Nothing
             else
                 Just index

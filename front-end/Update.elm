@@ -35,6 +35,12 @@ import ModelType
 import Song
     exposing
         ( songsRememberedAppendOneUnique
+        , songsRememberedUpdateTimestamp
+        )
+import SongHelper
+    exposing
+        ( song2SongTimeless
+        , songs2SongsTimeless
         )
 import SongPort
     exposing
@@ -44,6 +50,7 @@ import SongType
     exposing
         ( SongCommentingMaybe
         , SongsRemembered
+        , SongsRememberedIndexMaybe
         )
 import UpdateComment
     exposing
@@ -82,7 +89,8 @@ import UserIdentifier
         )
 import Utilities
     exposing
-        ( msg2Cmd
+        ( matchingIndexes
+        , msg2Cmd
         , selectOneMaybe
         , withoutOne
         )
@@ -212,12 +220,25 @@ update msg model =
 
         SongRememberHand songsLatestIndex ->
             let
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
+                songsRememberedAppended : SongsRemembered
+                songsRememberedAppended =
                     songsRememberedAppendOneUnique
                         model.songsLatest
                         songsLatestIndex
                         model.songsRemembered
+
+                songsRememberedIndexMaybe : SongsRememberedIndexMaybe
+                songsRememberedIndexMaybe =
+                    case selectOneMaybe model.songsLatest songsLatestIndex of
+                        Nothing ->
+                            Nothing
+
+                        Just songLatest ->
+                            List.head (matchingIndexes (songs2SongsTimeless songsRememberedAppended) (song2SongTimeless songLatest))
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    Maybe.withDefault songsRememberedAppended (Maybe.map (songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended) songsRememberedIndexMaybe)
             in
             --(awaitingServer, commentArea)
             case stateVector model of
