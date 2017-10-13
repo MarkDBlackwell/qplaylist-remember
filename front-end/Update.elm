@@ -221,26 +221,28 @@ update msg model =
 
         SongRememberHand songsLatestIndex ->
             let
-                songsRememberedAppended : SongsRemembered
-                songsRememberedAppended =
-                    songsRememberedAppendOneUnique
-                        model.songsLatest
-                        songsLatestIndex
-                        model.songsRemembered
-
-                songsRememberedAppendedTimeless : SongsTimeless
-                songsRememberedAppendedTimeless =
-                    songs2SongsTimeless songsRememberedAppended
-
-                songsRememberedIndexMaybe : SongsRememberedIndexMaybe
-                songsRememberedIndexMaybe =
-                    selectOneMaybe model.songsLatest songsLatestIndex
-                        |> Maybe.map song2SongTimeless
-                        |> Maybe.map (matchingIndexes songsRememberedAppendedTimeless)
-                        |> Maybe.andThen List.head
-
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
+                    let
+                        songsRememberedAppended : SongsRemembered
+                        songsRememberedAppended =
+                            songsRememberedAppendOneUnique
+                                model.songsLatest
+                                songsLatestIndex
+                                model.songsRemembered
+
+                        songsRememberedIndexMaybe : SongsRememberedIndexMaybe
+                        songsRememberedIndexMaybe =
+                            let
+                                timeless : SongsTimeless
+                                timeless =
+                                    songs2SongsTimeless songsRememberedAppended
+                            in
+                            selectOneMaybe model.songsLatest songsLatestIndex
+                                |> Maybe.map song2SongTimeless
+                                |> Maybe.map (matchingIndexes timeless)
+                                |> Maybe.andThen List.head
+                    in
                     songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended
                         |> flip Maybe.map songsRememberedIndexMaybe
                         |> Maybe.withDefault songsRememberedAppended
