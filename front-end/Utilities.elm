@@ -16,7 +16,7 @@ module Utilities
     exposing
         ( attributeIdFromMaybe
         , attributesEmpty
-        , fieldString
+        , field2String
         , goldenRatio
         , htmlNodeNull
         , indexes
@@ -70,8 +70,8 @@ import ViewType
 -- UPDATE
 
 
-fieldString : String -> Decoder String
-fieldString text =
+field2String : String -> Decoder String
+field2String text =
     field text string
 
 

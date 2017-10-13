@@ -25,14 +25,16 @@ import Json.Decode
     exposing
         ( Decoder
         , decodeString
-        , field
         , map
-        , string
         )
 import UpdateRequestType
     exposing
         ( HttpResponseText
         , LikeOrCommentResponseText
+        )
+import Utilities
+    exposing
+        ( field2String
         )
 
 
@@ -58,7 +60,7 @@ decodeLikeOrCommentResponse jsonRawText =
                         tag =
                             "response"
                     in
-                    field tag string
+                    field2String tag
                         |> map LikeOrCommentResponseWithDummyTag
             in
             decodeString decodeResponse jsonRawText

@@ -41,7 +41,7 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( fieldString
+        ( field2String
         )
 
 
@@ -70,10 +70,10 @@ decodeSongsLatestResponse jsonRawText =
                         decodeSongLatest =
                             map4
                                 SongLatest
-                                (fieldString "artist")
-                                (fieldString "time")
-                                (fieldString "timeStamp")
-                                (fieldString "title")
+                                (field2String "artist")
+                                (field2String "time")
+                                (field2String "timeStamp")
+                                (field2String "title")
 
                         tag : String
                         tag =
