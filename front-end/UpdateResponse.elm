@@ -216,6 +216,8 @@ likeResponseOk model httpResponseText =
             , Cmd.batch
                 [ Just alertMessageTextDecode
                     |> logDecoding
+                , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Like"
+                    |> focusSetId
                 , focusInputPossibly model
                 ]
             )
