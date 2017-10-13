@@ -244,8 +244,23 @@ view model =
                         songTime : Time
                         songTime =
                             let
+                                clock : Time
+                                clock =
+                                    songLatestOrRemembered.time
+
                                 prefix : String
                                 prefix =
+                                    let
+                                        select : Int -> String
+                                        select index =
+                                            let
+                                                stampList : List String
+                                                stampList =
+                                                    String.split " " songLatestOrRemembered.timestamp
+                                            in
+                                            selectOneMaybe stampList index
+                                                |> Maybe.withDefault ""
+                                    in
                                     String.concat
                                         [ select 0
                                         , " "
@@ -254,22 +269,13 @@ view model =
                                         , select 2
                                         , " "
                                         ]
-
-                                select : Int -> String
-                                select index =
-                                    selectOneMaybe stampList index
-                                        |> Maybe.withDefault ""
-
-                                stampList : List String
-                                stampList =
-                                    String.split " " songLatestOrRemembered.timestamp
                             in
                             case songGroup of
                                 Latest ->
-                                    songLatestOrRemembered.time
+                                    clock
 
                                 Remembered ->
-                                    prefix ++ songLatestOrRemembered.time
+                                    prefix ++ clock
                     in
                     div
                         songAttributes
