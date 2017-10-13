@@ -49,9 +49,9 @@ import SongPort
 import SongType
     exposing
         ( SongCommentingMaybe
+        , SongTimeless
         , SongsRemembered
         , SongsRememberedIndexMaybe
-        , SongsTimeless
         )
 import UpdateComment
     exposing
@@ -234,13 +234,14 @@ update msg model =
                         songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                         songsRememberedIndexMaybe =
                             let
-                                timeless : SongsTimeless
-                                timeless =
+                                matchingIndexesTimeless : SongTimeless -> List Int
+                                matchingIndexesTimeless =
                                     songs2SongsTimeless songsRememberedAppended
+                                        |> matchingIndexes
                             in
                             selectOneMaybe model.songsLatest songsLatestIndex
                                 |> Maybe.map song2SongTimeless
-                                |> Maybe.map (matchingIndexes timeless)
+                                |> Maybe.map matchingIndexesTimeless
                                 |> Maybe.andThen List.head
                     in
                     songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended
