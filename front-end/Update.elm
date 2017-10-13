@@ -138,17 +138,18 @@ update msg model =
 
         PageMorphHand ->
             let
-                bothListsAreEmpty : Bool
-                bothListsAreEmpty =
-                    List.any
-                        identity
-                        --Here, can't use List.all.
-                        [ List.isEmpty model.songsLatest
-                        , List.isEmpty model.songsRemembered
-                        ]
-
                 pageIsExpandedNew : PageIsExpanded
                 pageIsExpandedNew =
+                    let
+                        bothListsAreEmpty : Bool
+                        bothListsAreEmpty =
+                            List.any
+                                identity
+                                --Here, can't use List.all.
+                                [ List.isEmpty model.songsLatest
+                                , List.isEmpty model.songsRemembered
+                                ]
+                    in
                     if bothListsAreEmpty then
                         model.pageIsExpanded
                     else
@@ -213,7 +214,10 @@ update msg model =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedAppendOneUnique model.songsLatest songsLatestIndex model.songsRemembered
+                    songsRememberedAppendOneUnique
+                        model.songsLatest
+                        songsLatestIndex
+                        model.songsRemembered
             in
             --(awaitingServer, commentArea)
             case stateVector model of
