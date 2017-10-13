@@ -26,6 +26,7 @@ import SongHelper
         , song2SongTimeless
         , songs2SongsLatest
         , songs2SongsTimeless
+          --, songRememberedUpdate
         )
 import SongType
     exposing
@@ -89,7 +90,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
-songRememberedUpdated :
+songRememberedUpdate :
     { a
         | artist : Artist
         , likedOrCommented : LikedOrCommented
@@ -101,7 +102,7 @@ songRememberedUpdated :
             , timestamp : Timestamp
         }
     -> SongRemembered
-songRememberedUpdated { artist, likedOrCommented, title } { time, timestamp } =
+songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
     SongRemembered artist likedOrCommented time timestamp title
 
 
@@ -160,7 +161,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                 (songsRememberedIndex + 1)
                                     |> startingWith songsRemembered
                                     |> (++)
-                                        (songRememberedUpdated songRememberedSongsRememberedSwapOneLatest songLatest
+                                        (songRememberedUpdate songRememberedSongsRememberedSwapOneLatest songLatest
                                             |> List.singleton
                                         )
                                     |> (++) (List.take songsRememberedIndex songsRemembered)
