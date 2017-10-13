@@ -19,6 +19,7 @@ module SongHelper
         , song2SongRemembered
         , song2SongTimeless
         , songGroup2String
+        , songRememberedUpdate
         , songs2SongsLatest
         , songs2SongsRemembered
         , songs2SongsTimeless
@@ -35,6 +36,7 @@ import SongInitialize
 import SongType
     exposing
         ( Artist
+        , LikedOrCommented
         , SongCommenting
         , SongCommentingMaybe
         , SongGroup
@@ -105,6 +107,22 @@ song2SongRemembered { artist, time, timestamp, title } =
 song2SongTimeless : SongTimelessBase a -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
+
+
+songRememberedUpdate :
+    { a
+        | artist : Artist
+        , likedOrCommented : LikedOrCommented
+        , title : Title
+    }
+    ->
+        { b
+            | time : Time
+            , timestamp : Timestamp
+        }
+    -> SongRemembered
+songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
+    SongRemembered artist likedOrCommented time timestamp title
 
 
 songs2SongsLatest : List (SongLatestBase a) -> SongsLatest

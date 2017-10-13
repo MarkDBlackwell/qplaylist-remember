@@ -24,15 +24,13 @@ import SongHelper
         ( song2SongLatest
         , song2SongRemembered
         , song2SongTimeless
+        , songRememberedUpdate
         , songs2SongsLatest
         , songs2SongsTimeless
-          --, songRememberedUpdate
         )
 import SongType
     exposing
-        ( Artist
-        , LikedOrCommented
-        , SongGroupLength
+        ( SongGroupLength
         , SongLatest
         , SongLatestMaybe
         , SongLikingMaybe
@@ -46,9 +44,6 @@ import SongType
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedMaybe
-        , Time
-        , Timestamp
-        , Title
         )
 import Utilities
     exposing
@@ -88,22 +83,6 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             List.map tweakPossibly songsRemembered
     in
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
-
-
-songRememberedUpdate :
-    { a
-        | artist : Artist
-        , likedOrCommented : LikedOrCommented
-        , title : Title
-    }
-    ->
-        { b
-            | time : Time
-            , timestamp : Timestamp
-        }
-    -> SongRemembered
-songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
-    SongRemembered artist likedOrCommented time timestamp title
 
 
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
