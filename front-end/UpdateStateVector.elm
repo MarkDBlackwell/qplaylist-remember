@@ -20,17 +20,14 @@ module UpdateStateVector
 import ModelType
     exposing
         ( Model
+        , Optional
+            ( Closed
+            , Open
+            )
         )
 import UpdateRequestType
     exposing
         ( AwaitingServerResponse
-        )
-import UpdateType
-    exposing
-        ( Optional
-            ( Closed
-            , Open
-            )
         )
 import Utilities
     exposing

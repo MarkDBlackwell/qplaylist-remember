@@ -17,6 +17,10 @@ module ModelType
         ( CommentText
         , Flags
         , Model
+        , Optional
+            ( Closed
+            , Open
+            )
         , PageIsExpanded
         , ShowCommentButtons
         )
@@ -75,3 +79,12 @@ type alias PageIsExpanded =
 
 type alias ShowCommentButtons =
     Bool
+
+
+
+-- UPDATE
+
+
+type Optional
+    = Closed
+    | Open

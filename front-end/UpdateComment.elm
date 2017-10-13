@@ -35,6 +35,9 @@ import ModelInitialize
 import ModelType
     exposing
         ( Model
+        , Optional
+            ( Open
+            )
         )
 import Song
     exposing
@@ -58,12 +61,6 @@ import UpdateFocus
 import UpdateStateVector
     exposing
         ( stateVector
-        )
-import UpdateType
-    exposing
-        ( Optional
-            ( Open
-            )
         )
 import Utilities
     exposing
