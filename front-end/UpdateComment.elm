@@ -43,6 +43,10 @@ import Song
     exposing
         ( songsRememberedUpdateTimestamp
         )
+import SongHelper
+    exposing
+        ( buttonIdReconstruct
+        )
 import SongInitialize
     exposing
         ( songCommentingMaybeInit
@@ -150,5 +154,6 @@ commentCancelHand model =
                 , commentText = commentTextInit
                 , songCommentingMaybe = songCommentingMaybeInit
               }
-            , focusSetId "refresh"
+            , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
+                |> focusSetId
             )
