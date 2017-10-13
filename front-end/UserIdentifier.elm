@@ -80,30 +80,25 @@ updateInitialSetUp threeLetterSpaceInt =
         keyCode2Char : KeyCode -> Char
         keyCode2Char digit =
             let
-                charBase : KeyCode -> KeyCode
-                charBase keyCode =
-                    if keyCode < caseLength then
-                        toCode 'a'
-                    else
+                charBase : KeyCode
+                charBase =
+                    if digit < caseLength then
                         toCode 'A'
+                    else
+                        toCode 'a'
+
+                digitMod : KeyCode
+                digitMod =
+                    digit % caseLength
             in
-            caseLength
-                |> (%) digit
-                |> (+) digit
-                |> charBase
+            digitMod
+                |> (+) charBase
                 |> fromCode
 
         threeDigits : List Int
         threeDigits =
-            let
-                tempList : List Int
-                tempList =
-                    --List.scanl (//) threeLetterSpaceInt [ letterSpace, letterSpace ]
-                    List.repeat 2 letterSpace
-                        |> List.scanl (//) threeLetterSpaceInt
-            in
-            --List.map (\x -> x % letterSpace) tempList
-            tempList
+            List.repeat 2 letterSpace
+                |> List.scanl (//) threeLetterSpaceInt
                 |> List.map (\x -> x % letterSpace)
     in
     List.map keyCode2Char threeDigits
