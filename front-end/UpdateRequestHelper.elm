@@ -91,39 +91,35 @@ relative urlBeforeQueryList queryPairs =
                 joinAndEscape : QueryPair -> UriText
                 joinAndEscape ( name, value ) =
                     let
-                        escapeAll : UriText -> UriText
-                        escapeAll string =
-                            let
-                                escapeAmpersands : UriText -> UriText
-                                escapeAmpersands string =
-                                    String.join
-                                        "%26"
-                                        (String.split "&" string)
+                        escapeAmpersands : UriText -> UriText
+                        escapeAmpersands string =
+                            String.join
+                                "%26"
+                                (String.split "&" string)
 
-                                escapeEqualsSigns : UriText -> UriText
-                                escapeEqualsSigns string =
-                                    String.join
-                                        "%3D"
-                                        (String.split "=" string)
+                        escapeEqualsSigns : UriText -> UriText
+                        escapeEqualsSigns string =
+                            String.join
+                                "%3D"
+                                (String.split "=" string)
 
-                                escapeHashes : UriText -> UriText
-                                escapeHashes string =
-                                    String.join
-                                        "%23"
-                                        (String.split "#" string)
-                            in
-                            --See:
-                            --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
-                            --TODO: Possibly, use Http.encodeUri instead:
-                            string
-                                |> escapeAmpersands
-                                |> escapeEqualsSigns
-                                |> escapeHashes
+                        escapeHashes : UriText -> UriText
+                        escapeHashes string =
+                            String.join
+                                "%23"
+                                (String.split "#" string)
                     in
                     String.concat
                         [ name
                         , "="
-                        , escapeAll value
+
+                        --See:
+                        --http://package.elm-lang.org/packages/elm-lang/http/latest/Http
+                        --TODO: Possibly, use Http.encodeUri instead:
+                        , value
+                            |> escapeAmpersands
+                            |> escapeEqualsSigns
+                            |> escapeHashes
                         ]
             in
             if List.isEmpty queryPairs then
