@@ -16,6 +16,7 @@ module AlertType
     exposing
         ( ActionDescription
         , AlertMessageText
+        , AlertMessageTextList
         , AlertMessageTextMaybe
         , DetailsText
         , LikeOrCommentName
@@ -31,6 +32,10 @@ type alias ActionDescription =
 
 type alias AlertMessageText =
     String
+
+
+type alias AlertMessageTextList =
+    List AlertMessageText
 
 
 type alias AlertMessageTextMaybe =

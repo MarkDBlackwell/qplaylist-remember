@@ -26,6 +26,7 @@ import AlertType
     exposing
         ( ActionDescription
         , AlertMessageText
+        , AlertMessageTextList
         , AlertMessageTextMaybe
         , DetailsText
         , LikeOrCommentName
@@ -58,8 +59,58 @@ alertMessageTextInit =
 -- UPDATE
 
 
-alertMessageTextErrorHttp : Error -> ( AlertMessageText, AlertMessageText )
-alertMessageTextErrorHttp httpError =
+alertMessageTextErrorHttpLogging : Error -> AlertMessageText
+alertMessageTextErrorHttpLogging httpError =
+    errorHttpText httpError
+        |> first
+
+
+alertMessageTextErrorHttpScreen : Error -> AlertMessageText
+alertMessageTextErrorHttpScreen httpError =
+    errorHttpText httpError
+        |> second
+
+
+alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText
+alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
+    (++)
+        (alertMessageTextErrorHttpScreen httpError)
+        (String.concat
+            [ " (while attempting to send your "
+            , likeOrCommentName
+            , ")"
+            ]
+        )
+
+
+alertMessageTextSend : ActionDescription -> DetailsText -> AlertMessageText
+alertMessageTextSend actionDescription detailsText =
+    let
+        unexpected : AlertMessageTextList -> AlertMessageText
+        unexpected alertMessageTextList =
+            (++)
+                "Unexpected error "
+                (String.join
+                    prefixSeparator
+                    alertMessageTextList
+                )
+    in
+    unexpected
+        [ String.concat
+            [ "while attempting to "
+            , actionDescription
+            ]
+        , detailsText
+        ]
+
+
+alertMessageTextServerAwaiting : AlertMessageTextMaybe
+alertMessageTextServerAwaiting =
+    Just "Awaiting server"
+
+
+errorHttpText : Error -> ( AlertMessageText, AlertMessageText )
+errorHttpText httpError =
     let
         prefix : PrefixSeparatorText
         prefix =
@@ -90,50 +141,3 @@ alertMessageTextErrorHttp httpError =
             ( prefix
             , "Timeout"
             )
-
-
-alertMessageTextErrorHttpLogging : Error -> AlertMessageText
-alertMessageTextErrorHttpLogging httpError =
-    alertMessageTextErrorHttp httpError
-        |> first
-
-
-alertMessageTextErrorHttpScreen : Error -> AlertMessageText
-alertMessageTextErrorHttpScreen httpError =
-    alertMessageTextErrorHttp httpError
-        |> second
-
-
-alertMessageTextErrorUnexpected : List AlertMessageText -> AlertMessageText
-alertMessageTextErrorUnexpected alertMessageTextList =
-    (++)
-        "Unexpected error "
-        (String.join
-            prefixSeparator
-            alertMessageTextList
-        )
-
-
-alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText
-alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
-    (++)
-        (alertMessageTextErrorHttpScreen httpError)
-        (String.concat
-            [ " (while attempting to send your "
-            , likeOrCommentName
-            , ")"
-            ]
-        )
-
-
-alertMessageTextSend : ActionDescription -> DetailsText -> AlertMessageText
-alertMessageTextSend actionDescription detailsText =
-    alertMessageTextErrorUnexpected
-        [ "while attempting to " ++ actionDescription
-        , detailsText
-        ]
-
-
-alertMessageTextServerAwaiting : AlertMessageTextMaybe
-alertMessageTextServerAwaiting =
-    Just "Awaiting server"
