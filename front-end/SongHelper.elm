@@ -65,20 +65,20 @@ import Utilities
 -- UPDATE
 
 
-buttonIdCreate : Id -> Int -> Id
-buttonIdCreate idFragment index =
-    String.concat
-        [ "button"
-        , idFragment
-        , toString index
-        ]
-
-
 buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
 buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
+    let
+        create : Int -> Id
+        create index =
+            String.concat
+                [ "button"
+                , idFragment
+                , toString index
+                ]
+    in
     songCommentingMaybe
         |> Maybe.andThen (commentingIndexMaybe songsRemembered)
-        |> Maybe.map (buttonIdCreate idFragment)
+        |> Maybe.map create
         |> Maybe.withDefault "refresh"
 
 
