@@ -68,6 +68,17 @@ import Utilities
 buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
 buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
     let
+        commentingIndexMaybe : SongCommenting -> SongsRememberedIndexMaybe
+        commentingIndexMaybe songCommenting =
+            let
+                timeless : SongsTimeless
+                timeless =
+                    songs2SongsTimeless songsRemembered
+            in
+            song2SongTimeless songCommenting
+                |> matchingIndexes timeless
+                |> List.head
+
         create : Int -> Id
         create index =
             String.concat
@@ -76,22 +87,9 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
                 , toString index
                 ]
     in
-    songCommentingMaybe
-        |> Maybe.andThen (commentingIndexMaybe songsRemembered)
+    Maybe.andThen commentingIndexMaybe songCommentingMaybe
         |> Maybe.map create
         |> Maybe.withDefault "refresh"
-
-
-commentingIndexMaybe : SongsRemembered -> SongCommenting -> SongsRememberedIndexMaybe
-commentingIndexMaybe songsRemembered songCommenting =
-    let
-        songsRememberedTimeless : SongsTimeless
-        songsRememberedTimeless =
-            songs2SongsTimeless songsRemembered
-    in
-    song2SongTimeless songCommenting
-        |> matchingIndexes songsRememberedTimeless
-        |> List.head
 
 
 song2SongLatest : SongLatestBase a -> SongLatest
