@@ -53,20 +53,20 @@ type Msg
     = CommentAreaInputTextChangeCaptureHand CommentText
     | CommentAreaOpenHand SongsRememberedIndex
     | CommentCancelHand
-    | CommentResponse ResultErrorHttpResponseText
+    | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
     | InitialSetUp Int
     | LikeButtonProcessHand SongsRememberedIndex
-    | LikeResponse ResultErrorHttpResponseText
+    | LikeResponse ResultErrorHttp
     | None
     | PageMorphHand
     | SongForgetHand SongsRememberedIndex
     | SongRememberHand SongsLatestIndex
     | SongsLatestRefreshHand
-    | SongsLatestResponse ResultErrorHttpResponseText
+    | SongsLatestResponse ResultErrorHttp
     | SongsRememberedStore
 
 
-type alias ResultErrorHttpResponseText =
+type alias ResultErrorHttp =
     Result Error HttpResponseText
