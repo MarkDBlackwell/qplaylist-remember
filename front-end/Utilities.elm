@@ -16,6 +16,7 @@ module Utilities
     exposing
         ( attributeIdFromMaybe
         , attributesEmpty
+        , fieldString
         , goldenRatio
         , htmlNodeNull
         , indexes
@@ -49,6 +50,12 @@ import Html.Attributes
     exposing
         ( id
         )
+import Json.Decode
+    exposing
+        ( Decoder
+        , field
+        , string
+        )
 import Task
     exposing
         ( perform
@@ -61,6 +68,11 @@ import ViewType
 
 
 -- UPDATE
+
+
+fieldString : String -> Decoder String
+fieldString text =
+    field text string
 
 
 indexes : List a -> List Int

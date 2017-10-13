@@ -29,7 +29,6 @@ import Json.Decode
         , list
         , map
         , map4
-        , string
         )
 import SongType
     exposing
@@ -39,6 +38,10 @@ import SongType
 import UpdateRequestType
     exposing
         ( HttpResponseText
+        )
+import Utilities
+    exposing
+        ( fieldString
         )
 
 
@@ -67,10 +70,10 @@ decodeSongsLatestResponse jsonRawText =
                         decodeSongLatest =
                             map4
                                 SongLatest
-                                (field "artist" string)
-                                (field "time" string)
-                                (field "timeStamp" string)
-                                (field "title" string)
+                                (fieldString "artist")
+                                (fieldString "time")
+                                (fieldString "timeStamp")
+                                (fieldString "title")
 
                         tag : String
                         tag =
