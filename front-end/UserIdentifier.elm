@@ -86,12 +86,8 @@ updateInitialSetUp threeLetterSpaceInt =
                         toCode 'A'
                     else
                         toCode 'a'
-
-                digitMod : KeyCode
-                digitMod =
-                    digit % caseLength
             in
-            digitMod
+            (digit % caseLength)
                 |> (+) charBase
                 |> fromCode
 
@@ -101,5 +97,6 @@ updateInitialSetUp threeLetterSpaceInt =
                 |> List.scanl (//) threeLetterSpaceInt
                 |> List.map (\x -> x % letterSpace)
     in
-    List.map keyCode2Char threeDigits
+    threeDigits
+        |> List.map keyCode2Char
         |> String.fromList
