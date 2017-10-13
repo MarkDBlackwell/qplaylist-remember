@@ -119,7 +119,7 @@ update msg model =
             ( { model
                 | userIdentifier = updateInitialSetUp threeLetterNumberSpaceInt
               }
-            , Cmd.none
+            , focusSetId "refresh"
             )
 
         LikeButtonProcessHand songsRememberedIndex ->
