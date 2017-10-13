@@ -39,14 +39,12 @@ import ElmCycle
         )
 import Html
     exposing
-        ( Attribute
-        , Html
+        ( Html
         , button
         )
 import Html.Attributes
     exposing
-        ( id
-        , style
+        ( style
         , title
         , type_
         )
@@ -73,7 +71,9 @@ import SongType
         )
 import Utilities
     exposing
-        ( htmlNodeNull
+        ( attributeIdFromMaybe
+        , htmlNodeNull
+        , innerHtmlEmpty
         , maybeMapWithDefault
         )
 import ViewType
@@ -113,17 +113,6 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
 buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
 buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
     let
-        buttonAttributeId : List (Attribute msg)
-        buttonAttributeId =
-            maybeMapWithDefault
-                []
-                (\x -> [ id x ])
-                buttonAttributeIdMaybe
-
-        buttonInnerHtml : List (Html msg)
-        buttonInnerHtml =
-            []
-
         displayValue : Display
         displayValue =
             let
@@ -149,9 +138,9 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
          , title hoverText
          , type_ "button"
          ]
-            ++ buttonAttributeId
+            ++ attributeIdFromMaybe buttonAttributeIdMaybe
         )
-        buttonInnerHtml
+        innerHtmlEmpty
 
 
 buttonLatest : Html Msg

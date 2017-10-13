@@ -14,9 +14,11 @@
 
 module Utilities
     exposing
-        ( goldenRatio
+        ( attributeIdFromMaybe
+        , goldenRatio
         , htmlNodeNull
         , indexes
+        , innerHtmlEmpty
         , matchingIndexes
         , maybeDefaultNothing
         , maybeMapWithDefault
@@ -33,13 +35,22 @@ import ElmCycle
         )
 import Html
     exposing
-        ( Html
+        ( Attribute
+        , Html
         , text
+        )
+import Html.Attributes
+    exposing
+        ( id
         )
 import Task
     exposing
         ( perform
         , succeed
+        )
+import ViewType
+    exposing
+        ( IdMaybe
         )
 
 
@@ -115,6 +126,14 @@ withoutOne listA index =
 -- VIEW
 
 
+attributeIdFromMaybe : IdMaybe -> List (Attribute msg)
+attributeIdFromMaybe attributeIdMaybe =
+    maybeMapWithDefault
+        []
+        (\x -> [ id x ])
+        attributeIdMaybe
+
+
 goldenRatio : Float
 goldenRatio =
     --See:
@@ -125,3 +144,8 @@ goldenRatio =
 htmlNodeNull : Html Msg
 htmlNodeNull =
     text ""
+
+
+innerHtmlEmpty : List (Html msg)
+innerHtmlEmpty =
+    []
