@@ -78,26 +78,32 @@ updateInitialSetUp : ThreeLetterSpaceInt -> UserIdentifier
 updateInitialSetUp threeLetterSpaceInt =
     let
         keyCode2Char : KeyCode -> Char
-        keyCode2Char keyCode =
+        keyCode2Char digit =
             let
-                baseKeyCode : KeyCode -> KeyCode
-                baseKeyCode keyCode =
+                charBase : KeyCode -> KeyCode
+                charBase keyCode =
                     if keyCode < caseLength then
                         toCode 'a'
                     else
                         toCode 'A'
             in
-            keyCode
-                % caseLength
-                |> (+) keyCode
-                |> baseKeyCode
+            caseLength
+                |> (%) digit
+                |> (+) digit
+                |> charBase
                 |> fromCode
 
         threeDigits : ThreeLetterSpaceInt -> List Int
         threeDigits threeLetterSpaceInt =
-            [ (threeLetterSpaceInt // letterSpace // letterSpace) % letterSpace
-            , (threeLetterSpaceInt // letterSpace) % letterSpace
-            , threeLetterSpaceInt % letterSpace
+            [ threeLetterSpaceInt
+                // letterSpace
+                // letterSpace
+                |> flip (%) letterSpace
+            , threeLetterSpaceInt
+                // letterSpace
+                |> flip (%) letterSpace
+            , threeLetterSpaceInt
+                |> flip (%) letterSpace
             ]
     in
     threeDigits threeLetterSpaceInt
