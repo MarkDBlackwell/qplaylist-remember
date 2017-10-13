@@ -12,7 +12,7 @@
 -}
 
 
-module UpdateCommentArea
+module UpdateComment
     exposing
         ( commentAreaInputTextChangeCaptureHand
         , commentAreaOpenHand

@@ -45,7 +45,7 @@ import SongType
         ( SongCommentingMaybe
         , SongsRemembered
         )
-import UpdateCommentArea
+import UpdateComment
     exposing
         ( commentAreaInputTextChangeCaptureHand
         , commentAreaOpenHand
