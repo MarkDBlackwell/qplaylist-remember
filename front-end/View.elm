@@ -78,6 +78,7 @@ import SongType
 import Utilities
     exposing
         ( htmlNodeNull
+        , innerHtmlEmpty
         , maybeMapWithDefault
         , selectOneMaybe
         )
@@ -177,7 +178,7 @@ view model =
                             , title inputHoverText
                             , type_ "text"
                             ]
-                            []
+                            innerHtmlEmpty
                         , buttonView Nothing "Submit your comment" CommentSendHand
                         , buttonView Nothing "Cancel this comment" CommentCancelHand
                         ]
@@ -223,7 +224,7 @@ view model =
                             in
                             if songLatestOrRemembered.likedOrCommented then
                                 em [ title indicatorHoverText ]
-                                    []
+                                    innerHtmlEmpty
                             else
                                 htmlNodeNull
 
@@ -299,7 +300,7 @@ view model =
              ]
                 ++ songGroupView Remembered model.songsRemembered
             )
-        , hr [] []
+        , hr [] innerHtmlEmpty
         , section
             (songGroupAttributes Latest)
             ([ p []
