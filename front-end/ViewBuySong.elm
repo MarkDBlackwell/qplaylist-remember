@@ -52,6 +52,10 @@ import UpdateRequestType
         , UriText
         , UrlBeforeQueryList
         )
+import Utilities
+    exposing
+        ( innerHtmlEmpty
+        )
 import ViewType
     exposing
         ( HoverText
@@ -101,4 +105,4 @@ buySongAnchor song =
         , target "_blank"
         , title hoverText
         ]
-        []
+        innerHtmlEmpty
