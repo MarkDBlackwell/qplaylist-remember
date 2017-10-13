@@ -76,11 +76,9 @@ decodeSongsLatestResponse jsonRawText =
                         tag =
                             "latestFive"
                     in
-                    map
-                        SongsLatestWithDummyTag
-                        (list decodeSongLatest
-                            |> field tag
-                        )
+                    list decodeSongLatest
+                        |> field tag
+                        |> map SongsLatestWithDummyTag
             in
             decodeString decodeSongsLatestWithDummyTag jsonRawText
     in
