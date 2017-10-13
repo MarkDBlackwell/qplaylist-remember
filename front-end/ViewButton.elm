@@ -90,12 +90,12 @@ import ViewType
 buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html Msg
 buttonComment songGroup songsRememberedIndex showCommentButtons =
     let
-        buttonAction : Msg
-        buttonAction =
+        buttonActionMsg : Msg
+        buttonActionMsg =
             CommentAreaOpenHand songsRememberedIndex
 
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
             toString songsRememberedIndex
                 |> (++) "buttonComment"
                 |> Just
@@ -107,21 +107,25 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
     if Latest == songGroup then
         htmlNodeNull
     else
-        buttonCommentView buttonIdMaybe hoverText buttonAction showCommentButtons
+        buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg showCommentButtons
 
 
 buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
-buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
+buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
     let
-        buttonIdView : List (Attribute msg)
-        buttonIdView =
+        buttonAttributeId : List (Attribute msg)
+        buttonAttributeId =
             maybeMapWithDefault
                 []
                 (\x -> [ id x ])
-                buttonIdMaybe
+                buttonAttributeIdMaybe
 
-        display : Display
-        display =
+        buttonInnerHtml : List (Html msg)
+        buttonInnerHtml =
+            []
+
+        displayValue : Display
+        displayValue =
             let
                 default : Display
                 default =
@@ -137,42 +141,42 @@ buttonCommentView buttonIdMaybe hoverText action showCommentButtons =
                     else
                         default
             in
-            maybeMapWithDefault default nonePossibly buttonIdMaybe
+            maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
     in
     button
-        ([ style [ ( "display", display ) ]
+        ([ style [ ( "display", displayValue ) ]
          , onClick action
          , title hoverText
          , type_ "button"
          ]
-            ++ buttonIdView
+            ++ buttonAttributeId
         )
-        []
+        buttonInnerHtml
 
 
 buttonLatest : Html Msg
 buttonLatest =
     let
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
             Just "refresh"
 
         hoverText : HoverText
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonView buttonIdMaybe hoverText SongsLatestRefreshHand
+    buttonView buttonAttributeIdMaybe hoverText SongsLatestRefreshHand
 
 
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
 buttonLike songGroup songsRememberedIndex =
     let
-        buttonAction : Msg
-        buttonAction =
+        buttonActionMsg : Msg
+        buttonActionMsg =
             LikeButtonProcessHand songsRememberedIndex
 
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
             Just
                 (toString songsRememberedIndex
                     |> (++) "buttonLike"
@@ -187,14 +191,14 @@ buttonLike songGroup songsRememberedIndex =
             htmlNodeNull
 
         Remembered ->
-            buttonView buttonIdMaybe hoverText buttonAction
+            buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
 
 
 buttonRememberForget : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
 buttonRememberForget songGroup songsLatestOrRememberedIndex =
     let
-        buttonAction : Msg
-        buttonAction =
+        buttonActionMsg : Msg
+        buttonActionMsg =
             case songGroup of
                 Latest ->
                     SongRememberHand songsLatestOrRememberedIndex
@@ -202,8 +206,8 @@ buttonRememberForget songGroup songsLatestOrRememberedIndex =
                 Remembered ->
                     SongForgetHand songsLatestOrRememberedIndex
 
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
             Just
                 (String.concat
                     [ "button"
@@ -221,23 +225,23 @@ buttonRememberForget songGroup songsLatestOrRememberedIndex =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonView buttonIdMaybe hoverText buttonAction
+    buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
 
 
 buttonRemembered : Html Msg
 buttonRemembered =
     let
-        buttonIdMaybe : IdMaybe
-        buttonIdMaybe =
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
             Just "morph"
 
         hoverText : HoverText
         hoverText =
             "Morph this page's shape"
     in
-    buttonView buttonIdMaybe hoverText PageMorphHand
+    buttonView buttonAttributeIdMaybe hoverText PageMorphHand
 
 
 buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
-buttonView buttonIdMaybe hoverText action =
-    buttonCommentView buttonIdMaybe hoverText action False
+buttonView buttonAttributeIdMaybe hoverText action =
+    buttonCommentView buttonAttributeIdMaybe hoverText action False
