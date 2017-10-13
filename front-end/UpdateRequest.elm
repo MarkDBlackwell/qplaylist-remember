@@ -202,11 +202,11 @@ songsLatestRefreshHand model =
         songsLatestRequest : Cmd Msg
         songsLatestRequest =
             let
-                request : Request HttpRequestText
-                request =
+                requestHttp : Request HttpRequestText
+                requestHttp =
                     getString requestUriText
             in
-            send SongsLatestResponse request
+            send SongsLatestResponse requestHttp
     in
     --(awaitingServer, commentArea)
     case stateVector model of
