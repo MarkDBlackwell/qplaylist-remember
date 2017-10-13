@@ -118,11 +118,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
         swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
-                listHeadMaybe : SongLatestMaybe
-                listHeadMaybe =
-                    songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
-                        |> List.head
-
                 songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
                 songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
                     let
@@ -175,7 +170,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songRememberedSwapUnlessListHeadEmpty
                         songLatest
             in
-            listHeadMaybe
+            songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
+                |> List.head
                 |> maybeDefaultNothing swapOneLatestMaybe
     in
     selectOneMaybe songsRemembered songsRememberedIndex
