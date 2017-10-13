@@ -134,7 +134,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
                         songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
                             let
-                                songUpdated :
+                                songRememberedUpdated :
                                     { a
                                         | artist : Artist
                                         , likedOrCommented : LikedOrCommented
@@ -146,7 +146,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                             , timestamp : Timestamp
                                         }
                                     -> SongRemembered
-                                songUpdated { artist, likedOrCommented, title } { time, timestamp } =
+                                songRememberedUpdated { artist, likedOrCommented, title } { time, timestamp } =
                                     SongRemembered artist likedOrCommented time timestamp title
                             in
                             if
@@ -160,7 +160,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                 (songsRememberedIndex + 1)
                                     |> startingWith songsRemembered
                                     |> (++)
-                                        (songUpdated songRememberedSongsRememberedSwapOneLatest songLatest
+                                        (songRememberedUpdated songRememberedSongsRememberedSwapOneLatest songLatest
                                             |> List.singleton
                                         )
                                     |> (++) (List.take songsRememberedIndex songsRemembered)
