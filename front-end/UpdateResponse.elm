@@ -260,12 +260,13 @@ likeResponseOk model httpResponseText =
 songsLatestResponseErr : Model -> Error -> ElmCycle
 songsLatestResponseErr model httpError =
     let
-        actionDescription : String
-        actionDescription =
-            "access the latest few songs"
-
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
+            let
+                actionDescription : String
+                actionDescription =
+                    "access the latest few songs"
+            in
             String.concat
                 [ alertMessageTextErrorHttpScreen httpError
                 , " (while attempting to "
