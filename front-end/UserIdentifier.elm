@@ -93,16 +93,17 @@ updateInitialSetUp threeLetterSpaceInt =
                 |> charBase
                 |> fromCode
 
-        threeDigits : ThreeLetterSpaceInt -> List Int
-        threeDigits threeLetterSpaceInt =
-            List.map
-                (\x -> x % letterSpace)
-                [ threeLetterSpaceInt // letterSpace // letterSpace
-                , threeLetterSpaceInt // letterSpace
-                , threeLetterSpaceInt
-                ]
-
+        threeDigits : List Int
+        threeDigits =
+            let
+                tempList : List Int
+                tempList =
+                    [ threeLetterSpaceInt // letterSpace // letterSpace
+                    , threeLetterSpaceInt // letterSpace
+                    , threeLetterSpaceInt
+                    ]
+            in
+            List.map (\x -> x % letterSpace) tempList
     in
-    threeDigits threeLetterSpaceInt
-        |> List.map keyCode2Char
+    List.map keyCode2Char threeDigits
         |> String.fromList
