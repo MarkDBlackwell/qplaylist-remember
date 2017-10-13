@@ -115,10 +115,6 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
-        songsRememberedSelectOneMaybe : SongRememberedMaybe
-        songsRememberedSelectOneMaybe =
-            selectOneMaybe songsRemembered songsRememberedIndex
-
         swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
@@ -181,6 +177,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
             in
             maybeDefaultNothing swapOneLatestMaybe listHeadMaybe
     in
-    songsRememberedSelectOneMaybe
+    selectOneMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapUnlessListHeadEmptyMaybe
         |> Maybe.withDefault songsRemembered
