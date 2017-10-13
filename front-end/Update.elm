@@ -238,7 +238,9 @@ update msg model =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    Maybe.withDefault songsRememberedAppended (Maybe.map (songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended) songsRememberedIndexMaybe)
+                    songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended
+                        |> flip Maybe.map songsRememberedIndexMaybe
+                        |> Maybe.withDefault songsRememberedAppended
             in
             --(awaitingServer, commentArea)
             case stateVector model of
