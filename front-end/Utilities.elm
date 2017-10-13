@@ -24,12 +24,17 @@ module Utilities
         , maybeDefaultNothing
         , maybeMapWithDefault
         , msg2Cmd
+        , prefixSeparator
         , selectOneMaybe
         , startingWith
         , withIndexes
         , withoutOne
         )
 
+import AlertType
+    exposing
+        ( PrefixSeparatorText
+        )
 import ElmCycle
     exposing
         ( Msg
@@ -97,6 +102,11 @@ msg2Cmd msg =
     --For wrapping a message as a Cmd:
     succeed msg
         |> perform identity
+
+
+prefixSeparator : PrefixSeparatorText
+prefixSeparator =
+    ": "
 
 
 selectOneMaybe : List a -> Int -> Maybe a

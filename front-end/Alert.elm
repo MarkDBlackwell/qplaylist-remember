@@ -40,6 +40,10 @@ import Tuple
         ( first
         , second
         )
+import Utilities
+    exposing
+        ( prefixSeparator
+        )
 
 
 -- MODEL
@@ -133,8 +137,3 @@ alertMessageTextSend actionDescription detailsText =
 alertMessageTextServerAwaiting : AlertMessageTextMaybe
 alertMessageTextServerAwaiting =
     Just "Awaiting server"
-
-
-prefixSeparator : PrefixSeparatorText
-prefixSeparator =
-    ": "
