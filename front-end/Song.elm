@@ -130,10 +130,8 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                         songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
                         songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
                             if
-                                List.isEmpty
-                                    (songsLatestSongRememberedMatches
-                                        songRememberedSongsRememberedSwapOneLatest
-                                    )
+                                songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest
+                                    |> List.isEmpty
                             then
                                 Nothing
                             else
