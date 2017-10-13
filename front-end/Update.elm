@@ -234,14 +234,14 @@ update msg model =
                         songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                         songsRememberedIndexMaybe =
                             let
-                                matchingIndexesTimeless : SongTimeless -> List Int
-                                matchingIndexesTimeless =
+                                timelessMatchingIndexes : SongTimeless -> List Int
+                                timelessMatchingIndexes =
                                     songs2SongsTimeless songsRememberedAppended
                                         |> matchingIndexes
                             in
                             selectOneMaybe model.songsLatest songsLatestIndex
                                 |> Maybe.map song2SongTimeless
-                                |> Maybe.map matchingIndexesTimeless
+                                |> Maybe.map timelessMatchingIndexes
                                 |> Maybe.andThen List.head
                     in
                     songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended
