@@ -89,6 +89,22 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
+songRememberedUpdated :
+    { a
+        | artist : Artist
+        , likedOrCommented : LikedOrCommented
+        , title : Title
+    }
+    ->
+        { b
+            | time : Time
+            , timestamp : Timestamp
+        }
+    -> SongRemembered
+songRememberedUpdated { artist, likedOrCommented, title } { time, timestamp } =
+    SongRemembered artist likedOrCommented time timestamp title
+
+
 songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
     let
@@ -133,22 +149,6 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     let
                         songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
                         songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
-                            let
-                                songRememberedUpdated :
-                                    { a
-                                        | artist : Artist
-                                        , likedOrCommented : LikedOrCommented
-                                        , title : Title
-                                    }
-                                    ->
-                                        { b
-                                            | time : Time
-                                            , timestamp : Timestamp
-                                        }
-                                    -> SongRemembered
-                                songRememberedUpdated { artist, likedOrCommented, title } { time, timestamp } =
-                                    SongRemembered artist likedOrCommented time timestamp title
-                            in
                             if
                                 List.isEmpty
                                     (songsLatestSongRememberedMatches
