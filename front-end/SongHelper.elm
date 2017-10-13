@@ -68,8 +68,8 @@ import Utilities
 buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
 buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
     let
-        commentingIndexMaybe : SongCommenting -> SongsRememberedIndexMaybe
-        commentingIndexMaybe songCommenting =
+        songRememberedIndexMaybe : SongCommenting -> SongsRememberedIndexMaybe
+        songRememberedIndexMaybe songCommenting =
             let
                 timeless : SongsTimeless
                 timeless =
@@ -87,7 +87,7 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
                 , toString index
                 ]
     in
-    Maybe.andThen commentingIndexMaybe songCommentingMaybe
+    Maybe.andThen songRememberedIndexMaybe songCommentingMaybe
         |> Maybe.map create
         |> Maybe.withDefault "refresh"
 
