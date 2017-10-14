@@ -154,10 +154,10 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     List.filter compare songsLatest
 
                 swapOneLatestMaybe : SongLatest -> SongsRememberedMaybe
-                swapOneLatestMaybe songLatest =
+                swapOneLatestMaybe songLatestSwapOneLatestMaybe =
                     let
                         songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
-                        songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatest =
+                        songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatestSongsRememberedSwapOneLatestMaybe =
                             if
                                 songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest
                                     |> List.isEmpty
@@ -167,7 +167,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                                 (songsRememberedIndex + 1)
                                     |> startingWith songsRemembered
                                     |> (++)
-                                        (songRememberedUpdate songRememberedSongsRememberedSwapOneLatest songLatest
+                                        (songRememberedUpdate songRememberedSongsRememberedSwapOneLatest songLatestSongsRememberedSwapOneLatestMaybe
                                             |> List.singleton
                                         )
                                     |> (++)
@@ -176,7 +176,7 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                     in
                     songsRememberedSwapOneLatestMaybe
                         songRememberedSwapUnlessListHeadEmpty
-                        songLatest
+                        songLatestSwapOneLatestMaybe
             in
             songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
                 |> List.head
