@@ -134,11 +134,11 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
 
 
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
+songsRememberedUpdateTimestamp songsLatestSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
     let
         songsRememberedFrom : SongsRemembered
         songsRememberedFrom =
-            songs2SongsRemembered songsLatest
+            songs2SongsRemembered songsLatestSongsRememberedUpdateTimestamp
 
         swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
@@ -147,11 +147,11 @@ songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex 
                 songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
                     let
                         compare : SongLatest -> Bool
-                        compare songLatest =
+                        compare songLatestCompare =
                             song2SongTimeless songRememberedSongsLatestSongRememberedMatches
-                                |> (==) (song2SongTimeless songLatest)
+                                |> (==) (song2SongTimeless songLatestCompare)
                     in
-                    List.filter compare songsLatest
+                    List.filter compare songsLatestSongsRememberedUpdateTimestamp
 
                 swapOneLatestMaybe : SongLatest -> SongsRememberedMaybe
                 swapOneLatestMaybe songLatestSwapOneLatestMaybe =
