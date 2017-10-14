@@ -26,6 +26,7 @@ import SongHelper
         , song2SongTimeless
         , songRememberedUpdate
         , songs2SongsLatest
+        , songs2SongsRemembered
         , songs2SongsTimeless
         )
 import SongType
@@ -108,9 +109,37 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
         |> maybeMapWithDefault songsRemembered appendUnlessRemembered
 
 
+
+{-
+   songRemembered2songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+   songRemembered2songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
+
+   songRememberedMaybeUpdateMaybe : SongRememberedMaybe -> SongRememberedMaybe
+   songRememberedMaybeUpdateMaybe songRememberedMaybe =
+
+   songRememberedUpdateMaybe : SongRemembered -> SongRememberedMaybe
+   songRememberedUpdateMaybe songRemembered =
+
+   songsRememberedUpdateSingle : SongsRemembered -> SongRemembered -> SongsRemembered
+   songsRememberedUpdateSingle songsRemembered songRemembered =
+
+   songsRememberedSongsRememberedFromUpdateTimestamp : SongsRemembered -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+   songsRememberedSongsRememberedFromUpdateTimestamp songsRememberedFrom songsRemembered songsRememberedIndex =
+       let
+           songsLatest =
+               songsLatest2SongsRemembered songsRememberedFrom
+       in
+       songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex
+-}
+
+
 songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
 songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
     let
+        songsRememberedFrom : SongsRemembered
+        songsRememberedFrom =
+            songs2SongsRemembered songsLatest
+
         swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
