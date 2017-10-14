@@ -51,6 +51,7 @@ import SongType
         ( SongCommentingMaybe
         , SongTimeless
         , SongsRemembered
+        , SongsRememberedIndexList
         , SongsRememberedIndexMaybe
         )
 import UpdateComment
@@ -234,7 +235,7 @@ update msg model =
                         songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                         songsRememberedIndexMaybe =
                             let
-                                timelessMatchingIndexes : SongTimeless -> List Int
+                                timelessMatchingIndexes : SongTimeless -> SongsRememberedIndexList
                                 timelessMatchingIndexes =
                                     songs2SongsTimeless songsRememberedAppended
                                         |> matchingIndexes
