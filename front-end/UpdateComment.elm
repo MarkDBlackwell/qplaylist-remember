@@ -105,7 +105,7 @@ commentAreaOpenHand model songsRememberedIndex =
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
             songsRememberedUpdateTimestamp
-                model.songsLatest
+                model.songsRecent
                 model.songsRemembered
                 songsRememberedIndex
     in

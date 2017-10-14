@@ -21,27 +21,27 @@ module Song
 
 import SongHelper
     exposing
-        ( song2SongLatest
+        ( song2SongRecent
         , song2SongRemembered
         , song2SongTimeless
         , songRememberedUpdate
-        , songs2SongsLatest
+        , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
         )
 import SongType
     exposing
         ( SongGroupLength
-        , SongLatest
-        , SongLatestMaybe
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
+        , SongRecent
+        , SongRecentMaybe
         , SongRemembered
         , SongRememberedMaybe
-        , SongsLatest
-        , SongsLatestIndex
-        , SongsLatestOrRememberedIndex
+        , SongsRecent
+        , SongsRecentIndex
+        , SongsRecentOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedMaybe
@@ -70,11 +70,11 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                 tweakPossibly : SongRemembered -> SongRemembered
                 tweakPossibly songRemembered =
                     let
-                        songDesired : SongLatest
+                        songDesired : SongRecent
                         songDesired =
-                            song2SongLatest songLikingOrCommenting
+                            song2SongRecent songLikingOrCommenting
                     in
-                    if song2SongLatest songRemembered /= songDesired then
+                    if song2SongRecent songRemembered /= songDesired then
                         songRemembered
                     else
                         { songRemembered
@@ -86,33 +86,33 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
-songsRememberedAppendOneUnique : SongsLatest -> SongsLatestIndex -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
+songsRememberedAppendOneUnique : SongsRecent -> SongsRecentIndex -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUnique songsRecent songsRecentIndex songsRemembered =
     let
-        appendUnlessRemembered : SongLatest -> SongsRemembered
-        appendUnlessRemembered songLatest =
+        appendUnlessRemembered : SongRecent -> SongsRemembered
+        appendUnlessRemembered songRecent =
             let
                 remembered : Bool
                 remembered =
                     List.member
-                        (song2SongTimeless songLatest)
+                        (song2SongTimeless songRecent)
                         (songs2SongsTimeless songsRemembered)
             in
             if remembered then
                 songsRemembered
             else
-                song2SongRemembered songLatest
+                song2SongRemembered songRecent
                     |> List.singleton
                     |> (++) songsRemembered
     in
-    selectOneMaybe songsLatest songsLatestIndex
+    selectOneMaybe songsRecent songsRecentIndex
         |> maybeMapWithDefault songsRemembered appendUnlessRemembered
 
 
 
 {-
-   songRemembered2songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-   songRemembered2songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex =
+   songRemembered2songsRememberedUpdateTimestamp : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+   songRemembered2songsRememberedUpdateTimestamp songsRecent songsRemembered songsRememberedIndex =
 
    songRememberedMaybeUpdateMaybe : SongRememberedMaybe -> SongRememberedMaybe
    songRememberedMaybeUpdateMaybe songRememberedMaybe =
@@ -126,40 +126,40 @@ songsRememberedAppendOneUnique songsLatest songsLatestIndex songsRemembered =
    songsRememberedSongsRememberedFromUpdateTimestamp : SongsRemembered -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
    songsRememberedSongsRememberedFromUpdateTimestamp songsRememberedFrom songsRemembered songsRememberedIndex =
        let
-           songsLatest =
-               songsLatest2SongsRemembered songsRememberedFrom
+           songsRecent =
+               songsRecent2SongsRemembered songsRememberedFrom
        in
-       songsRememberedUpdateTimestamp songsLatest songsRemembered songsRememberedIndex
+       songsRememberedUpdateTimestamp songsRecent songsRemembered songsRememberedIndex
 -}
 
 
-songsRememberedUpdateTimestamp : SongsLatest -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestamp songsLatestSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
+songsRememberedUpdateTimestamp : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedUpdateTimestamp songsRecentSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
     let
         songsRememberedFrom : SongsRemembered
         songsRememberedFrom =
-            songs2SongsRemembered songsLatestSongsRememberedUpdateTimestamp
+            songs2SongsRemembered songsRecentSongsRememberedUpdateTimestamp
 
         swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
         swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
             let
-                songsLatestSongRememberedMatches : SongRemembered -> SongsLatest
-                songsLatestSongRememberedMatches songRememberedSongsLatestSongRememberedMatches =
+                songsRecentSongRememberedMatches : SongRemembered -> SongsRecent
+                songsRecentSongRememberedMatches songRememberedSongsRecentSongRememberedMatches =
                     let
-                        compare : SongLatest -> Bool
-                        compare songLatestCompare =
-                            song2SongTimeless songRememberedSongsLatestSongRememberedMatches
-                                |> (==) (song2SongTimeless songLatestCompare)
+                        compare : SongRecent -> Bool
+                        compare songRecentCompare =
+                            song2SongTimeless songRememberedSongsRecentSongRememberedMatches
+                                |> (==) (song2SongTimeless songRecentCompare)
                     in
-                    List.filter compare songsLatestSongsRememberedUpdateTimestamp
+                    List.filter compare songsRecentSongsRememberedUpdateTimestamp
 
-                swapOneLatestMaybe : SongLatest -> SongsRememberedMaybe
-                swapOneLatestMaybe songLatestSwapOneLatestMaybe =
+                swapOneRecentMaybe : SongRecent -> SongsRememberedMaybe
+                swapOneRecentMaybe songRecentSwapOneRecentMaybe =
                     let
-                        songsRememberedSwapOneLatestMaybe : SongRemembered -> SongLatest -> SongsRememberedMaybe
-                        songsRememberedSwapOneLatestMaybe songRememberedSongsRememberedSwapOneLatest songLatestSongsRememberedSwapOneLatestMaybe =
+                        songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
+                        songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
                             if
-                                songsLatestSongRememberedMatches songRememberedSongsRememberedSwapOneLatest
+                                songsRecentSongRememberedMatches songRememberedSongsRememberedSwapOneRecent
                                     |> List.isEmpty
                             then
                                 Nothing
@@ -167,20 +167,20 @@ songsRememberedUpdateTimestamp songsLatestSongsRememberedUpdateTimestamp songsRe
                                 (songsRememberedIndex + 1)
                                     |> startingWith songsRemembered
                                     |> (++)
-                                        (songRememberedUpdate songRememberedSongsRememberedSwapOneLatest songLatestSongsRememberedSwapOneLatestMaybe
+                                        (songRememberedUpdate songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe
                                             |> List.singleton
                                         )
                                     |> (++)
                                         (List.take songsRememberedIndex songsRemembered)
                                     |> Just
                     in
-                    songsRememberedSwapOneLatestMaybe
+                    songsRememberedSwapOneRecentMaybe
                         songRememberedSwapUnlessListHeadEmpty
-                        songLatestSwapOneLatestMaybe
+                        songRecentSwapOneRecentMaybe
             in
-            songsLatestSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
+            songsRecentSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
                 |> List.head
-                |> maybeDefaultNothing swapOneLatestMaybe
+                |> maybeDefaultNothing swapOneRecentMaybe
     in
     selectOneMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapUnlessListHeadEmptyMaybe

@@ -33,7 +33,7 @@ import SongType
     exposing
         ( SongCommentingMaybe
         , SongLikingMaybe
-        , SongsLatest
+        , SongsRecent
         , SongsRemembered
         )
 import UpdateRequestType
@@ -67,7 +67,7 @@ type alias Model =
     , showCommentButtons : ShowCommentButtons
     , songCommentingMaybe : SongCommentingMaybe
     , songLikingMaybe : SongLikingMaybe
-    , songsLatest : SongsLatest
+    , songsRecent : SongsRecent
     , songsRemembered : SongsRemembered
     , userIdentifier : UserIdentifier
     }

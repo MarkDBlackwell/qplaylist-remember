@@ -15,8 +15,8 @@
 module ViewButton
     exposing
         ( buttonComment
-        , buttonLatest
         , buttonLike
+        , buttonRecent
         , buttonRememberForget
         , buttonRemembered
         , buttonView
@@ -34,7 +34,7 @@ import ElmCycle
             , PageMorphHand
             , SongForgetHand
             , SongRememberHand
-            , SongsLatestRefreshHand
+            , SongsRecentRefreshHand
             )
         )
 import Html
@@ -63,10 +63,10 @@ import SongHelper
 import SongType
     exposing
         ( SongGroup
-            ( Latest
+            ( Recent
             , Remembered
             )
-        , SongsLatestOrRememberedIndex
+        , SongsRecentOrRememberedIndex
         , SongsRememberedIndex
         )
 import Utilities
@@ -104,7 +104,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
         hoverText =
             "Share a comment (with the DJ) about this song"
     in
-    if Latest == songGroup then
+    if Recent == songGroup then
         htmlNodeNull
     else
         buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg showCommentButtons
@@ -143,8 +143,8 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
         innerHtmlEmpty
 
 
-buttonLatest : Html Msg
-buttonLatest =
+buttonRecent : Html Msg
+buttonRecent =
     let
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
@@ -154,7 +154,7 @@ buttonLatest =
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonView buttonAttributeIdMaybe hoverText SongsLatestRefreshHand
+    buttonView buttonAttributeIdMaybe hoverText SongsRecentRefreshHand
 
 
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
@@ -176,24 +176,24 @@ buttonLike songGroup songsRememberedIndex =
             "Share a 'Like' (with the DJ) about this song"
     in
     case songGroup of
-        Latest ->
+        Recent ->
             htmlNodeNull
 
         Remembered ->
             buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
 
 
-buttonRememberForget : SongGroup -> SongsLatestOrRememberedIndex -> Html Msg
-buttonRememberForget songGroup songsLatestOrRememberedIndex =
+buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html Msg
+buttonRememberForget songGroup songsRecentOrRememberedIndex =
     let
         buttonActionMsg : Msg
         buttonActionMsg =
             case songGroup of
-                Latest ->
-                    SongRememberHand songsLatestOrRememberedIndex
+                Recent ->
+                    SongRememberHand songsRecentOrRememberedIndex
 
                 Remembered ->
-                    SongForgetHand songsLatestOrRememberedIndex
+                    SongForgetHand songsRecentOrRememberedIndex
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
@@ -201,14 +201,14 @@ buttonRememberForget songGroup songsLatestOrRememberedIndex =
                 (String.concat
                     [ "button"
                     , songGroup2String songGroup
-                    , toString songsLatestOrRememberedIndex
+                    , toString songsRecentOrRememberedIndex
                     ]
                 )
 
         hoverText : HoverText
         hoverText =
             case songGroup of
-                Latest ->
+                Recent ->
                     "Add this song (to remembered songs)"
 
                 Remembered ->

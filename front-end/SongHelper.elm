@@ -15,12 +15,12 @@
 module SongHelper
     exposing
         ( buttonIdReconstruct
-        , song2SongLatest
+        , song2SongRecent
         , song2SongRemembered
         , song2SongTimeless
         , songGroup2String
         , songRememberedUpdate
-        , songs2SongsLatest
+        , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
         )
@@ -40,15 +40,15 @@ import SongType
         , SongCommenting
         , SongCommentingMaybe
         , SongGroup
-            ( Latest
+            ( Recent
             , Remembered
             )
-        , SongLatest
-        , SongLatestBase
+        , SongRecent
+        , SongRecentBase
         , SongRemembered
         , SongTimeless
         , SongTimelessBase
-        , SongsLatest
+        , SongsRecent
         , SongsRemembered
         , SongsRememberedIndexMaybe
         , SongsTimeless
@@ -92,12 +92,12 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
         |> Maybe.withDefault "refresh"
 
 
-song2SongLatest : SongLatestBase a -> SongLatest
-song2SongLatest { artist, time, timestamp, title } =
-    SongLatest artist time timestamp title
+song2SongRecent : SongRecentBase a -> SongRecent
+song2SongRecent { artist, time, timestamp, title } =
+    SongRecent artist time timestamp title
 
 
-song2SongRemembered : SongLatestBase a -> SongRemembered
+song2SongRemembered : SongRecentBase a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     SongRemembered artist likedOrCommentedInit time timestamp title
 
@@ -123,14 +123,14 @@ songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
     SongRemembered artist likedOrCommented time timestamp title
 
 
-songs2SongsLatest : List (SongLatestBase a) -> SongsLatest
-songs2SongsLatest songLatestBaseList =
-    List.map song2SongLatest songLatestBaseList
+songs2SongsRecent : List (SongRecentBase a) -> SongsRecent
+songs2SongsRecent songRecentBaseList =
+    List.map song2SongRecent songRecentBaseList
 
 
-songs2SongsRemembered : List (SongLatestBase a) -> SongsRemembered
-songs2SongsRemembered songLatestBaseList =
-    List.map song2SongRemembered songLatestBaseList
+songs2SongsRemembered : List (SongRecentBase a) -> SongsRemembered
+songs2SongsRemembered songRecentBaseList =
+    List.map song2SongRemembered songRecentBaseList
 
 
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
@@ -145,7 +145,7 @@ songs2SongsTimeless songTimelessBaseList =
 songGroup2String : SongGroup -> String
 songGroup2String group =
     case group of
-        Latest ->
+        Recent ->
             "latest"
 
         Remembered ->

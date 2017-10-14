@@ -66,13 +66,13 @@ import SongType
     exposing
         ( SongCommenting
         , SongGroup
-            ( Latest
+            ( Recent
             , Remembered
             )
         , SongGroupLength
-        , SongLatestOrRemembered
-        , SongsLatestOrRemembered
-        , SongsLatestOrRememberedIndex
+        , SongRecentOrRemembered
+        , SongsRecentOrRemembered
+        , SongsRecentOrRememberedIndex
         , Time
         )
 import Utilities
@@ -86,8 +86,8 @@ import Utilities
 import ViewButton
     exposing
         ( buttonComment
-        , buttonLatest
         , buttonLike
+        , buttonRecent
         , buttonRememberForget
         , buttonRemembered
         , buttonView
@@ -198,11 +198,11 @@ view model =
                 )
             ]
 
-        songGroupView : SongGroup -> SongsLatestOrRemembered -> List (Html Msg)
-        songGroupView songGroup songsLatestOrRemembered =
+        songGroupView : SongGroup -> SongsRecentOrRemembered -> List (Html Msg)
+        songGroupView songGroup songsRecentOrRemembered =
             let
-                songView : SongsLatestOrRememberedIndex -> SongLatestOrRemembered -> Html Msg
-                songView songsLatestOrRememberedIndex songLatestOrRemembered =
+                songView : SongsRecentOrRememberedIndex -> SongRecentOrRemembered -> Html Msg
+                songView songsRecentOrRememberedIndex songRecentOrRemembered =
                     let
                         likedOrCommentedIndicator : Html Msg
                         likedOrCommentedIndicator =
@@ -223,7 +223,7 @@ view model =
                                         , " about this song (with the DJ)"
                                         ]
                             in
-                            if songLatestOrRemembered.likedOrCommented then
+                            if songRecentOrRemembered.likedOrCommented then
                                 em [ title indicatorHoverText ]
                                     innerHtmlEmpty
                             else
@@ -239,14 +239,14 @@ view model =
                             if model.pageIsExpanded then
                                 attributesEmpty
                             else
-                                [ styleCalc songGroup lengthRemembered songsLatestOrRememberedIndex ]
+                                [ styleCalc songGroup lengthRemembered songsRecentOrRememberedIndex ]
 
                         songTime : Time
                         songTime =
                             let
                                 clock : Time
                                 clock =
-                                    songLatestOrRemembered.time
+                                    songRecentOrRemembered.time
 
                                 prefix : String
                                 prefix =
@@ -256,7 +256,7 @@ view model =
                                             let
                                                 stampList : List String
                                                 stampList =
-                                                    String.split " " songLatestOrRemembered.timestamp
+                                                    String.split " " songRecentOrRemembered.timestamp
                                             in
                                             selectOneMaybe stampList index
                                                 |> Maybe.withDefault ""
@@ -271,7 +271,7 @@ view model =
                                         ]
                             in
                             case songGroup of
-                                Latest ->
+                                Recent ->
                                     clock
 
                                 Remembered ->
@@ -280,21 +280,21 @@ view model =
                     div
                         songAttributes
                         [ p attributesEmpty
-                            [ buttonRememberForget songGroup songsLatestOrRememberedIndex
+                            [ buttonRememberForget songGroup songsRecentOrRememberedIndex
                             , span attributesEmpty
                                 [ text songTime ]
-                            , buttonComment songGroup songsLatestOrRememberedIndex model.showCommentButtons
-                            , buttonLike songGroup songsLatestOrRememberedIndex
+                            , buttonComment songGroup songsRecentOrRememberedIndex model.showCommentButtons
+                            , buttonLike songGroup songsRecentOrRememberedIndex
                             , likedOrCommentedIndicator
-                            , buySongAnchor songLatestOrRemembered
+                            , buySongAnchor songRecentOrRemembered
                             ]
                         , p attributesEmpty
-                            [ text songLatestOrRemembered.title ]
+                            [ text songRecentOrRemembered.title ]
                         , p attributesEmpty
-                            [ text songLatestOrRemembered.artist ]
+                            [ text songRecentOrRemembered.artist ]
                         ]
             in
-            List.indexedMap songView songsLatestOrRemembered
+            List.indexedMap songView songsRecentOrRemembered
     in
     main_
         attributesEmpty
@@ -309,12 +309,12 @@ view model =
             )
         , hr attributesEmpty innerHtmlEmpty
         , section
-            (songGroupAttributes Latest)
+            (songGroupAttributes Recent)
             ([ p attributesEmpty
-                [ buttonLatest ]
+                [ buttonRecent ]
              ]
-                ++ (songs2SongsRemembered model.songsLatest
-                        |> songGroupView Latest
+                ++ (songs2SongsRemembered model.songsRecent
+                        |> songGroupView Recent
                    )
             )
         ]

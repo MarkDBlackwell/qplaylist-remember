@@ -18,8 +18,8 @@ module UpdateResponse
         , commentResponseOk
         , likeResponseErr
         , likeResponseOk
-        , songsLatestResponseErr
-        , songsLatestResponseOk
+        , songsRecentResponseErr
+        , songsRecentResponseOk
         )
 
 import Alert
@@ -38,9 +38,9 @@ import DecodeLikeOrCommentResponse
     exposing
         ( decodeLikeOrCommentResponse
         )
-import DecodeSongsLatest
+import DecodeSongsRecent
     exposing
-        ( decodeSongsLatestResponse
+        ( decodeSongsRecentResponse
         )
 import ElmCycle
     exposing
@@ -259,8 +259,8 @@ likeResponseOk model httpResponseText =
                 )
 
 
-songsLatestResponseErr : Model -> Error -> ElmCycle
-songsLatestResponseErr model httpError =
+songsRecentResponseErr : Model -> Error -> ElmCycle
+songsRecentResponseErr model httpError =
     let
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
@@ -289,9 +289,9 @@ songsLatestResponseErr model httpError =
     )
 
 
-songsLatestResponseOk : Model -> HttpResponseText -> ElmCycle
-songsLatestResponseOk model httpResponseText =
-    case decodeSongsLatestResponse httpResponseText of
+songsRecentResponseOk : Model -> HttpResponseText -> ElmCycle
+songsRecentResponseOk model httpResponseText =
+    case decodeSongsRecentResponse httpResponseText of
         Err alertMessageTextDecode ->
             let
                 actionDescription : AlertMessageText
@@ -311,11 +311,11 @@ songsLatestResponseOk model httpResponseText =
                 ]
             )
 
-        Ok songsLatestNew ->
+        Ok songsRecentNew ->
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = awaitingServerResponseInit
-                , songsLatest = songsLatestNew
+                , songsRecent = songsRecentNew
               }
               --Here, don't log the full response.
             , Cmd.batch

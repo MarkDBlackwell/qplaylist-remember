@@ -18,7 +18,7 @@ module SongInitialize
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songLikingOrCommentingInit
-        , songsLatestInit
+        , songsRecentInit
         )
 
 import SongType
@@ -29,7 +29,7 @@ import SongType
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongRemembered
-        , SongsLatest
+        , SongsRecent
         , Time
         , Timestamp
         , Title
@@ -54,8 +54,8 @@ songLikingOrCommentingInit =
     SongRemembered artistInit likedOrCommentedInit timeInit timestampInit titleInit
 
 
-songsLatestInit : SongsLatest
-songsLatestInit =
+songsRecentInit : SongsRecent
+songsRecentInit =
     []
 
 

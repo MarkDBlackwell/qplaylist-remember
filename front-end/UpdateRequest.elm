@@ -16,7 +16,7 @@ module UpdateRequest
     exposing
         ( commentSendHand
         , likeButtonProcessHand
-        , songsLatestRefreshHand
+        , songsRecentRefreshHand
         )
 
 import Alert
@@ -30,7 +30,7 @@ import ElmCycle
         , Msg
             ( CommentResponse
             , LikeResponse
-            , SongsLatestResponse
+            , SongsRecentResponse
             )
         )
 import Http
@@ -147,7 +147,7 @@ likeButtonProcessHand model songsRememberedIndex =
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
             songsRememberedUpdateTimestamp
-                model.songsLatest
+                model.songsRecent
                 model.songsRemembered
                 songsRememberedIndex
     in
@@ -175,15 +175,15 @@ likeButtonProcessHand model songsRememberedIndex =
             )
 
 
-songsLatestRefreshHand : Model -> ElmCycle
-songsLatestRefreshHand model =
+songsRecentRefreshHand : Model -> ElmCycle
+songsRecentRefreshHand model =
     let
         requestUriText : UriText
         requestUriText =
             let
                 basename : UriText
                 basename =
-                    "LatestFive.json"
+                    "RecentFive.json"
 
                 subUri : UriText
                 subUri =
@@ -196,14 +196,14 @@ songsLatestRefreshHand model =
                 ]
                 []
 
-        songsLatestRequest : Cmd Msg
-        songsLatestRequest =
+        songsRecentRequest : Cmd Msg
+        songsRecentRequest =
             let
                 requestHttp : Request HttpRequestText
                 requestHttp =
                     getString requestUriText
             in
-            send SongsLatestResponse requestHttp
+            send SongsRecentResponse requestHttp
     in
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -221,7 +221,7 @@ songsLatestRefreshHand model =
               }
             , Cmd.batch
                 [ logRequest requestUriText
-                , songsLatestRequest
+                , songsRecentRequest
                 , focusInputPossibly model
                 ]
             )

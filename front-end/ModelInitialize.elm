@@ -45,7 +45,7 @@ import SongInitialize
     exposing
         ( songCommentingMaybeInit
         , songLikingMaybeInit
-        , songsLatestInit
+        , songsRecentInit
         )
 import UpdateRequestType
     exposing
@@ -81,7 +81,7 @@ init flags =
         flags.showCommentButtons
         songCommentingMaybeInit
         songLikingMaybeInit
-        songsLatestInit
+        songsRecentInit
         flags.songsRemembered
         userIdentifierInit
     , generate InitialSetUp threeLetterNumberSpaceIntRandom

@@ -33,7 +33,7 @@ import ModelType
         )
 import SongType
     exposing
-        ( SongsLatestIndex
+        ( SongsRecentIndex
         , SongsRememberedIndex
         )
 import UpdateRequestType
@@ -62,9 +62,9 @@ type Msg
     | None
     | PageMorphHand
     | SongForgetHand SongsRememberedIndex
-    | SongRememberHand SongsLatestIndex
-    | SongsLatestRefreshHand
-    | SongsLatestResponse ResultErrorHttp
+    | SongRememberHand SongsRecentIndex
+    | SongsRecentRefreshHand
+    | SongsRecentResponse ResultErrorHttp
     | SongsRememberedStore
 
 

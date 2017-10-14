@@ -74,7 +74,7 @@ import UpdateRequest
     exposing
         ( commentSendHand
         , likeButtonProcessHand
-        , songsLatestRefreshHand
+        , songsRecentRefreshHand
         )
 import UpdateResponse
     exposing
@@ -82,8 +82,8 @@ import UpdateResponse
         , commentResponseOk
         , likeResponseErr
         , likeResponseOk
-        , songsLatestResponseErr
-        , songsLatestResponseOk
+        , songsRecentResponseErr
+        , songsRecentResponseOk
         )
 import UserIdentifier
     exposing
@@ -156,7 +156,7 @@ update msg model =
                             List.any
                                 identity
                                 --Here, can't use List.all.
-                                [ List.isEmpty model.songsLatest
+                                [ List.isEmpty model.songsRecent
                                 , List.isEmpty model.songsRemembered
                                 ]
                     in
@@ -220,7 +220,7 @@ update msg model =
                             ]
                         )
 
-        SongRememberHand songsLatestIndex ->
+        SongRememberHand songsRecentIndex ->
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
@@ -228,8 +228,8 @@ update msg model =
                         songsRememberedAppended : SongsRemembered
                         songsRememberedAppended =
                             songsRememberedAppendOneUnique
-                                model.songsLatest
-                                songsLatestIndex
+                                model.songsRecent
+                                songsRecentIndex
                                 model.songsRemembered
 
                         songsRememberedIndexMaybe : SongsRememberedIndexMaybe
@@ -240,12 +240,12 @@ update msg model =
                                     songs2SongsTimeless songsRememberedAppended
                                         |> matchingIndexes
                             in
-                            selectOneMaybe model.songsLatest songsLatestIndex
+                            selectOneMaybe model.songsRecent songsRecentIndex
                                 |> Maybe.map song2SongTimeless
                                 |> Maybe.map songsRememberedIndexes
                                 |> Maybe.andThen List.head
                     in
-                    songsRememberedUpdateTimestamp model.songsLatest songsRememberedAppended
+                    songsRememberedUpdateTimestamp model.songsRecent songsRememberedAppended
                         |> flip Maybe.map songsRememberedIndexMaybe
                         |> Maybe.withDefault songsRememberedAppended
             in
@@ -269,14 +269,14 @@ update msg model =
                         ]
                     )
 
-        SongsLatestRefreshHand ->
-            songsLatestRefreshHand model
+        SongsRecentRefreshHand ->
+            songsRecentRefreshHand model
 
-        SongsLatestResponse (Err httpError) ->
-            songsLatestResponseErr model httpError
+        SongsRecentResponse (Err httpError) ->
+            songsRecentResponseErr model httpError
 
-        SongsLatestResponse (Ok httpResponseText) ->
-            songsLatestResponseOk model httpResponseText
+        SongsRecentResponse (Ok httpResponseText) ->
+            songsRecentResponseOk model httpResponseText
 
         SongsRememberedStore ->
             songsRememberedStore model

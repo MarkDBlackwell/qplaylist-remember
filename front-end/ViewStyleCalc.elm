@@ -28,11 +28,11 @@ import Html.Attributes
 import SongType
     exposing
         ( SongGroup
-            ( Latest
+            ( Recent
             , Remembered
             )
         , SongGroupLength
-        , SongsLatestOrRememberedIndex
+        , SongsRecentOrRememberedIndex
         )
 import Utilities
     exposing
@@ -43,8 +43,8 @@ import Utilities
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsLatestOrRememberedIndex -> Attribute msg
-styleCalc group songGroupLength songsLatestOrRememberedIndex =
+styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> Attribute msg
+styleCalc group songGroupLength songsRecentOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
         backgroundColorStyling =
@@ -65,7 +65,7 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
                         ]
             in
             case group of
-                Latest ->
+                Recent ->
                     []
 
                 Remembered ->
@@ -93,16 +93,16 @@ styleCalc group songGroupLength songsLatestOrRememberedIndex =
         scaleFactor : Float
         scaleFactor =
             let
-                songsLatestOrRememberedIndexReversed : SongsLatestOrRememberedIndex
-                songsLatestOrRememberedIndexReversed =
-                    songGroupLength - songsLatestOrRememberedIndex - 1
+                songsRecentOrRememberedIndexReversed : SongsRecentOrRememberedIndex
+                songsRecentOrRememberedIndexReversed =
+                    songGroupLength - songsRecentOrRememberedIndex - 1
             in
             case group of
-                Latest ->
-                    goldenRatio ^ toFloat songsLatestOrRememberedIndex
+                Recent ->
+                    goldenRatio ^ toFloat songsRecentOrRememberedIndex
 
                 Remembered ->
-                    goldenRatio ^ toFloat songsLatestOrRememberedIndexReversed
+                    goldenRatio ^ toFloat songsRecentOrRememberedIndexReversed
     in
     style
         (List.concat

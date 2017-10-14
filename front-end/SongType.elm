@@ -19,25 +19,25 @@ module SongType
         , SongCommenting
         , SongCommentingMaybe
         , SongGroup
-            ( Latest
+            ( Recent
             , Remembered
             )
         , SongGroupLength
-        , SongLatest
-        , SongLatestBase
-        , SongLatestMaybe
-        , SongLatestOrRemembered
         , SongLikingMaybe
         , SongLikingOrCommenting
         , SongLikingOrCommentingMaybe
+        , SongRecent
+        , SongRecentBase
+        , SongRecentMaybe
+        , SongRecentOrRemembered
         , SongRemembered
         , SongRememberedMaybe
         , SongTimeless
         , SongTimelessBase
-        , SongsLatest
-        , SongsLatestIndex
-        , SongsLatestOrRemembered
-        , SongsLatestOrRememberedIndex
+        , SongsRecent
+        , SongsRecentIndex
+        , SongsRecentOrRemembered
+        , SongsRecentOrRememberedIndex
         , SongsRemembered
         , SongsRememberedIndex
         , SongsRememberedIndexList
@@ -68,7 +68,7 @@ type alias SongCommentingMaybe =
     Maybe SongCommenting
 
 
-type alias SongLatest =
+type alias SongRecent =
     --Keep order (for JSON decoding):
     { artist : Artist
     , time : Time
@@ -77,7 +77,7 @@ type alias SongLatest =
     }
 
 
-type alias SongLatestBase a =
+type alias SongRecentBase a =
     { a
         | artist : Artist
         , time : Time
@@ -86,8 +86,8 @@ type alias SongLatestBase a =
     }
 
 
-type alias SongLatestMaybe =
-    Maybe SongLatest
+type alias SongRecentMaybe =
+    Maybe SongRecent
 
 
 type alias SongLiking =
@@ -106,7 +106,7 @@ type alias SongLikingOrCommentingMaybe =
     Maybe SongLikingOrCommenting
 
 
-type alias SongLatestOrRemembered =
+type alias SongRecentOrRemembered =
     SongRemembered
 
 
@@ -136,15 +136,15 @@ type alias SongTimelessBase a =
     }
 
 
-type alias SongsLatest =
-    List SongLatest
+type alias SongsRecent =
+    List SongRecent
 
 
-type alias SongsLatestIndex =
+type alias SongsRecentIndex =
     Int
 
 
-type alias SongsLatestOrRemembered =
+type alias SongsRecentOrRemembered =
     SongsRemembered
 
 
@@ -193,7 +193,7 @@ type alias Title =
 
 
 type SongGroup
-    = Latest
+    = Recent
     | Remembered
 
 
@@ -201,5 +201,5 @@ type alias SongGroupLength =
     Int
 
 
-type alias SongsLatestOrRememberedIndex =
+type alias SongsRecentOrRememberedIndex =
     Int
