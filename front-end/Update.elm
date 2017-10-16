@@ -87,7 +87,7 @@ import UpdateResponse
         )
 import UserIdentifier
     exposing
-        ( updateInitialSetUp
+        ( initialSetUp
         )
 import Utilities
     exposing
@@ -126,9 +126,7 @@ update msg model =
             focusAttempt model id
 
         InitialSetUp threeLetterNumberSpaceInt ->
-            ( { model
-                | userIdentifier = updateInitialSetUp threeLetterNumberSpaceInt
-              }
+            ( initialSetUp model threeLetterNumberSpaceInt
             , focusSetId "refresh"
             )
 

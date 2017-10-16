@@ -14,8 +14,8 @@
 
 module UserIdentifier
     exposing
-        ( threeLetterNumberSpaceIntRandom
-        , updateInitialSetUp
+        ( initialSetUp
+        , threeLetterNumberSpaceIntRandom
         , userIdentifierInit
         )
 
@@ -24,6 +24,10 @@ import Char
         ( KeyCode
         , fromCode
         , toCode
+        )
+import ModelType
+    exposing
+        ( Model
         )
 import Random
     exposing
@@ -78,6 +82,13 @@ userIdentifierInit =
 
 
 -- UPDATE
+
+
+initialSetUp : Model -> ThreeLetterNumberSpaceInt -> Model
+initialSetUp model threeLetterNumberSpaceInt =
+    { model
+        | userIdentifier = updateInitialSetUp threeLetterNumberSpaceInt
+    }
 
 
 updateInitialSetUp : ThreeLetterNumberSpaceInt -> UserIdentifier

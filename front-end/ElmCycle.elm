@@ -40,6 +40,10 @@ import UpdateRequestType
     exposing
         ( HttpResponseText
         )
+import UserIdentifierType
+    exposing
+        ( ThreeLetterNumberSpaceInt
+        )
 
 
 -- MODEL
@@ -56,7 +60,7 @@ type Msg
     | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
-    | InitialSetUp Int
+    | InitialSetUp ThreeLetterNumberSpaceInt
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse ResultErrorHttp
     | None
