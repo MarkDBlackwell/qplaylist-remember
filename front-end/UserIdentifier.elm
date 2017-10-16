@@ -63,6 +63,16 @@ digitCount =
 
 generateUserIdentifier : Cmd Msg
 generateUserIdentifier =
+    let
+        threeLetterNumberSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
+        threeLetterNumberSpaceIntRandom =
+            let
+                highest : ThreeLetterNumberSpaceInt
+                highest =
+                    (letterNumberSpaceLength ^ digitCount) - 1
+            in
+            int 0 highest
+    in
     generate InitialSetUp threeLetterNumberSpaceIntRandom
 
 
@@ -75,16 +85,6 @@ letterNumberSpaceLength =
             2
     in
     caseCount * caseLength
-
-
-threeLetterNumberSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
-threeLetterNumberSpaceIntRandom =
-    let
-        highest : ThreeLetterNumberSpaceInt
-        highest =
-            (letterNumberSpaceLength ^ digitCount) - 1
-    in
-    int 0 highest
 
 
 userIdentifierInit : UserIdentifier
