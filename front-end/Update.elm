@@ -278,5 +278,8 @@ update msg model =
             ( { model
                 | userIdentifier = userIdentifierCalc randomInt
               }
-            , focusInputPossibly model
+            , Cmd.batch
+                [ focusSetId "refresh"
+                , focusInputPossibly model
+                ]
             )
