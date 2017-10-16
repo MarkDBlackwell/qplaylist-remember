@@ -50,8 +50,8 @@ digitCount =
     3
 
 
-letterSpace : Int
-letterSpace =
+letterNumberSpaceLength : Int
+letterNumberSpaceLength =
     let
         caseCount : Int
         caseCount =
@@ -66,7 +66,7 @@ threeLetterNumberSpaceIntRandom =
     let
         highest : ThreeLetterNumberSpaceInt
         highest =
-            (letterSpace ^ digitCount) - 1
+            (letterNumberSpaceLength ^ digitCount) - 1
     in
     int 0 highest
 
@@ -100,9 +100,9 @@ updateInitialSetUp threeLetterNumberSpaceInt =
         threeDigits : List Int
         threeDigits =
             (digitCount - 1)
-                |> flip List.repeat letterSpace
+                |> flip List.repeat letterNumberSpaceLength
                 |> List.scanl (//) threeLetterNumberSpaceInt
-                |> List.map (\x -> x % letterSpace)
+                |> List.map (\x -> x % letterNumberSpaceLength)
     in
     threeDigits
         |> List.map keyCode2Char
