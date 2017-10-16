@@ -42,7 +42,7 @@ import UpdateRequestType
         )
 import UserIdentifierType
     exposing
-        ( ThreeLetterNumberSpaceInt
+        ( UserIdentifierNumberSpaceInt
         )
 
 
@@ -60,7 +60,6 @@ type Msg
     | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
-    | InitialSetUp ThreeLetterNumberSpaceInt
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse ResultErrorHttp
     | None
@@ -70,6 +69,7 @@ type Msg
     | SongsRecentRefreshHand
     | SongsRecentResponse ResultErrorHttp
     | SongsRememberedStore
+    | UserIdentifierEstablish UserIdentifierNumberSpaceInt
 
 
 type alias ResultErrorHttp =

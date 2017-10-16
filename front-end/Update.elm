@@ -87,7 +87,7 @@ import UpdateResponse
         )
 import UserIdentifier
     exposing
-        ( initialSetUp
+        ( userIdentifierCalc
         )
 import Utilities
     exposing
@@ -124,11 +124,6 @@ update msg model =
 
         FocusAttempt id ->
             focusAttempt model id
-
-        InitialSetUp threeLetterNumberSpaceInt ->
-            ( initialSetUp model threeLetterNumberSpaceInt
-            , focusSetId "refresh"
-            )
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
@@ -278,3 +273,10 @@ update msg model =
 
         SongsRememberedStore ->
             songsRememberedStore model
+
+        UserIdentifierEstablish randomInt ->
+            ( { model
+                | userIdentifier = userIdentifierCalc randomInt
+              }
+            , focusInputPossibly model
+            )

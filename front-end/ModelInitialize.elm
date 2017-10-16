@@ -40,6 +40,10 @@ import SongInitialize
         , songLikingMaybeInit
         , songsRecentInit
         )
+import UpdateFocus
+    exposing
+        ( focusSetId
+        )
 import UpdateRequestType
     exposing
         ( AwaitingServerResponse
@@ -77,7 +81,10 @@ init flags =
         songsRecentInit
         flags.songsRemembered
         userIdentifierInit
-    , generateUserIdentifier
+    , Cmd.batch
+        [ generateUserIdentifier
+        , focusSetId "refresh"
+        ]
     )
 
 

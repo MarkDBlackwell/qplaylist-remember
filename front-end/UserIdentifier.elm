@@ -15,7 +15,7 @@
 module UserIdentifier
     exposing
         ( generateUserIdentifier
-        , initialSetUp
+        , userIdentifierCalc
         , userIdentifierInit
         )
 
@@ -27,13 +27,10 @@ import Char
         )
 import ElmCycle
     exposing
-        ( Msg
-            ( InitialSetUp
+        ( ElmCycle
+        , Msg
+            ( UserIdentifierEstablish
             )
-        )
-import ModelType
-    exposing
-        ( Model
         )
 import Random
     exposing
@@ -43,8 +40,12 @@ import Random
         )
 import UserIdentifierType
     exposing
-        ( ThreeLetterNumberSpaceInt
-        , UserIdentifier
+        ( UserIdentifier
+        , UserIdentifierNumberSpaceInt
+        )
+import Utilities
+    exposing
+        ( withIndexes
         )
 
 
@@ -56,28 +57,13 @@ caseLength =
     1 + toCode 'Z' - toCode 'A'
 
 
-digitCount : Int
-digitCount =
+charCount : Int
+charCount =
     3
 
 
-generateUserIdentifier : Cmd Msg
-generateUserIdentifier =
-    let
-        threeLetterNumberSpaceIntRandom : Generator ThreeLetterNumberSpaceInt
-        threeLetterNumberSpaceIntRandom =
-            let
-                highest : ThreeLetterNumberSpaceInt
-                highest =
-                    (letterNumberSpaceLength ^ digitCount) - 1
-            in
-            int 0 highest
-    in
-    generate InitialSetUp threeLetterNumberSpaceIntRandom
-
-
-letterNumberSpaceLength : Int
-letterNumberSpaceLength =
+charNumberSpaceLength : Int
+charNumberSpaceLength =
     let
         caseCount : Int
         caseCount =
@@ -85,6 +71,19 @@ letterNumberSpaceLength =
             2
     in
     caseCount * caseLength
+
+
+generateUserIdentifier : Cmd Msg
+generateUserIdentifier =
+    let
+        highest : UserIdentifierNumberSpaceInt
+        highest =
+            charNumberSpaceLength
+                ^ charCount
+                |> flip (-) 1
+    in
+    int 0 highest
+        |> generate UserIdentifierEstablish
 
 
 userIdentifierInit : UserIdentifier
@@ -96,37 +95,39 @@ userIdentifierInit =
 -- UPDATE
 
 
-initialSetUp : Model -> ThreeLetterNumberSpaceInt -> Model
-initialSetUp model threeLetterNumberSpaceInt =
-    { model
-        | userIdentifier = updateInitialSetUp threeLetterNumberSpaceInt
-    }
-
-
-updateInitialSetUp : ThreeLetterNumberSpaceInt -> UserIdentifier
-updateInitialSetUp threeLetterNumberSpaceInt =
+userIdentifierCalc : UserIdentifierNumberSpaceInt -> UserIdentifier
+userIdentifierCalc userIdentifierNumberSpaceInt =
     let
         keyCode2Char : KeyCode -> Char
-        keyCode2Char digit =
+        keyCode2Char keyCode =
             let
                 charBase : KeyCode
                 charBase =
-                    if digit < caseLength then
+                    if keyCode < caseLength then
                         toCode 'A'
                     else
                         toCode 'a'
+
+                slotInLetterCase : KeyCode
+                slotInLetterCase =
+                    keyCode % caseLength
             in
-            (digit % caseLength)
-                |> (+) charBase
+            (charBase + slotInLetterCase)
                 |> fromCode
 
-        threeDigits : List Int
+        threeDigits : List KeyCode
         threeDigits =
-            (digitCount - 1)
-                |> flip List.repeat letterNumberSpaceLength
-                |> List.scanl (//) threeLetterNumberSpaceInt
-                |> List.map (\x -> x % letterNumberSpaceLength)
+            let
+                charCalc : ( Int, UserIdentifierNumberSpaceInt ) -> KeyCode
+                charCalc ( index, userIdentifierNumberSpaceInt ) =
+                    charNumberSpaceLength
+                        ^ index
+                        |> (//) userIdentifierNumberSpaceInt
+                        |> flip (%) charNumberSpaceLength
+            in
+            List.repeat charCount userIdentifierNumberSpaceInt
+                |> withIndexes
+                |> List.map charCalc
     in
-    threeDigits
-        |> List.map keyCode2Char
+    List.map keyCode2Char threeDigits
         |> String.fromList
