@@ -14,8 +14,8 @@
 
 module UserIdentifier
     exposing
-        ( initialSetUp
-        , threeLetterNumberSpaceIntRandom
+        ( generateUserIdentifier
+        , initialSetUp
         , userIdentifierInit
         )
 
@@ -25,6 +25,12 @@ import Char
         , fromCode
         , toCode
         )
+import ElmCycle
+    exposing
+        ( Msg
+            ( InitialSetUp
+            )
+        )
 import ModelType
     exposing
         ( Model
@@ -32,6 +38,7 @@ import ModelType
 import Random
     exposing
         ( Generator
+        , generate
         , int
         )
 import UserIdentifierType
@@ -52,6 +59,11 @@ caseLength =
 digitCount : Int
 digitCount =
     3
+
+
+generateUserIdentifier : Cmd Msg
+generateUserIdentifier =
+    generate InitialSetUp threeLetterNumberSpaceIntRandom
 
 
 letterNumberSpaceLength : Int

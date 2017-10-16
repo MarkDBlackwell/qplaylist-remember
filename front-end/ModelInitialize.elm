@@ -26,9 +26,6 @@ import Alert
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( InitialSetUp
-            )
         )
 import ModelType
     exposing
@@ -36,10 +33,6 @@ import ModelType
         , Flags
         , Model
         , PageIsExpanded
-        )
-import Random
-    exposing
-        ( generate
         )
 import SongInitialize
     exposing
@@ -53,7 +46,7 @@ import UpdateRequestType
         )
 import UserIdentifier
     exposing
-        ( threeLetterNumberSpaceIntRandom
+        ( generateUserIdentifier
         , userIdentifierInit
         )
 
@@ -84,7 +77,7 @@ init flags =
         songsRecentInit
         flags.songsRemembered
         userIdentifierInit
-    , generate InitialSetUp threeLetterNumberSpaceIntRandom
+    , generateUserIdentifier
     )
 
 
