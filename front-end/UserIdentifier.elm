@@ -43,10 +43,6 @@ import UserIdentifierType
         ( UserIdentifier
         , UserIdentifierNumberSpaceInt
         )
-import Utilities
-    exposing
-        ( withIndexes
-        )
 
 
 -- MODEL
@@ -76,13 +72,12 @@ charNumberSpaceLength =
 generateUserIdentifier : Cmd Msg
 generateUserIdentifier =
     let
-        highest : UserIdentifierNumberSpaceInt
-        highest =
-            charNumberSpaceLength
-                ^ charCount
+        highestCharNumber : UserIdentifierNumberSpaceInt
+        highestCharNumber =
+            (charNumberSpaceLength ^ charCount)
                 |> flip (-) 1
     in
-    int 0 highest
+    int 0 highestCharNumber
         |> generate UserIdentifierEstablish
 
 
@@ -101,8 +96,8 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
         keyCode2Char : KeyCode -> Char
         keyCode2Char keyCode =
             let
-                charBase : KeyCode
-                charBase =
+                keyCodeBase : KeyCode
+                keyCodeBase =
                     if keyCode < caseLength then
                         toCode 'A'
                     else
@@ -112,22 +107,21 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
                 slotInLetterCase =
                     keyCode % caseLength
             in
-            (charBase + slotInLetterCase)
+            (keyCodeBase + slotInLetterCase)
                 |> fromCode
 
-        threeDigits : List KeyCode
-        threeDigits =
+        keyCodes : List KeyCode
+        keyCodes =
             let
-                charCalc : ( Int, UserIdentifierNumberSpaceInt ) -> KeyCode
-                charCalc ( index, userIdentifierNumberSpaceInt ) =
-                    charNumberSpaceLength
-                        ^ index
+                keyCodeCalc : Int -> KeyCode
+                keyCodeCalc index =
+                    (charNumberSpaceLength ^ index)
                         |> (//) userIdentifierNumberSpaceInt
                         |> flip (%) charNumberSpaceLength
             in
-            List.repeat charCount userIdentifierNumberSpaceInt
-                |> withIndexes
-                |> List.map charCalc
+            (charCount - 1)
+                |> List.range 0
+                |> List.map keyCodeCalc
     in
-    List.map keyCode2Char threeDigits
+    List.map keyCode2Char keyCodes
         |> String.fromList
