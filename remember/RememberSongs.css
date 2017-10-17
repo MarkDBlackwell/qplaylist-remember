@@ -223,7 +223,7 @@ section#songs-latest > p:after {
     content: "Latest";
 }
 section#songs-remembered > p:after {
-    content: "Remembered";
+    content: "Remembered . . . . . ?=help";
 }
 section.songs-group > p > button {
     vertical-align: text-top;
