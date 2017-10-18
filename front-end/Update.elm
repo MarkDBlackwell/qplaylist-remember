@@ -30,6 +30,9 @@ import ElmCycle
 import ModelType
     exposing
         ( Model
+        , Optional
+            ( Closed
+            )
         , PageIsExpanded
         )
 import Song
@@ -126,11 +129,19 @@ update msg model =
             focusAttempt model id
 
         KeyMsg keyCode ->
-            ( { model
-                | alertMessageText = Just "Key hit"
-              }
-            , Cmd.none
-            )
+            --(awaitingServer, commentArea)
+            case stateVector model of
+                ( False, Closed ) ->
+                    ( { model
+                        | alertMessageText = Just "Key hit"
+                      }
+                    , focusInputPossibly model
+                    )
+
+                _ ->
+                    ( model
+                    , focusInputPossibly model
+                    )
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
