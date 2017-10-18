@@ -12,50 +12,25 @@
 -}
 
 
-module Main
+module Subscription
     exposing
-        ( main
+        ( subscriptions
         )
 
 import ElmCycle
     exposing
         ( Msg
         )
-import Html
-    exposing
-        ( programWithFlags
-        )
-import ModelInitialize
-    exposing
-        ( init
-        )
 import ModelType
     exposing
-        ( Flags
-        , Model
-        )
-import Subscription
-    exposing
-        ( subscriptions
-        )
-import Update
-    exposing
-        ( update
-        )
-import View
-    exposing
-        ( view
+        ( Model
         )
 
 
--- MODEL
+-- SUBSCRIPTIONS
 
 
-main : Program Flags Model Msg
-main =
-    programWithFlags
-        { init = init
-        , subscriptions = subscriptions
-        , update = update
-        , view = view
-        }
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        []
