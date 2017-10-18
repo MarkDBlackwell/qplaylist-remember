@@ -26,6 +26,10 @@ import Http
     exposing
         ( Error
         )
+import Keyboard
+    exposing
+        ( KeyCode
+        )
 import ModelType
     exposing
         ( CommentText
@@ -60,6 +64,7 @@ type Msg
     | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
+    | KeyMsg Keyboard.KeyCode
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse ResultErrorHttp
     | None

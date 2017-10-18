@@ -20,6 +20,12 @@ module Subscription
 import ElmCycle
     exposing
         ( Msg
+            ( KeyMsg
+            )
+        )
+import Keyboard
+    exposing
+        ( ups
         )
 import ModelType
     exposing
@@ -33,4 +39,5 @@ import ModelType
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        []
+        [ Keyboard.ups KeyMsg
+        ]

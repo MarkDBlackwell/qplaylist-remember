@@ -125,6 +125,13 @@ update msg model =
         FocusAttempt id ->
             focusAttempt model id
 
+        KeyMsg keyCode ->
+            ( { model
+                | alertMessageText = Just "Key hit"
+              }
+            , Cmd.none
+            )
+
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
 
