@@ -31,6 +31,8 @@ import ElmCycle
         ( ElmCycle
         , Msg
             ( PageMorphHand
+            , SongRememberHand
+            , SongsRecentRefreshHand
             )
         )
 import ModelType
@@ -60,6 +62,15 @@ import Utilities
 keystrokeHand : Model -> KeyCode -> ElmCycle
 keystrokeHand model keyCode =
     let
+        doMessage : Msg -> ElmCycle
+        doMessage msg =
+            ( model
+            , Cmd.batch
+                [ msg2Cmd msg
+                , focusInputPossibly model
+                ]
+            )
+
         doNothing : ElmCycle
         doNothing =
             ( model
@@ -69,11 +80,7 @@ keystrokeHand model keyCode =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( False, Closed ) ->
-            if keyCode == Char.toCode 'C' then
-                doNothing
-            else if keyCode == Char.toCode 'F' then
-                doNothing
-            else if keyCode == Char.toCode 'H' then
+            if keyCode == Char.toCode 'H' then
                 let
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
@@ -119,17 +126,17 @@ keystrokeHand model keyCode =
                   }
                 , focusInputPossibly model
                 )
+            else if keyCode == Char.toCode 'C' then
+                doNothing
+            else if keyCode == Char.toCode 'F' then
+                doMessage SongsRecentRefreshHand
             else if keyCode == Char.toCode 'L' then
                 doNothing
             else if keyCode == Char.toCode 'M' then
-                ( model
-                , Cmd.batch
-                    [ msg2Cmd PageMorphHand
-                    , focusInputPossibly model
-                    ]
-                )
+                doMessage PageMorphHand
             else if keyCode == Char.toCode 'R' then
-                doNothing
+                SongRememberHand 0
+                    |> doMessage
             else
                 doNothing
 
