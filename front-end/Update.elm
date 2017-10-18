@@ -22,14 +22,6 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
-import AlertType
-    exposing
-        ( AlertMessageText
-        )
-import Char
-    exposing
-        ( toCode
-        )
 import ElmCycle
     exposing
         ( ElmCycle
@@ -38,9 +30,6 @@ import ElmCycle
 import ModelType
     exposing
         ( Model
-        , Optional
-            ( Closed
-            )
         , PageIsExpanded
         )
 import Song
@@ -80,6 +69,10 @@ import UpdateFocus
 import UpdateHelper
     exposing
         ( stateVector
+        )
+import UpdateKeyboard
+    exposing
+        ( keyMsgHand
         )
 import UpdateRequest
     exposing
@@ -137,73 +130,7 @@ update msg model =
             focusAttempt model id
 
         KeyMsg keyCode ->
-            --(awaitingServer, commentArea)
-            let
-                doNothing : ElmCycle
-                doNothing =
-                    ( model
-                    , focusInputPossibly model
-                    )
-            in
-            case stateVector model of
-                ( False, Closed ) ->
-                    if keyCode == Char.toCode 'C' then
-                        doNothing
-                    else if keyCode == Char.toCode 'F' then
-                        doNothing
-                    else if keyCode == Char.toCode 'H' then
-                        let
-                            alertMessageTextNew : AlertMessageText
-                            alertMessageTextNew =
-                                let
-                                    likeAndComment : String
-                                    likeAndComment =
-                                        let
-                                            comment : String
-                                            comment =
-                                                if model.showCommentButtons then
-                                                    String.concat
-                                                        [ separator
-                                                        , "C – Comment latest remembered"
-                                                        ]
-                                                else
-                                                    ""
-                                        in
-                                        String.concat
-                                            [ "L – Like latest remembered"
-                                            , comment
-                                            ]
-
-                                    separator : String
-                                    separator =
-                                        --The alert box compresses multiple blank characters.
-                                        "; "
-                                in
-                                String.join
-                                    separator
-                                    [ "F – reFresh"
-                                    , likeAndComment
-                                    , "R – Remember latest played"
-                                    , "M – Morph"
-                                    , "H – this Help"
-                                    ]
-                        in
-                        ( { model
-                            | alertMessageText = Just alertMessageTextNew
-                          }
-                        , focusInputPossibly model
-                        )
-                    else if keyCode == Char.toCode 'L' then
-                        doNothing
-                    else if keyCode == Char.toCode 'M' then
-                        doNothing
-                    else if keyCode == Char.toCode 'R' then
-                        doNothing
-                    else
-                        doNothing
-
-                _ ->
-                    doNothing
+            keyMsgHand model keyCode
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
