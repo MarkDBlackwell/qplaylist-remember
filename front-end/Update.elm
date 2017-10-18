@@ -22,6 +22,14 @@ import Alert
         ( alertMessageTextInit
         , alertMessageTextServerAwaiting
         )
+import AlertType
+    exposing
+        ( AlertMessageText
+        )
+import Char
+    exposing
+        ( toCode
+        )
 import ElmCycle
     exposing
         ( ElmCycle
@@ -130,18 +138,58 @@ update msg model =
 
         KeyMsg keyCode ->
             --(awaitingServer, commentArea)
-            case stateVector model of
-                ( False, Closed ) ->
-                    ( { model
-                        | alertMessageText = Just "Key hit"
-                      }
-                    , focusInputPossibly model
-                    )
+            let
+                alertMessageTextCommentButtons : String
+                alertMessageTextCommentButtons =
+                    if model.showCommentButtons then
+                        "; C – Comment latest remembered"
+                    else
+                        ""
 
-                _ ->
+                alertMessageTextNew : AlertMessageText
+                alertMessageTextNew =
+                    String.join
+                        --Extra blank characters don't work, here.
+                        "; "
+                        [ "F – reFresh"
+                        , String.concat
+                            [ "L – Like latest remembered"
+                            , alertMessageTextCommentButtons
+                            ]
+                        , "R – Remember latest played"
+                        , "M – Morph"
+                        , "H – this Help"
+                        ]
+
+                doNothing : ElmCycle
+                doNothing =
                     ( model
                     , focusInputPossibly model
                     )
+            in
+            case stateVector model of
+                ( False, Closed ) ->
+                    if keyCode == Char.toCode 'C' then
+                        doNothing
+                    else if keyCode == Char.toCode 'F' then
+                        doNothing
+                    else if keyCode == Char.toCode 'H' then
+                        ( { model
+                            | alertMessageText = Just alertMessageTextNew
+                          }
+                        , focusInputPossibly model
+                        )
+                    else if keyCode == Char.toCode 'L' then
+                        doNothing
+                    else if keyCode == Char.toCode 'M' then
+                        doNothing
+                    else if keyCode == Char.toCode 'R' then
+                        doNothing
+                    else
+                        doNothing
+
+                _ ->
+                    doNothing
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
