@@ -26,11 +26,17 @@ import Char
         ( KeyCode
         , toCode
         )
+import Dom
+    exposing
+        ( Id
+        )
 import ElmCycle
     exposing
         ( ElmCycle
         , Msg
-            ( PageMorphHand
+            ( CommentAreaOpenHand
+            , LikeButtonProcessHand
+            , PageMorphHand
             , SongRememberHand
             , SongsRecentRefreshHand
             )
@@ -42,9 +48,14 @@ import ModelType
             ( Closed
             )
         )
+import SongType
+    exposing
+        ( SongsRememberedIndex
+        )
 import UpdateFocus
     exposing
         ( focusInputPossibly
+        , focusSetId
         )
 import UpdateHelper
     exposing
@@ -62,15 +73,6 @@ import Utilities
 keystrokeHand : Model -> KeyCode -> ElmCycle
 keystrokeHand model keyCode =
     let
-        doMessage : Msg -> ElmCycle
-        doMessage msg =
-            ( model
-            , Cmd.batch
-                [ msg2Cmd msg
-                , focusInputPossibly model
-                ]
-            )
-
         doNothing : ElmCycle
         doNothing =
             ( model
@@ -80,6 +82,22 @@ keystrokeHand model keyCode =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( False, Closed ) ->
+            let
+                doMessage : Id -> Msg -> ElmCycle
+                doMessage id msg =
+                    ( model
+                    , Cmd.batch
+                        [ msg2Cmd msg
+                        , focusSetId id
+                        , focusInputPossibly model
+                        ]
+                    )
+
+                songsRememberedIndex : SongsRememberedIndex
+                songsRememberedIndex =
+                    List.length model.songsRemembered
+                        |> flip (-) 1
+            in
             if keyCode == Char.toCode 'H' then
                 let
                     alertMessageTextNew : AlertMessageText
@@ -127,16 +145,22 @@ keystrokeHand model keyCode =
                 , focusInputPossibly model
                 )
             else if keyCode == Char.toCode 'C' then
-                doNothing
+                songsRememberedIndex
+                    |> CommentAreaOpenHand
+                    |> doMessage "refresh"
             else if keyCode == Char.toCode 'F' then
-                doMessage SongsRecentRefreshHand
+                SongsRecentRefreshHand
+                    |> doMessage "refresh"
             else if keyCode == Char.toCode 'L' then
-                doNothing
+                songsRememberedIndex
+                    |> LikeButtonProcessHand
+                    |> doMessage "refresh"
             else if keyCode == Char.toCode 'M' then
-                doMessage PageMorphHand
+                PageMorphHand
+                    |> doMessage "morph"
             else if keyCode == Char.toCode 'R' then
                 SongRememberHand 0
-                    |> doMessage
+                    |> doMessage "refresh"
             else
                 doNothing
 

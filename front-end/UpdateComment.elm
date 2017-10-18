@@ -126,15 +126,22 @@ commentAreaOpenHand model songsRememberedIndex =
             )
 
         _ ->
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , commentText = commentTextInit
-                , songCommentingMaybe = songCommentingMaybeNew
-                , songsRemembered = songsRememberedNew
-              }
-              --'focusInputPossibly' doesn't work, here:
-            , focusSetId "input"
-            )
+            case songCommentingMaybeNew of
+                Nothing ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                _ ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , commentText = commentTextInit
+                        , songCommentingMaybe = songCommentingMaybeNew
+                        , songsRemembered = songsRememberedNew
+                      }
+                      --'focusInputPossibly' doesn't work, here:
+                    , focusSetId "input"
+                    )
 
 
 commentCancelHand : Model -> ElmCycle

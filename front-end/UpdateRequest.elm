@@ -161,18 +161,25 @@ likeButtonProcessHand model songsRememberedIndex =
             )
 
         _ ->
-            ( { model
-                | alertMessageText = alertMessageTextInit
-                , awaitingServerResponse = True
-                , songLikingMaybe = songLikingMaybeNew
-                , songsRemembered = songsRememberedNew
-              }
-            , Cmd.batch
-                [ logRequest likeRequestUriText
-                , likeRequest
-                , focusInputPossibly model
-                ]
-            )
+            case songLikingMaybeNew of
+                Nothing ->
+                    ( model
+                    , focusInputPossibly model
+                    )
+
+                _ ->
+                    ( { model
+                        | alertMessageText = alertMessageTextInit
+                        , awaitingServerResponse = True
+                        , songLikingMaybe = songLikingMaybeNew
+                        , songsRemembered = songsRememberedNew
+                      }
+                    , Cmd.batch
+                        [ logRequest likeRequestUriText
+                        , likeRequest
+                        , focusInputPossibly model
+                        ]
+                    )
 
 
 songsRecentRefreshHand : Model -> ElmCycle
