@@ -134,14 +134,13 @@ keystrokeHand model keyCode =
                                 --The alert box compresses multiple blank characters.
                                 "; "
                         in
-                        String.join
-                            separator
-                            [ entry "F" "reFresh"
-                            , entry "R" "Remember latest played"
-                            , likeComment
-                            , entry "M" "Morph"
-                            , entry "H" "this Help"
-                            ]
+                        [ entry "F" "reFresh"
+                        , entry "R" "Remember latest played"
+                        , likeComment
+                        , entry "M" "Morph"
+                        , entry "H" "this Help"
+                        ]
+                            |> String.join separator
                 in
                 ( { model
                     | alertMessageText = Just alertMessageTextNew
