@@ -18,6 +18,10 @@ module ElmCycle
         , Msg(..)
         )
 
+import Char
+    exposing
+        ( KeyCode
+        )
 import Dom
     exposing
         ( Id
@@ -25,10 +29,6 @@ import Dom
 import Http
     exposing
         ( Error
-        )
-import Keyboard
-    exposing
-        ( KeyCode
         )
 import ModelType
     exposing
@@ -64,7 +64,7 @@ type Msg
     | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
-    | KeyMsg Keyboard.KeyCode
+    | KeystrokeHand KeyCode
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse ResultErrorHttp
     | None

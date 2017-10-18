@@ -14,7 +14,7 @@
 
 module UpdateKeyboard
     exposing
-        ( keyMsgHand
+        ( keystrokeHand
         )
 
 import AlertType
@@ -51,9 +51,8 @@ import UpdateHelper
 -- UPDATE
 
 
-keyMsgHand : Model -> KeyCode -> ElmCycle
-keyMsgHand model keyCode =
-    --(awaitingServer, commentArea)
+keystrokeHand : Model -> KeyCode -> ElmCycle
+keystrokeHand model keyCode =
     let
         doNothing : ElmCycle
         doNothing =
@@ -61,6 +60,7 @@ keyMsgHand model keyCode =
             , focusInputPossibly model
             )
     in
+    --(awaitingServer, commentArea)
     case stateVector model of
         ( False, Closed ) ->
             if keyCode == Char.toCode 'C' then

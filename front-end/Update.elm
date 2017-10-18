@@ -72,7 +72,7 @@ import UpdateHelper
         )
 import UpdateKeyboard
     exposing
-        ( keyMsgHand
+        ( keystrokeHand
         )
 import UpdateRequest
     exposing
@@ -129,8 +129,8 @@ update msg model =
         FocusAttempt id ->
             focusAttempt model id
 
-        KeyMsg keyCode ->
-            keyMsgHand model keyCode
+        KeystrokeHand keyCode ->
+            keystrokeHand model keyCode
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex
