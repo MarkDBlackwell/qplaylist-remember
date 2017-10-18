@@ -29,7 +29,9 @@ import Char
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg(..)
+        , Msg
+            ( PageMorphHand
+            )
         )
 import ModelType
     exposing
@@ -45,6 +47,10 @@ import UpdateFocus
 import UpdateHelper
     exposing
         ( stateVector
+        )
+import Utilities
+    exposing
+        ( msg2Cmd
         )
 
 
@@ -72,23 +78,27 @@ keystrokeHand model keyCode =
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
                         let
-                            likeAndComment : String
-                            likeAndComment =
+                            entry : String -> String -> String
+                            entry letter string =
+                                [ letter, "–", string ]
+                                    |> String.join " "
+
+                            likeComment : String
+                            likeComment =
                                 let
                                     comment : String
                                     comment =
-                                        if model.showCommentButtons then
-                                            String.concat
-                                                [ separator
-                                                , "C – Comment latest remembered"
-                                                ]
-                                        else
-                                            ""
+                                        entry "C" "Comment latest remembered"
+
+                                    like : String
+                                    like =
+                                        entry "L" "Like latest remembered"
                                 in
-                                String.concat
-                                    [ "L – Like latest remembered"
-                                    , comment
-                                    ]
+                                if not model.showCommentButtons then
+                                    like
+                                else
+                                    [ like, comment ]
+                                        |> String.join separator
 
                             separator : String
                             separator =
@@ -97,11 +107,11 @@ keystrokeHand model keyCode =
                         in
                         String.join
                             separator
-                            [ "F – reFresh"
-                            , likeAndComment
-                            , "R – Remember latest played"
-                            , "M – Morph"
-                            , "H – this Help"
+                            [ entry "F" "reFresh"
+                            , entry "R" "Remember latest played"
+                            , likeComment
+                            , entry "M" "Morph"
+                            , entry "H" "this Help"
                             ]
                 in
                 ( { model
@@ -112,7 +122,12 @@ keystrokeHand model keyCode =
             else if keyCode == Char.toCode 'L' then
                 doNothing
             else if keyCode == Char.toCode 'M' then
-                doNothing
+                ( model
+                , Cmd.batch
+                    [ msg2Cmd PageMorphHand
+                    , focusInputPossibly model
+                    ]
+                )
             else if keyCode == Char.toCode 'R' then
                 doNothing
             else
