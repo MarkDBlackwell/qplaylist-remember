@@ -93,12 +93,16 @@ keystrokeHand model keyCode =
                         ]
                     )
 
+                keyIs : Char -> Bool
+                keyIs char =
+                    keyCode == Char.toCode char
+
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
                     List.length model.songsRemembered
                         |> flip (-) 1
             in
-            if keyCode == Char.toCode 'H' then
+            if keyIs 'H' then
                 let
                     alertMessageTextNew : AlertMessageText
                     alertMessageTextNew =
@@ -144,21 +148,21 @@ keystrokeHand model keyCode =
                   }
                 , focusInputPossibly model
                 )
-            else if keyCode == Char.toCode 'C' then
+            else if keyIs 'C' then
                 songsRememberedIndex
                     |> CommentAreaOpenHand
                     |> doMessage "refresh"
-            else if keyCode == Char.toCode 'F' then
+            else if keyIs 'F' then
                 SongsRecentRefreshHand
                     |> doMessage "refresh"
-            else if keyCode == Char.toCode 'L' then
+            else if keyIs 'L' then
                 songsRememberedIndex
                     |> LikeButtonProcessHand
                     |> doMessage "refresh"
-            else if keyCode == Char.toCode 'M' then
+            else if keyIs 'M' then
                 PageMorphHand
                     |> doMessage "morph"
-            else if keyCode == Char.toCode 'R' then
+            else if keyIs 'R' then
                 SongRememberHand 0
                     |> doMessage "refresh"
             else
