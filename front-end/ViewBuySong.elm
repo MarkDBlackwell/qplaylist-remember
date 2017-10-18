@@ -84,11 +84,10 @@ buySongAnchor song =
                     let
                         fieldKeywords : UriText
                         fieldKeywords =
-                            String.join
-                                "+"
-                                [ song.title
-                                , song.artist
-                                ]
+                            [ song.title
+                            , song.artist
+                            ]
+                                |> String.join "+"
                     in
                     [ ( "tag", "wtmdradio-20" )
                     , ( "url", "search-alias=digital-music" )

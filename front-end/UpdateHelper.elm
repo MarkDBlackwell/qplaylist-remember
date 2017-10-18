@@ -107,21 +107,18 @@ relative urlBeforeQueryList queryPairs =
                     let
                         escapeAmpersands : UriText -> UriText
                         escapeAmpersands string =
-                            String.join
-                                "%26"
-                                (String.split "&" string)
+                            String.split "&" string
+                                |> String.join "%26"
 
                         escapeEqualsSigns : UriText -> UriText
                         escapeEqualsSigns string =
-                            String.join
-                                "%3D"
-                                (String.split "=" string)
+                            String.split "=" string
+                                |> String.join "%3D"
 
                         escapeHashes : UriText -> UriText
                         escapeHashes string =
-                            String.join
-                                "%23"
-                                (String.split "#" string)
+                            String.split "#" string
+                                |> String.join "%23"
                     in
                     String.concat
                         [ name
@@ -145,9 +142,8 @@ relative urlBeforeQueryList queryPairs =
 
         urlBeforeQuery : UriText
         urlBeforeQuery =
-            String.join
-                "/"
-                urlBeforeQueryList
+            urlBeforeQueryList
+                |> String.join "/"
     in
     String.concat
         [ urlBeforeQuery

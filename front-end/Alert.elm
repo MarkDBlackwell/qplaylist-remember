@@ -90,9 +90,8 @@ alertMessageTextSend actionDescription detailsText =
         unexpected alertMessageTextList =
             (++)
                 "Unexpected error "
-                (String.join
-                    prefixSeparator
-                    alertMessageTextList
+                (alertMessageTextList
+                    |> String.join prefixSeparator
                 )
     in
     unexpected
