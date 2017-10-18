@@ -95,7 +95,7 @@ keystrokeHand model keyCode =
 
                 keyIs : Char -> Bool
                 keyIs char =
-                    keyCode == Char.toCode char
+                    Char.toCode char == keyCode
 
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
