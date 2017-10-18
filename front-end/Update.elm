@@ -153,9 +153,9 @@ update msg model =
                     let
                         bothListsAreEmpty : Bool
                         bothListsAreEmpty =
-                            List.any
+                            List.all
                                 identity
-                                --Here, can't use List.all.
+                                --Here, can't use List.map.
                                 [ List.isEmpty model.songsRecent
                                 , List.isEmpty model.songsRemembered
                                 ]
