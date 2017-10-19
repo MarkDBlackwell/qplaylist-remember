@@ -31,6 +31,7 @@ functionResetSongsDevelopmentOnly();
     var functionDealWithElm;
 
     functionDealWithElm = function() {
+        var functionAttachNode;
         var functionKeyStorage;
         var functionShowCommentButtons;
         var functionSongsRememberedRetrieved;
@@ -161,13 +162,12 @@ functionResetSongsDevelopmentOnly();
                 }
             });
         }
-
-        var functionAttachNode = function() {
-        node = document.getElementById('main');
-        app = Elm.Main.embed(node, {
-            showCommentButtons: functionShowCommentButtons(),
-            songsRemembered: functionSongsRememberedRetrieved()
-        });
+        functionAttachNode = function() {
+            node = document.getElementById('main');
+            app = Elm.Main.embed(node, {
+                showCommentButtons: functionShowCommentButtons(),
+                songsRemembered: functionSongsRememberedRetrieved()
+            });
         }
 
         functionAttachNode();
