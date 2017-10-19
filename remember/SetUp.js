@@ -158,10 +158,11 @@ functionResetSongsDevelopmentOnly();
                     window.localStorage.setItem(functionKeyStorage(), JSON.stringify(songsRememberedFromPort));
                 }
             });
+            return null;
         }
 
-        functionStorageSubscribe(functionAttachNode());
+        return functionStorageSubscribe(functionAttachNode());
     }
 
-    functionDealWithElm();
+    return functionDealWithElm();
 })();
