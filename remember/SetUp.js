@@ -22,7 +22,6 @@ Invokable Function Expression).
     var functionRetrieveQueryParameterIncludesComment;
     var functionRetrieveSongsFromStorage;
     var functionStorageIsAccessible;
-    var functionStoragePopup;
 
     var app;
     var keyStorage;
@@ -92,7 +91,7 @@ Invokable Function Expression).
         }
         catch(e) {
             //First, do the popup.
-            functionStoragePopup(e);
+            window.alert('Remembering songs (across sessions) is disabled:  ' + e);
 
             //Avoid QuotaExceededError, but only if the exception is a DOMException...
             return e instanceof DOMException &&
@@ -124,9 +123,6 @@ Invokable Function Expression).
                     e.name === 'QuotaExceededError'
                 );
         }
-    }
-    functionStoragePopup = function(e) {
-        window.alert('Remembering songs (across sessions) is disabled:  ' + e);
     }
 
     //functionResetSongsDevelopmentOnly = function() {
