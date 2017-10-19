@@ -64,7 +64,6 @@ functionResetSongsDevelopmentOnly();
             var functionRetrieveSongsFromStorage;
 
             var songsAsString;
-            var songsRememberedRetrieved;
 
             functionRetrieveSongsFromStorage = function() {
                 var defaultValue;
@@ -87,8 +86,7 @@ functionResetSongsDevelopmentOnly();
             //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
             //Retrieve data from localStorage.
             songsAsString = functionRetrieveSongsFromStorage();
-            songsRememberedRetrieved = JSON.parse(songsAsString);
-            return songsRememberedRetrieved;
+            return JSON.parse(songsAsString);
         }
         functionStorageIsAccessible = function() {
             //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
