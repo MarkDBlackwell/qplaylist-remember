@@ -153,13 +153,6 @@ functionResetSongsDevelopmentOnly();
                     );
             }
         }
-
-        node = document.getElementById('main');
-        app = Elm.Main.embed(node, {
-            showCommentButtons: functionShowCommentButtons(),
-            songsRemembered: functionSongsRememberedRetrieved()
-        });
-
         functionStorageSubscribe = function() {
             //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
             app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
@@ -168,6 +161,12 @@ functionResetSongsDevelopmentOnly();
                 }
             });
         }
+
+        node = document.getElementById('main');
+        app = Elm.Main.embed(node, {
+            showCommentButtons: functionShowCommentButtons(),
+            songsRemembered: functionSongsRememberedRetrieved()
+        });
 
         functionStorageSubscribe();
     }
