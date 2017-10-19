@@ -65,6 +65,10 @@ functionResetSongsDevelopmentOnly();
             var functionRetrieveSongsFromStorageAsString;
 
             functionRetrieveSongsFromStorageAsString = function() {
+                //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
+                //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+                //Retrieve data from localStorage.
+
                 var defaultValue;
                 var storage;
 
@@ -80,10 +84,6 @@ functionResetSongsDevelopmentOnly();
                 }
                 return storage;
             }
-
-            //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
-            //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
-            //Retrieve data from localStorage.
             return JSON.parse(functionRetrieveSongsFromStorageAsString());
         }
         functionStorageIsAccessible = function() {
