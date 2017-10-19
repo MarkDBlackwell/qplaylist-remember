@@ -29,7 +29,6 @@ functionResetSongsDevelopmentOnly();
 
 (function() {
     var functionDealWithElm;
-    var functionRetrieveSongsFromStorage;
     var functionShowCommentButtons;
     var functionSongsRememberedRetrieved;
     var functionStorageIsAccessible;
@@ -56,22 +55,6 @@ functionResetSongsDevelopmentOnly();
             }
         });
     }
-    functionRetrieveSongsFromStorage = function() {
-        var defaultValue;
-        var storage;
-
-        defaultValue = "[]";
-        if (! functionStorageIsAccessible()) {
-            return defaultValue;
-        }
-        storage = window.localStorage.getItem(keyStorage);
-        //window.alert('storage: ' + storage);
-
-        if (null === storage || "" == storage) {
-            return defaultValue;
-        }
-        return storage;
-    }
     functionShowCommentButtons = function() {
         var includesComment;
         var queryParameters;
@@ -84,8 +67,27 @@ functionResetSongsDevelopmentOnly();
         return includesComment;
     }
     functionSongsRememberedRetrieved = function() {
+        var functionRetrieveSongsFromStorage;
+
         var songsAsString;
         var songsRememberedRetrieved;
+
+        functionRetrieveSongsFromStorage = function() {
+            var defaultValue;
+            var storage;
+
+            defaultValue = "[]";
+            if (! functionStorageIsAccessible()) {
+                return defaultValue;
+            }
+            storage = window.localStorage.getItem(keyStorage);
+            //window.alert('storage: ' + storage);
+
+            if (null === storage || "" == storage) {
+                return defaultValue;
+            }
+            return storage;
+        }
 
         //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
         //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
