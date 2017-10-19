@@ -24,14 +24,9 @@ Invokable Function Expression).
     var retrieveQueryParameterComment = function() {
         //queryParameters always includes a leading question mark.
         var queryParameters = window.location.search.slice(1);
-        try {
-            //IE and Edge lack the URLSearchParams function.
-            var queryParametersArray = new URLSearchParams(queryParameters);
-            return queryParametersArray.has('comment');
-        }
-        catch(e) {
-            return false;
-        }
+        //IE and Edge lack the URLSearchParams function, so don't use it.
+        var includesComment = 'comment' == queryParameters;
+        return includesComment;
     }
     var retrieveSongsFromStorage = function() {
         var defaultValue = "[]";
