@@ -39,9 +39,10 @@ functionResetSongsDevelopmentOnly();
         var functionStorageSubscribe;
 
         var app;
-        var node;
 
         functionAttachNode = function() {
+            var node;
+
             node = document.getElementById('main');
             app = Elm.Main.embed(node, {
                 showCommentButtons: functionShowCommentButtons(),
