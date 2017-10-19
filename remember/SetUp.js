@@ -168,6 +168,8 @@ functionResetSongsDevelopmentOnly();
                 window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
             }
         });
+
+        functionStorageSubscribe();
     }
 
     functionDealWithElm();
