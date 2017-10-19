@@ -161,13 +161,13 @@ functionResetSongsDevelopmentOnly();
         });
 
         functionStorageSubscribe = function() {
-        }
         //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
         app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
             if (functionStorageIsAccessible()) {
                 window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
             }
         });
+        }
 
         functionStorageSubscribe();
     }
