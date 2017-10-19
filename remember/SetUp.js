@@ -39,11 +39,7 @@ functionResetSongsDevelopmentOnly();
         var functionStorageSubscribe;
 
         var app;
-        //var keyStorage;
         var node;
-
-        //Keep keyStorage before the functions which reference it.
-        //keyStorage = 'RememberSongs';
 
         functionAttachNode = function() {
             node = document.getElementById('main');
@@ -56,15 +52,13 @@ functionResetSongsDevelopmentOnly();
             return 'RememberSongs';
         }
         functionShowCommentButtons = function() {
-            var includesComment;
             var queryParameters;
 
             //location.search always includes a leading question mark.
             queryParameters = window.location.search.slice(1);
 
             //IE and Edge lack the URLSearchParams function, so don't use it.
-            includesComment = 'comment' == queryParameters;
-            return includesComment;
+            return 'comment' == queryParameters;
         }
         functionSongsRememberedRetrieved = function() {
             var functionRetrieveSongsFromStorage;
