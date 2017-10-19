@@ -153,8 +153,6 @@ functionResetSongsDevelopmentOnly();
                     );
             }
         }
-        functionStorageSubscribe = function() {
-        }
 
         node = document.getElementById('main');
         app = Elm.Main.embed(node, {
@@ -162,6 +160,8 @@ functionResetSongsDevelopmentOnly();
             songsRemembered: functionSongsRememberedRetrieved()
         });
 
+        functionStorageSubscribe = function() {
+        }
         //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
         app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
             if (functionStorageIsAccessible()) {
