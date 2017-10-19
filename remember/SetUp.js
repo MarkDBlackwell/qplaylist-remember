@@ -30,19 +30,23 @@ functionResetSongsDevelopmentOnly();
 (function() {
     var functionDealWithElm;
 
-    var keyStorage;
-
-    //Keep keyStorage before the inner functions.
-    keyStorage = 'RememberSongs';
-
     functionDealWithElm = function() {
+        var functionKeyStorage;
         var functionShowCommentButtons;
         var functionSongsRememberedRetrieved;
         var functionStorageIsAccessible;
 
         var app;
+        var keyStorage;
         var node;
 
+        //Keep keyStorage before the functions which reference it.
+        keyStorage = 'RememberSongs';
+
+        functionKeyStorage = function() {
+            keyStorage = 'RememberSongs';
+            return keyStorage;
+        }
         functionShowCommentButtons = function() {
             var includesComment;
             var queryParameters;
