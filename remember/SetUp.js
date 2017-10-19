@@ -18,22 +18,42 @@ Invokable Function Expression).
 */
 
 (function() {
-    //Keep keyStorage before functions.
-    var keyStorage = 'RememberSongs';
+    //var functionResetSongsDevelopmentOnly;
+    var functionRetrieveQueryParameterIncludesComment;
+    var functionRetrieveSongsFromStorage;
+    var functionStorageIsAccessible;
+    var functionStoragePopup;
 
-    var retrieveQueryParameterComment = function() {
-        //queryParameters always includes a leading question mark.
-        var queryParameters = window.location.search.slice(1);
+    var app;
+    var keyStorage;
+    var node;
+    var showCommentButtons;
+    var songsAsString;
+    var songsRememberedRetrieved;
+
+    //Keep keyStorage before the inner functions.
+    keyStorage = 'RememberSongs';
+
+    functionRetrieveQueryParameterIncludesComment = function() {
+        var includesComment;
+        var queryParameters;
+
+        //location.search always includes a leading question mark.
+        queryParameters = window.location.search.slice(1);
+
         //IE and Edge lack the URLSearchParams function, so don't use it.
-        var includesComment = 'comment' == queryParameters;
+        includesComment = 'comment' == queryParameters;
         return includesComment;
     }
-    var retrieveSongsFromStorage = function() {
-        var defaultValue = "[]";
-        if (! storageIsAccessible()) {
+    functionRetrieveSongsFromStorage = function() {
+        var defaultValue;
+        var storage;
+
+        defaultValue = "[]";
+        if (! functionStorageIsAccessible()) {
             return defaultValue;
         }
-        var storage = window.localStorage.getItem(keyStorage);
+        storage = window.localStorage.getItem(keyStorage);
         //window.alert('storage: ' + storage);
 
         if (null === storage || "" == storage) {
@@ -42,11 +62,12 @@ Invokable Function Expression).
         return storage;
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
-    var storageIsAccessible = function() {
+    functionStorageIsAccessible = function() {
         var hostname;
         var somethingWrongWithHostnameMessage;
         var storage;
         var suggestOperaMessage;
+        var x;
 
         somethingWrongWithHostnameMessage = 'Something wrong with window.hostname: ';
         suggestOperaMessage = 'Localhost is fine on Opera, but it lacks localStorage in Firefox, etc.';
@@ -64,14 +85,14 @@ Invokable Function Expression).
                 }
                 return false;
             }
-            var x = '__storage_test__';
+            x = '__storage_test__';
             storage.setItem(x, x);
             storage.removeItem(x);
             return true;
         }
         catch(e) {
             //First, do the popup.
-            storagePopup(e);
+            functionStoragePopup(e);
 
             //Avoid QuotaExceededError, but only if the exception is a DOMException...
             return e instanceof DOMException &&
@@ -104,40 +125,37 @@ Invokable Function Expression).
                 );
         }
     }
-    var storagePopup = function(e) {
+    functionStoragePopup = function(e) {
         window.alert('Remembering songs (across sessions) is disabled:  ' + e);
     }
 
-    var resetSongsDevelopmentOnly = function() {
-        var tempSongs = [];
-        var tempSongsAsString = JSON.stringify(tempSongs);
-        window.localStorage.setItem(keyStorage, tempSongsAsString);
-    }
-    //resetSongsDevelopmentOnly();
+    //functionResetSongsDevelopmentOnly = function() {
+    //    var tempSongs;
+    //    var tempSongsAsString;
+    //
+    //    tempSongs = [];
+    //    tempSongsAsString = JSON.stringify(tempSongs);
+    //    window.localStorage.setItem(keyStorage, tempSongsAsString);
+    //}
+    //functionResetSongsDevelopmentOnly();
 
     //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
     //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
     //Retrieve data from localStorage.
-    var songsAsString = retrieveSongsFromStorage();
-    //window.alert('songsAsString: ' + songsAsString);
+    songsAsString = functionRetrieveSongsFromStorage();
+    songsRememberedRetrieved = JSON.parse(songsAsString);
 
-    var songsRemembered = JSON.parse(songsAsString);
-    
-    var showCommentButtons = retrieveQueryParameterComment();
-    //window.alert(showCommentButtons);
-
-    var node = document.getElementById('main');
-    var app = Elm.Main.embed(node, {
+    showCommentButtons = functionRetrieveQueryParameterIncludesComment();
+    node = document.getElementById('main');
+    app = Elm.Main.embed(node, {
       showCommentButtons: showCommentButtons,
-      songsRemembered: songsRemembered
+      songsRemembered: songsRememberedRetrieved
     });
 
     //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
-    app.ports.updateLocalStorage.subscribe(function(songsRememberedNew) {
-        //window.alert('songsRememberedNew: ' + songsRememberedNew);
-
-        if (storageIsAccessible()) {
-            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedNew));
+    app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
+        if (functionStorageIsAccessible()) {
+            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
         }
     });
 })();
