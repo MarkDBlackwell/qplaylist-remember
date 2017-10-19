@@ -162,12 +162,15 @@ functionResetSongsDevelopmentOnly();
             });
         }
 
+        var functionAttachNode = function() {
         node = document.getElementById('main');
         app = Elm.Main.embed(node, {
             showCommentButtons: functionShowCommentButtons(),
             songsRemembered: functionSongsRememberedRetrieved()
         });
+        }
 
+        functionAttachNode();
         functionStorageSubscribe();
     }
 
