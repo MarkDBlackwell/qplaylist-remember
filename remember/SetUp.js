@@ -39,16 +39,13 @@ functionResetSongsDevelopmentOnly();
         var functionStorageSubscribe;
 
         functionAttachNode = function() {
-            var app;
             var node;
 
             node = document.getElementById('main');
-            app = Elm.Main.embed(node, {
+            return Elm.Main.embed(node, {
                 showCommentButtons: functionShowCommentButtons(),
                 songsRemembered: functionSongsRememberedRetrieved()
             });
-
-            return app;
         }
         functionKeyStorage = function() {
             return 'RememberSongs';
