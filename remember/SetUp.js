@@ -39,11 +39,11 @@ functionResetSongsDevelopmentOnly();
         var functionStorageSubscribe;
 
         var app;
-        var keyStorage;
+        //var keyStorage;
         var node;
 
         //Keep keyStorage before the functions which reference it.
-        keyStorage = 'RememberSongs';
+        //keyStorage = 'RememberSongs';
 
         functionAttachNode = function() {
             node = document.getElementById('main');
@@ -53,8 +53,7 @@ functionResetSongsDevelopmentOnly();
             });
         }
         functionKeyStorage = function() {
-            keyStorage = 'RememberSongs';
-            return keyStorage;
+            return 'RememberSongs';
         }
         functionShowCommentButtons = function() {
             var includesComment;
@@ -81,7 +80,7 @@ functionResetSongsDevelopmentOnly();
                 if (! functionStorageIsAccessible()) {
                     return defaultValue;
                 }
-                storage = window.localStorage.getItem(keyStorage);
+                storage = window.localStorage.getItem(functionKeyStorage());
                 //window.alert('storage: ' + storage);
 
                 if (null === storage || "" == storage) {
@@ -165,7 +164,7 @@ functionResetSongsDevelopmentOnly();
             //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
             app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
                 if (functionStorageIsAccessible()) {
-                    window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
+                    window.localStorage.setItem(functionKeyStorage(), JSON.stringify(songsRememberedFromPort));
                 }
             });
         }
