@@ -23,6 +23,7 @@ var functionResetSongsDevelopmentOnly = function() {
     var tempSongsAsString = JSON.stringify(tempSongs);
     var keyStorage = 'RememberSongs';
     window.localStorage.setItem(keyStorage, tempSongsAsString);
+    return null;
 }
 functionResetSongsDevelopmentOnly();
 */
