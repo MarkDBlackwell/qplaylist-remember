@@ -38,9 +38,8 @@ functionResetSongsDevelopmentOnly();
         var functionStorageIsAccessible;
         var functionStorageSubscribe;
 
-        var app;
-
         functionAttachNode = function() {
+            var app;
             var node;
 
             node = document.getElementById('main');
@@ -48,6 +47,8 @@ functionResetSongsDevelopmentOnly();
                 showCommentButtons: functionShowCommentButtons(),
                 songsRemembered: functionSongsRememberedRetrieved()
             });
+
+            return app;
         }
         functionKeyStorage = function() {
             return 'RememberSongs';
@@ -87,15 +88,18 @@ functionResetSongsDevelopmentOnly();
             return JSON.parse(functionRetrieveSongsFromStorageAsString());
         }
         functionStorageIsAccessible = function() {
-            //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
             var hostname;
+            var rememberingSongsIsDisabledMessage;
             var somethingWrongWithHostnameMessage;
             var storage;
             var suggestOperaMessage;
             var x;
 
+            rememberingSongsIsDisabledMessage = 'Remembering songs (across sessions) is disabled:  '
             somethingWrongWithHostnameMessage = 'Something wrong with window.hostname: ';
             suggestOperaMessage = 'Localhost is fine on Opera, but it lacks localStorage in Firefox, etc.';
+
+            //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
             try {
                 storage = window.localStorage;
                 if (null === storage) {
@@ -117,7 +121,7 @@ functionResetSongsDevelopmentOnly();
             }
             catch(e) {
                 //First, do the popup.
-                window.alert('Remembering songs (across sessions) is disabled:  ' + e);
+                window.alert(rememberingSongsIsDisabledMessage + e);
 
                 //Avoid QuotaExceededError, but only if the exception is a DOMException...
                 return e instanceof DOMException &&
@@ -150,7 +154,7 @@ functionResetSongsDevelopmentOnly();
                     );
             }
         }
-        functionStorageSubscribe = function() {
+        functionStorageSubscribe = function(app) {
             //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
             app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
                 if (functionStorageIsAccessible()) {
@@ -159,8 +163,7 @@ functionResetSongsDevelopmentOnly();
             });
         }
 
-        functionAttachNode();
-        functionStorageSubscribe();
+        functionStorageSubscribe(functionAttachNode());
     }
 
     functionDealWithElm();
