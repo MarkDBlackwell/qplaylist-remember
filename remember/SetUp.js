@@ -19,31 +19,17 @@ Invokable Function Expression).
 
 (function() {
     //var functionResetSongsDevelopmentOnly;
-    var functionRetrieveQueryParameterIncludesComment;
+    var functionDealWithElm;
     var functionRetrieveSongsFromStorage;
+    var functionShowCommentButtons;
+    var functionSongsRememberedRetrieved;
     var functionStorageIsAccessible;
 
-    var app;
     var keyStorage;
-    var node;
-    var showCommentButtons;
-    var songsAsString;
-    var songsRememberedRetrieved;
 
     //Keep keyStorage before the inner functions.
     keyStorage = 'RememberSongs';
 
-    functionRetrieveQueryParameterIncludesComment = function() {
-        var includesComment;
-        var queryParameters;
-
-        //location.search always includes a leading question mark.
-        queryParameters = window.location.search.slice(1);
-
-        //IE and Edge lack the URLSearchParams function, so don't use it.
-        includesComment = 'comment' == queryParameters;
-        return includesComment;
-    }
     functionRetrieveSongsFromStorage = function() {
         var defaultValue;
         var storage;
@@ -59,6 +45,17 @@ Invokable Function Expression).
             return defaultValue;
         }
         return storage;
+    }
+    functionShowCommentButtons = function() {
+        var includesComment;
+        var queryParameters;
+
+        //location.search always includes a leading question mark.
+        queryParameters = window.location.search.slice(1);
+
+        //IE and Edge lack the URLSearchParams function, so don't use it.
+        includesComment = 'comment' == queryParameters;
+        return includesComment;
     }
     //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
     functionStorageIsAccessible = function() {
@@ -135,23 +132,34 @@ Invokable Function Expression).
     //}
     //functionResetSongsDevelopmentOnly();
 
-    //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
-    //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
-    //Retrieve data from localStorage.
-    songsAsString = functionRetrieveSongsFromStorage();
-    songsRememberedRetrieved = JSON.parse(songsAsString);
+    functionSongsRememberedRetrieved = function() {
+        var songsAsString;
+        var songsRememberedRetrieved;
 
-    showCommentButtons = functionRetrieveQueryParameterIncludesComment();
-    node = document.getElementById('main');
-    app = Elm.Main.embed(node, {
-      showCommentButtons: showCommentButtons,
-      songsRemembered: songsRememberedRetrieved
-    });
+        //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
+        //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+        //Retrieve data from localStorage.
+        songsAsString = functionRetrieveSongsFromStorage();
+        songsRememberedRetrieved = JSON.parse(songsAsString);
+        return songsRememberedRetrieved;
+    }
+    functionDealWithElm = function() {
+        var app;
+        var node;
 
-    //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
-    app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
-        if (functionStorageIsAccessible()) {
-            window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
-        }
-    });
+        node = document.getElementById('main');
+        app = Elm.Main.embed(node, {
+            showCommentButtons: functionShowCommentButtons(),
+            songsRemembered: functionSongsRememberedRetrieved()
+        });
+
+        //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
+        app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
+            if (functionStorageIsAccessible()) {
+                window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
+            }
+        });
+    }
+
+    functionDealWithElm();
 })();
