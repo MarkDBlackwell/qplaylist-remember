@@ -35,6 +35,7 @@ functionResetSongsDevelopmentOnly();
         var functionShowCommentButtons;
         var functionSongsRememberedRetrieved;
         var functionStorageIsAccessible;
+        var functionStorageSubscribe;
 
         var app;
         var keyStorage;
@@ -151,6 +152,8 @@ functionResetSongsDevelopmentOnly();
                         e.name === 'QuotaExceededError'
                     );
             }
+        }
+        functionStorageSubscribe = function() {
         }
 
         node = document.getElementById('main');
