@@ -17,17 +17,15 @@ Hide everything from the global namespace, by using an IIFE (Immediately
 Invokable Function Expression).
 */
 
-//var functionResetSongsDevelopmentOnly = function() {
-//    var tempSongs;
-//    var tempSongsAsString;
-//    var keyStorage;
-
-//    keyStorage = 'RememberSongs';
-//    tempSongs = [];
-//    tempSongsAsString = JSON.stringify(tempSongs);
-//    window.localStorage.setItem(keyStorage, tempSongsAsString);
-//}
-//functionResetSongsDevelopmentOnly();
+/*
+var functionResetSongsDevelopmentOnly = function() {
+    var tempSongs = [];
+    var tempSongsAsString = JSON.stringify(tempSongs);
+    var keyStorage = 'RememberSongs';
+    window.localStorage.setItem(keyStorage, tempSongsAsString);
+}
+functionResetSongsDevelopmentOnly();
+*/
 
 (function() {
     var functionDealWithElm;
