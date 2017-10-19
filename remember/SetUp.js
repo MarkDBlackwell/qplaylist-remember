@@ -29,7 +29,6 @@ functionResetSongsDevelopmentOnly();
 
 (function() {
     var functionDealWithElm;
-    var functionShowCommentButtons;
     var functionSongsRememberedRetrieved;
     var functionStorageIsAccessible;
 
@@ -39,8 +38,22 @@ functionResetSongsDevelopmentOnly();
     keyStorage = 'RememberSongs';
 
     functionDealWithElm = function() {
+        var functionShowCommentButtons;
+
         var app;
         var node;
+
+        functionShowCommentButtons = function() {
+            var includesComment;
+            var queryParameters;
+
+            //location.search always includes a leading question mark.
+            queryParameters = window.location.search.slice(1);
+
+            //IE and Edge lack the URLSearchParams function, so don't use it.
+            includesComment = 'comment' == queryParameters;
+            return includesComment;
+        }
 
         node = document.getElementById('main');
         app = Elm.Main.embed(node, {
@@ -54,17 +67,6 @@ functionResetSongsDevelopmentOnly();
                 window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
             }
         });
-    }
-    functionShowCommentButtons = function() {
-        var includesComment;
-        var queryParameters;
-
-        //location.search always includes a leading question mark.
-        queryParameters = window.location.search.slice(1);
-
-        //IE and Edge lack the URLSearchParams function, so don't use it.
-        includesComment = 'comment' == queryParameters;
-        return includesComment;
     }
     functionSongsRememberedRetrieved = function() {
         var functionRetrieveSongsFromStorage;
