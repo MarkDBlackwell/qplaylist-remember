@@ -17,8 +17,19 @@ Hide everything from the global namespace, by using an IIFE (Immediately
 Invokable Function Expression).
 */
 
+//var functionResetSongsDevelopmentOnly = function() {
+//    var tempSongs;
+//    var tempSongsAsString;
+//    var keyStorage;
+
+//    keyStorage = 'RememberSongs';
+//    tempSongs = [];
+//    tempSongsAsString = JSON.stringify(tempSongs);
+//    window.localStorage.setItem(keyStorage, tempSongsAsString);
+//}
+//functionResetSongsDevelopmentOnly();
+
 (function() {
-    //var functionResetSongsDevelopmentOnly;
     var functionDealWithElm;
     var functionRetrieveSongsFromStorage;
     var functionShowCommentButtons;
@@ -30,6 +41,23 @@ Invokable Function Expression).
     //Keep keyStorage before the inner functions.
     keyStorage = 'RememberSongs';
 
+    functionDealWithElm = function() {
+        var app;
+        var node;
+
+        node = document.getElementById('main');
+        app = Elm.Main.embed(node, {
+            showCommentButtons: functionShowCommentButtons(),
+            songsRemembered: functionSongsRememberedRetrieved()
+        });
+
+        //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
+        app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
+            if (functionStorageIsAccessible()) {
+                window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
+            }
+        });
+    }
     functionRetrieveSongsFromStorage = function() {
         var defaultValue;
         var storage;
@@ -57,8 +85,19 @@ Invokable Function Expression).
         includesComment = 'comment' == queryParameters;
         return includesComment;
     }
-    //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+    functionSongsRememberedRetrieved = function() {
+        var songsAsString;
+        var songsRememberedRetrieved;
+
+        //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
+        //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+        //Retrieve data from localStorage.
+        songsAsString = functionRetrieveSongsFromStorage();
+        songsRememberedRetrieved = JSON.parse(songsAsString);
+        return songsRememberedRetrieved;
+    }
     functionStorageIsAccessible = function() {
+        //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
         var hostname;
         var somethingWrongWithHostnameMessage;
         var storage;
@@ -120,45 +159,6 @@ Invokable Function Expression).
                     e.name === 'QuotaExceededError'
                 );
         }
-    }
-
-    //functionResetSongsDevelopmentOnly = function() {
-    //    var tempSongs;
-    //    var tempSongsAsString;
-    //
-    //    tempSongs = [];
-    //    tempSongsAsString = JSON.stringify(tempSongs);
-    //    window.localStorage.setItem(keyStorage, tempSongsAsString);
-    //}
-    //functionResetSongsDevelopmentOnly();
-
-    functionSongsRememberedRetrieved = function() {
-        var songsAsString;
-        var songsRememberedRetrieved;
-
-        //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
-        //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
-        //Retrieve data from localStorage.
-        songsAsString = functionRetrieveSongsFromStorage();
-        songsRememberedRetrieved = JSON.parse(songsAsString);
-        return songsRememberedRetrieved;
-    }
-    functionDealWithElm = function() {
-        var app;
-        var node;
-
-        node = document.getElementById('main');
-        app = Elm.Main.embed(node, {
-            showCommentButtons: functionShowCommentButtons(),
-            songsRemembered: functionSongsRememberedRetrieved()
-        });
-
-        //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
-        app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
-            if (functionStorageIsAccessible()) {
-                window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
-            }
-        });
     }
 
     functionDealWithElm();
