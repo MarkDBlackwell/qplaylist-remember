@@ -45,6 +45,13 @@ functionResetSongsDevelopmentOnly();
         //Keep keyStorage before the functions which reference it.
         keyStorage = 'RememberSongs';
 
+        functionAttachNode = function() {
+            node = document.getElementById('main');
+            app = Elm.Main.embed(node, {
+                showCommentButtons: functionShowCommentButtons(),
+                songsRemembered: functionSongsRememberedRetrieved()
+            });
+        }
         functionKeyStorage = function() {
             keyStorage = 'RememberSongs';
             return keyStorage;
@@ -160,13 +167,6 @@ functionResetSongsDevelopmentOnly();
                 if (functionStorageIsAccessible()) {
                     window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
                 }
-            });
-        }
-        functionAttachNode = function() {
-            node = document.getElementById('main');
-            app = Elm.Main.embed(node, {
-                showCommentButtons: functionShowCommentButtons(),
-                songsRemembered: functionSongsRememberedRetrieved()
             });
         }
 
