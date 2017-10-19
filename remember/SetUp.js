@@ -29,7 +29,6 @@ functionResetSongsDevelopmentOnly();
 
 (function() {
     var functionDealWithElm;
-    var functionSongsRememberedRetrieved;
     var functionStorageIsAccessible;
 
     var keyStorage;
@@ -39,6 +38,7 @@ functionResetSongsDevelopmentOnly();
 
     functionDealWithElm = function() {
         var functionShowCommentButtons;
+        var functionSongsRememberedRetrieved;
 
         var app;
         var node;
@@ -54,6 +54,36 @@ functionResetSongsDevelopmentOnly();
             includesComment = 'comment' == queryParameters;
             return includesComment;
         }
+        functionSongsRememberedRetrieved = function() {
+            var functionRetrieveSongsFromStorage;
+
+            var songsAsString;
+            var songsRememberedRetrieved;
+
+            functionRetrieveSongsFromStorage = function() {
+                var defaultValue;
+                var storage;
+
+                defaultValue = "[]";
+                if (! functionStorageIsAccessible()) {
+                    return defaultValue;
+                }
+                storage = window.localStorage.getItem(keyStorage);
+                //window.alert('storage: ' + storage);
+
+                if (null === storage || "" == storage) {
+                    return defaultValue;
+                }
+                return storage;
+            }
+
+            //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
+            //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+            //Retrieve data from localStorage.
+            songsAsString = functionRetrieveSongsFromStorage();
+            songsRememberedRetrieved = JSON.parse(songsAsString);
+            return songsRememberedRetrieved;
+        }
 
         node = document.getElementById('main');
         app = Elm.Main.embed(node, {
@@ -67,36 +97,6 @@ functionResetSongsDevelopmentOnly();
                 window.localStorage.setItem(keyStorage, JSON.stringify(songsRememberedFromPort));
             }
         });
-    }
-    functionSongsRememberedRetrieved = function() {
-        var functionRetrieveSongsFromStorage;
-
-        var songsAsString;
-        var songsRememberedRetrieved;
-
-        functionRetrieveSongsFromStorage = function() {
-            var defaultValue;
-            var storage;
-
-            defaultValue = "[]";
-            if (! functionStorageIsAccessible()) {
-                return defaultValue;
-            }
-            storage = window.localStorage.getItem(keyStorage);
-            //window.alert('storage: ' + storage);
-
-            if (null === storage || "" == storage) {
-                return defaultValue;
-            }
-            return storage;
-        }
-
-        //TODO: If our usage exceeds localStorage limits, then use IndexedDB, instead.
-        //See: https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
-        //Retrieve data from localStorage.
-        songsAsString = functionRetrieveSongsFromStorage();
-        songsRememberedRetrieved = JSON.parse(songsAsString);
-        return songsRememberedRetrieved;
     }
     functionStorageIsAccessible = function() {
         //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
