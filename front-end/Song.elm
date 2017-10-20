@@ -139,7 +139,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered so
 
 
 songsRememberedUpdateTimestampFromIndex : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestampFromIndex songsRecentSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
+songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRememberedIndex =
     selectOneMaybe songsRemembered songsRememberedIndex
-        |> maybeDefaultNothing (swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecentSongsRememberedUpdateTimestamp songsRemembered)
+        |> maybeDefaultNothing (swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered)
         |> Maybe.withDefault songsRemembered
