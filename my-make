@@ -3,4 +3,4 @@
 
 grep -nEI ' $' `find front-end -type f` || \
 elm-format --yes front-end/ && \
-elm-make --warn --output=remember/Main.js front-end/Main.elm
+elm-make --warn --output=radio/remember/Main.js front-end/Main.elm

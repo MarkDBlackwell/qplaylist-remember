@@ -6,9 +6,9 @@
 /tests/elm-stuff/packages/*
 
 /index.html
-/remember/Main.js
-/remember/comments.txt
-/remember/php_errorlog
+/radio/remember/Main.js
+/radio/remember/comments.txt
+/radio/remember/php_errorlog
 /wtmdapp/LatestFive.json
 
 *.stackdump
