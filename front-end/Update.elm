@@ -228,9 +228,9 @@ update msg model =
                         songsRememberedAppended : SongsRemembered
                         songsRememberedAppended =
                             songsRememberedAppendOneUniqueFromIndex
+                                model.songsRemembered
                                 model.songsRecent
                                 songsRecentIndex
-                                model.songsRemembered
 
                         songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                         songsRememberedIndexMaybe =

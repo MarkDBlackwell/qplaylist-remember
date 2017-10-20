@@ -86,17 +86,17 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
-songsRememberedAppendOneUnique : SongsRecent -> SongRecent -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUnique songsRecent songRecent songsRemembered =
+songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
+songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
     --temp
     []
 
 
-songsRememberedAppendOneUniqueFromIndex : SongsRecent -> SongsRecentIndex -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUniqueFromIndex songsRecent songsRecentIndex songsRemembered =
+songsRememberedAppendOneUniqueFromIndex : SongsRemembered -> SongsRecent -> SongsRecentIndex -> SongsRemembered
+songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentIndex =
     let
-        appendUnlessRemembered : SongRecent -> SongsRemembered
-        appendUnlessRemembered songRecent =
+        appendUnlessRemembered : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
+        appendUnlessRemembered songsRemembered songsRecent songRecent =
             let
                 remembered : Bool
                 remembered =
@@ -116,7 +116,7 @@ songsRememberedAppendOneUniqueFromIndex songsRecent songsRecentIndex songsRememb
             selectOneMaybe songsRecent songsRecentIndex
     in
     maybe
-        |> maybeMapWithDefault songsRemembered appendUnlessRemembered
+        |> maybeMapWithDefault songsRemembered (appendUnlessRemembered songsRemembered songsRecent)
 
 
 
