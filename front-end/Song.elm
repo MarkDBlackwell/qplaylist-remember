@@ -150,12 +150,6 @@ songsRecentSongRememberedMatches songsRecent songRemembered =
     songsTimelessMatches songsRecent songRemembered
 
 
-songsRecentSongTimelessMatches : SongsRecent -> SongTimeless -> SongsRecent
-songsRecentSongTimelessMatches songsRecent songTimeless =
-    --List.filter (songTimelessCompare songTimeless) songsRecent
-    songsTimelessMatches songsRecent songTimeless
-
-
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
 swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered songRemembered =
     let
