@@ -105,12 +105,7 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
 
 songsRememberedAppendOneUniqueFromIndex : SongsRemembered -> SongsRecent -> SongsRecentIndex -> SongsRemembered
 songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentIndex =
-    let
-        maybe : SongRecentMaybe
-        maybe =
-            selectOneMaybe songsRecent songsRecentIndex
-    in
-    maybe
+    selectOneMaybe songsRecent songsRecentIndex
         |> maybeMapWithDefault songsRemembered (songsRememberedAppendOneUnique songsRemembered songsRecent)
 
 
