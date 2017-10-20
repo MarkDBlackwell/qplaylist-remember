@@ -88,35 +88,30 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
 
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
 songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
-    --temp
-    []
+    let
+        remembered : Bool
+        remembered =
+            List.member
+                (song2SongTimeless songRecent)
+                (songs2SongsTimeless songsRemembered)
+    in
+    if remembered then
+        songsRemembered
+    else
+        song2SongRemembered songRecent
+            |> List.singleton
+            |> (++) songsRemembered
 
 
 songsRememberedAppendOneUniqueFromIndex : SongsRemembered -> SongsRecent -> SongsRecentIndex -> SongsRemembered
 songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentIndex =
     let
-        appendUnlessRemembered : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
-        appendUnlessRemembered songsRemembered songsRecent songRecent =
-            let
-                remembered : Bool
-                remembered =
-                    List.member
-                        (song2SongTimeless songRecent)
-                        (songs2SongsTimeless songsRemembered)
-            in
-            if remembered then
-                songsRemembered
-            else
-                song2SongRemembered songRecent
-                    |> List.singleton
-                    |> (++) songsRemembered
-
         maybe : SongRecentMaybe
         maybe =
             selectOneMaybe songsRecent songsRecentIndex
     in
     maybe
-        |> maybeMapWithDefault songsRemembered (appendUnlessRemembered songsRemembered songsRecent)
+        |> maybeMapWithDefault songsRemembered (songsRememberedAppendOneUnique songsRemembered songsRecent)
 
 
 
