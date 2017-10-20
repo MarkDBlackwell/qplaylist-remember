@@ -144,8 +144,8 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 
 compareSongRememberedToSongRecent : SongRemembered -> SongRecent -> Bool
 compareSongRememberedToSongRecent songRemembered songRecent =
-    song2SongTimeless songRecent
-        |> (==) (song2SongTimeless songRemembered)
+    song2SongTimeless songRemembered
+        |> flip compareSongTimelessToSongRecent songRecent
 
 
 compareSongTimelessToSongRecent : SongTimeless -> SongRecent -> Bool
