@@ -16,7 +16,7 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromIndex
-        , songsRememberedUpdateTimestamp
+        , songsRememberedUpdateTimestampFromIndex
         )
 
 import SongHelper
@@ -129,12 +129,12 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
            songsRecent =
                songsRecent2SongsRemembered songsRememberedFrom
        in
-       songsRememberedUpdateTimestamp songsRecent songsRemembered songsRememberedIndex
+       songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRememberedIndex
 -}
 
 
-songsRememberedUpdateTimestamp : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestamp songsRecentSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
+songsRememberedUpdateTimestampFromIndex : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
+songsRememberedUpdateTimestampFromIndex songsRecentSongsRememberedUpdateTimestamp songsRemembered songsRememberedIndex =
     let
         songsRememberedFrom : SongsRemembered
         songsRememberedFrom =

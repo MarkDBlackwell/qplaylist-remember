@@ -35,7 +35,7 @@ import ModelType
 import Song
     exposing
         ( songsRememberedAppendOneUniqueFromIndex
-        , songsRememberedUpdateTimestamp
+        , songsRememberedUpdateTimestampFromIndex
         )
 import SongHelper
     exposing
@@ -245,7 +245,7 @@ update msg model =
                                 |> Maybe.map songsRememberedIndexes
                                 |> Maybe.andThen List.head
                     in
-                    songsRememberedUpdateTimestamp model.songsRecent songsRememberedAppended
+                    songsRememberedUpdateTimestampFromIndex model.songsRecent songsRememberedAppended
                         |> flip Maybe.map songsRememberedIndexMaybe
                         |> Maybe.withDefault songsRememberedAppended
             in

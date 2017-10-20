@@ -45,7 +45,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedUpdateTimestamp
+        ( songsRememberedUpdateTimestampFromIndex
         )
 import SongType
     exposing
@@ -146,7 +146,7 @@ likeButtonProcessHand model songsRememberedIndex =
 
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
-            songsRememberedUpdateTimestamp
+            songsRememberedUpdateTimestampFromIndex
                 model.songsRecent
                 model.songsRemembered
                 songsRememberedIndex
