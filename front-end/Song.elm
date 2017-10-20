@@ -144,12 +144,6 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 -}
 
 
-songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent
-songsRecentSongRememberedMatches songsRecent songRemembered =
-    --List.filter (songTimelessCompare songRemembered) songsRecent
-    songsTimelessMatches songsRecent songRemembered
-
-
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
 swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered songRemembered =
     let
@@ -159,7 +153,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered so
                 songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
                 songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
                     if
-                        songsRecentSongRememberedMatches
+                        songsTimelessMatches
                             songsRecent
                             songRememberedSongsRememberedSwapOneRecent
                             |> List.isEmpty
@@ -180,7 +174,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered so
                 songRemembered
                 songRecentSwapOneRecentMaybe
     in
-    songsRecentSongRememberedMatches
+    songsTimelessMatches
         songsRecent
         songRemembered
         |> List.head
