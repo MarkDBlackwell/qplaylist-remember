@@ -15,7 +15,7 @@
 module Song
     exposing
         ( likedOrCommentedShow
-        , songsRememberedAppendOneUnique
+        , songsRememberedAppendOneUniqueFromIndex
         , songsRememberedUpdateTimestamp
         )
 
@@ -86,8 +86,8 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
-songsRememberedAppendOneUnique : SongsRecent -> SongsRecentIndex -> SongsRemembered -> SongsRemembered
-songsRememberedAppendOneUnique songsRecent songsRecentIndex songsRemembered =
+songsRememberedAppendOneUniqueFromIndex : SongsRecent -> SongsRecentIndex -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUniqueFromIndex songsRecent songsRecentIndex songsRemembered =
     let
         appendUnlessRemembered : SongRecent -> SongsRemembered
         appendUnlessRemembered songRecent =

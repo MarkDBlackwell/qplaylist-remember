@@ -34,7 +34,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedAppendOneUnique
+        ( songsRememberedAppendOneUniqueFromIndex
         , songsRememberedUpdateTimestamp
         )
 import SongHelper
@@ -227,7 +227,7 @@ update msg model =
                     let
                         songsRememberedAppended : SongsRemembered
                         songsRememberedAppended =
-                            songsRememberedAppendOneUnique
+                            songsRememberedAppendOneUniqueFromIndex
                                 model.songsRecent
                                 songsRecentIndex
                                 model.songsRemembered
