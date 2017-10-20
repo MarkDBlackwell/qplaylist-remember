@@ -153,9 +153,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered so
                 songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
                 songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
                     if
-                        songsTimelessMatches
-                            songsRecent
-                            songRememberedSongsRememberedSwapOneRecent
+                        songsTimelessMatches songsRecent songRememberedSongsRememberedSwapOneRecent
                             |> List.isEmpty
                     then
                         Nothing
@@ -170,13 +168,9 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered so
                                 (List.take songsRememberedIndex songsRemembered)
                             |> Just
             in
-            songsRememberedSwapOneRecentMaybe
-                songRemembered
-                songRecentSwapOneRecentMaybe
+            songsRememberedSwapOneRecentMaybe songRemembered songRecentSwapOneRecentMaybe
     in
-    songsTimelessMatches
-        songsRecent
-        songRemembered
+    songsTimelessMatches songsRecent songRemembered
         |> List.head
         |> maybeDefaultNothing swapOneRecentMaybe
 
