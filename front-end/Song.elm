@@ -144,27 +144,27 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 -}
 
 
+songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
+songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
+    if
+        songsTimelessMatches songsRecent songRemembered
+            |> List.isEmpty
+    then
+        Nothing
+    else
+        (songsRememberedIndex + 1)
+            |> startingWith songsRemembered
+            |> (++)
+                (songRememberedUpdate songRemembered songRecent
+                    |> List.singleton
+                )
+            |> (++)
+                (List.take songsRememberedIndex songsRemembered)
+            |> Just
+
+
 swapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
 swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
-    let
-        songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
-        songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
-            if
-                songsTimelessMatches songsRecent songRemembered
-                    |> List.isEmpty
-            then
-                Nothing
-            else
-                (songsRememberedIndex + 1)
-                    |> startingWith songsRemembered
-                    |> (++)
-                        (songRememberedUpdate songRemembered songRecent
-                            |> List.singleton
-                        )
-                    |> (++)
-                        (List.take songsRememberedIndex songsRemembered)
-                    |> Just
-    in
     songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent
 
 
