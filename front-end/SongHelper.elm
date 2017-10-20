@@ -148,15 +148,13 @@ songs2SongsTimeless songTimelessBaseList =
 
 
 songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> List (SongTimelessBase a)
-songsTimelessMatches songsTimelessBaseA songTimelessBaseB =
+songsTimelessMatches listA songB =
     let
         compare : SongTimelessBase a -> Bool
-        compare songTimelessBaseA =
-            songTimelessBaseB
-                |> songTimelessCompare songTimelessBaseA
+        compare songA =
+            songTimelessCompare songA songB
     in
-    songsTimelessBaseA
-        |> List.filter compare
+    List.filter compare listA
 
 
 
