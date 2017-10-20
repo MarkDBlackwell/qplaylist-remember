@@ -70,6 +70,54 @@ import Utilities
 -- UPDATE
 
 
+keyProcessH : Model -> KeyCode -> ElmCycle
+keyProcessH model keyCode =
+    let
+        alertMessageTextNew : AlertMessageText
+        alertMessageTextNew =
+            let
+                entry : String -> String -> String
+                entry letter string =
+                    [ letter, "–", string ]
+                        |> String.join " "
+
+                likeComment : String
+                likeComment =
+                    let
+                        comment : String
+                        comment =
+                            entry "C" "Comment latest remembered"
+
+                        like : String
+                        like =
+                            entry "L" "Like latest remembered"
+                    in
+                    if not model.showCommentButtons then
+                        like
+                    else
+                        [ like, comment ]
+                            |> String.join separator
+
+                separator : String
+                separator =
+                    --The alert box compresses multiple blank characters.
+                    "; "
+            in
+            [ entry "F" "reFresh"
+            , entry "R" "Remember latest played"
+            , likeComment
+            , entry "M" "Morph"
+            , entry "H" "this Help"
+            ]
+                |> String.join separator
+    in
+    ( { model
+        | alertMessageText = Just alertMessageTextNew
+      }
+    , focusInputPossibly model
+    )
+
+
 keystrokeHand : Model -> KeyCode -> ElmCycle
 keystrokeHand model keyCode =
     let
@@ -103,50 +151,7 @@ keystrokeHand model keyCode =
                         |> flip (-) 1
             in
             if keyIs 'H' then
-                let
-                    alertMessageTextNew : AlertMessageText
-                    alertMessageTextNew =
-                        let
-                            entry : String -> String -> String
-                            entry letter string =
-                                [ letter, "–", string ]
-                                    |> String.join " "
-
-                            likeComment : String
-                            likeComment =
-                                let
-                                    comment : String
-                                    comment =
-                                        entry "C" "Comment latest remembered"
-
-                                    like : String
-                                    like =
-                                        entry "L" "Like latest remembered"
-                                in
-                                if not model.showCommentButtons then
-                                    like
-                                else
-                                    [ like, comment ]
-                                        |> String.join separator
-
-                            separator : String
-                            separator =
-                                --The alert box compresses multiple blank characters.
-                                "; "
-                        in
-                        [ entry "F" "reFresh"
-                        , entry "R" "Remember latest played"
-                        , likeComment
-                        , entry "M" "Morph"
-                        , entry "H" "this Help"
-                        ]
-                            |> String.join separator
-                in
-                ( { model
-                    | alertMessageText = Just alertMessageTextNew
-                  }
-                , focusInputPossibly model
-                )
+                keyProcessH model keyCode
             else if keyIs 'C' then
                 songsRememberedIndex
                     |> CommentAreaOpenHand
