@@ -140,8 +140,8 @@ songsRememberedUpdateTimestampFromIndex songsRecentSongsRememberedUpdateTimestam
         songsRememberedFrom =
             songs2SongsRemembered songsRecentSongsRememberedUpdateTimestamp
 
-        swapUnlessListHeadEmptyMaybe : SongRemembered -> SongsRememberedMaybe
-        swapUnlessListHeadEmptyMaybe songRememberedSwapUnlessListHeadEmpty =
+        swapUnlessListHeadEmptyMaybe : SongsRecent -> SongRemembered -> SongsRememberedMaybe
+        swapUnlessListHeadEmptyMaybe songsRecentSongsRememberedUpdateTimestamp songRememberedSwapUnlessListHeadEmpty =
             let
                 songsRecentSongRememberedMatches : SongRemembered -> SongsRecent
                 songsRecentSongRememberedMatches songRememberedSongsRecentSongRememberedMatches =
@@ -183,5 +183,5 @@ songsRememberedUpdateTimestampFromIndex songsRecentSongsRememberedUpdateTimestam
                 |> maybeDefaultNothing swapOneRecentMaybe
     in
     selectOneMaybe songsRemembered songsRememberedIndex
-        |> maybeDefaultNothing swapUnlessListHeadEmptyMaybe
+        |> maybeDefaultNothing (swapUnlessListHeadEmptyMaybe songsRecentSongsRememberedUpdateTimestamp)
         |> Maybe.withDefault songsRemembered
