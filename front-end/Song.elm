@@ -145,12 +145,12 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 
 
 swapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
-swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe =
+swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
     let
         songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
-        songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
+        songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
             if
-                songsTimelessMatches songsRecent songRememberedSongsRememberedSwapOneRecent
+                songsTimelessMatches songsRecent songRemembered
                     |> List.isEmpty
             then
                 Nothing
@@ -158,14 +158,14 @@ swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemember
                 (songsRememberedIndex + 1)
                     |> startingWith songsRemembered
                     |> (++)
-                        (songRememberedUpdate songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe
+                        (songRememberedUpdate songRemembered songRecent
                             |> List.singleton
                         )
                     |> (++)
                         (List.take songsRememberedIndex songsRemembered)
                     |> Just
     in
-    songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe
+    songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent
 
 
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
