@@ -19,10 +19,41 @@ Invokable Function Expression).
 
 /*
 var functionResetSongsDevelopmentOnly = function() {
-    var tempSongs = [];
-    var tempSongsAsString = JSON.stringify(tempSongs);
-    var keyStorage = 'RememberSongs';
-    window.localStorage.setItem(keyStorage, tempSongsAsString);
+    var keyStorage;
+    var localStorage;
+    var tempSongs;
+    var tempSongsAsString;
+
+    tempSongs = [
+        {
+          artist: "Vance Joy",
+          likedOrCommented: true,
+          title: "Lay It On Me",
+          time: "7:26 AM",
+          timestamp: "2017 08 31 07 26"
+        },
+        {
+          artist: "The Family Crest",
+          likedOrCommented: false,
+          title: "Mirror Love",
+          time: "7:22 AM",
+          timestamp: "2017 08 31 07 22"
+        },
+      ];
+    tempSongsAsString = JSON.stringify(tempSongs);
+    keyStorage = 'RememberSongs';
+    localStorage = window.localStorage;
+    window.alert('localStorage: ' + localStorage);
+    if (null === localStorage) {
+        window.alert('localStorage is null.');
+    } else {
+        try {
+            localStorage.setItem(keyStorage, tempSongsAsString);
+        }
+        catch(e) {
+            window.alert('e: ' + e);
+        }
+    }
     return null;
 }
 functionResetSongsDevelopmentOnly();
