@@ -25,6 +25,7 @@ import SongHelper
         , song2SongRemembered
         , song2SongTimeless
         , songRememberedUpdate
+        , songTimelessCompare
         , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
@@ -144,14 +145,12 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 
 compareSongRememberedToSongRecent : SongRemembered -> SongRecent -> Bool
 compareSongRememberedToSongRecent songRemembered songRecent =
-    song2SongTimeless songRemembered
-        |> flip compareSongTimelessToSongRecent songRecent
+    songTimelessCompare songRemembered songRecent
 
 
 compareSongTimelessToSongRecent : SongTimeless -> SongRecent -> Bool
 compareSongTimelessToSongRecent songTimeless songRecent =
-    song2SongTimeless songRecent
-        |> (==) songTimeless
+    songTimelessCompare songTimeless songRecent
 
 
 songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent

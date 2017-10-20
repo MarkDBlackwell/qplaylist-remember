@@ -20,6 +20,7 @@ module SongHelper
         , song2SongTimeless
         , songGroup2String
         , songRememberedUpdate
+        , songTimelessCompare
         , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
@@ -121,6 +122,13 @@ songRememberedUpdate :
     -> SongRemembered
 songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
     SongRemembered artist likedOrCommented time timestamp title
+
+
+songTimelessCompare : SongTimelessBase a -> SongTimelessBase b -> Bool
+songTimelessCompare x y =
+    (==)
+        ( x.artist, x.title )
+        ( y.artist, y.title )
 
 
 songs2SongsRecent : List (SongRecentBase a) -> SongsRecent
