@@ -86,6 +86,12 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
+songsRememberedAppendOneUnique : SongsRecent -> SongRecent -> SongsRemembered -> SongsRemembered
+songsRememberedAppendOneUnique songsRecent songRecent songsRemembered =
+    --temp
+    []
+
+
 songsRememberedAppendOneUniqueFromIndex : SongsRecent -> SongsRecentIndex -> SongsRemembered -> SongsRemembered
 songsRememberedAppendOneUniqueFromIndex songsRecent songsRecentIndex songsRemembered =
     let
@@ -104,8 +110,12 @@ songsRememberedAppendOneUniqueFromIndex songsRecent songsRecentIndex songsRememb
                 song2SongRemembered songRecent
                     |> List.singleton
                     |> (++) songsRemembered
+
+        maybe : SongRecentMaybe
+        maybe =
+            selectOneMaybe songsRecent songsRecentIndex
     in
-    selectOneMaybe songsRecent songsRecentIndex
+    maybe
         |> maybeMapWithDefault songsRemembered appendUnlessRemembered
 
 
