@@ -144,32 +144,32 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 -}
 
 
+swapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
+swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe =
+    let
+        songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
+        songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
+            if
+                songsTimelessMatches songsRecent songRememberedSongsRememberedSwapOneRecent
+                    |> List.isEmpty
+            then
+                Nothing
+            else
+                (songsRememberedIndex + 1)
+                    |> startingWith songsRemembered
+                    |> (++)
+                        (songRememberedUpdate songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe
+                            |> List.singleton
+                        )
+                    |> (++)
+                        (List.take songsRememberedIndex songsRemembered)
+                    |> Just
+    in
+    songsRememberedSwapOneRecentMaybe songRemembered songRecentSwapOneRecentMaybe
+
+
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
 swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecent songsRemembered songRemembered =
-    let
-        swapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
-        swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe =
-            let
-                songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
-                songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
-                    if
-                        songsTimelessMatches songsRecent songRememberedSongsRememberedSwapOneRecent
-                            |> List.isEmpty
-                    then
-                        Nothing
-                    else
-                        (songsRememberedIndex + 1)
-                            |> startingWith songsRemembered
-                            |> (++)
-                                (songRememberedUpdate songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe
-                                    |> List.singleton
-                                )
-                            |> (++)
-                                (List.take songsRememberedIndex songsRemembered)
-                            |> Just
-            in
-            songsRememberedSwapOneRecentMaybe songRemembered songRecentSwapOneRecentMaybe
-    in
     songsTimelessMatches songsRecent songRemembered
         |> List.head
         |> maybeDefaultNothing (swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered)
