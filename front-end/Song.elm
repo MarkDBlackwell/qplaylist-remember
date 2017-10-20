@@ -146,12 +146,14 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 
 songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent
 songsRecentSongRememberedMatches songsRecent songRemembered =
-    List.filter (songTimelessCompare songRemembered) songsRecent
+    --List.filter (songTimelessCompare songRemembered) songsRecent
+    songsTimelessMatches songsRecent songRemembered
 
 
 songsRecentSongTimelessMatches : SongsRecent -> SongTimeless -> SongsRecent
 songsRecentSongTimelessMatches songsRecent songTimeless =
-    List.filter (songTimelessCompare songTimeless) songsRecent
+    --List.filter (songTimelessCompare songTimeless) songsRecent
+    songsTimelessMatches songsRecent songTimeless
 
 
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe

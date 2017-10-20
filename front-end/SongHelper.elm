@@ -147,15 +147,15 @@ songs2SongsTimeless songTimelessBaseList =
     List.map song2SongTimeless songTimelessBaseList
 
 
-songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> SongsTimeless
-songsTimelessMatches songsTimelessBase { artist, title } =
+songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> List (SongTimelessBase a)
+songsTimelessMatches songsTimelessBaseA songTimelessBaseB =
     let
-        compare : SongTimeless -> Bool
-        compare songTimeless =
-            SongTimeless artist title
-                |> songTimelessCompare songTimeless
+        compare : SongTimelessBase a -> Bool
+        compare songTimelessBaseA =
+            songTimelessBaseB
+                |> songTimelessCompare songTimelessBaseA
     in
-    songs2SongsTimeless songsTimelessBase
+    songsTimelessBaseA
         |> List.filter compare
 
 
