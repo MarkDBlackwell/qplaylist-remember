@@ -117,7 +117,6 @@ functionResetSongsDevelopmentOnly();
             return JSON.parse(functionRetrieveSongsFromStorageAsString());
         }
         functionStorageIsAccessible = function() {
-            var hostname;
             var rememberingSongsIsDisabledMessage;
             var somethingWrongWithHostnameMessage;
             var storage;
@@ -125,22 +124,13 @@ functionResetSongsDevelopmentOnly();
             var x;
 
             rememberingSongsIsDisabledMessage = 'Remembering songs (across sessions) is disabled:  '
-            somethingWrongWithHostnameMessage = 'Something wrong with window.hostname: ';
-            suggestOperaMessage = 'Localhost is fine on Opera, but it lacks localStorage in Firefox, etc.';
+            somethingWrongWithLocalStorageMessage = 'Something wrong with window.localStorage: ';
 
             //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
             try {
                 storage = window.localStorage;
                 if (null === storage) {
-                    hostname = window.location.hostname;
-                    if (null === hostname) {
-                        window.alert(somethingWrongWithHostnameMessage + hostname);
-                        return false;
-                    }
-                    if ('localhost' == hostname) {
-                        window.alert(suggestOperaMessage);
-                        return false;
-                    }
+                    window.alert(somethingWrongWithLocalStorageMessage + storage);
                     return false;
                 }
                 x = '__storage_test__';
