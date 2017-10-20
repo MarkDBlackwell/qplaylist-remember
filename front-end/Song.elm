@@ -29,6 +29,7 @@ import SongHelper
         , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
+        , songsTimelessMatches
         )
 import SongType
     exposing
@@ -143,24 +144,14 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 -}
 
 
-compareSongRememberedToSongRecent : SongRemembered -> SongRecent -> Bool
-compareSongRememberedToSongRecent songRemembered songRecent =
-    songTimelessCompare songRemembered songRecent
-
-
-compareSongTimelessToSongRecent : SongTimeless -> SongRecent -> Bool
-compareSongTimelessToSongRecent songTimeless songRecent =
-    songTimelessCompare songTimeless songRecent
-
-
 songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent
 songsRecentSongRememberedMatches songsRecent songRemembered =
-    List.filter (compareSongRememberedToSongRecent songRemembered) songsRecent
+    List.filter (songTimelessCompare songRemembered) songsRecent
 
 
 songsRecentSongTimelessMatches : SongsRecent -> SongTimeless -> SongsRecent
 songsRecentSongTimelessMatches songsRecent songTimeless =
-    List.filter (compareSongTimelessToSongRecent songTimeless) songsRecent
+    List.filter (songTimelessCompare songTimeless) songsRecent
 
 
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe

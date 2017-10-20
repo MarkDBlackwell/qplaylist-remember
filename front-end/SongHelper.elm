@@ -24,6 +24,7 @@ module SongHelper
         , songs2SongsRecent
         , songs2SongsRemembered
         , songs2SongsTimeless
+        , songsTimelessMatches
         )
 
 import Dom
@@ -144,6 +145,11 @@ songs2SongsRemembered songRecentBaseList =
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
 songs2SongsTimeless songTimelessBaseList =
     List.map song2SongTimeless songTimelessBaseList
+
+
+songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> SongsTimeless
+songsTimelessMatches xes { artist, title } =
+    List.filter (songTimelessCompare (SongTimeless artist title)) (songs2SongsTimeless xes)
 
 
 
