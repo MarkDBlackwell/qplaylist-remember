@@ -89,16 +89,16 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
+songRememberedAlready : SongsRemembered -> SongRecent -> Bool
+songRememberedAlready songsRemembered songRecent =
+    List.member
+        (song2SongTimeless songRecent)
+        (songs2SongsTimeless songsRemembered)
+
+
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
 songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
-    let
-        remembered : Bool
-        remembered =
-            List.member
-                (song2SongTimeless songRecent)
-                (songs2SongsTimeless songsRemembered)
-    in
-    if remembered then
+    if songRememberedAlready songsRemembered songRecent then
         songsRemembered
     else
         song2SongRemembered songRecent
