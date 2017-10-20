@@ -144,8 +144,8 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
 swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecentSongsRememberedUpdateTimestamp songsRemembered songRememberedSwapUnlessListHeadEmpty =
     let
-        songsRecentSongRememberedMatches : SongRemembered -> SongsRecent
-        songsRecentSongRememberedMatches songRememberedSongsRecentSongRememberedMatches =
+        songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent
+        songsRecentSongRememberedMatches songsRecentSongsRememberedUpdateTimestamp songRememberedSongsRecentSongRememberedMatches =
             let
                 compare : SongRecent -> Bool
                 compare songRecentCompare =
@@ -160,7 +160,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecentSongsRememberedUpda
                 songsRememberedSwapOneRecentMaybe : SongRemembered -> SongRecent -> SongsRememberedMaybe
                 songsRememberedSwapOneRecentMaybe songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
                     if
-                        songsRecentSongRememberedMatches songRememberedSongsRememberedSwapOneRecent
+                        songsRecentSongRememberedMatches songsRecentSongsRememberedUpdateTimestamp songRememberedSongsRememberedSwapOneRecent
                             |> List.isEmpty
                     then
                         Nothing
@@ -179,7 +179,7 @@ swapUnlessListHeadEmptyMaybe songsRememberedIndex songsRecentSongsRememberedUpda
                 songRememberedSwapUnlessListHeadEmpty
                 songRecentSwapOneRecentMaybe
     in
-    songsRecentSongRememberedMatches songRememberedSwapUnlessListHeadEmpty
+    songsRecentSongRememberedMatches songsRecentSongsRememberedUpdateTimestamp songRememberedSwapUnlessListHeadEmpty
         |> List.head
         |> maybeDefaultNothing swapOneRecentMaybe
 
