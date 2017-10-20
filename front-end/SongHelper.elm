@@ -152,7 +152,7 @@ songsTimelessMatches listA songB =
     let
         compare : SongTimelessBase a -> Bool
         compare songA =
-            songTimelessCompare songA songB
+            songTimelessCompare songB songA
     in
     List.filter compare listA
 
