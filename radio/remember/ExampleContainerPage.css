@@ -15,21 +15,48 @@
 
 /* Styling for Remember Songs example container page. */
 
+html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    display: block;
+    width: 100vw;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-style: none;
+    border-width: 0;
+    background-color: rgb(118,215,196);
+}
+body > div {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-style: none;
     border-width: 0;
 }
-iframe {
-    width: 100%;
-    height: 100vh;
+body > div > iframe {
+    display: inline-block;
+    width: 1024px;
+    height: 560px;
     overflow-x: hidden;
     overflow-y: auto;
     margin: 0;
     padding: 0;
+    border-style: none;
     border-width: 0;
+    vertical-align: top;
+}
+body > div > span {
+    display: inline-block;
+    border-style: none;
+    border-width: 0;
+    vertical-align: top;
+}
+body > p {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    border-width: 0;
+    text-align: center;
 }
