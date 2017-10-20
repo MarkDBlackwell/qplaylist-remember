@@ -147,8 +147,8 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 swapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
 swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe =
     let
-        songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongRemembered -> SongRecent -> SongsRememberedMaybe
-        songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
+        songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
+        songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRememberedSongsRememberedSwapOneRecent songRecentSongsRememberedSwapOneRecentMaybe =
             if
                 songsTimelessMatches songsRecent songRememberedSongsRememberedSwapOneRecent
                     |> List.isEmpty
@@ -165,7 +165,7 @@ swapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemember
                         (List.take songsRememberedIndex songsRemembered)
                     |> Just
     in
-    songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songRemembered songRecentSwapOneRecentMaybe
+    songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecentSwapOneRecentMaybe
 
 
 swapUnlessListHeadEmptyMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongsRememberedMaybe
