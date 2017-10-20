@@ -142,25 +142,25 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 -}
 
 
+compareSongRememberedToSongRecent : SongRemembered -> SongRecent -> Bool
+compareSongRememberedToSongRecent songRemembered songRecent =
+    song2SongTimeless songRemembered
+        |> (==) (song2SongTimeless songRecent)
+
+
+compareSongTimelessToSongRecent : SongTimeless -> SongRecent -> Bool
+compareSongTimelessToSongRecent songTimeless songRecent =
+    songTimeless
+        |> (==) (song2SongTimeless songRecent)
+
+
 songsRecentSongRememberedMatches : SongsRecent -> SongRemembered -> SongsRecent
 songsRecentSongRememberedMatches songsRecent songRemembered =
-    let
-        compareSongRememberedToSongRecent : SongRemembered -> SongRecent -> Bool
-        compareSongRememberedToSongRecent songRemembered songRecent =
-            song2SongTimeless songRemembered
-                |> (==) (song2SongTimeless songRecent)
-    in
     List.filter (compareSongRememberedToSongRecent songRemembered) songsRecent
 
 
 songsRecentSongTimelessMatches : SongsRecent -> SongTimeless -> SongsRecent
 songsRecentSongTimelessMatches songsRecent songTimeless =
-    let
-        compareSongTimelessToSongRecent : SongTimeless -> SongRecent -> Bool
-        compareSongTimelessToSongRecent songTimeless songRecent =
-            songTimeless
-                |> (==) (song2SongTimeless songRecent)
-    in
     List.filter (compareSongTimelessToSongRecent songTimeless) songsRecent
 
 
