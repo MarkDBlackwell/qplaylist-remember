@@ -112,38 +112,6 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
         |> maybeMapWithDefault songsRemembered (songsRememberedAppendOneUnique songsRemembered songsRecent)
 
 
-
-{-
-   songRemembered2songsRememberedUpdateTimestamp : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-   songRemembered2songsRememberedUpdateTimestamp songsRecent songsRemembered songsRememberedIndex =
-
-   songRememberedMaybeUpdateMaybe : SongRememberedMaybe -> SongRememberedMaybe
-   songRememberedMaybeUpdateMaybe songRememberedMaybe =
-
-   songRememberedUpdateMaybe : SongRemembered -> SongRememberedMaybe
-   songRememberedUpdateMaybe songRemembered =
-
-   songsRememberedUpdateSingle : SongsRemembered -> SongRemembered -> SongsRemembered
-   songsRememberedUpdateSingle songsRemembered songRemembered =
-
-   songsRememberedSongsRememberedFromUpdateTimestamp : SongsRemembered -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-   songsRememberedSongsRememberedFromUpdateTimestamp songsRememberedFrom songsRemembered songsRememberedIndex =
-       let
-           songsRecent =
-               songsRecent2SongsRemembered songsRememberedFrom
-       in
-       songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRememberedIndex
-
-
-    let
-        songsRememberedFrom : SongsRemembered
-        songsRememberedFrom =
-            songs2SongsRemembered songsRecentSongsRememberedUpdateTimestamp
-
-    in
--}
-
-
 songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
 songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered songRecent =
     if
