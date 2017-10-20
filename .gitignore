@@ -6,6 +6,7 @@
 /tests/elm-stuff/packages/*
 
 /index.html
+/radio/.htaccess
 /radio/remember/Main.js
 /radio/remember/comments.txt
 /radio/remember/php_errorlog
