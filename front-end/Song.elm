@@ -90,14 +90,9 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
 
 
-songRememberedAlready : SongsRemembered -> SongRecent -> Bool
-songRememberedAlready songsRemembered songRecent =
-    songAlready songsRemembered songRecent
-
-
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
 songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
-    if songRememberedAlready songsRemembered songRecent then
+    if songAlready songsRemembered songRecent then
         songsRemembered
     else
         song2SongRemembered songRecent
