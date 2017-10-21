@@ -127,30 +127,6 @@ commentSendHand model =
 
 likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle
 likeButtonProcessHand model songsRememberedIndex =
-    let
-        likeRequest : Cmd Msg
-        likeRequest =
-            getString likeRequestUriText
-                |> send LikeResponse
-
-        likeRequestUriText : UriText
-        likeRequestUriText =
-            likeOrCommentRequestUriText
-                songLikingMaybeNew
-                model.userIdentifier
-                "Loved it!"
-
-        songLikingMaybeNew : SongLikingOrCommentingMaybe
-        songLikingMaybeNew =
-            selectOneMaybe songsRememberedNew songsRememberedIndex
-
-        songsRememberedNew : SongsRemembered
-        songsRememberedNew =
-            songsRememberedUpdateTimestampFromIndex
-                model.songsRemembered
-                model.songsRecent
-                songsRememberedIndex
-    in
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
@@ -161,6 +137,18 @@ likeButtonProcessHand model songsRememberedIndex =
             )
 
         _ ->
+            let
+                songLikingMaybeNew : SongLikingOrCommentingMaybe
+                songLikingMaybeNew =
+                    selectOneMaybe songsRememberedNew songsRememberedIndex
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    songsRememberedUpdateTimestampFromIndex
+                        model.songsRemembered
+                        model.songsRecent
+                        songsRememberedIndex
+            in
             case songLikingMaybeNew of
                 Nothing ->
                     ( model
@@ -168,6 +156,19 @@ likeButtonProcessHand model songsRememberedIndex =
                     )
 
                 _ ->
+                    let
+                        likeRequest : Cmd Msg
+                        likeRequest =
+                            getString likeRequestUriText
+                                |> send LikeResponse
+
+                        likeRequestUriText : UriText
+                        likeRequestUriText =
+                            likeOrCommentRequestUriText
+                                songLikingMaybeNew
+                                model.userIdentifier
+                                "Loved it!"
+                    in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
