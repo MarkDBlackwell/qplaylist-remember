@@ -18,6 +18,7 @@ module SongHelper
         , song2SongRecent
         , song2SongRemembered
         , song2SongTimeless
+        , songAlready
         , songGroup2String
         , songRememberedUpdate
         , songTimelessCompare
@@ -107,6 +108,13 @@ song2SongRemembered { artist, time, timestamp, title } =
 song2SongTimeless : SongTimelessBase a -> SongTimeless
 song2SongTimeless { artist, title } =
     SongTimeless artist title
+
+
+songAlready : List (SongTimelessBase a) -> SongTimelessBase b -> Bool
+songAlready listA songB =
+    List.member
+        (song2SongTimeless songB)
+        (songs2SongsTimeless listA)
 
 
 songRememberedUpdate :

@@ -24,6 +24,7 @@ import SongHelper
         ( song2SongRecent
         , song2SongRemembered
         , song2SongTimeless
+        , songAlready
         , songRememberedUpdate
         , songTimelessCompare
         , songs2SongsRecent
@@ -91,9 +92,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
 
 songRememberedAlready : SongsRemembered -> SongRecent -> Bool
 songRememberedAlready songsRemembered songRecent =
-    List.member
-        (song2SongTimeless songRecent)
-        (songs2SongsTimeless songsRemembered)
+    songAlready songsRemembered songRecent
 
 
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
