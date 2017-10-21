@@ -222,34 +222,6 @@ update msg model =
                         )
 
         SongRememberHand songsRecentIndex ->
-            let
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    let
-                        songsRememberedAppended : SongsRemembered
-                        songsRememberedAppended =
-                            songsRememberedAppendOneUniqueFromIndex
-                                model.songsRemembered
-                                model.songsRecent
-                                songsRecentIndex
-
-                        songsRememberedIndexMaybe : SongsRememberedIndexMaybe
-                        songsRememberedIndexMaybe =
-                            let
-                                songsRememberedIndexes : SongTimeless -> SongsRememberedIndexList
-                                songsRememberedIndexes =
-                                    songs2SongsTimeless songsRememberedAppended
-                                        |> matchingIndexes
-                            in
-                            selectOneMaybe model.songsRecent songsRecentIndex
-                                |> Maybe.map song2SongTimeless
-                                |> Maybe.map songsRememberedIndexes
-                                |> Maybe.andThen List.head
-                    in
-                    songsRememberedUpdateTimestampFromIndex songsRememberedAppended model.songsRecent
-                        |> flip Maybe.map songsRememberedIndexMaybe
-                        |> Maybe.withDefault songsRememberedAppended
-            in
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
@@ -260,6 +232,34 @@ update msg model =
                     )
 
                 _ ->
+                    let
+                        songsRememberedNew : SongsRemembered
+                        songsRememberedNew =
+                            let
+                                songsRememberedAppended : SongsRemembered
+                                songsRememberedAppended =
+                                    songsRememberedAppendOneUniqueFromIndex
+                                        model.songsRemembered
+                                        model.songsRecent
+                                        songsRecentIndex
+
+                                songsRememberedIndexMaybe : SongsRememberedIndexMaybe
+                                songsRememberedIndexMaybe =
+                                    let
+                                        songsRememberedIndexes : SongTimeless -> SongsRememberedIndexList
+                                        songsRememberedIndexes =
+                                            songs2SongsTimeless songsRememberedAppended
+                                                |> matchingIndexes
+                                    in
+                                    selectOneMaybe model.songsRecent songsRecentIndex
+                                        |> Maybe.map song2SongTimeless
+                                        |> Maybe.map songsRememberedIndexes
+                                        |> Maybe.andThen List.head
+                            in
+                            songsRememberedUpdateTimestampFromIndex songsRememberedAppended model.songsRecent
+                                |> flip Maybe.map songsRememberedIndexMaybe
+                                |> Maybe.withDefault songsRememberedAppended
+                    in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , songsRemembered = songsRememberedNew
