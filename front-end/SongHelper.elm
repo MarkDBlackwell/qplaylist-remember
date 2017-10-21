@@ -49,6 +49,8 @@ import SongType
         , SongRecent
         , SongRecentBase
         , SongRemembered
+        , SongTimeBase
+        , SongTimeExceptBase
         , SongTimeless
         , SongTimelessBase
         , SongsRecent
@@ -117,18 +119,7 @@ songAlready listA songB =
         (songs2SongsTimeless listA)
 
 
-songRememberedUpdate :
-    { a
-        | artist : Artist
-        , likedOrCommented : LikedOrCommented
-        , title : Title
-    }
-    ->
-        { b
-            | time : Time
-            , timestamp : Timestamp
-        }
-    -> SongRemembered
+songRememberedUpdate : SongTimeExceptBase a -> SongTimeBase b -> SongRemembered
 songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
     SongRemembered artist likedOrCommented time timestamp title
 

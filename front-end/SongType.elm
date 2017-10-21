@@ -32,6 +32,8 @@ module SongType
         , SongRecentOrRemembered
         , SongRemembered
         , SongRememberedMaybe
+        , SongTimeBase
+        , SongTimeExceptBase
         , SongTimeless
         , SongTimelessBase
         , SongsRecent
@@ -121,6 +123,21 @@ type alias SongRemembered =
 
 type alias SongRememberedMaybe =
     Maybe SongRemembered
+
+
+type alias SongTimeBase a =
+    { a
+        | time : Time
+        , timestamp : Timestamp
+    }
+
+
+type alias SongTimeExceptBase a =
+    { a
+        | artist : Artist
+        , likedOrCommented : LikedOrCommented
+        , title : Title
+    }
 
 
 type alias SongTimeless =
