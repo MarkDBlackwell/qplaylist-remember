@@ -22,7 +22,7 @@ module UpdateComment
 import Alert
     exposing
         ( alertMessageTextInit
-        , alertMessageTextServerAwaiting
+        , alertMessageTextServerAwaitingElmCycle
         )
 import ElmCycle
     exposing
@@ -100,11 +100,7 @@ commentAreaOpenHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            ( { model
-                | alertMessageText = alertMessageTextServerAwaiting
-              }
-            , focusInputPossibly model
-            )
+            alertMessageTextServerAwaitingElmCycle model
 
         ( _, Open ) ->
             ( { model
@@ -149,11 +145,7 @@ commentCancelHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            ( { model
-                | alertMessageText = alertMessageTextServerAwaiting
-              }
-            , focusInputPossibly model
-            )
+            alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             ( { model
