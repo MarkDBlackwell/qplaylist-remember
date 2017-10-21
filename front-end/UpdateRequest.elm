@@ -83,19 +83,6 @@ import Utilities
 
 commentSendHand : Model -> ElmCycle
 commentSendHand model =
-    let
-        commentRequest : Cmd Msg
-        commentRequest =
-            getString commentRequestUriText
-                |> send CommentResponse
-
-        commentRequestUriText : UriText
-        commentRequestUriText =
-            likeOrCommentRequestUriText
-                model.songCommentingMaybe
-                model.userIdentifier
-                model.commentText
-    in
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
@@ -113,6 +100,19 @@ commentSendHand model =
                 , focusInputPossibly model
                 )
             else
+                let
+                    commentRequest : Cmd Msg
+                    commentRequest =
+                        getString commentRequestUriText
+                            |> send CommentResponse
+
+                    commentRequestUriText : UriText
+                    commentRequestUriText =
+                        likeOrCommentRequestUriText
+                            model.songCommentingMaybe
+                            model.userIdentifier
+                            model.commentText
+                in
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = True
