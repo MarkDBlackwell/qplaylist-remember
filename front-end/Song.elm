@@ -52,13 +52,10 @@ import SongType
         )
 import Utilities
     exposing
-        ( indexes
-        , maybeDefaultNothing
+        ( maybeDefaultNothing
         , maybeMapWithDefault
         , selectOneMaybe
         , startingWith
-        , withIndexes
-        , withoutOne
         )
 
 
