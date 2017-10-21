@@ -19,7 +19,6 @@ module Alert
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
-        , alertMessageTextServerAwaiting
         , alertMessageTextServerAwaitingElmCycle
         )
 
@@ -116,15 +115,10 @@ alertMessageTextSend actionDescription detailsText =
         ]
 
 
-alertMessageTextServerAwaiting : AlertMessageTextMaybe
-alertMessageTextServerAwaiting =
-    Just "Awaiting server"
-
-
 alertMessageTextServerAwaitingElmCycle : Model -> ElmCycle
 alertMessageTextServerAwaitingElmCycle model =
     ( { model
-        | alertMessageText = alertMessageTextServerAwaiting
+        | alertMessageText = Just "Awaiting server"
       }
     , focusInputPossibly model
     )
