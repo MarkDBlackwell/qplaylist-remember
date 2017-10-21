@@ -197,10 +197,6 @@ update msg model =
                         songRememberedCompareMaybe : SongCommentingMaybe
                         songRememberedCompareMaybe =
                             selectOneMaybe model.songsRemembered songsRememberedIndex
-
-                        songsRememberedNew : SongsRemembered
-                        songsRememberedNew =
-                            withoutOne model.songsRemembered songsRememberedIndex
                     in
                     if model.songCommentingMaybe == songRememberedCompareMaybe then
                         ( { model
@@ -209,6 +205,11 @@ update msg model =
                         , focusInputPossibly model
                         )
                     else
+                        let
+                            songsRememberedNew : SongsRemembered
+                            songsRememberedNew =
+                                withoutOne model.songsRemembered songsRememberedIndex
+                        in
                         ( { model
                             | alertMessageText = alertMessageTextInit
                             , songsRemembered = songsRememberedNew
