@@ -20,6 +20,7 @@ module Alert
         , alertMessageTextRequestLikeOrComment
         , alertMessageTextSend
         , alertMessageTextServerAwaiting
+        , alertMessageTextServerAwaitingElmCycle
         )
 
 import AlertType
@@ -32,14 +33,26 @@ import AlertType
         , LikeOrCommentName
         , PrefixSeparatorText
         )
+import ElmCycle
+    exposing
+        ( ElmCycle
+        )
 import Http
     exposing
         ( Error
+        )
+import ModelType
+    exposing
+        ( Model
         )
 import Tuple
     exposing
         ( first
         , second
+        )
+import UpdateFocus
+    exposing
+        ( focusInputPossibly
         )
 import Utilities
     exposing
@@ -106,6 +119,15 @@ alertMessageTextSend actionDescription detailsText =
 alertMessageTextServerAwaiting : AlertMessageTextMaybe
 alertMessageTextServerAwaiting =
     Just "Awaiting server"
+
+
+alertMessageTextServerAwaitingElmCycle : Model -> ElmCycle
+alertMessageTextServerAwaitingElmCycle model =
+    ( { model
+        | alertMessageText = alertMessageTextServerAwaiting
+      }
+    , focusInputPossibly model
+    )
 
 
 errorHttpText : Error -> ( AlertMessageText, AlertMessageText )

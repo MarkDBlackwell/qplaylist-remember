@@ -20,7 +20,7 @@ module Update
 import Alert
     exposing
         ( alertMessageTextInit
-        , alertMessageTextServerAwaiting
+        , alertMessageTextServerAwaitingElmCycle
         )
 import ElmCycle
     exposing
@@ -150,11 +150,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
+                    alertMessageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
@@ -186,11 +182,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
+                    alertMessageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
@@ -225,11 +217,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
-                    ( { model
-                        | alertMessageText = alertMessageTextServerAwaiting
-                      }
-                    , focusInputPossibly model
-                    )
+                    alertMessageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
