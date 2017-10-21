@@ -97,18 +97,6 @@ commentAreaInputTextChangeCaptureHand model text =
 
 commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle
 commentAreaOpenHand model songsRememberedIndex =
-    let
-        songCommentingMaybeNew : SongLikingOrCommentingMaybe
-        songCommentingMaybeNew =
-            selectOneMaybe songsRememberedNew songsRememberedIndex
-
-        songsRememberedNew : SongsRemembered
-        songsRememberedNew =
-            songsRememberedUpdateTimestampFromIndex
-                model.songsRemembered
-                model.songsRecent
-                songsRememberedIndex
-    in
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
@@ -126,6 +114,18 @@ commentAreaOpenHand model songsRememberedIndex =
             )
 
         _ ->
+            let
+                songCommentingMaybeNew : SongLikingOrCommentingMaybe
+                songCommentingMaybeNew =
+                    selectOneMaybe songsRememberedNew songsRememberedIndex
+
+                songsRememberedNew : SongsRemembered
+                songsRememberedNew =
+                    songsRememberedUpdateTimestampFromIndex
+                        model.songsRemembered
+                        model.songsRecent
+                        songsRememberedIndex
+            in
             case songCommentingMaybeNew of
                 Nothing ->
                     ( model
