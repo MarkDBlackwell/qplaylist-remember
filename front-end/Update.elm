@@ -147,24 +147,6 @@ update msg model =
             )
 
         PageMorphHand ->
-            let
-                pageIsExpandedNew : PageIsExpanded
-                pageIsExpandedNew =
-                    let
-                        bothListsAreEmpty : Bool
-                        bothListsAreEmpty =
-                            List.all
-                                identity
-                                --Here, can't use List.map.
-                                [ List.isEmpty model.songsRecent
-                                , List.isEmpty model.songsRemembered
-                                ]
-                    in
-                    if bothListsAreEmpty then
-                        model.pageIsExpanded
-                    else
-                        not model.pageIsExpanded
-            in
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
@@ -175,6 +157,24 @@ update msg model =
                     )
 
                 _ ->
+                    let
+                        pageIsExpandedNew : PageIsExpanded
+                        pageIsExpandedNew =
+                            let
+                                bothListsAreEmpty : Bool
+                                bothListsAreEmpty =
+                                    List.all
+                                        identity
+                                        --Here, can't use List.map.
+                                        [ List.isEmpty model.songsRecent
+                                        , List.isEmpty model.songsRemembered
+                                        ]
+                            in
+                            if bothListsAreEmpty then
+                                model.pageIsExpanded
+                            else
+                                not model.pageIsExpanded
+                    in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , pageIsExpanded = pageIsExpandedNew
@@ -183,15 +183,6 @@ update msg model =
                     )
 
         SongForgetHand songsRememberedIndex ->
-            let
-                songRememberedCompareMaybe : SongCommentingMaybe
-                songRememberedCompareMaybe =
-                    selectOneMaybe model.songsRemembered songsRememberedIndex
-
-                songsRememberedNew : SongsRemembered
-                songsRememberedNew =
-                    withoutOne model.songsRemembered songsRememberedIndex
-            in
             --(awaitingServer, commentArea)
             case stateVector model of
                 ( True, _ ) ->
@@ -202,6 +193,15 @@ update msg model =
                     )
 
                 _ ->
+                    let
+                        songRememberedCompareMaybe : SongCommentingMaybe
+                        songRememberedCompareMaybe =
+                            selectOneMaybe model.songsRemembered songsRememberedIndex
+
+                        songsRememberedNew : SongsRemembered
+                        songsRememberedNew =
+                            withoutOne model.songsRemembered songsRememberedIndex
+                    in
                     if model.songCommentingMaybe == songRememberedCompareMaybe then
                         ( { model
                             | alertMessageText = alertMessageTextInit
