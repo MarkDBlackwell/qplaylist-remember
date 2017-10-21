@@ -108,8 +108,13 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
 
 songsRememberedAppendOneUniqueFromIndex : SongsRemembered -> SongsRecent -> SongsRecentIndex -> SongsRemembered
 songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentIndex =
+    let
+        append : SongRecent -> SongsRemembered
+        append =
+            songsRememberedAppendOneUnique songsRemembered songsRecent
+    in
     selectOneMaybe songsRecent songsRecentIndex
-        |> maybeMapWithDefault songsRemembered (songsRememberedAppendOneUnique songsRemembered songsRecent)
+        |> maybeMapWithDefault songsRemembered append
 
 
 songsRememberedSwapOneRecentMaybe : SongsRememberedIndex -> SongsRecent -> SongsRemembered -> SongRemembered -> SongRecent -> SongsRememberedMaybe
@@ -136,7 +141,10 @@ songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRemembe
     let
         swapMaybe : SongRemembered -> SongsRememberedMaybe
         swapMaybe =
-            swapUnlessListHeadEmptyMaybe songsRecent songsRemembered songsRememberedIndex
+            swapUnlessListHeadEmptyMaybe
+                songsRecent
+                songsRemembered
+                songsRememberedIndex
     in
     selectOneMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapMaybe
@@ -148,7 +156,11 @@ swapUnlessListHeadEmptyMaybe songsRecent songsRemembered songsRememberedIndex so
     let
         swapMaybe : SongRecent -> SongsRememberedMaybe
         swapMaybe =
-            songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered
+            songsRememberedSwapOneRecentMaybe
+                songsRememberedIndex
+                songsRecent
+                songsRemembered
+                songRemembered
     in
     songsTimelessMatches songsRecent songRemembered
         |> List.head
