@@ -147,8 +147,8 @@ likeButtonProcessHand model songsRememberedIndex =
         songsRememberedNew : SongsRemembered
         songsRememberedNew =
             songsRememberedUpdateTimestampFromIndex
-                model.songsRecent
                 model.songsRemembered
+                model.songsRecent
                 songsRememberedIndex
     in
     --(awaitingServer, commentArea)

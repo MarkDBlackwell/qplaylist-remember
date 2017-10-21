@@ -245,7 +245,7 @@ update msg model =
                                 |> Maybe.map songsRememberedIndexes
                                 |> Maybe.andThen List.head
                     in
-                    songsRememberedUpdateTimestampFromIndex model.songsRecent songsRememberedAppended
+                    songsRememberedUpdateTimestampFromIndex songsRememberedAppended model.songsRecent
                         |> flip Maybe.map songsRememberedIndexMaybe
                         |> Maybe.withDefault songsRememberedAppended
             in

@@ -130,8 +130,8 @@ songsRememberedSwapOneRecentMaybe songsRemembered songsRecent songRemembered son
             |> Just
 
 
-songsRememberedUpdateTimestampFromIndex : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRememberedIndex =
+songsRememberedUpdateTimestampFromIndex : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
+songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRememberedIndex =
     let
         swapMaybe : SongRemembered -> SongsRememberedMaybe
         swapMaybe =
