@@ -138,8 +138,18 @@ withIndexes listA =
         |> List.map2 (flip (,)) listA
 
 
+
+--withoutOne : List a -> a -> List a
+--withoutOne listA x =
+
+
 withoutOneFromIndex : List a -> Int -> List a
 withoutOneFromIndex listA index =
+    --case selectOneFromIndexMaybe listA index of
+    --    Nothing ->
+    --        listA
+    --    Just selectOne ->
+    --        withoutOne listA selectOne
     (index + 1)
         |> startingWithFromIndex listA
         |> (++) (List.take index listA)
