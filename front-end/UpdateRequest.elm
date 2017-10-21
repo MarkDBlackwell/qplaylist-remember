@@ -185,34 +185,6 @@ likeButtonProcessHand model songsRememberedIndex =
 
 songsRecentRefreshHand : Model -> ElmCycle
 songsRecentRefreshHand model =
-    let
-        requestUriText : UriText
-        requestUriText =
-            let
-                basename : UriText
-                basename =
-                    "LatestFive.json"
-
-                subUri : UriText
-                subUri =
-                    "wtmdapp"
-            in
-            relative
-                [ "../.."
-                , subUri
-                , basename
-                ]
-                []
-
-        songsRecentRequest : Cmd Msg
-        songsRecentRequest =
-            let
-                requestHttp : Request HttpRequestText
-                requestHttp =
-                    getString requestUriText
-            in
-            send SongsRecentResponse requestHttp
-    in
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
@@ -223,6 +195,34 @@ songsRecentRefreshHand model =
             )
 
         _ ->
+            let
+                requestUriText : UriText
+                requestUriText =
+                    let
+                        basename : UriText
+                        basename =
+                            "LatestFive.json"
+
+                        subUri : UriText
+                        subUri =
+                            "wtmdapp"
+                    in
+                    relative
+                        [ "../.."
+                        , subUri
+                        , basename
+                        ]
+                        []
+
+                songsRecentRequest : Cmd Msg
+                songsRecentRequest =
+                    let
+                        requestHttp : Request HttpRequestText
+                        requestHttp =
+                            getString requestUriText
+                    in
+                    send SongsRecentResponse requestHttp
+            in
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
