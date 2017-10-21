@@ -27,7 +27,7 @@ module Utilities
         , msg2Cmd
         , prefixSeparator
         , selectOneFromIndexMaybe
-        , startingWith
+        , startingWithFromIndex
         , withIndexes
         , withoutOneFromIndex
         )
@@ -123,12 +123,12 @@ prefixSeparator =
 
 selectOneFromIndexMaybe : List a -> Int -> Maybe a
 selectOneFromIndexMaybe listA index =
-    startingWith listA index
+    startingWithFromIndex listA index
         |> List.head
 
 
-startingWith : List a -> Int -> List a
-startingWith listA index =
+startingWithFromIndex : List a -> Int -> List a
+startingWithFromIndex listA index =
     List.drop index listA
 
 
@@ -141,7 +141,7 @@ withIndexes listA =
 withoutOneFromIndex : List a -> Int -> List a
 withoutOneFromIndex listA index =
     (index + 1)
-        |> startingWith listA
+        |> startingWithFromIndex listA
         |> (++) (List.take index listA)
 
 

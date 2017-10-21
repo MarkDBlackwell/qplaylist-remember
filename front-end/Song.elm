@@ -55,7 +55,7 @@ import Utilities
         ( maybeDefaultNothing
         , maybeMapWithDefault
         , selectOneFromIndexMaybe
-        , startingWith
+        , startingWithFromIndex
         )
 
 
@@ -117,7 +117,7 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
         Nothing
     else
         (songsRememberedIndex + 1)
-            |> startingWith songsRemembered
+            |> startingWithFromIndex songsRemembered
             |> (++)
                 (songRememberedUpdate songRemembered songRecent
                     |> List.singleton
