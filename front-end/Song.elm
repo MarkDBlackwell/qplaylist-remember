@@ -111,8 +111,8 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
         |> maybeMapWithDefault songsRemembered append
 
 
-songsRememberedSwapOneRecentMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
-songsRememberedSwapOneRecentMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
+songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
+songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
     if
         songsTimelessMatches songsRecent songRemembered
             |> List.isEmpty
@@ -150,7 +150,7 @@ swapUnlessListHeadEmptyFromIndexMaybe songsRecent songsRemembered songsRemembere
     let
         swapMaybe : SongRecent -> SongsRememberedMaybe
         swapMaybe =
-            songsRememberedSwapOneRecentMaybe
+            songsRememberedSwapOneRecentFromIndexMaybe
                 songsRemembered
                 songsRecent
                 songRemembered
