@@ -22,7 +22,7 @@ module UpdateRequest
 import Alert
     exposing
         ( alertMessageTextInit
-        , alertMessageTextServerAwaiting
+        , alertMessageTextServerAwaitingElmCycle
         )
 import ElmCycle
     exposing
@@ -86,11 +86,7 @@ commentSendHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            ( { model
-                | alertMessageText = alertMessageTextServerAwaiting
-              }
-            , focusInputPossibly model
-            )
+            alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             if String.isEmpty model.commentText then
@@ -130,11 +126,7 @@ likeButtonProcessHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            ( { model
-                | alertMessageText = alertMessageTextServerAwaiting
-              }
-            , focusInputPossibly model
-            )
+            alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             let
@@ -188,11 +180,7 @@ songsRecentRefreshHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            ( { model
-                | alertMessageText = alertMessageTextServerAwaiting
-              }
-            , focusInputPossibly model
-            )
+            alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             let
