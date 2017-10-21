@@ -145,6 +145,11 @@ songsRememberedUpdateTimestampFromIndex songsRecent songsRemembered songsRemembe
 
 swapUnlessListHeadEmptyMaybe : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongRemembered -> SongsRememberedMaybe
 swapUnlessListHeadEmptyMaybe songsRecent songsRemembered songsRememberedIndex songRemembered =
+    let
+        swapMaybe : SongRecent -> SongsRememberedMaybe
+        swapMaybe =
+            songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered
+    in
     songsTimelessMatches songsRecent songRemembered
         |> List.head
-        |> maybeDefaultNothing (songsRememberedSwapOneRecentMaybe songsRememberedIndex songsRecent songsRemembered songRemembered)
+        |> maybeDefaultNothing swapMaybe
