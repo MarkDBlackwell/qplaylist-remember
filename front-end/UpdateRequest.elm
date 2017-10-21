@@ -74,7 +74,7 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( selectOneMaybe
+        ( selectOneFromIndexMaybe
         )
 
 
@@ -132,7 +132,7 @@ likeButtonProcessHand model songsRememberedIndex =
             let
                 songLikingMaybeNew : SongLikingOrCommentingMaybe
                 songLikingMaybeNew =
-                    selectOneMaybe songsRememberedNew songsRememberedIndex
+                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =

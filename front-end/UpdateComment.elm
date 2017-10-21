@@ -68,7 +68,7 @@ import UpdateHelper
         )
 import Utilities
     exposing
-        ( selectOneMaybe
+        ( selectOneFromIndexMaybe
         )
 
 
@@ -113,7 +113,7 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songCommentingMaybeNew : SongLikingOrCommentingMaybe
                 songCommentingMaybeNew =
-                    selectOneMaybe songsRememberedNew songsRememberedIndex
+                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =

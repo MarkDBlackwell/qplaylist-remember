@@ -97,8 +97,8 @@ import Utilities
     exposing
         ( matchingIndexes
         , msg2Cmd
-        , selectOneMaybe
-        , withoutOne
+        , selectOneFromIndexMaybe
+        , withoutOneFromIndex
         )
 
 
@@ -188,7 +188,7 @@ update msg model =
                     let
                         songRememberedCompareMaybe : SongCommentingMaybe
                         songRememberedCompareMaybe =
-                            selectOneMaybe model.songsRemembered songsRememberedIndex
+                            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
                     in
                     if model.songCommentingMaybe == songRememberedCompareMaybe then
                         ( { model
@@ -200,7 +200,7 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                withoutOne model.songsRemembered songsRememberedIndex
+                                withoutOneFromIndex model.songsRemembered songsRememberedIndex
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit
@@ -239,7 +239,7 @@ update msg model =
                                             songs2SongsTimeless songsRememberedAppended
                                                 |> matchingIndexes
                                     in
-                                    selectOneMaybe model.songsRecent songsRecentIndex
+                                    selectOneFromIndexMaybe model.songsRecent songsRecentIndex
                                         |> Maybe.map song2SongTimeless
                                         |> Maybe.map songsRememberedIndexes
                                         |> Maybe.andThen List.head

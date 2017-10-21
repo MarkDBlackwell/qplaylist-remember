@@ -81,7 +81,7 @@ import Utilities
         , htmlNodeNull
         , innerHtmlEmpty
         , maybeMapWithDefault
-        , selectOneMaybe
+        , selectOneFromIndexMaybe
         )
 import ViewButton
     exposing
@@ -258,7 +258,7 @@ view model =
                                                 stampList =
                                                     String.split " " songRecentOrRemembered.timestamp
                                             in
-                                            selectOneMaybe stampList index
+                                            selectOneFromIndexMaybe stampList index
                                                 |> Maybe.withDefault ""
                                     in
                                     String.concat

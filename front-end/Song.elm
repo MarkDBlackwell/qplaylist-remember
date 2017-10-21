@@ -54,7 +54,7 @@ import Utilities
     exposing
         ( maybeDefaultNothing
         , maybeMapWithDefault
-        , selectOneMaybe
+        , selectOneFromIndexMaybe
         , startingWith
         )
 
@@ -104,7 +104,7 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
         append =
             songsRememberedAppendOneUnique songsRemembered songsRecent
     in
-    selectOneMaybe songsRecent songsRecentIndex
+    selectOneFromIndexMaybe songsRecent songsRecentIndex
         |> maybeMapWithDefault songsRemembered append
 
 
@@ -137,7 +137,7 @@ songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRemembe
                 songsRemembered
                 songsRememberedIndex
     in
-    selectOneMaybe songsRemembered songsRememberedIndex
+    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapMaybe
         |> Maybe.withDefault songsRemembered
 

@@ -26,10 +26,10 @@ module Utilities
         , maybeMapWithDefault
         , msg2Cmd
         , prefixSeparator
-        , selectOneMaybe
+        , selectOneFromIndexMaybe
         , startingWith
         , withIndexes
-        , withoutOne
+        , withoutOneFromIndex
         )
 
 import AlertType
@@ -121,8 +121,8 @@ prefixSeparator =
     ": "
 
 
-selectOneMaybe : List a -> Int -> Maybe a
-selectOneMaybe listA index =
+selectOneFromIndexMaybe : List a -> Int -> Maybe a
+selectOneFromIndexMaybe listA index =
     startingWith listA index
         |> List.head
 
@@ -138,8 +138,8 @@ withIndexes listA =
         |> List.map2 (flip (,)) listA
 
 
-withoutOne : List a -> Int -> List a
-withoutOne listA index =
+withoutOneFromIndex : List a -> Int -> List a
+withoutOneFromIndex listA index =
     (index + 1)
         |> startingWith listA
         |> (++) (List.take index listA)
