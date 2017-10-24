@@ -182,11 +182,11 @@ update msg model =
 
                 _ ->
                     let
-                        songRememberedSelectOneMaybe : SongCommentingMaybe
-                        songRememberedSelectOneMaybe =
+                        songsRememberedSelectOneMaybe : SongCommentingMaybe
+                        songsRememberedSelectOneMaybe =
                             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
                     in
-                    if model.songCommentingMaybe == songRememberedSelectOneMaybe then
+                    if model.songCommentingMaybe == songsRememberedSelectOneMaybe then
                         ( { model
                             | alertMessageText = alertMessageTextInit
                           }
@@ -196,7 +196,7 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                withoutOneFromMaybe model.songsRemembered songRememberedSelectOneMaybe
+                                withoutOneFromMaybe model.songsRemembered songsRememberedSelectOneMaybe
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit
