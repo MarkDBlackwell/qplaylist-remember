@@ -64,13 +64,13 @@ import SongHelper
         )
 import SongType
     exposing
-        ( SongCommenting
-        , SongGroup
+        ( SongGroup
             ( Recent
             , Remembered
             )
         , SongGroupLength
         , SongRecentOrRemembered
+        , SongRemembered
         , SongsRecentOrRemembered
         , SongsRecentOrRememberedIndex
         , Time
@@ -123,7 +123,7 @@ view model =
         commentAreaPossibly : Html Msg
         commentAreaPossibly =
             let
-                commentArea : SongCommenting -> Html Msg
+                commentArea : SongRemembered -> Html Msg
                 commentArea song =
                     let
                         inputHoverText : HoverText

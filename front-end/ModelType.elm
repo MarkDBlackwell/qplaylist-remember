@@ -31,8 +31,7 @@ import AlertType
         )
 import SongType
     exposing
-        ( SongCommentingMaybe
-        , SongLikingMaybe
+        ( SongRememberedMaybe
         , SongsRecent
         , SongsRemembered
         )
@@ -65,8 +64,8 @@ type alias Model =
     , commentText : CommentText
     , pageIsExpanded : PageIsExpanded
     , showCommentButtons : ShowCommentButtons
-    , songCommentingMaybe : SongCommentingMaybe
-    , songLikingMaybe : SongLikingMaybe
+    , songCommentingMaybe : SongRememberedMaybe
+    , songLikingMaybe : SongRememberedMaybe
     , songsRecent : SongsRecent
     , songsRemembered : SongsRemembered
     , userIdentifier : UserIdentifier

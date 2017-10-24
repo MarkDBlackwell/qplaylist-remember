@@ -40,16 +40,14 @@ import SongType
     exposing
         ( Artist
         , LikedOrCommented
-        , SongCommenting
-        , SongCommentingMaybe
         , SongGroup
             ( Recent
             , Remembered
             )
-        , SongLikingOrCommentingMaybe
         , SongRecent
         , SongRecentBase
         , SongRemembered
+        , SongRememberedMaybe
         , SongTimeBase
         , SongTimeExceptBase
         , SongTimeless
@@ -71,10 +69,10 @@ import Utilities
 -- UPDATE
 
 
-buttonIdReconstruct : SongsRemembered -> SongCommentingMaybe -> Id -> Id
+buttonIdReconstruct : SongsRemembered -> SongRememberedMaybe -> Id -> Id
 buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
     let
-        songRememberedIndexMaybe : SongCommenting -> SongsRememberedIndexMaybe
+        songRememberedIndexMaybe : SongRemembered -> SongsRememberedIndexMaybe
         songRememberedIndexMaybe songCommenting =
             let
                 timeless : SongsTimeless

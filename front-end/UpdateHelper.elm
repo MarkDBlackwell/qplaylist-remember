@@ -34,8 +34,8 @@ import SongInitialize
         )
 import SongType
     exposing
-        ( SongLikingOrCommenting
-        , SongLikingOrCommentingMaybe
+        ( SongRemembered
+        , SongRememberedMaybe
         )
 import UpdateRequestType
     exposing
@@ -59,7 +59,7 @@ import Utilities
 -- UPDATE
 
 
-likeOrCommentRequestUriText : SongLikingOrCommentingMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
+likeOrCommentRequestUriText : SongRememberedMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
 likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCommentText =
     let
         artistTimeTitle : UriText
@@ -76,7 +76,7 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         basename =
             "append.json"
 
-        songLikingOrCommenting : SongLikingOrCommenting
+        songLikingOrCommenting : SongRemembered
         songLikingOrCommenting =
             Maybe.withDefault songLikingOrCommentingInit songLikingOrCommentingMaybe
     in

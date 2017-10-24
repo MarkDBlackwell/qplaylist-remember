@@ -25,10 +25,8 @@ import SongType
     exposing
         ( Artist
         , LikedOrCommented
-        , SongCommentingMaybe
-        , SongLikingMaybe
-        , SongLikingOrCommenting
         , SongRemembered
+        , SongRememberedMaybe
         , SongsRecent
         , Time
         , Timestamp
@@ -39,17 +37,17 @@ import SongType
 -- MODEL
 
 
-songCommentingMaybeInit : SongCommentingMaybe
+songCommentingMaybeInit : SongRememberedMaybe
 songCommentingMaybeInit =
     Nothing
 
 
-songLikingMaybeInit : SongLikingMaybe
+songLikingMaybeInit : SongRememberedMaybe
 songLikingMaybeInit =
     Nothing
 
 
-songLikingOrCommentingInit : SongLikingOrCommenting
+songLikingOrCommentingInit : SongRemembered
 songLikingOrCommentingInit =
     SongRemembered artistInit likedOrCommentedInit timeInit timestampInit titleInit
 

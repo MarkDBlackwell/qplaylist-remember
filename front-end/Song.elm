@@ -38,9 +38,6 @@ import SongHelper
 import SongType
     exposing
         ( SongGroupLength
-        , SongLikingMaybe
-        , SongLikingOrCommenting
-        , SongLikingOrCommentingMaybe
         , SongRecent
         , SongRecentMaybe
         , SongRemembered
@@ -65,10 +62,10 @@ import Utilities
 -- UPDATE
 
 
-likedOrCommentedShow : SongLikingOrCommentingMaybe -> SongsRemembered -> SongsRemembered
+likedOrCommentedShow : SongRememberedMaybe -> SongsRemembered -> SongsRemembered
 likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
     let
-        process : SongLikingOrCommenting -> SongsRemembered
+        process : SongRemembered -> SongsRemembered
         process songLikingOrCommenting =
             let
                 tweakPossibly : SongRemembered -> SongRemembered

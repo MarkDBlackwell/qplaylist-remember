@@ -43,8 +43,8 @@ import SongPort
         )
 import SongType
     exposing
-        ( SongCommentingMaybe
-        , SongRecentMaybe
+        ( SongRecentMaybe
+        , SongRememberedMaybe
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndexList
@@ -182,7 +182,7 @@ update msg model =
 
                 _ ->
                     let
-                        songsRememberedSelectOneMaybe : SongCommentingMaybe
+                        songsRememberedSelectOneMaybe : SongRememberedMaybe
                         songsRememberedSelectOneMaybe =
                             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
                     in

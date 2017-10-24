@@ -16,16 +16,11 @@ module SongType
     exposing
         ( Artist
         , LikedOrCommented
-        , SongCommenting
-        , SongCommentingMaybe
         , SongGroup
             ( Recent
             , Remembered
             )
         , SongGroupLength
-        , SongLikingMaybe
-        , SongLikingOrCommenting
-        , SongLikingOrCommentingMaybe
         , SongRecent
         , SongRecentBase
         , SongRecentMaybe
@@ -62,14 +57,6 @@ type alias LikedOrCommented =
     Bool
 
 
-type alias SongCommenting =
-    SongRemembered
-
-
-type alias SongCommentingMaybe =
-    Maybe SongCommenting
-
-
 type alias SongRecent =
     --Keep order (for JSON decoding):
     { artist : Artist
@@ -90,22 +77,6 @@ type alias SongRecentBase a =
 
 type alias SongRecentMaybe =
     Maybe SongRecent
-
-
-type alias SongLiking =
-    SongCommenting
-
-
-type alias SongLikingMaybe =
-    Maybe SongLiking
-
-
-type alias SongLikingOrCommenting =
-    SongCommenting
-
-
-type alias SongLikingOrCommentingMaybe =
-    Maybe SongLikingOrCommenting
 
 
 type alias SongRecentOrRemembered =
