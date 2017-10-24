@@ -56,7 +56,6 @@ import SongType
         , SongTimelessBase
         , SongsRecent
         , SongsRemembered
-        , SongsRememberedIndex
         , SongsRememberedIndexMaybe
         , SongsTimeless
         , Time
@@ -66,7 +65,6 @@ import SongType
 import Utilities
     exposing
         ( matchingIndexes
-        , selectOneFromIndexMaybe
         )
 
 

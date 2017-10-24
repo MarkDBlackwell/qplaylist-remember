@@ -16,6 +16,7 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromMaybe
+        , songsRememberedLikeOrCommentNew
         , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
         )
@@ -117,6 +118,15 @@ songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMa
         songRecentMaybe
 
 
+songsRememberedLikeOrCommentNew : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
+songsRememberedLikeOrCommentNew songsRemembered songsRecent songsRememberedIndex =
+    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
+        |> Maybe.map song2SongRecent
+        |> songsRememberedUpdateTimestampFromMaybe
+            songsRemembered
+            songsRecent
+
+
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
 songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
     if
@@ -154,15 +164,18 @@ songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRemembe
 songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
 songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMaybe =
     let
-        swapConditional : SongRecent -> SongRemembered -> SongRemembered
-        swapConditional songRecent songRemembered =
+        updateSometimes : SongRecent -> SongRemembered -> SongRemembered
+        updateSometimes songRecent songRemembered =
             if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
                 songRemembered
             else
-                song2SongRemembered songRecent
+                { songRemembered
+                    | time = songRecent.time
+                    , timestamp = songRecent.timestamp
+                }
     in
     Maybe.map
-        (\x -> List.map (swapConditional x) songsRemembered)
+        (\x -> List.map (updateSometimes x) songsRemembered)
         songRecentMaybe
         |> Maybe.withDefault songsRemembered
 
