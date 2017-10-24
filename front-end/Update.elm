@@ -220,8 +220,8 @@ update msg model =
                         songsRememberedNew : SongsRemembered
                         songsRememberedNew =
                             let
-                                songRecentSelectOneMaybe : SongRecentMaybe
-                                songRecentSelectOneMaybe =
+                                songsRecentSelectOneMaybe : SongRecentMaybe
+                                songsRecentSelectOneMaybe =
                                     selectOneFromIndexMaybe model.songsRecent songsRecentIndex
 
                                 songsRememberedAppended : SongsRemembered
@@ -229,12 +229,12 @@ update msg model =
                                     songsRememberedAppendOneUniqueFromMaybe
                                         model.songsRemembered
                                         model.songsRecent
-                                        songRecentSelectOneMaybe
+                                        songsRecentSelectOneMaybe
                             in
                             songsRememberedUpdateTimestampFromMaybe
                                 songsRememberedAppended
                                 model.songsRecent
-                                songRecentSelectOneMaybe
+                                songsRecentSelectOneMaybe
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
