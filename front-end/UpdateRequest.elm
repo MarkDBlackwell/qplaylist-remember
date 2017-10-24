@@ -135,6 +135,10 @@ likeButtonProcessHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
+                    songsRememberedLikeOrCommentNew
+
+                songsRememberedLikeOrCommentNew : SongsRemembered
+                songsRememberedLikeOrCommentNew =
                     selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
                         |> Maybe.map song2SongRecent
                         |> songsRememberedUpdateTimestampFromMaybe
