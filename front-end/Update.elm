@@ -35,6 +35,7 @@ import ModelType
 import Song
     exposing
         ( songsRememberedAppendOneUniqueFromIndex
+        , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedUpdateTimestampFromIndex
         )
 import SongHelper
@@ -225,20 +226,20 @@ update msg model =
                         songsRememberedNew : SongsRemembered
                         songsRememberedNew =
                             let
+                                songRecentSelectOneMaybe : SongRecentMaybe
+                                songRecentSelectOneMaybe =
+                                    selectOneFromIndexMaybe model.songsRecent songsRecentIndex
+
                                 songsRememberedAppended : SongsRemembered
                                 songsRememberedAppended =
-                                    songsRememberedAppendOneUniqueFromIndex
+                                    songsRememberedAppendOneUniqueFromMaybe
                                         model.songsRemembered
                                         model.songsRecent
-                                        songsRecentIndex
+                                        songRecentSelectOneMaybe
 
                                 songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                                 songsRememberedIndexMaybe =
                                     let
-                                        songRecentSelectOneMaybe : SongRecentMaybe
-                                        songRecentSelectOneMaybe =
-                                            selectOneFromIndexMaybe model.songsRecent songsRecentIndex
-
                                         songsRememberedIndexes : SongTimeless -> SongsRememberedIndexList
                                         songsRememberedIndexes =
                                             songs2SongsTimeless songsRememberedAppended
