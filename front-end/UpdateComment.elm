@@ -41,11 +41,12 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedUpdateTimestampFromIndex
+        ( songsRememberedUpdateTimestampFromMaybe
         )
 import SongHelper
     exposing
         ( buttonIdReconstruct
+        , song2SongRecent
         )
 import SongInitialize
     exposing
@@ -117,10 +118,11 @@ commentAreaOpenHand model songsRememberedIndex =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedUpdateTimestampFromIndex
-                        model.songsRemembered
-                        model.songsRecent
-                        songsRememberedIndex
+                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                        |> Maybe.map song2SongRecent
+                        |> songsRememberedUpdateTimestampFromMaybe
+                            model.songsRemembered
+                            model.songsRecent
             in
             case songCommentingMaybeNew of
                 Nothing ->

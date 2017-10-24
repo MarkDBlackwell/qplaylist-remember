@@ -15,7 +15,6 @@
 module Song
     exposing
         ( likedOrCommentedShow
-        , songsRememberedAppendOneUniqueFromIndex
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
