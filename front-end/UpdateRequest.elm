@@ -134,8 +134,8 @@ likeButtonProcessHand model songsRememberedIndex =
 
         _ ->
             let
-                songLikingMaybeNew : SongLikingOrCommentingMaybe
-                songLikingMaybeNew =
+                songLikingOrCommentingMaybeNew : SongLikingOrCommentingMaybe
+                songLikingOrCommentingMaybeNew =
                     selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
@@ -146,7 +146,7 @@ likeButtonProcessHand model songsRememberedIndex =
                             model.songsRemembered
                             model.songsRecent
             in
-            case songLikingMaybeNew of
+            case songLikingOrCommentingMaybeNew of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -162,14 +162,14 @@ likeButtonProcessHand model songsRememberedIndex =
                         likeRequestUriText : UriText
                         likeRequestUriText =
                             likeOrCommentRequestUriText
-                                songLikingMaybeNew
+                                songLikingOrCommentingMaybeNew
                                 model.userIdentifier
                                 "Loved it!"
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
-                        , songLikingMaybe = songLikingMaybeNew
+                        , songLikingMaybe = songLikingOrCommentingMaybeNew
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
