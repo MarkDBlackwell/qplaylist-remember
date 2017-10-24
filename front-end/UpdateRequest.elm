@@ -50,11 +50,11 @@ import Song
 import SongHelper
     exposing
         ( song2SongRecent
+        , songLikingOrCommentingMaybeNew
         )
 import SongType
     exposing
-        ( SongLikingOrCommentingMaybe
-        , SongsRemembered
+        ( SongsRemembered
         , SongsRememberedIndex
         )
 import UpdateFocus
@@ -134,10 +134,6 @@ likeButtonProcessHand model songsRememberedIndex =
 
         _ ->
             let
-                songLikingOrCommentingMaybeNew : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
-                songLikingOrCommentingMaybeNew songsRemembered songsRememberedIndex =
-                    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
-
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
