@@ -45,11 +45,13 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedLikeOrCommentNew
+        ( songsRememberedLikeOrCommentNewFromIndex
+        , songsRememberedLikeOrCommentNewFromMaybe
         )
 import SongType
     exposing
-        ( SongsRemembered
+        ( SongRememberedMaybe
+        , SongsRemembered
         , SongsRememberedIndex
         )
 import UpdateFocus
@@ -131,10 +133,14 @@ likeButtonProcessHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedLikeOrCommentNew
+                    songsRememberedLikeOrCommentNewFromIndex
                         model.songsRemembered
                         model.songsRecent
                         songsRememberedIndex
+
+                songsRememberedSelectOneMaybe : SongRememberedMaybe
+                songsRememberedSelectOneMaybe =
+                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
             in
             case selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex of
                 Nothing ->

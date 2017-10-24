@@ -41,7 +41,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedLikeOrCommentNew
+        ( songsRememberedLikeOrCommentNewFromIndex
         )
 import SongHelper
     exposing
@@ -112,7 +112,7 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedLikeOrCommentNew
+                    songsRememberedLikeOrCommentNewFromIndex
                         model.songsRemembered
                         model.songsRecent
                         songsRememberedIndex

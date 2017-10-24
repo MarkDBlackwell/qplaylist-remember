@@ -16,7 +16,8 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromMaybe
-        , songsRememberedLikeOrCommentNew
+        , songsRememberedLikeOrCommentNewFromIndex
+        , songsRememberedLikeOrCommentNewFromMaybe
         , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
         )
@@ -118,10 +119,18 @@ songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMa
         songRecentMaybe
 
 
-songsRememberedLikeOrCommentNew : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
-songsRememberedLikeOrCommentNew songsRemembered songsRecent songsRememberedIndex =
+songsRememberedLikeOrCommentNewFromIndex : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
+songsRememberedLikeOrCommentNewFromIndex songsRemembered songsRecent songsRememberedIndex =
     selectOneFromIndexMaybe songsRemembered songsRememberedIndex
         |> Maybe.map song2SongRecent
+        |> songsRememberedUpdateTimestampFromMaybe
+            songsRemembered
+            songsRecent
+
+
+songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
+songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRememberedMaybe =
+    Maybe.map song2SongRecent songRememberedMaybe
         |> songsRememberedUpdateTimestampFromMaybe
             songsRemembered
             songsRecent
