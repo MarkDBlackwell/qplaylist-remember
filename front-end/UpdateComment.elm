@@ -47,7 +47,6 @@ import SongHelper
     exposing
         ( buttonIdReconstruct
         , song2SongRecent
-        , songLikingOrCommentingMaybeNew
         )
 import SongInitialize
     exposing
@@ -120,7 +119,7 @@ commentAreaOpenHand model songsRememberedIndex =
                             model.songsRemembered
                             model.songsRecent
             in
-            case songLikingOrCommentingMaybeNew songsRememberedNew songsRememberedIndex of
+            case selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -131,7 +130,7 @@ commentAreaOpenHand model songsRememberedIndex =
                         | alertMessageText = alertMessageTextInit
                         , commentText = commentTextInit
                         , songCommentingMaybe =
-                            songLikingOrCommentingMaybeNew
+                            selectOneFromIndexMaybe
                                 songsRememberedNew
                                 songsRememberedIndex
                         , songsRemembered = songsRememberedNew

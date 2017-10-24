@@ -20,7 +20,6 @@ module SongHelper
         , song2SongTimeless
         , songAlready
         , songGroup2String
-        , songLikingOrCommentingMaybeNew
         , songRememberedUpdate
         , songTimelessCompare
         , songs2SongsRecent
@@ -121,11 +120,6 @@ songAlready listA songB =
     List.member
         (song2SongTimeless songB)
         (songs2SongsTimeless listA)
-
-
-songLikingOrCommentingMaybeNew : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
-songLikingOrCommentingMaybeNew songsRemembered songsRememberedIndex =
-    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
 
 
 songRememberedUpdate : SongTimeExceptBase a -> SongTimeBase b -> SongRemembered

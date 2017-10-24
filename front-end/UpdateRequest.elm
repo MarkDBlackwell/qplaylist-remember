@@ -50,7 +50,6 @@ import Song
 import SongHelper
     exposing
         ( song2SongRecent
-        , songLikingOrCommentingMaybeNew
         )
 import SongType
     exposing
@@ -142,7 +141,7 @@ likeButtonProcessHand model songsRememberedIndex =
                             model.songsRemembered
                             model.songsRecent
             in
-            case songLikingOrCommentingMaybeNew songsRememberedNew songsRememberedIndex of
+            case selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -158,7 +157,7 @@ likeButtonProcessHand model songsRememberedIndex =
                         likeRequestUriText : UriText
                         likeRequestUriText =
                             likeOrCommentRequestUriText
-                                (songLikingOrCommentingMaybeNew songsRememberedNew songsRememberedIndex)
+                                (selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex)
                                 model.userIdentifier
                                 "Loved it!"
                     in
@@ -166,7 +165,7 @@ likeButtonProcessHand model songsRememberedIndex =
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
                         , songLikingMaybe =
-                            songLikingOrCommentingMaybeNew
+                            selectOneFromIndexMaybe
                                 songsRememberedNew
                                 songsRememberedIndex
                         , songsRemembered = songsRememberedNew
