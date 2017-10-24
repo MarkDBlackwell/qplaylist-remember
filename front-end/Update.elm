@@ -200,7 +200,7 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                withoutOneFromIndex model.songsRemembered songsRememberedIndex
+                                withoutOneFromMaybe model.songsRemembered songRememberedSelectOneMaybe
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit

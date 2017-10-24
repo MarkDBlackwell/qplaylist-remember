@@ -138,21 +138,23 @@ withIndexes listA =
         |> List.map2 (flip (,)) listA
 
 
-
---withoutOne : List a -> a -> List a
---withoutOne listA x =
+withoutOne : List a -> a -> List a
+withoutOne listA x =
+    List.filter ((/=) x) listA
 
 
 withoutOneFromIndex : List a -> Int -> List a
 withoutOneFromIndex listA index =
-    --case selectOneFromIndexMaybe listA index of
-    --    Nothing ->
-    --        listA
-    --    Just selectOne ->
-    --        withoutOne listA selectOne
     (index + 1)
         |> startingWithFromIndex listA
         |> (++) (List.take index listA)
+
+
+withoutOneFromMaybe : List a -> Maybe a -> List a
+withoutOneFromMaybe listA xMaybe =
+    withoutOne listA
+        |> flip Maybe.map xMaybe
+        |> Maybe.withDefault listA
 
 
 
