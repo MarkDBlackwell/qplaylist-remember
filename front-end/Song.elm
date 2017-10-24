@@ -18,6 +18,7 @@ module Song
         , songsRememberedAppendOneUniqueFromIndex
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedUpdateTimestampFromIndex
+        , songsRememberedUpdateTimestampFromMaybe
         )
 
 import SongHelper
@@ -111,12 +112,10 @@ songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentI
 
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
 songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
-    let
-        append : SongRecent -> SongsRemembered
-        append =
-            songsRememberedAppendOneUnique songsRemembered songsRecent
-    in
-    maybeMapWithDefault songsRemembered append songRecentMaybe
+    maybeMapWithDefault
+        songsRemembered
+        (songsRememberedAppendOneUnique songsRemembered songsRecent)
+        songRecentMaybe
 
 
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
@@ -151,6 +150,24 @@ songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRemembe
     selectOneFromIndexMaybe songsRemembered songsRememberedIndex
         |> maybeDefaultNothing swapMaybe
         |> Maybe.withDefault songsRemembered
+
+
+songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
+songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRememberedMaybe =
+    let
+        swapConditional : SongRemembered -> SongRemembered -> SongRemembered
+        swapConditional songRemembered songRememberedFromList =
+            if song2SongTimeless songRemembered /= song2SongTimeless songRememberedFromList then
+                songRemembered
+            else
+                songRememberedFromList
+    in
+    case songRememberedMaybe of
+        Nothing ->
+            songsRemembered
+
+        Just songRemembered ->
+            List.map (swapConditional songRemembered) songsRemembered
 
 
 swapUnlessListHeadEmptyFromIndexMaybe : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongRemembered -> SongsRememberedMaybe

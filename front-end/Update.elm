@@ -37,6 +37,7 @@ import Song
         ( songsRememberedAppendOneUniqueFromIndex
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedUpdateTimestampFromIndex
+        , songsRememberedUpdateTimestampFromMaybe
         )
 import SongHelper
     exposing
