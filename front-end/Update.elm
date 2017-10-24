@@ -39,11 +39,6 @@ import Song
         , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
         )
-import SongHelper
-    exposing
-        ( song2SongTimeless
-        , songs2SongsTimeless
-        )
 import SongPort
     exposing
         ( songsRememberedStore
@@ -237,22 +232,11 @@ update msg model =
                                         model.songsRemembered
                                         model.songsRecent
                                         songRecentSelectOneMaybe
-
-                                songsRememberedIndexMaybe : SongsRememberedIndexMaybe
-                                songsRememberedIndexMaybe =
-                                    let
-                                        songsRememberedIndexes : SongTimeless -> SongsRememberedIndexList
-                                        songsRememberedIndexes =
-                                            songs2SongsTimeless songsRememberedAppended
-                                                |> matchingIndexes
-                                    in
-                                    Maybe.map song2SongTimeless songRecentSelectOneMaybe
-                                        |> Maybe.map songsRememberedIndexes
-                                        |> Maybe.andThen List.head
                             in
-                            songsRememberedUpdateTimestampFromIndex songsRememberedAppended model.songsRecent
-                                |> flip Maybe.map songsRememberedIndexMaybe
-                                |> Maybe.withDefault songsRememberedAppended
+                            songsRememberedUpdateTimestampFromMaybe
+                                songsRememberedAppended
+                                model.songsRecent
+                                songRecentSelectOneMaybe
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit

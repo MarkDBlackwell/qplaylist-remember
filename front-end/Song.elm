@@ -152,22 +152,20 @@ songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRemembe
         |> Maybe.withDefault songsRemembered
 
 
-songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
-songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRememberedMaybe =
+songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
+songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMaybe =
     let
-        swapConditional : SongRemembered -> SongRemembered -> SongRemembered
-        swapConditional songRemembered songRememberedFromList =
-            if song2SongTimeless songRemembered /= song2SongTimeless songRememberedFromList then
+        swapConditional : SongRecent -> SongRemembered -> SongRemembered
+        swapConditional songRecent songRemembered =
+            if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
                 songRemembered
             else
-                songRememberedFromList
+                song2SongRemembered songRecent
     in
-    case songRememberedMaybe of
-        Nothing ->
-            songsRemembered
-
-        Just songRemembered ->
-            List.map (swapConditional songRemembered) songsRemembered
+    Maybe.map
+        (\x -> List.map (swapConditional x) songsRemembered)
+        songRecentMaybe
+        |> Maybe.withDefault songsRemembered
 
 
 swapUnlessListHeadEmptyFromIndexMaybe : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongRemembered -> SongsRememberedMaybe
