@@ -112,9 +112,9 @@ commentAreaOpenHand model songsRememberedIndex =
 
         _ ->
             let
-                songLikingOrCommentingMaybeNew : SongLikingOrCommentingMaybe
-                songLikingOrCommentingMaybeNew =
-                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
+                songLikingOrCommentingMaybeNew : SongsRemembered -> SongsRememberedIndex -> SongLikingOrCommentingMaybe
+                songLikingOrCommentingMaybeNew songsRemembered songsRememberedIndex =
+                    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
@@ -124,7 +124,7 @@ commentAreaOpenHand model songsRememberedIndex =
                             model.songsRemembered
                             model.songsRecent
             in
-            case songLikingOrCommentingMaybeNew of
+            case songLikingOrCommentingMaybeNew songsRememberedNew songsRememberedIndex of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -134,7 +134,10 @@ commentAreaOpenHand model songsRememberedIndex =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentText = commentTextInit
-                        , songCommentingMaybe = songLikingOrCommentingMaybeNew
+                        , songCommentingMaybe =
+                            songLikingOrCommentingMaybeNew
+                                songsRememberedNew
+                                songsRememberedIndex
                         , songsRemembered = songsRememberedNew
                       }
                       --'focusInputPossibly' doesn't work, here:
