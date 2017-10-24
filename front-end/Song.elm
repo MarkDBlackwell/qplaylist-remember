@@ -162,9 +162,13 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMa
             else
                 song2SongRemembered songRecent
     in
-    Maybe.map
-        (\x -> List.map (swapConditional x) songsRemembered)
+    --Maybe.map
+    --(\x -> List.map (swapConditional x) songsRemembered)
+    --(\x -> flip List.map songsRemembered (swapConditional x))
+    --songRecentMaybe
+    flip Maybe.map
         songRecentMaybe
+        (\x -> flip List.map songsRemembered (swapConditional x))
         |> Maybe.withDefault songsRemembered
 
 
