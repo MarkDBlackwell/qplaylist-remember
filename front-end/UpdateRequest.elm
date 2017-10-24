@@ -133,16 +133,16 @@ likeButtonProcessHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedLikeOrCommentNewFromIndex
+                    songsRememberedLikeOrCommentNewFromMaybe
                         model.songsRemembered
                         model.songsRecent
-                        songsRememberedIndex
+                        (selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex)
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
-                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
             in
-            case selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex of
+            case songsRememberedSelectOneMaybe of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -158,17 +158,14 @@ likeButtonProcessHand model songsRememberedIndex =
                         likeRequestUriText : UriText
                         likeRequestUriText =
                             likeOrCommentRequestUriText
-                                (selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex)
+                                songsRememberedSelectOneMaybe
                                 model.userIdentifier
                                 "Loved it!"
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , awaitingServerResponse = True
-                        , songLikingMaybe =
-                            selectOneFromIndexMaybe
-                                songsRememberedNew
-                                songsRememberedIndex
+                        , songLikingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
