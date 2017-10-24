@@ -45,7 +45,11 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedUpdateTimestampFromIndex
+        ( songsRememberedUpdateTimestampFromMaybe
+        )
+import SongHelper
+    exposing
+        ( song2SongRecent
         )
 import SongType
     exposing
@@ -136,10 +140,11 @@ likeButtonProcessHand model songsRememberedIndex =
 
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedUpdateTimestampFromIndex
-                        model.songsRemembered
-                        model.songsRecent
-                        songsRememberedIndex
+                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                        |> Maybe.map song2SongRecent
+                        |> songsRememberedUpdateTimestampFromMaybe
+                            model.songsRemembered
+                            model.songsRecent
             in
             case songLikingMaybeNew of
                 Nothing ->
