@@ -49,6 +49,7 @@ import SongPort
 import SongType
     exposing
         ( SongCommentingMaybe
+        , SongRecentMaybe
         , SongTimeless
         , SongsRemembered
         , SongsRememberedIndexList
@@ -98,7 +99,7 @@ import Utilities
         ( matchingIndexes
         , msg2Cmd
         , selectOneFromIndexMaybe
-        , withoutOneFromIndex
+        , withoutOneFromMaybe
         )
 
 
@@ -234,13 +235,16 @@ update msg model =
                                 songsRememberedIndexMaybe : SongsRememberedIndexMaybe
                                 songsRememberedIndexMaybe =
                                     let
+                                        songRecentSelectOneMaybe : SongRecentMaybe
+                                        songRecentSelectOneMaybe =
+                                            selectOneFromIndexMaybe model.songsRecent songsRecentIndex
+
                                         songsRememberedIndexes : SongTimeless -> SongsRememberedIndexList
                                         songsRememberedIndexes =
                                             songs2SongsTimeless songsRememberedAppended
                                                 |> matchingIndexes
                                     in
-                                    selectOneFromIndexMaybe model.songsRecent songsRecentIndex
-                                        |> Maybe.map song2SongTimeless
+                                    Maybe.map song2SongTimeless songRecentSelectOneMaybe
                                         |> Maybe.map songsRememberedIndexes
                                         |> Maybe.andThen List.head
                             in

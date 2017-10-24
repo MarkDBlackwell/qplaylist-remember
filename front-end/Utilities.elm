@@ -29,7 +29,7 @@ module Utilities
         , selectOneFromIndexMaybe
         , startingWithFromIndex
         , withIndexes
-        , withoutOneFromIndex
+        , withoutOneFromMaybe
         )
 
 import AlertType
