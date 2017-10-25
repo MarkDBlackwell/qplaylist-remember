@@ -58,7 +58,8 @@ import UpdateFocus
         )
 import UpdateHelper
     exposing
-        ( likeOrCommentRequestUriText
+        ( elmCycleDefault
+        , likeOrCommentRequestUriText
         , relative
         , stateVector
         )
@@ -138,9 +139,7 @@ likeButtonProcessHand model songsRememberedIndex =
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
-                    ( model
-                    , focusInputPossibly model
-                    )
+                    elmCycleDefault model
 
                 _ ->
                     let

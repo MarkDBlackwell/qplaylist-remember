@@ -59,7 +59,8 @@ import UpdateFocus
         )
 import UpdateHelper
     exposing
-        ( stateVector
+        ( elmCycleDefault
+        , stateVector
         )
 import Utilities
     exposing
@@ -123,9 +124,7 @@ keystrokeHand model keyCode =
     let
         doNothing : ElmCycle
         doNothing =
-            ( model
-            , focusInputPossibly model
-            )
+            elmCycleDefault model
     in
     --(awaitingServer, commentArea)
     case stateVector model of

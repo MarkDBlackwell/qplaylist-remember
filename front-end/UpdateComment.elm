@@ -62,7 +62,8 @@ import UpdateFocus
         )
 import UpdateHelper
     exposing
-        ( stateVector
+        ( elmCycleDefault
+        , stateVector
         )
 import Utilities
     exposing
@@ -119,9 +120,7 @@ commentAreaOpenHand model songsRememberedIndex =
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
-                    ( model
-                    , focusInputPossibly model
-                    )
+                    elmCycleDefault model
 
                 _ ->
                     ( { model

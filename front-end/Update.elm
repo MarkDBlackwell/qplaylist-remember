@@ -64,7 +64,8 @@ import UpdateFocus
         )
 import UpdateHelper
     exposing
-        ( stateVector
+        ( elmCycleDefault
+        , stateVector
         )
 import UpdateKeyboard
     exposing
@@ -142,9 +143,7 @@ update msg model =
             likeOrCommentResponseOk model httpResponseText Like
 
         None ->
-            ( model
-            , focusInputPossibly model
-            )
+            elmCycleDefault model
 
         PageMorphHand ->
             --(awaitingServer, commentArea)

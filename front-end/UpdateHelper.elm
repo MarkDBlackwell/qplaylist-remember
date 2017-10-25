@@ -15,11 +15,16 @@
 module UpdateHelper
     exposing
         ( actionLikeOrComment2String
+        , elmCycleDefault
         , likeOrCommentRequestUriText
         , relative
         , stateVector
         )
 
+import ElmCycle
+    exposing
+        ( ElmCycle
+        )
 import ModelType
     exposing
         ( Model
@@ -38,6 +43,10 @@ import SongType
         ( SongRecentMaybe
         , SongRemembered
         , SongRememberedMaybe
+        )
+import UpdateFocus
+    exposing
+        ( focusInputPossibly
         )
 import UpdateRequestType
     exposing
@@ -73,6 +82,13 @@ actionLikeOrComment2String actionLikeOrComment =
 
         Like ->
             "Like"
+
+
+elmCycleDefault : Model -> ElmCycle
+elmCycleDefault model =
+    ( model
+    , focusInputPossibly model
+    )
 
 
 likeOrCommentRequestUriText : SongRememberedMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
