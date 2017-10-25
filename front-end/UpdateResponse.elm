@@ -141,17 +141,20 @@ commentResponseOk model httpResponseText =
                 ]
             )
 
-        Ok responseString ->
-            if "ok" /= responseString then
+        Ok responseText ->
+            if "ok" /= responseText then
                 ( { model
                     | alertMessageText =
-                        alertMessageTextSend actionDescription responseString
+                        alertMessageTextSend actionDescription responseText
                             |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
+                    , songCommentingMaybe = songCommentingMaybeInit
                   }
                 , Cmd.batch
-                    [ Just responseString
+                    [ Just responseText
                         |> logResponse
+                    , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
+                        |> focusSetId
                     , focusInputPossibly model
                     ]
                 )
@@ -166,9 +169,9 @@ commentResponseOk model httpResponseText =
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , commentText = commentTextInit
-                    , songCommentingMaybe = songCommentingMaybeInit
                     , songsRemembered = songsRememberedNew
+                    , songCommentingMaybe = songCommentingMaybeInit
+                    , commentText = commentTextInit
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
@@ -222,18 +225,20 @@ likeResponseOk model httpResponseText =
                 ]
             )
 
-        Ok responseString ->
-            if "ok" /= responseString then
+        Ok responseText ->
+            if "ok" /= responseText then
                 ( { model
                     | alertMessageText =
-                        alertMessageTextSend actionDescription responseString
+                        alertMessageTextSend actionDescription responseText
                             |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songLikingMaybe = songLikingMaybeInit
                   }
                 , Cmd.batch
-                    [ Just responseString
+                    [ Just responseText
                         |> logResponse
+                    , buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
+                        |> focusSetId
                     , focusInputPossibly model
                     ]
                 )
@@ -248,12 +253,14 @@ likeResponseOk model httpResponseText =
                 ( { model
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , songLikingMaybe = songLikingMaybeInit
                     , songsRemembered = songsRememberedNew
+                    , songLikingMaybe = songLikingMaybeInit
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
                     , logResponse Nothing
+                    , buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
+                        |> focusSetId
                     , focusInputPossibly model
                     ]
                 )
