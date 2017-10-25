@@ -143,19 +143,3 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMa
         (\x -> List.map (updateSometimes x) songsRemembered)
         songRecentMaybe
         |> Maybe.withDefault songsRemembered
-
-
-swapUnlessListHeadEmptyFromIndexMaybe : SongsRecent -> SongsRemembered -> SongsRememberedIndex -> SongRemembered -> SongsRememberedMaybe
-swapUnlessListHeadEmptyFromIndexMaybe songsRecent songsRemembered songsRememberedIndex songRemembered =
-    let
-        swapMaybe : SongRecent -> SongsRememberedMaybe
-        swapMaybe =
-            songsRememberedSwapOneRecentFromIndexMaybe
-                songsRemembered
-                songsRecent
-                songRemembered
-                songsRememberedIndex
-    in
-    songsTimelessMatches songsRecent songRemembered
-        |> List.head
-        |> maybeDefaultNothing swapMaybe
