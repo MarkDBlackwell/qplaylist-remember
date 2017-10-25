@@ -199,29 +199,26 @@ songsRememberedNewFunction model songsRememberedIndex =
                 model.songsRemembered
                 model.songsRecent
                 songRememberedMaybe
-    in
-    case songsRecentMatchFirstMaybe of
-        Nothing ->
-            selectOneMaybe
-                --|> songsRememberedLikeOrCommentNewFromMaybe
-                --    model.songsRemembered
-                --    model.songsRecent
-                |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
-        Just songRecent ->
-            let
-                update : SongRemembered -> SongRemembered
-                update songRemembered =
-                    { songRemembered
-                        | time = songRecent.time
-                        , timestamp = songRecent.timestamp
-                    }
-            in
-            Maybe.map update selectOneMaybe
-                --|> songsRememberedLikeOrCommentNewFromMaybe
-                --    model.songsRemembered
-                --    model.songsRecent
-                |> songsRememberedLikeOrCommentNewFromMaybeFunction
+        caseOf : SongRecentMaybe -> SongRememberedMaybe
+        caseOf songRecentMaybe =
+            case songsRecentMatchFirstMaybe of
+                Nothing ->
+                    selectOneMaybe
+
+                Just songRecent ->
+                    let
+                        update : SongRemembered -> SongRemembered
+                        update songRemembered =
+                            { songRemembered
+                                | time = songRecent.time
+                                , timestamp = songRecent.timestamp
+                            }
+                    in
+                    Maybe.map update selectOneMaybe
+    in
+    caseOf songsRecentMatchFirstMaybe
+        |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
 
 songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
