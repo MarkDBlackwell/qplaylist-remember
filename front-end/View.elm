@@ -303,7 +303,8 @@ view model =
         , section
             (songGroupAttributes Remembered)
             ([ p attributesEmpty
-                [ buttonRemembered ]
+                --Per client request, the 'refresh' button is at the top.
+                [ buttonRecent ]
              ]
                 ++ songGroupView Remembered model.songsRemembered
             )
@@ -311,7 +312,7 @@ view model =
         , section
             (songGroupAttributes Recent)
             ([ p attributesEmpty
-                [ buttonRecent ]
+                [ buttonRemembered ]
              ]
                 ++ (songs2SongsRemembered model.songsRecent
                         |> songGroupView Recent

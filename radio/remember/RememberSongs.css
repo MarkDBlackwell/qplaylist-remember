@@ -244,8 +244,8 @@ section.songs-group > p > button {
     letter-spacing: .227273em;
 }
 section#songs-latest > p > button:before {
-    content: "refresh";
+    content: "morph";
 }
 section#songs-remembered > p > button:before {
-    content: "morph";
+    content: "refresh";
 }
