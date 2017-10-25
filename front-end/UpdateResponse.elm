@@ -112,10 +112,6 @@ import Utilities
 likeOrCommentResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
 likeOrCommentResponseErr model httpError actionLikeOrComment =
     let
-        actionLikeOrCommentText : String
-        actionLikeOrCommentText =
-            actionLikeOrComment2String actionLikeOrComment
-
         modelNewSongLikingOrCommenting : Model
         modelNewSongLikingOrCommenting =
             case actionLikeOrComment of
@@ -129,7 +125,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
     in
     ( { modelNewSongLikingOrCommenting
         | alertMessageText =
-            alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
+            actionLikeOrComment2String actionLikeOrComment
+                |> alertMessageTextRequestLikeOrComment httpError
                 |> Just
         , awaitingServerResponse = awaitingServerResponseInit
       }
@@ -147,13 +144,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
         actionDescription =
-            String.append
-                "send your "
-                actionLikeOrCommentText
-
-        actionLikeOrCommentText : String
-        actionLikeOrCommentText =
             actionLikeOrComment2String actionLikeOrComment
+                |> String.append "send your "
 
         buttonCommand : Cmd Msg
         buttonCommand =
@@ -166,10 +158,10 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
 
         buttonCommandAccomplished : Cmd Msg
         buttonCommandAccomplished =
-            buttonIdReconstruct
-                model.songsRemembered
-                songLikingOrCommentingMaybe
-                actionLikeOrCommentText
+            actionLikeOrComment2String actionLikeOrComment
+                |> buttonIdReconstruct
+                    model.songsRemembered
+                    songLikingOrCommentingMaybe
                 |> focusSetId
 
         modelNewCommentText : Model
