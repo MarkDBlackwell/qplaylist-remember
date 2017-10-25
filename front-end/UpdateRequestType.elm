@@ -46,10 +46,6 @@ type Action
     | ActionResponse
 
 
-type alias HttpRequestOrResponseText =
-    String
-
-
 type alias HttpResponseText =
     String
 
