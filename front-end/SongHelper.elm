@@ -177,17 +177,10 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 
 songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
 songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
-    let
-        update : SongRemembered -> SongRecent -> SongRemembered
-        update songRemembered songRecent =
-            songRememberedUpdate songRemembered songRecent
-    in
     songsTimelessMatches model.songsRecent
         |> flip Maybe.map songRememberedMaybe
         |> Maybe.andThen List.head
-        |> Maybe.map2
-            update
-            songRememberedMaybe
+        |> Maybe.map2 songRememberedUpdate songRememberedMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
             model.songsRecent
