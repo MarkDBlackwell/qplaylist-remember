@@ -178,11 +178,6 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 songsRememberedNewFunction : Model -> SongsRememberedIndex -> SongsRemembered
 songsRememberedNewFunction model songsRememberedIndex =
     let
-        recentMatchMaybe : SongRemembered -> SongRecentMaybe
-        recentMatchMaybe songRemembered =
-            recentMatches songRemembered
-                |> List.head
-
         recentMatches : SongRemembered -> SongsRecent
         recentMatches songRemembered =
             songsTimelessMatches model.songsRecent songRemembered
@@ -198,7 +193,8 @@ songsRememberedNewFunction model songsRememberedIndex =
                 , timestamp = songRecent.timestamp
             }
     in
-    Maybe.andThen recentMatchMaybe selectOneMaybe
+    Maybe.map recentMatches selectOneMaybe
+        |> Maybe.andThen List.head
         |> Maybe.map2 update selectOneMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
