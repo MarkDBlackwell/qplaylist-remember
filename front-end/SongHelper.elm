@@ -178,8 +178,8 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 songsRememberedNewFunction : Model -> SongsRememberedIndex -> SongsRemembered
 songsRememberedNewFunction model songsRememberedIndex =
     let
-        selectOneMaybe : SongRememberedMaybe
-        selectOneMaybe =
+        songsRememberedSelectOneMaybeMy : SongRememberedMaybe
+        songsRememberedSelectOneMaybeMy =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
 
         songsRecentMatchFirstMaybe : SongRecentMaybe
@@ -191,7 +191,7 @@ songsRememberedNewFunction model songsRememberedIndex =
                         |> flip List.filter model.songsRecent
                         |> List.head
             in
-            Maybe.andThen matchFirstMaybe selectOneMaybe
+            Maybe.andThen matchFirstMaybe songsRememberedSelectOneMaybeMy
 
         songsRememberedLikeOrCommentNewFromMaybeFunction : SongRememberedMaybe -> SongsRemembered
         songsRememberedLikeOrCommentNewFromMaybeFunction songRememberedMaybe =
@@ -200,24 +200,24 @@ songsRememberedNewFunction model songsRememberedIndex =
                 model.songsRecent
                 songRememberedMaybe
 
-        caseOf : SongRecentMaybe -> SongRememberedMaybe
-        caseOf songRecentMaybe =
+        functionTwo : SongRecentMaybe -> SongRememberedMaybe
+        functionTwo songRecentMaybe =
             let
-                func : SongRecent -> SongRememberedMaybe
-                func songRecent =
+                functionOne : SongRecent -> SongRememberedMaybe
+                functionOne songRecent =
                     let
-                        update : SongRemembered -> SongRemembered
-                        update songRemembered =
+                        songRememberedUpdate : SongRemembered -> SongRemembered
+                        songRememberedUpdate songRemembered =
                             { songRemembered
                                 | time = songRecent.time
                                 , timestamp = songRecent.timestamp
                             }
                     in
-                    Maybe.map update selectOneMaybe
+                    Maybe.map songRememberedUpdate songsRememberedSelectOneMaybeMy
             in
-            Maybe.andThen func songsRecentMatchFirstMaybe
+            Maybe.andThen functionOne songRecentMaybe
     in
-    caseOf songsRecentMatchFirstMaybe
+    functionTwo songsRecentMatchFirstMaybe
         |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
 
