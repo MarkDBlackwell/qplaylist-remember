@@ -14,7 +14,8 @@
 
 module Alert
     exposing
-        ( alertMessageTextErrorHttpLogging
+        ( actionDescriptionRecent
+        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
@@ -69,6 +70,11 @@ alertMessageTextInit =
 
 
 -- UPDATE
+
+
+actionDescriptionRecent : AlertMessageText
+actionDescriptionRecent =
+    "access the latest few songs"
 
 
 alertMessageTextErrorHttpLogging : Error -> AlertMessageText

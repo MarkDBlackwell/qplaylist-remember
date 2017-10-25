@@ -22,7 +22,8 @@ module UpdateResponse
 
 import Alert
     exposing
-        ( alertMessageTextErrorHttpLogging
+        ( actionDescriptionRecent
+        , alertMessageTextErrorHttpLogging
         , alertMessageTextErrorHttpScreen
         , alertMessageTextInit
         , alertMessageTextRequestLikeOrComment
@@ -260,15 +261,10 @@ songsRecentResponseErr model httpError =
     let
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
-            let
-                actionDescription : String
-                actionDescription =
-                    "access the latest few songs"
-            in
             String.concat
                 [ alertMessageTextErrorHttpScreen httpError
                 , " (while attempting to "
-                , actionDescription
+                , actionDescriptionRecent
                 , ")"
                 ]
     in
@@ -289,14 +285,9 @@ songsRecentResponseOk : Model -> HttpResponseText -> ElmCycle
 songsRecentResponseOk model httpResponseText =
     case decodeSongsRecentResponse httpResponseText of
         Err alertMessageTextDecode ->
-            let
-                actionDescription : AlertMessageText
-                actionDescription =
-                    "access the latest few songs"
-            in
             ( { model
                 | alertMessageText =
-                    alertMessageTextSend actionDescription alertMessageTextDecode
+                    alertMessageTextSend actionDescriptionRecent alertMessageTextDecode
                         |> Just
                 , awaitingServerResponse = awaitingServerResponseInit
               }
