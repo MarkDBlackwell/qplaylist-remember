@@ -200,24 +200,19 @@ songsRememberedNewFunction model songsRememberedIndex =
         songsRememberedSelectOneMaybeMy =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
 
-        functionTwo : SongRecentMaybe -> SongRememberedMaybe
-        functionTwo songRecentMaybe =
+        songRememberedUpdateFromRecent : SongRecent -> SongRememberedMaybe
+        songRememberedUpdateFromRecent songRecent =
             let
-                functionOne : SongRecent -> SongRememberedMaybe
-                functionOne songRecent =
-                    let
-                        songRememberedUpdate : SongRemembered -> SongRemembered
-                        songRememberedUpdate songRemembered =
-                            { songRemembered
-                                | time = songRecent.time
-                                , timestamp = songRecent.timestamp
-                            }
-                    in
-                    Maybe.map songRememberedUpdate songsRememberedSelectOneMaybeMy
+                songRememberedUpdate : SongRemembered -> SongRemembered
+                songRememberedUpdate songRemembered =
+                    { songRemembered
+                        | time = songRecent.time
+                        , timestamp = songRecent.timestamp
+                    }
             in
-            Maybe.andThen functionOne songRecentMaybe
+            Maybe.map songRememberedUpdate songsRememberedSelectOneMaybeMy
     in
-    functionTwo songsRecentMatchFirstMaybe
+    Maybe.andThen songRememberedUpdateFromRecent songsRecentMatchFirstMaybe
         |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
 
