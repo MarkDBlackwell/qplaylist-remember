@@ -116,8 +116,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         actionLikeOrCommentText =
             actionLikeOrComment2String actionLikeOrComment
 
-        modelNew : Model
-        modelNew =
+        modelNewSongLikingOrCommenting : Model
+        modelNewSongLikingOrCommenting =
             case actionLikeOrComment of
                 Comment ->
                     model
@@ -127,7 +127,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                         | songLikingMaybe = songLikingMaybeInit
                     }
     in
-    ( { modelNew
+    ( { modelNewSongLikingOrCommenting
         | alertMessageText =
             alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
                 |> Just
@@ -168,18 +168,20 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
         buttonCommandAccomplished =
             buttonIdReconstruct
                 model.songsRemembered
-                modelLikingOrCommenting
+                songLikingOrCommentingMaybe
                 actionLikeOrCommentText
                 |> focusSetId
 
-        modelLikingOrCommenting : SongRememberedMaybe
-        modelLikingOrCommenting =
+        modelNewCommentText : Model
+        modelNewCommentText =
             case actionLikeOrComment of
                 Comment ->
-                    model.songCommentingMaybe
+                    { modelNewSongLikingOrCommenting
+                        | commentText = commentTextInit
+                    }
 
                 Like ->
-                    model.songLikingMaybe
+                    modelNewSongLikingOrCommenting
 
         modelNewSongLikingOrCommenting : Model
         modelNewSongLikingOrCommenting =
@@ -194,16 +196,14 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         | songLikingMaybe = songLikingMaybeInit
                     }
 
-        modelNewCommentText : Model
-        modelNewCommentText =
+        songLikingOrCommentingMaybe : SongRememberedMaybe
+        songLikingOrCommentingMaybe =
             case actionLikeOrComment of
                 Comment ->
-                    { modelNewSongLikingOrCommenting
-                        | commentText = commentTextInit
-                    }
+                    model.songCommentingMaybe
 
                 Like ->
-                    modelNewSongLikingOrCommenting
+                    model.songLikingMaybe
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -241,7 +241,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
                         likedOrCommentedShow
-                            modelLikingOrCommenting
+                            songLikingOrCommentingMaybe
                             model.songsRemembered
                 in
                 ( { modelNewCommentText
