@@ -86,7 +86,7 @@ import UpdateRequestType
 import UpdateResponse
     exposing
         ( commentResponseErr
-        , commentResponseOk
+        , likeOrCommentResponseOk
         , likeResponseErr
         , likeResponseOk
         , songsRecentResponseErr
@@ -123,7 +123,7 @@ update msg model =
             commentResponseErr model httpError
 
         CommentResponse (Ok httpResponseText) ->
-            commentResponseOk model httpResponseText Comment
+            likeOrCommentResponseOk model httpResponseText Comment
 
         CommentSendHand ->
             commentSendHand model

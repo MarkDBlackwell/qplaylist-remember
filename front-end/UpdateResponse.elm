@@ -15,7 +15,7 @@
 module UpdateResponse
     exposing
         ( commentResponseErr
-        , commentResponseOk
+        , likeOrCommentResponseOk
         , likeResponseErr
         , likeResponseOk
         , songsRecentResponseErr
@@ -123,8 +123,8 @@ commentResponseErr model httpError =
     )
 
 
-commentResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle
-commentResponseOk model httpResponseText actionLikeOrComment =
+likeOrCommentResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle
+likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
         actionDescription =
@@ -135,27 +135,27 @@ commentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     "send your Like"
 
-        buttonCommand model =
+        buttonCommand =
             case actionLikeOrComment of
                 Comment ->
                     Cmd.none
 
                 Like ->
-                    buttonCommandLike model
+                    buttonCommandLike
 
-        buttonCommandAccomplished model =
+        buttonCommandAccomplished =
             case actionLikeOrComment of
                 Comment ->
-                    buttonCommandComment model
+                    buttonCommandComment
 
                 Like ->
-                    buttonCommandLike model
+                    buttonCommandLike
 
-        buttonCommandComment model =
+        buttonCommandComment =
             buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
                 |> focusSetId
 
-        buttonCommandLike model =
+        buttonCommandLike =
             buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
                 |> focusSetId
     in
@@ -170,7 +170,7 @@ commentResponseOk model httpResponseText actionLikeOrComment =
             , Cmd.batch
                 [ Just alertMessageTextDecode
                     |> logDecoding
-                , buttonCommand model
+                , buttonCommand
                 , focusInputPossibly model
                 ]
             )
@@ -187,7 +187,7 @@ commentResponseOk model httpResponseText actionLikeOrComment =
                 , Cmd.batch
                     [ Just responseText
                         |> logResponse
-                    , buttonCommandAccomplished model
+                    , buttonCommandAccomplished
                     , focusInputPossibly model
                     ]
                 )
@@ -209,7 +209,7 @@ commentResponseOk model httpResponseText actionLikeOrComment =
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
                     , logResponse Nothing
-                    , buttonCommand model
+                    , buttonCommand
                     , focusInputPossibly model
                     ]
                 )
@@ -240,13 +240,13 @@ likeResponseOk model httpResponseText =
         actionDescription =
             "send your Like"
 
-        buttonCommand model =
-            buttonCommandLike model
+        buttonCommand =
+            buttonCommandLike
 
-        buttonCommandAccomplished model =
-            buttonCommand model
+        buttonCommandAccomplished =
+            buttonCommand
 
-        buttonCommandLike model =
+        buttonCommandLike =
             buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
                 |> focusSetId
     in
@@ -261,7 +261,7 @@ likeResponseOk model httpResponseText =
             , Cmd.batch
                 [ Just alertMessageTextDecode
                     |> logDecoding
-                , buttonCommand model
+                , buttonCommand
                 , focusInputPossibly model
                 ]
             )
@@ -278,7 +278,7 @@ likeResponseOk model httpResponseText =
                 , Cmd.batch
                     [ Just responseText
                         |> logResponse
-                    , buttonCommandAccomplished model
+                    , buttonCommandAccomplished
                     , focusInputPossibly model
                     ]
                 )
@@ -299,7 +299,7 @@ likeResponseOk model httpResponseText =
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
                     , logResponse Nothing
-                    , buttonCommand model
+                    , buttonCommand
                     , focusInputPossibly model
                     ]
                 )
