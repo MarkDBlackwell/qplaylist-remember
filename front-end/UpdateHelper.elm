@@ -14,7 +14,8 @@
 
 module UpdateHelper
     exposing
-        ( likeOrCommentRequestUriText
+        ( actionLikeOrComment2String
+        , likeOrCommentRequestUriText
         , relative
         , stateVector
         )
@@ -39,7 +40,11 @@ import SongType
         )
 import UpdateRequestType
     exposing
-        ( AwaitingServerResponse
+        ( ActionLikeOrComment
+            ( Comment
+            , Like
+            )
+        , AwaitingServerResponse
         , LikeOrCommentText
         , QueryPair
         , QueryPairs
@@ -57,6 +62,16 @@ import Utilities
 
 
 -- UPDATE
+
+
+actionLikeOrComment2String : ActionLikeOrComment -> String
+actionLikeOrComment2String actionLikeOrComment =
+    case actionLikeOrComment of
+        Comment ->
+            "Comment"
+
+        Like ->
+            "Like"
 
 
 likeOrCommentRequestUriText : SongRememberedMaybe -> UserIdentifier -> LikeOrCommentText -> UriText

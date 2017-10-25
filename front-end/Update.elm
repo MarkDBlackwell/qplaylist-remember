@@ -88,7 +88,6 @@ import UpdateResponse
         ( commentResponseErr
         , likeOrCommentResponseOk
         , likeResponseErr
-        , likeResponseOk
         , songsRecentResponseErr
         , songsRecentResponseOk
         )

@@ -17,7 +17,6 @@ module UpdateResponse
         ( commentResponseErr
         , likeOrCommentResponseOk
         , likeResponseErr
-        , likeResponseOk
         , songsRecentResponseErr
         , songsRecentResponseOk
         )
@@ -84,6 +83,10 @@ import UpdateFocus
         ( focusInputPossibly
         , focusSetId
         )
+import UpdateHelper
+    exposing
+        ( actionLikeOrComment2String
+        )
 import UpdateLog
     exposing
         ( logDecoding
@@ -132,13 +135,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 "send your "
                 actionLikeOrCommentText
 
+        actionLikeOrCommentText : String
         actionLikeOrCommentText =
-            case actionLikeOrComment of
-                Comment ->
-                    "Comment"
-
-                Like ->
-                    "Like"
+            actionLikeOrComment2String actionLikeOrComment
 
         buttonCommand =
             case actionLikeOrComment of
@@ -254,92 +253,6 @@ likeResponseErr model httpError =
         , focusInputPossibly model
         ]
     )
-
-
-likeResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle
-likeResponseOk model httpResponseText actionLikeOrComment =
-    let
-        actionDescription : AlertMessageText
-        actionDescription =
-            String.append
-                "send your "
-                actionLikeOrCommentText
-
-        actionLikeOrCommentText =
-            "Like"
-
-        buttonCommand =
-            buttonCommandAccomplished
-
-        buttonCommandAccomplished =
-            buttonIdReconstruct
-                model.songsRemembered
-                modelLikingOrCommenting
-                actionLikeOrCommentText
-                |> focusSetId
-
-        modelLikingOrCommenting =
-            model.songLikingMaybe
-
-        modelNewOne =
-            { model
-                | songLikingMaybe = songLikingMaybeInit
-            }
-
-        modelNewTwo =
-            modelNewOne
-    in
-    case decodeLikeOrCommentResponse httpResponseText of
-        Err alertMessageTextDecode ->
-            ( { model
-                | alertMessageText =
-                    alertMessageTextSend actionDescription alertMessageTextDecode
-                        |> Just
-                , awaitingServerResponse = awaitingServerResponseInit
-              }
-            , Cmd.batch
-                [ Just alertMessageTextDecode
-                    |> logDecoding
-                , buttonCommand
-                , focusInputPossibly model
-                ]
-            )
-
-        Ok responseText ->
-            if "ok" /= responseText then
-                ( { modelNewOne
-                    | alertMessageText =
-                        alertMessageTextSend actionDescription responseText
-                            |> Just
-                    , awaitingServerResponse = awaitingServerResponseInit
-                  }
-                , Cmd.batch
-                    [ Just responseText
-                        |> logResponse
-                    , buttonCommandAccomplished
-                    , focusInputPossibly model
-                    ]
-                )
-            else
-                let
-                    songsRememberedNew : SongsRemembered
-                    songsRememberedNew =
-                        likedOrCommentedShow
-                            modelLikingOrCommenting
-                            model.songsRemembered
-                in
-                ( { modelNewTwo
-                    | alertMessageText = alertMessageTextInit
-                    , awaitingServerResponse = awaitingServerResponseInit
-                    , songsRemembered = songsRememberedNew
-                  }
-                , Cmd.batch
-                    [ msg2Cmd SongsRememberedStore
-                    , logResponse Nothing
-                    , buttonCommand
-                    , focusInputPossibly model
-                    ]
-                )
 
 
 songsRecentResponseErr : Model -> Error -> ElmCycle
