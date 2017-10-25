@@ -200,7 +200,8 @@ songsRememberedNewFunction model songsRememberedIndex =
         songsRememberedSelectOneMaybeMy =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
     in
-    Maybe.map2 songRememberedUpdateMy songsRecentMatchFirstMaybe songsRememberedSelectOneMaybeMy
+    songsRememberedSelectOneMaybeMy
+        |> Maybe.map2 songRememberedUpdateMy songsRecentMatchFirstMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
             model.songsRecent
