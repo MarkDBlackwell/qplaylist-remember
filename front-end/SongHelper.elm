@@ -24,7 +24,6 @@ module SongHelper
         , songs2SongsRemembered
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedLikeOrCommentNewFromMaybe
-        , songsRememberedNewFromIndexWithUpdate
         , songsRememberedNewFromMaybeWithUpdate
         , songsRememberedUpdateTimestampFromMaybe
         , songsTimelessMatches
@@ -176,44 +175,19 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
             songsRecent
 
 
-songsRememberedNewFromIndexWithUpdate : Model -> SongsRememberedIndex -> SongsRemembered
-songsRememberedNewFromIndexWithUpdate model songsRememberedIndex =
-    let
-        selectOneMaybe : SongRememberedMaybe
-        selectOneMaybe =
-            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
-
-        update : SongRemembered -> SongRecent -> SongRemembered
-        update songRemembered songRecent =
-            { songRemembered
-                | time = songRecent.time
-                , timestamp = songRecent.timestamp
-            }
-    in
-    songsTimelessMatches model.songsRecent
-        |> flip Maybe.map selectOneMaybe
-        |> Maybe.andThen List.head
-        |> Maybe.map2 update selectOneMaybe
-        |> songsRememberedLikeOrCommentNewFromMaybe
-            model.songsRemembered
-            model.songsRecent
-
-
 songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
 songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
     let
         update : SongRemembered -> SongRecent -> SongRemembered
         update songRemembered songRecent =
-            --{ songRemembered
-            --    | time = songRecent.time
-            --    , timestamp = songRecent.timestamp
-            --}
             songRememberedUpdate songRemembered songRecent
     in
     songsTimelessMatches model.songsRecent
         |> flip Maybe.map songRememberedMaybe
         |> Maybe.andThen List.head
-        |> Maybe.map2 update songRememberedMaybe
+        |> Maybe.map2
+            update
+            songRememberedMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
             model.songsRecent
