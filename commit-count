@@ -1,0 +1,4 @@
+#/bin/sh
+# Copyright (C) 2017 Mark D. Blackwell.
+
+git log --pretty=oneline | wc -l
