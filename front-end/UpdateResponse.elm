@@ -222,7 +222,12 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
             )
 
         Ok responseText ->
-            if "good" /= responseText then
+            let
+                serverSaysRequestWasBad : Bool
+                serverSaysRequestWasBad =
+                    "good" /= responseText
+            in
+            if serverSaysRequestWasBad then
                 ( { modelNewSongLikingOrCommenting
                     | alertMessageText =
                         alertMessageTextSend actionDescription responseText
