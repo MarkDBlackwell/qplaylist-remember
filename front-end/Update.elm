@@ -141,7 +141,7 @@ update msg model =
             likeResponseErr model httpError
 
         LikeResponse (Ok httpResponseText) ->
-            likeResponseOk model httpResponseText
+            likeResponseOk model httpResponseText Like
 
         None ->
             ( model

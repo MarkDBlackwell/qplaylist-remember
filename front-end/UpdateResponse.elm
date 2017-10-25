@@ -128,12 +128,17 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
         actionDescription =
+            String.append
+                "send your "
+                actionLikeOrCommentText
+
+        actionLikeOrCommentText =
             case actionLikeOrComment of
                 Comment ->
-                    "send your Comment"
+                    "Comment"
 
                 Like ->
-                    "send your Like"
+                    "Like"
 
         buttonCommand =
             case actionLikeOrComment of
@@ -141,23 +146,44 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     Cmd.none
 
                 Like ->
-                    buttonCommandLike
+                    buttonCommandAccomplished
 
         buttonCommandAccomplished =
+            buttonIdReconstruct
+                model.songsRemembered
+                modelLikingOrCommenting
+                actionLikeOrCommentText
+                |> focusSetId
+
+        modelLikingOrCommenting =
             case actionLikeOrComment of
                 Comment ->
-                    buttonCommandComment
+                    model.songCommentingMaybe
 
                 Like ->
-                    buttonCommandLike
+                    model.songLikingMaybe
 
-        buttonCommandComment =
-            buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
-                |> focusSetId
+        modelNewOne =
+            case actionLikeOrComment of
+                Comment ->
+                    { model
+                        | songCommentingMaybe = songCommentingMaybeInit
+                    }
 
-        buttonCommandLike =
-            buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
-                |> focusSetId
+                Like ->
+                    { model
+                        | songLikingMaybe = songLikingMaybeInit
+                    }
+
+        modelNewTwo =
+            case actionLikeOrComment of
+                Comment ->
+                    { modelNewOne
+                        | commentText = commentTextInit
+                    }
+
+                Like ->
+                    modelNewOne
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -177,12 +203,11 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
 
         Ok responseText ->
             if "ok" /= responseText then
-                ( { model
+                ( { modelNewOne
                     | alertMessageText =
                         alertMessageTextSend actionDescription responseText
                             |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , songCommentingMaybe = songCommentingMaybeInit
                   }
                 , Cmd.batch
                     [ Just responseText
@@ -196,15 +221,13 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
                         likedOrCommentedShow
-                            model.songCommentingMaybe
+                            modelLikingOrCommenting
                             model.songsRemembered
                 in
-                ( { model
+                ( { modelNewTwo
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songsRemembered = songsRememberedNew
-                    , songCommentingMaybe = songCommentingMaybeInit
-                    , commentText = commentTextInit
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
@@ -233,22 +256,38 @@ likeResponseErr model httpError =
     )
 
 
-likeResponseOk : Model -> HttpResponseText -> ElmCycle
-likeResponseOk model httpResponseText =
+likeResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle
+likeResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
         actionDescription =
-            "send your Like"
+            String.append
+                "send your "
+                actionLikeOrCommentText
+
+        actionLikeOrCommentText =
+            "Like"
 
         buttonCommand =
-            buttonCommandLike
+            buttonCommandAccomplished
 
         buttonCommandAccomplished =
-            buttonCommand
-
-        buttonCommandLike =
-            buttonIdReconstruct model.songsRemembered model.songLikingMaybe "Like"
+            buttonIdReconstruct
+                model.songsRemembered
+                modelLikingOrCommenting
+                actionLikeOrCommentText
                 |> focusSetId
+
+        modelLikingOrCommenting =
+            model.songLikingMaybe
+
+        modelNewOne =
+            { model
+                | songLikingMaybe = songLikingMaybeInit
+            }
+
+        modelNewTwo =
+            modelNewOne
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -268,12 +307,11 @@ likeResponseOk model httpResponseText =
 
         Ok responseText ->
             if "ok" /= responseText then
-                ( { model
+                ( { modelNewOne
                     | alertMessageText =
                         alertMessageTextSend actionDescription responseText
                             |> Just
                     , awaitingServerResponse = awaitingServerResponseInit
-                    , songLikingMaybe = songLikingMaybeInit
                   }
                 , Cmd.batch
                     [ Just responseText
@@ -287,14 +325,13 @@ likeResponseOk model httpResponseText =
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
                         likedOrCommentedShow
-                            model.songLikingMaybe
+                            modelLikingOrCommenting
                             model.songsRemembered
                 in
-                ( { model
+                ( { modelNewTwo
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songsRemembered = songsRememberedNew
-                    , songLikingMaybe = songLikingMaybeInit
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
