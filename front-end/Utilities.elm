@@ -21,7 +21,6 @@ module Utilities
         , htmlNodeNull
         , innerHtmlEmpty
         , matchingIndexes
-        , maybeDefaultNothing
         , maybeMapWithDefault
         , msg2Cmd
         , prefixSeparator
@@ -94,11 +93,6 @@ matchingIndexes listA thing =
         |> List.filterMap matchWithIndexMaybe
 
 
-maybeDefaultNothing : (a -> Maybe b) -> Maybe a -> Maybe b
-maybeDefaultNothing function value =
-    maybeMapWithDefault Nothing function value
-
-
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
 maybeMapWithDefault default function value =
     Maybe.map function value
@@ -139,13 +133,6 @@ withIndexes listA =
 withoutOne : List a -> a -> List a
 withoutOne listA x =
     List.filter ((/=) x) listA
-
-
-withoutOneFromIndex : List a -> Int -> List a
-withoutOneFromIndex listA index =
-    (index + 1)
-        |> startingWithFromIndex listA
-        |> (++) (List.take index listA)
 
 
 withoutOneFromMaybe : List a -> Maybe a -> List a

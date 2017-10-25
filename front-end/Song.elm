@@ -46,9 +46,7 @@ import SongType
         )
 import Utilities
     exposing
-        ( maybeDefaultNothing
-        , maybeMapWithDefault
-        , selectOneFromIndexMaybe
+        ( maybeMapWithDefault
         , startingWithFromIndex
         )
 
