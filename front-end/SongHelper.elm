@@ -180,14 +180,7 @@ songsRememberedNewFunction model songsRememberedIndex =
     let
         recentMatchMaybe : SongRemembered -> SongRecentMaybe
         recentMatchMaybe songRemembered =
-            let
-                compare : SongRecent -> Bool
-                compare songRecent =
-                    (==)
-                        (song2SongTimeless songRecent)
-                        (song2SongTimeless songRemembered)
-            in
-            flip List.filter model.songsRecent compare
+            songsTimelessMatches model.songsRecent songRemembered
                 |> List.head
 
         selectOneMaybe : SongRememberedMaybe
@@ -201,7 +194,7 @@ songsRememberedNewFunction model songsRememberedIndex =
                 , timestamp = songRecent.timestamp
             }
     in
-    Maybe.andThen recentMatchMaybe selectOneMaybe
+    flip Maybe.andThen selectOneMaybe recentMatchMaybe
         |> Maybe.map2 update selectOneMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
