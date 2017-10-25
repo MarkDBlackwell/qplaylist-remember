@@ -184,8 +184,8 @@ songsRememberedNewFunction model songsRememberedIndex =
                 |> flip List.filter model.songsRecent
                 |> List.head
 
-        selectOne : SongRememberedMaybe
-        selectOne =
+        selectOneMaybe : SongRememberedMaybe
+        selectOneMaybe =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
 
         update : SongRemembered -> SongRecent -> SongRemembered
@@ -195,8 +195,8 @@ songsRememberedNewFunction model songsRememberedIndex =
                 , timestamp = songRecent.timestamp
             }
     in
-    Maybe.andThen matchFirstMaybe selectOne
-        |> Maybe.map2 update selectOne
+    Maybe.andThen matchFirstMaybe selectOneMaybe
+        |> Maybe.map2 update selectOneMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
             model.songsRecent
