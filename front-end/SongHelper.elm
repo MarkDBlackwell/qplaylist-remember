@@ -127,11 +127,6 @@ songTimelessCompare x y =
         ( y.artist, y.title )
 
 
-songs2SongsRecent : List (SongRecentBase a) -> SongsRecent
-songs2SongsRecent songRecentBaseList =
-    List.map song2SongRecent songRecentBaseList
-
-
 songs2SongsRemembered : List (SongRecentBase a) -> SongsRemembered
 songs2SongsRemembered songRecentBaseList =
     List.map song2SongRemembered songRecentBaseList
