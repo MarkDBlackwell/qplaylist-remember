@@ -44,6 +44,7 @@ import SongHelper
         ( buttonIdReconstruct
         , song2SongTimeless
         , songsRememberedNewFromIndex
+        , songsRememberedNewFromMaybe
         )
 import SongInitialize
     exposing

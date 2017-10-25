@@ -25,6 +25,7 @@ module SongHelper
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedLikeOrCommentNewFromMaybe
         , songsRememberedNewFromIndex
+        , songsRememberedNewFromMaybe
         , songsRememberedUpdateTimestampFromMaybe
         , songsTimelessMatches
         )
@@ -181,6 +182,30 @@ songsRememberedNewFromIndex model songsRememberedIndex =
         selectOneMaybe : SongRememberedMaybe
         selectOneMaybe =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+
+        update : SongRemembered -> SongRecent -> SongRemembered
+        update songRemembered songRecent =
+            { songRemembered
+                | time = songRecent.time
+                , timestamp = songRecent.timestamp
+            }
+    in
+    songsTimelessMatches model.songsRecent
+        |> flip Maybe.map selectOneMaybe
+        |> Maybe.andThen List.head
+        |> Maybe.map2 update selectOneMaybe
+        |> songsRememberedLikeOrCommentNewFromMaybe
+            model.songsRemembered
+            model.songsRecent
+
+
+songsRememberedNewFromMaybe : Model -> SongRememberedMaybe -> SongsRemembered
+songsRememberedNewFromMaybe model songRememberedMaybe =
+    let
+        selectOneMaybe : SongRememberedMaybe
+        selectOneMaybe =
+            --selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+            songRememberedMaybe
 
         update : SongRemembered -> SongRecent -> SongRemembered
         update songRemembered songRecent =

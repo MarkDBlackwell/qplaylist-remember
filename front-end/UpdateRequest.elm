@@ -45,6 +45,7 @@ import ModelType
 import SongHelper
     exposing
         ( songsRememberedNewFromIndex
+        , songsRememberedNewFromMaybe
         )
 import SongType
     exposing
