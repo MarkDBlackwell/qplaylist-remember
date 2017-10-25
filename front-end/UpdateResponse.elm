@@ -112,9 +112,25 @@ import Utilities
 
 likeOrCommentResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
 likeOrCommentResponseErr model httpError actionLikeOrComment =
-    ( { model
+    let
+        actionLikeOrCommentText : String
+        actionLikeOrCommentText =
+            actionLikeOrComment2String actionLikeOrComment
+
+        modelNewOne : Model
+        modelNewOne =
+            case actionLikeOrComment of
+                Comment ->
+                    model
+
+                Like ->
+                    { model
+                        | songLikingMaybe = songLikingMaybeInit
+                    }
+    in
+    ( { modelNewOne
         | alertMessageText =
-            alertMessageTextRequestLikeOrComment httpError "comment"
+            alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
                 |> Just
         , awaitingServerResponse = awaitingServerResponseInit
       }
@@ -129,12 +145,22 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
 
 likeResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
 likeResponseErr model httpError actionLikeOrComment =
-    ( { model
+    let
+        actionLikeOrCommentText : String
+        actionLikeOrCommentText =
+            actionLikeOrComment2String actionLikeOrComment
+
+        modelNewOne : Model
+        modelNewOne =
+            { model
+                | songLikingMaybe = songLikingMaybeInit
+            }
+    in
+    ( { modelNewOne
         | alertMessageText =
-            alertMessageTextRequestLikeOrComment httpError "Like"
+            alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
                 |> Just
         , awaitingServerResponse = awaitingServerResponseInit
-        , songLikingMaybe = songLikingMaybeInit
       }
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
