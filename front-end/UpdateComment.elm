@@ -41,7 +41,7 @@ import ModelType
         )
 import Song
     exposing
-        ( songsRememberedLikeOrCommentNewFromIndex
+        ( songsRememberedLikeOrCommentNewFromMaybe
         )
 import SongHelper
     exposing
@@ -53,7 +53,8 @@ import SongInitialize
         )
 import SongType
     exposing
-        ( SongsRemembered
+        ( SongRememberedMaybe
+        , SongsRemembered
         , SongsRememberedIndex
         )
 import UpdateFocus
@@ -112,12 +113,16 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedLikeOrCommentNewFromIndex
-                        model.songsRemembered
-                        model.songsRecent
-                        songsRememberedIndex
+                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                        |> songsRememberedLikeOrCommentNewFromMaybe
+                            model.songsRemembered
+                            model.songsRecent
+
+                songsRememberedSelectOneMaybe : SongRememberedMaybe
+                songsRememberedSelectOneMaybe =
+                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
             in
-            case selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex of
+            case songsRememberedSelectOneMaybe of
                 Nothing ->
                     ( model
                     , focusInputPossibly model
@@ -127,10 +132,7 @@ commentAreaOpenHand model songsRememberedIndex =
                     ( { model
                         | alertMessageText = alertMessageTextInit
                         , commentText = commentTextInit
-                        , songCommentingMaybe =
-                            selectOneFromIndexMaybe
-                                songsRememberedNew
-                                songsRememberedIndex
+                        , songCommentingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
                       --'focusInputPossibly' doesn't work, here:

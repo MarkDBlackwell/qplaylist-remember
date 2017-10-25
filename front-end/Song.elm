@@ -16,7 +16,6 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromMaybe
-        , songsRememberedLikeOrCommentNewFromIndex
         , songsRememberedLikeOrCommentNewFromMaybe
         , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
@@ -93,32 +92,12 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
             |> (++) songsRemembered
 
 
-songsRememberedAppendOneUniqueFromIndex : SongsRemembered -> SongsRecent -> SongsRecentIndex -> SongsRemembered
-songsRememberedAppendOneUniqueFromIndex songsRemembered songsRecent songsRecentIndex =
-    let
-        append : SongRecent -> SongsRemembered
-        append =
-            songsRememberedAppendOneUnique songsRemembered songsRecent
-    in
-    selectOneFromIndexMaybe songsRecent songsRecentIndex
-        |> maybeMapWithDefault songsRemembered append
-
-
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
 songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
     maybeMapWithDefault
         songsRemembered
         (songsRememberedAppendOneUnique songsRemembered songsRecent)
         songRecentMaybe
-
-
-songsRememberedLikeOrCommentNewFromIndex : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
-songsRememberedLikeOrCommentNewFromIndex songsRemembered songsRecent songsRememberedIndex =
-    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
-        |> Maybe.map song2SongRecent
-        |> songsRememberedUpdateTimestampFromMaybe
-            songsRemembered
-            songsRecent
 
 
 songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
