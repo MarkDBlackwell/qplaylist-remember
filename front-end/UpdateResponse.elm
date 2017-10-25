@@ -116,8 +116,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         actionLikeOrCommentText =
             actionLikeOrComment2String actionLikeOrComment
 
-        modelNewOne : Model
-        modelNewOne =
+        modelNew : Model
+        modelNew =
             case actionLikeOrComment of
                 Comment ->
                     model
@@ -127,7 +127,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                         | songLikingMaybe = songLikingMaybeInit
                     }
     in
-    ( { modelNewOne
+    ( { modelNew
         | alertMessageText =
             alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
                 |> Just
@@ -181,8 +181,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     model.songLikingMaybe
 
-        modelNewOne : Model
-        modelNewOne =
+        modelNewSongLikingOrCommenting : Model
+        modelNewSongLikingOrCommenting =
             case actionLikeOrComment of
                 Comment ->
                     { model
@@ -194,16 +194,16 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         | songLikingMaybe = songLikingMaybeInit
                     }
 
-        modelNewTwo : Model
-        modelNewTwo =
+        modelNewCommentText : Model
+        modelNewCommentText =
             case actionLikeOrComment of
                 Comment ->
-                    { modelNewOne
+                    { modelNewSongLikingOrCommenting
                         | commentText = commentTextInit
                     }
 
                 Like ->
-                    modelNewOne
+                    modelNewSongLikingOrCommenting
     in
     case decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
@@ -223,7 +223,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
 
         Ok responseText ->
             if "ok" /= responseText then
-                ( { modelNewOne
+                ( { modelNewSongLikingOrCommenting
                     | alertMessageText =
                         alertMessageTextSend actionDescription responseText
                             |> Just
@@ -244,7 +244,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                             modelLikingOrCommenting
                             model.songsRemembered
                 in
-                ( { modelNewTwo
+                ( { modelNewCommentText
                     | alertMessageText = alertMessageTextInit
                     , awaitingServerResponse = awaitingServerResponseInit
                     , songsRemembered = songsRememberedNew
