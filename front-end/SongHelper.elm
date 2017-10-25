@@ -196,19 +196,21 @@ songsRememberedNewFunction model songsRememberedIndex =
             in
             Maybe.andThen matchFirstMaybe songsRememberedSelectOneMaybeMy
 
-        songsRememberedLikeOrCommentNewFromMaybeFunction : SongRememberedMaybe -> SongsRemembered
-        songsRememberedLikeOrCommentNewFromMaybeFunction songRememberedMaybe =
-            songsRememberedLikeOrCommentNewFromMaybe
-                model.songsRemembered
-                model.songsRecent
-                songRememberedMaybe
-
+        --songsRememberedLikeOrCommentNewFromMaybeFunction : SongRememberedMaybe -> SongsRemembered
+        --songsRememberedLikeOrCommentNewFromMaybeFunction songRememberedMaybe =
+        --    songsRememberedLikeOrCommentNewFromMaybe
+        --        model.songsRemembered
+        --        model.songsRecent
+        --        songRememberedMaybe
         songsRememberedSelectOneMaybeMy : SongRememberedMaybe
         songsRememberedSelectOneMaybeMy =
             selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
     in
     Maybe.map2 songRememberedUpdate songsRememberedSelectOneMaybeMy songsRecentMatchFirstMaybe
-        |> songsRememberedLikeOrCommentNewFromMaybeFunction
+        --|> songsRememberedLikeOrCommentNewFromMaybeFunction
+        |> songsRememberedLikeOrCommentNewFromMaybe
+            model.songsRemembered
+            model.songsRecent
 
 
 songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
