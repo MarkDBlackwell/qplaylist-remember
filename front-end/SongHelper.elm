@@ -202,11 +202,9 @@ songsRememberedNewFunction model songsRememberedIndex =
 
         caseOf : SongRecentMaybe -> SongRememberedMaybe
         caseOf songRecentMaybe =
-            case songsRecentMatchFirstMaybe of
-                Nothing ->
-                    selectOneMaybe
-
-                Just songRecent ->
+            let
+                func : SongRecent -> SongRememberedMaybe
+                func songRecent =
                     let
                         update : SongRemembered -> SongRemembered
                         update songRemembered =
@@ -216,6 +214,8 @@ songsRememberedNewFunction model songsRememberedIndex =
                             }
                     in
                     Maybe.map update selectOneMaybe
+            in
+            Maybe.andThen func songsRecentMatchFirstMaybe
     in
     caseOf songsRecentMatchFirstMaybe
         |> songsRememberedLikeOrCommentNewFromMaybeFunction
