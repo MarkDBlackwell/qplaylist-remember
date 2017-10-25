@@ -19,6 +19,10 @@ module UpdateRequestType
             , ActionRequest
             , ActionResponse
             )
+        , ActionLikeOrComment
+            ( Comment
+            , Like
+            )
         , AwaitingServerResponse
         , HttpResponseText
         , LikeOrCommentResponseText
@@ -44,6 +48,11 @@ type Action
     = ActionDecoding
     | ActionRequest
     | ActionResponse
+
+
+type ActionLikeOrComment
+    = Comment
+    | Like
 
 
 type alias HttpResponseText =
