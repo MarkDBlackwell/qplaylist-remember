@@ -192,13 +192,21 @@ songsRememberedNewFunction model songsRememberedIndex =
                         |> List.head
             in
             Maybe.andThen matchFirstMaybe selectOneMaybe
+
+        songsRememberedLikeOrCommentNewFromMaybeFunction : SongRememberedMaybe -> SongsRemembered
+        songsRememberedLikeOrCommentNewFromMaybeFunction songRememberedMaybe =
+            songsRememberedLikeOrCommentNewFromMaybe
+                model.songsRemembered
+                model.songsRecent
+                songRememberedMaybe
     in
     case songsRecentMatchFirstMaybe of
         Nothing ->
             selectOneMaybe
-                |> songsRememberedLikeOrCommentNewFromMaybe
-                    model.songsRemembered
-                    model.songsRecent
+                --|> songsRememberedLikeOrCommentNewFromMaybe
+                --    model.songsRemembered
+                --    model.songsRecent
+                |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
         Just songRecent ->
             let
@@ -210,9 +218,10 @@ songsRememberedNewFunction model songsRememberedIndex =
                     }
             in
             Maybe.map update selectOneMaybe
-                |> songsRememberedLikeOrCommentNewFromMaybe
-                    model.songsRemembered
-                    model.songsRecent
+                --|> songsRememberedLikeOrCommentNewFromMaybe
+                --    model.songsRemembered
+                --    model.songsRecent
+                |> songsRememberedLikeOrCommentNewFromMaybeFunction
 
 
 songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
