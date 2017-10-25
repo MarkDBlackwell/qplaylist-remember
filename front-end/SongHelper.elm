@@ -178,10 +178,6 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 songsRememberedNewFunction : Model -> SongsRememberedIndex -> SongsRemembered
 songsRememberedNewFunction model songsRememberedIndex =
     let
-        songsRememberedSelectOneMaybeMy : SongRememberedMaybe
-        songsRememberedSelectOneMaybeMy =
-            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
-
         songsRecentMatchFirstMaybe : SongRecentMaybe
         songsRecentMatchFirstMaybe =
             let
@@ -199,6 +195,10 @@ songsRememberedNewFunction model songsRememberedIndex =
                 model.songsRemembered
                 model.songsRecent
                 songRememberedMaybe
+
+        songsRememberedSelectOneMaybeMy : SongRememberedMaybe
+        songsRememberedSelectOneMaybeMy =
+            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
 
         functionTwo : SongRecentMaybe -> SongRememberedMaybe
         functionTwo songRecentMaybe =
