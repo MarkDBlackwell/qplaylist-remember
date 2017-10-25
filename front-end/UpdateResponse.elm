@@ -14,7 +14,7 @@
 
 module UpdateResponse
     exposing
-        ( commentResponseErr
+        ( likeOrCommentResponseErr
         , likeOrCommentResponseOk
         , likeResponseErr
         , songsRecentResponseErr
@@ -110,13 +110,31 @@ import Utilities
 -- UPDATE
 
 
-commentResponseErr : Model -> Error -> ElmCycle
-commentResponseErr model httpError =
+likeOrCommentResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
+likeOrCommentResponseErr model httpError actionLikeOrComment =
     ( { model
         | alertMessageText =
             alertMessageTextRequestLikeOrComment httpError "comment"
                 |> Just
         , awaitingServerResponse = awaitingServerResponseInit
+      }
+    , Cmd.batch
+        [ alertMessageTextErrorHttpLogging httpError
+            |> Just
+            |> logResponse
+        , focusInputPossibly model
+        ]
+    )
+
+
+likeResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
+likeResponseErr model httpError actionLikeOrComment =
+    ( { model
+        | alertMessageText =
+            alertMessageTextRequestLikeOrComment httpError "Like"
+                |> Just
+        , awaitingServerResponse = awaitingServerResponseInit
+        , songLikingMaybe = songLikingMaybeInit
       }
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
@@ -241,24 +259,6 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , focusInputPossibly model
                     ]
                 )
-
-
-likeResponseErr : Model -> Error -> ElmCycle
-likeResponseErr model httpError =
-    ( { model
-        | alertMessageText =
-            alertMessageTextRequestLikeOrComment httpError "Like"
-                |> Just
-        , awaitingServerResponse = awaitingServerResponseInit
-        , songLikingMaybe = songLikingMaybeInit
-      }
-    , Cmd.batch
-        [ alertMessageTextErrorHttpLogging httpError
-            |> Just
-            |> logResponse
-        , focusInputPossibly model
-        ]
-    )
 
 
 songsRecentResponseErr : Model -> Error -> ElmCycle
