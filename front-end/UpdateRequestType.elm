@@ -20,7 +20,6 @@ module UpdateRequestType
             , ActionResponse
             )
         , AwaitingServerResponse
-        , HttpRequestText
         , HttpResponseText
         , LikeOrCommentResponseText
         , LikeOrCommentText
@@ -45,10 +44,6 @@ type Action
     = ActionDecoding
     | ActionRequest
     | ActionResponse
-
-
-type alias HttpRequestText =
-    String
 
 
 type alias HttpRequestOrResponseText =

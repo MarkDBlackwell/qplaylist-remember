@@ -35,8 +35,7 @@ import ElmCycle
         )
 import Http
     exposing
-        ( Request
-        , getString
+        ( getString
         , send
         )
 import ModelType
@@ -75,8 +74,7 @@ import UpdateLog
         )
 import UpdateRequestType
     exposing
-        ( HttpRequestText
-        , UriText
+        ( UriText
         )
 import Utilities
     exposing
@@ -244,12 +242,8 @@ songsRecentRefreshHand model =
 
                 songsRecentRequest : Cmd Msg
                 songsRecentRequest =
-                    let
-                        requestHttp : Request HttpRequestText
-                        requestHttp =
-                            getString requestUriText
-                    in
-                    send SongsRecentResponse requestHttp
+                    getString requestUriText
+                        |> send SongsRecentResponse
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
