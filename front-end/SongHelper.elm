@@ -24,8 +24,8 @@ module SongHelper
         , songs2SongsRemembered
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedLikeOrCommentNewFromMaybe
-        , songsRememberedNewFromIndex
-        , songsRememberedNewFromMaybe
+        , songsRememberedNewFromIndexWithUpdate
+        , songsRememberedNewFromMaybeWithUpdate
         , songsRememberedUpdateTimestampFromMaybe
         , songsTimelessMatches
         )
@@ -176,8 +176,8 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
             songsRecent
 
 
-songsRememberedNewFromIndex : Model -> SongsRememberedIndex -> SongsRemembered
-songsRememberedNewFromIndex model songsRememberedIndex =
+songsRememberedNewFromIndexWithUpdate : Model -> SongsRememberedIndex -> SongsRemembered
+songsRememberedNewFromIndexWithUpdate model songsRememberedIndex =
     let
         selectOneMaybe : SongRememberedMaybe
         selectOneMaybe =
@@ -199,8 +199,8 @@ songsRememberedNewFromIndex model songsRememberedIndex =
             model.songsRecent
 
 
-songsRememberedNewFromMaybe : Model -> SongRememberedMaybe -> SongsRemembered
-songsRememberedNewFromMaybe model songRememberedMaybe =
+songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
+songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
     let
         selectOneMaybe : SongRememberedMaybe
         selectOneMaybe =
