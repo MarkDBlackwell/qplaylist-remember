@@ -19,7 +19,6 @@ module Utilities
         , field2String
         , goldenRatio
         , htmlNodeNull
-        , indexes
         , innerHtmlEmpty
         , matchingIndexes
         , maybeDefaultNothing
@@ -28,7 +27,6 @@ module Utilities
         , prefixSeparator
         , selectOneFromIndexMaybe
         , startingWithFromIndex
-        , withIndexes
         , withoutOneFromMaybe
         )
 

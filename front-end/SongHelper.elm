@@ -21,10 +21,7 @@ module SongHelper
         , songAlready
         , songGroup2String
         , songRememberedUpdate
-        , songTimelessCompare
-        , songs2SongsRecent
         , songs2SongsRemembered
-        , songs2SongsTimeless
         , songsTimelessMatches
         )
 

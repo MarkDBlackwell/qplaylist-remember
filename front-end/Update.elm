@@ -91,8 +91,7 @@ import UserIdentifier
         )
 import Utilities
     exposing
-        ( matchingIndexes
-        , msg2Cmd
+        ( msg2Cmd
         , selectOneFromIndexMaybe
         , withoutOneFromMaybe
         )

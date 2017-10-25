@@ -29,10 +29,6 @@ import SongHelper
         , song2SongTimeless
         , songAlready
         , songRememberedUpdate
-        , songTimelessCompare
-        , songs2SongsRecent
-        , songs2SongsRemembered
-        , songs2SongsTimeless
         , songsTimelessMatches
         )
 import SongType
