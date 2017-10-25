@@ -22,6 +22,7 @@ module SongHelper
         , songGroup2String
         , songRememberedUpdate
         , songs2SongsRemembered
+        , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedLikeOrCommentNewFromMaybe
         , songsRememberedNewFunction
         , songsRememberedUpdateTimestampFromMaybe
@@ -69,6 +70,7 @@ import SongType
 import Utilities
     exposing
         ( matchingIndexes
+        , maybeMapWithDefault
         , selectOneFromIndexMaybe
         )
 
@@ -145,6 +147,24 @@ songs2SongsRemembered songRecentBaseList =
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
 songs2SongsTimeless songTimelessBaseList =
     List.map song2SongTimeless songTimelessBaseList
+
+
+songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
+songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
+    if songAlready songsRemembered songRecent then
+        songsRemembered
+    else
+        song2SongRemembered songRecent
+            |> List.singleton
+            |> (++) songsRemembered
+
+
+songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
+songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
+    maybeMapWithDefault
+        songsRemembered
+        (songsRememberedAppendOneUnique songsRemembered songsRecent)
+        songRecentMaybe
 
 
 songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered

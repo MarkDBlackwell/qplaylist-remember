@@ -15,15 +15,12 @@
 module Song
     exposing
         ( likedOrCommentedShow
-        , songsRememberedAppendOneUniqueFromMaybe
         )
 
 import SongHelper
     exposing
         ( song2SongRecent
-        , song2SongRemembered
         , song2SongTimeless
-        , songAlready
         , songRememberedUpdate
         , songsTimelessMatches
         )
@@ -31,7 +28,6 @@ import SongType
     exposing
         ( SongGroupLength
         , SongRecent
-        , SongRecentMaybe
         , SongRemembered
         , SongRememberedMaybe
         , SongTimeless
@@ -75,24 +71,6 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             List.map tweakPossibly songsRemembered
     in
     maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
-
-
-songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
-songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
-    if songAlready songsRemembered songRecent then
-        songsRemembered
-    else
-        song2SongRemembered songRecent
-            |> List.singleton
-            |> (++) songsRemembered
-
-
-songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
-songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
-    maybeMapWithDefault
-        songsRemembered
-        (songsRememberedAppendOneUnique songsRemembered songsRecent)
-        songRecentMaybe
 
 
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe

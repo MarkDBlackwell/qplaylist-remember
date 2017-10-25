@@ -32,13 +32,10 @@ import ModelType
         ( Model
         , PageIsExpanded
         )
-import Song
-    exposing
-        ( songsRememberedAppendOneUniqueFromMaybe
-        )
 import SongHelper
     exposing
-        ( songsRememberedUpdateTimestampFromMaybe
+        ( songsRememberedAppendOneUniqueFromMaybe
+        , songsRememberedUpdateTimestampFromMaybe
         )
 import SongPort
     exposing
