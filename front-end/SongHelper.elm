@@ -187,12 +187,6 @@ songsRememberedNewFunction model songsRememberedIndex =
                         (song2SongTimeless songRecent)
                         (song2SongTimeless songRemembered)
             in
-            --(\songRecent ->
-            --    (==)
-            --        (song2SongTimeless songRecent)
-            --        (song2SongTimeless songRemembered)
-            --)
-            --|> flip List.filter model.songsRecent
             flip List.filter model.songsRecent compare
                 |> List.head
 
