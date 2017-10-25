@@ -16,7 +16,6 @@ module UpdateResponse
     exposing
         ( likeOrCommentResponseErr
         , likeOrCommentResponseOk
-        , likeResponseErr
         , songsRecentResponseErr
         , songsRecentResponseOk
         )
@@ -127,34 +126,6 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                     { model
                         | songLikingMaybe = songLikingMaybeInit
                     }
-    in
-    ( { modelNewOne
-        | alertMessageText =
-            alertMessageTextRequestLikeOrComment httpError actionLikeOrCommentText
-                |> Just
-        , awaitingServerResponse = awaitingServerResponseInit
-      }
-    , Cmd.batch
-        [ alertMessageTextErrorHttpLogging httpError
-            |> Just
-            |> logResponse
-        , focusInputPossibly model
-        ]
-    )
-
-
-likeResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
-likeResponseErr model httpError actionLikeOrComment =
-    let
-        actionLikeOrCommentText : String
-        actionLikeOrCommentText =
-            actionLikeOrComment2String actionLikeOrComment
-
-        modelNewOne : Model
-        modelNewOne =
-            { model
-                | songLikingMaybe = songLikingMaybeInit
-            }
     in
     ( { modelNewOne
         | alertMessageText =

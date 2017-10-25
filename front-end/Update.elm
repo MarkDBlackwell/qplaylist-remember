@@ -87,7 +87,6 @@ import UpdateResponse
     exposing
         ( likeOrCommentResponseErr
         , likeOrCommentResponseOk
-        , likeResponseErr
         , songsRecentResponseErr
         , songsRecentResponseOk
         )
@@ -137,7 +136,7 @@ update msg model =
             likeButtonProcessHand model songsRememberedIndex
 
         LikeResponse (Err httpError) ->
-            likeResponseErr model httpError Like
+            likeOrCommentResponseErr model httpError Like
 
         LikeResponse (Ok httpResponseText) ->
             likeOrCommentResponseOk model httpResponseText Like
