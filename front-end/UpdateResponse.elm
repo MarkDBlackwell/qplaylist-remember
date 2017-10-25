@@ -76,7 +76,8 @@ import SongInitialize
         )
 import SongType
     exposing
-        ( SongsRemembered
+        ( SongRememberedMaybe
+        , SongsRemembered
         )
 import UpdateFocus
     exposing
@@ -139,6 +140,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
         actionLikeOrCommentText =
             actionLikeOrComment2String actionLikeOrComment
 
+        buttonCommand : Cmd Msg
         buttonCommand =
             case actionLikeOrComment of
                 Comment ->
@@ -147,6 +149,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     buttonCommandAccomplished
 
+        buttonCommandAccomplished : Cmd Msg
         buttonCommandAccomplished =
             buttonIdReconstruct
                 model.songsRemembered
@@ -154,6 +157,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 actionLikeOrCommentText
                 |> focusSetId
 
+        modelLikingOrCommenting : SongRememberedMaybe
         modelLikingOrCommenting =
             case actionLikeOrComment of
                 Comment ->
@@ -162,6 +166,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     model.songLikingMaybe
 
+        modelNewOne : Model
         modelNewOne =
             case actionLikeOrComment of
                 Comment ->
@@ -174,6 +179,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         | songLikingMaybe = songLikingMaybeInit
                     }
 
+        modelNewTwo : Model
         modelNewTwo =
             case actionLikeOrComment of
                 Comment ->
