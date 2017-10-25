@@ -17,7 +17,6 @@ module Song
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromMaybe
         , songsRememberedLikeOrCommentNewFromMaybe
-        , songsRememberedUpdateTimestampFromIndex
         , songsRememberedUpdateTimestampFromMaybe
         )
 
@@ -125,21 +124,6 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
             |> (++)
                 (List.take songsRememberedIndex songsRemembered)
             |> Just
-
-
-songsRememberedUpdateTimestampFromIndex : SongsRemembered -> SongsRecent -> SongsRememberedIndex -> SongsRemembered
-songsRememberedUpdateTimestampFromIndex songsRemembered songsRecent songsRememberedIndex =
-    let
-        swapMaybe : SongRemembered -> SongsRememberedMaybe
-        swapMaybe =
-            swapUnlessListHeadEmptyFromIndexMaybe
-                songsRecent
-                songsRemembered
-                songsRememberedIndex
-    in
-    selectOneFromIndexMaybe songsRemembered songsRememberedIndex
-        |> maybeDefaultNothing swapMaybe
-        |> Maybe.withDefault songsRemembered
 
 
 songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
