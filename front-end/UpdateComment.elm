@@ -43,7 +43,7 @@ import SongHelper
     exposing
         ( buttonIdReconstruct
         , song2SongTimeless
-        , songsRememberedNewFunction
+        , songsRememberedNewFromIndex
         )
 import SongInitialize
     exposing
@@ -112,7 +112,7 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedNewFunction model songsRememberedIndex
+                    songsRememberedNewFromIndex model songsRememberedIndex
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
