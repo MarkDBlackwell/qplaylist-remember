@@ -193,15 +193,15 @@ songsRememberedNewFunction model songsRememberedIndex =
             in
             Maybe.andThen matchFirstMaybe selectOne
 
-        update : SongRecent -> SongRemembered -> SongRemembered
-        update songRecent songRemembered =
+        update : SongRemembered -> SongRecent -> SongRemembered
+        update songRemembered songRecent =
             { songRemembered
                 | time = songRecent.time
                 , timestamp = songRecent.timestamp
             }
     in
-    selectOne
-        |> Maybe.map2 update songsRecentMatchFirstMaybe
+    songsRecentMatchFirstMaybe
+        |> Maybe.map2 update selectOne
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
             model.songsRecent
