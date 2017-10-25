@@ -232,7 +232,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , Cmd.batch
                     [ Just responseText
                         |> logResponse
-                    , buttonCommandAccomplished
+                    , buttonCommand
                     , focusInputPossibly model
                     ]
                 )
@@ -252,7 +252,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
                     , logResponse Nothing
-                    , buttonCommand
+                    , buttonCommandAccomplished
                     , focusInputPossibly model
                     ]
                 )
