@@ -180,12 +180,20 @@ songsRememberedNewFunction model songsRememberedIndex =
     let
         recentMatchMaybe : SongRemembered -> SongRecentMaybe
         recentMatchMaybe songRemembered =
-            (\songRecent ->
-                (==)
-                    (song2SongTimeless songRecent)
-                    (song2SongTimeless songRemembered)
-            )
-                |> flip List.filter model.songsRecent
+            let
+                compare : SongRecent -> Bool
+                compare songRecent =
+                    (==)
+                        (song2SongTimeless songRecent)
+                        (song2SongTimeless songRemembered)
+            in
+            --(\songRecent ->
+            --    (==)
+            --        (song2SongTimeless songRecent)
+            --        (song2SongTimeless songRemembered)
+            --)
+            --|> flip List.filter model.songsRecent
+            flip List.filter model.songsRecent compare
                 |> List.head
 
         selectOneMaybe : SongRememberedMaybe
