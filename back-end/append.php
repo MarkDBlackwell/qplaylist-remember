@@ -26,7 +26,7 @@ $my_query_keys = array('comment', 'song', 'user_identifier', 'timestamp');
 
 $response_bad_file_json               = json_encode(array('response' => 'Unable to open comments file!'));
 $response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));
-$response_ok_json                     = json_encode(array('response' => 'ok'));
+$response_ok_json                     = json_encode(array('response' => 'good'));
 
 // Depends upon the above:
 
