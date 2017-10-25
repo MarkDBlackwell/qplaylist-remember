@@ -143,20 +143,6 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
         innerHtmlEmpty
 
 
-buttonRecent : Html Msg
-buttonRecent =
-    let
-        buttonAttributeIdMaybe : IdMaybe
-        buttonAttributeIdMaybe =
-            Just "refresh"
-
-        hoverText : HoverText
-        hoverText =
-            "Refresh the latest few songs"
-    in
-    buttonView buttonAttributeIdMaybe hoverText SongsRecentRefreshHand
-
-
 buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
 buttonLike songGroup songsRememberedIndex =
     let
@@ -181,6 +167,20 @@ buttonLike songGroup songsRememberedIndex =
 
         Remembered ->
             buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
+
+
+buttonRecent : Html Msg
+buttonRecent =
+    let
+        buttonAttributeIdMaybe : IdMaybe
+        buttonAttributeIdMaybe =
+            Just "refresh"
+
+        hoverText : HoverText
+        hoverText =
+            "Refresh the latest few songs"
+    in
+    buttonView buttonAttributeIdMaybe hoverText SongsRecentRefreshHand
 
 
 buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html Msg
