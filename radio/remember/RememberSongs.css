@@ -47,6 +47,14 @@ head {
 body {
     font-size: 0;
 }
+noscript,
+noscript > p {
+    line-height: 2;
+    font-size: 20px;
+    text-align: center;
+    color: Black;
+    background-color: White;
+}
 section#alert {
     line-height: 1.5;
     background-color: rgb(255,255,0);
