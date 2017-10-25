@@ -39,14 +39,11 @@ import ModelType
             ( Open
             )
         )
-import Song
-    exposing
-        ( songsRememberedLikeOrCommentNewFromMaybe
-        )
 import SongHelper
     exposing
         ( buttonIdReconstruct
         , song2SongTimeless
+        , songsRememberedNewFunction
         )
 import SongInitialize
     exposing
@@ -54,9 +51,7 @@ import SongInitialize
         )
 import SongType
     exposing
-        ( SongRecentMaybe
-        , SongRemembered
-        , SongRememberedMaybe
+        ( SongRememberedMaybe
         , SongsRemembered
         , SongsRememberedIndex
         )
@@ -116,44 +111,7 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    let
-                        selectOneMaybe =
-                            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
-
-                        songsRecentMatchFirstMaybe : SongRecentMaybe
-                        songsRecentMatchFirstMaybe =
-                            let
-                                selectOneMaybe =
-                                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
-                            in
-                            case selectOneMaybe of
-                                Nothing ->
-                                    Nothing
-
-                                Just songRemembered ->
-                                    List.filter (\x -> song2SongTimeless songRemembered == song2SongTimeless x) model.songsRecent
-                                        |> List.head
-                    in
-                    case songsRecentMatchFirstMaybe of
-                        Nothing ->
-                            selectOneMaybe
-                                |> songsRememberedLikeOrCommentNewFromMaybe
-                                    model.songsRemembered
-                                    model.songsRecent
-
-                        Just songRecent ->
-                            let
-                                update : SongRemembered -> SongRemembered
-                                update songRemembered =
-                                    { songRemembered
-                                        | time = songRecent.time
-                                        , timestamp = songRecent.timestamp
-                                    }
-                            in
-                            Maybe.map update selectOneMaybe
-                                |> songsRememberedLikeOrCommentNewFromMaybe
-                                    model.songsRemembered
-                                    model.songsRecent
+                    songsRememberedNewFunction model songsRememberedIndex
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =

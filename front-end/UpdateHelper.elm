@@ -35,7 +35,8 @@ import SongInitialize
         )
 import SongType
     exposing
-        ( SongRemembered
+        ( SongRecentMaybe
+        , SongRemembered
         , SongRememberedMaybe
         )
 import UpdateRequestType

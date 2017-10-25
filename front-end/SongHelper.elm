@@ -22,12 +22,19 @@ module SongHelper
         , songGroup2String
         , songRememberedUpdate
         , songs2SongsRemembered
+        , songsRememberedLikeOrCommentNewFromMaybe
+        , songsRememberedNewFunction
+        , songsRememberedUpdateTimestampFromMaybe
         , songsTimelessMatches
         )
 
 import Dom
     exposing
         ( Id
+        )
+import ModelType
+    exposing
+        ( Model
         )
 import SongInitialize
     exposing
@@ -43,6 +50,7 @@ import SongType
             )
         , SongRecent
         , SongRecentBase
+        , SongRecentMaybe
         , SongRemembered
         , SongRememberedMaybe
         , SongTimeBase
@@ -51,6 +59,7 @@ import SongType
         , SongTimelessBase
         , SongsRecent
         , SongsRemembered
+        , SongsRememberedIndex
         , SongsRememberedIndexMaybe
         , SongsTimeless
         , Time
@@ -60,6 +69,7 @@ import SongType
 import Utilities
     exposing
         ( matchingIndexes
+        , selectOneFromIndexMaybe
         )
 
 
@@ -135,6 +145,75 @@ songs2SongsRemembered songRecentBaseList =
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
 songs2SongsTimeless songTimelessBaseList =
     List.map song2SongTimeless songTimelessBaseList
+
+
+songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
+songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRememberedMaybe =
+    Maybe.map song2SongRecent songRememberedMaybe
+        |> songsRememberedUpdateTimestampFromMaybe
+            songsRemembered
+            songsRecent
+
+
+songsRememberedNewFunction : Model -> SongsRememberedIndex -> SongsRemembered
+songsRememberedNewFunction model songsRememberedIndex =
+    let
+        selectOneMaybe =
+            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+
+        songsRecentMatchFirstMaybe : SongRecentMaybe
+        songsRecentMatchFirstMaybe =
+            let
+                selectOneMaybe =
+                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+            in
+            case selectOneMaybe of
+                Nothing ->
+                    Nothing
+
+                Just songRemembered ->
+                    List.filter (\x -> song2SongTimeless songRemembered == song2SongTimeless x) model.songsRecent
+                        |> List.head
+    in
+    case songsRecentMatchFirstMaybe of
+        Nothing ->
+            selectOneMaybe
+                |> songsRememberedLikeOrCommentNewFromMaybe
+                    model.songsRemembered
+                    model.songsRecent
+
+        Just songRecent ->
+            let
+                update : SongRemembered -> SongRemembered
+                update songRemembered =
+                    { songRemembered
+                        | time = songRecent.time
+                        , timestamp = songRecent.timestamp
+                    }
+            in
+            Maybe.map update selectOneMaybe
+                |> songsRememberedLikeOrCommentNewFromMaybe
+                    model.songsRemembered
+                    model.songsRecent
+
+
+songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
+songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMaybe =
+    let
+        updateSometimes : SongRecent -> SongRemembered -> SongRemembered
+        updateSometimes songRecent songRemembered =
+            if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
+                songRemembered
+            else
+                { songRemembered
+                    | time = songRecent.time
+                    , timestamp = songRecent.timestamp
+                }
+    in
+    Maybe.map
+        (\x -> List.map (updateSometimes x) songsRemembered)
+        songRecentMaybe
+        |> Maybe.withDefault songsRemembered
 
 
 songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> List (SongTimelessBase a)

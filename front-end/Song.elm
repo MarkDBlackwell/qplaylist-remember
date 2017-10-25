@@ -16,8 +16,6 @@ module Song
     exposing
         ( likedOrCommentedShow
         , songsRememberedAppendOneUniqueFromMaybe
-        , songsRememberedLikeOrCommentNewFromMaybe
-        , songsRememberedUpdateTimestampFromMaybe
         )
 
 import SongHelper
@@ -97,14 +95,6 @@ songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMa
         songRecentMaybe
 
 
-songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
-songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRememberedMaybe =
-    Maybe.map song2SongRecent songRememberedMaybe
-        |> songsRememberedUpdateTimestampFromMaybe
-            songsRemembered
-            songsRecent
-
-
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
 songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
     if
@@ -122,22 +112,3 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
             |> (++)
                 (List.take songsRememberedIndex songsRemembered)
             |> Just
-
-
-songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
-songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMaybe =
-    let
-        updateSometimes : SongRecent -> SongRemembered -> SongRemembered
-        updateSometimes songRecent songRemembered =
-            if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
-                songRemembered
-            else
-                { songRemembered
-                    | time = songRecent.time
-                    , timestamp = songRecent.timestamp
-                }
-    in
-    Maybe.map
-        (\x -> List.map (updateSometimes x) songsRemembered)
-        songRecentMaybe
-        |> Maybe.withDefault songsRemembered

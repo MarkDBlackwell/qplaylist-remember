@@ -35,7 +35,10 @@ import ModelType
 import Song
     exposing
         ( songsRememberedAppendOneUniqueFromMaybe
-        , songsRememberedUpdateTimestampFromMaybe
+        )
+import SongHelper
+    exposing
+        ( songsRememberedUpdateTimestampFromMaybe
         )
 import SongPort
     exposing
