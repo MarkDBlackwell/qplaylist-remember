@@ -180,8 +180,12 @@ songsRememberedNewFunction model songsRememberedIndex =
     let
         recentMatchMaybe : SongRemembered -> SongRecentMaybe
         recentMatchMaybe songRemembered =
-            songsTimelessMatches model.songsRecent songRemembered
+            recentMatches songRemembered
                 |> List.head
+
+        recentMatches : SongRemembered -> SongsRecent
+        recentMatches songRemembered =
+            songsTimelessMatches model.songsRecent songRemembered
 
         selectOneMaybe : SongRememberedMaybe
         selectOneMaybe =
