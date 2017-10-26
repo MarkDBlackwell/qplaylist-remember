@@ -191,7 +191,7 @@ songsRecentRefreshHand model =
                             "wtmdapp"
                     in
                     relative
-                        [ "../.."
+                        [ ".."
                         , subUri
                         , basename
                         ]

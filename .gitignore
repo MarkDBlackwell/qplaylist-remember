@@ -9,9 +9,9 @@
 /.htaccess
 /index.html
 /radio/.htaccess
-/radio/remember/Main.js
-/radio/remember/comments.txt
-/radio/remember/php_errorlog
+/remember/Main.js
+/remember/comments.txt
+/remember/php_errorlog
 /robots.txt
 
 *.stackdump
