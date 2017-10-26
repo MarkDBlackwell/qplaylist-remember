@@ -13,6 +13,12 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 See http://trentwalton.com/2013/01/16/windows-phone-8-viewport-fix/
+
+The purpose here, quoting from the article, is:
+
+"to get responsive layouts to render properly in IE10[,]
+for both Snap Mode and Windows Phone 8."
+
 Keep this as the first script in <head>.
 */
 
