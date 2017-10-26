@@ -13,5 +13,7 @@
 /remember/comments.txt
 /remember/php_errorlog
 /robots.txt
+/wtmdapp/.htaccess
 
 *.stackdump
+Copy\ *
