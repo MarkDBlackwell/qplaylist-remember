@@ -50,15 +50,14 @@ body {
 p.requirements,
 p.requirements-internet-explorer {
     line-height: 1.9;
-    font-size: 20px;
     text-align: center;
     color: Black;
     background-color: White;
 }
-p.requirements {
+p.requirements > span {
     font-size: 14px;
 }
-p.requirements-internet-explorer {
+p.requirements-internet-explorer > span {
     font-size: 20px;
 }
 section#alert {
