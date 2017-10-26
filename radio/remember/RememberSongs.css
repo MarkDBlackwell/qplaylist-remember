@@ -47,13 +47,19 @@ head {
 body {
     font-size: 0;
 }
-noscript,
-noscript > p {
-    line-height: 2;
+p.requirements,
+p.requirements-internet-explorer {
+    line-height: 1.9;
     font-size: 20px;
     text-align: center;
     color: Black;
     background-color: White;
+}
+p.requirements {
+    font-size: 14px;
+}
+p.requirements-internet-explorer {
+    font-size: 20px;
 }
 section#alert {
     line-height: 1.5;
