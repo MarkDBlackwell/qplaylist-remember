@@ -2,15 +2,16 @@
 /elm-stuff/generated-code/*
 /elm-stuff/packages/*
 /out/*
+/player/*
 /tests/elm-stuff/build-artifacts/*
 /tests/elm-stuff/packages/*
 
+/.htaccess
 /index.html
 /radio/.htaccess
 /radio/remember/Main.js
 /radio/remember/comments.txt
 /radio/remember/php_errorlog
 /robots.txt
-/wtmdapp/LatestFive.json
 
 *.stackdump

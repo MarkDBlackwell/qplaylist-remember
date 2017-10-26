@@ -3,3 +3,29 @@
 <IfModule mod_rewrite.c>
     RewriteRule "^append\.json$" "append.php" [QSA]
 </IfModule>
+
+# 10-26-17 Mark Blackwell - FollowSymLinks
+# See:
+#   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
+#   http://httpd.apache.org/docs/2.2/mod/core.html#options
+Options +FollowSymLinks
+
+# 10-26-17 Mark Blackwell - Work around Internet Explorer 8 (Windows XP)'s limit of TLS 1.0,
+#  by forcing http for this folder.
+# See:
+#   https://httpd.apache.org/docs/2.4/howto/htaccess.html#rewrite
+#   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
+#   https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_l
+#   https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_qsa
+#   https://httpd.apache.org/docs/2.4/rewrite/intro.html#regex
+#   https://httpd.apache.org/docs/2.4/rewrite/remapping.html#old-to-new-extern
+#   https://wiki.apache.org/httpd/RewriteHTTPToHTTPS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^wtmd\.org$ [OR]
+    RewriteCond %{HTTP_HOST} ^www\.wtmd\.org$
+# Ensure the current connection is HTTPS.
+    RewriteCond %{HTTPS} =on
+# Redirect (temporarily) all requests in this folder to http.
+    RewriteRule "" http://%{HTTP_HOST}%{REQUEST_URI} [QSA,R=302,L]
+</IfModule>
