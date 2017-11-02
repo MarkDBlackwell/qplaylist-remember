@@ -16,7 +16,7 @@ See https://stackoverflow.com/questions/24972424/php-create-or-write-append-in-t
 Accept AJAX request to append to a comments file.
 */
 
-// Code to run:
+// First code to run:
 header("content-type:application/json");
 
 // Constants:
