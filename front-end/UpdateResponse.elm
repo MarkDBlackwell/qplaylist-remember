@@ -132,7 +132,10 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         , awaitingServerResponse = awaitingServerResponseInit
       }
     , Cmd.batch
-        [ alertMessageTextErrorHttpLogging httpError
+        --[ alertMessageTextErrorHttpLogging httpError
+        [ (++)
+            (alertMessageTextErrorHttpLogging httpError)
+            (alertMessageTextRequestLikeOrComment httpError (actionLikeOrComment2String actionLikeOrComment))
             |> Just
             |> logResponse
         , focusInputPossibly model
@@ -207,7 +210,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ Just alertMessageTextDecode
+                --[ Just alertMessageTextDecode
+                [ Just (alertMessageTextDecode ++ httpResponseText)
                     |> logDecoding
                 , buttonCommand
                 , focusInputPossibly model
@@ -228,7 +232,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , Cmd.batch
-                    [ Just responseText
+                    --[ Just responseText
+                    [ Just (responseText ++ httpResponseText)
                         |> logResponse
                     , buttonCommand
                     , focusInputPossibly model
@@ -292,7 +297,8 @@ songsRecentResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                [ Just alertMessageTextDecode
+                --[ Just alertMessageTextDecode
+                [ Just (alertMessageTextDecode ++ httpResponseText)
                     |> logDecoding
                 , focusInputPossibly model
                 ]

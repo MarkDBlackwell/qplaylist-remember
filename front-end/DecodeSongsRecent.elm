@@ -87,7 +87,8 @@ decodeSongsRecentResponse jsonRawText =
     in
     case asRecord of
         Err text ->
-            Err text
+            --Err text
+            Err (text ++ jsonRawText)
 
         Ok record ->
             Ok record.dummyTag
