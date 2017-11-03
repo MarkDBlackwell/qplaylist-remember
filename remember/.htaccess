@@ -1,33 +1,41 @@
+# 10-26-17 Mark Blackwell - Within .htaccess, mod_rewrite requires FollowSymLinks.
+# See:
+#   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
+#   https://httpd.apache.org/docs/2.4/mod/core.html#options
+Options +FollowSymLinks
+
 # 09-16-17 Mark Blackwell - On requests for append.json, invoke PHP.
 # This eases development by allowing access through the local filesystem.
 <IfModule mod_rewrite.c>
     RewriteRule "^append\.json$" "append.php" [QSA]
 </IfModule>
 
-# 10-26-17 Mark Blackwell - FollowSymLinks
-# See:
-#   https://httpd.apache.org/docs/2.4/mod/core.html#options
-#   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
-Options +FollowSymLinks
+## 11-03-17 Mark Blackwell - The fact that Windows XP lacks TLS 1.1 (and 1.2)
+##   doesn't affect Remember Songs, because Windows XP
+##   also lacks Internet Explorer 10.
+## See:
+##   https://blogs.msdn.microsoft.com/kaushal/2011/10/02/support-for-ssltls-protocols-on-windows/
 
-# 10-26-17 Mark Blackwell - Work around Internet Explorer 8 (Windows XP)'s limit of TLS 1.0,
-#  by forcing http for this folder.
-# See:
-#   https://httpd.apache.org/docs/2.4/howto/htaccess.html#rewrite
-#   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
-#   https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_l
-#   https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_pt
-#   https://httpd.apache.org/docs/2.4/rewrite/flags.html#flag_qsa
-#   https://httpd.apache.org/docs/2.4/rewrite/intro.html#regex
-#   https://httpd.apache.org/docs/2.4/rewrite/remapping.html#old-to-new
-#   https://httpd.apache.org/docs/2.4/rewrite/remapping.html#old-to-new-extern
-#   https://wiki.apache.org/httpd/RewriteHTTPToHTTPS
+# 11-03-17 Mark D. Blackwell - Enable downloading of QPlaylist's precompressed
+#   JSON file which contains the latest few songs.
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{HTTP_HOST} ^wtmd\.org$ [OR]
-    RewriteCond %{HTTP_HOST} ^www\.wtmd\.org$
-# Ensure that the current connection is HTTPS.
-    RewriteCond %{HTTPS} =on
-# Rewrite all requests in this folder to http.
-    RewriteRule "" "http://%{HTTP_HOST}%{REQUEST_URI}" [QSA,PT]
+    <IfModule mod_headers.c>
+        <FilesMatch "^LatestFew\.json\.gz$">
+            # Serve correct encoding type.
+            Header append Content-Encoding gzip
+
+            # Force proxies to cache gzipped &
+            # non-gzipped QPlaylist files separately.
+            Header append Vary Accept-Encoding
+        </FilesMatch>
+
+        # If the client accepts gzip
+        # and the requested gzip-compressed QPlaylist file exists...
+        RewriteCond "%{HTTP:Accept-encoding}" gzip
+        RewriteCond "%{REQUEST_FILENAME}.gz" -s
+        # Append ".gz".
+        RewriteRule "^LatestFew\.json$" "LatestFew.json.gz" [QSA]
+        # Serve the correct media type, and prevent mod_deflate double gzip.
+        RewriteRule "^LatestFew\.json\.gz$" "-" [T=application/json,E=no-gzip:1]
+    </IfModule>
 </IfModule>
