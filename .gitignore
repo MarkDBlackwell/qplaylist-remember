@@ -17,3 +17,5 @@
 
 *.stackdump
 Copy\ *
+*-min.css
+*-min.js
