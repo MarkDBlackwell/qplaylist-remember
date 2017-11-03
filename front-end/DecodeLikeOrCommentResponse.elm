@@ -67,8 +67,7 @@ decodeLikeOrCommentResponse jsonRawText =
     in
     case asRecord of
         Err text ->
-            --Err text
-            Err (text ++ jsonRawText)
+            Err text
 
         Ok record ->
             Ok record.dummyTag

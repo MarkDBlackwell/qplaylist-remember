@@ -132,10 +132,11 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         , awaitingServerResponse = awaitingServerResponseInit
       }
     , Cmd.batch
-        --[ alertMessageTextErrorHttpLogging httpError
         [ (++)
             (alertMessageTextErrorHttpLogging httpError)
-            (alertMessageTextRequestLikeOrComment httpError (actionLikeOrComment2String actionLikeOrComment))
+            (actionLikeOrComment2String actionLikeOrComment
+                |> alertMessageTextRequestLikeOrComment httpError
+            )
             |> Just
             |> logResponse
         , focusInputPossibly model
@@ -210,8 +211,10 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                --[ Just alertMessageTextDecode
-                [ Just (alertMessageTextDecode ++ httpResponseText)
+                [ (++)
+                    alertMessageTextDecode
+                    httpResponseText
+                    |> Just
                     |> logDecoding
                 , buttonCommand
                 , focusInputPossibly model
@@ -232,8 +235,10 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , awaitingServerResponse = awaitingServerResponseInit
                   }
                 , Cmd.batch
-                    --[ Just responseText
-                    [ Just (responseText ++ httpResponseText)
+                    [ (++)
+                        responseText
+                        httpResponseText
+                        |> Just
                         |> logResponse
                     , buttonCommand
                     , focusInputPossibly model
@@ -297,8 +302,10 @@ songsRecentResponseOk model httpResponseText =
                 , awaitingServerResponse = awaitingServerResponseInit
               }
             , Cmd.batch
-                --[ Just alertMessageTextDecode
-                [ Just (alertMessageTextDecode ++ httpResponseText)
+                [ (++)
+                    alertMessageTextDecode
+                    httpResponseText
+                    |> Just
                     |> logDecoding
                 , focusInputPossibly model
                 ]

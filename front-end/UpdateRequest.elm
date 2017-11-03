@@ -186,13 +186,11 @@ songsRecentRefreshHand model =
                         basename =
                             "LatestFive.json"
 
-                        --"LatestFiveHD2-json-txt-mark.txt"
                         subUri : UriText
                         subUri =
                             "wtmdapp"
                     in
                     relative
-                        --[ "http://wtmd.org"
                         [ ".."
                         , subUri
                         , basename
