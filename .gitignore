@@ -3,12 +3,12 @@
 /elm-stuff/packages/*
 /out/*
 /player/*
+/radio/*
 /tests/elm-stuff/build-artifacts/*
 /tests/elm-stuff/packages/*
 
 /.htaccess
 /index.html
-/radio/.htaccess
 /remember/Main.js
 /remember/comments.txt
 /remember/php_errorlog
