@@ -1,186 +1,188 @@
 <!DOCTYPE html>
 <!-- Copyright (C) 2017 Mark D. Blackwell.
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Remember Songs, a front-end tool for users of QPlaylist">
-<meta name="author" content="Mark D. Blackwell">
-<title>Sample</title>
-<link rel="stylesheet" type="text/css" href="RememberSongs.css">
-<!-- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
-<link rel="stylesheet" type="text/css" media="only screen" href="RememberSongs-responsive-smartphone.css">
-<!--Keep as first script in <head>:-->
-<script type="text/javascript" src="RememberSongs-windows-phone-8-viewport-fix.js"></script>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Remember Songs, a front-end tool for users of QPlaylist">
+		<meta name="author" content="Mark D. Blackwell">
+		<title>Sample</title>
+		<link rel="stylesheet" type="text/css" href="RememberSongs.css">
+
+		<!-- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
+		<link rel="stylesheet" type="text/css" media="only screen" href="RememberSongs-responsive-smartphone.css">
+
+		<!--Keep as first script in <head>:-->
+		<script type="text/javascript" src="RememberSongs-windows-phone-8-viewport-fix.js"></script>
+	</head>
 
 <!--Hide this from other browsers:-->
 <!--[if lt IE 10]>
-<body>
-    <p class="requirements-internet-explorer">
-        <span>For Internet Explorer, this program (Remember songs) requires at least version 10.</span>
-    </p>
-</body>
+	<body>
+		<p class="requirements-internet-explorer">
+			<span>For Internet Explorer, this program (Remember songs) requires at least version 10.</span>
+		</p>
+	</body>
 <![endif]-->
 
 <!--Expose this to other browsers:-->
 <![if gte IE 10]>
-<body id="main">
-    <p class="requirements">
-        <span>This program (Remember songs) requires JavaScript.</span>
-    </p>
-    <main>
-	<section id="alert">
-		<p>Alert message</p>
-	</section>
-
-	<section id="comment">
-		<p>Some artist d: Some title d (Time d on Date d)</p>
-		<input id="input" type=text required
-		       placeholder="Type your (additional) comment here!"
-		             title="Type your (additional) comment here!"></input>
-		<button type=button title="Submit your comment"></button>
-		<button type=button title="Cancel this comment"></button>
-	</section>
-
-	<section id="songs-remembered" class="songs-group">
-		<p><button type=button title="Refresh the latest few songs"></button></p>
-		<div>
-			<p>
-				<button type=button title="Drop this song (from remembered songs)"></button
-				><span>Timestamp a</span
-				><button type=button title="Share a comment (with the DJ) about this song"></button
-				><button type=button title="Share a 'Like' (with the DJ) about this song"></button
-				><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+	<body id="main">
+		<p class="requirements">
+			<span>This program (Remember songs) requires JavaScript.</span>
+		</p>
+		<main>
+		<section id="alert">
+			<p>Alert message</p>
+		</section>
+	
+		<section id="comment">
+			<p>Some artist d: Some title d (Time d on Date d)</p>
+			<input id="input" type=text required
+			       placeholder="Type your (additional) comment here!"
+			             title="Type your (additional) comment here!"></input>
+			<button type=button title="Submit your comment"></button>
+			<button type=button title="Cancel this comment"></button>
+		</section>
+	
+		<section id="songs-remembered" class="songs-group">
+			<p><button type=button title="Refresh the latest few songs"></button></p>
+			<div>
+				<p>
+					<button type=button title="Drop this song (from remembered songs)"></button
+					><span>Timestamp a</span
+					><button type=button title="Share a comment (with the DJ) about this song"></button
+					><button type=button title="Share a 'Like' (with the DJ) about this song"></button
+					><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title a+Some artist a"></a
-			></p>
-			<p>Some title a</p>
-			<p>Some artist a</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Drop this song (from remembered songs)"></button
-				><span>Timestamp b</span
-				><button type=button title="Share a comment (with the DJ) about this song"></button
-				><button type=button title="Share a 'Like' (with the DJ) about this song"></button
-				><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title a</p>
+				<p>Some artist a</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Drop this song (from remembered songs)"></button
+					><span>Timestamp b</span
+					><button type=button title="Share a comment (with the DJ) about this song"></button
+					><button type=button title="Share a 'Like' (with the DJ) about this song"></button
+					><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title b+Some artist b"></a
-			></p>
-			<p>Some title b</p>
-			<p>Some artist b</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Drop this song (from remembered songs)"></button
-				><span>Timestamp c</span
-				><button type=button title="Share a comment (with the DJ) about this song"></button
-				><button type=button title="Share a 'Like' (with the DJ) about this song"></button
-				><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title b</p>
+				<p>Some artist b</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Drop this song (from remembered songs)"></button
+					><span>Timestamp c</span
+					><button type=button title="Share a comment (with the DJ) about this song"></button
+					><button type=button title="Share a 'Like' (with the DJ) about this song"></button
+					><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title c+Some artist c"></a
-			></p>
-			<p>Some title c</p>
-			<p>Some artist c</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Drop this song (from remembered songs)"></button
-				><span>Timestamp d</span
-				><button type=button title="Share a comment (with the DJ) about this song"></button
-				><button type=button title="Share a 'Like' (with the DJ) about this song"></button
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title c</p>
+				<p>Some artist c</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Drop this song (from remembered songs)"></button
+					><span>Timestamp d</span
+					><button type=button title="Share a comment (with the DJ) about this song"></button
+					><button type=button title="Share a 'Like' (with the DJ) about this song"></button
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title d+Some artist d"></a
-			></p>
-			<p>Some title d</p>
-			<p>Some artist d</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Drop this song (from remembered songs)"></button
-				><span>Timestamp e</span
-				><button type=button title="Share a comment (with the DJ) about this song"></button
-				><button type=button title="Share a 'Like' (with the DJ) about this song"></button
-				><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title d</p>
+				<p>Some artist d</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Drop this song (from remembered songs)"></button
+					><span>Timestamp e</span
+					><button type=button title="Share a comment (with the DJ) about this song"></button
+					><button type=button title="Share a 'Like' (with the DJ) about this song"></button
+					><em title="You've shared a 'Like' (or a comment) about this song (with the DJ)"></em
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title e+Some artist e"></a
-			></p>
-			<p>Some title e</p>
-			<p>Some artist e</p>
-		</div>
-	</section>
-	<hr>
-
-	<section id="songs-latest" class="songs-group">
-		<p><button type=button title="Morph this page's shape"></button></p>
-		<div>
-			<p>
-				<button type=button title="Add this song (to remembered songs)"></button
-				><span>Time t</span
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title e</p>
+				<p>Some artist e</p>
+			</div>
+		</section>
+		<hr>
+	
+		<section id="songs-latest" class="songs-group">
+			<p><button type=button title="Morph this page's shape"></button></p>
+			<div>
+				<p>
+					<button type=button title="Add this song (to remembered songs)"></button
+					><span>Time t</span
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title t+Some artist t"></a
-			></p>
-			<p>Some title t</p>
-			<p>Some artist t</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Add this song (to remembered songs)"></button
-				><span>Time s</span
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title t</p>
+				<p>Some artist t</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Add this song (to remembered songs)"></button
+					><span>Time s</span
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title s+Some artist s"></a
-			></p>
-			<p>Some title s</p>
-			<p>Some artist s</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Add this song (to remembered songs)"></button
-				><span>Time r</span
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title s</p>
+				<p>Some artist s</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Add this song (to remembered songs)"></button
+					><span>Time r</span
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title r+Some artist r"></a
-			></p>
-			<p>Some title r</p>
-			<p>Some artist r</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Add this song (to remembered songs)"></button
-				><span>Time q</span
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title r</p>
+				<p>Some artist r</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Add this song (to remembered songs)"></button
+					><span>Time q</span
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title q+Some artist q"></a
-			></p>
-			<p>Some title q</p>
-			<p>Some artist q</p>
-		</div>
-		<div>
-			<p>
-				<button type=button title="Add this song (to remembered songs)"></button
-				><span>Time p</span
-				><a target="_blank" title="See this song on Amazon (in new tab)"
+				></p>
+				<p>Some title q</p>
+				<p>Some artist q</p>
+			</div>
+			<div>
+				<p>
+					<button type=button title="Add this song (to remembered songs)"></button
+					><span>Time p</span
+					><a target="_blank" title="See this song on Amazon (in new tab)"
 href="http://www.amazon.com/s/ref=nb_sb_noss?tag=wtmdradio-20&url=search-alias%3Ddigital-music&field-keywords=Some title p+Some artist p"></a
-			></p>
-			<p>Some title p</p>
-			<p>Some artist p</p>
-		</div>
-	</section>
-    </main>
-</body>
+				></p>
+				<p>Some title p</p>
+				<p>Some artist p</p>
+			</div>
+		</section>
+		</main>
+	</body>
 <![endif]>
 
 </html>

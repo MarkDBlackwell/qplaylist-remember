@@ -1,58 +1,60 @@
 <!DOCTYPE html>
 <!-- Copyright (C) 2017 Mark D. Blackwell.
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Remember Songs, a front-end tool for users of QPlaylist">
-<meta name="author" content="Mark D. Blackwell">
-<title>Remember songs</title>
-<link rel="stylesheet" type="text/css" href="RememberSongs-min.css">
-<!-- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
-<link rel="stylesheet" type="text/css" media="only screen" href="RememberSongs-responsive-smartphone-min.css">
-<!--Keep as first script in <head>:-->
-<script type="text/javascript" src="RememberSongs-windows-phone-8-viewport-fix-min.js"></script>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Remember Songs, a front-end tool for users of QPlaylist">
+		<meta name="author" content="Mark D. Blackwell">
+		<title>Remember songs</title>
+		<link rel="stylesheet" type="text/css" href="RememberSongs-min.css">
+
+		<!-- See https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries -->
+		<link rel="stylesheet" type="text/css" media="only screen" href="RememberSongs-responsive-smartphone-min.css">
+
+		<!--Keep as first script in <head>:-->
+		<script type="text/javascript" src="RememberSongs-windows-phone-8-viewport-fix-min.js"></script>
+	</head>
 
 <!--For a discussion of an application/json problem in IE 9, see:
-    http://blog.degree.no/2012/09/jquery-json-ie8ie9-treats-response-as-downloadable-file/
-    I didn't find a solution.-->
+	http://blog.degree.no/2012/09/jquery-json-ie8ie9-treats-response-as-downloadable-file/
+	I didn't find a solution.-->
 
 <!--Hide this from other browsers:-->
 <!--[if lt IE 10]>
-<body>
-    <p class="requirements-internet-explorer">
-        <span>For Internet Explorer, this program (Remember songs) requires at least version 10.</span>
-    </p>
-</body>
+	<body>
+		<p class="requirements-internet-explorer">
+			<span>For Internet Explorer, this program (Remember songs) requires at least version 10.</span>
+		</p>
+	</body>
 <![endif]-->
 
 <!--Expose this to other browsers:-->
 <![if gte IE 10]>
-<body id="main">
-    <noscript>
-        <p class="requirements">
-            <span>This program (Remember songs) requires JavaScript.</span>
-        </p>
-    </noscript>
-    <script type="text/javascript" src="Main-min.js"></script>
+	<body id="main">
+		<noscript>
+			<p class="requirements">
+				<span>This program (Remember songs) requires JavaScript.</span>
+			</p>
+		</noscript>
+		<script type="text/javascript" src="Main-min.js"></script>
 
-    <!--Keep after both the body#main element and the Elm script:-->
-    <script type="text/javascript" src="SetUp-min.js"></script>
-</body>
+		<!--Keep after both the body#main element and the Elm script:-->
+		<script type="text/javascript" src="SetUp-min.js"></script>
+	</body>
 <![endif]>
 </html>
