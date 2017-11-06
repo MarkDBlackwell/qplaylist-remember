@@ -17,7 +17,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Remember Songs, a front-end tool for users of QPlaylist">
 <meta name="author" content="Mark D. Blackwell">
 <title>Remember songs</title>
@@ -27,7 +27,6 @@
 <!--Keep as first script in <head>:-->
 <script type="text/javascript" src="RememberSongs-windows-phone-8-viewport-fix-min.js"></script>
 </head>
-<body id="main"></body>
 
 <!--For a discussion of an application/json problem in IE 9, see:
     http://blog.degree.no/2012/09/jquery-json-ie8ie9-treats-response-as-downloadable-file/
@@ -35,21 +34,25 @@
 
 <!--Hide this from other browsers:-->
 <!--[if lt IE 10]>
+<body>
     <p class="requirements-internet-explorer">
         <span>For Internet Explorer, this program (Remember songs) requires at least version 10.</span>
     </p>
+</body>
 <![endif]-->
 
 <!--Expose this to other browsers:-->
 <![if gte IE 10]>
-    <script type="text/javascript" src="Main-min.js"></script>
-
-    <!--Keep after both the body#main element and the Elm script:-->
-    <script type="text/javascript" src="SetUp-min.js"></script>
+<body id="main">
     <noscript>
         <p class="requirements">
             <span>This program (Remember songs) requires JavaScript.</span>
         </p>
     </noscript>
+    <script type="text/javascript" src="Main-min.js"></script>
+
+    <!--Keep after both the body#main element and the Elm script:-->
+    <script type="text/javascript" src="SetUp-min.js"></script>
+</body>
 <![endif]>
 </html>
