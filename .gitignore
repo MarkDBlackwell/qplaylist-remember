@@ -1,6 +1,7 @@
 /elm-stuff/build-artifacts/*
 /elm-stuff/generated-code/*
 /elm-stuff/packages/*
+/node_modules/*
 /out/*
 /player/*
 /radio/*
@@ -11,6 +12,7 @@
 /index.html
 /remember/Main.js
 /remember/comments.txt
+/remember/npm-debug.log
 /remember/php_errorlog
 /robots.txt
 /wtmdapp/.htaccess
@@ -18,4 +20,5 @@
 *.stackdump
 Copy\ *
 *-min.css
+*-min.html
 *-min.js
