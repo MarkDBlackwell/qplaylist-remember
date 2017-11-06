@@ -49,13 +49,13 @@ var functionResetSongsDevelopmentOnly = function() {
     } else {
         try {
             localStorage.setItem(keyStorage, tempSongsAsString);
-        }
+        };
         catch(e) {
             window.alert('e: ' + e);
-        }
-    }
+        };
+    };
     return null;
-}
+};
 functionResetSongsDevelopmentOnly();
 */
 
@@ -78,10 +78,10 @@ functionResetSongsDevelopmentOnly();
                 showCommentButtons: functionShowCommentButtons(),
                 songsRemembered: functionSongsRememberedRetrieved()
             });
-        }
+        };
         functionKeyStorage = function() {
             return 'RememberSongs';
-        }
+        };
         functionShowCommentButtons = function() {
             var queryParameters;
 
@@ -90,7 +90,7 @@ functionResetSongsDevelopmentOnly();
 
             //IE and Edge lack the URLSearchParams function, so don't use it.
             return 'comment' == queryParameters;
-        }
+        };
         functionSongsRememberedRetrieved = function() {
             var functionRetrieveSongsFromStorageAsString;
 
@@ -105,32 +105,30 @@ functionResetSongsDevelopmentOnly();
                 defaultValue = "[]";
                 if (! functionStorageIsAccessible()) {
                     return defaultValue;
-                }
+                };
                 storage = window.localStorage.getItem(functionKeyStorage());
                 //window.alert('storage: ' + storage);
 
                 if (null === storage || "" == storage) {
                     return defaultValue;
-                }
+                };
                 return storage;
-            }
+            };
             return JSON.parse(functionRetrieveSongsFromStorageAsString());
-        }
+        };
         functionStorageIsAccessible = function() {
             var rememberingSongsIsDisabledMessage;
-            var somethingWrongWithHostnameMessage;
+            var somethingWrongWithLocalStorageMessage;
             var storage;
-            var suggestOperaMessage;
             var x;
 
-            rememberingSongsIsDisabledMessage = 'Remembering songs (across sessions) is disabled:  '
-            somethingWrongWithLocalStorageMessage = 'Something wrong with window.localStorage: ';
 
             //See: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
             try {
                 storage = window.localStorage;
                 if (null === storage) {
-                    window.alert(somethingWrongWithLocalStorageMessage + storage);
+                    somethingWrongWithLocalStorageMessage = 'Something wrong with window.localStorage';
+                    window.alert(somethingWrongWithLocalStorageMessage + ': ' + storage);
                     return false;
                 }
                 x = '__storage_test__';
@@ -140,7 +138,8 @@ functionResetSongsDevelopmentOnly();
             }
             catch(e) {
                 //First, do the popup.
-                window.alert(rememberingSongsIsDisabledMessage + e);
+                rememberingSongsIsDisabledMessage = 'Remembering songs (across sessions) is disabled';
+                window.alert(rememberingSongsIsDisabledMessage + ':  ' + e);
 
                 //Avoid QuotaExceededError, but only if the exception is a DOMException...
                 return e instanceof DOMException &&
@@ -171,20 +170,20 @@ functionResetSongsDevelopmentOnly();
                         //for everything except Firefox:
                         e.name === 'QuotaExceededError'
                     );
-            }
-        }
+            };
+        };
         functionStorageSubscribe = function(app) {
             //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
             app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
                 if (functionStorageIsAccessible()) {
                     window.localStorage.setItem(functionKeyStorage(), JSON.stringify(songsRememberedFromPort));
-                }
+                };
             });
             return null;
-        }
+        };
 
         return functionStorageSubscribe(functionAttachNode());
-    }
+    };
 
     return functionDealWithElm();
 })();
