@@ -11,6 +11,7 @@
 /.htaccess
 /index.html
 /remember/Main.js
+/remember/RememberSongs.html
 /remember/comments.txt
 /remember/npm-debug.log
 /remember/php_errorlog
@@ -20,5 +21,4 @@
 *.stackdump
 Copy\ *
 *-min.css
-*-min.html
 *-min.js

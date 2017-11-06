@@ -1,12 +1,21 @@
 #/bin/sh
 # Copyright (C) 2017 Mark D. Blackwell.
+# See:
+# https://developers.google.com/speed/docs/insights/MinifyResources
+# https://github.com/ben-eb/cssnano
+# https://github.com/kangax/html-minifier
 
 grep -nEI ' $' `find front-end -type f` || \
 elm-format --yes front-end/ && \
 elm-make --warn --output=remember/Main.js front-end/Main.elm && \
-(cd remember; cp RememberSongs.css RememberSongs-min.css) && \
-(cd remember; cp RememberSongs-responsive-smartphone.css RememberSongs-responsive-smartphone-min.css) && \
+
+(cd remember; html-minifier --config-file ../html-minifier-conf.json RememberSongs-src.html > RememberSongs.html) && \
+
+(cd remember; postcss RememberSongs.css > RememberSongs-min.css) && \
+(cd remember; postcss RememberSongs-responsive-smartphone.css > RememberSongs-responsive-smartphone-min.css) && \
+
 (cd remember; cp Main.js Main-min.js) && \
 (cd remember; cp RememberSongs-windows-phone-8-viewport-fix.js RememberSongs-windows-phone-8-viewport-fix-min.js) && \
 (cd remember; cp SetUp.js SetUp-min.js) || \
+
 echo "Failed to complete"
