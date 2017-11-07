@@ -1,20 +1,24 @@
 #/bin/sh
 # Copyright (C) 2017 Mark D. Blackwell.
 
+# Versions:
+#  elm 0.18.0
+#  elm-format 0.7.0-exp
+#  uglify-js 3.1.7
+
+echo "Searching for trailing blanks"
+grep -nEI ' $' `find front-end -type f`
+
 (
-NAME=Main && \
-
-echo "Searching for trailing blanks" && \
-grep -nEI ' $' `find front-end -type f` || \
-
-echo "Formatting" && \
+echo "Formatting"
 elm-format --yes front-end/ && \
 
+NAME=Main
 elm-make --warn --output=remember/$NAME.js front-end/$NAME.elm && \
 
 cd remember && \
 
-echo "Minifying $NAME.js" && \
+echo "Minifying $NAME.js"
 uglifyjs --compress --mangle reserved=['Elm'] -- \
   $NAME.js > \
   $NAME-min.js && \
