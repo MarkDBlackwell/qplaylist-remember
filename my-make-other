@@ -1,0 +1,44 @@
+#/bin/sh
+# Copyright (C) 2017 Mark D. Blackwell.
+# See:
+# https://developers.google.com/speed/docs/insights/MinifyResources
+# https://dimiterpetrov.com/blog/elm-single-page-application-setup/
+# https://github.com/ben-eb/cssnano
+# https://github.com/kangax/html-minifier
+# https://github.com/mishoo/UglifyJS2
+
+(
+
+cd remember && \
+
+NAME=RememberSongs
+echo "Minifying $NAME.html"
+html-minifier --config-file ../html-minifier-conf.json \
+  $NAME-src.html > \
+  $NAME.html && \
+
+NAME=RememberSongs-responsive-smartphone
+postcss \
+  $NAME.css > \
+  $NAME-min.css && \
+
+NAME=RememberSongs
+postcss \
+  $NAME.css > \
+  $NAME-min.css && \
+
+NAME=RememberSongs-windows-phone-8-viewport-fix
+echo "Minifying $NAME.js"
+uglifyjs --compress --mangle --warn -- \
+  $NAME.js > \
+  $NAME-min.js && \
+
+NAME=SetUp
+echo "Minifying $NAME.js"
+uglifyjs --compress --mangle --warn -- \
+  $NAME.js > \
+  $NAME-min.js && \
+
+:) || \
+
+echo "Failed to complete"

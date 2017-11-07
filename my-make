@@ -1,21 +1,24 @@
 #/bin/sh
 # Copyright (C) 2017 Mark D. Blackwell.
-# See:
-# https://developers.google.com/speed/docs/insights/MinifyResources
-# https://github.com/ben-eb/cssnano
-# https://github.com/kangax/html-minifier
 
+(
+NAME=Main && \
+
+echo "Searching for trailing blanks" && \
 grep -nEI ' $' `find front-end -type f` || \
+
+echo "Formatting" && \
 elm-format --yes front-end/ && \
-elm-make --warn --output=remember/Main.js front-end/Main.elm && \
 
-(cd remember; html-minifier --config-file ../html-minifier-conf.json RememberSongs-src.html > RememberSongs.html) && \
+elm-make --warn --output=remember/$NAME.js front-end/$NAME.elm && \
 
-(cd remember; postcss RememberSongs.css > RememberSongs-min.css) && \
-(cd remember; postcss RememberSongs-responsive-smartphone.css > RememberSongs-responsive-smartphone-min.css) && \
+cd remember && \
 
-(cd remember; cp Main.js Main-min.js) && \
-(cd remember; cp RememberSongs-windows-phone-8-viewport-fix.js RememberSongs-windows-phone-8-viewport-fix-min.js) && \
-(cd remember; cp SetUp.js SetUp-min.js) || \
+echo "Minifying $NAME.js" && \
+uglifyjs --compress --mangle reserved=['Elm'] -- \
+  $NAME.js > \
+  $NAME-min.js && \
+
+:) || \
 
 echo "Failed to complete"
