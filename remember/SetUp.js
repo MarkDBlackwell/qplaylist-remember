@@ -175,8 +175,10 @@ functionResetSongsDevelopmentOnly();
         functionStorageSubscribe = function(app) {
             //Don't use an arrow function ("fat tag"), because IE 11 doesn't support it.
             app.ports.updateLocalStorage.subscribe(function(songsRememberedFromPort) {
+                var stringified;
                 if (functionStorageIsAccessible()) {
-                    window.localStorage.setItem(functionKeyStorage(), JSON.stringify(songsRememberedFromPort));
+                    stringified = JSON.stringify(songsRememberedFromPort);
+                    window.localStorage.setItem(functionKeyStorage(), stringified);
                 };
             });
             return null;
