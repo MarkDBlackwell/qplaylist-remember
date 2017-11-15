@@ -106,7 +106,10 @@ commentSendHand model =
                         likeOrCommentRequestUriText
                             model.songCommentingMaybe
                             model.userIdentifier
-                            model.commentText
+                            (String.cons
+                                'b'
+                                model.commentText
+                            )
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -154,7 +157,10 @@ likeButtonProcessHand model songsRememberedIndex =
                             likeOrCommentRequestUriText
                                 songsRememberedSelectOneMaybe
                                 model.userIdentifier
-                                "Loved it!"
+                                (String.cons
+                                    'c'
+                                    "Loved it!"
+                                )
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit

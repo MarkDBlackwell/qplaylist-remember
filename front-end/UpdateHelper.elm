@@ -104,6 +104,12 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
                 , songLikingOrCommenting.title
                 ]
 
+        artistTimeTitlePrepended : UriText
+        artistTimeTitlePrepended =
+            String.cons
+                'a'
+                artistTimeTitle
+
         basename : UriText
         basename =
             "append.json"
@@ -116,7 +122,7 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         [ basename ]
         [ ( "user_identifier", userIdentifier )
         , ( "timestamp", songLikingOrCommenting.timestamp )
-        , ( "song", artistTimeTitle )
+        , ( "song", artistTimeTitlePrepended )
         , ( "comment", likeOrCommentText )
         ]
 
