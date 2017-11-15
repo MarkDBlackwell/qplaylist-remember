@@ -97,22 +97,22 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         artistTimeTitle : UriText
         artistTimeTitle =
             String.concat
-                [ songLikingOrCommenting.time
+                [ category
+                , " "
+                , songLikingOrCommenting.time
                 , " "
                 , songLikingOrCommenting.artist
                 , ": "
                 , songLikingOrCommenting.title
                 ]
 
-        artistTimeTitlePrepended : UriText
-        artistTimeTitlePrepended =
-            String.cons
-                'a'
-                artistTimeTitle
-
         basename : UriText
         basename =
             "append.json"
+
+        category : UriText
+        category =
+            "s"
 
         songLikingOrCommenting : SongRemembered
         songLikingOrCommenting =
@@ -122,7 +122,7 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
         [ basename ]
         [ ( "user_identifier", userIdentifier )
         , ( "timestamp", songLikingOrCommenting.timestamp )
-        , ( "song", artistTimeTitlePrepended )
+        , ( "song", artistTimeTitle )
         , ( "comment", likeOrCommentText )
         ]
 

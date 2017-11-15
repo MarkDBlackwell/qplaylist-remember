@@ -96,6 +96,10 @@ commentSendHand model =
                 )
             else
                 let
+                    category : UriText
+                    category =
+                        "c"
+
                     commentRequest : Cmd Msg
                     commentRequest =
                         getString commentRequestUriText
@@ -103,13 +107,14 @@ commentSendHand model =
 
                     commentRequestUriText : UriText
                     commentRequestUriText =
-                        likeOrCommentRequestUriText
-                            model.songCommentingMaybe
-                            model.userIdentifier
-                            (String.cons
-                                'b'
-                                model.commentText
-                            )
+                        String.concat
+                            [ category
+                            , " "
+                            , model.commentText
+                            ]
+                            |> likeOrCommentRequestUriText
+                                model.songCommentingMaybe
+                                model.userIdentifier
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -147,6 +152,10 @@ likeButtonProcessHand model songsRememberedIndex =
 
                 _ ->
                     let
+                        category : UriText
+                        category =
+                            "l"
+
                         likeRequest : Cmd Msg
                         likeRequest =
                             getString likeRequestUriText
@@ -154,13 +163,14 @@ likeButtonProcessHand model songsRememberedIndex =
 
                         likeRequestUriText : UriText
                         likeRequestUriText =
-                            likeOrCommentRequestUriText
-                                songsRememberedSelectOneMaybe
-                                model.userIdentifier
-                                (String.cons
-                                    'c'
-                                    "Loved it!"
-                                )
+                            String.concat
+                                [ category
+                                , " "
+                                , "Loved it!"
+                                ]
+                                |> likeOrCommentRequestUriText
+                                    songsRememberedSelectOneMaybe
+                                    model.userIdentifier
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
