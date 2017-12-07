@@ -200,16 +200,10 @@ songsRecentRefreshHand model =
                     let
                         basename : UriText
                         basename =
-                            "LatestFive.json"
-
-                        subUri : UriText
-                        subUri =
-                            "wtmdapp"
+                            "LatestFew.json"
                     in
                     relative
-                        [ ".."
-                        , subUri
-                        , basename
+                        [ basename
                         ]
                         []
 
