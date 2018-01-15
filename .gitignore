@@ -2,23 +2,29 @@
 /elm-stuff/generated-code/*
 /elm-stuff/packages/*
 /node_modules/*
+/old/*
 /out/*
 /player/*
 /radio/*
+/station-app/*
 /tests/elm-stuff/build-artifacts/*
 /tests/elm-stuff/packages/*
+/tmp/*
+/website-root/*
 
-/.htaccess
+/Main.js
 /index.html
-/remember/Main.js
 /remember/RememberSongs.html
 /remember/comments.txt
-/remember/npm-debug.log
-/remember/php_errorlog
-/robots.txt
-/wtmdapp/.htaccess
+/test/LatestFew.json
+/test/comments.txt
+
+npm-debug.log
+php_errorlog
 
 *.stackdump
 Copy\ *
 *-min.css
 *-min.js
+
+!.gitkeep

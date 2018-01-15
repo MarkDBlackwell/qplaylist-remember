@@ -15,34 +15,36 @@
 #  postcss 4.1.1
 
 (
+SOURCE_DIRECTORY=../remember-source && \
+
 cd remember && \
 
-NAME=SetUp
-echo "Minifying $NAME.js"
+NAME=SetUp && \
+echo "Minifying $NAME.js" && \
 uglifyjs --compress --mangle --warn -- \
-  $NAME.js > \
+  $SOURCE_DIRECTORY/$NAME.js > \
   $NAME-min.js && \
 
-NAME=RememberSongs-windows-phone-8-viewport-fix
-echo "Minifying $NAME.js"
+NAME=RememberSongs-windows-phone-8-viewport-fix && \
+echo "Minifying $NAME.js" && \
 uglifyjs --compress --mangle --warn -- \
-  $NAME.js > \
+  $SOURCE_DIRECTORY/$NAME.js > \
   $NAME-min.js && \
 
-NAME=RememberSongs
-echo "Minifying $NAME.html"
+NAME=RememberSongs && \
+echo "Minifying $NAME.html" && \
 html-minifier --config-file ../html-minifier-conf.json \
-  $NAME-src.html > \
+  $SOURCE_DIRECTORY/$NAME-src.html > \
   $NAME.html && \
 
-NAME=RememberSongs
+NAME=RememberSongs && \
 postcss \
-  $NAME.css > \
+  $SOURCE_DIRECTORY/$NAME.css > \
   $NAME-min.css && \
 
-NAME=RememberSongs-responsive-smartphone
+NAME=RememberSongs-responsive-smartphone && \
 postcss \
-  $NAME.css > \
+  $SOURCE_DIRECTORY/$NAME.css > \
   $NAME-min.css && \
 
 :) || \

@@ -10,18 +10,18 @@ echo "Searching for trailing blanks"
 grep -nEI ' $' `find front-end -type f`
 
 (
-echo "Formatting"
+TEMP_DIRECTORY=tmp && \
+
+echo "Formatting" && \
 elm-format --yes front-end/ && \
 
-NAME=Main
-elm-make --warn --output=remember/$NAME.js front-end/$NAME.elm && \
+NAME=Main && \
+elm-make --warn --output=$TEMP_DIRECTORY/$NAME.js front-end/$NAME.elm && \
 
-cd remember && \
-
-echo "Minifying $NAME.js"
+echo "Minifying $NAME.js" && \
 uglifyjs --compress --mangle reserved=['Elm'] -- \
-  $NAME.js > \
-  $NAME-min.js && \
+  $TEMP_DIRECTORY/$NAME.js > \
+  remember/$NAME-min.js && \
 
 :) || \
 
