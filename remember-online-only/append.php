@@ -28,6 +28,11 @@ $response_bad_file_json               = json_encode(array('response' => 'Unable 
 $response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));
 $response_ok_json                     = json_encode(array('response' => 'good'));
 
+// See http://php.net/manual/en/function.fopen.php
+// fopen with "a" means:
+//   "Open for writing only; place the file pointer at the end of the file.
+//   If the file does not exist, attempt to create it."
+
 // Depends upon the above:
 
 $myfile = fopen($comments_filename, "a") or die($response_bad_file_json);
