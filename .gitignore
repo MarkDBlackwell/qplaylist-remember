@@ -8,6 +8,7 @@
 /radio/*
 /station-app/*
 /tests/elm-stuff/build-artifacts/*
+/tests/elm-stuff/generated-code/*
 /tests/elm-stuff/packages/*
 /tmp/*
 /website-root/*
