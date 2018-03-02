@@ -2,4 +2,4 @@
 
 Copyright (C) 2017 Mark D. Blackwell.
 
-License: GPL version 3.
+License: see license/none.txt

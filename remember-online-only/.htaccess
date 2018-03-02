@@ -1,3 +1,9 @@
+# Copyright (C) 2017 Mark D. Blackwell.
+#   All rights reserved.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 # 10-26-17 Mark Blackwell - Within .htaccess, mod_rewrite requires FollowSymLinks.
 # See:
 #   https://httpd.apache.org/docs/2.4/mod/mod_rewrite.html#rewriterule
