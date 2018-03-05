@@ -3,16 +3,15 @@
 # See:
 # https://developers.google.com/speed/docs/insights/MinifyResources
 # https://dimiterpetrov.com/blog/elm-single-page-application-setup/
-# https://github.com/ben-eb/cssnano
+# https://github.com/ben-eb/cssnano-cli
 # https://github.com/kangax/html-minifier
 # https://github.com/mishoo/UglifyJS2
 
 # Versions:
-#  cssnano 3.10.0
+#  cssnano-cli 1.0.5
 #  html-minifier 3.5.6
-#  node v5.12.0
+#  node 5.12.0
 #  npm 3.8.6
-#  postcss 4.1.1
 
 (
 SOURCE_DIRECTORY=../remember-source && \
@@ -38,12 +37,12 @@ html-minifier --config-file ../html-minifier-conf.json \
   $NAME.html && \
 
 NAME=RememberSongs && \
-postcss \
+cssnano \
   $SOURCE_DIRECTORY/$NAME.css > \
   $NAME-min.css && \
 
 NAME=RememberSongs-responsive-smartphone && \
-postcss \
+cssnano \
   $SOURCE_DIRECTORY/$NAME.css > \
   $NAME-min.css && \
 
