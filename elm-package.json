@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "Remember Songs from QPlaylist",
-    "repository": "https://github.com/markdblackwell/qplaylist-remember-songs.git",
+    "repository": "https://github.com/markdblackwell/qplaylist-remember.git",
     "license": "GPL3",
     "source-directories": [
         "front-end"

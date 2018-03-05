@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "Test Suites",
-    "repository": "https://github.com/markdblackwell/qplaylist-remember-songs.git",
+    "repository": "https://github.com/markdblackwell/qplaylist-remember.git",
     "license": "GPL3",
     "source-directories": [
         "..\\front-end",
