@@ -2,6 +2,13 @@
 
 Copyright (C) 2017 Mark D. Blackwell.
 
+## Overview
+
+Provides a webpage for listeners
+to send comments about recent songs to disk jockeys
+for any radio station
+which uses WideOrbit automation software.
+
 ## Development
 
 npm install --global cssnano-cli
