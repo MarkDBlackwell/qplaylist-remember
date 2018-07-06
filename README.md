@@ -20,4 +20,6 @@ npm install --global uglify-js
 ./my-make-other
 ````
 
-License: see license/none.txt
+## License
+
+See license/none.txt
