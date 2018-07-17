@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2017 Mark D. Blackwell.
+/* Copyright (C) 2017, 2018 Mark D. Blackwell.
    All rights reserved.
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,8 +17,21 @@ header("content-type:application/json");
 
 // Constants:
 $comments_filename = "comments.txt";
+$double_quote = "\"";
 $ip_address = $_SERVER['REMOTE_ADDR'];
-$my_query_keys = array('comment', 'song', 'user_identifier', 'timestamp');
+
+$my_query_keys = array(
+    'comment',
+    'comment_category',
+    'song_artist',
+    'song_category',
+    'song_time',
+    'song_title',
+    'timestamp',
+    'user_identifier'
+    );
+
+$n_dash = " – ";
 
 $response_bad_file_json               = json_encode(array('response' => 'Unable to open comments file!'));
 $response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));
@@ -38,19 +51,36 @@ count($my_query_keys) === count($_GET) or die($response_bad_request_parameters_j
 foreach ($my_query_keys as $key)
     isset($_GET[$key]) or die($response_bad_request_parameters_json);
 
-$comment         = $_GET['comment'        ];
-$song            = $_GET['song'           ];
-$user_identifier = $_GET['user_identifier'];
-$timestamp       = $_GET['timestamp'      ];
+$comment          = $_GET['comment'         ];
+$comment_category = $_GET['comment_category'];
+$song_artist      = $_GET['song_artist'     ];
+$song_category    = $_GET['song_category'   ];
+$song_time        = $_GET['song_time'       ];
+$song_title       = $_GET['song_title'      ];
+$timestamp        = $_GET['timestamp'       ];
+$user_identifier  = $_GET['user_identifier' ];
 
 // Depends upon the above:
 
-$prefix = $timestamp . " " . $ip_address . " " . $user_identifier . " ";
+$prefix = $timestamp . " " . $ip_address . " " . $user_identifier;
 
 // Depends upon the above:
 
-$string_to_write_comment = $prefix . $comment . "\n";
-$string_to_write_song    = $prefix . $song    . "\n";
+$string_to_write_comment =
+    $prefix . " " .
+    $comment_category . " " .
+    $comment .
+    "\n";
+
+$string_to_write_song    =
+    $prefix . " " .
+    $song_category . " " .
+    $song_time .
+    $n_dash . $double_quote .
+    $song_title .
+    $double_quote . $n_dash .
+    $song_artist .
+    "\n";
 
 // Depends upon the above:
 

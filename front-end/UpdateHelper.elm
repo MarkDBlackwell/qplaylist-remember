@@ -1,4 +1,4 @@
-{- Copyright (C) 2017 Mark D. Blackwell.
+{- Copyright (C) 2017, 2018 Mark D. Blackwell.
    All rights reserved.
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -85,27 +85,15 @@ elmCycleDefault model =
     )
 
 
-likeOrCommentRequestUriText : SongRememberedMaybe -> UserIdentifier -> LikeOrCommentText -> UriText
-likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCommentText =
+likeOrCommentRequestUriText : UserIdentifier -> SongRememberedMaybe -> UriText -> LikeOrCommentText -> UriText
+likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCategory likeOrCommentText =
     let
-        artistTimeTitle : UriText
-        artistTimeTitle =
-            String.concat
-                [ category
-                , " "
-                , songLikingOrCommenting.time
-                , " "
-                , songLikingOrCommenting.artist
-                , ": "
-                , songLikingOrCommenting.title
-                ]
-
         basename : UriText
         basename =
             "append.json"
 
-        category : UriText
-        category =
+        songCategory : UriText
+        songCategory =
             "s"
 
         songLikingOrCommenting : SongRemembered
@@ -114,10 +102,14 @@ likeOrCommentRequestUriText songLikingOrCommentingMaybe userIdentifier likeOrCom
     in
     relative
         [ basename ]
-        [ ( "user_identifier", userIdentifier )
+        [ ( "comment", likeOrCommentText )
+        , ( "comment_category", commentCategory )
+        , ( "song_artist", songLikingOrCommenting.artist )
+        , ( "song_category", songCategory )
+        , ( "song_time", songLikingOrCommenting.time )
+        , ( "song_title", songLikingOrCommenting.title )
         , ( "timestamp", songLikingOrCommenting.timestamp )
-        , ( "song", artistTimeTitle )
-        , ( "comment", likeOrCommentText )
+        , ( "user_identifier", userIdentifier )
         ]
 
 

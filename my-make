@@ -1,5 +1,5 @@
 #/bin/sh
-# Copyright (C) 2017 Mark D. Blackwell.
+# Copyright (C) 2017, 2018 Mark D. Blackwell.
 
 # Versions:
 #  node 5.12.0 or 6.11.0
@@ -22,7 +22,7 @@ elm-format --yes front-end/ && \
 NAME=Main && \
 elm-make --warn --output=$TEMP_DIRECTORY/$NAME.js front-end/$NAME.elm && \
 
-echo "Minifying $NAME.js" && \
+echo "Minifying $NAME.js to $NAME-min.js" && \
 uglifyjs --compress --mangle reserved=['Elm'] -- \
   $TEMP_DIRECTORY/$NAME.js > \
   remember/$NAME-min.js && \

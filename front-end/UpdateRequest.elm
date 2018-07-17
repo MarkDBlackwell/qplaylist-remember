@@ -1,4 +1,4 @@
-{- Copyright (C) 2017 Mark D. Blackwell.
+{- Copyright (C) 2017, 2018 Mark D. Blackwell.
    All rights reserved.
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -90,10 +90,6 @@ commentSendHand model =
                 )
             else
                 let
-                    category : UriText
-                    category =
-                        "c"
-
                     commentRequest : Cmd Msg
                     commentRequest =
                         getString commentRequestUriText
@@ -101,14 +97,16 @@ commentSendHand model =
 
                     commentRequestUriText : UriText
                     commentRequestUriText =
-                        String.concat
-                            [ category
-                            , " "
-                            , model.commentText
-                            ]
-                            |> likeOrCommentRequestUriText
-                                model.songCommentingMaybe
-                                model.userIdentifier
+                        let
+                            commentCategory : UriText
+                            commentCategory =
+                                "c"
+                        in
+                        likeOrCommentRequestUriText
+                            model.userIdentifier
+                            model.songCommentingMaybe
+                            commentCategory
+                            model.commentText
                 in
                 ( { model
                     | alertMessageText = alertMessageTextInit
@@ -146,10 +144,6 @@ likeButtonProcessHand model songsRememberedIndex =
 
                 _ ->
                     let
-                        category : UriText
-                        category =
-                            "l"
-
                         likeRequest : Cmd Msg
                         likeRequest =
                             getString likeRequestUriText
@@ -157,14 +151,20 @@ likeButtonProcessHand model songsRememberedIndex =
 
                         likeRequestUriText : UriText
                         likeRequestUriText =
-                            String.concat
-                                [ category
-                                , " "
-                                , "Loved it!"
-                                ]
-                                |> likeOrCommentRequestUriText
-                                    songsRememberedSelectOneMaybe
-                                    model.userIdentifier
+                            let
+                                commentCategory : UriText
+                                commentCategory =
+                                    "l"
+
+                                commentText : UriText
+                                commentText =
+                                    "Loved it!"
+                            in
+                            likeOrCommentRequestUriText
+                                model.userIdentifier
+                                songsRememberedSelectOneMaybe
+                                commentCategory
+                                commentText
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
