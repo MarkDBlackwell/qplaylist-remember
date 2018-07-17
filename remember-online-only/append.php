@@ -31,7 +31,7 @@ $my_query_keys = array(
     'user_identifier'
     );
 
-$n_dash = " – ";
+$n_dash = " - "; // Using hyphen, because it's ASCII.
 
 $response_bad_file_json               = json_encode(array('response' => 'Unable to open comments file!'));
 $response_bad_request_parameters_json = json_encode(array('response' => 'Invalid request parameters!'));

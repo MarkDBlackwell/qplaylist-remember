@@ -11,6 +11,10 @@
 #  html-minifier 3.5.6
 #  cssnano-cli 1.0.5
 
+# Don't uglify (or compress) the PHP program on the server (append.php),
+#   since browsers don't download it, and thus it doesn't involve slow
+#   network traffic.
+
 (
 export PATH=$PATH:./node_modules/.bin && \
 
