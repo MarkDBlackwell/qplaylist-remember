@@ -11,11 +11,24 @@ which uses WideOrbit automation software.
 
 ## Development
 
-````bash
-npm install --global cssnano-cli
-npm install --global html-minifier
-npm install --global uglify-js
+For versions, see the following my-make* files.
 
+I suggest that you *do not* use the '--global' flag.
+
+Download and install the latest LTS (long-term support) version of Node.js, from its [website](https://nodejs.org/en/).
+
+I'm using version 6.11.0.
+(Earlier, I was using version 5.12.0.)
+
+Node.js automatically comes with npm. I'm using version 3.10.10.
+(Earlier, I was using version 3.8.6.)
+
+Do these from the project root directory:
+
+````bash
+npm install uglify-js@{version}
+npm install html-minifier@{version}
+npm install cssnano-cli@{version}
 ./my-make
 ./my-make-other
 ````

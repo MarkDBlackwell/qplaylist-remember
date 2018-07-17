@@ -2,6 +2,8 @@
 # Copyright (C) 2017 Mark D. Blackwell.
 
 # Versions:
+#  node 5.12.0 or 6.11.0
+#  npm 3.8.6 or 3.10.10 (comes with node)
 #  elm 0.18.0
 #  elm-format 0.7.0-exp
 #  uglify-js 3.1.7
@@ -10,6 +12,8 @@ echo "Searching for trailing blanks"
 grep -nEI ' $' `find front-end -type f`
 
 (
+export PATH=$PATH:./node_modules/.bin && \
+
 TEMP_DIRECTORY=tmp && \
 
 echo "Formatting" && \
