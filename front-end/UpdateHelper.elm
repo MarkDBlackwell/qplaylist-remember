@@ -29,7 +29,7 @@ import ModelType
         )
 import SongInitialize
     exposing
-        ( likedOrCommentedInit
+        ( likedOrCommentedCountInit
         , songLikingOrCommentingInit
         )
 import SongType

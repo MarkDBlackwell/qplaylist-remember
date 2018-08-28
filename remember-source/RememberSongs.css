@@ -76,6 +76,9 @@ section#comment > button {
 section#comment > button:first-of-type:after {
     content: "OK";
 }
+section#comment > button:last-of-type {
+    float: right;
+}
 section#comment > button:last-of-type:after {
     content: "Cancel";
 }

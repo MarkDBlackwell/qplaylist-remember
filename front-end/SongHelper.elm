@@ -33,12 +33,12 @@ import ModelType
         )
 import SongInitialize
     exposing
-        ( likedOrCommentedInit
+        ( likedOrCommentedCountInit
         )
 import SongType
     exposing
         ( Artist
-        , LikedOrCommented
+        , LikedOrCommentedCount
         , SongGroup
             ( Recent
             , Remembered
@@ -106,7 +106,7 @@ song2SongRecent { artist, time, timestamp, title } =
 
 song2SongRemembered : SongRecentBase a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
-    SongRemembered artist likedOrCommentedInit time timestamp title
+    SongRemembered artist likedOrCommentedCountInit time timestamp title
 
 
 song2SongTimeless : SongTimelessBase a -> SongTimeless
@@ -122,8 +122,8 @@ songAlready listA songB =
 
 
 songRememberedUpdate : SongTimeExceptBase a -> SongTimeBase b -> SongRemembered
-songRememberedUpdate { artist, likedOrCommented, title } { time, timestamp } =
-    SongRemembered artist likedOrCommented time timestamp title
+songRememberedUpdate { artist, likedOrCommentedCount, title } { time, timestamp } =
+    SongRemembered artist likedOrCommentedCount time timestamp title
 
 
 songTimelessCompare : SongTimelessBase a -> SongTimelessBase b -> Bool

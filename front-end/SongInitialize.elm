@@ -8,7 +8,7 @@
 
 module SongInitialize
     exposing
-        ( likedOrCommentedInit
+        ( likedOrCommentedCountInit
         , songCommentingMaybeInit
         , songLikingMaybeInit
         , songLikingOrCommentingInit
@@ -18,7 +18,7 @@ module SongInitialize
 import SongType
     exposing
         ( Artist
-        , LikedOrCommented
+        , LikedOrCommentedCount
         , SongRemembered
         , SongRememberedMaybe
         , SongsRecent
@@ -43,7 +43,7 @@ songLikingMaybeInit =
 
 songLikingOrCommentingInit : SongRemembered
 songLikingOrCommentingInit =
-    SongRemembered artistInit likedOrCommentedInit timeInit timestampInit titleInit
+    SongRemembered artistInit likedOrCommentedCountInit timeInit timestampInit titleInit
 
 
 songsRecentInit : SongsRecent
@@ -60,9 +60,9 @@ artistInit =
     ""
 
 
-likedOrCommentedInit : LikedOrCommented
-likedOrCommentedInit =
-    False
+likedOrCommentedCountInit : LikedOrCommentedCount
+likedOrCommentedCountInit =
+    0
 
 
 timeInit : Time

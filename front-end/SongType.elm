@@ -9,7 +9,7 @@
 module SongType
     exposing
         ( Artist
-        , LikedOrCommented
+        , LikedOrCommentedCount
         , SongGroup
             ( Recent
             , Remembered
@@ -47,8 +47,8 @@ type alias Artist =
     String
 
 
-type alias LikedOrCommented =
-    Bool
+type alias LikedOrCommentedCount =
+    Int
 
 
 type alias SongRecent =
@@ -79,7 +79,7 @@ type alias SongRecentOrRemembered =
 
 type alias SongRemembered =
     { artist : Artist
-    , likedOrCommented : LikedOrCommented
+    , likedOrCommentedCount : LikedOrCommentedCount
     , time : Time
     , timestamp : Timestamp
     , title : Title
@@ -100,7 +100,7 @@ type alias SongTimeBase a =
 type alias SongTimeExceptBase a =
     { a
         | artist : Artist
-        , likedOrCommented : LikedOrCommented
+        , likedOrCommentedCount : LikedOrCommentedCount
         , title : Title
     }
 

@@ -22,14 +22,14 @@ var functionResetSongsDevelopmentOnly = function() {
     tempSongs = [
         {
           artist: "Vance Joy",
-          likedOrCommented: true,
+          likedOrCommentedCount: 1,
           title: "Lay It On Me",
           time: "7:26 AM",
           timestamp: "2017 08 31 07 26"
         },
         {
           artist: "The Family Crest",
-          likedOrCommented: false,
+          likedOrCommentedCount: 0,
           title: "Mirror Love",
           time: "7:22 AM",
           timestamp: "2017 08 31 07 22"

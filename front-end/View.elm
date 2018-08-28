@@ -40,6 +40,7 @@ import Html.Attributes
         , id
         , placeholder
         , required
+        , style
         , title
         , type_
         )
@@ -204,24 +205,62 @@ view model =
                                 indicatorHoverText : HoverText
                                 indicatorHoverText =
                                     let
-                                        orAComment : HoverText
-                                        orAComment =
+                                        aboutSong : HoverText
+                                        aboutSong =
+                                            " about this song (with the DJ)"
+
+                                        likes : HoverText
+                                        likes =
+                                            case songRecentOrRemembered.likedOrCommentedCount of
+                                                1 ->
+                                                    "a 'Like'"
+
+                                                _ ->
+                                                    "'Like's"
+
+                                        orComments : HoverText
+                                        orComments =
+                                            let
+                                                comments : HoverText
+                                                comments =
+                                                    case songRecentOrRemembered.likedOrCommentedCount of
+                                                        1 ->
+                                                            " (or a comment)"
+
+                                                        _ ->
+                                                            " (or comments)"
+                                            in
                                             if model.showCommentButtons then
-                                                " (or a comment)"
+                                                comments
                                             else
                                                 ""
+
+                                        youShared : HoverText
+                                        youShared =
+                                            "You've shared "
                                     in
                                     String.concat
-                                        [ "You've shared a 'Like'"
-                                        , orAComment
-                                        , " about this song (with the DJ)"
+                                        [ youShared
+                                        , likes
+                                        , orComments
+                                        , aboutSong
                                         ]
                             in
-                            if songRecentOrRemembered.likedOrCommented then
-                                em [ title indicatorHoverText ]
-                                    innerHtmlEmpty
-                            else
-                                htmlNodeNull
+                            case songRecentOrRemembered.likedOrCommentedCount of
+                                0 ->
+                                    htmlNodeNull
+
+                                1 ->
+                                    em [ title indicatorHoverText ]
+                                        innerHtmlEmpty
+
+                                _ ->
+                                    em
+                                        [ title indicatorHoverText
+                                        , style [ ( "background-color", "Salmon" ) ]
+                                        , style [ ( "color", "Salmon" ) ]
+                                        ]
+                                        innerHtmlEmpty
 
                         songAttributes : List (Attribute msg)
                         songAttributes =

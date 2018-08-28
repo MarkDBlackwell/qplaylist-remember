@@ -20,7 +20,8 @@ import SongHelper
         )
 import SongType
     exposing
-        ( SongGroupLength
+        ( LikedOrCommentedCount
+        , SongGroupLength
         , SongRecent
         , SongRemembered
         , SongRememberedMaybe
@@ -51,6 +52,12 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                 tweakPossibly : SongRemembered -> SongRemembered
                 tweakPossibly songRemembered =
                     let
+                        likedOrCommentedCountNew : LikedOrCommentedCount
+                        likedOrCommentedCountNew =
+                            (+)
+                                songRemembered.likedOrCommentedCount
+                                1
+
                         songDesired : SongRecent
                         songDesired =
                             song2SongRecent songLikingOrCommenting
@@ -59,7 +66,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                         songRemembered
                     else
                         { songRemembered
-                            | likedOrCommented = True
+                            | likedOrCommentedCount = likedOrCommentedCountNew
                         }
             in
             List.map tweakPossibly songsRemembered
