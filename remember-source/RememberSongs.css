@@ -39,18 +39,19 @@ head {
 body {
     font-size: 0;
 }
-p.requirements,
-p.requirements-internet-explorer {
+body#main > div > h2,
+body#main > div > pre,
+p.requirements {
     line-height: 1.9;
+    font-size: 14px;
+    background-color: rgb(255,255,0);
+    color: rgb(230,0,140);
+}
+p.requirements {
     text-align: center;
-    color: Black;
-    background-color: White;
 }
 p.requirements > span {
     font-size: 14px;
-}
-p.requirements-internet-explorer > span {
-    font-size: 20px;
 }
 section#alert {
     line-height: 1.5;
