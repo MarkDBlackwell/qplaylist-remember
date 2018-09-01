@@ -211,7 +211,7 @@ view model =
 
                                         likes : HoverText
                                         likes =
-                                            case songRecentOrRemembered.likedOrCommentedCount of
+                                            case songRecentOrRemembered.likeOrCommentCount of
                                                 1 ->
                                                     "a 'Like'"
 
@@ -223,7 +223,7 @@ view model =
                                             let
                                                 comments : HoverText
                                                 comments =
-                                                    case songRecentOrRemembered.likedOrCommentedCount of
+                                                    case songRecentOrRemembered.likeOrCommentCount of
                                                         1 ->
                                                             " (or a comment)"
 
@@ -246,7 +246,7 @@ view model =
                                         , aboutSong
                                         ]
                             in
-                            case songRecentOrRemembered.likedOrCommentedCount of
+                            case songRecentOrRemembered.likeOrCommentCount of
                                 0 ->
                                     htmlNodeNull
 
