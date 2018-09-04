@@ -8,23 +8,28 @@
 #  elm-format 0.7.0-exp
 #  uglify-js 3.1.7
 
+DIRECTORY_FRONT_END=src/front-end
+
+DIRECTORY_TEMP=tmp
+
 echo "Searching for trailing blanks"
-grep -nEI ' $' `find front-end -type f`
+grep -nEI ' $' `find $DIRECTORY_FRONT_END -type f`
 
 (
 export PATH=$PATH:./node_modules/.bin && \
 
-TEMP_DIRECTORY=tmp && \
-
-echo "Formatting" && \
-elm-format --yes front-end/ && \
+for directory_source in `find $DIRECTORY_FRONT_END -type d`
+do
+  echo "Formatting $directory_source"
+  elm-format --yes $directory_source
+done && \
 
 NAME=Main && \
-elm-make --warn --output=$TEMP_DIRECTORY/$NAME.js front-end/$NAME.elm && \
+elm-make --warn --output=$DIRECTORY_TEMP/$NAME.js $DIRECTORY_FRONT_END/$NAME.elm && \
 
 echo "Minifying $NAME.js to $NAME-min.js" && \
 uglifyjs --compress --mangle reserved=['Elm'] -- \
-  $TEMP_DIRECTORY/$NAME.js > \
+  $DIRECTORY_TEMP/$NAME.js > \
   remember/$NAME-min.js && \
 
 :) || \

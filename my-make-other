@@ -18,38 +18,38 @@
 (
 export PATH=$PATH:./node_modules/.bin && \
 
-SOURCE_DIRECTORY=../remember-source && \
-
 cd remember && \
+
+DIRECTORY_SOURCE=../src/remember-source && \
 
 NAME=SetUp && \
 echo "Minifying $NAME.js to $NAME-min.js" && \
 ../node_modules/.bin/uglifyjs --compress --mangle --warn -- \
-  $SOURCE_DIRECTORY/$NAME.js > \
+  $DIRECTORY_SOURCE/$NAME.js > \
   $NAME-min.js && \
 
 NAME=RememberSongs-windows-phone-8-viewport-fix && \
 echo "Minifying $NAME.js to $NAME-min.js" && \
 ../node_modules/.bin/uglifyjs --compress --mangle --warn -- \
-  $SOURCE_DIRECTORY/$NAME.js > \
+  $DIRECTORY_SOURCE/$NAME.js > \
   $NAME-min.js && \
 
 NAME=RememberSongs && \
 echo "Minifying $NAME-src.html to $NAME.html" && \
 ../node_modules/.bin/html-minifier --config-file ../html-minifier-conf.json \
-  $SOURCE_DIRECTORY/$NAME-src.html > \
+  $DIRECTORY_SOURCE/$NAME-src.html > \
   $NAME.html && \
 
 NAME=RememberSongs && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
 ../node_modules/.bin/cssnano \
-  $SOURCE_DIRECTORY/$NAME.css > \
+  $DIRECTORY_SOURCE/$NAME.css > \
   $NAME-min.css && \
 
 NAME=RememberSongs-responsive-smartphone && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
 ../node_modules/.bin/cssnano \
-  $SOURCE_DIRECTORY/$NAME.css > \
+  $DIRECTORY_SOURCE/$NAME.css > \
   $NAME-min.css && \
 
 :) || \

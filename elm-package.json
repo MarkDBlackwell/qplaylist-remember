@@ -4,7 +4,13 @@
     "repository": "https://github.com/markdblackwell/qplaylist-remember.git",
     "license": "GPL3",
     "source-directories": [
-        "front-end"
+        "src/front-end",
+        "src/front-end/helper",
+        "src/front-end/initialize",
+        "src/front-end/type",
+        "src/front-end/update",
+        "src/front-end/utility",
+        "src/front-end/view"
     ],
     "exposed-modules": [],
     "dependencies": {
