@@ -213,10 +213,10 @@ view model =
                                         likes =
                                             case songRecentOrRemembered.likeOrCommentCount of
                                                 1 ->
-                                                    "a 'Like'"
+                                                    " a 'Like'"
 
                                                 _ ->
-                                                    "'Like's"
+                                                    " 'Like's"
 
                                         orComments : HoverText
                                         orComments =
@@ -237,7 +237,7 @@ view model =
 
                                         youShared : HoverText
                                         youShared =
-                                            "You've shared "
+                                            "You've shared"
                                     in
                                     String.concat
                                         [ youShared
