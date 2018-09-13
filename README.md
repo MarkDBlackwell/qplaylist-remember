@@ -1,6 +1,7 @@
 ### Remember songs (for QPlaylist)
 
-Copyright (C) 2017 Mark D. Blackwell.
+Copyright (C) 2018 Mark D. Blackwell.
+    All rights reserved.
 
 ## Overview
 
