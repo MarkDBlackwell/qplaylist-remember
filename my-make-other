@@ -1,5 +1,10 @@
 #/bin/sh
-# Copyright (C) 2017, 2018 Mark D. Blackwell.
+# Copyright (C) 2018 Mark D. Blackwell.
+#   All rights reserved.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 # See:
 # https://developers.google.com/speed/docs/insights/MinifyResources
 # https://dimiterpetrov.com/blog/elm-single-page-application-setup/
@@ -18,7 +23,7 @@
 (
 export PATH=$PATH:./node_modules/.bin && \
 
-cd remember && \
+cd build && \
 
 DIRECTORY_SOURCE=../src/remember-source && \
 
