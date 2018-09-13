@@ -1,0 +1,45 @@
+# Copyright (C) 2018 Mark D. Blackwell.
+#   All rights reserved.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+------------
+* Adjust focus (back to Comment button) on:
+
+CommentCancelHand  --DONE
+
+CommentResponse Ok  --DONE
+
+------------
+* Adjust focus (back to Like button) on:
+
+LikeResponse Ok  --DONE
+
+------------
+* Adjust focus (to Refresh button) on:
+
+InitialSetUp --DONE
+
+SongForgetHand --DONE
+
+------------
+* Prevent remembering identical (except timestamp) song on:
+
+SongRememberHand --DONE
+
+------------
+* Remove focus from log routines:
+
+(All of them.) --DONE
+
+------------
+* Update remembered song's timestamp on:
+
+CommentAreaOpenHand --DONE
+
+CommentSendHand --SKIP THIS ONE
+
+LikeButtonProcessHand --DONE
+
+SongRememberHand --DONE
