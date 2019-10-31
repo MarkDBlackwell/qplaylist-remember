@@ -17,6 +17,7 @@ button {
     border-width: .19230769em;
     font-family: inherit;
     font-stretch: ultra-expanded;
+    background-color: rgb(244,244,244);
 }
 button:focus {
     outline-style: dotted;
