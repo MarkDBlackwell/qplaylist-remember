@@ -51,7 +51,7 @@ echo "Minifying $NAME.css to $NAME-min.css" && \
   $DIRECTORY_SOURCE/$NAME.css > \
   $NAME-min.css && \
 
-NAME=RememberSongs-responsive-smartphone && \
+NAME=RememberSongs-responsive && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
 ../node_modules/.bin/cssnano \
   $DIRECTORY_SOURCE/$NAME.css > \
