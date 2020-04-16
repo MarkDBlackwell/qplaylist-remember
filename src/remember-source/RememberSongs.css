@@ -30,7 +30,7 @@ button:focus {
     padding: 0;
     line-height: 0;
     font-family: 'PT Sans Narrow', 'Arial', 'Helvetica', sans-serif;
-    font-size: 15px; /* basis for rem calculations */
+    font-size: 19px; /* basis for rem calculations */
     color: White;
     background-color: Black;
 }
@@ -60,7 +60,7 @@ section#alert {
     color: rgb(230,0,140);
 }
 section#alert > p {
-    font-size: 1rem; /* basis for em and percentage calculations */
+    font-size: .7rem; /* basis for em and percentage calculations */
     text-align: center;
 }
 section#comment {
@@ -183,7 +183,7 @@ section.songs-group > div > p > button {
     border-width: .19230769em;
 /* Override browser & user settings: */
     line-height: .9;
-    font-size: 11000%;
+    font-size: 14000%;
     font-weight: 100;
     letter-spacing: .227273em;
 }
@@ -241,12 +241,15 @@ section.songs-group > p > button {
 /* Override browser & user settings: */
     margin: 0 .90909091em 0 0;
     line-height: 1.2;
-    font-size: .73333333rem; /* basis for em and percentage calculations */
+    font-size: .9rem; /* basis for em and percentage calculations */
     font-weight: 400;
     letter-spacing: .227273em;
 }
 section#songs-latest > p > button:before {
     content: "morph";
+}
+section#songs-remembered > p > button {
+    margin-bottom: 1.2em;
 }
 section#songs-remembered > p > button:before {
     content: "refresh";
