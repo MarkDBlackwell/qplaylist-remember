@@ -9,8 +9,7 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
 */
 
-@media (orientation: landscape) and (max-width:  1023.9px),
-       (orientation: portrait ) and (max-height: 1023.9px) {
+@media only screen and (max-width:  1023.9px) {
     :root {
         font-size: 19px; /* basis for rem calculations */
     }
