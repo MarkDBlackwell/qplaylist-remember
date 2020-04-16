@@ -171,9 +171,6 @@ section.songs-group > div > p > a {
     color: White;
     outline-color: White;
 }
-section.songs-group > div > p > a:hover {
-    color: #ee7500;
-}
 section.songs-group > div > p > a:before {
     content: "Buy Song";
 }

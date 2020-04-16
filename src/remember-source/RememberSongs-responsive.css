@@ -9,7 +9,13 @@
 https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
 */
 
-@media only screen and (min-width:  1023.9px) {
+@media only screen and (any-hover: hover) {
+    section.songs-group > div > p > a:hover {
+        color: #ee7500;
+    }
+
+}
+@media only screen and (min-width: 1023.9px) {
     :root {
         font-size: 15px; /* basis for rem calculations */
     }
