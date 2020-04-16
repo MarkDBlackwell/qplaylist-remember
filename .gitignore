@@ -8,7 +8,6 @@
 /tests/elm-stuff/generated-code/*
 /tests/elm-stuff/packages/*
 /tmp/*
-/website-root/*
 
 /Main.js
 /index.html
