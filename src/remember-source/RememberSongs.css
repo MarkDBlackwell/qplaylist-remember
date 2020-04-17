@@ -211,7 +211,7 @@ section#songs-remembered > div > p > button:nth-of-type(2):before {
 }
 section#songs-remembered > div > p > button:last-of-type:before {
     text-transform: capitalize;
-    content: "send like";
+    content: "like";
 }
 section#songs-remembered > div > p > em {
     margin: 0 0 0 .4em;
