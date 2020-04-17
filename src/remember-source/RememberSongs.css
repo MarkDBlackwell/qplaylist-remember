@@ -110,7 +110,7 @@ section.songs-group:focus {
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-width: .19230769em;
-    border-bottom-color: #63686d;
+    border-bottom-color: rgb(99,104,109);
     border-bottom-style: solid;
     border-radius: .5em;
     font-size: .66666667rem; /* basis for em and percentage calculations */

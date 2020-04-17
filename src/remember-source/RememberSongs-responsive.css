@@ -11,7 +11,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
 
 @media only screen and (any-hover: hover) {
     section.songs-group > div > p > a:hover {
-        color: #ee7500;
+        color: rgb(238,117,0);
     }
 
 }
