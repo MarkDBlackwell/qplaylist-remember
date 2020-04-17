@@ -16,6 +16,11 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
 
 }
 @media only screen and (min-width: 1023.9px) {
+/* Override browser & user settings: */
+    button {
+        font-stretch: ultra-expanded;
+    }
+/* (End of override browser & user settings.) */
     :root {
         font-size: 15px; /* basis for rem calculations */
     }
