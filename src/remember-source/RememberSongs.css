@@ -72,10 +72,12 @@ section#comment > button {
     padding: 0 .2em 0 .2em;
     border-width: .16666667em;
     border-radius: 50%;
+    text-transform: lowercase;
 /* Override browser & user settings: */
     font-size: 1.0666667rem; /* basis for em and percentage calculations */
 }
 section#comment > button:first-of-type:after {
+/* Lowercase "OK" always looks bad: */
     text-transform: uppercase;
     content: "ok";
 }
@@ -83,7 +85,6 @@ section#comment > button:last-of-type {
     float: right;
 }
 section#comment > button:last-of-type:after {
-    text-transform: capitalize;
     content: "cancel";
 }
 section#comment > input {
@@ -156,14 +157,12 @@ section.songs-group > div > p:nth-of-type(2) {
 section.songs-group > div > p:nth-of-type(2):before {
     padding-right: .427691em;
     font-size: 73.0769%;
-    text-transform: capitalize;
     content: "title:";
 }
 /* Artist */
 section.songs-group > div > p:last-of-type:before {
     padding-right: .427691em;
     font-size: 73.0769%;
-    text-transform: capitalize;
     content: "artist:";
 }
 /* Link to buy song */
@@ -183,6 +182,7 @@ section.songs-group > div > p > button {
     vertical-align: top;
     padding: 0 .165289em .0606062em .110193em;
     border-width: .19230769em;
+    text-transform: lowercase;
 /* Override browser & user settings: */
     line-height: .9;
     font-size: 14000%;
@@ -198,19 +198,15 @@ section.songs-group > div > p > button:nth-of-type(2) {
     margin: 0 .290909em 0 0;
 }
 section#songs-latest > div > p > button:before {
-    text-transform: uppercase;
     content: "remember";
 }
 section#songs-remembered > div > p > button:first-of-type:before {
-    text-transform: uppercase;
     content: "forget";
 }
 section#songs-remembered > div > p > button:nth-of-type(2):before {
-    text-transform: capitalize;
     content: "comment";
 }
 section#songs-remembered > div > p > button:last-of-type:before {
-    text-transform: capitalize;
     content: "like";
 }
 section#songs-remembered > div > p > em {
@@ -229,25 +225,26 @@ section.songs-group > div > p > span {
     padding: 0 1.3em 0 .3em;
     font-size: 10000%;
 }
+/* Song group entries */
 section.songs-group > p {
     line-height: 1.1;
     font-size: .8rem; /* basis for em and percentage calculations */
     text-align: center;
     font-style: italic;
+    text-transform: lowercase;
 /* Override browser & user settings: */
     margin: 0;
 }
 section#songs-latest > p:after {
-    text-transform: capitalize;
     content: "latest";
 }
 section#songs-remembered > p:after {
-    text-transform: capitalize;
     content: "remembered . . . . . h – help";
 }
 section.songs-group > p > button {
     vertical-align: text-top;
     padding: 0 .04545455em 0 .1818182em;
+    text-transform: lowercase;
 /* Override browser & user settings: */
     margin: 0 .90909091em 0 0;
     line-height: 1.2;
@@ -256,13 +253,11 @@ section.songs-group > p > button {
     letter-spacing: .227273em;
 }
 section#songs-latest > p > button:before {
-    text-transform: lowercase;
     content: "morph";
 }
 section#songs-remembered > p > button {
     margin-bottom: 1.2em;
 }
 section#songs-remembered > p > button:before {
-    text-transform: lowercase;
     content: "refresh";
 }

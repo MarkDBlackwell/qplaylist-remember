@@ -22,16 +22,44 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     section#alert > p {
         font-size: 1rem; /* basis for em and percentage calculations */
     }
+    section#comment > button:last-of-type:after {
+        text-transform: capitalize;
+    }
     section.songs-group > div > p > button {
-/* Override browser & user settings: */
         font-size: 11000%;
     }
     section.songs-group > p > button {
-/* Override browser & user settings: */
         font-size: .73333333rem; /* basis for em and percentage calculations */
     }
     section#songs-remembered > p > button {
         margin-bottom: 0;
+    }
+/* Song title */
+    section.songs-group > div > p:nth-of-type(2):before {
+        text-transform: capitalize;
+    }
+/* Artist */
+    section.songs-group > div > p:last-of-type:before {
+        text-transform: capitalize;
+    }
+    section#songs-latest > div > p > button:before {
+        text-transform: uppercase;
+    }
+    section#songs-remembered > div > p > button:first-of-type:before {
+        text-transform: uppercase;
+    }
+    section#songs-remembered > div > p > button:nth-of-type(2):before {
+        text-transform: capitalize;
+    }
+    section#songs-remembered > div > p > button:last-of-type:before {
+        text-transform: capitalize;
+    }
+/* Song group entries */
+    section#songs-latest > p:after {
+        text-transform: capitalize;
+    }
+    section#songs-remembered > p:after {
+        text-transform: capitalize;
     }
 
 }
