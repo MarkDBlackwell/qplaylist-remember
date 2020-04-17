@@ -210,8 +210,8 @@ section#songs-remembered > div > p > button:nth-of-type(2):before {
     content: "comment";
 }
 section#songs-remembered > div > p > button:last-of-type:before {
-    text-transform: none;
-    content: "Send like";
+    text-transform: capitalize;
+    content: "send like";
 }
 section#songs-remembered > div > p > em {
     margin: 0 0 0 .4em;
