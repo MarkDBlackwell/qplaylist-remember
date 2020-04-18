@@ -45,7 +45,7 @@
 /* Help old browsers by preferring "div" over "section", here. */
     body > div#requirements {
         line-height: 1.5;
-        font-size: 5.6px;
+        font-size: 9.4px;
         background-color: rgb(255,255,0);
         color: rgb(230,0,140);
         text-align: center;
@@ -57,7 +57,7 @@
         color: rgb(230,0,140);
     }
     section#alert > p {
-        font-size: .7rem; /* basis for em and percentage calculations */
+        font-size: 1rem; /* basis for em and percentage calculations */
         text-align: center;
     }
 /* Comment */
@@ -65,6 +65,10 @@
         line-height: 1.5;
         background-color: rgb(190,255,190);
         color: Black;
+    }
+    section#comment > p {
+        font-size: .82rem; /* basis for em and percentage calculations */
+        text-align: center;
     }
     section#comment > input {
         display: block;
@@ -74,10 +78,6 @@
         border-style: none;
         outline-width: .1em;
         outline-color: Black;
-    }
-    section#comment > p {
-        font-size: 1.0666667rem; /* basis for em and percentage calculations */
-        text-align: center;
     }
 /* Comment buttons */
     section#comment > button {
@@ -110,7 +110,7 @@
     }
     section.songs-group > p {
         line-height: 1.1;
-        font-size: .8rem; /* basis for em and percentage calculations */
+        font-size: .94rem; /* basis for em and percentage calculations */
         text-align: center;
         font-style: italic;
         text-transform: lowercase;

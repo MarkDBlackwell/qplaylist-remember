@@ -52,21 +52,25 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     body > div#requirements {
         font-size: 14px;
     }
-/* Alert */
-    section#alert > p {
-        font-size: 1rem; /* basis for em and percentage calculations */
+/* Comment */
+    section#comment > p {
+        font-size: 1.0666667rem; /* basis for em and percentage calculations */
     }
 /* Comment buttons */
     section#comment > button:last-of-type:after {
         text-transform: capitalize;
     }
 /* Song groups */
+    section.songs-group > p {
+        font-size: .8rem; /* basis for em and percentage calculations */
+    }
     section#songs-latest > p:after {
         text-transform: capitalize;
     }
     section#songs-remembered > p:after {
         text-transform: capitalize;
     }
+/* Song group buttons */
     section.songs-group > p > button {
         letter-spacing: .227273em;
 /* Override browser & user settings: */
