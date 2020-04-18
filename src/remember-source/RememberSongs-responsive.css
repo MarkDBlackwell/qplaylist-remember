@@ -54,6 +54,8 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     }
     section.songs-group > div > p > button:first-of-type {
         letter-spacing: .0909091em;
+/* Override browser & user settings: */
+        font-style: italic;
     }
     section#songs-latest > div > p > button:before {
         text-transform: uppercase;
