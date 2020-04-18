@@ -16,6 +16,13 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     }
 
 }
+@media only screen and (min-width: 246px) {
+/* Song buttons */
+    section.songs-group > div > p:first-of-type > button {
+/* Override browser & user settings: */
+        font-size: 9300%;
+    }
+}
 @media only screen and (min-width: 1000px) {
 /* Overall */
     :root {
