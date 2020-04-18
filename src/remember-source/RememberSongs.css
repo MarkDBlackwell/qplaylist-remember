@@ -178,6 +178,7 @@ section.songs-group > div > p > a:before {
     text-transform: capitalize;
     content: "buy song";
 }
+/* Section buttons */
 section.songs-group > div > p > button {
     vertical-align: top;
     padding: 0 .165289em .0606062em .110193em;
@@ -187,12 +188,10 @@ section.songs-group > div > p > button {
     line-height: .9;
     font-size: 14000%;
     font-weight: 100;
-    letter-spacing: .227273em;
 }
 section.songs-group > div > p > button:first-of-type {
 /* Override browser & user settings: */
     font-style: italic;
-    letter-spacing: .0909091em;
 }
 section.songs-group > div > p > button:nth-of-type(2) {
     margin: 0 .290909em 0 0;
@@ -225,7 +224,7 @@ section.songs-group > div > p > span {
     padding: 0 1.3em 0 .3em;
     font-size: 10000%;
 }
-/* Song group entries */
+/* Song groups */
 section.songs-group > p {
     line-height: 1.1;
     font-size: .8rem; /* basis for em and percentage calculations */
@@ -250,7 +249,6 @@ section.songs-group > p > button {
     line-height: 1.2;
     font-size: .9rem; /* basis for em and percentage calculations */
     font-weight: 400;
-    letter-spacing: .227273em;
 }
 section#songs-latest > p > button:before {
     content: "morph";

@@ -47,6 +47,14 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     section.songs-group > div > p:last-of-type:before {
         text-transform: capitalize;
     }
+/* Section buttons */
+    section.songs-group > div > p > button {
+/* Override browser & user settings: */
+        letter-spacing: .227273em;
+    }
+    section.songs-group > div > p > button:first-of-type {
+        letter-spacing: .0909091em;
+    }
     section#songs-latest > div > p > button:before {
         text-transform: uppercase;
     }
@@ -59,12 +67,15 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     section#songs-remembered > div > p > button:last-of-type:before {
         text-transform: capitalize;
     }
-/* Song group entries */
+/* Song groups */
     section#songs-latest > p:after {
         text-transform: capitalize;
     }
     section#songs-remembered > p:after {
         text-transform: capitalize;
+    }
+    section.songs-group > p > button {
+        letter-spacing: .227273em;
     }
 
 }
