@@ -45,6 +45,12 @@ echo "Minifying $NAME-src.html to $NAME.html" && \
   $DIRECTORY_SOURCE/$NAME-src.html > \
   $NAME.html && \
 
+NAME=RememberSongsDevelop && \
+echo "Minifying $NAME-src.html to $NAME.html" && \
+tr -d '\n' < \
+  $DIRECTORY_SOURCE/$NAME-src.html > \
+  $NAME.html && \
+
 NAME=RememberSongs && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
 ../node_modules/.bin/cssnano \

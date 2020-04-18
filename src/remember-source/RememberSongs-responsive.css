@@ -10,8 +10,32 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
 */
 
 @media only screen and (any-hover: hover) {
+/* Link to buy song */
     section.songs-group > div > p > a:hover {
         color: rgb(238,117,0);
+    }
+
+}
+@media only screen and (min-width: 1000px) {
+/* Overall */
+    :root {
+        font-size: 19px; /* basis for rem calculations */
+    }
+    body > div#requirements {
+        font-size: 15px;
+    }
+/* Song group buttons */
+    section.songs-group > p > button {
+/* Override browser & user settings: */
+        line-height: 1.2;
+    }
+    section#songs-remembered > p > button {
+        margin-bottom: 1.2em;
+    }
+/* Song buttons */
+    section.songs-group > div > p:first-of-type > button {
+/* Override browser & user settings: */
+        font-size: 14000%;
     }
 
 }
@@ -21,52 +45,19 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-stretch: ultra-expanded;
     }
 /* (End of override browser & user settings.) */
+/* Overall */
     :root {
         font-size: 15px; /* basis for rem calculations */
     }
+    body > div#requirements {
+        font-size: 14px;
+    }
+/* Alert */
     section#alert > p {
         font-size: 1rem; /* basis for em and percentage calculations */
     }
+/* Comment buttons */
     section#comment > button:last-of-type:after {
-        text-transform: capitalize;
-    }
-    section.songs-group > div > p > button {
-        font-size: 11000%;
-    }
-    section.songs-group > p > button {
-        font-size: .73333333rem; /* basis for em and percentage calculations */
-    }
-    section#songs-remembered > p > button {
-        margin-bottom: 0;
-    }
-/* Song title */
-    section.songs-group > div > p:nth-of-type(2):before {
-        text-transform: capitalize;
-    }
-/* Artist */
-    section.songs-group > div > p:last-of-type:before {
-        text-transform: capitalize;
-    }
-/* Section buttons */
-    section.songs-group > div > p > button {
-/* Override browser & user settings: */
-        letter-spacing: .227273em;
-    }
-    section.songs-group > div > p > button:first-of-type {
-        letter-spacing: .0909091em;
-/* Override browser & user settings: */
-        font-style: italic;
-    }
-    section#songs-latest > div > p > button:before {
-        text-transform: uppercase;
-    }
-    section#songs-remembered > div > p > button:first-of-type:before {
-        text-transform: uppercase;
-    }
-    section#songs-remembered > div > p > button:nth-of-type(2):before {
-        text-transform: capitalize;
-    }
-    section#songs-remembered > div > p > button:last-of-type:before {
         text-transform: capitalize;
     }
 /* Song groups */
@@ -78,6 +69,42 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     }
     section.songs-group > p > button {
         letter-spacing: .227273em;
+/* Override browser & user settings: */
+        font-size: .73333333rem; /* basis for em and percentage calculations */
+    }
+    section#songs-remembered > p > button {
+        margin-bottom: 0;
+    }
+/* Song buttons */
+    section.songs-group > div > p:first-of-type > button {
+/* Override browser & user settings: */
+        font-size: 11000%;
+        letter-spacing: .227273em;
+    }
+    section.songs-group > div > p:first-of-type > button:first-of-type {
+        letter-spacing: .0909091em;
+/* Override browser & user settings: */
+        font-style: italic;
+    }
+    section#songs-remembered > div > p:first-of-type > button:first-of-type:before {
+        text-transform: uppercase;
+    }
+    section#songs-remembered > div > p:first-of-type > button:nth-of-type(2):before {
+        text-transform: capitalize;
+    }
+    section#songs-remembered > div > p:first-of-type > button:last-of-type:before {
+        text-transform: capitalize;
+    }
+    section#songs-latest > div > p:first-of-type > button:before {
+        text-transform: uppercase;
+    }
+/* Song title */
+    section.songs-group > div > p:nth-of-type(2):before {
+        text-transform: capitalize;
+    }
+/* Song artist */
+    section.songs-group > div > p:last-of-type:before {
+        text-transform: capitalize;
     }
 
 }

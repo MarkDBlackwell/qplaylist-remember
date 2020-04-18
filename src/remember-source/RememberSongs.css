@@ -7,6 +7,7 @@
 
 /* Styling for Remember Songs elements (for QPlaylist). */
 
+@media all {
 /* Override browser & user settings: */
 body,
 form,
@@ -25,12 +26,13 @@ button:focus {
 }
 /* (End of override browser & user settings.) */
 
+/* Overall */
 :root {
     margin: 0;
     padding: 0;
     line-height: 0;
     font-family: 'PT Sans Narrow', 'Arial', 'Helvetica', sans-serif;
-    font-size: 19px; /* basis for rem calculations */
+    font-size: 8px; /* basis for rem calculations */
     color: White;
     background-color: Black;
 }
@@ -40,20 +42,15 @@ head {
 body {
     font-size: 0;
 }
-body#main > div > h2,
-body#main > div > pre,
-p.requirements {
-    line-height: 1.9;
-    font-size: 14px;
+/* Help old browsers by preferring "div" over "section", here. */
+body > div#requirements {
+    line-height: 1.5;
+    font-size: 5.6px;
     background-color: rgb(255,255,0);
     color: rgb(230,0,140);
-}
-p.requirements {
     text-align: center;
 }
-p.requirements > span {
-    font-size: 14px;
-}
+/* Alert */
 section#alert {
     line-height: 1.5;
     background-color: rgb(255,255,0);
@@ -63,11 +60,26 @@ section#alert > p {
     font-size: .7rem; /* basis for em and percentage calculations */
     text-align: center;
 }
+/* Comment */
 section#comment {
     line-height: 1.5;
     background-color: rgb(190,255,190);
     color: Black;
 }
+section#comment > input {
+    display: block;
+    width: 100%;
+    height: 2em;
+    font-size: 1.28rem; /* basis for em and percentage calculations */
+    border-style: none;
+    outline-width: .1em;
+    outline-color: Black;
+}
+section#comment > p {
+    font-size: 1.0666667rem; /* basis for em and percentage calculations */
+    text-align: center;
+}
+/* Comment buttons */
 section#comment > button {
     padding: 0 .2em 0 .2em;
     border-width: .16666667em;
@@ -87,19 +99,7 @@ section#comment > button:last-of-type {
 section#comment > button:last-of-type:after {
     content: "cancel";
 }
-section#comment > input {
-    display: block;
-    width: 100%;
-    height: 2em;
-    font-size: 1.28rem; /* basis for em and percentage calculations */
-    border-style: none;
-    outline-width: .1em;
-    outline-color: Black;
-}
-section#comment > p {
-    font-size: 1.0666667rem; /* basis for em and percentage calculations */
-    text-align: center;
-}
+/* Song groups */
 section.songs-group {
     background-color: Black;
 }
@@ -108,6 +108,42 @@ section.songs-group:focus {
     outline-style: dotted;
     outline-width: .2rem;
 }
+section.songs-group > p {
+    line-height: 1.1;
+    font-size: .8rem; /* basis for em and percentage calculations */
+    text-align: center;
+    font-style: italic;
+    text-transform: lowercase;
+/* Override browser & user settings: */
+    margin: 0;
+}
+section#songs-remembered > p:after {
+    content: "remembered . . . . . h – help";
+}
+section#songs-latest > p:after {
+    content: "latest";
+}
+/* Song group buttons */
+section.songs-group > p > button {
+    vertical-align: text-top;
+    padding: 0 .04545455em 0 .1818182em;
+    text-transform: lowercase;
+/* Override browser & user settings: */
+    margin: 0 .90909091em 0 0;
+    line-height: .9;
+    font-size: .9rem; /* basis for em and percentage calculations */
+    font-weight: 400;
+}
+section#songs-remembered > p > button {
+    margin-bottom: .6em;
+}
+section#songs-remembered > p > button:before {
+    content: "refresh";
+}
+section#songs-latest > p > button:before {
+    content: "morph";
+}
+/* Song boxes */
 section.songs-group > div {
     padding: .5em 1em .4em .6em;
     border-width: .19230769em;
@@ -116,29 +152,30 @@ section.songs-group > div {
     border-radius: .5em;
     font-size: .66666667rem; /* basis for em and percentage calculations */
 }
-section#songs-latest > div {
-    background-color: rgb(17,17,17);
-}
 section#songs-remembered > div {
     background-color: rgb(191,63,63);
+}
+section#songs-latest > div {
+    background-color: rgb(17,17,17);
 }
 section.songs-group > div:first-of-type {
     padding-top: 0;
 }
-/* To remove striping, use same background as plain <div>. */
+/* Note: To remove striping, use same background as plain <div>. */
 section#songs-latest > div:nth-of-type(even) {
     background-color: rgb(36,36,36);
 }
 section.songs-group > div:last-of-type {
     border-bottom-style: none;
 }
+/* Song information lines */
 section.songs-group > div > p {
     line-height: 1.5;
     font-size: 130%;
 /* Override browser & user settings: */
     margin: 0;
 }
-/* Start time, and link to buy song */
+/* Song start time, and link to buy song */
 section.songs-group > div > p:first-of-type {
     font-size: 1%; /* Shrink spaces to almost nothing */
 }
@@ -150,6 +187,63 @@ section.songs-group > div > p:first-of-type:after {
     clear: both;
     content: "";
 }
+/* Song start time */
+section.songs-group > div > p:first-of-type > span {
+    padding: 0 1.3em 0 .3em;
+    font-size: 10000%;
+}
+/* Link to buy song */
+section.songs-group > div > p:first-of-type > a {
+    float: right;
+    font-size: 9000%;
+    font-weight: bold;
+    text-decoration: underline;
+    color: White;
+    outline-color: White;
+}
+section.songs-group > div > p:first-of-type > a:before {
+    text-transform: capitalize;
+    content: "buy song";
+}
+/* Song buttons */
+section.songs-group > div > p:first-of-type > button {
+    vertical-align: top;
+    padding: 0 .165289em .0606062em .110193em;
+    border-width: .19230769em;
+    text-transform: lowercase;
+/* Override browser & user settings: */
+    line-height: .9;
+    font-size: 8640%;
+    font-weight: 100;
+}
+section#songs-remembered > div > p:first-of-type > button:first-of-type:before {
+    content: "forget";
+}
+section#songs-remembered > div > p:first-of-type > button:nth-of-type(2) {
+    margin: 0 .290909em 0 0;
+}
+section#songs-remembered > div > p:first-of-type > button:nth-of-type(2):before {
+    content: "comment";
+}
+section#songs-remembered > div > p:first-of-type > button:last-of-type:before {
+    content: "like";
+}
+section#songs-latest > div > p:first-of-type > button:before {
+    content: "remember";
+}
+/* Song "Like" signs */
+section#songs-remembered > div > p:first-of-type > em {
+    margin: 0 0 0 .4em;
+    border-radius: 1em;
+    font-size: 8000%;
+    color: Purple;
+    background-color: Purple;
+}
+section#songs-remembered > div > p:first-of-type > em:before {
+    text-transform: lowercase;
+/* A good diameter for a fat dot, useful for indicating various things: */
+    content: "nn";
+}
 /* Song title */
 section.songs-group > div > p:nth-of-type(2) {
     padding-top: .123077em;
@@ -159,99 +253,11 @@ section.songs-group > div > p:nth-of-type(2):before {
     font-size: 73.0769%;
     content: "title:";
 }
-/* Artist */
+/* Song artist */
 section.songs-group > div > p:last-of-type:before {
     padding-right: .427691em;
     font-size: 73.0769%;
     content: "artist:";
 }
-/* Link to buy song */
-section.songs-group > div > p > a {
-    float: right;
-    font-size: 9000%;
-    font-weight: bold;
-    text-decoration: underline;
-    color: White;
-    outline-color: White;
-}
-section.songs-group > div > p > a:before {
-    text-transform: capitalize;
-    content: "buy song";
-}
-/* Section buttons */
-section.songs-group > div > p > button {
-    vertical-align: top;
-    padding: 0 .165289em .0606062em .110193em;
-    border-width: .19230769em;
-    text-transform: lowercase;
-/* Override browser & user settings: */
-    line-height: .9;
-    font-size: 14000%;
-    font-weight: 100;
-}
-section.songs-group > div > p > button:nth-of-type(2) {
-    margin: 0 .290909em 0 0;
-}
-section#songs-latest > div > p > button:before {
-    content: "remember";
-}
-section#songs-remembered > div > p > button:first-of-type:before {
-    content: "forget";
-}
-section#songs-remembered > div > p > button:nth-of-type(2):before {
-    content: "comment";
-}
-section#songs-remembered > div > p > button:last-of-type:before {
-    content: "like";
-}
-section#songs-remembered > div > p > em {
-    margin: 0 0 0 .4em;
-    border-radius: 1em;
-    font-size: 8000%;
-    color: Purple;
-    background-color: Purple;
-}
-section#songs-remembered > div > p > em:before {
-    text-transform: lowercase;
-/* A good diameter for a fat dot, useful for indicating various things: */
-    content: "nn";
-}
-section.songs-group > div > p > span {
-    padding: 0 1.3em 0 .3em;
-    font-size: 10000%;
-}
-/* Song groups */
-section.songs-group > p {
-    line-height: 1.1;
-    font-size: .8rem; /* basis for em and percentage calculations */
-    text-align: center;
-    font-style: italic;
-    text-transform: lowercase;
-/* Override browser & user settings: */
-    margin: 0;
-}
-section#songs-latest > p:after {
-    content: "latest";
-}
-section#songs-remembered > p:after {
-    content: "remembered . . . . . h – help";
-}
-section.songs-group > p > button {
-    vertical-align: text-top;
-    padding: 0 .04545455em 0 .1818182em;
-    text-transform: lowercase;
-/* Override browser & user settings: */
-    margin: 0 .90909091em 0 0;
-    line-height: 1.2;
-    font-size: .9rem; /* basis for em and percentage calculations */
-    font-weight: 400;
-}
-section#songs-latest > p > button:before {
-    content: "morph";
-}
-section#songs-remembered > p > button {
-    margin-bottom: 1.2em;
-}
-section#songs-remembered > p > button:before {
-    content: "refresh";
+
 }
