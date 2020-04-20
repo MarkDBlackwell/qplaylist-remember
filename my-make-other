@@ -13,7 +13,7 @@
 # https://github.com/mishoo/UglifyJS2
 
 # Versions:
-#  html-minifier 3.5.6
+#  html-minifier 3.5.6 or 4.0.0
 #  cssnano-cli 1.0.5
 
 # Don't uglify (or compress) the PHP program on the server (append.php),

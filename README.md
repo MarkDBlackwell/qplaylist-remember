@@ -12,24 +12,26 @@ which uses WideOrbit automation software.
 
 ## Development
 
-For versions, see the following my-make* files.
+Download and install Elm version 0.18.0 from its [website](http://elm-lang.org/).
+Try [here](http://github.com/elm-lang/elm-platform/releases).
 
-I suggest that you *do not* use the '--global' flag.
+For the versions of the other programs (and packages) known to work, see the following my-make* files.
 
-Download and install the latest LTS (long-term support) version of Node.js, from its [website](https://nodejs.org/en/).
+Nevertheless, you should install the latest versions.
 
-I'm using version 6.11.0.
-(Earlier, I was using version 5.12.0.)
+Do *not* use the '--global' flag.
 
-Node.js automatically comes with npm. I'm using version 3.10.10.
-(Earlier, I was using version 3.8.6.)
+Download and install the latest LTS (long-term support) version of Node.js, from its [website](http://nodejs.org/en/).
 
-Do these from the project root directory:
+Node.js automatically comes with npm.
+
+Do these, from the project root directory:
 
 ````bash
-npm install uglify-js@{version}
-npm install html-minifier@{version}
-npm install cssnano-cli@{version}
+npm install elm-format
+npm install uglify-js
+npm install html-minifier
+npm install cssnano-cli
 ./my-make
 ./my-make-other
 ````
