@@ -6,12 +6,11 @@
 -}
 
 
-module UpdateFocus
-    exposing
-        ( focusAttempt
-        , focusInputPossibly
-        , focusSetId
-        )
+module UpdateFocus exposing
+    ( focusAttempt
+    , focusInputPossibly
+    , focusSetId
+    )
 
 import Dom
     exposing
@@ -41,6 +40,7 @@ import Utilities
         ( maybeMapWithDefault
         , msg2Cmd
         )
+
 
 
 -- UPDATE

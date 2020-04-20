@@ -6,11 +6,10 @@
 -}
 
 
-module UserIdentifierType
-    exposing
-        ( UserIdentifier
-        , UserIdentifierNumberSpaceInt
-        )
+module UserIdentifierType exposing
+    ( UserIdentifier
+    , UserIdentifierNumberSpaceInt
+    )
 
 -- MODEL
 

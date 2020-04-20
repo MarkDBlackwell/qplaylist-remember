@@ -6,17 +6,17 @@
 -}
 
 
-module ViewType
-    exposing
-        ( Display
-        , HoverText
-        , IdMaybe
-        )
+module ViewType exposing
+    ( Display
+    , HoverText
+    , IdMaybe
+    )
 
 import Dom
     exposing
         ( Id
         )
+
 
 
 -- VIEW

@@ -6,10 +6,7 @@
 -}
 
 
-module Update
-    exposing
-        ( update
-        )
+module Update exposing (update)
 
 import Alert
     exposing
@@ -97,6 +94,7 @@ import Utilities
         )
 
 
+
 -- UPDATE
 
 
@@ -161,6 +159,7 @@ update msg model =
                             in
                             if bothListsAreEmpty then
                                 model.pageIsExpanded
+
                             else
                                 not model.pageIsExpanded
                     in
@@ -189,6 +188,7 @@ update msg model =
                           }
                         , focusInputPossibly model
                         )
+
                     else
                         let
                             songsRememberedNew : SongsRemembered

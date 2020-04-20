@@ -6,10 +6,7 @@
 -}
 
 
-module View
-    exposing
-        ( view
-        )
+module View exposing (view)
 
 import ElmCycle
     exposing
@@ -99,6 +96,7 @@ import ViewType
     exposing
         ( HoverText
         )
+
 
 
 -- VIEW
@@ -232,6 +230,7 @@ view model =
                                             in
                                             if model.showCommentButtons then
                                                 comments
+
                                             else
                                                 ""
 
@@ -271,6 +270,7 @@ view model =
                             in
                             if model.pageIsExpanded then
                                 attributesEmpty
+
                             else
                                 [ styleCalc songGroup lengthRemembered songsRecentOrRememberedIndex ]
 

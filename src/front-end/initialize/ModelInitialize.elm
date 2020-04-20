@@ -6,12 +6,11 @@
 -}
 
 
-module ModelInitialize
-    exposing
-        ( awaitingServerResponseInit
-        , commentTextInit
-        , init
-        )
+module ModelInitialize exposing
+    ( awaitingServerResponseInit
+    , commentTextInit
+    , init
+    )
 
 import Alert
     exposing
@@ -43,6 +42,7 @@ import UserIdentifier
         ( generateUserIdentifier
         , userIdentifierInit
         )
+
 
 
 -- MODEL

@@ -6,39 +6,39 @@
 -}
 
 
-module SongType
-    exposing
-        ( Artist
-        , LikeOrCommentCount
-        , SongGroup
-            ( Recent
-            , Remembered
-            )
-        , SongGroupLength
-        , SongRecent
-        , SongRecentBase
-        , SongRecentMaybe
-        , SongRecentOrRemembered
-        , SongRemembered
-        , SongRememberedMaybe
-        , SongTimeBase
-        , SongTimeExceptBase
-        , SongTimeless
-        , SongTimelessBase
-        , SongsRecent
-        , SongsRecentIndex
-        , SongsRecentOrRemembered
-        , SongsRecentOrRememberedIndex
-        , SongsRemembered
-        , SongsRememberedIndex
-        , SongsRememberedIndexList
-        , SongsRememberedIndexMaybe
-        , SongsRememberedMaybe
-        , SongsTimeless
-        , Time
-        , Timestamp
-        , Title
+module SongType exposing
+    ( Artist
+    , LikeOrCommentCount
+    ,  SongGroup
+        ( Recent
+        , Remembered
         )
+
+    , SongGroupLength
+    , SongRecent
+    , SongRecentBase
+    , SongRecentMaybe
+    , SongRecentOrRemembered
+    , SongRemembered
+    , SongRememberedMaybe
+    , SongTimeBase
+    , SongTimeExceptBase
+    , SongTimeless
+    , SongTimelessBase
+    , SongsRecent
+    , SongsRecentIndex
+    , SongsRecentOrRemembered
+    , SongsRecentOrRememberedIndex
+    , SongsRemembered
+    , SongsRememberedIndex
+    , SongsRememberedIndexList
+    , SongsRememberedIndexMaybe
+    , SongsRememberedMaybe
+    , SongsTimeless
+    , Time
+    , Timestamp
+    , Title
+    )
 
 -- MODEL
 

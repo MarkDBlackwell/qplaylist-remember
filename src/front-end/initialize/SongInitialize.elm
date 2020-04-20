@@ -6,14 +6,13 @@
 -}
 
 
-module SongInitialize
-    exposing
-        ( likeOrCommentCountInit
-        , songCommentingMaybeInit
-        , songLikingMaybeInit
-        , songLikingOrCommentingInit
-        , songsRecentInit
-        )
+module SongInitialize exposing
+    ( likeOrCommentCountInit
+    , songCommentingMaybeInit
+    , songLikingMaybeInit
+    , songLikingOrCommentingInit
+    , songsRecentInit
+    )
 
 import SongType
     exposing
@@ -26,6 +25,7 @@ import SongType
         , Timestamp
         , Title
         )
+
 
 
 -- MODEL

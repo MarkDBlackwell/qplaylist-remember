@@ -6,10 +6,7 @@
 -}
 
 
-module Song
-    exposing
-        ( likedOrCommentedShow
-        )
+module Song exposing (likedOrCommentedShow)
 
 import SongHelper
     exposing
@@ -40,6 +37,7 @@ import Utilities
         )
 
 
+
 -- UPDATE
 
 
@@ -64,6 +62,7 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                     in
                     if song2SongRecent songRemembered /= songDesired then
                         songRemembered
+
                     else
                         { songRemembered
                             | likeOrCommentCount = likeOrCommentCountNew
@@ -81,6 +80,7 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
             |> List.isEmpty
     then
         Nothing
+
     else
         (songsRememberedIndex + 1)
             |> startingWithFromIndex songsRemembered

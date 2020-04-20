@@ -6,10 +6,7 @@
 -}
 
 
-module DecodeLikeOrCommentResponse
-    exposing
-        ( decodeLikeOrCommentResponse
-        )
+module DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
 
 import AlertType
     exposing
@@ -30,6 +27,7 @@ import Utilities
     exposing
         ( field2String
         )
+
 
 
 -- UPDATE

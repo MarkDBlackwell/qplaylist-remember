@@ -6,12 +6,11 @@
 -}
 
 
-module UpdateRequest
-    exposing
-        ( commentSendHand
-        , likeButtonProcessHand
-        , songsRecentRefreshHand
-        )
+module UpdateRequest exposing
+    ( commentSendHand
+    , likeButtonProcessHand
+    , songsRecentRefreshHand
+    )
 
 import Alert
     exposing
@@ -71,6 +70,7 @@ import Utilities
         )
 
 
+
 -- UPDATE
 
 
@@ -88,6 +88,7 @@ commentSendHand model =
                   }
                 , focusInputPossibly model
                 )
+
             else
                 let
                     commentRequest : Cmd Msg

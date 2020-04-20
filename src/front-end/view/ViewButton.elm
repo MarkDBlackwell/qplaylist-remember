@@ -6,15 +6,14 @@
 -}
 
 
-module ViewButton
-    exposing
-        ( buttonComment
-        , buttonLike
-        , buttonRecent
-        , buttonRememberForget
-        , buttonRemembered
-        , buttonView
-        )
+module ViewButton exposing
+    ( buttonComment
+    , buttonLike
+    , buttonRecent
+    , buttonRememberForget
+    , buttonRemembered
+    , buttonView
+    )
 
 import Dom
     exposing
@@ -78,6 +77,7 @@ import ViewType
         )
 
 
+
 -- VIEW
 
 
@@ -100,6 +100,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
     in
     if Recent == songGroup then
         htmlNodeNull
+
     else
         buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg showCommentButtons
 
@@ -121,6 +122,7 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
                             && not showCommentButtons
                     then
                         "none"
+
                     else
                         default
             in

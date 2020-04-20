@@ -6,10 +6,7 @@
 -}
 
 
-module Main
-    exposing
-        ( main
-        )
+module Main exposing (main)
 
 import ElmCycle
     exposing
@@ -40,6 +37,7 @@ import View
     exposing
         ( view
         )
+
 
 
 -- MODEL

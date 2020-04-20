@@ -6,10 +6,7 @@
 -}
 
 
-module ViewStyleCalc
-    exposing
-        ( styleCalc
-        )
+module ViewStyleCalc exposing (styleCalc)
 
 import Html
     exposing
@@ -32,6 +29,7 @@ import Utilities
     exposing
         ( goldenRatio
         )
+
 
 
 -- VIEW

@@ -6,22 +6,21 @@
 -}
 
 
-module Utilities
-    exposing
-        ( attributeIdFromMaybe
-        , attributesEmpty
-        , field2String
-        , goldenRatio
-        , htmlNodeNull
-        , innerHtmlEmpty
-        , matchingIndexes
-        , maybeMapWithDefault
-        , msg2Cmd
-        , prefixSeparator
-        , selectOneFromIndexMaybe
-        , startingWithFromIndex
-        , withoutOneFromMaybe
-        )
+module Utilities exposing
+    ( attributeIdFromMaybe
+    , attributesEmpty
+    , field2String
+    , goldenRatio
+    , htmlNodeNull
+    , innerHtmlEmpty
+    , matchingIndexes
+    , maybeMapWithDefault
+    , msg2Cmd
+    , prefixSeparator
+    , selectOneFromIndexMaybe
+    , startingWithFromIndex
+    , withoutOneFromMaybe
+    )
 
 import AlertType
     exposing
@@ -58,6 +57,7 @@ import ViewType
         )
 
 
+
 -- UPDATE
 
 
@@ -80,6 +80,7 @@ matchingIndexes listA thing =
         matchWithIndexMaybe ( index, variable ) =
             if thing /= variable then
                 Nothing
+
             else
                 Just index
     in

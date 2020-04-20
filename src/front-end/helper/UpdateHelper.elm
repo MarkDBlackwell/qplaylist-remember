@@ -6,14 +6,13 @@
 -}
 
 
-module UpdateHelper
-    exposing
-        ( actionLikeOrComment2String
-        , elmCycleDefault
-        , likeOrCommentRequestUriText
-        , relative
-        , stateVector
-        )
+module UpdateHelper exposing
+    ( actionLikeOrComment2String
+    , elmCycleDefault
+    , likeOrCommentRequestUriText
+    , relative
+    , stateVector
+    )
 
 import ElmCycle
     exposing
@@ -62,6 +61,7 @@ import Utilities
     exposing
         ( maybeMapWithDefault
         )
+
 
 
 -- UPDATE
@@ -158,6 +158,7 @@ relative urlBeforeQueryList queryPairs =
             in
             if List.isEmpty queryPairs then
                 ""
+
             else
                 List.map joinAndEscape queryPairs
                     |> String.join "&"

@@ -6,10 +6,7 @@
 -}
 
 
-module Subscription
-    exposing
-        ( subscriptions
-        )
+module Subscription exposing (subscriptions)
 
 import ElmCycle
     exposing
@@ -25,6 +22,7 @@ import ModelType
     exposing
         ( Model
         )
+
 
 
 -- SUBSCRIPTIONS

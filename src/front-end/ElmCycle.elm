@@ -6,11 +6,10 @@
 -}
 
 
-module ElmCycle
-    exposing
-        ( ElmCycle
-        , Msg(..)
-        )
+module ElmCycle exposing
+    ( ElmCycle
+    , Msg(..)
+    )
 
 import Char
     exposing
@@ -42,6 +41,7 @@ import UserIdentifierType
     exposing
         ( UserIdentifierNumberSpaceInt
         )
+
 
 
 -- MODEL

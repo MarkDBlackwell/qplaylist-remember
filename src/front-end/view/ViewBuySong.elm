@@ -6,10 +6,7 @@
 -}
 
 
-module ViewBuySong
-    exposing
-        ( buySongAnchor
-        )
+module ViewBuySong exposing (buySongAnchor)
 
 import ElmCycle
     exposing
@@ -54,6 +51,7 @@ import ViewType
     exposing
         ( HoverText
         )
+
 
 
 -- VIEW

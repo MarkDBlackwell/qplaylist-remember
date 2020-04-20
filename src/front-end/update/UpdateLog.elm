@@ -6,12 +6,11 @@
 -}
 
 
-module UpdateLog
-    exposing
-        ( logDecoding
-        , logRequest
-        , logResponse
-        )
+module UpdateLog exposing
+    ( logDecoding
+    , logRequest
+    , logResponse
+    )
 
 import Debug
     exposing
@@ -29,6 +28,7 @@ import UpdateRequestType
             , ActionResponse
             )
         )
+
 
 
 -- UPDATE

@@ -6,13 +6,12 @@
 -}
 
 
-module UpdateResponse
-    exposing
-        ( likeOrCommentResponseErr
-        , likeOrCommentResponseOk
-        , songsRecentResponseErr
-        , songsRecentResponseOk
-        )
+module UpdateResponse exposing
+    ( likeOrCommentResponseErr
+    , likeOrCommentResponseOk
+    , songsRecentResponseErr
+    , songsRecentResponseOk
+    )
 
 import Alert
     exposing
@@ -99,6 +98,7 @@ import Utilities
     exposing
         ( msg2Cmd
         )
+
 
 
 -- UPDATE
@@ -238,6 +238,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , focusInputPossibly model
                     ]
                 )
+
             else
                 let
                     songsRememberedNew : SongsRemembered

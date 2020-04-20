@@ -6,10 +6,7 @@
 -}
 
 
-module DecodeSongsRecent
-    exposing
-        ( decodeSongsRecentResponse
-        )
+module DecodeSongsRecent exposing (decodeSongsRecentResponse)
 
 import AlertType
     exposing
@@ -37,6 +34,7 @@ import Utilities
     exposing
         ( field2String
         )
+
 
 
 -- UPDATE

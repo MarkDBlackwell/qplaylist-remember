@@ -6,12 +6,11 @@
 -}
 
 
-module UpdateComment
-    exposing
-        ( commentAreaInputTextChangeCaptureHand
-        , commentAreaOpenHand
-        , commentCancelHand
-        )
+module UpdateComment exposing
+    ( commentAreaInputTextChangeCaptureHand
+    , commentAreaOpenHand
+    , commentCancelHand
+    )
 
 import Alert
     exposing
@@ -63,6 +62,7 @@ import Utilities
     exposing
         ( selectOneFromIndexMaybe
         )
+
 
 
 -- UPDATE

@@ -6,12 +6,11 @@
 -}
 
 
-module UserIdentifier
-    exposing
-        ( generateUserIdentifier
-        , userIdentifierCalc
-        , userIdentifierInit
-        )
+module UserIdentifier exposing
+    ( generateUserIdentifier
+    , userIdentifierCalc
+    , userIdentifierInit
+    )
 
 import Char
     exposing
@@ -37,6 +36,7 @@ import UserIdentifierType
         ( UserIdentifier
         , UserIdentifierNumberSpaceInt
         )
+
 
 
 -- MODEL
@@ -94,6 +94,7 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
                 keyCodeBase =
                     if keyCode < caseLength then
                         toCode 'A'
+
                     else
                         toCode 'a'
 

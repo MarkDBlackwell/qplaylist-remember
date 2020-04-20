@@ -6,10 +6,7 @@
 -}
 
 
-port module SongPort
-    exposing
-        ( songsRememberedStore
-        )
+port module SongPort exposing (songsRememberedStore)
 
 import ElmCycle
     exposing
@@ -23,6 +20,7 @@ import SongType
     exposing
         ( SongsRemembered
         )
+
 
 
 -- UPDATE

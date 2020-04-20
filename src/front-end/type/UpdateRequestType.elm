@@ -6,26 +6,27 @@
 -}
 
 
-module UpdateRequestType
-    exposing
-        ( Action
-            ( ActionDecoding
-            , ActionRequest
-            , ActionResponse
-            )
-        , ActionLikeOrComment
-            ( Comment
-            , Like
-            )
-        , AwaitingServerResponse
-        , HttpResponseText
-        , LikeOrCommentResponseText
-        , LikeOrCommentText
-        , QueryPair
-        , QueryPairs
-        , UriText
-        , UrlBeforeQueryList
+module UpdateRequestType exposing
+    (  Action
+        ( ActionDecoding
+        , ActionRequest
+        , ActionResponse
         )
+
+    ,  ActionLikeOrComment
+        ( Comment
+        , Like
+        )
+
+    , AwaitingServerResponse
+    , HttpResponseText
+    , LikeOrCommentResponseText
+    , LikeOrCommentText
+    , QueryPair
+    , QueryPairs
+    , UriText
+    , UrlBeforeQueryList
+    )
 
 -- MODEL
 

@@ -6,18 +6,18 @@
 -}
 
 
-module ModelType
-    exposing
-        ( CommentText
-        , Flags
-        , Model
-        , Optional
-            ( Closed
-            , Open
-            )
-        , PageIsExpanded
-        , ShowCommentButtons
+module ModelType exposing
+    ( CommentText
+    , Flags
+    , Model
+    ,  Optional
+        ( Closed
+        , Open
         )
+
+    , PageIsExpanded
+    , ShowCommentButtons
+    )
 
 import AlertType
     exposing
@@ -37,6 +37,7 @@ import UserIdentifierType
     exposing
         ( UserIdentifier
         )
+
 
 
 -- MODEL

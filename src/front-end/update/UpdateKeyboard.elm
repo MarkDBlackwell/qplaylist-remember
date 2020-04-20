@@ -6,10 +6,7 @@
 -}
 
 
-module UpdateKeyboard
-    exposing
-        ( keystrokeHand
-        )
+module UpdateKeyboard exposing (keystrokeHand)
 
 import AlertType
     exposing
@@ -62,6 +59,7 @@ import Utilities
         )
 
 
+
 -- UPDATE
 
 
@@ -89,6 +87,7 @@ keyProcessH model keyCode =
                     in
                     if not model.showCommentButtons then
                         like
+
                     else
                         [ like, comment ]
                             |> String.join separator
@@ -145,23 +144,29 @@ keystrokeHand model keyCode =
             in
             if keyIs 'H' then
                 keyProcessH model keyCode
+
             else if keyIs 'C' then
                 songsRememberedIndex
                     |> CommentAreaOpenHand
                     |> doMessage "refresh"
+
             else if keyIs 'F' then
                 SongsRecentRefreshHand
                     |> doMessage "refresh"
+
             else if keyIs 'L' then
                 songsRememberedIndex
                     |> LikeButtonProcessHand
                     |> doMessage "refresh"
+
             else if keyIs 'M' then
                 PageMorphHand
                     |> doMessage "morph"
+
             else if keyIs 'R' then
                 SongRememberHand 0
                     |> doMessage "refresh"
+
             else
                 doNothing
 

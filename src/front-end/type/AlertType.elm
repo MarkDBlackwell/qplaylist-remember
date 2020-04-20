@@ -6,16 +6,15 @@
 -}
 
 
-module AlertType
-    exposing
-        ( ActionDescription
-        , AlertMessageText
-        , AlertMessageTextList
-        , AlertMessageTextMaybe
-        , DetailsText
-        , LikeOrCommentName
-        , PrefixSeparatorText
-        )
+module AlertType exposing
+    ( ActionDescription
+    , AlertMessageText
+    , AlertMessageTextList
+    , AlertMessageTextMaybe
+    , DetailsText
+    , LikeOrCommentName
+    , PrefixSeparatorText
+    )
 
 -- MODEL
 

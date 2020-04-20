@@ -6,16 +6,15 @@
 -}
 
 
-module Alert
-    exposing
-        ( actionDescriptionRecent
-        , alertMessageTextErrorHttpLogging
-        , alertMessageTextErrorHttpScreen
-        , alertMessageTextInit
-        , alertMessageTextRequestLikeOrComment
-        , alertMessageTextSend
-        , alertMessageTextServerAwaitingElmCycle
-        )
+module Alert exposing
+    ( actionDescriptionRecent
+    , alertMessageTextErrorHttpLogging
+    , alertMessageTextErrorHttpScreen
+    , alertMessageTextInit
+    , alertMessageTextRequestLikeOrComment
+    , alertMessageTextSend
+    , alertMessageTextServerAwaitingElmCycle
+    )
 
 import AlertType
     exposing
@@ -52,6 +51,7 @@ import Utilities
     exposing
         ( prefixSeparator
         )
+
 
 
 -- MODEL

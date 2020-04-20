@@ -6,22 +6,21 @@
 -}
 
 
-module SongHelper
-    exposing
-        ( buttonIdReconstruct
-        , song2SongRecent
-        , song2SongRemembered
-        , song2SongTimeless
-        , songAlready
-        , songGroup2String
-        , songRememberedUpdate
-        , songs2SongsRemembered
-        , songsRememberedAppendOneUniqueFromMaybe
-        , songsRememberedLikeOrCommentNewFromMaybe
-        , songsRememberedNewFromMaybeWithUpdate
-        , songsRememberedUpdateTimestampFromMaybe
-        , songsTimelessMatches
-        )
+module SongHelper exposing
+    ( buttonIdReconstruct
+    , song2SongRecent
+    , song2SongRemembered
+    , song2SongTimeless
+    , songAlready
+    , songGroup2String
+    , songRememberedUpdate
+    , songs2SongsRemembered
+    , songsRememberedAppendOneUniqueFromMaybe
+    , songsRememberedLikeOrCommentNewFromMaybe
+    , songsRememberedNewFromMaybeWithUpdate
+    , songsRememberedUpdateTimestampFromMaybe
+    , songsTimelessMatches
+    )
 
 import Dom
     exposing
@@ -66,6 +65,7 @@ import Utilities
         , maybeMapWithDefault
         , selectOneFromIndexMaybe
         )
+
 
 
 -- UPDATE
@@ -146,6 +146,7 @@ songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent ->
 songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
     if songAlready songsRemembered songRecent then
         songsRemembered
+
     else
         song2SongRemembered songRecent
             |> List.singleton
@@ -186,6 +187,7 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMa
         updateSometimes songRecent songRemembered =
             if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
                 songRemembered
+
             else
                 { songRemembered
                     | time = songRecent.time
