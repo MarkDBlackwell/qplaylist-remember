@@ -6,9 +6,9 @@
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Versions:
-#  node 5.12.0 or 6.11.0
-#  npm 3.8.6 or 3.10.10 (comes with node)
 #  elm 0.18.0
+#  node 5.12.0 or 6.11.0 or latest LTS
+#  npm 3.8.6 or 3.10.10 (comes with node)
 #  elm-format 0.7.0-exp
 #  uglify-js 3.1.7
 
@@ -20,7 +20,7 @@ echo "Searching for trailing blanks"
 grep -nEI ' $' `find $DIRECTORY_FRONT_END -type f`
 
 (
-export PATH=$PATH:./node_modules/.bin && \
+export PATH="node_modules/.bin:$PATH" && \
 
 for directory_source in `find $DIRECTORY_FRONT_END -type d`
 do

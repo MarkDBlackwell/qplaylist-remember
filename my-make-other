@@ -21,27 +21,27 @@
 #   network traffic.
 
 (
-export PATH=$PATH:./node_modules/.bin && \
-
 cd build && \
+
+export PATH="../node_modules/.bin:$PATH" && \
 
 DIRECTORY_SOURCE=../src/remember-source && \
 
 NAME=SetUp && \
 echo "Minifying $NAME.js to $NAME-min.js" && \
-../node_modules/.bin/uglifyjs --compress --mangle --warn -- \
+uglifyjs --compress --mangle --warn -- \
   $DIRECTORY_SOURCE/$NAME.js > \
   $NAME-min.js && \
 
 NAME=RememberSongs-windows-phone-8-viewport-fix && \
 echo "Minifying $NAME.js to $NAME-min.js" && \
-../node_modules/.bin/uglifyjs --compress --mangle --warn -- \
+uglifyjs --compress --mangle --warn -- \
   $DIRECTORY_SOURCE/$NAME.js > \
   $NAME-min.js && \
 
 NAME=RememberSongs && \
 echo "Minifying $NAME-src.html to $NAME.html" && \
-../node_modules/.bin/html-minifier --config-file ../html-minifier-conf.json \
+html-minifier --config-file ../html-minifier-conf.json \
   $DIRECTORY_SOURCE/$NAME-src.html > \
   $NAME.html && \
 
@@ -53,13 +53,13 @@ tr -d '\n' < \
 
 NAME=RememberSongs && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
-../node_modules/.bin/cssnano \
+cssnano \
   $DIRECTORY_SOURCE/$NAME.css > \
   $NAME-min.css && \
 
 NAME=RememberSongs-responsive && \
 echo "Minifying $NAME.css to $NAME-min.css" && \
-../node_modules/.bin/cssnano \
+cssnano \
   $DIRECTORY_SOURCE/$NAME.css > \
   $NAME-min.css && \
 
