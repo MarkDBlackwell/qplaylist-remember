@@ -86,7 +86,7 @@
         border-radius: 50%;
         text-transform: lowercase;
 /* Override browser & user settings: */
-        font-size: 1.0666667rem; /* basis for em and percentage calculations */
+        font-size: 1.5rem; /* basis for em and percentage calculations */
     }
     section#comment > button:first-of-type:after {
 /* Lowercase "OK" always looks bad: */
@@ -133,6 +133,7 @@
         line-height: .9;
         font-size: .9rem; /* basis for em and percentage calculations */
         font-weight: 400;
+        letter-spacing: .02em;
     }
     section#songs-remembered > p > button {
         margin-bottom: .6em;
@@ -171,7 +172,7 @@
 /* Song information lines */
     section.songs-group > div > p {
         line-height: 1.5;
-        font-size: 130%;
+        font-size: 180%;
 /* Override browser & user settings: */
         margin: 0;
     }
@@ -215,6 +216,7 @@
         line-height: .9;
         font-size: 8640%;
         font-weight: 100;
+        letter-spacing: .02em;
     }
     section#songs-remembered > div > p:first-of-type > button:first-of-type:before {
         content: "forget";
