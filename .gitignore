@@ -20,5 +20,6 @@ php_errorlog
 Copy\ *
 *-min.css
 *-min.js
+*~
 
 !.gitkeep
