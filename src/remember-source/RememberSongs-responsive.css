@@ -16,13 +16,17 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     }
 
 }
-@media only screen and (min-width: 246px) {
+@media only screen and (min-width: 246.9px) {
+/* Song information lines */
+    section.songs-group > div > p {
+        font-size: 180%;
+    }
 /* Song buttons */
     section.songs-group > div > p:first-of-type > button {
         font-size: 9300%;
     }
 }
-@media only screen and (min-width: 272px) {
+@media only screen and (min-width: 272.9px) {
 /* Comment buttons */
     section#comment > button {
         font-size: 1.7rem; /* basis for em and percentage calculations */
@@ -40,13 +44,13 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-size: 12000%;
     }
 }
-@media only screen and (min-width: 284px) {
+@media only screen and (min-width: 284.9px) {
 /* Song start time */
     section.songs-group > div > p:first-of-type > span {
         font-size: 11400%;
     }
 }
-@media only screen and (min-width: 294px) {
+@media only screen and (min-width: 294.9px) {
 /* Comment buttons */
     section#comment > button {
         font-size: 1.8rem; /* basis for em and percentage calculations */
@@ -60,10 +64,10 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-size: 12500%;
     }
 }
-@media only screen and (min-width: 312px) {
+@media only screen and (min-width: 312.9px) {
 /* Overall */
     :root {
-        font-size: 8.5px; /* basis for rem calculations */
+        font-size: 8.59px; /* basis for rem calculations */
     }
 /* Song group buttons */
     section.songs-group > p > button {
@@ -74,13 +78,13 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         letter-spacing: .05em;
     }
 }
-@media only screen and (min-width: 316px) {
+@media only screen and (min-width: 316.9px) {
 /* Comment buttons */
     section#comment > button {
         font-size: 1.9rem; /* basis for em and percentage calculations */
     }
 }
-@media only screen and (min-width: 322px) {
+@media only screen and (min-width: 322.9px) {
 /* Comment buttons */
     section#comment > button {
         font-size: 2.2rem; /* basis for em and percentage calculations */
@@ -94,7 +98,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-size: 13800%;
     }
 }
-@media only screen and (min-width: 332px) {
+@media only screen and (min-width: 332.9px) {
 /* Song group buttons */
     section.songs-group > p > button {
         font-size: 1.562rem; /* basis for em and percentage calculations */
@@ -104,40 +108,46 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-size: 15000%;
     }
 }
-@media only screen and (min-width: 360px) {
+@media only screen and (min-width: 356.9px) {
+/* Overall */
+    :root {
+        font-size: 8.64px; /* basis for rem calculations */
+    }
+}
+@media only screen and (min-width: 364.9px) {
 /* Overall */
     :root {
         font-size: 10px; /* basis for rem calculations */
     }
 }
-@media only screen and (min-width: 418px) {
+@media only screen and (min-width: 425.9px) {
 /* Song buttons */
     section.songs-group > div > p:first-of-type > button {
         font-size: 20000%;
     }
 }
-@media only screen and (min-width: 490px) {
+@media only screen and (min-width: 503.9px) {
 /* Overall */
     :root {
-        font-size: 10.5px; /* basis for rem calculations */
+        font-size: 10.9px; /* basis for rem calculations */
     }
 }
-@media only screen and (min-width: 562px) {
+@media only screen and (min-width: 570.9px) {
 /* Overall */
     :root {
         font-size: 12px; /* basis for rem calculations */
     }
 }
-@media only screen and (min-width: 634px) {
+@media only screen and (min-width: 634.9px) {
 /* Overall */
     :root {
-        font-size: 13.5px; /* basis for rem calculations */
+        font-size: 13.9px; /* basis for rem calculations */
     }
     body > div#requirements {
         font-size: 12px;
     }
 }
-@media only screen and (min-width: 701px) {
+@media only screen and (min-width: 701.9px) {
 /* Overall */
     :root {
         font-size: 15px; /* basis for rem calculations */
@@ -146,7 +156,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
         font-size: 14px;
     }
 }
-@media only screen and (min-width: 1024px) and (any-hover: hover) {
+@media only screen and (min-width: 1023.9px) and (any-hover: hover) {
 /* Override browser & user settings: */
     button {
         font-stretch: ultra-expanded;
