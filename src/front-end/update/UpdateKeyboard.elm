@@ -24,20 +24,12 @@ import Dom
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( CommentAreaOpenHand
-            , LikeButtonProcessHand
-            , PageMorphHand
-            , SongRememberHand
-            , SongsRecentRefreshHand
-            )
+        , Msg(..)
         )
 import ModelType
     exposing
         ( Model
-        , Optional
-            ( Closed
-            )
+        , Optional(..)
         )
 import SongType
     exposing
@@ -140,7 +132,7 @@ keystrokeHand model keyCode =
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
                     List.length model.songsRemembered
-                        |> flip (-) 1
+                        |> (\a -> (-) a 1)
             in
             if keyIs 'H' then
                 keyProcessH model keyCode

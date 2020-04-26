@@ -69,7 +69,7 @@ field2String text =
 indexes : List a -> List Int
 indexes listA =
     List.length listA
-        |> flip (-) 1
+        |> (\a -> (-) a 1)
         |> List.range 0
 
 
@@ -122,7 +122,7 @@ startingWithFromIndex listA index =
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
     indexes listA
-        |> List.map2 (flip (,)) listA
+        |> List.map2 (\b a -> (\a b -> ( a, b )) a b) listA
 
 
 withoutOne : List a -> a -> List a
@@ -133,7 +133,7 @@ withoutOne listA x =
 withoutOneFromMaybe : List a -> Maybe a -> List a
 withoutOneFromMaybe listA xMaybe =
     withoutOne listA
-        |> flip Maybe.map xMaybe
+        |> (\a -> Maybe.map a xMaybe)
         |> Maybe.withDefault listA
 
 

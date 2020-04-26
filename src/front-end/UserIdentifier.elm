@@ -21,9 +21,7 @@ import Char
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( UserIdentifierEstablish
-            )
+        , Msg(..)
         )
 import Random
     exposing
@@ -69,7 +67,7 @@ generateUserIdentifier =
         highestCharNumber : UserIdentifierNumberSpaceInt
         highestCharNumber =
             (charNumberSpaceLength ^ charCount)
-                |> flip (-) 1
+                |> (\a -> (-) a 1)
     in
     int 0 highestCharNumber
         |> generate UserIdentifierEstablish
@@ -100,7 +98,7 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
 
                 slotInLetterCase : KeyCode
                 slotInLetterCase =
-                    keyCode % caseLength
+                    modBy caseLength keyCode
             in
             (keyCodeBase + slotInLetterCase)
                 |> fromCode
@@ -112,7 +110,7 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
                 keyCodeCalc index =
                     (charNumberSpaceLength ^ index)
                         |> (//) userIdentifierNumberSpaceInt
-                        |> flip (%) charNumberSpaceLength
+                        |> (\a -> (\dividend modulus -> modBy modulus dividend) a charNumberSpaceLength)
             in
             (charCount - 1)
                 |> List.range 0

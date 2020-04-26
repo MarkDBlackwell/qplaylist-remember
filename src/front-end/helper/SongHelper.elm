@@ -37,10 +37,7 @@ import SongInitialize
 import SongType
     exposing
         ( Artist
-        , SongGroup
-            ( Recent
-            , Remembered
-            )
+        , SongGroup(..)
         , SongRecent
         , SongRecentBase
         , SongRecentMaybe
@@ -172,7 +169,7 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
 songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
     songsTimelessMatches model.songsRecent
-        |> flip Maybe.map songRememberedMaybe
+        |> (\a -> Maybe.map a songRememberedMaybe)
         |> Maybe.andThen List.head
         |> Maybe.map2 songRememberedUpdate songRememberedMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe

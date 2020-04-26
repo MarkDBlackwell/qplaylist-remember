@@ -21,10 +21,7 @@ import ElmCycle
 import ModelType
     exposing
         ( Model
-        , Optional
-            ( Closed
-            , Open
-            )
+        , Optional(..)
         )
 import SongInitialize
     exposing
@@ -42,10 +39,7 @@ import UpdateFocus
         )
 import UpdateRequestType
     exposing
-        ( ActionLikeOrComment
-            ( Comment
-            , Like
-            )
+        ( ActionLikeOrComment(..)
         , AwaitingServerResponse
         , LikeOrCommentText
         , QueryPair

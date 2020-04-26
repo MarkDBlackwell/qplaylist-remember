@@ -20,11 +20,7 @@ import Alert
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( CommentResponse
-            , LikeResponse
-            , SongsRecentResponse
-            )
+        , Msg(..)
         )
 import Http
     exposing

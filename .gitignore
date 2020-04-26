@@ -13,6 +13,7 @@
 /Main.js
 /index.html
 
+elm-upgrade-*.log
 npm-debug.log
 php_errorlog
 

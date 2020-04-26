@@ -10,9 +10,7 @@ module ViewBuySong exposing (buySongAnchor)
 
 import ElmCycle
     exposing
-        ( Msg
-            ( None
-            )
+        ( Msg(..)
         )
 import Html
     exposing

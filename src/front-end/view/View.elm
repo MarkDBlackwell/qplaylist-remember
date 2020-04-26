@@ -10,11 +10,7 @@ module View exposing (view)
 
 import ElmCycle
     exposing
-        ( Msg
-            ( CommentAreaInputTextChangeCaptureHand
-            , CommentCancelHand
-            , CommentSendHand
-            )
+        ( Msg(..)
         )
 import Html
     exposing
@@ -56,10 +52,7 @@ import SongHelper
         )
 import SongType
     exposing
-        ( SongGroup
-            ( Recent
-            , Remembered
-            )
+        ( SongGroup(..)
         , SongGroupLength
         , SongRecentOrRemembered
         , SongRemembered
@@ -256,8 +249,8 @@ view model =
                                 _ ->
                                     em
                                         [ title indicatorHoverText
-                                        , style [ ( "background-color", "Salmon" ) ]
-                                        , style [ ( "color", "Salmon" ) ]
+                                        , style "background-color" "Salmon"
+                                        , style "color" "Salmon"
                                         ]
                                         innerHtmlEmpty
 

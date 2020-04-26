@@ -10,9 +10,7 @@ module Subscription exposing (subscriptions)
 
 import ElmCycle
     exposing
-        ( Msg
-            ( KeystrokeHand
-            )
+        ( Msg(..)
         )
 import Keyboard
     exposing

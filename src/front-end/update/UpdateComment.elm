@@ -28,9 +28,7 @@ import ModelInitialize
 import ModelType
     exposing
         ( Model
-        , Optional
-            ( Open
-            )
+        , Optional(..)
         )
 import SongHelper
     exposing

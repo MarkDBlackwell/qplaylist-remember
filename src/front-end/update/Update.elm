@@ -70,10 +70,7 @@ import UpdateRequest
         )
 import UpdateRequestType
     exposing
-        ( ActionLikeOrComment
-            ( Comment
-            , Like
-            )
+        ( ActionLikeOrComment(..)
         )
 import UpdateResponse
     exposing

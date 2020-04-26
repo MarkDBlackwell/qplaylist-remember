@@ -10,11 +10,7 @@ module ModelType exposing
     ( CommentText
     , Flags
     , Model
-    ,  Optional
-        ( Closed
-        , Open
-        )
-
+    , Optional(..)
     , PageIsExpanded
     , ShowCommentButtons
     )

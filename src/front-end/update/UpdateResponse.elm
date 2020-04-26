@@ -37,9 +37,7 @@ import DecodeSongsRecent
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( SongsRememberedStore
-            )
+        , Msg(..)
         )
 import Http
     exposing
@@ -88,10 +86,7 @@ import UpdateLog
         )
 import UpdateRequestType
     exposing
-        ( ActionLikeOrComment
-            ( Comment
-            , Like
-            )
+        ( ActionLikeOrComment(..)
         , HttpResponseText
         )
 import Utilities

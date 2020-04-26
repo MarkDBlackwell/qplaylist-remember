@@ -9,11 +9,7 @@
 module SongType exposing
     ( Artist
     , LikeOrCommentCount
-    ,  SongGroup
-        ( Recent
-        , Remembered
-        )
-
+    , SongGroup(..)
     , SongGroupLength
     , SongRecent
     , SongRecentBase

@@ -7,17 +7,8 @@
 
 
 module UpdateRequestType exposing
-    (  Action
-        ( ActionDecoding
-        , ActionRequest
-        , ActionResponse
-        )
-
-    ,  ActionLikeOrComment
-        ( Comment
-        , Like
-        )
-
+    ( Action(..)
+    , ActionLikeOrComment(..)
     , AwaitingServerResponse
     , HttpResponseText
     , LikeOrCommentResponseText

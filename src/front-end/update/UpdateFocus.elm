@@ -21,10 +21,7 @@ import Dom
 import ElmCycle
     exposing
         ( ElmCycle
-        , Msg
-            ( FocusAttempt
-            , None
-            )
+        , Msg(..)
         )
 import ModelType
     exposing

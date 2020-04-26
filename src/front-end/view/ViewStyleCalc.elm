@@ -18,10 +18,7 @@ import Html.Attributes
         )
 import SongType
     exposing
-        ( SongGroup
-            ( Recent
-            , Remembered
-            )
+        ( SongGroup(..)
         , SongGroupLength
         , SongsRecentOrRememberedIndex
         )

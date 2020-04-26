@@ -21,14 +21,7 @@ import Dom
         )
 import ElmCycle
     exposing
-        ( Msg
-            ( CommentAreaOpenHand
-            , LikeButtonProcessHand
-            , PageMorphHand
-            , SongForgetHand
-            , SongRememberHand
-            , SongsRecentRefreshHand
-            )
+        ( Msg(..)
         )
 import Html
     exposing
@@ -55,10 +48,7 @@ import SongHelper
         )
 import SongType
     exposing
-        ( SongGroup
-            ( Recent
-            , Remembered
-            )
+        ( SongGroup(..)
         , SongsRecentOrRememberedIndex
         , SongsRememberedIndex
         )
@@ -129,7 +119,7 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
             maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
     in
     button
-        ([ style [ ( "display", displayValue ) ]
+        ([ style "display" displayValue
          , onClick action
          , title hoverText
          , type_ "button"

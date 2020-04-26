@@ -22,11 +22,7 @@ import ElmCycle
         )
 import UpdateRequestType
     exposing
-        ( Action
-            ( ActionDecoding
-            , ActionRequest
-            , ActionResponse
-            )
+        ( Action(..)
         )
 
 
