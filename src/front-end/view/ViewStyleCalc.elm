@@ -49,7 +49,7 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                         [ "hsl(0,"
                         , saturation
                             * 100.0
-                            |> toString
+                            |> String.fromInt
                         , "%,50%"
                         ]
             in
@@ -73,7 +73,7 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                     String.concat
                         [ scaleFactor
                             * base
-                            |> toString
+                            |> String.fromInt
                         , "rem"
                         ]
             in

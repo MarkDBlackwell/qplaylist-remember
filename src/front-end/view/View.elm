@@ -119,7 +119,7 @@ view model =
                         statistics : String
                         statistics =
                             String.length model.commentText
-                                |> toString
+                                |> String.fromInt
                                 |> (++) " – "
 
                         yearMonthDay : String

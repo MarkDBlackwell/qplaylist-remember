@@ -20,8 +20,7 @@
             "elm/random": "1.0.0",
             "elm/svg": "1.0.1",
             "elm/virtual-dom": "1.0.2",
-            "elm-explorations/markdown": "1.0.0",
-            "elm-lang/websocket": "1.0.2"
+            "elm-explorations/markdown": "1.0.0"
         },
         "indirect": {
             "elm/bytes": "1.0.8",

@@ -87,7 +87,7 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
             String.concat
                 [ "button"
                 , idFragment
-                , toString index
+                , String.fromInt index
                 ]
     in
     Maybe.andThen songRememberedIndexMaybe songCommentingMaybe

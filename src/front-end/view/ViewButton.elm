@@ -80,7 +80,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            toString songsRememberedIndex
+            String.fromInt songsRememberedIndex
                 |> (++) "buttonComment"
                 |> Just
 
@@ -139,7 +139,7 @@ buttonLike songGroup songsRememberedIndex =
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
             Just
-                (toString songsRememberedIndex
+                (String.fromInt songsRememberedIndex
                     |> (++) "buttonLike"
                 )
 
@@ -187,7 +187,7 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
                 (String.concat
                     [ "button"
                     , songGroup2String songGroup
-                    , toString songsRecentOrRememberedIndex
+                    , String.fromInt songsRecentOrRememberedIndex
                     ]
                 )
 

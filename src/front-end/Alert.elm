@@ -139,7 +139,7 @@ errorHttpText httpError =
 
         Http.BadStatus httpResponseText ->
             ( prefixSeparator ++ "BadStatus"
-            , toString httpResponseText.status
+            , String.fromInt httpResponseText.status
             )
 
         Http.BadUrl uriText ->
