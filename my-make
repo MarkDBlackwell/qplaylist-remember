@@ -29,7 +29,7 @@ do
 done && \
 
 NAME=Main && \
-elm-make --warn --output=$DIRECTORY_TEMP/$NAME.js $DIRECTORY_FRONT_END/$NAME.elm && \
+elm make --output=$DIRECTORY_TEMP/$NAME.js $DIRECTORY_FRONT_END/$NAME.elm && \
 
 echo "Minifying $NAME.js to $NAME-min.js" && \
 uglifyjs --compress --mangle reserved=['Elm'] -- \
