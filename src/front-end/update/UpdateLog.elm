@@ -13,9 +13,6 @@ module UpdateLog exposing
     )
 
 import Debug
-    exposing
-        ( log
-        )
 import ElmCycle
     exposing
         ( Msg
@@ -52,7 +49,9 @@ logAction action textMaybe =
                 text =
                     Maybe.withDefault "Ok" textMaybe
             in
-            log actionString text
+            --Use Debug.log during development.
+            --Debug.log actionString text
+            text
     in
     Cmd.none
 

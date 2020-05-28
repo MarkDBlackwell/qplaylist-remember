@@ -14,8 +14,7 @@ module UserIdentifier exposing
 
 import Char
     exposing
-        ( KeyCode
-        , fromCode
+        ( fromCode
         , toCode
         )
 import ElmCycle
@@ -33,6 +32,10 @@ import UserIdentifierType
     exposing
         ( UserIdentifier
         , UserIdentifierNumberSpaceInt
+        )
+import ViewType
+    exposing
+        ( KeyCode
         )
 
 

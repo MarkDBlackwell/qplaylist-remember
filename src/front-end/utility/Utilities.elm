@@ -40,12 +40,7 @@ import Html.Attributes
     exposing
         ( id
         )
-import Json.Decode
-    exposing
-        ( Decoder
-        , field
-        , string
-        )
+import Json.Decode as Json
 import Task
     exposing
         ( perform
@@ -61,16 +56,20 @@ import ViewType
 -- UPDATE
 
 
-field2String : String -> Decoder String
+field2String : String -> Json.Decoder String
 field2String text =
-    field text string
+    Json.field text Json.string
 
 
 indexes : List a -> List Int
 indexes listA =
     List.length listA
-        |> (\a -> (-) a 1)
+        |> (\x -> (-) x 1)
         |> List.range 0
+
+
+
+{- TODO: try List.indexedMap -}
 
 
 matchingIndexes : List a -> a -> List Int
@@ -97,7 +96,7 @@ maybeMapWithDefault default function value =
 msg2Cmd : Msg -> Cmd Msg
 msg2Cmd msg =
     --See:
-    --https://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
     succeed msg
         |> perform identity
@@ -119,21 +118,26 @@ startingWithFromIndex listA index =
     List.drop index listA
 
 
+
+{- TODO: try List.map2 (\thing index -> ( index, thing )) listA -}
+{- TODO: try List.indexedMap -}
+
+
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
     indexes listA
-        |> List.map2 (\b a -> (\a b -> ( a, b )) a b) listA
+        |> List.map2 (\thing index -> (\x y -> ( x, y )) index thing) listA
 
 
 withoutOne : List a -> a -> List a
-withoutOne listA x =
-    List.filter ((/=) x) listA
+withoutOne listA thing =
+    List.filter ((/=) thing) listA
 
 
 withoutOneFromMaybe : List a -> Maybe a -> List a
 withoutOneFromMaybe listA xMaybe =
     withoutOne listA
-        |> (\a -> Maybe.map a xMaybe)
+        |> (\thing -> Maybe.map thing xMaybe)
         |> Maybe.withDefault listA
 
 
@@ -145,7 +149,7 @@ attributeIdFromMaybe : IdMaybe -> List (Attribute msg)
 attributeIdFromMaybe attributeIdMaybe =
     maybeMapWithDefault
         attributesEmpty
-        (\x -> [ id x ])
+        (\thing -> [ id thing ])
         attributeIdMaybe
 
 
@@ -157,7 +161,7 @@ attributesEmpty =
 goldenRatio : Float
 goldenRatio =
     --See:
-    --https://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+    --http://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
     0.6180339887498949
 
 

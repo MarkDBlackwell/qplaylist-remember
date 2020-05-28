@@ -67,7 +67,7 @@ type alias UriText =
 
 type alias UrlBeforeQueryList =
     --See:
-    --https://github.com/elm-lang/url
-    --https://tools.ietf.org/html/rfc3986
+    --http://github.com/elm/url
+    --http://tools.ietf.org/html/rfc3986
     --When joined, then comprises a URI's scheme, authority, and path:
     List UriText

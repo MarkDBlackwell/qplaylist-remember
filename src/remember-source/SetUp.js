@@ -44,7 +44,7 @@ var functionResetSongsDevelopmentOnly = function() {
     } else {
         try {
             localStorage.setItem(keyStorage, tempSongsAsString);
-        };
+        }
         catch(e) {
             window.alert('e: ' + e);
         };
@@ -66,12 +66,15 @@ functionResetSongsDevelopmentOnly();
         var functionStorageSubscribe;
 
         functionAttachNode = function() {
-            var node;
+            var elmMain;
 
-            node = document.getElementById('main');
-            return Elm.Main.embed(node, {
-                showCommentButtons: functionShowCommentButtons(),
-                songsRemembered: functionSongsRememberedRetrieved()
+            elmMain = document.getElementById('main');
+            return Elm.Main.init({
+                node: elmMain,
+                flags: {
+                    showCommentButtons: functionShowCommentButtons(),
+                    songsRemembered: functionSongsRememberedRetrieved()
+                }
             });
         };
         functionKeyStorage = function() {

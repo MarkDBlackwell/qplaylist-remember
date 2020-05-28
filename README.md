@@ -27,7 +27,7 @@ Node.js automatically comes with npm.
 Do these, from the project root directory:
 
 ````bash
-npm install elm-format
+npm install elm-format    This comes bundled with elm 0.19.1.
 npm install uglify-js
 npm install html-minifier
 npm install cssnano-cli

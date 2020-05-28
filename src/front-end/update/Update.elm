@@ -119,8 +119,8 @@ update msg model =
         FocusAttempt id ->
             focusAttempt model id
 
-        KeystrokeHand keyCode ->
-            keystrokeHand model keyCode
+        KeystrokeHand keyChar ->
+            keystrokeHand model keyChar
 
         LikeButtonProcessHand songsRememberedIndex ->
             likeButtonProcessHand model songsRememberedIndex

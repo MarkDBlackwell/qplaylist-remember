@@ -32,7 +32,7 @@ import Utilities
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> Attribute msg
+styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> List (Attribute msg)
 styleCalc group songGroupLength songsRecentOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
@@ -49,7 +49,7 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                         [ "hsl(0,"
                         , saturation
                             * 100.0
-                            |> String.fromInt
+                            |> String.fromFloat
                         , "%,50%"
                         ]
             in
@@ -73,7 +73,7 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                     String.concat
                         [ scaleFactor
                             * base
-                            |> String.fromInt
+                            |> String.fromFloat
                         , "rem"
                         ]
             in
@@ -93,9 +93,8 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                 Remembered ->
                     goldenRatio ^ toFloat songsRecentOrRememberedIndexReversed
     in
-    style
-        (List.concat
-            [ backgroundColorStyling
-            , fontSizeStyling
-            ]
-        )
+    List.concat
+        [ backgroundColorStyling
+        , fontSizeStyling
+        ]
+        |> List.map (\( property, value ) -> style property value)

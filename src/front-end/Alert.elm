@@ -31,9 +31,6 @@ import ElmCycle
         ( ElmCycle
         )
 import Http
-    exposing
-        ( Error
-        )
 import ModelType
     exposing
         ( Model
@@ -71,19 +68,19 @@ actionDescriptionRecent =
     "access the latest few songs"
 
 
-alertMessageTextErrorHttpLogging : Error -> AlertMessageText
+alertMessageTextErrorHttpLogging : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
     errorHttpText httpError
         |> first
 
 
-alertMessageTextErrorHttpScreen : Error -> AlertMessageText
+alertMessageTextErrorHttpScreen : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpScreen httpError =
     errorHttpText httpError
         |> second
 
 
-alertMessageTextRequestLikeOrComment : Error -> LikeOrCommentName -> AlertMessageText
+alertMessageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     (++)
         (alertMessageTextErrorHttpScreen httpError)
@@ -124,7 +121,7 @@ alertMessageTextServerAwaitingElmCycle model =
     )
 
 
-errorHttpText : Error -> ( AlertMessageText, AlertMessageText )
+errorHttpText : Http.Error -> ( AlertMessageText, AlertMessageText )
 errorHttpText httpError =
     let
         prefix : PrefixSeparatorText
@@ -132,14 +129,14 @@ errorHttpText httpError =
             "HttpError"
     in
     case httpError of
-        Http.BadPayload debuggingText httpResponseText ->
-            ( prefix ++ prefixSeparator ++ "BadPayload"
+        Http.BadBody debuggingText ->
+            ( prefix ++ prefixSeparator ++ "BadBody"
             , debuggingText
             )
 
-        Http.BadStatus httpResponseText ->
+        Http.BadStatus status ->
             ( prefixSeparator ++ "BadStatus"
-            , String.fromInt httpResponseText.status
+            , String.fromInt status
             )
 
         Http.BadUrl uriText ->

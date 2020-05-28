@@ -14,6 +14,7 @@
 /index.html
 
 elm-upgrade-*.log
+nano.save*
 npm-debug.log
 php_errorlog
 

@@ -15,10 +15,6 @@ module ViewButton exposing
     , buttonView
     )
 
-import Dom
-    exposing
-        ( Id
-        )
 import ElmCycle
     exposing
         ( Msg(..)
@@ -63,6 +59,7 @@ import ViewType
     exposing
         ( Display
         , HoverText
+        , Id
         , IdMaybe
         )
 

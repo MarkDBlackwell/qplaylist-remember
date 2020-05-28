@@ -40,9 +40,6 @@ import ElmCycle
         , Msg(..)
         )
 import Http
-    exposing
-        ( Error
-        )
 import ModelInitialize
     exposing
         ( awaitingServerResponseInit
@@ -80,10 +77,6 @@ import UpdateHelper
         ( actionLikeOrComment2String
         )
 import UpdateLog
-    exposing
-        ( logDecoding
-        , logResponse
-        )
 import UpdateRequestType
     exposing
         ( ActionLikeOrComment(..)
@@ -99,7 +92,7 @@ import Utilities
 -- UPDATE
 
 
-likeOrCommentResponseErr : Model -> Error -> ActionLikeOrComment -> ElmCycle
+likeOrCommentResponseErr : Model -> Http.Error -> ActionLikeOrComment -> ElmCycle
 likeOrCommentResponseErr model httpError actionLikeOrComment =
     let
         modelNewSongLikingOrCommenting : Model
@@ -127,7 +120,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                 |> alertMessageTextRequestLikeOrComment httpError
             )
             |> Just
-            |> logResponse
+            |> UpdateLog.logResponse
         , focusInputPossibly model
         ]
     )
@@ -204,7 +197,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> logDecoding
+                    |> UpdateLog.logDecoding
                 , buttonCommand
                 , focusInputPossibly model
                 ]
@@ -228,7 +221,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         responseText
                         httpResponseText
                         |> Just
-                        |> logResponse
+                        |> UpdateLog.logResponse
                     , buttonCommand
                     , focusInputPossibly model
                     ]
@@ -249,14 +242,14 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                   }
                 , Cmd.batch
                     [ msg2Cmd SongsRememberedStore
-                    , logResponse Nothing
+                    , UpdateLog.logResponse Nothing
                     , buttonCommandAccomplished
                     , focusInputPossibly model
                     ]
                 )
 
 
-songsRecentResponseErr : Model -> Error -> ElmCycle
+songsRecentResponseErr : Model -> Http.Error -> ElmCycle
 songsRecentResponseErr model httpError =
     let
         alertMessageTextNew : AlertMessageText
@@ -275,7 +268,7 @@ songsRecentResponseErr model httpError =
     , Cmd.batch
         [ alertMessageTextErrorHttpLogging httpError
             |> Just
-            |> logResponse
+            |> UpdateLog.logResponse
         , focusInputPossibly model
         ]
     )
@@ -296,7 +289,7 @@ songsRecentResponseOk model httpResponseText =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> logDecoding
+                    |> UpdateLog.logDecoding
                 , focusInputPossibly model
                 ]
             )
@@ -309,7 +302,7 @@ songsRecentResponseOk model httpResponseText =
               }
               --Here, don't log the full response.
             , Cmd.batch
-                [ logResponse Nothing
+                [ UpdateLog.logResponse Nothing
                 , focusInputPossibly model
                 ]
             )

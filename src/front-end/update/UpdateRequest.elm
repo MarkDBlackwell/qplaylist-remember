@@ -23,10 +23,6 @@ import ElmCycle
         , Msg(..)
         )
 import Http
-    exposing
-        ( getString
-        , send
-        )
 import ModelType
     exposing
         ( Model
@@ -53,9 +49,6 @@ import UpdateHelper
         , stateVector
         )
 import UpdateLog
-    exposing
-        ( logRequest
-        )
 import UpdateRequestType
     exposing
         ( UriText
@@ -89,8 +82,10 @@ commentSendHand model =
                 let
                     commentRequest : Cmd Msg
                     commentRequest =
-                        getString commentRequestUriText
-                            |> send CommentResponse
+                        Http.get
+                            { url = commentRequestUriText
+                            , expect = Http.expectString CommentResponse
+                            }
 
                     commentRequestUriText : UriText
                     commentRequestUriText =
@@ -110,7 +105,7 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ logRequest commentRequestUriText
+                    [ UpdateLog.logRequest commentRequestUriText
                     , commentRequest
                     , focusInputPossibly model
                     ]
@@ -143,8 +138,10 @@ likeButtonProcessHand model songsRememberedIndex =
                     let
                         likeRequest : Cmd Msg
                         likeRequest =
-                            getString likeRequestUriText
-                                |> send LikeResponse
+                            Http.get
+                                { url = likeRequestUriText
+                                , expect = Http.expectString LikeResponse
+                                }
 
                         likeRequestUriText : UriText
                         likeRequestUriText =
@@ -170,7 +167,7 @@ likeButtonProcessHand model songsRememberedIndex =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ logRequest likeRequestUriText
+                        [ UpdateLog.logRequest likeRequestUriText
                         , likeRequest
                         , focusInputPossibly model
                         ]
@@ -200,15 +197,17 @@ songsRecentRefreshHand model =
 
                 songsRecentRequest : Cmd Msg
                 songsRecentRequest =
-                    getString requestUriText
-                        |> send SongsRecentResponse
+                    Http.get
+                        { url = requestUriText
+                        , expect = Http.expectString SongsRecentResponse
+                        }
             in
             ( { model
                 | alertMessageText = alertMessageTextInit
                 , awaitingServerResponse = True
               }
             , Cmd.batch
-                [ logRequest requestUriText
+                [ UpdateLog.logRequest requestUriText
                 , songsRecentRequest
                 , focusInputPossibly model
                 ]

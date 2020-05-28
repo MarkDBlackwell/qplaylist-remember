@@ -12,29 +12,29 @@
 #  elm-format 0.7.0-exp or 0.8.3
 #  uglify-js 3.1.7 or 3.9.1
 
-DIRECTORY_FRONT_END=src/front-end
+DIRECTORY_SOURCE_ELM=src/front-end
 
 DIRECTORY_TEMP=tmp
-
-echo "Searching for trailing blanks"
-grep -nEI ' $' `find $DIRECTORY_FRONT_END -type f`
 
 (
 export PATH="node_modules/.bin:$PATH" && \
 
-for directory_source in `find $DIRECTORY_FRONT_END -type d`
-do
-  echo "Formatting $directory_source"
-  elm-format --yes $directory_source
-done && \
+echo "Formatting $DIRECTORY_SOURCE_ELM:" && \
+elm-format --yes $DIRECTORY_SOURCE_ELM && \
 
 NAME=Main && \
-elm make --output=$DIRECTORY_TEMP/$NAME.js $DIRECTORY_FRONT_END/$NAME.elm && \
+#elm make $DIRECTORY_SOURCE_ELM/$NAME.elm --output=$DIRECTORY_TEMP/$NAME.js && \
+ elm make $DIRECTORY_SOURCE_ELM/$NAME.elm --output=$DIRECTORY_TEMP/$NAME.js --optimize && \
 
 echo "Minifying $NAME.js to $NAME-min.js" && \
-uglifyjs --compress --mangle reserved=['Elm'] -- \
-  $DIRECTORY_TEMP/$NAME.js > \
-  build/$NAME-min.js && \
+
+#uglifyjs --compress --mangle reserved=['Elm'] -- \
+#  $DIRECTORY_TEMP/$NAME.js > \
+#  build/$NAME-min.js && \
+
+uglifyjs $DIRECTORY_TEMP/$NAME.js \
+--compress "pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,keep_fargs=false,unsafe_comps,unsafe" \
+| uglifyjs --mangle --output=build/$NAME-min.js && \
 
 :) || \
 

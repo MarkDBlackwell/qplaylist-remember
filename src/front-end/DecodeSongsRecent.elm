@@ -12,15 +12,7 @@ import AlertType
     exposing
         ( AlertMessageText
         )
-import Json.Decode
-    exposing
-        ( Decoder
-        , decodeString
-        , field
-        , list
-        , map
-        , map4
-        )
+import Json.Decode as Json
 import SongType
     exposing
         ( SongRecent
@@ -48,19 +40,19 @@ type alias SongsRecentWithDummyTag =
 decodeSongsRecentResponse : HttpResponseText -> Result AlertMessageText SongsRecent
 decodeSongsRecentResponse jsonRawText =
     --See:
-    --https://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+    --http://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        asRecord : Result AlertMessageText SongsRecentWithDummyTag
+        asRecord : Result Json.Error SongsRecentWithDummyTag
         asRecord =
             let
-                decodeSongsRecentWithDummyTag : Decoder SongsRecentWithDummyTag
+                decodeSongsRecentWithDummyTag : Json.Decoder SongsRecentWithDummyTag
                 decodeSongsRecentWithDummyTag =
                     let
-                        decodeSongRecent : Decoder SongRecent
+                        decodeSongRecent : Json.Decoder SongRecent
                         decodeSongRecent =
-                            map4
+                            Json.map4
                                 SongRecent
                                 (field2String "artist")
                                 (field2String "time")
@@ -71,15 +63,15 @@ decodeSongsRecentResponse jsonRawText =
                         tag =
                             "latestFive"
                     in
-                    list decodeSongRecent
-                        |> field tag
-                        |> map SongsRecentWithDummyTag
+                    Json.list decodeSongRecent
+                        |> Json.field tag
+                        |> Json.map SongsRecentWithDummyTag
             in
-            decodeString decodeSongsRecentWithDummyTag jsonRawText
+            Json.decodeString decodeSongsRecentWithDummyTag jsonRawText
     in
     case asRecord of
-        Err text ->
-            Err text
+        Err error ->
+            Err (Json.errorToString error)
 
         Ok record ->
             Ok record.dummyTag

@@ -22,10 +22,6 @@ module SongHelper exposing
     , songsTimelessMatches
     )
 
-import Dom
-    exposing
-        ( Id
-        )
 import ModelType
     exposing
         ( Model
@@ -61,6 +57,10 @@ import Utilities
         ( matchingIndexes
         , maybeMapWithDefault
         , selectOneFromIndexMaybe
+        )
+import ViewType
+    exposing
+        ( Id
         )
 
 

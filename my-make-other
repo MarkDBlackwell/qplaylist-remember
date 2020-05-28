@@ -27,6 +27,11 @@ export PATH="../node_modules/.bin:$PATH" && \
 
 DIRECTORY_SOURCE=../src/remember-source && \
 
+echo "Searching for trailing blanks:" && \
+(grep -nrIE '[[:space:]]$' $DIRECTORY_SOURCE; status=$?; [ $status -ne 0 ]) && \
+
+echo "Minifying JavaScript:" && \
+
 NAME=SetUp && \
 echo "Minifying $NAME.js to $NAME-min.js" && \
 uglifyjs --compress --mangle --warn -- \
@@ -39,6 +44,8 @@ uglifyjs --compress --mangle --warn -- \
   $DIRECTORY_SOURCE/$NAME.js > \
   $NAME-min.js && \
 
+echo "Minifying HTML:" && \
+
 NAME=RememberSongs && \
 echo "Minifying $NAME-src.html to $NAME.html" && \
 html-minifier --config-file ../html-minifier-conf.json \
@@ -50,6 +57,8 @@ echo "Minifying $NAME-src.html to $NAME.html" && \
 tr -d '\n' < \
   $DIRECTORY_SOURCE/$NAME-src.html > \
   $NAME.html && \
+
+echo "Minifying CSS:" && \
 
 NAME=RememberSongs && \
 echo "Minifying $NAME.css to $NAME-min.css" && \

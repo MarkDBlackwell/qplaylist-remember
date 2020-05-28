@@ -265,7 +265,7 @@ view model =
                                 attributesEmpty
 
                             else
-                                [ styleCalc songGroup lengthRemembered songsRecentOrRememberedIndex ]
+                                styleCalc songGroup lengthRemembered songsRecentOrRememberedIndex
 
                         songTime : Time
                         songTime =

@@ -12,12 +12,7 @@ module UpdateFocus exposing
     , focusSetId
     )
 
-import Dom
-    exposing
-        ( Error
-        , Id
-        , focus
-        )
+import Browser.Dom as Dom
 import ElmCycle
     exposing
         ( ElmCycle
@@ -30,12 +25,15 @@ import ModelType
 import Task
     exposing
         ( Task
-        , attempt
         )
 import Utilities
     exposing
         ( maybeMapWithDefault
         , msg2Cmd
+        )
+import ViewType
+    exposing
+        ( Id
         )
 
 
@@ -46,20 +44,21 @@ import Utilities
 focusAttempt : Model -> Id -> ElmCycle
 focusAttempt model id =
     let
-        focusOnId : Task Error ()
+        focusOnId : Task Dom.Error ()
         focusOnId =
-            focus id
+            Dom.focus id
 
         ignoreResult : Result x a -> Msg
         ignoreResult _ =
             None
     in
     --See:
-    --https://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
-    --https://stackoverflow.com/a/39419640/1136063
+    --http://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
+    --http://stackoverflow.com/a/39419640/1136063
+    --http://stackoverflow.com/questions/31901397/how-to-set-focus-on-an-element-in-elm
     ( model
       --Here, unlike logging, executing the task requires the Elm runtime.
-    , attempt ignoreResult focusOnId
+    , Task.attempt ignoreResult focusOnId
     )
 
 

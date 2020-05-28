@@ -12,15 +12,6 @@ import AlertType
     exposing
         ( AlertMessageText
         )
-import Char
-    exposing
-        ( KeyCode
-        , toCode
-        )
-import Dom
-    exposing
-        ( Id
-        )
 import ElmCycle
     exposing
         ( ElmCycle
@@ -49,14 +40,19 @@ import Utilities
     exposing
         ( msg2Cmd
         )
+import ViewType
+    exposing
+        ( Id
+        , KeyChar
+        )
 
 
 
 -- UPDATE
 
 
-keyProcessH : Model -> KeyCode -> ElmCycle
-keyProcessH model keyCode =
+keyProcessH : Model -> KeyChar -> ElmCycle
+keyProcessH model keyChar =
     let
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
@@ -104,8 +100,8 @@ keyProcessH model keyCode =
     )
 
 
-keystrokeHand : Model -> KeyCode -> ElmCycle
-keystrokeHand model keyCode =
+keystrokeHand : Model -> KeyChar -> ElmCycle
+keystrokeHand model keyChar =
     let
         doNothing : ElmCycle
         doNothing =
@@ -125,37 +121,37 @@ keystrokeHand model keyCode =
                         ]
                     )
 
-                keyIs : Char -> Bool
-                keyIs char =
-                    Char.toCode char == keyCode
+                keyIs : String -> Bool
+                keyIs text =
+                    text == String.toUpper keyChar
 
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
                     List.length model.songsRemembered
                         |> (\a -> (-) a 1)
             in
-            if keyIs 'H' then
-                keyProcessH model keyCode
+            if keyIs "H" then
+                keyProcessH model keyChar
 
-            else if keyIs 'C' then
+            else if keyIs "C" then
                 songsRememberedIndex
                     |> CommentAreaOpenHand
                     |> doMessage "refresh"
 
-            else if keyIs 'F' then
+            else if keyIs "F" then
                 SongsRecentRefreshHand
                     |> doMessage "refresh"
 
-            else if keyIs 'L' then
+            else if keyIs "L" then
                 songsRememberedIndex
                     |> LikeButtonProcessHand
                     |> doMessage "refresh"
 
-            else if keyIs 'M' then
+            else if keyIs "M" then
                 PageMorphHand
                     |> doMessage "morph"
 
-            else if keyIs 'R' then
+            else if keyIs "R" then
                 SongRememberHand 0
                     |> doMessage "refresh"
 

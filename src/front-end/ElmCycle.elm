@@ -11,18 +11,7 @@ module ElmCycle exposing
     , Msg(..)
     )
 
-import Char
-    exposing
-        ( KeyCode
-        )
-import Dom
-    exposing
-        ( Id
-        )
 import Http
-    exposing
-        ( Error
-        )
 import ModelType
     exposing
         ( CommentText
@@ -41,6 +30,11 @@ import UserIdentifierType
     exposing
         ( UserIdentifierNumberSpaceInt
         )
+import ViewType
+    exposing
+        ( Id
+        , KeyChar
+        )
 
 
 
@@ -58,7 +52,7 @@ type Msg
     | CommentResponse ResultErrorHttp
     | CommentSendHand
     | FocusAttempt Id
-    | KeystrokeHand KeyCode
+    | KeystrokeHand KeyChar
     | LikeButtonProcessHand SongsRememberedIndex
     | LikeResponse ResultErrorHttp
     | None
@@ -72,4 +66,4 @@ type Msg
 
 
 type alias ResultErrorHttp =
-    Result Error HttpResponseText
+    Result Http.Error HttpResponseText
