@@ -10,6 +10,16 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
 
 Hide everything from the global namespace, by using an IIFE (Immediately
 Invokable Function Expression).
+
+In Firefox (e.g. version 76.0.1), if preference
+"Delete cookies and site data when Firefox is closed" is set, then
+localStorage is flaky. From our localStorage key, it returns:
+1.  Sometimes data; and
+2.  Sometimes null.
+See:
+  "When privacy settings for cookies are set to 'Keep until they expire'
+  localStorage becomes inconsistent during the same browsing session":
+  http://bugzilla.mozilla.org/show_bug.cgi?id=1436231
 */
 
 /*
@@ -128,7 +138,7 @@ functionResetSongsDevelopmentOnly();
                     somethingWrongWithLocalStorageMessage = 'Something wrong with window.localStorage';
                     window.alert(somethingWrongWithLocalStorageMessage + ': ' + storage);
                     return false;
-                }
+                };
                 x = '__storage_test__';
                 storage.setItem(x, x);
                 storage.removeItem(x);
