@@ -30,9 +30,9 @@ import View
 
 main : Program Flags Model Msg
 main =
-    Browser.element
-        { init = ModelInitialize.init
-        , subscriptions = Subscription.subscriptions
-        , update = Update.update
-        , view = View.view
-        }
+    { init = ModelInitialize.init
+    , subscriptions = Subscription.subscriptions
+    , update = Update.update
+    , view = View.view
+    }
+        |> Browser.element

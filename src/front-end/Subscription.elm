@@ -46,7 +46,8 @@ subscriptions model =
                     let
                         decoder : Json.Decode.Decoder KeyChar
                         decoder =
-                            Json.Decode.field "key" Json.Decode.string
+                            Json.Decode.string
+                                |> Json.Decode.field "key"
 
                         source : Json.Decode.Decoder msg -> Sub msg
                         source =
@@ -54,7 +55,8 @@ subscriptions model =
                     in
                     source decoder
             in
-            Sub.map KeystrokeHand keySub
+            keySub
+                |> Sub.map KeystrokeHand
     in
     Sub.batch
         [ keyStrokeGlobal

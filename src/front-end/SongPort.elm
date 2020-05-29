@@ -32,5 +32,6 @@ port updateLocalStorage : SongsRemembered -> Cmd msg
 songsRememberedStore : Model -> ElmCycle
 songsRememberedStore model =
     ( model
-    , updateLocalStorage model.songsRemembered
+    , model.songsRemembered
+        |> updateLocalStorage
     )

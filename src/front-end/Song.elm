@@ -34,6 +34,7 @@ import Utilities
     exposing
         ( maybeMapWithDefault
         , startingWithFromIndex
+        , succ
         )
 
 
@@ -52,13 +53,13 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                     let
                         likeOrCommentCountNew : LikeOrCommentCount
                         likeOrCommentCountNew =
-                            (+)
-                                songRemembered.likeOrCommentCount
-                                1
+                            songRemembered.likeOrCommentCount
+                                |> succ
 
                         songDesired : SongRecent
                         songDesired =
-                            song2SongRecent songLikingOrCommenting
+                            songLikingOrCommenting
+                                |> song2SongRecent
                     in
                     if song2SongRecent songRemembered /= songDesired then
                         songRemembered
@@ -68,26 +69,33 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                             | likeOrCommentCount = likeOrCommentCountNew
                         }
             in
-            List.map tweakPossibly songsRemembered
+            songsRemembered
+                |> List.map tweakPossibly
     in
-    maybeMapWithDefault songsRemembered process songLikingOrCommentingMaybe
+    songLikingOrCommentingMaybe
+        |> maybeMapWithDefault songsRemembered process
 
 
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe
 songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
     if
-        songsTimelessMatches songsRecent songRemembered
+        songRemembered
+            |> songsTimelessMatches songsRecent
             |> List.isEmpty
     then
         Nothing
 
     else
-        (songsRememberedIndex + 1)
+        songsRememberedIndex
+            |> succ
             |> startingWithFromIndex songsRemembered
             |> (++)
-                (songRememberedUpdate songRemembered songRecent
+                (songRecent
+                    |> songRememberedUpdate songRemembered
                     |> List.singleton
                 )
             |> (++)
-                (List.take songsRememberedIndex songsRemembered)
+                (songsRemembered
+                    |> List.take songsRememberedIndex
+                )
             |> Just

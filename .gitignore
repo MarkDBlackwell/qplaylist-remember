@@ -19,6 +19,7 @@ npm-debug.log
 php_errorlog
 
 *.stackdump
+*.swp
 Copy\ *
 *-min.css
 *-min.js

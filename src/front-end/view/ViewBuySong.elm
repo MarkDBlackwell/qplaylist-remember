@@ -86,7 +86,8 @@ buySongAnchor song =
                       )
                     ]
             in
-            relative urlBeforeQueryList queryPairs
+            queryPairs
+                |> relative urlBeforeQueryList
     in
     a
         [ href uriText

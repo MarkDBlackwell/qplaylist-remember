@@ -24,6 +24,11 @@ import UserIdentifierType
         ( UserIdentifier
         , UserIdentifierNumberSpaceInt
         )
+import Utilities
+    exposing
+        ( pred
+        , succ
+        )
 import ViewType
     exposing
         ( KeyCode
@@ -36,7 +41,9 @@ import ViewType
 
 caseLength : Int
 caseLength =
-    1 + Char.toCode 'Z' - Char.toCode 'A'
+    Char.toCode 'Z'
+        - Char.toCode 'A'
+        |> succ
 
 
 charCount : Int
@@ -60,8 +67,9 @@ generateUserIdentifier =
     let
         highestCharNumber : UserIdentifierNumberSpaceInt
         highestCharNumber =
-            (charNumberSpaceLength ^ charCount)
-                |> (\a -> (-) a 1)
+            charNumberSpaceLength
+                ^ charCount
+                |> pred
     in
     Random.int 0 highestCharNumber
         |> Random.generate UserIdentifierEstablish
@@ -92,9 +100,11 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
 
                 slotInLetterCase : KeyCode
                 slotInLetterCase =
-                    modBy caseLength keyCode
+                    keyCode
+                        |> modBy caseLength
             in
-            (keyCodeBase + slotInLetterCase)
+            keyCodeBase
+                + slotInLetterCase
                 |> Char.fromCode
 
         keyCodes : List KeyCode
@@ -102,13 +112,16 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
             let
                 keyCodeCalc : Int -> KeyCode
                 keyCodeCalc index =
-                    (charNumberSpaceLength ^ index)
-                        |> (//) userIdentifierNumberSpaceInt
-                        |> (\a -> (\dividend modulus -> modBy modulus dividend) a charNumberSpaceLength)
+                    charNumberSpaceLength
+                        ^ index
+                        // userIdentifierNumberSpaceInt
+                        |> modBy charNumberSpaceLength
             in
-            (charCount - 1)
+            charCount
+                |> pred
                 |> List.range 0
                 |> List.map keyCodeCalc
     in
-    List.map keyCode2Char keyCodes
+    keyCodes
+        |> List.map keyCode2Char
         |> String.fromList

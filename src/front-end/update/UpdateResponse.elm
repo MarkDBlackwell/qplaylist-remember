@@ -60,9 +60,20 @@ import Utilities
 -- UPDATE
 
 
+alertLogging : Http.Error -> AlertMessageText
+alertLogging httpError =
+    httpError
+        |> Alert.alertMessageTextErrorHttpLogging
+
+
 likeOrCommentResponseErr : Model -> Http.Error -> ActionLikeOrComment -> ElmCycle
 likeOrCommentResponseErr model httpError actionLikeOrComment =
     let
+        alertLikeOrComment : AlertType.LikeOrCommentName -> AlertMessageText
+        alertLikeOrComment =
+            httpError
+                |> Alert.alertMessageTextRequestLikeOrComment
+
         modelNewSongLikingOrCommenting : Model
         modelNewSongLikingOrCommenting =
             case actionLikeOrComment of
@@ -76,16 +87,20 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
     in
     ( { modelNewSongLikingOrCommenting
         | alertMessageText =
-            UpdateHelper.actionLikeOrComment2String actionLikeOrComment
-                |> Alert.alertMessageTextRequestLikeOrComment httpError
+            actionLikeOrComment
+                |> UpdateHelper.actionLikeOrComment2String
+                |> alertLikeOrComment
                 |> Just
         , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
       }
     , Cmd.batch
         [ (++)
-            (Alert.alertMessageTextErrorHttpLogging httpError)
-            (UpdateHelper.actionLikeOrComment2String actionLikeOrComment
-                |> Alert.alertMessageTextRequestLikeOrComment httpError
+            (httpError
+                |> alertLogging
+            )
+            (actionLikeOrComment
+                |> UpdateHelper.actionLikeOrComment2String
+                |> alertLikeOrComment
             )
             |> Just
             |> UpdateLog.logResponse
@@ -99,7 +114,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
         actionDescription =
-            UpdateHelper.actionLikeOrComment2String actionLikeOrComment
+            actionLikeOrComment
+                |> UpdateHelper.actionLikeOrComment2String
                 |> String.append "send your "
 
         buttonCommand : Cmd Msg
@@ -113,7 +129,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
 
         buttonCommandAccomplished : Cmd Msg
         buttonCommandAccomplished =
-            UpdateHelper.actionLikeOrComment2String actionLikeOrComment
+            actionLikeOrComment
+                |> UpdateHelper.actionLikeOrComment2String
                 |> SongHelper.buttonIdReconstruct
                     model.songsRemembered
                     songLikingOrCommentingMaybe
@@ -156,7 +173,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
         Err alertMessageTextDecode ->
             ( { model
                 | alertMessageText =
-                    Alert.alertMessageTextSend actionDescription alertMessageTextDecode
+                    alertMessageTextDecode
+                        |> Alert.alertMessageTextSend actionDescription
                         |> Just
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }
@@ -180,7 +198,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
             if serverSaysRequestWasBad then
                 ( { modelNewSongLikingOrCommenting
                     | alertMessageText =
-                        Alert.alertMessageTextSend actionDescription responseText
+                        responseText
+                            |> Alert.alertMessageTextSend actionDescription
                             |> Just
                     , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
                   }
@@ -199,9 +218,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        Song.likedOrCommentedShow
-                            songLikingOrCommentingMaybe
-                            model.songsRemembered
+                        model.songsRemembered
+                            |> Song.likedOrCommentedShow
+                                songLikingOrCommentingMaybe
                 in
                 ( { modelNewCommentText
                     | alertMessageText = Alert.alertMessageTextInit
@@ -222,8 +241,14 @@ songsRecentResponseErr model httpError =
     let
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
+            let
+                alertScreen : String
+                alertScreen =
+                    httpError
+                        |> Alert.alertMessageTextErrorHttpScreen
+            in
             String.concat
-                [ Alert.alertMessageTextErrorHttpScreen httpError
+                [ alertScreen
                 , " (while attempting to "
                 , Alert.actionDescriptionRecent
                 , ")"
@@ -234,7 +259,8 @@ songsRecentResponseErr model httpError =
         , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
       }
     , Cmd.batch
-        [ Alert.alertMessageTextErrorHttpLogging httpError
+        [ httpError
+            |> alertLogging
             |> Just
             |> UpdateLog.logResponse
         , UpdateFocus.focusInputPossibly model
@@ -248,7 +274,8 @@ songsRecentResponseOk model httpResponseText =
         Err alertMessageTextDecode ->
             ( { model
                 | alertMessageText =
-                    Alert.alertMessageTextSend Alert.actionDescriptionRecent alertMessageTextDecode
+                    alertMessageTextDecode
+                        |> Alert.alertMessageTextSend Alert.actionDescriptionRecent
                         |> Just
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }

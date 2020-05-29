@@ -73,11 +73,13 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
     let
         buttonActionMsg : Msg
         buttonActionMsg =
-            CommentAreaOpenHand songsRememberedIndex
+            songsRememberedIndex
+                |> CommentAreaOpenHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            String.fromInt songsRememberedIndex
+            songsRememberedIndex
+                |> String.fromInt
                 |> (++) "buttonComment"
                 |> Just
 
@@ -89,7 +91,8 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
         htmlNodeNull
 
     else
-        buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg showCommentButtons
+        showCommentButtons
+            |> buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg
 
 
 buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
@@ -131,12 +134,14 @@ buttonLike songGroup songsRememberedIndex =
     let
         buttonActionMsg : Msg
         buttonActionMsg =
-            LikeButtonProcessHand songsRememberedIndex
+            songsRememberedIndex
+                |> LikeButtonProcessHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
             Just
-                (String.fromInt songsRememberedIndex
+                (songsRememberedIndex
+                    |> String.fromInt
                     |> (++) "buttonLike"
                 )
 
@@ -149,7 +154,8 @@ buttonLike songGroup songsRememberedIndex =
             htmlNodeNull
 
         Remembered ->
-            buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
+            buttonActionMsg
+                |> buttonView buttonAttributeIdMaybe hoverText
 
 
 buttonRecent : Html Msg
@@ -163,7 +169,8 @@ buttonRecent =
         hoverText =
             "Refresh the latest few songs"
     in
-    buttonView buttonAttributeIdMaybe hoverText SongsRecentRefreshHand
+    SongsRecentRefreshHand
+        |> buttonView buttonAttributeIdMaybe hoverText
 
 
 buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html Msg
@@ -173,20 +180,21 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
         buttonActionMsg =
             case songGroup of
                 Recent ->
-                    SongRememberHand songsRecentOrRememberedIndex
+                    songsRecentOrRememberedIndex
+                        |> SongRememberHand
 
                 Remembered ->
-                    SongForgetHand songsRecentOrRememberedIndex
+                    songsRecentOrRememberedIndex
+                        |> SongForgetHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            Just
-                (String.concat
-                    [ "button"
-                    , songGroup2String songGroup
-                    , String.fromInt songsRecentOrRememberedIndex
-                    ]
-                )
+            [ "button"
+            , songGroup2String songGroup
+            , String.fromInt songsRecentOrRememberedIndex
+            ]
+                |> String.concat
+                |> Just
 
         hoverText : HoverText
         hoverText =
@@ -197,7 +205,8 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonView buttonAttributeIdMaybe hoverText buttonActionMsg
+    buttonActionMsg
+        |> buttonView buttonAttributeIdMaybe hoverText
 
 
 buttonRemembered : Html Msg
@@ -211,9 +220,11 @@ buttonRemembered =
         hoverText =
             "Morph this page's shape"
     in
-    buttonView buttonAttributeIdMaybe hoverText PageMorphHand
+    PageMorphHand
+        |> buttonView buttonAttributeIdMaybe hoverText
 
 
 buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
 buttonView buttonAttributeIdMaybe hoverText action =
-    buttonCommentView buttonAttributeIdMaybe hoverText action False
+    False
+        |> buttonCommentView buttonAttributeIdMaybe hoverText action

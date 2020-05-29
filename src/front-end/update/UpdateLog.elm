@@ -47,18 +47,21 @@ logAction action textMaybe =
 
                 text : String
                 text =
-                    Maybe.withDefault "Ok" textMaybe
+                    textMaybe
+                        |> Maybe.withDefault "Ok"
             in
-            --Use Debug.log during development.
-            --Debug.log actionString text
             text
+
+        --Use Debug.log during development.
+        --|> Debug.log actionString
     in
     Cmd.none
 
 
 logDecoding : Maybe String -> Cmd Msg
 logDecoding textMaybe =
-    logAction ActionDecoding textMaybe
+    textMaybe
+        |> logAction ActionDecoding
 
 
 logRequest : String -> Cmd Msg
@@ -69,4 +72,5 @@ logRequest text =
 
 logResponse : Maybe String -> Cmd Msg
 logResponse textMaybe =
-    logAction ActionResponse textMaybe
+    textMaybe
+        |> logAction ActionResponse

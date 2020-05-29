@@ -35,6 +35,7 @@ import UpdateHelper
 import Utilities
     exposing
         ( msg2Cmd
+        , pred
         )
 import ViewType
     exposing
@@ -63,11 +64,13 @@ keyProcessH model =
                     let
                         comment : String
                         comment =
-                            entry 'C' "Comment latest remembered"
+                            "Comment latest remembered"
+                                |> entry 'C'
 
                         like : String
                         like =
-                            entry 'L' "Like latest remembered"
+                            "Like latest remembered"
+                                |> entry 'L'
                     in
                     if not model.showCommentButtons then
                         like
@@ -81,18 +84,23 @@ keyProcessH model =
                     --The alert box compresses multiple blank characters.
                     "; "
             in
-            [ entry 'F' "reFresh"
-            , entry 'R' "Remember latest played"
+            [ "reFresh"
+                |> entry 'F'
+            , "Remember latest played"
+                |> entry 'R'
             , likeComment
-            , entry 'M' "Morph"
-            , entry 'H' "this Help"
+            , "Morph"
+                |> entry 'M'
+            , "this Help"
+                |> entry 'H'
             ]
                 |> String.join separator
     in
     ( { model
         | alertMessageText = Just alertMessageTextNew
       }
-    , UpdateFocus.focusInputPossibly model
+    , model
+        |> UpdateFocus.focusInputPossibly
     )
 
 
@@ -101,7 +109,8 @@ keystrokeHand model keyCharRaw =
     let
         doNothing : ElmCycle
         doNothing =
-            elmCycleDefault model
+            model
+                |> elmCycleDefault
     in
     --(awaitingServer, commentArea)
     case stateVector model of
@@ -113,7 +122,8 @@ keystrokeHand model keyCharRaw =
                     , Cmd.batch
                         [ msg2Cmd msg
                         , UpdateFocus.focusSetId id
-                        , UpdateFocus.focusInputPossibly model
+                        , model
+                            |> UpdateFocus.focusInputPossibly
                         ]
                     )
 
@@ -127,8 +137,9 @@ keystrokeHand model keyCharRaw =
 
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
-                    List.length model.songsRemembered
-                        |> (\a -> (-) a 1)
+                    model.songsRemembered
+                        |> List.length
+                        |> pred
             in
             if keyIs 'H' then
                 keyProcessH model

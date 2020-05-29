@@ -47,14 +47,18 @@ decodeLikeOrCommentResponse jsonRawText =
                         tag =
                             "response"
                     in
-                    field2String tag
+                    tag
+                        |> field2String
                         |> Json.map LikeOrCommentResponseWithDummyTag
             in
-            Json.decodeString decodeResponse jsonRawText
+            jsonRawText
+                |> Json.decodeString decodeResponse
     in
     case asRecord of
         Err error ->
-            Err (Json.errorToString error)
+            error
+                |> Json.errorToString
+                |> Err
 
         Ok record ->
             Ok record.dummyTag

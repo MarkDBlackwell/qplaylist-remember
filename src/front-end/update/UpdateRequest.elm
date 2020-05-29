@@ -74,7 +74,9 @@ commentSendHand model =
                     commentRequest =
                         Http.get
                             { url = commentRequestUriText
-                            , expect = Http.expectString CommentResponse
+                            , expect =
+                                CommentResponse
+                                    |> Http.expectString
                             }
 
                     commentRequestUriText : UriText
@@ -84,11 +86,11 @@ commentSendHand model =
                             commentCategory =
                                 "c"
                         in
-                        likeOrCommentRequestUriText
-                            model.userIdentifier
-                            model.songCommentingMaybe
-                            commentCategory
-                            model.commentText
+                        model.commentText
+                            |> likeOrCommentRequestUriText
+                                model.userIdentifier
+                                model.songCommentingMaybe
+                                commentCategory
                 in
                 ( { model
                     | alertMessageText = Alert.alertMessageTextInit
@@ -113,12 +115,14 @@ likeButtonProcessHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                    songsRememberedIndex
+                        |> selectOneFromIndexMaybe model.songsRemembered
                         |> SongHelper.songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
-                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
+                    songsRememberedIndex
+                        |> selectOneFromIndexMaybe songsRememberedNew
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
@@ -130,7 +134,9 @@ likeButtonProcessHand model songsRememberedIndex =
                         likeRequest =
                             Http.get
                                 { url = likeRequestUriText
-                                , expect = Http.expectString LikeResponse
+                                , expect =
+                                    LikeResponse
+                                        |> Http.expectString
                                 }
 
                         likeRequestUriText : UriText
@@ -144,11 +150,11 @@ likeButtonProcessHand model songsRememberedIndex =
                                 commentText =
                                     "Loved it!"
                             in
-                            likeOrCommentRequestUriText
-                                model.userIdentifier
-                                songsRememberedSelectOneMaybe
-                                commentCategory
-                                commentText
+                            commentText
+                                |> likeOrCommentRequestUriText
+                                    model.userIdentifier
+                                    songsRememberedSelectOneMaybe
+                                    commentCategory
                     in
                     ( { model
                         | alertMessageText = Alert.alertMessageTextInit
@@ -189,7 +195,9 @@ songsRecentRefreshHand model =
                 songsRecentRequest =
                     Http.get
                         { url = requestUriText
-                        , expect = Http.expectString SongsRecentResponse
+                        , expect =
+                            SongsRecentResponse
+                                |> Http.expectString
                         }
             in
             ( { model
@@ -197,7 +205,8 @@ songsRecentRefreshHand model =
                 , awaitingServerResponse = True
               }
             , Cmd.batch
-                [ UpdateLog.logRequest requestUriText
+                [ requestUriText
+                    |> UpdateLog.logRequest
                 , songsRecentRequest
                 , UpdateFocus.focusInputPossibly model
                 ]

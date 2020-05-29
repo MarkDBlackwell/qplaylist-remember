@@ -58,19 +58,24 @@ focusAttempt model id =
     --http://stackoverflow.com/questions/31901397/how-to-set-focus-on-an-element-in-elm
     ( model
       --Here, unlike logging, executing the task requires the Elm runtime.
-    , Task.attempt ignoreResult focusOnId
+    , focusOnId
+        |> Task.attempt ignoreResult
     )
 
 
 focusInputPossibly : Model -> Cmd Msg
 focusInputPossibly model =
-    maybeMapWithDefault
-        Cmd.none
-        (\_ -> focusSetId "input")
-        model.songCommentingMaybe
+    --TODO: try '(\_ -> Msg.none)'.
+    model.songCommentingMaybe
+        |> maybeMapWithDefault
+            Cmd.none
+            (\_ -> focusSetId "input")
 
 
 focusSetId : Id -> Cmd Msg
 focusSetId id =
-    FocusAttempt id
+    --TODO: simplify this.
+    --See Browser.Dom.focus.
+    id
+        |> FocusAttempt
         |> msg2Cmd

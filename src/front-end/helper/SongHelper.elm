@@ -76,54 +76,62 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
             let
                 timeless : SongsTimeless
                 timeless =
-                    songs2SongsTimeless songsRemembered
+                    songsRemembered
+                        |> songs2SongsTimeless
             in
-            song2SongTimeless songCommenting
+            songCommenting
+                |> song2SongTimeless
                 |> matchingIndexes timeless
                 |> List.head
 
         create : Int -> Id
         create index =
-            String.concat
-                [ "button"
-                , idFragment
-                , String.fromInt index
-                ]
+            [ "button"
+            , idFragment
+            , String.fromInt index
+            ]
+                |> String.concat
     in
-    Maybe.andThen songRememberedIndexMaybe songCommentingMaybe
+    songCommentingMaybe
+        |> Maybe.andThen songRememberedIndexMaybe
         |> Maybe.map create
         |> Maybe.withDefault "refresh"
 
 
 song2SongRecent : SongRecentBase a -> SongRecent
 song2SongRecent { artist, time, timestamp, title } =
+    --TODO: Try constructor.
     SongRecent artist time timestamp title
 
 
 song2SongRemembered : SongRecentBase a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
+    --TODO: Try constructor.
     SongRemembered artist likeOrCommentCountInit time timestamp title
 
 
 song2SongTimeless : SongTimelessBase a -> SongTimeless
 song2SongTimeless { artist, title } =
+    --TODO: Try constructor.
     SongTimeless artist title
 
 
 songAlready : List (SongTimelessBase a) -> SongTimelessBase b -> Bool
 songAlready listA songB =
-    List.member
-        (song2SongTimeless songB)
-        (songs2SongsTimeless listA)
+    songs2SongsTimeless listA
+        |> List.member
+            (song2SongTimeless songB)
 
 
 songRememberedUpdate : SongTimeExceptBase a -> SongTimeBase b -> SongRemembered
 songRememberedUpdate { artist, likeOrCommentCount, title } { time, timestamp } =
+    --TODO: Try constructor.
     SongRemembered artist likeOrCommentCount time timestamp title
 
 
 songTimelessCompare : SongTimelessBase a -> SongTimelessBase b -> Bool
 songTimelessCompare x y =
+    --TODO: Try constructor.
     (==)
         ( x.artist, x.title )
         ( y.artist, y.title )
@@ -131,12 +139,14 @@ songTimelessCompare x y =
 
 songs2SongsRemembered : List (SongRecentBase a) -> SongsRemembered
 songs2SongsRemembered songRecentBaseList =
-    List.map song2SongRemembered songRecentBaseList
+    songRecentBaseList
+        |> List.map song2SongRemembered
 
 
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
 songs2SongsTimeless songTimelessBaseList =
-    List.map song2SongTimeless songTimelessBaseList
+    songTimelessBaseList
+        |> List.map song2SongTimeless
 
 
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
@@ -145,22 +155,26 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
         songsRemembered
 
     else
-        song2SongRemembered songRecent
+        songRecent
+            |> song2SongRemembered
             |> List.singleton
             |> (++) songsRemembered
 
 
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
 songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
-    maybeMapWithDefault
-        songsRemembered
-        (songsRememberedAppendOneUnique songsRemembered songsRecent)
-        songRecentMaybe
+    songRecentMaybe
+        |> maybeMapWithDefault
+            songsRemembered
+            (songsRecent
+                |> songsRememberedAppendOneUnique songsRemembered
+            )
 
 
 songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
 songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRememberedMaybe =
-    Maybe.map song2SongRecent songRememberedMaybe
+    songRememberedMaybe
+        |> Maybe.map song2SongRecent
         |> songsRememberedUpdateTimestampFromMaybe
             songsRemembered
             songsRecent
@@ -168,7 +182,8 @@ songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRemembe
 
 songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
 songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
-    songsTimelessMatches model.songsRecent
+    model.songsRecent
+        |> songsTimelessMatches
         |> (\a -> Maybe.map a songRememberedMaybe)
         |> Maybe.andThen List.head
         |> Maybe.map2 songRememberedUpdate songRememberedMaybe
@@ -202,9 +217,11 @@ songsTimelessMatches listA songB =
     let
         compare : SongTimelessBase a -> Bool
         compare songA =
-            songTimelessCompare songB songA
+            songA
+                |> songTimelessCompare songB
     in
-    List.filter compare listA
+    listA
+        |> List.filter compare
 
 
 

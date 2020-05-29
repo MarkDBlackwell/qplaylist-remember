@@ -70,13 +70,15 @@ actionDescriptionRecent =
 
 alertMessageTextErrorHttpLogging : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
-    errorHttpText httpError
+    httpError
+        |> errorHttpText
         |> first
 
 
 alertMessageTextErrorHttpScreen : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpScreen httpError =
-    errorHttpText httpError
+    httpError
+        |> errorHttpText
         |> second
 
 
@@ -84,11 +86,11 @@ alertMessageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertM
 alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
     (++)
         (alertMessageTextErrorHttpScreen httpError)
-        (String.concat
-            [ " (while attempting to send your "
-            , likeOrCommentName
-            , ")"
-            ]
+        ([ " (while attempting to send your "
+         , likeOrCommentName
+         , ")"
+         ]
+            |> String.concat
         )
 
 
@@ -104,10 +106,10 @@ alertMessageTextSend actionDescription detailsText =
                 )
     in
     unexpected
-        [ String.concat
-            [ "while attempting to "
-            , actionDescription
-            ]
+        [ [ "while attempting to "
+          , actionDescription
+          ]
+            |> String.concat
         , detailsText
         ]
 

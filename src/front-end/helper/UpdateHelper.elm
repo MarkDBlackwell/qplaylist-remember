@@ -91,7 +91,8 @@ likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCa
 
         songLikingOrCommenting : SongRemembered
         songLikingOrCommenting =
-            Maybe.withDefault songLikingOrCommentingInit songLikingOrCommentingMaybe
+            songLikingOrCommentingMaybe
+                |> Maybe.withDefault songLikingOrCommentingInit
     in
     relative
         [ basename ]
@@ -121,37 +122,41 @@ relative urlBeforeQueryList queryPairs =
                     let
                         escapeAmpersands : UriText -> UriText
                         escapeAmpersands string =
-                            String.split "&" string
+                            string
+                                |> String.split "&"
                                 |> String.join "%26"
 
                         escapeEqualsSigns : UriText -> UriText
                         escapeEqualsSigns string =
-                            String.split "=" string
+                            string
+                                |> String.split "="
                                 |> String.join "%3D"
 
                         escapeHashes : UriText -> UriText
                         escapeHashes string =
-                            String.split "#" string
+                            string
+                                |> String.split "#"
                                 |> String.join "%23"
                     in
-                    String.concat
-                        [ name
-                        , "="
+                    [ name
+                    , "="
 
-                        --See:
-                        --http://package.elm-lang.org/packages/elm/http/2.0.0/
-                        --TODO: Possibly, use Http.encodeUri instead:
-                        , value
-                            |> escapeAmpersands
-                            |> escapeEqualsSigns
-                            |> escapeHashes
-                        ]
+                    --See:
+                    --http://package.elm-lang.org/packages/elm/http/2.0.0/
+                    --TODO: Possibly, use Http.encodeUri instead:
+                    , value
+                        |> escapeAmpersands
+                        |> escapeEqualsSigns
+                        |> escapeHashes
+                    ]
+                        |> String.concat
             in
             if List.isEmpty queryPairs then
                 ""
 
             else
-                List.map joinAndEscape queryPairs
+                queryPairs
+                    |> List.map joinAndEscape
                     |> String.join "&"
                     |> String.cons '?'
 
@@ -171,7 +176,8 @@ stateVector model =
     let
         commentOptional : Optional
         commentOptional =
-            maybeMapWithDefault Closed (\_ -> Open) model.songCommentingMaybe
+            model.songCommentingMaybe
+                |> maybeMapWithDefault Closed (\_ -> Open)
     in
     ( model.awaitingServerResponse
     , commentOptional

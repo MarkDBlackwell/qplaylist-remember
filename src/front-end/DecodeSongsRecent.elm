@@ -63,15 +63,19 @@ decodeSongsRecentResponse jsonRawText =
                         tag =
                             "latestFive"
                     in
-                    Json.list decodeSongRecent
+                    decodeSongRecent
+                        |> Json.list
                         |> Json.field tag
                         |> Json.map SongsRecentWithDummyTag
             in
-            Json.decodeString decodeSongsRecentWithDummyTag jsonRawText
+            jsonRawText
+                |> Json.decodeString decodeSongsRecentWithDummyTag
     in
     case asRecord of
         Err error ->
-            Err (Json.errorToString error)
+            error
+                |> Json.errorToString
+                |> Err
 
         Ok record ->
             Ok record.dummyTag

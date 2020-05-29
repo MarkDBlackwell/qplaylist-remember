@@ -16,9 +16,11 @@ module Utilities exposing
     , matchingIndexes
     , maybeMapWithDefault
     , msg2Cmd
+    , pred
     , prefixSeparator
     , selectOneFromIndexMaybe
     , startingWithFromIndex
+    , succ
     , withoutOneFromMaybe
     )
 
@@ -59,8 +61,9 @@ field2String text =
 
 indexes : List a -> List Int
 indexes listA =
-    List.length listA
-        |> (\x -> (-) x 1)
+    listA
+        |> List.length
+        |> pred
         |> List.range 0
 
 
@@ -79,13 +82,15 @@ matchingIndexes listA thing =
             else
                 Just index
     in
-    withIndexes listA
+    listA
+        |> withIndexes
         |> List.filterMap matchWithIndexMaybe
 
 
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
 maybeMapWithDefault default function value =
-    Maybe.map function value
+    value
+        |> Maybe.map function
         |> Maybe.withDefault default
 
 
@@ -94,8 +99,15 @@ msg2Cmd msg =
     --See:
     --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
-    Task.succeed msg
+    msg
+        |> Task.succeed
         |> Task.perform identity
+
+
+pred : Int -> Int
+pred x =
+    --Predecessor
+    x - 1
 
 
 prefixSeparator : PrefixSeparatorText
@@ -105,34 +117,41 @@ prefixSeparator =
 
 selectOneFromIndexMaybe : List a -> Int -> Maybe a
 selectOneFromIndexMaybe listA index =
-    startingWithFromIndex listA index
+    index
+        |> startingWithFromIndex listA
         |> List.head
 
 
 startingWithFromIndex : List a -> Int -> List a
 startingWithFromIndex listA index =
-    List.drop index listA
+    listA
+        |> List.drop index
 
 
-
-{- TODO: try List.map2 (\thing index -> ( index, thing )) listA -}
-{- TODO: try List.indexedMap -}
+succ : Int -> Int
+succ x =
+    --Successor
+    x + 1
 
 
 withIndexes : List a -> List ( Int, a )
 withIndexes listA =
-    indexes listA
-        |> List.map2 (\thing index -> (\x y -> ( x, y )) index thing) listA
+    --TODO: try List.indexedMap
+    listA
+        |> indexes
+        |> List.map2 (\thing index -> ( index, thing )) listA
 
 
 withoutOne : List a -> a -> List a
 withoutOne listA thing =
-    List.filter ((/=) thing) listA
+    listA
+        |> List.filter ((/=) thing)
 
 
 withoutOneFromMaybe : List a -> Maybe a -> List a
 withoutOneFromMaybe listA xMaybe =
-    withoutOne listA
+    listA
+        |> withoutOne
         |> (\thing -> Maybe.map thing xMaybe)
         |> Maybe.withDefault listA
 

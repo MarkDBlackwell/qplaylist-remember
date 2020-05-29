@@ -25,6 +25,7 @@ import SongType
 import Utilities
     exposing
         ( goldenRatio
+        , pred
         )
 
 
@@ -84,7 +85,9 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
             let
                 songsRecentOrRememberedIndexReversed : SongsRecentOrRememberedIndex
                 songsRecentOrRememberedIndexReversed =
-                    songGroupLength - songsRecentOrRememberedIndex - 1
+                    songGroupLength
+                        - songsRecentOrRememberedIndex
+                        |> pred
             in
             case group of
                 Recent ->

@@ -104,12 +104,14 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                    songsRememberedIndex
+                        |> selectOneFromIndexMaybe model.songsRemembered
                         |> songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
-                    selectOneFromIndexMaybe songsRememberedNew songsRememberedIndex
+                    songsRememberedIndex
+                        |> selectOneFromIndexMaybe songsRememberedNew
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
@@ -140,6 +142,7 @@ commentCancelHand model =
                 , commentText = commentTextInit
                 , songCommentingMaybe = songCommentingMaybeInit
               }
-            , buttonIdReconstruct model.songsRemembered model.songCommentingMaybe "Comment"
+            , "Comment"
+                |> buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
                 |> focusSetId
             )

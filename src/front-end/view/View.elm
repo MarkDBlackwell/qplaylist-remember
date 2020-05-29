@@ -96,7 +96,9 @@ view model =
             section
                 [ id "alert" ]
                 [ p attributesEmpty
-                    [ text (Maybe.withDefault "" model.alertMessageText) ]
+                    [ Maybe.withDefault "" model.alertMessageText
+                        |> text
+                    ]
                 ]
 
         commentAreaPossibly : Html Msg
@@ -105,13 +107,30 @@ view model =
                 commentArea : SongRemembered -> Html Msg
                 commentArea song =
                     let
+                        artistTitleTime : String
+                        artistTitleTime =
+                            [ song.artist
+                            , ": "
+                            , song.title
+                            , " ("
+                            , song.time
+                            , " on "
+                            , yearMonthDay
+                            , ")"
+
+                            --For development, keep this statistics line.
+                            --, statistics
+                            ]
+                                |> String.concat
+
                         inputHoverText : HoverText
                         inputHoverText =
                             "Type your (additional) comment here!"
 
                         statistics : String
                         statistics =
-                            String.length model.commentText
+                            model.commentText
+                                |> String.length
                                 |> String.fromInt
                                 |> (++) " – "
 
@@ -125,30 +144,18 @@ view model =
                                         howManyToTake =
                                             3
                                     in
-                                    String.split " " song.timestamp
+                                    song.timestamp
+                                        |> String.split " "
                                         |> List.take howManyToTake
                             in
-                            String.join "-" timestampFieldsSelected
+                            timestampFieldsSelected
+                                |> String.join "-"
                     in
                     section
                         [ id "comment" ]
-                        [ p attributesEmpty
-                            [ text
-                                (String.concat
-                                    [ song.artist
-                                    , ": "
-                                    , song.title
-                                    , " ("
-                                    , song.time
-                                    , " on "
-                                    , yearMonthDay
-                                    , ")"
-
-                                    --For development, keep this statistics line.
-                                    --, statistics
-                                    ]
-                                )
-                            ]
+                        [ p
+                            attributesEmpty
+                            [ text artistTitleTime ]
                         , input
                             [ autocomplete False
                             , id "input"
@@ -159,20 +166,23 @@ view model =
                             , type_ "text"
                             ]
                             innerHtmlEmpty
-                        , buttonView Nothing "Submit your comment" CommentSendHand
-                        , buttonView Nothing "Cancel this comment" CommentCancelHand
+                        , CommentSendHand
+                            |> buttonView Nothing "Submit your comment"
+                        , CommentCancelHand
+                            |> buttonView Nothing "Cancel this comment"
                         ]
             in
-            maybeMapWithDefault
-                htmlNodeNull
-                (\x -> commentArea x)
-                model.songCommentingMaybe
+            model.songCommentingMaybe
+                |> maybeMapWithDefault
+                    htmlNodeNull
+                    (\x -> commentArea x)
 
         songGroupAttributes : SongGroup -> List (Attribute msg)
         songGroupAttributes songGroup =
             [ class "songs-group"
             , id
-                (SongHelper.songGroup2String songGroup
+                (songGroup
+                    |> SongHelper.songGroup2String
                     |> (++) "songs-"
                 )
             ]
@@ -224,12 +234,12 @@ view model =
                                         youShared =
                                             "You've shared"
                                     in
-                                    String.concat
-                                        [ youShared
-                                        , likes
-                                        , orComments
-                                        , aboutSong
-                                        ]
+                                    [ youShared
+                                    , likes
+                                    , orComments
+                                    , aboutSong
+                                    ]
+                                        |> String.concat
                             in
                             case songRecentOrRemembered.likeOrCommentCount of
                                 0 ->
@@ -252,13 +262,15 @@ view model =
                             let
                                 lengthRemembered : SongGroupLength
                                 lengthRemembered =
-                                    List.length model.songsRemembered
+                                    model.songsRemembered
+                                        |> List.length
                             in
                             if model.pageIsExpanded then
                                 attributesEmpty
 
                             else
-                                styleCalc songGroup lengthRemembered songsRecentOrRememberedIndex
+                                songsRecentOrRememberedIndex
+                                    |> styleCalc songGroup lengthRemembered
 
                         songTime : Time
                         songTime =
@@ -275,19 +287,21 @@ view model =
                                             let
                                                 stampList : List String
                                                 stampList =
-                                                    String.split " " songRecentOrRemembered.timestamp
+                                                    songRecentOrRemembered.timestamp
+                                                        |> String.split " "
                                             in
-                                            selectOneFromIndexMaybe stampList index
+                                            index
+                                                |> selectOneFromIndexMaybe stampList
                                                 |> Maybe.withDefault ""
                                     in
-                                    String.concat
-                                        [ select 0
-                                        , " "
-                                        , select 1
-                                        , "-"
-                                        , select 2
-                                        , " "
-                                        ]
+                                    [ select 0
+                                    , " "
+                                    , select 1
+                                    , "-"
+                                    , select 2
+                                    , " "
+                                    ]
+                                        |> String.concat
                             in
                             case songGroup of
                                 Recent ->
@@ -299,11 +313,15 @@ view model =
                     div
                         songAttributes
                         [ p attributesEmpty
-                            [ buttonRememberForget songGroup songsRecentOrRememberedIndex
-                            , span attributesEmpty
+                            [ songsRecentOrRememberedIndex
+                                |> buttonRememberForget songGroup
+                            , span
+                                attributesEmpty
                                 [ text songTime ]
-                            , buttonComment songGroup songsRecentOrRememberedIndex model.showCommentButtons
-                            , buttonLike songGroup songsRecentOrRememberedIndex
+                            , model.showCommentButtons
+                                |> buttonComment songGroup songsRecentOrRememberedIndex
+                            , songsRecentOrRememberedIndex
+                                |> buttonLike songGroup
                             , likedOrCommentedIndicator
                             , buySongAnchor songRecentOrRemembered
                             ]
@@ -313,7 +331,8 @@ view model =
                             [ text songRecentOrRemembered.artist ]
                         ]
             in
-            List.indexedMap songView songsRecentOrRemembered
+            songsRecentOrRemembered
+                |> List.indexedMap songView
     in
     main_
         attributesEmpty
@@ -325,15 +344,19 @@ view model =
                 --Per client request, the 'refresh' button is at the top.
                 [ buttonRecent ]
              ]
-                ++ songGroupView Remembered model.songsRemembered
+                ++ (model.songsRemembered
+                        |> songGroupView Remembered
+                   )
             )
         , hr attributesEmpty innerHtmlEmpty
         , section
             (songGroupAttributes Recent)
-            ([ p attributesEmpty
+            ([ p
+                attributesEmpty
                 [ buttonRemembered ]
              ]
-                ++ (SongHelper.songs2SongsRemembered model.songsRecent
+                ++ (model.songsRecent
+                        |> SongHelper.songs2SongsRemembered
                         |> songGroupView Recent
                    )
             )

@@ -79,10 +79,12 @@ update : Msg -> Model -> ElmCycle
 update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
-            commentAreaInputTextChangeCaptureHand model text
+            text
+                |> commentAreaInputTextChangeCaptureHand model
 
         CommentAreaOpenHand songsRememberedIndex ->
-            commentAreaOpenHand model songsRememberedIndex
+            songsRememberedIndex
+                |> commentAreaOpenHand model
 
         CommentCancelHand ->
             commentCancelHand model
@@ -91,19 +93,23 @@ update msg model =
             UpdateResponse.likeOrCommentResponseErr model httpError Comment
 
         CommentResponse (Ok httpResponseText) ->
-            UpdateResponse.likeOrCommentResponseOk model httpResponseText Comment
+            Comment
+                |> UpdateResponse.likeOrCommentResponseOk model httpResponseText
 
         CommentSendHand ->
             UpdateRequest.commentSendHand model
 
         FocusAttempt id ->
-            focusAttempt model id
+            id
+                |> focusAttempt model
 
         KeystrokeHand keyChar ->
-            UpdateKeyboard.keystrokeHand model keyChar
+            keyChar
+                |> UpdateKeyboard.keystrokeHand model
 
         LikeButtonProcessHand songsRememberedIndex ->
-            UpdateRequest.likeButtonProcessHand model songsRememberedIndex
+            songsRememberedIndex
+                |> UpdateRequest.likeButtonProcessHand model
 
         LikeResponse (Err httpError) ->
             UpdateResponse.likeOrCommentResponseErr model httpError Like
@@ -157,7 +163,8 @@ update msg model =
                     let
                         songsRememberedSelectOneMaybe : SongRememberedMaybe
                         songsRememberedSelectOneMaybe =
-                            selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
+                            songsRememberedIndex
+                                |> selectOneFromIndexMaybe model.songsRemembered
                     in
                     if model.songCommentingMaybe == songsRememberedSelectOneMaybe then
                         ( { model
@@ -170,7 +177,8 @@ update msg model =
                         let
                             songsRememberedNew : SongsRemembered
                             songsRememberedNew =
-                                withoutOneFromMaybe model.songsRemembered songsRememberedSelectOneMaybe
+                                songsRememberedSelectOneMaybe
+                                    |> withoutOneFromMaybe model.songsRemembered
                         in
                         ( { model
                             | alertMessageText = alertMessageTextInit
@@ -196,19 +204,20 @@ update msg model =
                             let
                                 songsRecentSelectOneMaybe : SongRecentMaybe
                                 songsRecentSelectOneMaybe =
-                                    selectOneFromIndexMaybe model.songsRecent songsRecentIndex
+                                    songsRecentIndex
+                                        |> selectOneFromIndexMaybe model.songsRecent
 
                                 songsRememberedAppended : SongsRemembered
                                 songsRememberedAppended =
-                                    songsRememberedAppendOneUniqueFromMaybe
-                                        model.songsRemembered
-                                        model.songsRecent
-                                        songsRecentSelectOneMaybe
+                                    songsRecentSelectOneMaybe
+                                        |> songsRememberedAppendOneUniqueFromMaybe
+                                            model.songsRemembered
+                                            model.songsRecent
                             in
-                            songsRememberedUpdateTimestampFromMaybe
-                                songsRememberedAppended
-                                model.songsRecent
-                                songsRecentSelectOneMaybe
+                            songsRecentSelectOneMaybe
+                                |> songsRememberedUpdateTimestampFromMaybe
+                                    songsRememberedAppended
+                                    model.songsRecent
                     in
                     ( { model
                         | alertMessageText = alertMessageTextInit
@@ -224,17 +233,21 @@ update msg model =
             UpdateRequest.songsRecentRefreshHand model
 
         SongsRecentResponse (Err httpError) ->
-            UpdateResponse.songsRecentResponseErr model httpError
+            httpError
+                |> UpdateResponse.songsRecentResponseErr model
 
         SongsRecentResponse (Ok httpResponseText) ->
-            UpdateResponse.songsRecentResponseOk model httpResponseText
+            httpResponseText
+                |> UpdateResponse.songsRecentResponseOk model
 
         SongsRememberedStore ->
             SongPort.songsRememberedStore model
 
         UserIdentifierEstablish randomInt ->
             ( { model
-                | userIdentifier = UserIdentifier.userIdentifierCalc randomInt
+                | userIdentifier =
+                    randomInt
+                        |> UserIdentifier.userIdentifierCalc
               }
             , Cmd.batch
                 [ focusSetId "refresh"
