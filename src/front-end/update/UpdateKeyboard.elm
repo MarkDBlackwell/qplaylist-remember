@@ -27,10 +27,6 @@ import SongType
         ( SongsRememberedIndex
         )
 import UpdateFocus
-    exposing
-        ( focusInputPossibly
-        , focusSetId
-        )
 import UpdateHelper
     exposing
         ( elmCycleDefault
@@ -51,15 +47,15 @@ import ViewType
 -- UPDATE
 
 
-keyProcessH : Model -> KeyChar -> ElmCycle
-keyProcessH model keyChar =
+keyProcessH : Model -> ElmCycle
+keyProcessH model =
     let
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
             let
-                entry : String -> String -> String
+                entry : Char -> String -> String
                 entry letter string =
-                    [ letter, "–", string ]
+                    [ String.fromChar letter, "–", string ]
                         |> String.join " "
 
                 likeComment : String
@@ -67,11 +63,11 @@ keyProcessH model keyChar =
                     let
                         comment : String
                         comment =
-                            entry "C" "Comment latest remembered"
+                            entry 'C' "Comment latest remembered"
 
                         like : String
                         like =
-                            entry "L" "Like latest remembered"
+                            entry 'L' "Like latest remembered"
                     in
                     if not model.showCommentButtons then
                         like
@@ -85,23 +81,23 @@ keyProcessH model keyChar =
                     --The alert box compresses multiple blank characters.
                     "; "
             in
-            [ entry "F" "reFresh"
-            , entry "R" "Remember latest played"
+            [ entry 'F' "reFresh"
+            , entry 'R' "Remember latest played"
             , likeComment
-            , entry "M" "Morph"
-            , entry "H" "this Help"
+            , entry 'M' "Morph"
+            , entry 'H' "this Help"
             ]
                 |> String.join separator
     in
     ( { model
         | alertMessageText = Just alertMessageTextNew
       }
-    , focusInputPossibly model
+    , UpdateFocus.focusInputPossibly model
     )
 
 
 keystrokeHand : Model -> KeyChar -> ElmCycle
-keystrokeHand model keyChar =
+keystrokeHand model keyCharRaw =
     let
         doNothing : ElmCycle
         doNothing =
@@ -116,42 +112,46 @@ keystrokeHand model keyChar =
                     ( model
                     , Cmd.batch
                         [ msg2Cmd msg
-                        , focusSetId id
-                        , focusInputPossibly model
+                        , UpdateFocus.focusSetId id
+                        , UpdateFocus.focusInputPossibly model
                         ]
                     )
 
-                keyIs : String -> Bool
-                keyIs text =
-                    text == String.toUpper keyChar
+                keyChar : String
+                keyChar =
+                    String.toUpper keyCharRaw
+
+                keyIs : Char -> Bool
+                keyIs letter =
+                    keyChar == String.fromChar letter
 
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
                     List.length model.songsRemembered
                         |> (\a -> (-) a 1)
             in
-            if keyIs "H" then
-                keyProcessH model keyChar
+            if keyIs 'H' then
+                keyProcessH model
 
-            else if keyIs "C" then
+            else if keyIs 'C' then
                 songsRememberedIndex
                     |> CommentAreaOpenHand
                     |> doMessage "refresh"
 
-            else if keyIs "F" then
+            else if keyIs 'F' then
                 SongsRecentRefreshHand
                     |> doMessage "refresh"
 
-            else if keyIs "L" then
+            else if keyIs 'L' then
                 songsRememberedIndex
                     |> LikeButtonProcessHand
                     |> doMessage "refresh"
 
-            else if keyIs "M" then
+            else if keyIs 'M' then
                 PageMorphHand
                     |> doMessage "morph"
 
-            else if keyIs "R" then
+            else if keyIs 'R' then
                 SongRememberHand 0
                     |> doMessage "refresh"
 

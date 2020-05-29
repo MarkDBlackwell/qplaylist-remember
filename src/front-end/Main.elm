@@ -9,34 +9,19 @@
 module Main exposing (main)
 
 import Browser
-    exposing
-        ( element
-        )
 import ElmCycle
     exposing
         ( Msg
         )
 import ModelInitialize
-    exposing
-        ( init
-        )
 import ModelType
     exposing
         ( Flags
         , Model
         )
 import Subscription
-    exposing
-        ( subscriptions
-        )
 import Update
-    exposing
-        ( update
-        )
 import View
-    exposing
-        ( view
-        )
 
 
 
@@ -45,9 +30,9 @@ import View
 
 main : Program Flags Model Msg
 main =
-    element
-        { init = init
-        , subscriptions = subscriptions
-        , update = update
-        , view = view
+    Browser.element
+        { init = ModelInitialize.init
+        , subscriptions = Subscription.subscriptions
+        , update = Update.update
+        , view = View.view
         }

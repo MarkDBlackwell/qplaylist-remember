@@ -42,10 +42,6 @@ import Html.Attributes
         )
 import Json.Decode as Json
 import Task
-    exposing
-        ( perform
-        , succeed
-        )
 import ViewType
     exposing
         ( IdMaybe
@@ -98,8 +94,8 @@ msg2Cmd msg =
     --See:
     --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
-    succeed msg
-        |> perform identity
+    Task.succeed msg
+        |> Task.perform identity
 
 
 prefixSeparator : PrefixSeparatorText

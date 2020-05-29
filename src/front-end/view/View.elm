@@ -38,18 +38,11 @@ import Html.Attributes
         , type_
         )
 import Html.Events
-    exposing
-        ( onInput
-        )
 import ModelType
     exposing
         ( Model
         )
 import SongHelper
-    exposing
-        ( songGroup2String
-        , songs2SongsRemembered
-        )
 import SongType
     exposing
         ( SongGroup(..)
@@ -159,7 +152,7 @@ view model =
                         , input
                             [ autocomplete False
                             , id "input"
-                            , onInput CommentAreaInputTextChangeCaptureHand
+                            , Html.Events.onInput CommentAreaInputTextChangeCaptureHand
                             , placeholder inputHoverText
                             , required True
                             , title inputHoverText
@@ -179,7 +172,7 @@ view model =
         songGroupAttributes songGroup =
             [ class "songs-group"
             , id
-                (songGroup2String songGroup
+                (SongHelper.songGroup2String songGroup
                     |> (++) "songs-"
                 )
             ]
@@ -340,7 +333,7 @@ view model =
             ([ p attributesEmpty
                 [ buttonRemembered ]
              ]
-                ++ (songs2SongsRemembered model.songsRecent
+                ++ (SongHelper.songs2SongsRemembered model.songsRecent
                         |> songGroupView Recent
                    )
             )

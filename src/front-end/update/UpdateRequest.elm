@@ -13,10 +13,6 @@ module UpdateRequest exposing
     )
 
 import Alert
-    exposing
-        ( alertMessageTextInit
-        , alertMessageTextServerAwaitingElmCycle
-        )
 import ElmCycle
     exposing
         ( ElmCycle
@@ -28,9 +24,6 @@ import ModelType
         ( Model
         )
 import SongHelper
-    exposing
-        ( songsRememberedNewFromMaybeWithUpdate
-        )
 import SongType
     exposing
         ( SongRememberedMaybe
@@ -38,9 +31,6 @@ import SongType
         , SongsRememberedIndex
         )
 import UpdateFocus
-    exposing
-        ( focusInputPossibly
-        )
 import UpdateHelper
     exposing
         ( elmCycleDefault
@@ -68,14 +58,14 @@ commentSendHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            alertMessageTextServerAwaitingElmCycle model
+            Alert.alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             if String.isEmpty model.commentText then
                 ( { model
-                    | alertMessageText = alertMessageTextInit
+                    | alertMessageText = Alert.alertMessageTextInit
                   }
-                , focusInputPossibly model
+                , UpdateFocus.focusInputPossibly model
                 )
 
             else
@@ -101,13 +91,13 @@ commentSendHand model =
                             model.commentText
                 in
                 ( { model
-                    | alertMessageText = alertMessageTextInit
+                    | alertMessageText = Alert.alertMessageTextInit
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
                     [ UpdateLog.logRequest commentRequestUriText
                     , commentRequest
-                    , focusInputPossibly model
+                    , UpdateFocus.focusInputPossibly model
                     ]
                 )
 
@@ -117,14 +107,14 @@ likeButtonProcessHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            alertMessageTextServerAwaitingElmCycle model
+            Alert.alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     selectOneFromIndexMaybe model.songsRemembered songsRememberedIndex
-                        |> songsRememberedNewFromMaybeWithUpdate model
+                        |> SongHelper.songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
@@ -161,7 +151,7 @@ likeButtonProcessHand model songsRememberedIndex =
                                 commentText
                     in
                     ( { model
-                        | alertMessageText = alertMessageTextInit
+                        | alertMessageText = Alert.alertMessageTextInit
                         , awaitingServerResponse = True
                         , songLikingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
@@ -169,7 +159,7 @@ likeButtonProcessHand model songsRememberedIndex =
                     , Cmd.batch
                         [ UpdateLog.logRequest likeRequestUriText
                         , likeRequest
-                        , focusInputPossibly model
+                        , UpdateFocus.focusInputPossibly model
                         ]
                     )
 
@@ -179,7 +169,7 @@ songsRecentRefreshHand model =
     --(awaitingServer, commentArea)
     case stateVector model of
         ( True, _ ) ->
-            alertMessageTextServerAwaitingElmCycle model
+            Alert.alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             let
@@ -203,12 +193,12 @@ songsRecentRefreshHand model =
                         }
             in
             ( { model
-                | alertMessageText = alertMessageTextInit
+                | alertMessageText = Alert.alertMessageTextInit
                 , awaitingServerResponse = True
               }
             , Cmd.batch
                 [ UpdateLog.logRequest requestUriText
                 , songsRecentRequest
-                , focusInputPossibly model
+                , UpdateFocus.focusInputPossibly model
                 ]
             )

@@ -29,9 +29,6 @@ import SongHelper
         , songsRememberedUpdateTimestampFromMaybe
         )
 import SongPort
-    exposing
-        ( songsRememberedStore
-        )
 import SongType
     exposing
         ( SongRecentMaybe
@@ -59,30 +56,13 @@ import UpdateHelper
         , stateVector
         )
 import UpdateKeyboard
-    exposing
-        ( keystrokeHand
-        )
 import UpdateRequest
-    exposing
-        ( commentSendHand
-        , likeButtonProcessHand
-        , songsRecentRefreshHand
-        )
 import UpdateRequestType
     exposing
         ( ActionLikeOrComment(..)
         )
 import UpdateResponse
-    exposing
-        ( likeOrCommentResponseErr
-        , likeOrCommentResponseOk
-        , songsRecentResponseErr
-        , songsRecentResponseOk
-        )
 import UserIdentifier
-    exposing
-        ( userIdentifierCalc
-        )
 import Utilities
     exposing
         ( msg2Cmd
@@ -108,28 +88,28 @@ update msg model =
             commentCancelHand model
 
         CommentResponse (Err httpError) ->
-            likeOrCommentResponseErr model httpError Comment
+            UpdateResponse.likeOrCommentResponseErr model httpError Comment
 
         CommentResponse (Ok httpResponseText) ->
-            likeOrCommentResponseOk model httpResponseText Comment
+            UpdateResponse.likeOrCommentResponseOk model httpResponseText Comment
 
         CommentSendHand ->
-            commentSendHand model
+            UpdateRequest.commentSendHand model
 
         FocusAttempt id ->
             focusAttempt model id
 
         KeystrokeHand keyChar ->
-            keystrokeHand model keyChar
+            UpdateKeyboard.keystrokeHand model keyChar
 
         LikeButtonProcessHand songsRememberedIndex ->
-            likeButtonProcessHand model songsRememberedIndex
+            UpdateRequest.likeButtonProcessHand model songsRememberedIndex
 
         LikeResponse (Err httpError) ->
-            likeOrCommentResponseErr model httpError Like
+            UpdateResponse.likeOrCommentResponseErr model httpError Like
 
         LikeResponse (Ok httpResponseText) ->
-            likeOrCommentResponseOk model httpResponseText Like
+            UpdateResponse.likeOrCommentResponseOk model httpResponseText Like
 
         None ->
             elmCycleDefault model
@@ -241,20 +221,20 @@ update msg model =
                     )
 
         SongsRecentRefreshHand ->
-            songsRecentRefreshHand model
+            UpdateRequest.songsRecentRefreshHand model
 
         SongsRecentResponse (Err httpError) ->
-            songsRecentResponseErr model httpError
+            UpdateResponse.songsRecentResponseErr model httpError
 
         SongsRecentResponse (Ok httpResponseText) ->
-            songsRecentResponseOk model httpResponseText
+            UpdateResponse.songsRecentResponseOk model httpResponseText
 
         SongsRememberedStore ->
-            songsRememberedStore model
+            SongPort.songsRememberedStore model
 
         UserIdentifierEstablish randomInt ->
             ( { model
-                | userIdentifier = userIdentifierCalc randomInt
+                | userIdentifier = UserIdentifier.userIdentifierCalc randomInt
               }
             , Cmd.batch
                 [ focusSetId "refresh"

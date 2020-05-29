@@ -13,21 +13,12 @@ module UserIdentifier exposing
     )
 
 import Char
-    exposing
-        ( fromCode
-        , toCode
-        )
 import ElmCycle
     exposing
         ( ElmCycle
         , Msg(..)
         )
 import Random
-    exposing
-        ( Generator
-        , generate
-        , int
-        )
 import UserIdentifierType
     exposing
         ( UserIdentifier
@@ -45,7 +36,7 @@ import ViewType
 
 caseLength : Int
 caseLength =
-    1 + toCode 'Z' - toCode 'A'
+    1 + Char.toCode 'Z' - Char.toCode 'A'
 
 
 charCount : Int
@@ -72,8 +63,8 @@ generateUserIdentifier =
             (charNumberSpaceLength ^ charCount)
                 |> (\a -> (-) a 1)
     in
-    int 0 highestCharNumber
-        |> generate UserIdentifierEstablish
+    Random.int 0 highestCharNumber
+        |> Random.generate UserIdentifierEstablish
 
 
 userIdentifierInit : UserIdentifier
@@ -94,17 +85,17 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
                 keyCodeBase : KeyCode
                 keyCodeBase =
                     if keyCode < caseLength then
-                        toCode 'A'
+                        Char.toCode 'A'
 
                     else
-                        toCode 'a'
+                        Char.toCode 'a'
 
                 slotInLetterCase : KeyCode
                 slotInLetterCase =
                     modBy caseLength keyCode
             in
             (keyCodeBase + slotInLetterCase)
-                |> fromCode
+                |> Char.fromCode
 
         keyCodes : List KeyCode
         keyCodes =
