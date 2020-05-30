@@ -33,10 +33,6 @@ import ModelType
         ( Model
         )
 import UpdateFocus
-import Utilities
-    exposing
-        ( prefixSeparator
-        )
 
 
 
@@ -144,3 +140,8 @@ errorHttpText httpError =
             ( prefix
             , "Timeout"
             )
+
+
+prefixSeparator : PrefixSeparatorText
+prefixSeparator =
+    ": "

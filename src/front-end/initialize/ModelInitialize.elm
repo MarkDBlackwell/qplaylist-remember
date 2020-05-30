@@ -29,10 +29,6 @@ import UpdateRequestType
 import UserIdentifier
 
 
-
--- MODEL
-
-
 awaitingServerResponseInit : AwaitingServerResponse
 awaitingServerResponseInit =
     False
@@ -41,6 +37,10 @@ awaitingServerResponseInit =
 commentTextInit : CommentText
 commentTextInit =
     ""
+
+
+
+-- MODEL
 
 
 init : Flags -> ElmCycle.ElmCycle

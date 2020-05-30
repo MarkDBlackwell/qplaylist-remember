@@ -27,8 +27,18 @@ import SongType
         )
 
 
+likeOrCommentCountInit : LikeOrCommentCount
+likeOrCommentCountInit =
+    0
+
+
 
 -- MODEL
+
+
+artistInit : Artist
+artistInit =
+    ""
 
 
 songCommentingMaybeInit : SongRememberedMaybe
@@ -49,20 +59,6 @@ songLikingOrCommentingInit =
 songsRecentInit : SongsRecent
 songsRecentInit =
     []
-
-
-
--- UPDATE
-
-
-artistInit : Artist
-artistInit =
-    ""
-
-
-likeOrCommentCountInit : LikeOrCommentCount
-likeOrCommentCountInit =
-    0
 
 
 timeInit : Time

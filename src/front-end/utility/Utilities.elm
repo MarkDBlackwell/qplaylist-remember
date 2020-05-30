@@ -17,17 +17,12 @@ module Utilities exposing
     , maybeMapWithDefault
     , msg2Cmd
     , pred
-    , prefixSeparator
     , selectOneFromIndexMaybe
     , startingWithFromIndex
     , succ
     , withoutOneFromMaybe
     )
 
-import AlertType
-    exposing
-        ( PrefixSeparatorText
-        )
 import ElmCycle
 import Html
 import Html.Attributes
@@ -39,22 +34,15 @@ import ViewType
         )
 
 
-
--- UPDATE
-
-
 field2String : String -> Json.Decode.Decoder String
 field2String text =
     Json.Decode.string
         |> Json.Decode.field text
 
 
-
-{- TODO: try List.indexedMap -}
-
-
 matchingIndexes : List a -> a -> List Int
 matchingIndexes listA x =
+    --TODO: try List.indexedMap.
     let
         matchWithIndexMaybe : ( Int, a ) -> Maybe Int
         matchWithIndexMaybe ( index, variable ) =
@@ -91,25 +79,10 @@ maybeMapWithDefault default function value =
         |> Maybe.withDefault default
 
 
-msg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
-msg2Cmd msg =
-    --See:
-    --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
-    --For wrapping a message as a Cmd:
-    msg
-        |> Task.succeed
-        |> Task.perform identity
-
-
 pred : Int -> Int
 pred x =
     --Predecessor
     x - 1
-
-
-prefixSeparator : PrefixSeparatorText
-prefixSeparator =
-    ": "
 
 
 selectOneFromIndexMaybe : List a -> Int -> Maybe a
@@ -143,6 +116,20 @@ withoutOneFromMaybe listA xMaybe =
         |> withoutOne
         |> (\thing -> Maybe.map thing xMaybe)
         |> Maybe.withDefault listA
+
+
+
+-- UPDATE
+
+
+msg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
+msg2Cmd msg =
+    --See:
+    --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --For wrapping a message as a Cmd:
+    msg
+        |> Task.succeed
+        |> Task.perform identity
 
 
 
