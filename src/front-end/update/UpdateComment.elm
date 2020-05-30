@@ -53,7 +53,7 @@ commentAreaInputTextChangeCaptureHand model text =
 
         _ ->
             ( { model
-                | alertMessageText = Alert.alertMessageTextInit
+                | alertMessageText = Alert.messageTextInit
                 , commentText = text
               }
             , Cmd.none
@@ -65,11 +65,11 @@ commentAreaOpenHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            Alert.alertMessageTextServerAwaitingElmCycle model
+            Alert.messageTextServerAwaitingElmCycle model
 
         ( _, Open ) ->
             ( { model
-                | alertMessageText = Alert.alertMessageTextInit
+                | alertMessageText = Alert.messageTextInit
               }
             , UpdateFocus.focusInputPossibly model
             )
@@ -93,7 +93,7 @@ commentAreaOpenHand model songsRememberedIndex =
 
                 _ ->
                     ( { model
-                        | alertMessageText = Alert.alertMessageTextInit
+                        | alertMessageText = Alert.messageTextInit
                         , commentText = ModelInitialize.commentTextInit
                         , songCommentingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
@@ -108,11 +108,11 @@ commentCancelHand model =
     --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            Alert.alertMessageTextServerAwaitingElmCycle model
+            Alert.messageTextServerAwaitingElmCycle model
 
         _ ->
             ( { model
-                | alertMessageText = Alert.alertMessageTextInit
+                | alertMessageText = Alert.messageTextInit
                 , commentText = ModelInitialize.commentTextInit
                 , songCommentingMaybe = SongInitialize.songCommentingMaybeInit
               }

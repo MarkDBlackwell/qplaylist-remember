@@ -46,7 +46,7 @@ commentTextInit =
 init : Flags -> ElmCycle.ElmCycle
 init flags =
     ( Model
-        Alert.alertMessageTextInit
+        Alert.messageTextInit
         awaitingServerResponseInit
         commentTextInit
         pageIsExpandedInit

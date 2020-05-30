@@ -59,7 +59,7 @@ import Utilities
 alertLogging : Http.Error -> AlertMessageText
 alertLogging httpError =
     httpError
-        |> Alert.alertMessageTextErrorHttpLogging
+        |> Alert.messageTextErrorHttpLogging
 
 
 likeOrCommentResponseErr : Model -> Http.Error -> ActionLikeOrComment -> ElmCycle.ElmCycle
@@ -68,7 +68,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         alertLikeOrComment : AlertType.LikeOrCommentName -> AlertMessageText
         alertLikeOrComment =
             httpError
-                |> Alert.alertMessageTextRequestLikeOrComment
+                |> Alert.messageTextRequestLikeOrComment
 
         modelNewSongLikingOrCommenting : Model
         modelNewSongLikingOrCommenting =
@@ -170,7 +170,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
             ( { model
                 | alertMessageText =
                     alertMessageTextDecode
-                        |> Alert.alertMessageTextSend actionDescription
+                        |> Alert.messageTextSend actionDescription
                         |> Just
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }
@@ -195,7 +195,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 ( { modelNewSongLikingOrCommenting
                     | alertMessageText =
                         responseText
-                            |> Alert.alertMessageTextSend actionDescription
+                            |> Alert.messageTextSend actionDescription
                             |> Just
                     , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
                   }
@@ -219,7 +219,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                                 songLikingOrCommentingMaybe
                 in
                 ( { modelNewCommentText
-                    | alertMessageText = Alert.alertMessageTextInit
+                    | alertMessageText = Alert.messageTextInit
                     , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
                     , songsRemembered = songsRememberedNew
                   }
@@ -241,7 +241,7 @@ songsRecentResponseErr model httpError =
                 alertScreen : String
                 alertScreen =
                     httpError
-                        |> Alert.alertMessageTextErrorHttpScreen
+                        |> Alert.messageTextErrorHttpScreen
             in
             String.concat
                 [ alertScreen
@@ -271,7 +271,7 @@ songsRecentResponseOk model httpResponseText =
             ( { model
                 | alertMessageText =
                     alertMessageTextDecode
-                        |> Alert.alertMessageTextSend Alert.actionDescriptionRecent
+                        |> Alert.messageTextSend Alert.actionDescriptionRecent
                         |> Just
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }
@@ -287,7 +287,7 @@ songsRecentResponseOk model httpResponseText =
 
         Ok songsRecentNew ->
             ( { model
-                | alertMessageText = Alert.alertMessageTextInit
+                | alertMessageText = Alert.messageTextInit
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
                 , songsRecent = songsRecentNew
               }

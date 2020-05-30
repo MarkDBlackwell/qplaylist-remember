@@ -9,10 +9,6 @@
 module Update exposing (update)
 
 import Alert
-    exposing
-        ( alertMessageTextInit
-        , alertMessageTextServerAwaitingElmCycle
-        )
 import ElmCycle
     exposing
         ( Msg(..)
@@ -109,7 +105,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
-                    alertMessageTextServerAwaitingElmCycle model
+                    Alert.messageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
@@ -132,7 +128,7 @@ update msg model =
                                 not model.pageIsExpanded
                     in
                     ( { model
-                        | alertMessageText = alertMessageTextInit
+                        | alertMessageText = Alert.messageTextInit
                         , pageIsExpanded = pageIsExpandedNew
                       }
                     , UpdateFocus.focusInputPossibly model
@@ -142,7 +138,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
-                    alertMessageTextServerAwaitingElmCycle model
+                    Alert.messageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
@@ -153,7 +149,7 @@ update msg model =
                     in
                     if model.songCommentingMaybe == songsRememberedSelectOneMaybe then
                         ( { model
-                            | alertMessageText = alertMessageTextInit
+                            | alertMessageText = Alert.messageTextInit
                           }
                         , UpdateFocus.focusInputPossibly model
                         )
@@ -166,7 +162,7 @@ update msg model =
                                     |> withoutOneFromMaybe model.songsRemembered
                         in
                         ( { model
-                            | alertMessageText = alertMessageTextInit
+                            | alertMessageText = Alert.messageTextInit
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
@@ -180,7 +176,7 @@ update msg model =
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
-                    alertMessageTextServerAwaitingElmCycle model
+                    Alert.messageTextServerAwaitingElmCycle model
 
                 _ ->
                     let
@@ -205,7 +201,7 @@ update msg model =
                                     model.songsRecent
                     in
                     ( { model
-                        | alertMessageText = alertMessageTextInit
+                        | alertMessageText = Alert.messageTextInit
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch

@@ -51,12 +51,12 @@ commentSendHand model =
     --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            Alert.alertMessageTextServerAwaitingElmCycle model
+            Alert.messageTextServerAwaitingElmCycle model
 
         _ ->
             if String.isEmpty model.commentText then
                 ( { model
-                    | alertMessageText = Alert.alertMessageTextInit
+                    | alertMessageText = Alert.messageTextInit
                   }
                 , UpdateFocus.focusInputPossibly model
                 )
@@ -86,7 +86,7 @@ commentSendHand model =
                                 commentCategory
                 in
                 ( { model
-                    | alertMessageText = Alert.alertMessageTextInit
+                    | alertMessageText = Alert.messageTextInit
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
@@ -102,7 +102,7 @@ likeButtonProcessHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            Alert.alertMessageTextServerAwaitingElmCycle model
+            Alert.messageTextServerAwaitingElmCycle model
 
         _ ->
             let
@@ -150,7 +150,7 @@ likeButtonProcessHand model songsRememberedIndex =
                                     commentCategory
                     in
                     ( { model
-                        | alertMessageText = Alert.alertMessageTextInit
+                        | alertMessageText = Alert.messageTextInit
                         , awaitingServerResponse = True
                         , songLikingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
@@ -168,7 +168,7 @@ songsRecentRefreshHand model =
     --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            Alert.alertMessageTextServerAwaitingElmCycle model
+            Alert.messageTextServerAwaitingElmCycle model
 
         _ ->
             let
@@ -194,7 +194,7 @@ songsRecentRefreshHand model =
                         }
             in
             ( { model
-                | alertMessageText = Alert.alertMessageTextInit
+                | alertMessageText = Alert.messageTextInit
                 , awaitingServerResponse = True
               }
             , Cmd.batch

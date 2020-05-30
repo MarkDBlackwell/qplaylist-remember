@@ -8,12 +8,12 @@
 
 module Alert exposing
     ( actionDescriptionRecent
-    , alertMessageTextErrorHttpLogging
-    , alertMessageTextErrorHttpScreen
-    , alertMessageTextInit
-    , alertMessageTextRequestLikeOrComment
-    , alertMessageTextSend
-    , alertMessageTextServerAwaitingElmCycle
+    , messageTextErrorHttpLogging
+    , messageTextErrorHttpScreen
+    , messageTextInit
+    , messageTextRequestLikeOrComment
+    , messageTextSend
+    , messageTextServerAwaitingElmCycle
     )
 
 import AlertType
@@ -39,8 +39,8 @@ import UpdateFocus
 -- MODEL
 
 
-alertMessageTextInit : AlertMessageTextMaybe
-alertMessageTextInit =
+messageTextInit : AlertMessageTextMaybe
+messageTextInit =
     Nothing
 
 
@@ -51,61 +51,6 @@ alertMessageTextInit =
 actionDescriptionRecent : AlertMessageText
 actionDescriptionRecent =
     "access the latest few songs"
-
-
-alertMessageTextErrorHttpLogging : Http.Error -> AlertMessageText
-alertMessageTextErrorHttpLogging httpError =
-    httpError
-        |> errorHttpText
-        |> Tuple.first
-
-
-alertMessageTextErrorHttpScreen : Http.Error -> AlertMessageText
-alertMessageTextErrorHttpScreen httpError =
-    httpError
-        |> errorHttpText
-        |> Tuple.second
-
-
-alertMessageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText
-alertMessageTextRequestLikeOrComment httpError likeOrCommentName =
-    (++)
-        (alertMessageTextErrorHttpScreen httpError)
-        ([ " (while attempting to send your "
-         , likeOrCommentName
-         , ")"
-         ]
-            |> String.concat
-        )
-
-
-alertMessageTextSend : ActionDescription -> DetailsText -> AlertMessageText
-alertMessageTextSend actionDescription detailsText =
-    let
-        unexpected : AlertMessageTextList -> AlertMessageText
-        unexpected alertMessageTextList =
-            (++)
-                "Unexpected error "
-                (alertMessageTextList
-                    |> String.join prefixSeparator
-                )
-    in
-    unexpected
-        [ [ "while attempting to "
-          , actionDescription
-          ]
-            |> String.concat
-        , detailsText
-        ]
-
-
-alertMessageTextServerAwaitingElmCycle : Model -> ElmCycle.ElmCycle
-alertMessageTextServerAwaitingElmCycle model =
-    ( { model
-        | alertMessageText = Just "Awaiting server"
-      }
-    , UpdateFocus.focusInputPossibly model
-    )
 
 
 errorHttpText : Http.Error -> ( AlertMessageText, AlertMessageText )
@@ -140,6 +85,61 @@ errorHttpText httpError =
             ( prefix
             , "Timeout"
             )
+
+
+messageTextErrorHttpLogging : Http.Error -> AlertMessageText
+messageTextErrorHttpLogging httpError =
+    httpError
+        |> errorHttpText
+        |> Tuple.first
+
+
+messageTextErrorHttpScreen : Http.Error -> AlertMessageText
+messageTextErrorHttpScreen httpError =
+    httpError
+        |> errorHttpText
+        |> Tuple.second
+
+
+messageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText
+messageTextRequestLikeOrComment httpError likeOrCommentName =
+    (++)
+        (messageTextErrorHttpScreen httpError)
+        ([ " (while attempting to send your "
+         , likeOrCommentName
+         , ")"
+         ]
+            |> String.concat
+        )
+
+
+messageTextSend : ActionDescription -> DetailsText -> AlertMessageText
+messageTextSend actionDescription detailsText =
+    let
+        unexpected : AlertMessageTextList -> AlertMessageText
+        unexpected alertMessageTextList =
+            (++)
+                "Unexpected error "
+                (alertMessageTextList
+                    |> String.join prefixSeparator
+                )
+    in
+    unexpected
+        [ [ "while attempting to "
+          , actionDescription
+          ]
+            |> String.concat
+        , detailsText
+        ]
+
+
+messageTextServerAwaitingElmCycle : Model -> ElmCycle.ElmCycle
+messageTextServerAwaitingElmCycle model =
+    ( { model
+        | alertMessageText = Just "Awaiting server"
+      }
+    , UpdateFocus.focusInputPossibly model
+    )
 
 
 prefixSeparator : PrefixSeparatorText
