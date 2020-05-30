@@ -46,7 +46,7 @@ focusAttempt model id =
 
         ignoreResult : Result x a -> ElmCycle.Msg
         ignoreResult _ =
-            None
+            MsgNone
     in
     --See:
     --http://www.reddit.com/r/elm/comments/53y6s4/focus_on_input_box_after_clicking_button/
@@ -73,5 +73,5 @@ focusSetId id =
     --TODO: simplify this.
     --See Browser.Dom.focus.
     id
-        |> FocusAttempt
+        |> MsgFocusAttempt
         |> msg2Cmd

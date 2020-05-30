@@ -68,7 +68,7 @@ commentSendHand model =
                         Http.get
                             { url = commentRequestUriText
                             , expect =
-                                CommentResponse
+                                MsgCommentResponse
                                     |> Http.expectString
                             }
 
@@ -128,7 +128,7 @@ likeButtonProcessHand model songsRememberedIndex =
                             Http.get
                                 { url = likeRequestUriText
                                 , expect =
-                                    LikeResponse
+                                    MsgLikeResponse
                                         |> Http.expectString
                                 }
 
@@ -189,7 +189,7 @@ songsRecentRefreshHand model =
                     Http.get
                         { url = requestUriText
                         , expect =
-                            SongsRecentResponse
+                            MsgSongsRecentResponse
                                 |> Http.expectString
                         }
             in

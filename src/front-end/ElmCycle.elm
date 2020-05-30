@@ -46,23 +46,23 @@ type alias ElmCycle =
 
 
 type Msg
-    = CommentAreaInputTextChangeCaptureHand CommentText
-    | CommentAreaOpenHand SongsRememberedIndex
-    | CommentCancelHand
-    | CommentResponse ResultErrorHttp
-    | CommentSendHand
-    | FocusAttempt Id
-    | KeystrokeHand KeyChar
-    | LikeButtonProcessHand SongsRememberedIndex
-    | LikeResponse ResultErrorHttp
-    | None
-    | PageMorphHand
-    | SongForgetHand SongsRememberedIndex
-    | SongRememberHand SongsRecentIndex
-    | SongsRecentRefreshHand
-    | SongsRecentResponse ResultErrorHttp
-    | SongsRememberedStore
-    | UserIdentifierEstablish UserIdentifierNumberSpaceInt
+    = MsgCommentAreaInputTextChangeCaptureHand CommentText
+    | MsgCommentAreaOpenHand SongsRememberedIndex
+    | MsgCommentCancelHand
+    | MsgCommentResponse ResultErrorHttp
+    | MsgCommentSendHand
+    | MsgFocusAttempt Id
+    | MsgKeystrokeHand KeyChar
+    | MsgLikeButtonProcessHand SongsRememberedIndex
+    | MsgLikeResponse ResultErrorHttp
+    | MsgNone
+    | MsgPageMorphHand
+    | MsgSongForgetHand SongsRememberedIndex
+    | MsgSongRememberHand SongsRecentIndex
+    | MsgSongsRecentRefreshHand
+    | MsgSongsRecentResponse ResultErrorHttp
+    | MsgSongsRememberedStore
+    | MsgUserIdentifierEstablish UserIdentifierNumberSpaceInt
 
 
 type alias ResultErrorHttp =

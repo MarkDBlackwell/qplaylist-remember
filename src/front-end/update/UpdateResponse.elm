@@ -224,7 +224,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch
-                    [ msg2Cmd SongsRememberedStore
+                    [ msg2Cmd MsgSongsRememberedStore
                     , UpdateLog.logResponse Nothing
                     , buttonCommandAccomplished
                     , UpdateFocus.focusInputPossibly model

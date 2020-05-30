@@ -153,16 +153,16 @@ view model =
                         , input
                             [ autocomplete False
                             , id "input"
-                            , Html.Events.onInput CommentAreaInputTextChangeCaptureHand
+                            , Html.Events.onInput MsgCommentAreaInputTextChangeCaptureHand
                             , placeholder inputHoverText
                             , required True
                             , title inputHoverText
                             , type_ "text"
                             ]
                             innerHtmlEmpty
-                        , CommentSendHand
+                        , MsgCommentSendHand
                             |> buttonView Nothing "Submit your comment"
-                        , CommentCancelHand
+                        , MsgCommentCancelHand
                             |> buttonView Nothing "Cancel this comment"
                         ]
             in

@@ -59,7 +59,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
         buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             songsRememberedIndex
-                |> CommentAreaOpenHand
+                |> MsgCommentAreaOpenHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
@@ -120,7 +120,7 @@ buttonLike songGroup songsRememberedIndex =
         buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             songsRememberedIndex
-                |> LikeButtonProcessHand
+                |> MsgLikeButtonProcessHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
@@ -154,7 +154,7 @@ buttonRecent =
         hoverText =
             "Refresh the latest few songs"
     in
-    SongsRecentRefreshHand
+    MsgSongsRecentRefreshHand
         |> buttonView buttonAttributeIdMaybe hoverText
 
 
@@ -166,11 +166,11 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
             case songGroup of
                 Recent ->
                     songsRecentOrRememberedIndex
-                        |> SongRememberHand
+                        |> MsgSongRememberHand
 
                 Remembered ->
                     songsRecentOrRememberedIndex
-                        |> SongForgetHand
+                        |> MsgSongForgetHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
@@ -205,7 +205,7 @@ buttonRemembered =
         hoverText =
             "Morph this page's shape"
     in
-    PageMorphHand
+    MsgPageMorphHand
         |> buttonView buttonAttributeIdMaybe hoverText
 
 

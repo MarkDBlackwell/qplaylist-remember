@@ -57,7 +57,7 @@ subscriptions model =
                     source decoder
             in
             keySub
-                |> Platform.Sub.map KeystrokeHand
+                |> Platform.Sub.map MsgKeystrokeHand
     in
     Platform.Sub.batch
         [ keyStrokeGlobal

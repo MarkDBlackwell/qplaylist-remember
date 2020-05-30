@@ -71,7 +71,7 @@ generateUserIdentifier =
                 |> pred
     in
     Random.int 0 highestCharNumber
-        |> Random.generate UserIdentifierEstablish
+        |> Random.generate MsgUserIdentifierEstablish
 
 
 userIdentifierInit : UserIdentifier

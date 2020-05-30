@@ -76,7 +76,7 @@ buySongAnchor song =
     in
     Html.a
         [ Html.Attributes.href uriText
-        , Html.Events.onClick None
+        , Html.Events.onClick MsgNone
         , Html.Attributes.target "_blank"
         , Html.Attributes.title hoverText
         ]

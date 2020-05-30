@@ -59,49 +59,49 @@ import Utilities
 update : ElmCycle.Msg -> Model -> ElmCycle.ElmCycle
 update msg model =
     case msg of
-        CommentAreaInputTextChangeCaptureHand text ->
+        MsgCommentAreaInputTextChangeCaptureHand text ->
             text
                 |> UpdateComment.commentAreaInputTextChangeCaptureHand model
 
-        CommentAreaOpenHand songsRememberedIndex ->
+        MsgCommentAreaOpenHand songsRememberedIndex ->
             songsRememberedIndex
                 |> UpdateComment.commentAreaOpenHand model
 
-        CommentCancelHand ->
+        MsgCommentCancelHand ->
             UpdateComment.commentCancelHand model
 
-        CommentResponse (Err httpError) ->
+        MsgCommentResponse (Err httpError) ->
             UpdateResponse.likeOrCommentResponseErr model httpError Comment
 
-        CommentResponse (Ok httpResponseText) ->
+        MsgCommentResponse (Ok httpResponseText) ->
             Comment
                 |> UpdateResponse.likeOrCommentResponseOk model httpResponseText
 
-        CommentSendHand ->
+        MsgCommentSendHand ->
             UpdateRequest.commentSendHand model
 
-        FocusAttempt id ->
+        MsgFocusAttempt id ->
             id
                 |> UpdateFocus.focusAttempt model
 
-        KeystrokeHand keyChar ->
+        MsgKeystrokeHand keyChar ->
             keyChar
                 |> UpdateKeyboard.keystrokeHand model
 
-        LikeButtonProcessHand songsRememberedIndex ->
+        MsgLikeButtonProcessHand songsRememberedIndex ->
             songsRememberedIndex
                 |> UpdateRequest.likeButtonProcessHand model
 
-        LikeResponse (Err httpError) ->
+        MsgLikeResponse (Err httpError) ->
             UpdateResponse.likeOrCommentResponseErr model httpError Like
 
-        LikeResponse (Ok httpResponseText) ->
+        MsgLikeResponse (Ok httpResponseText) ->
             UpdateResponse.likeOrCommentResponseOk model httpResponseText Like
 
-        None ->
+        MsgNone ->
             UpdateHelper.elmCycleDefault model
 
-        PageMorphHand ->
+        MsgPageMorphHand ->
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
@@ -134,7 +134,7 @@ update msg model =
                     , UpdateFocus.focusInputPossibly model
                     )
 
-        SongForgetHand songsRememberedIndex ->
+        MsgSongForgetHand songsRememberedIndex ->
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
@@ -166,13 +166,13 @@ update msg model =
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
-                            [ msg2Cmd SongsRememberedStore
+                            [ msg2Cmd MsgSongsRememberedStore
                             , UpdateFocus.focusSetId "refresh"
                             , UpdateFocus.focusInputPossibly model
                             ]
                         )
 
-        SongRememberHand songsRecentIndex ->
+        MsgSongRememberHand songsRecentIndex ->
             --(awaitingServer, commentArea)
             case UpdateHelper.stateVector model of
                 ( True, _ ) ->
@@ -205,26 +205,26 @@ update msg model =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ msg2Cmd SongsRememberedStore
+                        [ msg2Cmd MsgSongsRememberedStore
                         , UpdateFocus.focusInputPossibly model
                         ]
                     )
 
-        SongsRecentRefreshHand ->
+        MsgSongsRecentRefreshHand ->
             UpdateRequest.songsRecentRefreshHand model
 
-        SongsRecentResponse (Err httpError) ->
+        MsgSongsRecentResponse (Err httpError) ->
             httpError
                 |> UpdateResponse.songsRecentResponseErr model
 
-        SongsRecentResponse (Ok httpResponseText) ->
+        MsgSongsRecentResponse (Ok httpResponseText) ->
             httpResponseText
                 |> UpdateResponse.songsRecentResponseOk model
 
-        SongsRememberedStore ->
+        MsgSongsRememberedStore ->
             SongPort.songsRememberedStore model
 
-        UserIdentifierEstablish randomInt ->
+        MsgUserIdentifierEstablish randomInt ->
             ( { model
                 | userIdentifier =
                     randomInt

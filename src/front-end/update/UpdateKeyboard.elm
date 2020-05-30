@@ -141,24 +141,24 @@ keystrokeHand model keyCharRaw =
 
             else if keyIs 'C' then
                 songsRememberedIndex
-                    |> CommentAreaOpenHand
+                    |> MsgCommentAreaOpenHand
                     |> doMessage "refresh"
 
             else if keyIs 'F' then
-                SongsRecentRefreshHand
+                MsgSongsRecentRefreshHand
                     |> doMessage "refresh"
 
             else if keyIs 'L' then
                 songsRememberedIndex
-                    |> LikeButtonProcessHand
+                    |> MsgLikeButtonProcessHand
                     |> doMessage "refresh"
 
             else if keyIs 'M' then
-                PageMorphHand
+                MsgPageMorphHand
                     |> doMessage "morph"
 
             else if keyIs 'R' then
-                SongRememberHand 0
+                MsgSongRememberHand 0
                     |> doMessage "refresh"
 
             else
