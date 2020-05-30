@@ -71,13 +71,7 @@ import ViewButton
         , buttonView
         )
 import ViewBuySong
-    exposing
-        ( buySongAnchor
-        )
 import ViewStyleCalc
-    exposing
-        ( styleCalc
-        )
 import ViewType
     exposing
         ( HoverText
@@ -88,10 +82,10 @@ import ViewType
 -- VIEW
 
 
-view : Model -> Html Msg
+view : Model -> Html ElmCycle.Msg
 view model =
     let
-        alertArea : Html Msg
+        alertArea : Html ElmCycle.Msg
         alertArea =
             section
                 [ id "alert" ]
@@ -101,10 +95,10 @@ view model =
                     ]
                 ]
 
-        commentAreaPossibly : Html Msg
+        commentAreaPossibly : Html ElmCycle.Msg
         commentAreaPossibly =
             let
-                commentArea : SongRemembered -> Html Msg
+                commentArea : SongRemembered -> Html ElmCycle.Msg
                 commentArea song =
                     let
                         artistTitleTime : String
@@ -187,13 +181,13 @@ view model =
                 )
             ]
 
-        songGroupView : SongGroup -> SongsRecentOrRemembered -> List (Html Msg)
+        songGroupView : SongGroup -> SongsRecentOrRemembered -> List (Html ElmCycle.Msg)
         songGroupView songGroup songsRecentOrRemembered =
             let
-                songView : SongsRecentOrRememberedIndex -> SongRecentOrRemembered -> Html Msg
+                songView : SongsRecentOrRememberedIndex -> SongRecentOrRemembered -> Html ElmCycle.Msg
                 songView songsRecentOrRememberedIndex songRecentOrRemembered =
                     let
-                        likedOrCommentedIndicator : Html Msg
+                        likedOrCommentedIndicator : Html ElmCycle.Msg
                         likedOrCommentedIndicator =
                             let
                                 indicatorHoverText : HoverText
@@ -270,7 +264,7 @@ view model =
 
                             else
                                 songsRecentOrRememberedIndex
-                                    |> styleCalc songGroup lengthRemembered
+                                    |> ViewStyleCalc.styleCalc songGroup lengthRemembered
 
                         songTime : Time
                         songTime =
@@ -323,7 +317,7 @@ view model =
                             , songsRecentOrRememberedIndex
                                 |> buttonLike songGroup
                             , likedOrCommentedIndicator
-                            , buySongAnchor songRecentOrRemembered
+                            , ViewBuySong.buySongAnchor songRecentOrRemembered
                             ]
                         , p attributesEmpty
                             [ text songRecentOrRemembered.title ]

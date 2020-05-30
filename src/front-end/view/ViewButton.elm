@@ -20,28 +20,13 @@ import ElmCycle
         ( Msg(..)
         )
 import Html
-    exposing
-        ( Html
-        , button
-        )
 import Html.Attributes
-    exposing
-        ( style
-        , title
-        , type_
-        )
 import Html.Events
-    exposing
-        ( onClick
-        )
 import ModelType
     exposing
         ( ShowCommentButtons
         )
 import SongHelper
-    exposing
-        ( songGroup2String
-        )
 import SongType
     exposing
         ( SongGroup(..)
@@ -68,10 +53,10 @@ import ViewType
 -- VIEW
 
 
-buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html Msg
+buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html.Html ElmCycle.Msg
 buttonComment songGroup songsRememberedIndex showCommentButtons =
     let
-        buttonActionMsg : Msg
+        buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             songsRememberedIndex
                 |> CommentAreaOpenHand
@@ -95,7 +80,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
             |> buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg
 
 
-buttonCommentView : IdMaybe -> HoverText -> Msg -> ShowCommentButtons -> Html Msg
+buttonCommentView : IdMaybe -> HoverText -> ElmCycle.Msg -> ShowCommentButtons -> Html.Html ElmCycle.Msg
 buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
     let
         displayValue : Display
@@ -118,21 +103,21 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
             in
             maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
     in
-    button
-        ([ style "display" displayValue
-         , onClick action
-         , title hoverText
-         , type_ "button"
+    Html.button
+        ([ Html.Attributes.style "display" displayValue
+         , Html.Events.onClick action
+         , Html.Attributes.title hoverText
+         , Html.Attributes.type_ "button"
          ]
             ++ attributeIdFromMaybe buttonAttributeIdMaybe
         )
         innerHtmlEmpty
 
 
-buttonLike : SongGroup -> SongsRememberedIndex -> Html Msg
+buttonLike : SongGroup -> SongsRememberedIndex -> Html.Html ElmCycle.Msg
 buttonLike songGroup songsRememberedIndex =
     let
-        buttonActionMsg : Msg
+        buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             songsRememberedIndex
                 |> LikeButtonProcessHand
@@ -158,7 +143,7 @@ buttonLike songGroup songsRememberedIndex =
                 |> buttonView buttonAttributeIdMaybe hoverText
 
 
-buttonRecent : Html Msg
+buttonRecent : Html.Html ElmCycle.Msg
 buttonRecent =
     let
         buttonAttributeIdMaybe : IdMaybe
@@ -173,10 +158,10 @@ buttonRecent =
         |> buttonView buttonAttributeIdMaybe hoverText
 
 
-buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html Msg
+buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html.Html ElmCycle.Msg
 buttonRememberForget songGroup songsRecentOrRememberedIndex =
     let
-        buttonActionMsg : Msg
+        buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             case songGroup of
                 Recent ->
@@ -190,7 +175,7 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
             [ "button"
-            , songGroup2String songGroup
+            , SongHelper.songGroup2String songGroup
             , String.fromInt songsRecentOrRememberedIndex
             ]
                 |> String.concat
@@ -209,7 +194,7 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
         |> buttonView buttonAttributeIdMaybe hoverText
 
 
-buttonRemembered : Html Msg
+buttonRemembered : Html.Html ElmCycle.Msg
 buttonRemembered =
     let
         buttonAttributeIdMaybe : IdMaybe
@@ -224,7 +209,7 @@ buttonRemembered =
         |> buttonView buttonAttributeIdMaybe hoverText
 
 
-buttonView : IdMaybe -> HoverText -> Msg -> Html Msg
+buttonView : IdMaybe -> HoverText -> ElmCycle.Msg -> Html.Html ElmCycle.Msg
 buttonView buttonAttributeIdMaybe hoverText action =
     False
         |> buttonCommentView buttonAttributeIdMaybe hoverText action

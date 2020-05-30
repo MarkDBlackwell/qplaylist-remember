@@ -29,20 +29,9 @@ import AlertType
         ( PrefixSeparatorText
         )
 import ElmCycle
-    exposing
-        ( Msg
-        )
 import Html
-    exposing
-        ( Attribute
-        , Html
-        , text
-        )
 import Html.Attributes
-    exposing
-        ( id
-        )
-import Json.Decode as Json
+import Json.Decode
 import Task
 import ViewType
     exposing
@@ -54,17 +43,10 @@ import ViewType
 -- UPDATE
 
 
-field2String : String -> Json.Decoder String
+field2String : String -> Json.Decode.Decoder String
 field2String text =
-    Json.field text Json.string
-
-
-indexes : List a -> List Int
-indexes listA =
-    listA
-        |> List.length
-        |> pred
-        |> List.range 0
+    Json.Decode.string
+        |> Json.Decode.field text
 
 
 
@@ -72,15 +54,30 @@ indexes listA =
 
 
 matchingIndexes : List a -> a -> List Int
-matchingIndexes listA thing =
+matchingIndexes listA x =
     let
         matchWithIndexMaybe : ( Int, a ) -> Maybe Int
         matchWithIndexMaybe ( index, variable ) =
-            if thing /= variable then
+            if x /= variable then
                 Nothing
 
             else
                 Just index
+
+        withIndexes : List b -> List ( Int, b )
+        withIndexes listB =
+            let
+                indexes : List c -> List Int
+                indexes listC =
+                    listC
+                        |> List.length
+                        |> pred
+                        |> List.range 0
+            in
+            --TODO: try List.indexedMap
+            listB
+                |> indexes
+                |> List.map2 (\thing index -> ( index, thing )) listB
     in
     listA
         |> withIndexes
@@ -94,7 +91,7 @@ maybeMapWithDefault default function value =
         |> Maybe.withDefault default
 
 
-msg2Cmd : Msg -> Cmd Msg
+msg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
 msg2Cmd msg =
     --See:
     --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
@@ -134,22 +131,14 @@ succ x =
     x + 1
 
 
-withIndexes : List a -> List ( Int, a )
-withIndexes listA =
-    --TODO: try List.indexedMap
-    listA
-        |> indexes
-        |> List.map2 (\thing index -> ( index, thing )) listA
-
-
-withoutOne : List a -> a -> List a
-withoutOne listA thing =
-    listA
-        |> List.filter ((/=) thing)
-
-
 withoutOneFromMaybe : List a -> Maybe a -> List a
 withoutOneFromMaybe listA xMaybe =
+    let
+        withoutOne : List b -> b -> List b
+        withoutOne listB x =
+            listB
+                |> List.filter ((/=) x)
+    in
     listA
         |> withoutOne
         |> (\thing -> Maybe.map thing xMaybe)
@@ -160,15 +149,15 @@ withoutOneFromMaybe listA xMaybe =
 -- VIEW
 
 
-attributeIdFromMaybe : IdMaybe -> List (Attribute msg)
+attributeIdFromMaybe : IdMaybe -> List (Html.Attribute msg)
 attributeIdFromMaybe attributeIdMaybe =
-    maybeMapWithDefault
-        attributesEmpty
-        (\thing -> [ id thing ])
-        attributeIdMaybe
+    attributeIdMaybe
+        |> maybeMapWithDefault
+            attributesEmpty
+            (\thing -> [ Html.Attributes.id thing ])
 
 
-attributesEmpty : List (Attribute msg)
+attributesEmpty : List (Html.Attribute msg)
 attributesEmpty =
     []
 
@@ -180,11 +169,11 @@ goldenRatio =
     0.6180339887498949
 
 
-htmlNodeNull : Html Msg
+htmlNodeNull : Html.Html ElmCycle.Msg
 htmlNodeNull =
-    text ""
+    Html.text ""
 
 
-innerHtmlEmpty : List (Html msg)
+innerHtmlEmpty : List (Html.Html msg)
 innerHtmlEmpty =
     []

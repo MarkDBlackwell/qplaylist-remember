@@ -27,23 +27,12 @@ import AlertType
         , PrefixSeparatorText
         )
 import ElmCycle
-    exposing
-        ( ElmCycle
-        )
 import Http
 import ModelType
     exposing
         ( Model
         )
-import Tuple
-    exposing
-        ( first
-        , second
-        )
 import UpdateFocus
-    exposing
-        ( focusInputPossibly
-        )
 import Utilities
     exposing
         ( prefixSeparator
@@ -72,14 +61,14 @@ alertMessageTextErrorHttpLogging : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpLogging httpError =
     httpError
         |> errorHttpText
-        |> first
+        |> Tuple.first
 
 
 alertMessageTextErrorHttpScreen : Http.Error -> AlertMessageText
 alertMessageTextErrorHttpScreen httpError =
     httpError
         |> errorHttpText
-        |> second
+        |> Tuple.second
 
 
 alertMessageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText
@@ -114,12 +103,12 @@ alertMessageTextSend actionDescription detailsText =
         ]
 
 
-alertMessageTextServerAwaitingElmCycle : Model -> ElmCycle
+alertMessageTextServerAwaitingElmCycle : Model -> ElmCycle.ElmCycle
 alertMessageTextServerAwaitingElmCycle model =
     ( { model
         | alertMessageText = Just "Awaiting server"
       }
-    , focusInputPossibly model
+    , UpdateFocus.focusInputPossibly model
     )
 
 

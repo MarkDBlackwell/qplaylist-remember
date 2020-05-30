@@ -18,6 +18,7 @@ import ModelType
     exposing
         ( Model
         )
+import Platform.Sub
 import ViewType
     exposing
         ( KeyChar
@@ -35,13 +36,13 @@ import ViewType
 -}
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : Model -> Platform.Sub.Sub ElmCycle.Msg
 subscriptions model =
     let
-        keyStrokeGlobal : Sub Msg
+        keyStrokeGlobal : Platform.Sub.Sub ElmCycle.Msg
         keyStrokeGlobal =
             let
-                keySub : Sub KeyChar
+                keySub : Platform.Sub.Sub KeyChar
                 keySub =
                     let
                         decoder : Json.Decode.Decoder KeyChar
@@ -49,15 +50,15 @@ subscriptions model =
                             Json.Decode.string
                                 |> Json.Decode.field "key"
 
-                        source : Json.Decode.Decoder msg -> Sub msg
+                        source : Json.Decode.Decoder msg -> Platform.Sub.Sub msg
                         source =
                             Browser.Events.onKeyUp
                     in
                     source decoder
             in
             keySub
-                |> Sub.map KeystrokeHand
+                |> Platform.Sub.map KeystrokeHand
     in
-    Sub.batch
+    Platform.Sub.batch
         [ keyStrokeGlobal
         ]

@@ -13,28 +13,13 @@ import ElmCycle
         ( Msg(..)
         )
 import Html
-    exposing
-        ( Html
-        , a
-        )
 import Html.Attributes
-    exposing
-        ( href
-        , target
-        , title
-        )
 import Html.Events
-    exposing
-        ( onClick
-        )
 import SongType
     exposing
         ( SongRemembered
         )
 import UpdateHelper
-    exposing
-        ( relative
-        )
 import UpdateRequestType
     exposing
         ( QueryPairs
@@ -55,7 +40,7 @@ import ViewType
 -- VIEW
 
 
-buySongAnchor : SongRemembered -> Html Msg
+buySongAnchor : SongRemembered -> Html.Html ElmCycle.Msg
 buySongAnchor song =
     let
         hoverText : HoverText
@@ -87,12 +72,12 @@ buySongAnchor song =
                     ]
             in
             queryPairs
-                |> relative urlBeforeQueryList
+                |> UpdateHelper.relative urlBeforeQueryList
     in
-    a
-        [ href uriText
-        , onClick None
-        , target "_blank"
-        , title hoverText
+    Html.a
+        [ Html.Attributes.href uriText
+        , Html.Events.onClick None
+        , Html.Attributes.target "_blank"
+        , Html.Attributes.title hoverText
         ]
         innerHtmlEmpty

@@ -14,8 +14,7 @@ import AlertType
         )
 import ElmCycle
     exposing
-        ( ElmCycle
-        , Msg(..)
+        ( Msg(..)
         )
 import ModelType
     exposing
@@ -28,10 +27,6 @@ import SongType
         )
 import UpdateFocus
 import UpdateHelper
-    exposing
-        ( elmCycleDefault
-        , stateVector
-        )
 import Utilities
     exposing
         ( msg2Cmd
@@ -48,7 +43,7 @@ import ViewType
 -- UPDATE
 
 
-keyProcessH : Model -> ElmCycle
+keyProcessH : Model -> ElmCycle.ElmCycle
 keyProcessH model =
     let
         alertMessageTextNew : AlertMessageText
@@ -104,19 +99,19 @@ keyProcessH model =
     )
 
 
-keystrokeHand : Model -> KeyChar -> ElmCycle
+keystrokeHand : Model -> KeyChar -> ElmCycle.ElmCycle
 keystrokeHand model keyCharRaw =
     let
-        doNothing : ElmCycle
+        doNothing : ElmCycle.ElmCycle
         doNothing =
             model
-                |> elmCycleDefault
+                |> UpdateHelper.elmCycleDefault
     in
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( False, Closed ) ->
             let
-                doMessage : Id -> Msg -> ElmCycle
+                doMessage : Id -> ElmCycle.Msg -> ElmCycle.ElmCycle
                 doMessage id msg =
                     ( model
                     , Cmd.batch

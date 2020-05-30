@@ -12,7 +12,7 @@ import AlertType
     exposing
         ( AlertMessageText
         )
-import Json.Decode as Json
+import Json.Decode
 import UpdateRequestType
     exposing
         ( HttpResponseText
@@ -37,10 +37,10 @@ decodeLikeOrCommentResponse : HttpResponseText -> Result AlertMessageText LikeOr
 decodeLikeOrCommentResponse jsonRawText =
     --For decoding JSON:
     let
-        asRecord : Result Json.Error LikeOrCommentResponseWithDummyTag
+        asRecord : Result Json.Decode.Error LikeOrCommentResponseWithDummyTag
         asRecord =
             let
-                decodeResponse : Json.Decoder LikeOrCommentResponseWithDummyTag
+                decodeResponse : Json.Decode.Decoder LikeOrCommentResponseWithDummyTag
                 decodeResponse =
                     let
                         tag : String
@@ -49,15 +49,15 @@ decodeLikeOrCommentResponse jsonRawText =
                     in
                     tag
                         |> field2String
-                        |> Json.map LikeOrCommentResponseWithDummyTag
+                        |> Json.Decode.map LikeOrCommentResponseWithDummyTag
             in
             jsonRawText
-                |> Json.decodeString decodeResponse
+                |> Json.Decode.decodeString decodeResponse
     in
     case asRecord of
         Err error ->
             error
-                |> Json.errorToString
+                |> Json.Decode.errorToString
                 |> Err
 
         Ok record ->

@@ -12,7 +12,7 @@ import AlertType
     exposing
         ( AlertMessageText
         )
-import Json.Decode as Json
+import Json.Decode
 import SongType
     exposing
         ( SongRecent
@@ -44,15 +44,15 @@ decodeSongsRecentResponse jsonRawText =
     --http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
-        asRecord : Result Json.Error SongsRecentWithDummyTag
+        asRecord : Result Json.Decode.Error SongsRecentWithDummyTag
         asRecord =
             let
-                decodeSongsRecentWithDummyTag : Json.Decoder SongsRecentWithDummyTag
+                decodeSongsRecentWithDummyTag : Json.Decode.Decoder SongsRecentWithDummyTag
                 decodeSongsRecentWithDummyTag =
                     let
-                        decodeSongRecent : Json.Decoder SongRecent
+                        decodeSongRecent : Json.Decode.Decoder SongRecent
                         decodeSongRecent =
-                            Json.map4
+                            Json.Decode.map4
                                 SongRecent
                                 (field2String "artist")
                                 (field2String "time")
@@ -64,17 +64,17 @@ decodeSongsRecentResponse jsonRawText =
                             "latestFive"
                     in
                     decodeSongRecent
-                        |> Json.list
-                        |> Json.field tag
-                        |> Json.map SongsRecentWithDummyTag
+                        |> Json.Decode.list
+                        |> Json.Decode.field tag
+                        |> Json.Decode.map SongsRecentWithDummyTag
             in
             jsonRawText
-                |> Json.decodeString decodeSongsRecentWithDummyTag
+                |> Json.Decode.decodeString decodeSongsRecentWithDummyTag
     in
     case asRecord of
         Err error ->
             error
-                |> Json.errorToString
+                |> Json.Decode.errorToString
                 |> Err
 
         Ok record ->

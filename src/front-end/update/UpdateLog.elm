@@ -14,9 +14,6 @@ module UpdateLog exposing
 
 import Debug
 import ElmCycle
-    exposing
-        ( Msg
-        )
 import UpdateRequestType
     exposing
         ( Action(..)
@@ -27,7 +24,7 @@ import UpdateRequestType
 -- UPDATE
 
 
-logAction : Action -> Maybe String -> Cmd Msg
+logAction : Action -> Maybe String -> Cmd ElmCycle.Msg
 logAction action textMaybe =
     let
         keepForConsoleLogging : String
@@ -58,19 +55,19 @@ logAction action textMaybe =
     Cmd.none
 
 
-logDecoding : Maybe String -> Cmd Msg
+logDecoding : Maybe String -> Cmd ElmCycle.Msg
 logDecoding textMaybe =
     textMaybe
         |> logAction ActionDecoding
 
 
-logRequest : String -> Cmd Msg
+logRequest : String -> Cmd ElmCycle.Msg
 logRequest text =
     Just text
         |> logAction ActionRequest
 
 
-logResponse : Maybe String -> Cmd Msg
+logResponse : Maybe String -> Cmd ElmCycle.Msg
 logResponse textMaybe =
     textMaybe
         |> logAction ActionResponse

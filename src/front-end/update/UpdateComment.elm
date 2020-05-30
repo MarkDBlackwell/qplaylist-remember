@@ -13,33 +13,15 @@ module UpdateComment exposing
     )
 
 import Alert
-    exposing
-        ( alertMessageTextInit
-        , alertMessageTextServerAwaitingElmCycle
-        )
 import ElmCycle
-    exposing
-        ( ElmCycle
-        )
 import ModelInitialize
-    exposing
-        ( commentTextInit
-        )
 import ModelType
     exposing
         ( Model
         , Optional(..)
         )
 import SongHelper
-    exposing
-        ( buttonIdReconstruct
-        , song2SongTimeless
-        , songsRememberedNewFromMaybeWithUpdate
-        )
 import SongInitialize
-    exposing
-        ( songCommentingMaybeInit
-        )
 import SongType
     exposing
         ( SongRememberedMaybe
@@ -47,15 +29,7 @@ import SongType
         , SongsRememberedIndex
         )
 import UpdateFocus
-    exposing
-        ( focusInputPossibly
-        , focusSetId
-        )
 import UpdateHelper
-    exposing
-        ( elmCycleDefault
-        , stateVector
-        )
 import Utilities
     exposing
         ( selectOneFromIndexMaybe
@@ -66,10 +40,10 @@ import Utilities
 -- UPDATE
 
 
-commentAreaInputTextChangeCaptureHand : Model -> String -> ElmCycle
+commentAreaInputTextChangeCaptureHand : Model -> String -> ElmCycle.ElmCycle
 commentAreaInputTextChangeCaptureHand model text =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
             ( { model
                 | commentText = text
@@ -79,25 +53,25 @@ commentAreaInputTextChangeCaptureHand model text =
 
         _ ->
             ( { model
-                | alertMessageText = alertMessageTextInit
+                | alertMessageText = Alert.alertMessageTextInit
                 , commentText = text
               }
             , Cmd.none
             )
 
 
-commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle
+commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
 commentAreaOpenHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            alertMessageTextServerAwaitingElmCycle model
+            Alert.alertMessageTextServerAwaitingElmCycle model
 
         ( _, Open ) ->
             ( { model
-                | alertMessageText = alertMessageTextInit
+                | alertMessageText = Alert.alertMessageTextInit
               }
-            , focusInputPossibly model
+            , UpdateFocus.focusInputPossibly model
             )
 
         _ ->
@@ -106,7 +80,7 @@ commentAreaOpenHand model songsRememberedIndex =
                 songsRememberedNew =
                     songsRememberedIndex
                         |> selectOneFromIndexMaybe model.songsRemembered
-                        |> songsRememberedNewFromMaybeWithUpdate model
+                        |> SongHelper.songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
@@ -115,34 +89,34 @@ commentAreaOpenHand model songsRememberedIndex =
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
-                    elmCycleDefault model
+                    UpdateHelper.elmCycleDefault model
 
                 _ ->
                     ( { model
-                        | alertMessageText = alertMessageTextInit
-                        , commentText = commentTextInit
+                        | alertMessageText = Alert.alertMessageTextInit
+                        , commentText = ModelInitialize.commentTextInit
                         , songCommentingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
-                      --'focusInputPossibly' doesn't work, here:
-                    , focusSetId "input"
+                      --'UpdateFocus.focusInputPossibly' doesn't work, here:
+                    , UpdateFocus.focusSetId "input"
                     )
 
 
-commentCancelHand : Model -> ElmCycle
+commentCancelHand : Model -> ElmCycle.ElmCycle
 commentCancelHand model =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
-            alertMessageTextServerAwaitingElmCycle model
+            Alert.alertMessageTextServerAwaitingElmCycle model
 
         _ ->
             ( { model
-                | alertMessageText = alertMessageTextInit
-                , commentText = commentTextInit
-                , songCommentingMaybe = songCommentingMaybeInit
+                | alertMessageText = Alert.alertMessageTextInit
+                , commentText = ModelInitialize.commentTextInit
+                , songCommentingMaybe = SongInitialize.songCommentingMaybeInit
               }
             , "Comment"
-                |> buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
-                |> focusSetId
+                |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
+                |> UpdateFocus.focusSetId
             )

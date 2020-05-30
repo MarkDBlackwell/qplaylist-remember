@@ -9,13 +9,7 @@
 module ViewStyleCalc exposing (styleCalc)
 
 import Html
-    exposing
-        ( Attribute
-        )
 import Html.Attributes
-    exposing
-        ( style
-        )
 import SongType
     exposing
         ( SongGroup(..)
@@ -33,7 +27,7 @@ import Utilities
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> List (Attribute msg)
+styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> List (Html.Attribute msg)
 styleCalc group songGroupLength songsRecentOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )
@@ -100,4 +94,4 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
         [ backgroundColorStyling
         , fontSizeStyling
         ]
-        |> List.map (\( property, value ) -> style property value)
+        |> List.map (\( property, value ) -> Html.Attributes.style property value)

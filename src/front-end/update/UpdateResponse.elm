@@ -19,14 +19,10 @@ import AlertType
         ( AlertMessageText
         )
 import DecodeLikeOrCommentResponse
-    exposing
-        ( decodeLikeOrCommentResponse
-        )
 import DecodeSongsRecent
 import ElmCycle
     exposing
-        ( ElmCycle
-        , Msg(..)
+        ( Msg(..)
         )
 import Http
 import ModelInitialize
@@ -66,7 +62,7 @@ alertLogging httpError =
         |> Alert.alertMessageTextErrorHttpLogging
 
 
-likeOrCommentResponseErr : Model -> Http.Error -> ActionLikeOrComment -> ElmCycle
+likeOrCommentResponseErr : Model -> Http.Error -> ActionLikeOrComment -> ElmCycle.ElmCycle
 likeOrCommentResponseErr model httpError actionLikeOrComment =
     let
         alertLikeOrComment : AlertType.LikeOrCommentName -> AlertMessageText
@@ -109,7 +105,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
     )
 
 
-likeOrCommentResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle
+likeOrCommentResponseOk : Model -> HttpResponseText -> ActionLikeOrComment -> ElmCycle.ElmCycle
 likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
     let
         actionDescription : AlertMessageText
@@ -118,7 +114,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 |> UpdateHelper.actionLikeOrComment2String
                 |> String.append "send your "
 
-        buttonCommand : Cmd Msg
+        buttonCommand : Cmd ElmCycle.Msg
         buttonCommand =
             case actionLikeOrComment of
                 Comment ->
@@ -127,7 +123,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     buttonCommandAccomplished
 
-        buttonCommandAccomplished : Cmd Msg
+        buttonCommandAccomplished : Cmd ElmCycle.Msg
         buttonCommandAccomplished =
             actionLikeOrComment
                 |> UpdateHelper.actionLikeOrComment2String
@@ -169,7 +165,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     model.songLikingMaybe
     in
-    case decodeLikeOrCommentResponse httpResponseText of
+    case DecodeLikeOrCommentResponse.decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
                 | alertMessageText =
@@ -236,7 +232,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 )
 
 
-songsRecentResponseErr : Model -> Http.Error -> ElmCycle
+songsRecentResponseErr : Model -> Http.Error -> ElmCycle.ElmCycle
 songsRecentResponseErr model httpError =
     let
         alertMessageTextNew : AlertMessageText
@@ -268,7 +264,7 @@ songsRecentResponseErr model httpError =
     )
 
 
-songsRecentResponseOk : Model -> HttpResponseText -> ElmCycle
+songsRecentResponseOk : Model -> HttpResponseText -> ElmCycle.ElmCycle
 songsRecentResponseOk model httpResponseText =
     case DecodeSongsRecent.decodeSongsRecentResponse httpResponseText of
         Err alertMessageTextDecode ->

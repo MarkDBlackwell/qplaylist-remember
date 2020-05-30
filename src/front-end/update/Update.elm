@@ -15,8 +15,7 @@ import Alert
         )
 import ElmCycle
     exposing
-        ( ElmCycle
-        , Msg(..)
+        ( Msg(..)
         )
 import ModelType
     exposing
@@ -39,22 +38,8 @@ import SongType
         , SongsRememberedIndexMaybe
         )
 import UpdateComment
-    exposing
-        ( commentAreaInputTextChangeCaptureHand
-        , commentAreaOpenHand
-        , commentCancelHand
-        )
 import UpdateFocus
-    exposing
-        ( focusAttempt
-        , focusInputPossibly
-        , focusSetId
-        )
 import UpdateHelper
-    exposing
-        ( elmCycleDefault
-        , stateVector
-        )
 import UpdateKeyboard
 import UpdateRequest
 import UpdateRequestType
@@ -75,19 +60,19 @@ import Utilities
 -- UPDATE
 
 
-update : Msg -> Model -> ElmCycle
+update : ElmCycle.Msg -> Model -> ElmCycle.ElmCycle
 update msg model =
     case msg of
         CommentAreaInputTextChangeCaptureHand text ->
             text
-                |> commentAreaInputTextChangeCaptureHand model
+                |> UpdateComment.commentAreaInputTextChangeCaptureHand model
 
         CommentAreaOpenHand songsRememberedIndex ->
             songsRememberedIndex
-                |> commentAreaOpenHand model
+                |> UpdateComment.commentAreaOpenHand model
 
         CommentCancelHand ->
-            commentCancelHand model
+            UpdateComment.commentCancelHand model
 
         CommentResponse (Err httpError) ->
             UpdateResponse.likeOrCommentResponseErr model httpError Comment
@@ -101,7 +86,7 @@ update msg model =
 
         FocusAttempt id ->
             id
-                |> focusAttempt model
+                |> UpdateFocus.focusAttempt model
 
         KeystrokeHand keyChar ->
             keyChar
@@ -118,11 +103,11 @@ update msg model =
             UpdateResponse.likeOrCommentResponseOk model httpResponseText Like
 
         None ->
-            elmCycleDefault model
+            UpdateHelper.elmCycleDefault model
 
         PageMorphHand ->
             --(awaitingServer, commentArea)
-            case stateVector model of
+            case UpdateHelper.stateVector model of
                 ( True, _ ) ->
                     alertMessageTextServerAwaitingElmCycle model
 
@@ -150,12 +135,12 @@ update msg model =
                         | alertMessageText = alertMessageTextInit
                         , pageIsExpanded = pageIsExpandedNew
                       }
-                    , focusInputPossibly model
+                    , UpdateFocus.focusInputPossibly model
                     )
 
         SongForgetHand songsRememberedIndex ->
             --(awaitingServer, commentArea)
-            case stateVector model of
+            case UpdateHelper.stateVector model of
                 ( True, _ ) ->
                     alertMessageTextServerAwaitingElmCycle model
 
@@ -170,7 +155,7 @@ update msg model =
                         ( { model
                             | alertMessageText = alertMessageTextInit
                           }
-                        , focusInputPossibly model
+                        , UpdateFocus.focusInputPossibly model
                         )
 
                     else
@@ -186,14 +171,14 @@ update msg model =
                           }
                         , Cmd.batch
                             [ msg2Cmd SongsRememberedStore
-                            , focusSetId "refresh"
-                            , focusInputPossibly model
+                            , UpdateFocus.focusSetId "refresh"
+                            , UpdateFocus.focusInputPossibly model
                             ]
                         )
 
         SongRememberHand songsRecentIndex ->
             --(awaitingServer, commentArea)
-            case stateVector model of
+            case UpdateHelper.stateVector model of
                 ( True, _ ) ->
                     alertMessageTextServerAwaitingElmCycle model
 
@@ -225,7 +210,7 @@ update msg model =
                       }
                     , Cmd.batch
                         [ msg2Cmd SongsRememberedStore
-                        , focusInputPossibly model
+                        , UpdateFocus.focusInputPossibly model
                         ]
                     )
 
@@ -250,7 +235,7 @@ update msg model =
                         |> UserIdentifier.userIdentifierCalc
               }
             , Cmd.batch
-                [ focusSetId "refresh"
-                , focusInputPossibly model
+                [ UpdateFocus.focusSetId "refresh"
+                , UpdateFocus.focusInputPossibly model
                 ]
             )

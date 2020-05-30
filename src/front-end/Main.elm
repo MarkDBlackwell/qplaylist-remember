@@ -10,9 +10,6 @@ module Main exposing (main)
 
 import Browser
 import ElmCycle
-    exposing
-        ( Msg
-        )
 import ModelInitialize
 import ModelType
     exposing
@@ -28,7 +25,7 @@ import View
 -- MODEL
 
 
-main : Program Flags Model Msg
+main : Platform.Program Flags Model ElmCycle.Msg
 main =
     { init = ModelInitialize.init
     , subscriptions = Subscription.subscriptions

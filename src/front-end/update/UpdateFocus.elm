@@ -15,17 +15,13 @@ module UpdateFocus exposing
 import Browser.Dom as Dom
 import ElmCycle
     exposing
-        ( ElmCycle
-        , Msg(..)
+        ( Msg(..)
         )
 import ModelType
     exposing
         ( Model
         )
 import Task
-    exposing
-        ( Task
-        )
 import Utilities
     exposing
         ( maybeMapWithDefault
@@ -41,14 +37,14 @@ import ViewType
 -- UPDATE
 
 
-focusAttempt : Model -> Id -> ElmCycle
+focusAttempt : Model -> Id -> ElmCycle.ElmCycle
 focusAttempt model id =
     let
-        focusOnId : Task Dom.Error ()
+        focusOnId : Task.Task Dom.Error ()
         focusOnId =
             Dom.focus id
 
-        ignoreResult : Result x a -> Msg
+        ignoreResult : Result x a -> ElmCycle.Msg
         ignoreResult _ =
             None
     in
@@ -63,16 +59,16 @@ focusAttempt model id =
     )
 
 
-focusInputPossibly : Model -> Cmd Msg
+focusInputPossibly : Model -> Cmd ElmCycle.Msg
 focusInputPossibly model =
-    --TODO: try '(\_ -> Msg.none)'.
+    --TODO: try '(\_ -> ElmCycle.Msg.none)'.
     model.songCommentingMaybe
         |> maybeMapWithDefault
             Cmd.none
             (\_ -> focusSetId "input")
 
 
-focusSetId : Id -> Cmd Msg
+focusSetId : Id -> Cmd ElmCycle.Msg
 focusSetId id =
     --TODO: simplify this.
     --See Browser.Dom.focus.

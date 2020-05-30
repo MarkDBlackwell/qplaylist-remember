@@ -15,18 +15,12 @@ module UpdateHelper exposing
     )
 
 import ElmCycle
-    exposing
-        ( ElmCycle
-        )
 import ModelType
     exposing
         ( Model
         , Optional(..)
         )
 import SongInitialize
-    exposing
-        ( songLikingOrCommentingInit
-        )
 import SongType
     exposing
         ( SongRecentMaybe
@@ -34,9 +28,6 @@ import SongType
         , SongRememberedMaybe
         )
 import UpdateFocus
-    exposing
-        ( focusInputPossibly
-        )
 import UpdateRequestType
     exposing
         ( ActionLikeOrComment(..)
@@ -71,10 +62,10 @@ actionLikeOrComment2String actionLikeOrComment =
             "Like"
 
 
-elmCycleDefault : Model -> ElmCycle
+elmCycleDefault : Model -> ElmCycle.ElmCycle
 elmCycleDefault model =
     ( model
-    , focusInputPossibly model
+    , UpdateFocus.focusInputPossibly model
     )
 
 
@@ -92,7 +83,7 @@ likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCa
         songLikingOrCommenting : SongRemembered
         songLikingOrCommenting =
             songLikingOrCommentingMaybe
-                |> Maybe.withDefault songLikingOrCommentingInit
+                |> Maybe.withDefault SongInitialize.songLikingOrCommentingInit
     in
     relative
         [ basename ]

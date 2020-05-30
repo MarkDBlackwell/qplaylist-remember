@@ -9,12 +9,6 @@
 module Song exposing (likedOrCommentedShow)
 
 import SongHelper
-    exposing
-        ( song2SongRecent
-        , song2SongTimeless
-        , songRememberedUpdate
-        , songsTimelessMatches
-        )
 import SongType
     exposing
         ( LikeOrCommentCount
@@ -59,9 +53,9 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
                         songDesired : SongRecent
                         songDesired =
                             songLikingOrCommenting
-                                |> song2SongRecent
+                                |> SongHelper.song2SongRecent
                     in
-                    if song2SongRecent songRemembered /= songDesired then
+                    if SongHelper.song2SongRecent songRemembered /= songDesired then
                         songRemembered
 
                     else
@@ -80,7 +74,7 @@ songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> S
 songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemembered songsRememberedIndex songRecent =
     if
         songRemembered
-            |> songsTimelessMatches songsRecent
+            |> SongHelper.songsTimelessMatches songsRecent
             |> List.isEmpty
     then
         Nothing
@@ -91,7 +85,7 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
             |> startingWithFromIndex songsRemembered
             |> (++)
                 (songRecent
-                    |> songRememberedUpdate songRemembered
+                    |> SongHelper.songRememberedUpdate songRemembered
                     |> List.singleton
                 )
             |> (++)

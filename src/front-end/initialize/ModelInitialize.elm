@@ -13,13 +13,7 @@ module ModelInitialize exposing
     )
 
 import Alert
-    exposing
-        ( alertMessageTextInit
-        )
 import ElmCycle
-    exposing
-        ( ElmCycle
-        )
 import ModelType
     exposing
         ( CommentText
@@ -28,20 +22,11 @@ import ModelType
         , PageIsExpanded
         )
 import SongInitialize
-    exposing
-        ( songCommentingMaybeInit
-        , songLikingMaybeInit
-        , songsRecentInit
-        )
 import UpdateRequestType
     exposing
         ( AwaitingServerResponse
         )
 import UserIdentifier
-    exposing
-        ( generateUserIdentifier
-        , userIdentifierInit
-        )
 
 
 
@@ -58,20 +43,20 @@ commentTextInit =
     ""
 
 
-init : Flags -> ElmCycle
+init : Flags -> ElmCycle.ElmCycle
 init flags =
     ( Model
-        alertMessageTextInit
+        Alert.alertMessageTextInit
         awaitingServerResponseInit
         commentTextInit
         pageIsExpandedInit
         flags.showCommentButtons
-        songCommentingMaybeInit
-        songLikingMaybeInit
-        songsRecentInit
+        SongInitialize.songCommentingMaybeInit
+        SongInitialize.songLikingMaybeInit
+        SongInitialize.songsRecentInit
         flags.songsRemembered
-        userIdentifierInit
-    , generateUserIdentifier
+        UserIdentifier.userIdentifierInit
+    , UserIdentifier.generateUserIdentifier
     )
 
 

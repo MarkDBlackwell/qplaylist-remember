@@ -15,8 +15,7 @@ module UpdateRequest exposing
 import Alert
 import ElmCycle
     exposing
-        ( ElmCycle
-        , Msg(..)
+        ( Msg(..)
         )
 import Http
 import ModelType
@@ -32,12 +31,6 @@ import SongType
         )
 import UpdateFocus
 import UpdateHelper
-    exposing
-        ( elmCycleDefault
-        , likeOrCommentRequestUriText
-        , relative
-        , stateVector
-        )
 import UpdateLog
 import UpdateRequestType
     exposing
@@ -53,10 +46,10 @@ import Utilities
 -- UPDATE
 
 
-commentSendHand : Model -> ElmCycle
+commentSendHand : Model -> ElmCycle.ElmCycle
 commentSendHand model =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
             Alert.alertMessageTextServerAwaitingElmCycle model
 
@@ -70,7 +63,7 @@ commentSendHand model =
 
             else
                 let
-                    commentRequest : Cmd Msg
+                    commentRequest : Cmd ElmCycle.Msg
                     commentRequest =
                         Http.get
                             { url = commentRequestUriText
@@ -87,7 +80,7 @@ commentSendHand model =
                                 "c"
                         in
                         model.commentText
-                            |> likeOrCommentRequestUriText
+                            |> UpdateHelper.likeOrCommentRequestUriText
                                 model.userIdentifier
                                 model.songCommentingMaybe
                                 commentCategory
@@ -104,10 +97,10 @@ commentSendHand model =
                 )
 
 
-likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle
+likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
 likeButtonProcessHand model songsRememberedIndex =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
             Alert.alertMessageTextServerAwaitingElmCycle model
 
@@ -126,11 +119,11 @@ likeButtonProcessHand model songsRememberedIndex =
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->
-                    elmCycleDefault model
+                    UpdateHelper.elmCycleDefault model
 
                 _ ->
                     let
-                        likeRequest : Cmd Msg
+                        likeRequest : Cmd ElmCycle.Msg
                         likeRequest =
                             Http.get
                                 { url = likeRequestUriText
@@ -151,7 +144,7 @@ likeButtonProcessHand model songsRememberedIndex =
                                     "Loved it!"
                             in
                             commentText
-                                |> likeOrCommentRequestUriText
+                                |> UpdateHelper.likeOrCommentRequestUriText
                                     model.userIdentifier
                                     songsRememberedSelectOneMaybe
                                     commentCategory
@@ -170,10 +163,10 @@ likeButtonProcessHand model songsRememberedIndex =
                     )
 
 
-songsRecentRefreshHand : Model -> ElmCycle
+songsRecentRefreshHand : Model -> ElmCycle.ElmCycle
 songsRecentRefreshHand model =
     --(awaitingServer, commentArea)
-    case stateVector model of
+    case UpdateHelper.stateVector model of
         ( True, _ ) ->
             Alert.alertMessageTextServerAwaitingElmCycle model
 
@@ -186,12 +179,12 @@ songsRecentRefreshHand model =
                         basename =
                             "LatestFew.json"
                     in
-                    relative
+                    UpdateHelper.relative
                         [ basename
                         ]
                         []
 
-                songsRecentRequest : Cmd Msg
+                songsRecentRequest : Cmd ElmCycle.Msg
                 songsRecentRequest =
                     Http.get
                         { url = requestUriText

@@ -27,9 +27,6 @@ import ModelType
         ( Model
         )
 import SongInitialize
-    exposing
-        ( likeOrCommentCountInit
-        )
 import SongType
     exposing
         ( Artist
@@ -107,7 +104,7 @@ song2SongRecent { artist, time, timestamp, title } =
 song2SongRemembered : SongRecentBase a -> SongRemembered
 song2SongRemembered { artist, time, timestamp, title } =
     --TODO: Try constructor.
-    SongRemembered artist likeOrCommentCountInit time timestamp title
+    SongRemembered artist SongInitialize.likeOrCommentCountInit time timestamp title
 
 
 song2SongTimeless : SongTimelessBase a -> SongTimeless
