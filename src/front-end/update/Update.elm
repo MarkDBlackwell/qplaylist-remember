@@ -46,7 +46,7 @@ import UpdateResponse
 import UserIdentifier
 import Utilities
     exposing
-        ( msg2Cmd
+        ( cmdMsg2Cmd
         , selectOneFromIndexMaybe
         , withoutOneFromMaybe
         )
@@ -131,7 +131,7 @@ update msg model =
                         | alertMessageText = Alert.messageTextInit
                         , pageIsExpanded = pageIsExpandedNew
                       }
-                    , UpdateFocus.focusInputPossibly model
+                    , UpdateFocus.cmdFocusInputPossibly model
                     )
 
         MsgSongForgetHand songsRememberedIndex ->
@@ -151,7 +151,7 @@ update msg model =
                         ( { model
                             | alertMessageText = Alert.messageTextInit
                           }
-                        , UpdateFocus.focusInputPossibly model
+                        , UpdateFocus.cmdFocusInputPossibly model
                         )
 
                     else
@@ -166,9 +166,9 @@ update msg model =
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
-                            [ msg2Cmd MsgSongsRememberedStore
-                            , UpdateFocus.focusSetId "refresh"
-                            , UpdateFocus.focusInputPossibly model
+                            [ cmdMsg2Cmd MsgSongsRememberedStore
+                            , UpdateFocus.cmdFocusSetId "refresh"
+                            , UpdateFocus.cmdFocusInputPossibly model
                             ]
                         )
 
@@ -205,8 +205,8 @@ update msg model =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ msg2Cmd MsgSongsRememberedStore
-                        , UpdateFocus.focusInputPossibly model
+                        [ cmdMsg2Cmd MsgSongsRememberedStore
+                        , UpdateFocus.cmdFocusInputPossibly model
                         ]
                     )
 
@@ -231,7 +231,7 @@ update msg model =
                         |> UserIdentifier.userIdentifierCalc
               }
             , Cmd.batch
-                [ UpdateFocus.focusSetId "refresh"
-                , UpdateFocus.focusInputPossibly model
+                [ UpdateFocus.cmdFocusSetId "refresh"
+                , UpdateFocus.cmdFocusInputPossibly model
                 ]
             )

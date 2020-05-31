@@ -65,7 +65,7 @@ actionLikeOrComment2String actionLikeOrComment =
 elmCycleDefault : Model -> ElmCycle.ElmCycle
 elmCycleDefault model =
     ( model
-    , UpdateFocus.focusInputPossibly model
+    , UpdateFocus.cmdFocusInputPossibly model
     )
 
 

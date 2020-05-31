@@ -7,9 +7,9 @@
 
 
 module UpdateLog exposing
-    ( logDecoding
-    , logRequest
-    , logResponse
+    ( cmdLogDecoding
+    , cmdLogRequest
+    , cmdLogResponse
     )
 
 import Debug
@@ -24,8 +24,8 @@ import UpdateRequestType
 -- UPDATE
 
 
-logAction : Action -> Maybe String -> Cmd ElmCycle.Msg
-logAction action textMaybe =
+cmdLogAction : Action -> Maybe String -> Cmd ElmCycle.Msg
+cmdLogAction action textMaybe =
     let
         keepForConsoleLogging : String
         keepForConsoleLogging =
@@ -55,19 +55,19 @@ logAction action textMaybe =
     Cmd.none
 
 
-logDecoding : Maybe String -> Cmd ElmCycle.Msg
-logDecoding textMaybe =
+cmdLogDecoding : Maybe String -> Cmd ElmCycle.Msg
+cmdLogDecoding textMaybe =
     textMaybe
-        |> logAction ActionDecoding
+        |> cmdLogAction ActionDecoding
 
 
-logRequest : String -> Cmd ElmCycle.Msg
-logRequest text =
+cmdLogRequest : String -> Cmd ElmCycle.Msg
+cmdLogRequest text =
     Just text
-        |> logAction ActionRequest
+        |> cmdLogAction ActionRequest
 
 
-logResponse : Maybe String -> Cmd ElmCycle.Msg
-logResponse textMaybe =
+cmdLogResponse : Maybe String -> Cmd ElmCycle.Msg
+cmdLogResponse textMaybe =
     textMaybe
-        |> logAction ActionResponse
+        |> cmdLogAction ActionResponse

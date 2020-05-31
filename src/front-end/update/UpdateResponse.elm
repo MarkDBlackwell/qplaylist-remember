@@ -48,7 +48,7 @@ import UpdateRequestType
         )
 import Utilities
     exposing
-        ( msg2Cmd
+        ( cmdMsg2Cmd
         )
 
 
@@ -99,8 +99,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                 |> alertLikeOrComment
             )
             |> Just
-            |> UpdateLog.logResponse
-        , UpdateFocus.focusInputPossibly model
+            |> UpdateLog.cmdLogResponse
+        , UpdateFocus.cmdFocusInputPossibly model
         ]
     )
 
@@ -114,23 +114,23 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 |> UpdateHelper.actionLikeOrComment2String
                 |> String.append "send your "
 
-        buttonCommand : Cmd ElmCycle.Msg
-        buttonCommand =
+        cmdButtonCommand : Cmd ElmCycle.Msg
+        cmdButtonCommand =
             case actionLikeOrComment of
                 Comment ->
                     Cmd.none
 
                 Like ->
-                    buttonCommandAccomplished
+                    cmdButtonCommandAccomplished
 
-        buttonCommandAccomplished : Cmd ElmCycle.Msg
-        buttonCommandAccomplished =
+        cmdButtonCommandAccomplished : Cmd ElmCycle.Msg
+        cmdButtonCommandAccomplished =
             actionLikeOrComment
                 |> UpdateHelper.actionLikeOrComment2String
                 |> SongHelper.buttonIdReconstruct
                     model.songsRemembered
                     songLikingOrCommentingMaybe
-                |> UpdateFocus.focusSetId
+                |> UpdateFocus.cmdFocusSetId
 
         modelNewCommentText : Model
         modelNewCommentText =
@@ -179,9 +179,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> UpdateLog.logDecoding
-                , buttonCommand
-                , UpdateFocus.focusInputPossibly model
+                    |> UpdateLog.cmdLogDecoding
+                , cmdButtonCommand
+                , UpdateFocus.cmdFocusInputPossibly model
                 ]
             )
 
@@ -204,9 +204,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         responseText
                         httpResponseText
                         |> Just
-                        |> UpdateLog.logResponse
-                    , buttonCommand
-                    , UpdateFocus.focusInputPossibly model
+                        |> UpdateLog.cmdLogResponse
+                    , cmdButtonCommand
+                    , UpdateFocus.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -224,10 +224,10 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , songsRemembered = songsRememberedNew
                   }
                 , Cmd.batch
-                    [ msg2Cmd MsgSongsRememberedStore
-                    , UpdateLog.logResponse Nothing
-                    , buttonCommandAccomplished
-                    , UpdateFocus.focusInputPossibly model
+                    [ cmdMsg2Cmd MsgSongsRememberedStore
+                    , UpdateLog.cmdLogResponse Nothing
+                    , cmdButtonCommandAccomplished
+                    , UpdateFocus.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -258,8 +258,8 @@ songsRecentResponseErr model httpError =
         [ httpError
             |> alertLogging
             |> Just
-            |> UpdateLog.logResponse
-        , UpdateFocus.focusInputPossibly model
+            |> UpdateLog.cmdLogResponse
+        , UpdateFocus.cmdFocusInputPossibly model
         ]
     )
 
@@ -280,8 +280,8 @@ songsRecentResponseOk model httpResponseText =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> UpdateLog.logDecoding
-                , UpdateFocus.focusInputPossibly model
+                    |> UpdateLog.cmdLogDecoding
+                , UpdateFocus.cmdFocusInputPossibly model
                 ]
             )
 
@@ -293,7 +293,7 @@ songsRecentResponseOk model httpResponseText =
               }
               --Here, don't log the full response.
             , Cmd.batch
-                [ UpdateLog.logResponse Nothing
-                , UpdateFocus.focusInputPossibly model
+                [ UpdateLog.cmdLogResponse Nothing
+                , UpdateFocus.cmdFocusInputPossibly model
                 ]
             )

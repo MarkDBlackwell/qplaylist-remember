@@ -9,13 +9,13 @@
 module Utilities exposing
     ( attributeIdFromMaybe
     , attributesEmpty
+    , cmdMsg2Cmd
     , field2String
     , goldenRatio
     , htmlNodeNull
     , innerHtmlEmpty
     , matchingIndexes
     , maybeMapWithDefault
-    , msg2Cmd
     , pred
     , selectOneFromIndexMaybe
     , startingWithFromIndex
@@ -122,8 +122,8 @@ withoutOneFromMaybe listA xMaybe =
 -- UPDATE
 
 
-msg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
-msg2Cmd msg =
+cmdMsg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
+cmdMsg2Cmd msg =
     --See:
     --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:

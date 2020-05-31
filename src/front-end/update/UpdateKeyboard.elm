@@ -29,7 +29,7 @@ import UpdateFocus
 import UpdateHelper
 import Utilities
     exposing
-        ( msg2Cmd
+        ( cmdMsg2Cmd
         , pred
         )
 import ViewType
@@ -95,7 +95,7 @@ keyProcessH model =
         | alertMessageText = Just alertMessageTextNew
       }
     , model
-        |> UpdateFocus.focusInputPossibly
+        |> UpdateFocus.cmdFocusInputPossibly
     )
 
 
@@ -115,10 +115,10 @@ keystrokeHand model keyCharRaw =
                 doMessage id msg =
                     ( model
                     , Cmd.batch
-                        [ msg2Cmd msg
-                        , UpdateFocus.focusSetId id
+                        [ cmdMsg2Cmd msg
+                        , UpdateFocus.cmdFocusSetId id
                         , model
-                            |> UpdateFocus.focusInputPossibly
+                            |> UpdateFocus.cmdFocusInputPossibly
                         ]
                     )
 

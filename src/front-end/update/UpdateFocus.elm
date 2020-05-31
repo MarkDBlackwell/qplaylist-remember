@@ -7,9 +7,9 @@
 
 
 module UpdateFocus exposing
-    ( focusAttempt
-    , focusInputPossibly
-    , focusSetId
+    ( cmdFocusInputPossibly
+    , cmdFocusSetId
+    , focusAttempt
     )
 
 import Browser.Dom as Dom
@@ -24,8 +24,8 @@ import ModelType
 import Task
 import Utilities
     exposing
-        ( maybeMapWithDefault
-        , msg2Cmd
+        ( cmdMsg2Cmd
+        , maybeMapWithDefault
         )
 import ViewType
     exposing
@@ -59,19 +59,19 @@ focusAttempt model id =
     )
 
 
-focusInputPossibly : Model -> Cmd ElmCycle.Msg
-focusInputPossibly model =
+cmdFocusInputPossibly : Model -> Cmd ElmCycle.Msg
+cmdFocusInputPossibly model =
     --TODO: try '(\_ -> ElmCycle.Msg.none)'.
     model.songCommentingMaybe
         |> maybeMapWithDefault
             Cmd.none
-            (\_ -> focusSetId "input")
+            (\_ -> cmdFocusSetId "input")
 
 
-focusSetId : Id -> Cmd ElmCycle.Msg
-focusSetId id =
+cmdFocusSetId : Id -> Cmd ElmCycle.Msg
+cmdFocusSetId id =
     --TODO: simplify this.
     --See Browser.Dom.focus.
     id
         |> MsgFocusAttempt
-        |> msg2Cmd
+        |> cmdMsg2Cmd

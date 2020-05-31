@@ -58,13 +58,13 @@ commentSendHand model =
                 ( { model
                     | alertMessageText = Alert.messageTextInit
                   }
-                , UpdateFocus.focusInputPossibly model
+                , UpdateFocus.cmdFocusInputPossibly model
                 )
 
             else
                 let
-                    commentRequest : Cmd ElmCycle.Msg
-                    commentRequest =
+                    cmdCommentRequest : Cmd ElmCycle.Msg
+                    cmdCommentRequest =
                         Http.get
                             { url = commentRequestUriText
                             , expect =
@@ -90,9 +90,9 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ UpdateLog.logRequest commentRequestUriText
-                    , commentRequest
-                    , UpdateFocus.focusInputPossibly model
+                    [ UpdateLog.cmdLogRequest commentRequestUriText
+                    , cmdCommentRequest
+                    , UpdateFocus.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -123,8 +123,8 @@ likeButtonProcessHand model songsRememberedIndex =
 
                 _ ->
                     let
-                        likeRequest : Cmd ElmCycle.Msg
-                        likeRequest =
+                        cmdLikeRequest : Cmd ElmCycle.Msg
+                        cmdLikeRequest =
                             Http.get
                                 { url = likeRequestUriText
                                 , expect =
@@ -156,9 +156,9 @@ likeButtonProcessHand model songsRememberedIndex =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ UpdateLog.logRequest likeRequestUriText
-                        , likeRequest
-                        , UpdateFocus.focusInputPossibly model
+                        [ UpdateLog.cmdLogRequest likeRequestUriText
+                        , cmdLikeRequest
+                        , UpdateFocus.cmdFocusInputPossibly model
                         ]
                     )
 
@@ -184,8 +184,8 @@ songsRecentRefreshHand model =
                         ]
                         []
 
-                songsRecentRequest : Cmd ElmCycle.Msg
-                songsRecentRequest =
+                cmdSongsRecentRequest : Cmd ElmCycle.Msg
+                cmdSongsRecentRequest =
                     Http.get
                         { url = requestUriText
                         , expect =
@@ -199,8 +199,8 @@ songsRecentRefreshHand model =
               }
             , Cmd.batch
                 [ requestUriText
-                    |> UpdateLog.logRequest
-                , songsRecentRequest
-                , UpdateFocus.focusInputPossibly model
+                    |> UpdateLog.cmdLogRequest
+                , cmdSongsRecentRequest
+                , UpdateFocus.cmdFocusInputPossibly model
                 ]
             )

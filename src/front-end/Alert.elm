@@ -138,7 +138,7 @@ messageTextServerAwaitingElmCycle model =
     ( { model
         | alertMessageText = Just "Awaiting server"
       }
-    , UpdateFocus.focusInputPossibly model
+    , UpdateFocus.cmdFocusInputPossibly model
     )
 
 

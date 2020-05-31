@@ -7,7 +7,7 @@
 
 
 module UserIdentifier exposing
-    ( generateUserIdentifier
+    ( cmdGenerateUserIdentifier
     , userIdentifierCalc
     , userIdentifierInit
     )
@@ -61,8 +61,8 @@ charNumberSpaceLength =
     caseCount * caseLength
 
 
-generateUserIdentifier : Cmd ElmCycle.Msg
-generateUserIdentifier =
+cmdGenerateUserIdentifier : Cmd ElmCycle.Msg
+cmdGenerateUserIdentifier =
     let
         highestCharNumber : UserIdentifierNumberSpaceInt
         highestCharNumber =

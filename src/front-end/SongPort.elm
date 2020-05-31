@@ -23,12 +23,12 @@ import SongType
 -- UPDATE
 
 
-port updateLocalStorage : SongsRemembered -> Cmd msg
+port cmdUpdateLocalStorage : SongsRemembered -> Cmd msg
 
 
 songsRememberedStore : Model -> ElmCycle.ElmCycle
 songsRememberedStore model =
     ( model
     , model.songsRemembered
-        |> updateLocalStorage
+        |> cmdUpdateLocalStorage
     )

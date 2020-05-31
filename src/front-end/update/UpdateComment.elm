@@ -71,7 +71,7 @@ commentAreaOpenHand model songsRememberedIndex =
             ( { model
                 | alertMessageText = Alert.messageTextInit
               }
-            , UpdateFocus.focusInputPossibly model
+            , UpdateFocus.cmdFocusInputPossibly model
             )
 
         _ ->
@@ -98,8 +98,8 @@ commentAreaOpenHand model songsRememberedIndex =
                         , songCommentingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
-                      --'UpdateFocus.focusInputPossibly' doesn't work, here:
-                    , UpdateFocus.focusSetId "input"
+                      --'UpdateFocus.cmdFocusInputPossibly' doesn't work, here:
+                    , UpdateFocus.cmdFocusSetId "input"
                     )
 
 
@@ -118,5 +118,5 @@ commentCancelHand model =
               }
             , "Comment"
                 |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
-                |> UpdateFocus.focusSetId
+                |> UpdateFocus.cmdFocusSetId
             )

@@ -56,7 +56,7 @@ init flags =
         SongInitialize.songsRecentInit
         flags.songsRemembered
         UserIdentifier.userIdentifierInit
-    , UserIdentifier.generateUserIdentifier
+    , UserIdentifier.cmdGenerateUserIdentifier
     )
 
 
