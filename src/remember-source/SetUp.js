@@ -22,7 +22,7 @@ See:
   http://bugzilla.mozilla.org/show_bug.cgi?id=1436231
 */
 
-/**/
+/*
 var functionResetSongsDevelopmentOnly = function() {
     var keyStorage;
     var localStorage;
@@ -62,7 +62,7 @@ var functionResetSongsDevelopmentOnly = function() {
     return null;
 };
 functionResetSongsDevelopmentOnly();
-/**/
+*/
 
 (function() {
     var functionDealWithElm;

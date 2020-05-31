@@ -113,7 +113,7 @@ userIdentifierCalc userIdentifierNumberSpaceInt =
                 keyCodeCalc index =
                     charNumberSpaceLength
                         ^ index
-                        // userIdentifierNumberSpaceInt
+                        |> (//) userIdentifierNumberSpaceInt
                         |> modBy charNumberSpaceLength
             in
             charCount
