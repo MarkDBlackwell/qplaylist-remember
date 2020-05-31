@@ -101,9 +101,9 @@ likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCa
 relative : UrlBeforeQueryList -> QueryPairs -> UriText
 relative urlBeforeQueryList queryPairs =
     --See:
-    --http://package.elm-lang.org/packages/elm/http/2.0.0/
+    --  http://package.elm-lang.org/packages/elm/http/2.0.0/
     --TODO: When elm-lang/url is updated to contain 'relative',
-    --consider replacing this code:
+    --    consider replacing this code:
     let
         query : UriText
         query =
@@ -133,8 +133,11 @@ relative urlBeforeQueryList queryPairs =
                     , "="
 
                     --See:
-                    --http://package.elm-lang.org/packages/elm/http/2.0.0/
+                    --  http://package.elm-lang.org/packages/elm/http/2.0.0/
+                    --  http://github.com/elm/http/issues/10#issuecomment-436681699
+                    --  http://package.elm-lang.org/packages/elm/url/1.0.0/
                     --TODO: Possibly, use Http.encodeUri instead:
+                    --    or maybe encodeUri has been superseded.
                     , value
                         |> escapeAmpersands
                         |> escapeEqualsSigns

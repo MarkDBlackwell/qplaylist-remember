@@ -42,8 +42,8 @@ import Utilities
 
 commentAreaInputTextChangeCaptureHand : Model -> String -> ElmCycle.ElmCycle
 commentAreaInputTextChangeCaptureHand model text =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             ( { model
                 | commentText = text
@@ -62,8 +62,8 @@ commentAreaInputTextChangeCaptureHand model text =
 
 commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
 commentAreaOpenHand model songsRememberedIndex =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 
@@ -105,8 +105,8 @@ commentAreaOpenHand model songsRememberedIndex =
 
 commentCancelHand : Model -> ElmCycle.ElmCycle
 commentCancelHand model =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 

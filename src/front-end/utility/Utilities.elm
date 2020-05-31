@@ -125,7 +125,7 @@ withoutOneFromMaybe listA xMaybe =
 cmdMsg2Cmd : ElmCycle.Msg -> Cmd ElmCycle.Msg
 cmdMsg2Cmd msg =
     --See:
-    --http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
+    --  http://github.com/billstclair/elm-dynamodb/blob/7ac30d60b98fbe7ea253be13f5f9df4d9c661b92/src/DynamoBackend.elm
     --For wrapping a message as a Cmd:
     msg
         |> Task.succeed
@@ -152,7 +152,7 @@ attributesEmpty =
 goldenRatio : Float
 goldenRatio =
     --See:
-    --http://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
+    --  http://en.wikipedia.org/w/index.php?title=Golden_ratio&oldid=790709344
     0.6180339887498949
 
 

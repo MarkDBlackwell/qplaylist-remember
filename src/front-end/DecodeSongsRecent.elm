@@ -40,8 +40,8 @@ type alias SongsRecentWithDummyTag =
 decodeSongsRecentResponse : HttpResponseText -> Result AlertMessageText SongsRecent
 decodeSongsRecentResponse jsonRawText =
     --See:
-    --http://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
-    --http://eeue56.github.io/json-to-elm/
+    --  http://medium.com/@eeue56/json-decoding-in-elm-is-still-difficult-cad2d1fb39ae
+    --  http://eeue56.github.io/json-to-elm/
     --For decoding JSON:
     let
         asRecord : Result Json.Decode.Error SongsRecentWithDummyTag

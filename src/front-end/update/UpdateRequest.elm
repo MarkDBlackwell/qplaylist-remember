@@ -48,8 +48,8 @@ import Utilities
 
 commentSendHand : Model -> ElmCycle.ElmCycle
 commentSendHand model =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 
@@ -99,8 +99,8 @@ commentSendHand model =
 
 likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
 likeButtonProcessHand model songsRememberedIndex =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 
@@ -165,8 +165,8 @@ likeButtonProcessHand model songsRememberedIndex =
 
 songsRecentRefreshHand : Model -> ElmCycle.ElmCycle
 songsRecentRefreshHand model =
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 

@@ -107,8 +107,8 @@ keystrokeHand model keyCharRaw =
             model
                 |> UpdateHelper.elmCycleDefault
     in
-    --(awaitingServer, commentArea)
     case UpdateHelper.stateVector model of
+        --(awaitingServer, commentArea)
         ( False, Closed ) ->
             let
                 doMessage : Id -> ElmCycle.Msg -> ElmCycle.ElmCycle

@@ -27,17 +27,16 @@ import ViewType
 
 
 -- SUBSCRIPTIONS
-{- See:
-   http://github.com/lenards/elm-example-key-decoding
-   http://github.com/elm/browser/blob/53e3caa265fd9da3ec9880d47bb95eed6fe24ee6/notes/keyboard.md
-   http://package.elm-lang.org/packages/elm/core/1.0.5/Platform-Sub
-   http://package.elm-lang.org/packages/elm/browser/1.0.2/Browser-Events
-   http://medium.com/jobteaser-dev-team/json-decoding-in-elm-explained-step-by-step-9d629b2625dc
--}
 
 
 subscriptions : Model -> Platform.Sub.Sub ElmCycle.Msg
 subscriptions model =
+    --See:
+    --  http://github.com/lenards/elm-example-key-decoding
+    --  http://github.com/elm/browser/blob/53e3caa265fd9da3ec9880d47bb95eed6fe24ee6/notes/keyboard.md
+    --  http://package.elm-lang.org/packages/elm/core/1.0.5/Platform-Sub
+    --  http://package.elm-lang.org/packages/elm/browser/1.0.2/Browser-Events
+    --  http://medium.com/jobteaser-dev-team/json-decoding-in-elm-explained-step-by-step-9d629b2625dc
     let
         keyStrokeGlobal : Platform.Sub.Sub ElmCycle.Msg
         keyStrokeGlobal =
