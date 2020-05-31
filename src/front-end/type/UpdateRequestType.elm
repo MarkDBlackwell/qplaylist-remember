@@ -15,8 +15,8 @@ module UpdateRequestType exposing
     , LikeOrCommentText
     , QueryPair
     , QueryPairs
-    , UriText
     , UrlBeforeQueryList
+    , UrlText
     )
 
 -- MODEL
@@ -54,14 +54,14 @@ type alias LikeOrCommentText =
 
 
 type alias QueryPair =
-    ( UriText, UriText )
+    ( UrlText, UrlText )
 
 
 type alias QueryPairs =
     List QueryPair
 
 
-type alias UriText =
+type alias UrlText =
     String
 
 
@@ -69,5 +69,5 @@ type alias UrlBeforeQueryList =
     --See:
     --  http://github.com/elm/url
     --  http://tools.ietf.org/html/rfc3986
-    --When joined, then comprises a URI's scheme, authority, and path:
-    List UriText
+    --When joined, then comprises a URL's scheme, authority, and path:
+    List UrlText

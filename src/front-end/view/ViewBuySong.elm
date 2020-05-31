@@ -23,8 +23,8 @@ import UpdateHelper
 import UpdateRequestType
     exposing
         ( QueryPairs
-        , UriText
         , UrlBeforeQueryList
+        , UrlText
         )
 import Utilities
     exposing
@@ -47,8 +47,8 @@ buySongAnchor song =
         hoverText =
             "See this song on Amazon (in new tab)"
 
-        uriText : UriText
-        uriText =
+        urlText : UrlText
+        urlText =
             let
                 urlBeforeQueryList : UrlBeforeQueryList
                 urlBeforeQueryList =
@@ -57,7 +57,7 @@ buySongAnchor song =
                 queryPairs : QueryPairs
                 queryPairs =
                     let
-                        fieldKeywords : UriText
+                        fieldKeywords : UrlText
                         fieldKeywords =
                             [ song.title
                             , song.artist
@@ -75,7 +75,7 @@ buySongAnchor song =
                 |> UpdateHelper.relative urlBeforeQueryList
     in
     Html.a
-        [ Html.Attributes.href uriText
+        [ Html.Attributes.href urlText
         , Html.Events.onClick MsgNone
         , Html.Attributes.target "_blank"
         , Html.Attributes.title hoverText

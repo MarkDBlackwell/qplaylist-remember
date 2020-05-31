@@ -34,7 +34,7 @@ import UpdateHelper
 import UpdateLog
 import UpdateRequestType
     exposing
-        ( UriText
+        ( UrlText
         )
 import Utilities
     exposing
@@ -66,21 +66,21 @@ commentSendHand model =
                     cmdCommentRequest : Cmd ElmCycle.Msg
                     cmdCommentRequest =
                         Http.get
-                            { url = commentRequestUriText
+                            { url = commentRequestUrlText
                             , expect =
                                 MsgCommentResponse
                                     |> Http.expectString
                             }
 
-                    commentRequestUriText : UriText
-                    commentRequestUriText =
+                    commentRequestUrlText : UrlText
+                    commentRequestUrlText =
                         let
-                            commentCategory : UriText
+                            commentCategory : UrlText
                             commentCategory =
                                 "c"
                         in
                         model.commentText
-                            |> UpdateHelper.likeOrCommentRequestUriText
+                            |> UpdateHelper.likeOrCommentRequestUrlText
                                 model.userIdentifier
                                 model.songCommentingMaybe
                                 commentCategory
@@ -90,7 +90,7 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ UpdateLog.cmdLogRequest commentRequestUriText
+                    [ UpdateLog.cmdLogRequest commentRequestUrlText
                     , cmdCommentRequest
                     , UpdateFocus.cmdFocusInputPossibly model
                     ]
@@ -126,25 +126,25 @@ likeButtonProcessHand model songsRememberedIndex =
                         cmdLikeRequest : Cmd ElmCycle.Msg
                         cmdLikeRequest =
                             Http.get
-                                { url = likeRequestUriText
+                                { url = likeRequestUrlText
                                 , expect =
                                     MsgLikeResponse
                                         |> Http.expectString
                                 }
 
-                        likeRequestUriText : UriText
-                        likeRequestUriText =
+                        likeRequestUrlText : UrlText
+                        likeRequestUrlText =
                             let
-                                commentCategory : UriText
+                                commentCategory : UrlText
                                 commentCategory =
                                     "l"
 
-                                commentText : UriText
+                                commentText : UrlText
                                 commentText =
                                     "Loved it!"
                             in
                             commentText
-                                |> UpdateHelper.likeOrCommentRequestUriText
+                                |> UpdateHelper.likeOrCommentRequestUrlText
                                     model.userIdentifier
                                     songsRememberedSelectOneMaybe
                                     commentCategory
@@ -156,7 +156,7 @@ likeButtonProcessHand model songsRememberedIndex =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ UpdateLog.cmdLogRequest likeRequestUriText
+                        [ UpdateLog.cmdLogRequest likeRequestUrlText
                         , cmdLikeRequest
                         , UpdateFocus.cmdFocusInputPossibly model
                         ]
@@ -172,10 +172,10 @@ songsRecentRefreshHand model =
 
         _ ->
             let
-                requestUriText : UriText
-                requestUriText =
+                requestUrlText : UrlText
+                requestUrlText =
                     let
-                        basename : UriText
+                        basename : UrlText
                         basename =
                             "LatestFew.json"
                     in
@@ -187,7 +187,7 @@ songsRecentRefreshHand model =
                 cmdSongsRecentRequest : Cmd ElmCycle.Msg
                 cmdSongsRecentRequest =
                     Http.get
-                        { url = requestUriText
+                        { url = requestUrlText
                         , expect =
                             MsgSongsRecentResponse
                                 |> Http.expectString
@@ -198,7 +198,7 @@ songsRecentRefreshHand model =
                 , awaitingServerResponse = True
               }
             , Cmd.batch
-                [ requestUriText
+                [ requestUrlText
                     |> UpdateLog.cmdLogRequest
                 , cmdSongsRecentRequest
                 , UpdateFocus.cmdFocusInputPossibly model

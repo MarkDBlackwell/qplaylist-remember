@@ -9,7 +9,7 @@
 module UpdateHelper exposing
     ( actionLikeOrComment2String
     , elmCycleDefault
-    , likeOrCommentRequestUriText
+    , likeOrCommentRequestUrlText
     , relative
     , stateVector
     )
@@ -35,8 +35,8 @@ import UpdateRequestType
         , LikeOrCommentText
         , QueryPair
         , QueryPairs
-        , UriText
         , UrlBeforeQueryList
+        , UrlText
         )
 import UserIdentifierType
     exposing
@@ -69,14 +69,14 @@ elmCycleDefault model =
     )
 
 
-likeOrCommentRequestUriText : UserIdentifier -> SongRememberedMaybe -> UriText -> LikeOrCommentText -> UriText
-likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCategory likeOrCommentText =
+likeOrCommentRequestUrlText : UserIdentifier -> SongRememberedMaybe -> UrlText -> LikeOrCommentText -> UrlText
+likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCategory likeOrCommentText =
     let
-        basename : UriText
+        basename : UrlText
         basename =
             "append.json"
 
-        songCategory : UriText
+        songCategory : UrlText
         songCategory =
             "s"
 
@@ -98,32 +98,32 @@ likeOrCommentRequestUriText userIdentifier songLikingOrCommentingMaybe commentCa
         ]
 
 
-relative : UrlBeforeQueryList -> QueryPairs -> UriText
+relative : UrlBeforeQueryList -> QueryPairs -> UrlText
 relative urlBeforeQueryList queryPairs =
     --See:
     --  http://package.elm-lang.org/packages/elm/http/2.0.0/
     --TODO: When elm-lang/url is updated to contain 'relative',
     --    consider replacing this code:
     let
-        query : UriText
+        query : UrlText
         query =
             let
-                joinAndEscape : QueryPair -> UriText
+                joinAndEscape : QueryPair -> UrlText
                 joinAndEscape ( name, value ) =
                     let
-                        escapeAmpersands : UriText -> UriText
+                        escapeAmpersands : UrlText -> UrlText
                         escapeAmpersands string =
                             string
                                 |> String.split "&"
                                 |> String.join "%26"
 
-                        escapeEqualsSigns : UriText -> UriText
+                        escapeEqualsSigns : UrlText -> UrlText
                         escapeEqualsSigns string =
                             string
                                 |> String.split "="
                                 |> String.join "%3D"
 
-                        escapeHashes : UriText -> UriText
+                        escapeHashes : UrlText -> UrlText
                         escapeHashes string =
                             string
                                 |> String.split "#"
@@ -154,7 +154,7 @@ relative urlBeforeQueryList queryPairs =
                     |> String.join "&"
                     |> String.cons '?'
 
-        urlBeforeQuery : UriText
+        urlBeforeQuery : UrlText
         urlBeforeQuery =
             urlBeforeQueryList
                 |> String.join "/"

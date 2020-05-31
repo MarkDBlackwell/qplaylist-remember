@@ -71,9 +71,9 @@ errorHttpText httpError =
             , String.fromInt status
             )
 
-        Http.BadUrl uriText ->
+        Http.BadUrl urlText ->
             ( prefixSeparator ++ "BadUrl"
-            , uriText
+            , urlText
             )
 
         Http.NetworkError ->
