@@ -37,6 +37,24 @@ import ViewType
 -- UPDATE
 
 
+cmdFocusInputPossibly : Model -> Cmd ElmCycle.Msg
+cmdFocusInputPossibly model =
+    --TODO: try '(\_ -> ElmCycle.Msg.none)'.
+    model.songCommentingMaybe
+        |> maybeMapWithDefault
+            Cmd.none
+            (\_ -> cmdFocusSetId "input")
+
+
+cmdFocusSetId : Id -> Cmd ElmCycle.Msg
+cmdFocusSetId id =
+    --TODO: simplify this.
+    --See Browser.Dom.focus.
+    id
+        |> MsgFocusAttempt
+        |> cmdMsg2Cmd
+
+
 focusAttempt : Model -> Id -> ElmCycle.ElmCycle
 focusAttempt model id =
     let
@@ -57,21 +75,3 @@ focusAttempt model id =
     , focusOnId
         |> Task.attempt ignoreResult
     )
-
-
-cmdFocusInputPossibly : Model -> Cmd ElmCycle.Msg
-cmdFocusInputPossibly model =
-    --TODO: try '(\_ -> ElmCycle.Msg.none)'.
-    model.songCommentingMaybe
-        |> maybeMapWithDefault
-            Cmd.none
-            (\_ -> cmdFocusSetId "input")
-
-
-cmdFocusSetId : Id -> Cmd ElmCycle.Msg
-cmdFocusSetId id =
-    --TODO: simplify this.
-    --See Browser.Dom.focus.
-    id
-        |> MsgFocusAttempt
-        |> cmdMsg2Cmd
