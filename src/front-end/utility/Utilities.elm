@@ -62,7 +62,7 @@ matchingIndexes listA x =
                         |> pred
                         |> List.range 0
             in
-            --TODO: try List.indexedMap
+            --TODO: try List.indexedMap.
             listB
                 |> indexes
                 |> List.map2 (\thing index -> ( index, thing )) listB

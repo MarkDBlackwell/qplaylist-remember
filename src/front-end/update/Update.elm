@@ -114,12 +114,11 @@ update msg model =
                             let
                                 bothListsAreEmpty : Bool
                                 bothListsAreEmpty =
-                                    List.all
-                                        identity
-                                        --Here, can't use List.map.
-                                        [ List.isEmpty model.songsRecent
-                                        , List.isEmpty model.songsRemembered
-                                        ]
+                                    --Can't combine, in a list, lists of different types:
+                                    [ List.isEmpty model.songsRecent
+                                    , List.isEmpty model.songsRemembered
+                                    ]
+                                        |> List.foldl (&&) True
                             in
                             if bothListsAreEmpty then
                                 model.pageIsExpanded
