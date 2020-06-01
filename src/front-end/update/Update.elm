@@ -102,8 +102,8 @@ update msg model =
             UpdateHelper.elmCycleDefault model
 
         MsgPageMorphHand ->
-            case UpdateHelper.stateVector model of
-                --(awaitingServer, commentArea)
+            case UpdateHelper.commentAreaStateVector model of
+                --( AwaitingServerResponse, CommentAreaOptional )
                 ( True, _ ) ->
                     Alert.messageTextServerAwaitingElmCycle model
 
@@ -134,8 +134,8 @@ update msg model =
                     )
 
         MsgSongForgetHand songsRememberedIndex ->
-            case UpdateHelper.stateVector model of
-                --(awaitingServer, commentArea)
+            case UpdateHelper.commentAreaStateVector model of
+                --( AwaitingServerResponse, CommentAreaOptional )
                 ( True, _ ) ->
                     Alert.messageTextServerAwaitingElmCycle model
 
@@ -172,8 +172,8 @@ update msg model =
                         )
 
         MsgSongRememberHand songsRecentIndex ->
-            case UpdateHelper.stateVector model of
-                --(awaitingServer, commentArea)
+            case UpdateHelper.commentAreaStateVector model of
+                --( AwaitingServerResponse, CommentAreaOptional )
                 ( True, _ ) ->
                     Alert.messageTextServerAwaitingElmCycle model
 

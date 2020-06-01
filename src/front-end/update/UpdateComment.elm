@@ -17,8 +17,8 @@ import ElmCycle
 import ModelInitialize
 import ModelType
     exposing
-        ( Model
-        , Optional(..)
+        ( CommentAreaOptional(..)
+        , Model
         )
 import SongHelper
 import SongInitialize
@@ -42,8 +42,8 @@ import Utilities
 
 commentAreaInputTextChangeCaptureHand : Model -> String -> ElmCycle.ElmCycle
 commentAreaInputTextChangeCaptureHand model text =
-    case UpdateHelper.stateVector model of
-        --(awaitingServer, commentArea)
+    case UpdateHelper.commentAreaStateVector model of
+        --( AwaitingServerResponse, CommentAreaOptional )
         ( True, _ ) ->
             ( { model
                 | commentText = text
@@ -62,12 +62,12 @@ commentAreaInputTextChangeCaptureHand model text =
 
 commentAreaOpenHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
 commentAreaOpenHand model songsRememberedIndex =
-    case UpdateHelper.stateVector model of
-        --(awaitingServer, commentArea)
+    case UpdateHelper.commentAreaStateVector model of
+        --( AwaitingServerResponse, CommentAreaOptional )
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 
-        ( _, Open ) ->
+        ( _, CommentAreaOpen ) ->
             ( { model
                 | alertMessageText = Alert.messageTextInit
               }
@@ -105,8 +105,8 @@ commentAreaOpenHand model songsRememberedIndex =
 
 commentCancelHand : Model -> ElmCycle.ElmCycle
 commentCancelHand model =
-    case UpdateHelper.stateVector model of
-        --(awaitingServer, commentArea)
+    case UpdateHelper.commentAreaStateVector model of
+        --( AwaitingServerResponse, CommentAreaOptional )
         ( True, _ ) ->
             Alert.messageTextServerAwaitingElmCycle model
 

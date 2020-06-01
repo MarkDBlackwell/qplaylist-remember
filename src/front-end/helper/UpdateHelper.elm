@@ -8,17 +8,17 @@
 
 module UpdateHelper exposing
     ( actionLikeOrComment2String
+    , commentAreaStateVector
     , elmCycleDefault
     , likeOrCommentRequestUrlText
     , relative
-    , stateVector
     )
 
 import ElmCycle
 import ModelType
     exposing
-        ( Model
-        , Optional(..)
+        ( CommentAreaOptional(..)
+        , Model
         )
 import SongInitialize
 import SongType
@@ -165,14 +165,14 @@ relative urlBeforeQueryList queryPairs =
         ]
 
 
-stateVector : Model -> ( AwaitingServerResponse, Optional )
-stateVector model =
+commentAreaStateVector : Model -> ( AwaitingServerResponse, CommentAreaOptional )
+commentAreaStateVector model =
     let
-        commentOptional : Optional
-        commentOptional =
+        optional : CommentAreaOptional
+        optional =
             model.songCommentingMaybe
-                |> maybeMapWithDefault Closed (\_ -> Open)
+                |> maybeMapWithDefault CommentAreaClosed (\_ -> CommentAreaOpen)
     in
     ( model.awaitingServerResponse
-    , commentOptional
+    , optional
     )

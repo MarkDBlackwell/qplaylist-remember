@@ -18,8 +18,8 @@ import ElmCycle
         )
 import ModelType
     exposing
-        ( Model
-        , Optional(..)
+        ( CommentAreaOptional(..)
+        , Model
         )
 import SongType
     exposing
@@ -107,9 +107,9 @@ keystrokeHand model keyCharRaw =
             model
                 |> UpdateHelper.elmCycleDefault
     in
-    case UpdateHelper.stateVector model of
-        --(awaitingServer, commentArea)
-        ( False, Closed ) ->
+    case UpdateHelper.commentAreaStateVector model of
+        --( AwaitingServerResponse, CommentAreaOptional )
+        ( False, CommentAreaClosed ) ->
             let
                 doMessage : Id -> ElmCycle.Msg -> ElmCycle.ElmCycle
                 doMessage id msg =

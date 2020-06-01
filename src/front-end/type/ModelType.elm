@@ -7,10 +7,10 @@
 
 
 module ModelType exposing
-    ( CommentText
+    ( CommentAreaOptional(..)
+    , CommentText
     , Flags
     , Model
-    , Optional(..)
     , PageIsExpanded
     , ShowCommentButtons
     )
@@ -75,6 +75,6 @@ type alias ShowCommentButtons =
 -- UPDATE
 
 
-type Optional
-    = Closed
-    | Open
+type CommentAreaOptional
+    = CommentAreaClosed
+    | CommentAreaOpen
