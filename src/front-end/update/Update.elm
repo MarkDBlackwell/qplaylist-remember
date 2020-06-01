@@ -43,7 +43,7 @@ import UpdateRequestType
         ( ActionLikeOrComment(..)
         )
 import UpdateResponse
-import UserIdentifier
+import UpdateUserIdentifier
 import Utilities
     exposing
         ( cmdMsg2Cmd
@@ -224,13 +224,5 @@ update msg model =
             SongPort.songsRememberedStore model
 
         MsgUserIdentifierEstablish randomInt ->
-            ( { model
-                | userIdentifier =
-                    randomInt
-                        |> UserIdentifier.userIdentifierCalc
-              }
-            , Cmd.batch
-                [ UpdateFocus.cmdFocusSetId "refresh"
-                , UpdateFocus.cmdFocusInputPossibly model
-                ]
-            )
+            randomInt
+                |> UpdateUserIdentifier.userIdentifierEstablish model
