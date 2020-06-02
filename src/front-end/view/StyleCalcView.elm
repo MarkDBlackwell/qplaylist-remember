@@ -6,7 +6,7 @@
 -}
 
 
-module ViewStyleCalc exposing (styleCalc)
+module StyleCalcView exposing (styleCalc)
 
 import Html
 import Html.Attributes

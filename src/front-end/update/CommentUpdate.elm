@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateComment exposing
+module CommentUpdate exposing
     ( commentAreaInputTextChangeCaptureHand
     , commentAreaOpenHand
     , commentCancelHand
@@ -14,6 +14,7 @@ module UpdateComment exposing
 
 import Alert
 import ElmCycle
+import FocusUpdate
 import ModelInitialize
 import ModelType
     exposing
@@ -28,7 +29,6 @@ import SongType
         , SongsRemembered
         , SongsRememberedIndex
         )
-import UpdateFocus
 import UpdateHelper
 import Utilities
     exposing
@@ -71,7 +71,7 @@ commentAreaOpenHand model songsRememberedIndex =
             ( { model
                 | alertMessageText = Alert.messageTextInit
               }
-            , UpdateFocus.cmdFocusInputPossibly model
+            , FocusUpdate.cmdFocusInputPossibly model
             )
 
         _ ->
@@ -98,8 +98,8 @@ commentAreaOpenHand model songsRememberedIndex =
                         , songCommentingMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
-                      --'UpdateFocus.cmdFocusInputPossibly' doesn't work, here:
-                    , UpdateFocus.cmdFocusSetId "input"
+                      --'FocusUpdate.cmdFocusInputPossibly' doesn't work, here:
+                    , FocusUpdate.cmdFocusSetId "input"
                     )
 
 
@@ -118,5 +118,5 @@ commentCancelHand model =
               }
             , "Comment"
                 |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
-                |> UpdateFocus.cmdFocusSetId
+                |> FocusUpdate.cmdFocusSetId
             )

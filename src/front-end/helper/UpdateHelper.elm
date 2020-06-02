@@ -15,20 +15,13 @@ module UpdateHelper exposing
     )
 
 import ElmCycle
+import FocusUpdate
 import ModelType
     exposing
         ( CommentAreaOptional(..)
         , Model
         )
-import SongInitialize
-import SongType
-    exposing
-        ( SongRecentMaybe
-        , SongRemembered
-        , SongRememberedMaybe
-        )
-import UpdateFocus
-import UpdateRequestType
+import RequestUpdateType
     exposing
         ( ActionLikeOrComment(..)
         , AwaitingServerResponse
@@ -37,6 +30,13 @@ import UpdateRequestType
         , QueryPairs
         , UrlBeforeQueryList
         , UrlText
+        )
+import SongInitialize
+import SongType
+    exposing
+        ( SongRecentMaybe
+        , SongRemembered
+        , SongRememberedMaybe
         )
 import UserIdentifierType
     exposing
@@ -65,7 +65,7 @@ actionLikeOrComment2String actionLikeOrComment =
 elmCycleDefault : Model -> ElmCycle.ElmCycle
 elmCycleDefault model =
     ( model
-    , UpdateFocus.cmdFocusInputPossibly model
+    , FocusUpdate.cmdFocusInputPossibly model
     )
 
 

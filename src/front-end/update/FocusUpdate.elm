@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateFocus exposing
+module FocusUpdate exposing
     ( cmdFocusInputPossibly
     , cmdFocusSetId
     , focusAttempt

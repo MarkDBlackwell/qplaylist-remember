@@ -8,6 +8,16 @@
 
 module View exposing (view)
 
+import ButtonView
+    exposing
+        ( buttonComment
+        , buttonLike
+        , buttonRecent
+        , buttonRememberForget
+        , buttonRemembered
+        , buttonView
+        )
+import BuySongView
 import ElmCycle
     exposing
         ( Msg(..)
@@ -53,6 +63,7 @@ import SongType
         , SongsRecentOrRememberedIndex
         , Time
         )
+import StyleCalcView
 import Utilities
     exposing
         ( attributesEmpty
@@ -61,17 +72,6 @@ import Utilities
         , maybeMapWithDefault
         , selectOneFromIndexMaybe
         )
-import ViewButton
-    exposing
-        ( buttonComment
-        , buttonLike
-        , buttonRecent
-        , buttonRememberForget
-        , buttonRemembered
-        , buttonView
-        )
-import ViewBuySong
-import ViewStyleCalc
 import ViewType
     exposing
         ( HoverText
@@ -264,7 +264,7 @@ view model =
 
                             else
                                 songsRecentOrRememberedIndex
-                                    |> ViewStyleCalc.styleCalc songGroup lengthRemembered
+                                    |> StyleCalcView.styleCalc songGroup lengthRemembered
 
                         songTime : Time
                         songTime =
@@ -317,7 +317,7 @@ view model =
                             , songsRecentOrRememberedIndex
                                 |> buttonLike songGroup
                             , likedOrCommentedIndicator
-                            , ViewBuySong.buySongAnchor songRecentOrRemembered
+                            , BuySongView.buySongAnchor songRecentOrRemembered
                             ]
                         , p attributesEmpty
                             [ text songRecentOrRemembered.title ]

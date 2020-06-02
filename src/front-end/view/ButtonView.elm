@@ -6,7 +6,7 @@
 -}
 
 
-module ViewButton exposing
+module ButtonView exposing
     ( buttonComment
     , buttonLike
     , buttonRecent

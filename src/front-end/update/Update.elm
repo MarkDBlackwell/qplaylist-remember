@@ -9,15 +9,24 @@
 module Update exposing (update)
 
 import Alert
+import CommentUpdate
 import ElmCycle
     exposing
         ( Msg(..)
         )
+import FocusUpdate
+import KeyboardUpdate
 import ModelType
     exposing
         ( Model
         , PageIsExpanded
         )
+import RequestUpdate
+import RequestUpdateType
+    exposing
+        ( ActionLikeOrComment(..)
+        )
+import ResponseUpdate
 import SongHelper
     exposing
         ( songsRememberedAppendOneUniqueFromMaybe
@@ -33,17 +42,8 @@ import SongType
         , SongsRememberedIndexList
         , SongsRememberedIndexMaybe
         )
-import UpdateComment
-import UpdateFocus
 import UpdateHelper
-import UpdateKeyboard
-import UpdateRequest
-import UpdateRequestType
-    exposing
-        ( ActionLikeOrComment(..)
-        )
-import UpdateResponse
-import UpdateUserIdentifier
+import UserIdentifierUpdate
 import Utilities
     exposing
         ( cmdMsg2Cmd
@@ -61,42 +61,42 @@ update msg model =
     case msg of
         MsgCommentAreaInputTextChangeCaptureHand text ->
             text
-                |> UpdateComment.commentAreaInputTextChangeCaptureHand model
+                |> CommentUpdate.commentAreaInputTextChangeCaptureHand model
 
         MsgCommentAreaOpenHand songsRememberedIndex ->
             songsRememberedIndex
-                |> UpdateComment.commentAreaOpenHand model
+                |> CommentUpdate.commentAreaOpenHand model
 
         MsgCommentCancelHand ->
-            UpdateComment.commentCancelHand model
+            CommentUpdate.commentCancelHand model
 
         MsgCommentResponse (Err httpError) ->
-            UpdateResponse.likeOrCommentResponseErr model httpError Comment
+            ResponseUpdate.likeOrCommentResponseErr model httpError Comment
 
         MsgCommentResponse (Ok httpResponseText) ->
             Comment
-                |> UpdateResponse.likeOrCommentResponseOk model httpResponseText
+                |> ResponseUpdate.likeOrCommentResponseOk model httpResponseText
 
         MsgCommentSendHand ->
-            UpdateRequest.commentSendHand model
+            RequestUpdate.commentSendHand model
 
         MsgFocusAttempt id ->
             id
-                |> UpdateFocus.focusAttempt model
+                |> FocusUpdate.focusAttempt model
 
         MsgKeystrokeHand keyChar ->
             keyChar
-                |> UpdateKeyboard.keystrokeHand model
+                |> KeyboardUpdate.keystrokeHand model
 
         MsgLikeButtonProcessHand songsRememberedIndex ->
             songsRememberedIndex
-                |> UpdateRequest.likeButtonProcessHand model
+                |> RequestUpdate.likeButtonProcessHand model
 
         MsgLikeResponse (Err httpError) ->
-            UpdateResponse.likeOrCommentResponseErr model httpError Like
+            ResponseUpdate.likeOrCommentResponseErr model httpError Like
 
         MsgLikeResponse (Ok httpResponseText) ->
-            UpdateResponse.likeOrCommentResponseOk model httpResponseText Like
+            ResponseUpdate.likeOrCommentResponseOk model httpResponseText Like
 
         MsgNone ->
             UpdateHelper.elmCycleDefault model
@@ -130,7 +130,7 @@ update msg model =
                         | alertMessageText = Alert.messageTextInit
                         , pageIsExpanded = pageIsExpandedNew
                       }
-                    , UpdateFocus.cmdFocusInputPossibly model
+                    , FocusUpdate.cmdFocusInputPossibly model
                     )
 
         MsgSongForgetHand songsRememberedIndex ->
@@ -150,7 +150,7 @@ update msg model =
                         ( { model
                             | alertMessageText = Alert.messageTextInit
                           }
-                        , UpdateFocus.cmdFocusInputPossibly model
+                        , FocusUpdate.cmdFocusInputPossibly model
                         )
 
                     else
@@ -166,8 +166,8 @@ update msg model =
                           }
                         , Cmd.batch
                             [ cmdMsg2Cmd MsgSongsRememberedStore
-                            , UpdateFocus.cmdFocusSetId "refresh"
-                            , UpdateFocus.cmdFocusInputPossibly model
+                            , FocusUpdate.cmdFocusSetId "refresh"
+                            , FocusUpdate.cmdFocusInputPossibly model
                             ]
                         )
 
@@ -205,24 +205,24 @@ update msg model =
                       }
                     , Cmd.batch
                         [ cmdMsg2Cmd MsgSongsRememberedStore
-                        , UpdateFocus.cmdFocusInputPossibly model
+                        , FocusUpdate.cmdFocusInputPossibly model
                         ]
                     )
 
         MsgSongsRecentRefreshHand ->
-            UpdateRequest.songsRecentRefreshHand model
+            RequestUpdate.songsRecentRefreshHand model
 
         MsgSongsRecentResponse (Err httpError) ->
             httpError
-                |> UpdateResponse.songsRecentResponseErr model
+                |> ResponseUpdate.songsRecentResponseErr model
 
         MsgSongsRecentResponse (Ok httpResponseText) ->
             httpResponseText
-                |> UpdateResponse.songsRecentResponseOk model
+                |> ResponseUpdate.songsRecentResponseOk model
 
         MsgSongsRememberedStore ->
             SongPort.songsRememberedStore model
 
         MsgUserIdentifierEstablish randomInt ->
             randomInt
-                |> UpdateUserIdentifier.userIdentifierEstablish model
+                |> UserIdentifierUpdate.userIdentifierEstablish model

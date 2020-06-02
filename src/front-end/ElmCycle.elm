@@ -17,14 +17,14 @@ import ModelType
         ( CommentText
         , Model
         )
+import RequestUpdateType
+    exposing
+        ( HttpResponseText
+        )
 import SongType
     exposing
         ( SongsRecentIndex
         , SongsRememberedIndex
-        )
-import UpdateRequestType
-    exposing
-        ( HttpResponseText
         )
 import UserIdentifierType
     exposing

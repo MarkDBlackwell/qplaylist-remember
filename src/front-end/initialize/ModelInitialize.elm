@@ -21,11 +21,11 @@ import ModelType
         , Model
         , PageIsExpanded
         )
-import SongInitialize
-import UpdateRequestType
+import RequestUpdateType
     exposing
         ( AwaitingServerResponse
         )
+import SongInitialize
 import UserIdentifier
 
 

@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateLog exposing
+module LogUpdate exposing
     ( cmdLogDecoding
     , cmdLogRequest
     , cmdLogResponse
@@ -14,7 +14,7 @@ module UpdateLog exposing
 
 import Debug
 import ElmCycle
-import UpdateRequestType
+import RequestUpdateType
     exposing
         ( Action(..)
         )

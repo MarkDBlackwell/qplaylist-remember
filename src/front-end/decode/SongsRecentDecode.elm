@@ -6,21 +6,21 @@
 -}
 
 
-module DecodeSongsRecent exposing (decodeSongsRecentResponse)
+module SongsRecentDecode exposing (decodeSongsRecentResponse)
 
 import AlertType
     exposing
         ( AlertMessageText
         )
 import Json.Decode
+import RequestUpdateType
+    exposing
+        ( HttpResponseText
+        )
 import SongType
     exposing
         ( SongRecent
         , SongsRecent
-        )
-import UpdateRequestType
-    exposing
-        ( HttpResponseText
         )
 import Utilities
     exposing

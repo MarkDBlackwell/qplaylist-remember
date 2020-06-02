@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateResponse exposing
+module ResponseUpdate exposing
     ( likeOrCommentResponseErr
     , likeOrCommentResponseOk
     , songsRecentResponseErr
@@ -18,17 +18,23 @@ import AlertType
     exposing
         ( AlertMessageText
         )
-import DecodeLikeOrCommentResponse
-import DecodeSongsRecent
 import ElmCycle
     exposing
         ( Msg(..)
         )
+import FocusUpdate
 import Http
+import LikeOrCommentResponseDecode
+import LogUpdate
 import ModelInitialize
 import ModelType
     exposing
         ( Model
+        )
+import RequestUpdateType
+    exposing
+        ( ActionLikeOrComment(..)
+        , HttpResponseText
         )
 import Song
 import SongHelper
@@ -38,14 +44,8 @@ import SongType
         ( SongRememberedMaybe
         , SongsRemembered
         )
-import UpdateFocus
+import SongsRecentDecode
 import UpdateHelper
-import UpdateLog
-import UpdateRequestType
-    exposing
-        ( ActionLikeOrComment(..)
-        , HttpResponseText
-        )
 import Utilities
     exposing
         ( cmdMsg2Cmd
@@ -99,8 +99,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                 |> alertLikeOrComment
             )
             |> Just
-            |> UpdateLog.cmdLogResponse
-        , UpdateFocus.cmdFocusInputPossibly model
+            |> LogUpdate.cmdLogResponse
+        , FocusUpdate.cmdFocusInputPossibly model
         ]
     )
 
@@ -130,7 +130,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 |> SongHelper.buttonIdReconstruct
                     model.songsRemembered
                     songLikingOrCommentingMaybe
-                |> UpdateFocus.cmdFocusSetId
+                |> FocusUpdate.cmdFocusSetId
 
         modelNewCommentText : Model
         modelNewCommentText =
@@ -165,7 +165,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 Like ->
                     model.songLikingMaybe
     in
-    case DecodeLikeOrCommentResponse.decodeLikeOrCommentResponse httpResponseText of
+    case LikeOrCommentResponseDecode.decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
                 | alertMessageText =
@@ -179,9 +179,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> UpdateLog.cmdLogDecoding
+                    |> LogUpdate.cmdLogDecoding
                 , cmdButtonCommand
-                , UpdateFocus.cmdFocusInputPossibly model
+                , FocusUpdate.cmdFocusInputPossibly model
                 ]
             )
 
@@ -204,9 +204,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         responseText
                         httpResponseText
                         |> Just
-                        |> UpdateLog.cmdLogResponse
+                        |> LogUpdate.cmdLogResponse
                     , cmdButtonCommand
-                    , UpdateFocus.cmdFocusInputPossibly model
+                    , FocusUpdate.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -225,9 +225,9 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                   }
                 , Cmd.batch
                     [ cmdMsg2Cmd MsgSongsRememberedStore
-                    , UpdateLog.cmdLogResponse Nothing
+                    , LogUpdate.cmdLogResponse Nothing
                     , cmdButtonCommandAccomplished
-                    , UpdateFocus.cmdFocusInputPossibly model
+                    , FocusUpdate.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -258,15 +258,15 @@ songsRecentResponseErr model httpError =
         [ httpError
             |> alertLogging
             |> Just
-            |> UpdateLog.cmdLogResponse
-        , UpdateFocus.cmdFocusInputPossibly model
+            |> LogUpdate.cmdLogResponse
+        , FocusUpdate.cmdFocusInputPossibly model
         ]
     )
 
 
 songsRecentResponseOk : Model -> HttpResponseText -> ElmCycle.ElmCycle
 songsRecentResponseOk model httpResponseText =
-    case DecodeSongsRecent.decodeSongsRecentResponse httpResponseText of
+    case SongsRecentDecode.decodeSongsRecentResponse httpResponseText of
         Err alertMessageTextDecode ->
             ( { model
                 | alertMessageText =
@@ -280,8 +280,8 @@ songsRecentResponseOk model httpResponseText =
                     alertMessageTextDecode
                     httpResponseText
                     |> Just
-                    |> UpdateLog.cmdLogDecoding
-                , UpdateFocus.cmdFocusInputPossibly model
+                    |> LogUpdate.cmdLogDecoding
+                , FocusUpdate.cmdFocusInputPossibly model
                 ]
             )
 
@@ -293,7 +293,7 @@ songsRecentResponseOk model httpResponseText =
               }
               --Here, don't log the full response.
             , Cmd.batch
-                [ UpdateLog.cmdLogResponse Nothing
-                , UpdateFocus.cmdFocusInputPossibly model
+                [ LogUpdate.cmdLogResponse Nothing
+                , FocusUpdate.cmdFocusInputPossibly model
                 ]
             )

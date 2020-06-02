@@ -19,15 +19,15 @@ import AlertType
     exposing
         ( AlertMessageTextMaybe
         )
+import RequestUpdateType
+    exposing
+        ( AwaitingServerResponse
+        )
 import SongType
     exposing
         ( SongRememberedMaybe
         , SongsRecent
         , SongsRemembered
-        )
-import UpdateRequestType
-    exposing
-        ( AwaitingServerResponse
         )
 import UserIdentifierType
     exposing

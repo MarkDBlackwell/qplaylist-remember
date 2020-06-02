@@ -6,14 +6,14 @@
 -}
 
 
-module UpdateUserIdentifier exposing (userIdentifierEstablish)
+module UserIdentifierUpdate exposing (userIdentifierEstablish)
 
 import ElmCycle
+import FocusUpdate
 import ModelType
     exposing
         ( Model
         )
-import UpdateFocus
 import UserIdentifier
 import UserIdentifierType
     exposing
@@ -33,7 +33,7 @@ userIdentifierEstablish model randomInt =
                 |> UserIdentifier.userIdentifierCalc
       }
     , Cmd.batch
-        [ UpdateFocus.cmdFocusSetId "refresh"
-        , UpdateFocus.cmdFocusInputPossibly model
+        [ FocusUpdate.cmdFocusSetId "refresh"
+        , FocusUpdate.cmdFocusInputPossibly model
         ]
     )

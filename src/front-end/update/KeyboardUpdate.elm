@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateKeyboard exposing (keystrokeHand)
+module KeyboardUpdate exposing (keystrokeHand)
 
 import AlertType
     exposing
@@ -16,6 +16,7 @@ import ElmCycle
     exposing
         ( Msg(..)
         )
+import FocusUpdate
 import ModelType
     exposing
         ( CommentAreaOptional(..)
@@ -25,7 +26,6 @@ import SongType
     exposing
         ( SongsRememberedIndex
         )
-import UpdateFocus
 import UpdateHelper
 import Utilities
     exposing
@@ -95,7 +95,7 @@ keyProcessH model =
         | alertMessageText = Just alertMessageTextNew
       }
     , model
-        |> UpdateFocus.cmdFocusInputPossibly
+        |> FocusUpdate.cmdFocusInputPossibly
     )
 
 
@@ -116,9 +116,9 @@ keystrokeHand model keyCharRaw =
                     ( model
                     , Cmd.batch
                         [ cmdMsg2Cmd msg
-                        , UpdateFocus.cmdFocusSetId id
+                        , FocusUpdate.cmdFocusSetId id
                         , model
-                            |> UpdateFocus.cmdFocusInputPossibly
+                            |> FocusUpdate.cmdFocusInputPossibly
                         ]
                     )
 

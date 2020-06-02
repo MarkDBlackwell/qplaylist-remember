@@ -6,7 +6,7 @@
 -}
 
 
-module ViewBuySong exposing (buySongAnchor)
+module BuySongView exposing (buySongAnchor)
 
 import ElmCycle
     exposing
@@ -15,17 +15,17 @@ import ElmCycle
 import Html
 import Html.Attributes
 import Html.Events
-import SongType
-    exposing
-        ( SongRemembered
-        )
-import UpdateHelper
-import UpdateRequestType
+import RequestUpdateType
     exposing
         ( QueryPairs
         , UrlBeforeQueryList
         , UrlText
         )
+import SongType
+    exposing
+        ( SongRemembered
+        )
+import UpdateHelper
 import Utilities
     exposing
         ( innerHtmlEmpty

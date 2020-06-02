@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateRequestType exposing
+module RequestUpdateType exposing
     ( Action(..)
     , ActionLikeOrComment(..)
     , AwaitingServerResponse

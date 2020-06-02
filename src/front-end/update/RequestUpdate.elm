@@ -6,7 +6,7 @@
 -}
 
 
-module UpdateRequest exposing
+module RequestUpdate exposing
     ( commentSendHand
     , likeButtonProcessHand
     , songsRecentRefreshHand
@@ -17,10 +17,16 @@ import ElmCycle
     exposing
         ( Msg(..)
         )
+import FocusUpdate
 import Http
+import LogUpdate
 import ModelType
     exposing
         ( Model
+        )
+import RequestUpdateType
+    exposing
+        ( UrlText
         )
 import SongHelper
 import SongType
@@ -29,13 +35,7 @@ import SongType
         , SongsRemembered
         , SongsRememberedIndex
         )
-import UpdateFocus
 import UpdateHelper
-import UpdateLog
-import UpdateRequestType
-    exposing
-        ( UrlText
-        )
 import Utilities
     exposing
         ( selectOneFromIndexMaybe
@@ -58,7 +58,7 @@ commentSendHand model =
                 ( { model
                     | alertMessageText = Alert.messageTextInit
                   }
-                , UpdateFocus.cmdFocusInputPossibly model
+                , FocusUpdate.cmdFocusInputPossibly model
                 )
 
             else
@@ -90,9 +90,9 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ UpdateLog.cmdLogRequest commentRequestUrlText
+                    [ LogUpdate.cmdLogRequest commentRequestUrlText
                     , cmdCommentRequest
-                    , UpdateFocus.cmdFocusInputPossibly model
+                    , FocusUpdate.cmdFocusInputPossibly model
                     ]
                 )
 
@@ -156,9 +156,9 @@ likeButtonProcessHand model songsRememberedIndex =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ UpdateLog.cmdLogRequest likeRequestUrlText
+                        [ LogUpdate.cmdLogRequest likeRequestUrlText
                         , cmdLikeRequest
-                        , UpdateFocus.cmdFocusInputPossibly model
+                        , FocusUpdate.cmdFocusInputPossibly model
                         ]
                     )
 
@@ -199,8 +199,8 @@ songsRecentRefreshHand model =
               }
             , Cmd.batch
                 [ requestUrlText
-                    |> UpdateLog.cmdLogRequest
+                    |> LogUpdate.cmdLogRequest
                 , cmdSongsRecentRequest
-                , UpdateFocus.cmdFocusInputPossibly model
+                , FocusUpdate.cmdFocusInputPossibly model
                 ]
             )

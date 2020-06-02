@@ -2,6 +2,7 @@
     "type": "application",
     "source-directories": [
         "src/front-end",
+        "src/front-end/decode",
         "src/front-end/helper",
         "src/front-end/initialize",
         "src/front-end/type",

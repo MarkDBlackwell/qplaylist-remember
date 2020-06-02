@@ -27,12 +27,12 @@ import AlertType
         , PrefixSeparatorText
         )
 import ElmCycle
+import FocusUpdate
 import Http
 import ModelType
     exposing
         ( Model
         )
-import UpdateFocus
 
 
 
@@ -138,7 +138,7 @@ messageTextServerAwaitingElmCycle model =
     ( { model
         | alertMessageText = Just "Awaiting server"
       }
-    , UpdateFocus.cmdFocusInputPossibly model
+    , FocusUpdate.cmdFocusInputPossibly model
     )
 
 

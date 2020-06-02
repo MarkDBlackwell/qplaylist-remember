@@ -6,14 +6,14 @@
 -}
 
 
-module DecodeLikeOrCommentResponse exposing (decodeLikeOrCommentResponse)
+module LikeOrCommentResponseDecode exposing (decodeLikeOrCommentResponse)
 
 import AlertType
     exposing
         ( AlertMessageText
         )
 import Json.Decode
-import UpdateRequestType
+import RequestUpdateType
     exposing
         ( HttpResponseText
         , LikeOrCommentResponseText
