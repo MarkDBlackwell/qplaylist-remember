@@ -90,7 +90,8 @@ commentSendHand model =
                     , awaitingServerResponse = True
                   }
                 , Cmd.batch
-                    [ LogUpdate.cmdLogRequest commentRequestUrlText
+                    [ commentRequestUrlText
+                        |> LogUpdate.cmdLogRequest
                     , cmdCommentRequest
                     , FocusUpdate.cmdFocusInputPossibly model
                     ]
@@ -156,7 +157,8 @@ likeButtonProcessHand model songsRememberedIndex =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ LogUpdate.cmdLogRequest likeRequestUrlText
+                        [ likeRequestUrlText
+                            |> LogUpdate.cmdLogRequest
                         , cmdLikeRequest
                         , FocusUpdate.cmdFocusInputPossibly model
                         ]

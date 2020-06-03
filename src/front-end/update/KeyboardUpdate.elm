@@ -115,7 +115,8 @@ keystrokeHand model keyCharRaw =
                 doMessage id msg =
                     ( model
                     , Cmd.batch
-                        [ cmdMsg2Cmd msg
+                        [ msg
+                            |> cmdMsg2Cmd
                         , FocusUpdate.cmdFocusSetId id
                         , model
                             |> FocusUpdate.cmdFocusInputPossibly

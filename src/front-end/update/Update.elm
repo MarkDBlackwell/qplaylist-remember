@@ -71,7 +71,8 @@ update msg model =
             CommentUpdate.commentCancelHand model
 
         MsgCommentResponse (Err httpError) ->
-            ResponseUpdate.likeOrCommentResponseErr model httpError Comment
+            Comment
+                |> ResponseUpdate.likeOrCommentResponseErr model httpError
 
         MsgCommentResponse (Ok httpResponseText) ->
             Comment
@@ -93,10 +94,12 @@ update msg model =
                 |> RequestUpdate.likeButtonProcessHand model
 
         MsgLikeResponse (Err httpError) ->
-            ResponseUpdate.likeOrCommentResponseErr model httpError Like
+            Like
+                |> ResponseUpdate.likeOrCommentResponseErr model httpError
 
         MsgLikeResponse (Ok httpResponseText) ->
-            ResponseUpdate.likeOrCommentResponseOk model httpResponseText Like
+            Like
+                |> ResponseUpdate.likeOrCommentResponseOk model httpResponseText
 
         MsgNone ->
             UpdateHelper.elmCycleDefault model
@@ -124,7 +127,8 @@ update msg model =
                                 model.pageIsExpanded
 
                             else
-                                not model.pageIsExpanded
+                                model.pageIsExpanded
+                                    |> not
                     in
                     ( { model
                         | alertMessageText = Alert.messageTextInit
@@ -165,7 +169,8 @@ update msg model =
                             , songsRemembered = songsRememberedNew
                           }
                         , Cmd.batch
-                            [ cmdMsg2Cmd MsgSongsRememberedStore
+                            [ MsgSongsRememberedStore
+                                |> cmdMsg2Cmd
                             , FocusUpdate.cmdFocusSetId "refresh"
                             , FocusUpdate.cmdFocusInputPossibly model
                             ]
@@ -204,7 +209,8 @@ update msg model =
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
-                        [ cmdMsg2Cmd MsgSongsRememberedStore
+                        [ MsgSongsRememberedStore
+                            |> cmdMsg2Cmd
                         , FocusUpdate.cmdFocusInputPossibly model
                         ]
                     )
