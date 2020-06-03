@@ -89,10 +89,6 @@ update msg model =
             keyChar
                 |> KeyboardUpdate.keystrokeHand model
 
-        MsgLikeSendHand songsRememberedIndex ->
-            songsRememberedIndex
-                |> RequestUpdate.likeSendHand model
-
         MsgLikeResponse (Err httpError) ->
             Like
                 |> ResponseUpdate.likeOrCommentResponseErr model httpError
@@ -100,6 +96,10 @@ update msg model =
         MsgLikeResponse (Ok httpResponseText) ->
             Like
                 |> ResponseUpdate.likeOrCommentResponseOk model httpResponseText
+
+        MsgLikeSendHand songsRememberedIndex ->
+            songsRememberedIndex
+                |> RequestUpdate.likeSendHand model
 
         MsgNone ->
             UpdateHelper.elmCycleDefault model
