@@ -47,10 +47,10 @@ cmdLogAction action textMaybe =
                     textMaybe
                         |> Maybe.withDefault "Ok"
             in
+            --Use Debug.log during development:
+            --text
+            --    |> Debug.log actionString
             text
-
-        --Use Debug.log during development.
-        --|> Debug.log actionString
     in
     Cmd.none
 
