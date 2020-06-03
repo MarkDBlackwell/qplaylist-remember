@@ -120,7 +120,7 @@ buttonLike songGroup songsRememberedIndex =
         buttonActionMsg : ElmCycle.Msg
         buttonActionMsg =
             songsRememberedIndex
-                |> MsgLikeButtonProcessHand
+                |> MsgLikeSendHand
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =

@@ -8,7 +8,7 @@
 
 module RequestUpdate exposing
     ( commentSendHand
-    , likeButtonProcessHand
+    , likeSendHand
     , songsRecentRefreshHand
     )
 
@@ -98,8 +98,8 @@ commentSendHand model =
                 )
 
 
-likeButtonProcessHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
-likeButtonProcessHand model songsRememberedIndex =
+likeSendHand : Model -> SongsRememberedIndex -> ElmCycle.ElmCycle
+likeSendHand model songsRememberedIndex =
     case UpdateHelper.commentAreaStateVector model of
         --( AwaitingServerResponse, CommentAreaOptional )
         ( True, _ ) ->

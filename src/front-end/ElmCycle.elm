@@ -53,7 +53,7 @@ type Msg
     | MsgCommentSendHand
     | MsgFocusAttempt Id
     | MsgKeystrokeHand KeyChar
-    | MsgLikeButtonProcessHand SongsRememberedIndex
+    | MsgLikeSendHand SongsRememberedIndex
     | MsgLikeResponse ResultErrorHttp
     | MsgNone
     | MsgPageMorphHand

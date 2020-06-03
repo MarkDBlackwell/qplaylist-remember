@@ -151,7 +151,7 @@ keystrokeHand model keyCharRaw =
 
             else if keyIs 'L' then
                 songsRememberedIndex
-                    |> MsgLikeButtonProcessHand
+                    |> MsgLikeSendHand
                     |> doMessage "refresh"
 
             else if keyIs 'M' then

@@ -89,9 +89,9 @@ update msg model =
             keyChar
                 |> KeyboardUpdate.keystrokeHand model
 
-        MsgLikeButtonProcessHand songsRememberedIndex ->
+        MsgLikeSendHand songsRememberedIndex ->
             songsRememberedIndex
-                |> RequestUpdate.likeButtonProcessHand model
+                |> RequestUpdate.likeSendHand model
 
         MsgLikeResponse (Err httpError) ->
             Like
