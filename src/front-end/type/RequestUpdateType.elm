@@ -19,6 +19,10 @@ module RequestUpdateType exposing
     , UrlText
     )
 
+import Url.Builder
+
+
+
 -- MODEL
 
 
@@ -54,7 +58,7 @@ type alias LikeOrCommentText =
 
 
 type alias QueryPair =
-    ( UrlText, UrlText )
+    Url.Builder.QueryParameter
 
 
 type alias QueryPairs =

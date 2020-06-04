@@ -26,7 +26,8 @@ import ModelType
         )
 import RequestUpdateType
     exposing
-        ( UrlText
+        ( QueryPairs
+        , UrlText
         )
 import SongHelper
 import SongType
@@ -36,6 +37,7 @@ import SongType
         , SongsRememberedIndex
         )
 import UpdateHelper
+import Url.Builder
 import Utilities
     exposing
         ( selectOneFromIndexMaybe
@@ -177,14 +179,16 @@ songsRecentRefreshHand model =
                 requestUrlText : UrlText
                 requestUrlText =
                     let
-                        basename : UrlText
-                        basename =
-                            "LatestFew.json"
+                        path : List String
+                        path =
+                            [ "LatestFew.json" ]
+
+                        queryPairs : QueryPairs
+                        queryPairs =
+                            []
                     in
-                    UpdateHelper.relative
-                        [ basename
-                        ]
-                        []
+                    queryPairs
+                        |> Url.Builder.relative path
 
                 cmdSongsRecentRequest : Cmd ElmCycle.Msg
                 cmdSongsRecentRequest =

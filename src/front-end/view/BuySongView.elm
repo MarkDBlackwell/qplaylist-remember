@@ -25,7 +25,7 @@ import SongType
     exposing
         ( SongRemembered
         )
-import UpdateHelper
+import Url.Builder
 import Utilities
     exposing
         ( innerHtmlEmpty
@@ -50,9 +50,18 @@ buySongAnchor song =
         urlText : UrlText
         urlText =
             let
-                urlBeforeQueryList : UrlBeforeQueryList
-                urlBeforeQueryList =
-                    [ "http://www.amazon.com/s/ref=nb_sb_noss" ]
+                origin : String
+                origin =
+                    [ "http"
+                    , "www.amazon.com"
+                    ]
+                        |> String.join "://"
+
+                path : List String
+                path =
+                    [ "s"
+                    , "ref=nb_sb_noss"
+                    ]
 
                 queryPairs : QueryPairs
                 queryPairs =
@@ -64,15 +73,16 @@ buySongAnchor song =
                             ]
                                 |> String.join "+"
                     in
-                    [ ( "tag", "wtmdradio-20" )
-                    , ( "url", "search-alias=digital-music" )
-                    , ( "field-keywords"
-                      , fieldKeywords
-                      )
+                    [ Url.Builder.string "tag" "wtmdradio-20"
+                    , Url.Builder.string "url" "search-alias=digital-music"
+                    , Url.Builder.string "field-keywords" fieldKeywords
                     ]
             in
+            --"http://www.amazon.com/s/ref=nb_sb_noss"
             queryPairs
-                |> UpdateHelper.relative urlBeforeQueryList
+                |> Url.Builder.crossOrigin
+                    origin
+                    path
     in
     Html.a
         [ Html.Attributes.href urlText
