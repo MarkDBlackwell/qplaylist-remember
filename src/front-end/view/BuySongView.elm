@@ -52,10 +52,8 @@ buySongAnchor song =
             let
                 origin : String
                 origin =
-                    [ "http"
-                    , "www.amazon.com"
-                    ]
-                        |> String.join "://"
+                    "www.amazon.com"
+                        |> String.append "http://"
 
                 path : List String
                 path =

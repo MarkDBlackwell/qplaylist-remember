@@ -58,6 +58,4 @@ subscriptions model =
             keySub
                 |> Platform.Sub.map MsgKeystrokeHand
     in
-    Platform.Sub.batch
-        [ keyStrokeGlobal
-        ]
+    keyStrokeGlobal

@@ -181,7 +181,8 @@ songsRecentRefreshHand model =
                     let
                         path : List String
                         path =
-                            [ "LatestFew.json" ]
+                            "LatestFew.json"
+                                |> List.singleton
 
                         queryPairs : QueryPairs
                         queryPairs =

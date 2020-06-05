@@ -141,7 +141,7 @@ attributeIdFromMaybe attributeIdMaybe =
     attributeIdMaybe
         |> maybeMapWithDefault
             attributesEmpty
-            (\thing -> [ Html.Attributes.id thing ])
+            (\x -> [ Html.Attributes.id x ])
 
 
 attributesEmpty : List (Html.Attribute msg)

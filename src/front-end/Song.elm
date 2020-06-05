@@ -83,12 +83,12 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
         songsRememberedIndex
             |> succ
             |> startingWithFromIndex songsRemembered
-            |> (++)
+            |> List.append
                 (songRecent
                     |> SongHelper.songRememberedUpdate songRemembered
                     |> List.singleton
                 )
-            |> (++)
+            |> List.append
                 (songsRemembered
                     |> List.take songsRememberedIndex
                 )

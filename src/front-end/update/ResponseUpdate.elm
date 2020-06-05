@@ -90,14 +90,13 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
         , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
       }
     , Cmd.batch
-        [ (++)
-            (httpError
-                |> alertLogging
-            )
-            (actionLikeOrComment
-                |> UpdateHelper.actionLikeOrComment2String
-                |> alertLikeOrComment
-            )
+        [ actionLikeOrComment
+            |> UpdateHelper.actionLikeOrComment2String
+            |> alertLikeOrComment
+            |> String.append
+                (httpError
+                    |> alertLogging
+                )
             |> Just
             |> LogUpdate.cmdLogResponse
         , FocusUpdate.cmdFocusInputPossibly model
@@ -175,9 +174,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }
             , Cmd.batch
-                [ (++)
-                    alertMessageTextDecode
-                    httpResponseText
+                [ httpResponseText
+                    |> String.append alertMessageTextDecode
                     |> Just
                     |> LogUpdate.cmdLogDecoding
                 , cmdButtonCommand
@@ -200,9 +198,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
                   }
                 , Cmd.batch
-                    [ (++)
-                        responseText
-                        httpResponseText
+                    [ httpResponseText
+                        |> String.append responseText
                         |> Just
                         |> LogUpdate.cmdLogResponse
                     , cmdButtonCommand
@@ -277,9 +274,8 @@ songsRecentResponseOk model httpResponseText =
                 , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
               }
             , Cmd.batch
-                [ (++)
-                    alertMessageTextDecode
-                    httpResponseText
+                [ httpResponseText
+                    |> String.append alertMessageTextDecode
                     |> Just
                     |> LogUpdate.cmdLogDecoding
                 , FocusUpdate.cmdFocusInputPossibly model

@@ -86,7 +86,8 @@ likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCa
     let
         path : List String
         path =
-            [ "append.json" ]
+            "append.json"
+                |> List.singleton
 
         queryPairs : QueryPairs
         queryPairs =

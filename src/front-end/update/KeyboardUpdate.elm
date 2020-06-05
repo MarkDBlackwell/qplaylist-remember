@@ -51,7 +51,11 @@ keyProcessH model =
             let
                 entry : Char -> String -> String
                 entry letter string =
-                    [ String.fromChar letter, "–", string ]
+                    [ letter
+                        |> String.fromChar
+                    , "–"
+                    , string
+                    ]
                         |> String.join " "
 
                 likeComment : String
@@ -71,8 +75,11 @@ keyProcessH model =
                         like
 
                     else
-                        [ like, comment ]
-                            |> String.join separator
+                        [ like
+                        , separator
+                        , comment
+                        ]
+                            |> String.concat
 
                 separator : String
                 separator =

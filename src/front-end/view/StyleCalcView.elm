@@ -40,13 +40,14 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                         saturation =
                             scaleFactor * 0.5
                     in
-                    String.concat
-                        [ "hsl(0,"
-                        , saturation
-                            * 100.0
-                            |> String.fromFloat
-                        , "%,50%"
-                        ]
+                    [ "hsl (0, "
+                    , saturation
+                        * 100.0
+                        |> String.fromFloat
+                    , "%, 50%"
+                    ]
+                        |> String.concat
+                        |> String.replace " " ""
             in
             case group of
                 Recent ->

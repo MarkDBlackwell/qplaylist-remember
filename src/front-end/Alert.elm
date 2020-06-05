@@ -20,7 +20,6 @@ import AlertType
     exposing
         ( ActionDescription
         , AlertMessageText
-        , AlertMessageTextList
         , AlertMessageTextMaybe
         , DetailsText
         , LikeOrCommentName
@@ -103,34 +102,28 @@ messageTextErrorHttpScreen httpError =
 
 messageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText
 messageTextRequestLikeOrComment httpError likeOrCommentName =
-    (++)
-        (messageTextErrorHttpScreen httpError)
-        ([ " (while attempting to send your "
-         , likeOrCommentName
-         , ")"
-         ]
-            |> String.concat
-        )
+    let
+        prefix : String
+        prefix =
+            httpError
+                |> messageTextErrorHttpScreen
+    in
+    [ " (while attempting to send your "
+    , likeOrCommentName
+    , ")"
+    ]
+        |> String.concat
+        |> String.append prefix
 
 
 messageTextSend : ActionDescription -> DetailsText -> AlertMessageText
 messageTextSend actionDescription detailsText =
-    let
-        unexpected : AlertMessageTextList -> AlertMessageText
-        unexpected alertMessageTextList =
-            (++)
-                "Unexpected error "
-                (alertMessageTextList
-                    |> String.join prefixSeparator
-                )
-    in
-    unexpected
-        [ [ "while attempting to "
-          , actionDescription
-          ]
-            |> String.concat
-        , detailsText
-        ]
+    [ "Unexpected error while attempting to "
+    , actionDescription
+    , prefixSeparator
+    , detailsText
+    ]
+        |> String.concat
 
 
 messageTextServerAwaitingElmCycle : Model -> ElmCycle.ElmCycle

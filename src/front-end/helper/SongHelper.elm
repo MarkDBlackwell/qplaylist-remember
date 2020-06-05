@@ -155,7 +155,7 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
         songRecent
             |> song2SongRemembered
             |> List.singleton
-            |> (++) songsRemembered
+            |> List.append songsRemembered
 
 
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered

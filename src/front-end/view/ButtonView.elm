@@ -65,7 +65,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
         buttonAttributeIdMaybe =
             songsRememberedIndex
                 |> String.fromInt
-                |> (++) "buttonComment"
+                |> String.append "buttonComment"
                 |> Just
 
         hoverText : HoverText
@@ -83,33 +83,39 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
 buttonCommentView : IdMaybe -> HoverText -> ElmCycle.Msg -> ShowCommentButtons -> Html.Html ElmCycle.Msg
 buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
     let
-        displayValue : Display
-        displayValue =
+        attributes : List (Html.Attribute Msg)
+        attributes =
             let
-                default : Display
-                default =
-                    "inline-block"
+                displayValue : Display
+                displayValue =
+                    let
+                        default : Display
+                        default =
+                            "inline-block"
 
-                nonePossibly : Id -> HoverText
-                nonePossibly buttonId =
-                    if
-                        String.startsWith "buttonComment" buttonId
-                            && not showCommentButtons
-                    then
-                        "none"
+                        nonePossibly : Id -> HoverText
+                        nonePossibly buttonId =
+                            if
+                                String.startsWith "buttonComment" buttonId
+                                    && not showCommentButtons
+                            then
+                                "none"
 
-                    else
-                        default
+                            else
+                                default
+                    in
+                    maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
             in
-            maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
+            [ Html.Attributes.style "display" displayValue
+            , Html.Events.onClick action
+            , Html.Attributes.title hoverText
+            , Html.Attributes.type_ "button"
+            ]
     in
     Html.button
-        ([ Html.Attributes.style "display" displayValue
-         , Html.Events.onClick action
-         , Html.Attributes.title hoverText
-         , Html.Attributes.type_ "button"
-         ]
-            ++ attributeIdFromMaybe buttonAttributeIdMaybe
+        (buttonAttributeIdMaybe
+            |> attributeIdFromMaybe
+            |> List.append attributes
         )
         innerHtmlEmpty
 
@@ -127,7 +133,7 @@ buttonLike songGroup songsRememberedIndex =
             Just
                 (songsRememberedIndex
                     |> String.fromInt
-                    |> (++) "buttonLike"
+                    |> String.append "buttonLike"
                 )
 
         hoverText : HoverText

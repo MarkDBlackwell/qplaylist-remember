@@ -89,7 +89,8 @@ view model =
         alertArea =
             section
                 [ id "alert" ]
-                [ p attributesEmpty
+                [ p
+                    attributesEmpty
                     [ Maybe.withDefault "" model.alertMessageText
                         |> text
                     ]
@@ -126,7 +127,7 @@ view model =
                             model.commentText
                                 |> String.length
                                 |> String.fromInt
-                                |> (++) " – "
+                                |> String.append " – "
 
                         yearMonthDay : String
                         yearMonthDay =
@@ -177,7 +178,7 @@ view model =
             , id
                 (songGroup
                     |> SongHelper.songGroup2String
-                    |> (++) "songs-"
+                    |> String.append "songs-"
                 )
             ]
 
