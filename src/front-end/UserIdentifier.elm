@@ -26,7 +26,6 @@ import UserIdentifierType
 import Utilities
     exposing
         ( pred
-        , succ
         )
 import ViewType
     exposing
@@ -40,9 +39,9 @@ import ViewType
 
 caseLength : Int
 caseLength =
-    Char.toCode 'Z'
-        - Char.toCode 'A'
-        |> succ
+    Char.toCode 'A'
+        |> pred
+        |> (-) (Char.toCode 'Z')
 
 
 charCount : Int
