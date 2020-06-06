@@ -67,7 +67,9 @@ commentAreaStateVector model =
         optional : CommentAreaOptional
         optional =
             model.songCommentingMaybe
-                |> maybeMapWithDefault CommentAreaClosed (\_ -> CommentAreaOpen)
+                |> maybeMapWithDefault
+                    CommentAreaClosed
+                    (\_ -> CommentAreaOpen)
     in
     ( model.awaitingServerResponse
     , optional
@@ -99,7 +101,8 @@ likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCa
                 songLikingOrCommenting : SongRemembered
                 songLikingOrCommenting =
                     songLikingOrCommentingMaybe
-                        |> Maybe.withDefault SongInitialize.songLikingOrCommentingInit
+                        |> Maybe.withDefault
+                            SongInitialize.songLikingOrCommentingInit
             in
             [ Url.Builder.string "comment" likeOrCommentText
             , Url.Builder.string "comment_category" commentCategory
@@ -112,4 +115,5 @@ likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCa
             ]
     in
     queryPairs
-        |> Url.Builder.relative path
+        |> Url.Builder.relative
+            path

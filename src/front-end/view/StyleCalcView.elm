@@ -19,7 +19,7 @@ import SongType
 import Utilities
     exposing
         ( goldenRatio
-        , pred
+        , succ
         )
 
 
@@ -81,8 +81,8 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                 songsRecentOrRememberedIndexReversed : SongsRecentOrRememberedIndex
                 songsRecentOrRememberedIndexReversed =
                     songsRecentOrRememberedIndex
+                        |> succ
                         |> (-) songGroupLength
-                        |> pred
             in
             case group of
                 Recent ->

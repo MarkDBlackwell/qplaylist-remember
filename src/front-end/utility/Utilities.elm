@@ -37,7 +37,8 @@ import ViewType
 field2String : String -> Json.Decode.Decoder String
 field2String text =
     Json.Decode.string
-        |> Json.Decode.field text
+        |> Json.Decode.field
+            text
 
 
 matchingIndexes : List a -> a -> List Int
@@ -69,14 +70,16 @@ matchingIndexes listA x =
     in
     listA
         |> withIndexes
-        |> List.filterMap matchWithIndexMaybe
+        |> List.filterMap
+            matchWithIndexMaybe
 
 
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
 maybeMapWithDefault default function value =
     value
         |> Maybe.map function
-        |> Maybe.withDefault default
+        |> Maybe.withDefault
+            default
 
 
 pred : Int -> Int
@@ -88,14 +91,16 @@ pred x =
 selectOneFromIndexMaybe : List a -> Int -> Maybe a
 selectOneFromIndexMaybe listA index =
     index
-        |> startingWithFromIndex listA
+        |> startingWithFromIndex
+            listA
         |> List.head
 
 
 startingWithFromIndex : List a -> Int -> List a
 startingWithFromIndex listA index =
     listA
-        |> List.drop index
+        |> List.drop
+            index
 
 
 succ : Int -> Int
@@ -115,7 +120,8 @@ withoutOneFromMaybe listA xMaybe =
     listA
         |> withoutOne
         |> (\thing -> Maybe.map thing xMaybe)
-        |> Maybe.withDefault listA
+        |> Maybe.withDefault
+            listA
 
 
 
@@ -129,7 +135,8 @@ cmdMsg2Cmd msg =
     --For wrapping a message as a Cmd:
     msg
         |> Task.succeed
-        |> Task.perform identity
+        |> Task.perform
+            identity
 
 
 

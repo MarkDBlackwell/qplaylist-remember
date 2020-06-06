@@ -66,10 +66,12 @@ decodeSongsRecentResponse jsonRawText =
                     decodeSongRecent
                         |> Json.Decode.list
                         |> Json.Decode.field tag
-                        |> Json.Decode.map SongsRecentWithDummyTag
+                        |> Json.Decode.map
+                            SongsRecentWithDummyTag
             in
             jsonRawText
-                |> Json.Decode.decodeString decodeSongsRecentWithDummyTag
+                |> Json.Decode.decodeString
+                    decodeSongsRecentWithDummyTag
     in
     case asRecord of
         Err error ->

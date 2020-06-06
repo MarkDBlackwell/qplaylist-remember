@@ -49,10 +49,12 @@ decodeLikeOrCommentResponse jsonRawText =
                     in
                     tag
                         |> field2String
-                        |> Json.Decode.map LikeOrCommentResponseWithDummyTag
+                        |> Json.Decode.map
+                            LikeOrCommentResponseWithDummyTag
             in
             jsonRawText
-                |> Json.Decode.decodeString decodeResponse
+                |> Json.Decode.decodeString
+                    decodeResponse
     in
     case asRecord of
         Err error ->

@@ -137,13 +137,15 @@ songTimelessCompare x y =
 songs2SongsRemembered : List (SongRecentBase a) -> SongsRemembered
 songs2SongsRemembered songRecentBaseList =
     songRecentBaseList
-        |> List.map song2SongRemembered
+        |> List.map
+            song2SongRemembered
 
 
 songs2SongsTimeless : List (SongTimelessBase a) -> SongsTimeless
 songs2SongsTimeless songTimelessBaseList =
     songTimelessBaseList
-        |> List.map song2SongTimeless
+        |> List.map
+            song2SongTimeless
 
 
 songsRememberedAppendOneUnique : SongsRemembered -> SongsRecent -> SongRecent -> SongsRemembered
@@ -155,7 +157,8 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
         songRecent
             |> song2SongRemembered
             |> List.singleton
-            |> List.append songsRemembered
+            |> List.append
+                songsRemembered
 
 
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
@@ -164,7 +167,8 @@ songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMa
         |> maybeMapWithDefault
             songsRemembered
             (songsRecent
-                |> songsRememberedAppendOneUnique songsRemembered
+                |> songsRememberedAppendOneUnique
+                    songsRemembered
             )
 
 
@@ -206,7 +210,8 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMa
     Maybe.map
         (\x -> List.map (updateSometimes x) songsRemembered)
         songRecentMaybe
-        |> Maybe.withDefault songsRemembered
+        |> Maybe.withDefault
+            songsRemembered
 
 
 songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> List (SongTimelessBase a)
@@ -215,10 +220,12 @@ songsTimelessMatches listA songB =
         compare : SongTimelessBase a -> Bool
         compare songA =
             songA
-                |> songTimelessCompare songB
+                |> songTimelessCompare
+                    songB
     in
     listA
-        |> List.filter compare
+        |> List.filter
+            compare
 
 
 

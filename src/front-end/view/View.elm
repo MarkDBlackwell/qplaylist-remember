@@ -141,7 +141,8 @@ view model =
                                     in
                                     song.timestamp
                                         |> String.split " "
-                                        |> List.take howManyToTake
+                                        |> List.take
+                                            howManyToTake
                             in
                             timestampFieldsSelected
                                 |> String.join "-"
@@ -154,8 +155,10 @@ view model =
                         , input
                             [ autocomplete False
                             , id "input"
-                            , Html.Events.onInput MsgCommentAreaInputTextChangeCaptureHand
-                            , placeholder inputHoverText
+                            , Html.Events.onInput
+                                MsgCommentAreaInputTextChangeCaptureHand
+                            , placeholder
+                                inputHoverText
                             , required True
                             , title inputHoverText
                             , type_ "text"
@@ -265,7 +268,9 @@ view model =
 
                             else
                                 songsRecentOrRememberedIndex
-                                    |> StyleCalcView.styleCalc songGroup lengthRemembered
+                                    |> StyleCalcView.styleCalc
+                                        songGroup
+                                        lengthRemembered
 
                         songTime : Time
                         songTime =
@@ -314,9 +319,12 @@ view model =
                                 attributesEmpty
                                 [ text songTime ]
                             , model.showCommentButtons
-                                |> buttonComment songGroup songsRecentOrRememberedIndex
+                                |> buttonComment
+                                    songGroup
+                                    songsRecentOrRememberedIndex
                             , songsRecentOrRememberedIndex
-                                |> buttonLike songGroup
+                                |> buttonLike
+                                    songGroup
                             , likedOrCommentedIndicator
                             , songRecentOrRemembered
                                 |> BuySongView.buySongAnchor
@@ -341,7 +349,8 @@ view model =
                 [ buttonRecent ]
              ]
                 ++ (model.songsRemembered
-                        |> songGroupView Remembered
+                        |> songGroupView
+                            Remembered
                    )
             )
         , hr attributesEmpty innerHtmlEmpty
@@ -353,7 +362,8 @@ view model =
              ]
                 ++ (model.songsRecent
                         |> SongHelper.songs2SongsRemembered
-                        |> songGroupView Recent
+                        |> songGroupView
+                            Recent
                    )
             )
         ]
