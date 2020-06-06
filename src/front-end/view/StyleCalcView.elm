@@ -66,12 +66,12 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
                         base =
                             1.0666666666666667
                     in
-                    String.concat
-                        [ scaleFactor
-                            * base
-                            |> String.fromFloat
-                        , "rem"
-                        ]
+                    [ scaleFactor
+                        * base
+                        |> String.fromFloat
+                    , "rem"
+                    ]
+                        |> String.concat
             in
             [ ( "font-size", fontSizeValue ) ]
 
@@ -80,16 +80,20 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
             let
                 songsRecentOrRememberedIndexReversed : SongsRecentOrRememberedIndex
                 songsRecentOrRememberedIndexReversed =
-                    songGroupLength
-                        - songsRecentOrRememberedIndex
+                    songsRecentOrRememberedIndex
+                        |> (-) songGroupLength
                         |> pred
             in
             case group of
                 Recent ->
-                    goldenRatio ^ toFloat songsRecentOrRememberedIndex
+                    songsRecentOrRememberedIndex
+                        |> toFloat
+                        |> (^) goldenRatio
 
                 Remembered ->
-                    goldenRatio ^ toFloat songsRecentOrRememberedIndexReversed
+                    songsRecentOrRememberedIndexReversed
+                        |> toFloat
+                        |> (^) goldenRatio
     in
     List.concat
         [ backgroundColorStyling

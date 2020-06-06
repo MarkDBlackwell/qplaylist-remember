@@ -77,7 +77,10 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
 
     else
         showCommentButtons
-            |> buttonCommentView buttonAttributeIdMaybe hoverText buttonActionMsg
+            |> buttonCommentView
+                buttonAttributeIdMaybe
+                hoverText
+                buttonActionMsg
 
 
 buttonCommentView : IdMaybe -> HoverText -> ElmCycle.Msg -> ShowCommentButtons -> Html.Html ElmCycle.Msg
@@ -104,7 +107,10 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
                             else
                                 default
                     in
-                    maybeMapWithDefault default nonePossibly buttonAttributeIdMaybe
+                    maybeMapWithDefault
+                        default
+                        nonePossibly
+                        buttonAttributeIdMaybe
             in
             [ Html.Attributes.style "display" displayValue
             , Html.Events.onClick action
@@ -146,7 +152,9 @@ buttonLike songGroup songsRememberedIndex =
 
         Remembered ->
             buttonActionMsg
-                |> buttonView buttonAttributeIdMaybe hoverText
+                |> buttonView
+                    buttonAttributeIdMaybe
+                    hoverText
 
 
 buttonRecent : Html.Html ElmCycle.Msg
@@ -161,7 +169,9 @@ buttonRecent =
             "Refresh the latest few songs"
     in
     MsgSongsRecentRefreshHand
-        |> buttonView buttonAttributeIdMaybe hoverText
+        |> buttonView
+            buttonAttributeIdMaybe
+            hoverText
 
 
 buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html.Html ElmCycle.Msg
@@ -181,8 +191,10 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
             [ "button"
-            , SongHelper.songGroup2String songGroup
-            , String.fromInt songsRecentOrRememberedIndex
+            , songGroup
+                |> SongHelper.songGroup2String
+            , songsRecentOrRememberedIndex
+                |> String.fromInt
             ]
                 |> String.concat
                 |> Just
@@ -197,7 +209,9 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
                     "Drop this song (from remembered songs)"
     in
     buttonActionMsg
-        |> buttonView buttonAttributeIdMaybe hoverText
+        |> buttonView
+            buttonAttributeIdMaybe
+            hoverText
 
 
 buttonRemembered : Html.Html ElmCycle.Msg
@@ -212,10 +226,15 @@ buttonRemembered =
             "Morph this page's shape"
     in
     MsgPageMorphHand
-        |> buttonView buttonAttributeIdMaybe hoverText
+        |> buttonView
+            buttonAttributeIdMaybe
+            hoverText
 
 
 buttonView : IdMaybe -> HoverText -> ElmCycle.Msg -> Html.Html ElmCycle.Msg
 buttonView buttonAttributeIdMaybe hoverText action =
     False
-        |> buttonCommentView buttonAttributeIdMaybe hoverText action
+        |> buttonCommentView
+            buttonAttributeIdMaybe
+            hoverText
+            action

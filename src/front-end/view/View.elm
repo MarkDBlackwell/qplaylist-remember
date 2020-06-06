@@ -318,7 +318,8 @@ view model =
                             , songsRecentOrRememberedIndex
                                 |> buttonLike songGroup
                             , likedOrCommentedIndicator
-                            , BuySongView.buySongAnchor songRecentOrRemembered
+                            , songRecentOrRemembered
+                                |> BuySongView.buySongAnchor
                             ]
                         , p attributesEmpty
                             [ text songRecentOrRemembered.title ]
