@@ -42,36 +42,19 @@ field2String text =
 
 
 matchingIndexes : List a -> a -> List Int
-matchingIndexes listA x =
-    --TODO: try List.indexedMap.
+matchingIndexes listOfThings thing =
     let
-        matchWithIndexMaybe : ( Int, a ) -> Maybe Int
-        matchWithIndexMaybe ( index, variable ) =
-            if x /= variable then
+        matchWithIndexMaybe : Int -> a -> Maybe Int
+        matchWithIndexMaybe index variable =
+            if thing /= variable then
                 Nothing
 
             else
                 Just index
-
-        withIndexes : List b -> List ( Int, b )
-        withIndexes listB =
-            let
-                indexes : List c -> List Int
-                indexes listC =
-                    listC
-                        |> List.length
-                        |> pred
-                        |> List.range 0
-            in
-            --TODO: try List.indexedMap.
-            listB
-                |> indexes
-                |> List.map2 (\thing index -> ( index, thing )) listB
     in
-    listA
-        |> withIndexes
-        |> List.filterMap
-            matchWithIndexMaybe
+    listOfThings
+        |> List.indexedMap matchWithIndexMaybe
+        |> List.filterMap identity
 
 
 maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
