@@ -56,8 +56,8 @@ import ViewType
 buttonComment : SongGroup -> SongsRememberedIndex -> ShowCommentButtons -> Html.Html ElmCycle.Msg
 buttonComment songGroup songsRememberedIndex showCommentButtons =
     let
-        buttonActionMsg : ElmCycle.Msg
-        buttonActionMsg =
+        buttonCommentActionMsg : ElmCycle.Msg
+        buttonCommentActionMsg =
             songsRememberedIndex
                 |> MsgCommentAreaOpenHand
 
@@ -80,7 +80,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
             |> buttonCommentView
                 buttonAttributeIdMaybe
                 hoverText
-                buttonActionMsg
+                buttonCommentActionMsg
 
 
 buttonCommentView : IdMaybe -> HoverText -> ElmCycle.Msg -> ShowCommentButtons -> Html.Html ElmCycle.Msg
@@ -129,8 +129,8 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
 buttonLike : SongGroup -> SongsRememberedIndex -> Html.Html ElmCycle.Msg
 buttonLike songGroup songsRememberedIndex =
     let
-        buttonActionMsg : ElmCycle.Msg
-        buttonActionMsg =
+        buttonLikeActionMsg : ElmCycle.Msg
+        buttonLikeActionMsg =
             songsRememberedIndex
                 |> MsgLikeSendHand
 
@@ -151,7 +151,7 @@ buttonLike songGroup songsRememberedIndex =
             htmlNodeNull
 
         Remembered ->
-            buttonActionMsg
+            buttonLikeActionMsg
                 |> buttonView
                     buttonAttributeIdMaybe
                     hoverText
@@ -177,8 +177,8 @@ buttonRecent =
 buttonRememberForget : SongGroup -> SongsRecentOrRememberedIndex -> Html.Html ElmCycle.Msg
 buttonRememberForget songGroup songsRecentOrRememberedIndex =
     let
-        buttonActionMsg : ElmCycle.Msg
-        buttonActionMsg =
+        buttonRememberForgetActionMsg : ElmCycle.Msg
+        buttonRememberForgetActionMsg =
             case songGroup of
                 Recent ->
                     songsRecentOrRememberedIndex
@@ -208,7 +208,7 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
                 Remembered ->
                     "Drop this song (from remembered songs)"
     in
-    buttonActionMsg
+    buttonRememberForgetActionMsg
         |> buttonView
             buttonAttributeIdMaybe
             hoverText
