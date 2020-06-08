@@ -51,9 +51,14 @@ keyProcessH model =
             let
                 entry : Char -> String -> String
                 entry letter string =
-                    [ letter
-                        |> String.fromChar
-                    , "–"
+                    let
+                        letterParenthesized : String
+                        letterParenthesized =
+                            [ '(', ')' ]
+                                |> List.intersperse letter
+                                |> String.fromList
+                    in
+                    [ letterParenthesized
                     , string
                     ]
                         |> String.join " "
@@ -63,7 +68,7 @@ keyProcessH model =
                     let
                         comment : String
                         comment =
-                            "Comment latest remembered"
+                            "Comment on latest remembered"
                                 |> entry 'C'
 
                         like : String
