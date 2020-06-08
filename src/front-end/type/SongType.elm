@@ -9,6 +9,7 @@
 module SongType exposing
     ( Artist
     , LikeOrCommentCount
+    , SongFieldString
     , SongGroup(..)
     , SongGroupLength
     , SongRecent
@@ -40,11 +41,15 @@ module SongType exposing
 
 
 type alias Artist =
-    String
+    SongFieldString
 
 
 type alias LikeOrCommentCount =
     Int
+
+
+type alias SongFieldString =
+    String
 
 
 type alias SongRecent =
@@ -155,15 +160,15 @@ type alias SongsTimelessIndex =
 
 
 type alias Time =
-    String
+    SongFieldString
 
 
 type alias Timestamp =
-    String
+    SongFieldString
 
 
 type alias Title =
-    String
+    SongFieldString
 
 
 

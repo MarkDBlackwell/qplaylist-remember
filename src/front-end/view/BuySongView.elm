@@ -23,7 +23,8 @@ import RequestUpdateType
         )
 import SongType
     exposing
-        ( SongRemembered
+        ( SongFieldString
+        , SongRemembered
         )
 import Url.Builder
 import Utilities
@@ -67,10 +68,10 @@ buySongAnchor song =
                         fieldKeywords : String
                         fieldKeywords =
                             let
-                                elementsCombine : List String -> String
+                                elementsCombine : List SongFieldString -> String
                                 elementsCombine elements =
                                     let
-                                        elementQuote : String -> String
+                                        elementQuote : SongFieldString -> String
                                         elementQuote content =
                                             let
                                                 bothEndsCount : Int
