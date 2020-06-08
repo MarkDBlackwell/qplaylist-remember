@@ -12,7 +12,7 @@ which uses WideOrbit automation software.
 
 ## Development
 
-Download and install Elm version 0.18.0 from its [website](http://elm-lang.org/) (try [here](http://github.com/elm-lang/elm-platform/releases)).
+Download and install Elm version 0.19.1 from its [website](http://elm-lang.org/) (try [here](http://github.com/elm-lang/elm-platform/releases)).
 
 For versions of the other programs (and packages) known to work, see the following 'my-make*' files.
 
@@ -21,6 +21,7 @@ Nevertheless, you should install the latest versions.
 Do *not* use the '--global' flag.
 
 Download and install the latest LTS (long-term support) version of Node.js from its [website](http://nodejs.org/en/).
+The package provided by your Linux, etc. distribution probably will work.
 
 Node.js automatically comes with npm.
 

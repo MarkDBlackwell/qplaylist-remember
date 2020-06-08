@@ -6,8 +6,8 @@
 #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # Versions:
-#  Elm 0.18.0
-#  Node.js 5.12.0 or 6.11.0 or 12.16.2 or latest LTS
+#  Elm 0.19.1
+#  Node.js 5.12.0 or 6.11.0 or 10.21.0 or 12.16.2 or latest LTS
 #  npm 3.8.6 or 3.10.10 or 6.14.4 (comes with Node.js)
 #  elm-format 0.7.0-exp or 0.8.3
 #  uglify-js 3.1.7 or 3.9.1
