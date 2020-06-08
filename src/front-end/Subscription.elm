@@ -49,7 +49,7 @@ subscriptions model =
                             Json.Decode.string
                                 |> Json.Decode.field "key"
 
-                        source : Json.Decode.Decoder msg -> Platform.Sub.Sub msg
+                        source : Json.Decode.Decoder KeyChar -> Platform.Sub.Sub KeyChar
                         source =
                             Browser.Events.onKeyUp
                     in

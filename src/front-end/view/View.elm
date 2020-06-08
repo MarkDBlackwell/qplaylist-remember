@@ -175,7 +175,7 @@ view model =
                     htmlNodeNull
                     (\x -> commentArea x)
 
-        songGroupAttributes : SongGroup -> List (Attribute msg)
+        songGroupAttributes : SongGroup -> List (Attribute ElmCycle.Msg)
         songGroupAttributes songGroup =
             [ class "songs-group"
             , id
@@ -255,7 +255,7 @@ view model =
                                         ]
                                         innerHtmlEmpty
 
-                        songAttributes : List (Attribute msg)
+                        songAttributes : List (Attribute ElmCycle.Msg)
                         songAttributes =
                             let
                                 lengthRemembered : SongGroupLength
@@ -353,7 +353,9 @@ view model =
                             Remembered
                    )
             )
-        , hr attributesEmpty innerHtmlEmpty
+        , hr
+            attributesEmpty
+            innerHtmlEmpty
         , section
             (songGroupAttributes Recent)
             ([ p

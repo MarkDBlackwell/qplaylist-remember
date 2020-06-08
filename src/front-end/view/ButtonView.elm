@@ -86,7 +86,7 @@ buttonComment songGroup songsRememberedIndex showCommentButtons =
 buttonCommentView : IdMaybe -> HoverText -> ElmCycle.Msg -> ShowCommentButtons -> Html.Html ElmCycle.Msg
 buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
     let
-        attributes : List (Html.Attribute Msg)
+        attributes : List (Html.Attribute ElmCycle.Msg)
         attributes =
             let
                 displayValue : Display

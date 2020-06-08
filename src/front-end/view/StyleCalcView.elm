@@ -8,6 +8,7 @@
 
 module StyleCalcView exposing (styleCalc)
 
+import ElmCycle
 import Html
 import Html.Attributes
 import SongType
@@ -27,7 +28,7 @@ import Utilities
 -- VIEW
 
 
-styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> List (Html.Attribute msg)
+styleCalc : SongGroup -> SongGroupLength -> SongsRecentOrRememberedIndex -> List (Html.Attribute ElmCycle.Msg)
 styleCalc group songGroupLength songsRecentOrRememberedIndex =
     let
         backgroundColorStyling : List ( String, String )

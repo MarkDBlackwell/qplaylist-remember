@@ -126,7 +126,7 @@ cmdMsg2Cmd msg =
 -- VIEW
 
 
-attributeIdFromMaybe : IdMaybe -> List (Html.Attribute msg)
+attributeIdFromMaybe : IdMaybe -> List (Html.Attribute ElmCycle.Msg)
 attributeIdFromMaybe attributeIdMaybe =
     attributeIdMaybe
         |> maybeMapWithDefault
@@ -134,7 +134,7 @@ attributeIdFromMaybe attributeIdMaybe =
             (\x -> [ Html.Attributes.id x ])
 
 
-attributesEmpty : List (Html.Attribute msg)
+attributesEmpty : List (Html.Attribute ElmCycle.Msg)
 attributesEmpty =
     []
 
@@ -151,6 +151,6 @@ htmlNodeNull =
     Html.text ""
 
 
-innerHtmlEmpty : List (Html.Html msg)
+innerHtmlEmpty : List (Html.Html ElmCycle.Msg)
 innerHtmlEmpty =
     []
