@@ -24,9 +24,7 @@ import ElmCycle
         )
 import Html
     exposing
-        ( Attribute
-        , Html
-        , div
+        ( div
         , em
         , hr
         , input
@@ -82,10 +80,10 @@ import ViewType
 -- VIEW
 
 
-view : Model -> Html ElmCycle.Msg
+view : Model -> Html.Html ElmCycle.Msg
 view model =
     let
-        alertArea : Html ElmCycle.Msg
+        alertArea : Html.Html ElmCycle.Msg
         alertArea =
             section
                 [ id "alert" ]
@@ -96,10 +94,10 @@ view model =
                     ]
                 ]
 
-        commentAreaPossibly : Html ElmCycle.Msg
+        commentAreaPossibly : Html.Html ElmCycle.Msg
         commentAreaPossibly =
             let
-                commentArea : SongRemembered -> Html ElmCycle.Msg
+                commentArea : SongRemembered -> Html.Html ElmCycle.Msg
                 commentArea song =
                     let
                         artistTitleTime : String
@@ -175,7 +173,7 @@ view model =
                     htmlNodeNull
                     (\x -> commentArea x)
 
-        songGroupAttributes : SongGroup -> List (Attribute ElmCycle.Msg)
+        songGroupAttributes : SongGroup -> List (Html.Attribute ElmCycle.Msg)
         songGroupAttributes songGroup =
             [ class "songs-group"
             , id
@@ -185,13 +183,13 @@ view model =
                 )
             ]
 
-        songGroupView : SongGroup -> SongsRecentOrRemembered -> List (Html ElmCycle.Msg)
+        songGroupView : SongGroup -> SongsRecentOrRemembered -> List (Html.Html ElmCycle.Msg)
         songGroupView songGroup songsRecentOrRemembered =
             let
-                songView : SongsRecentOrRememberedIndex -> SongRecentOrRemembered -> Html ElmCycle.Msg
+                songView : SongsRecentOrRememberedIndex -> SongRecentOrRemembered -> Html.Html ElmCycle.Msg
                 songView songsRecentOrRememberedIndex songRecentOrRemembered =
                     let
-                        likedOrCommentedIndicator : Html ElmCycle.Msg
+                        likedOrCommentedIndicator : Html.Html ElmCycle.Msg
                         likedOrCommentedIndicator =
                             let
                                 indicatorHoverText : HoverText
@@ -255,7 +253,7 @@ view model =
                                         ]
                                         innerHtmlEmpty
 
-                        songAttributes : List (Attribute ElmCycle.Msg)
+                        songAttributes : List (Html.Attribute ElmCycle.Msg)
                         songAttributes =
                             let
                                 lengthRemembered : SongGroupLength
