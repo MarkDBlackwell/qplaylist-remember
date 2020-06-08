@@ -64,12 +64,31 @@ buySongAnchor song =
                 queryPairs : QueryPairs
                 queryPairs =
                     let
-                        fieldKeywords : UrlText
+                        fieldKeywords : String
                         fieldKeywords =
+                            let
+                                elementsCombine : List String -> String
+                                elementsCombine elements =
+                                    let
+                                        elementQuote : String -> String
+                                        elementQuote content =
+                                            let
+                                                bothEndsCount : Int
+                                                bothEndsCount =
+                                                    2
+                                            in
+                                            "\""
+                                                |> List.repeat bothEndsCount
+                                                |> String.join content
+                                    in
+                                    elements
+                                        |> List.map elementQuote
+                                        |> String.join " "
+                            in
                             [ song.title
                             , song.artist
                             ]
-                                |> String.join "+"
+                                |> elementsCombine
                     in
                     [ Url.Builder.string "tag" "wtmdradio-20"
                     , Url.Builder.string "url" "search-alias=digital-music"
