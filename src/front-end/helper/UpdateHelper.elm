@@ -69,7 +69,7 @@ commentAreaStateVector model =
             model.songCommentingMaybe
                 |> maybeMapWithDefault
                     CommentAreaClosed
-                    (\_ -> CommentAreaOpen)
+                    (always CommentAreaOpen)
     in
     ( model.awaitingServerResponse
     , optional
