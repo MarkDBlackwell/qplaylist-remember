@@ -95,7 +95,7 @@ commentAreaOpenHand model songsRememberedIndex =
                     ( { model
                         | alertMessageText = Alert.messageTextInit
                         , commentText = ModelInitialize.commentTextInit
-                        , songCommentingMaybe = songsRememberedSelectOneMaybe
+                        , songCommentingOnNowMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
                       --'FocusUpdate.cmdFocusInputPossibly' doesn't work, here:
@@ -114,9 +114,9 @@ commentCancelHand model =
             ( { model
                 | alertMessageText = Alert.messageTextInit
                 , commentText = ModelInitialize.commentTextInit
-                , songCommentingMaybe = SongInitialize.songCommentingMaybeInit
+                , songCommentingOnNowMaybe = SongInitialize.songCommentingOnNowMaybeInit
               }
             , "Comment"
-                |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingMaybe
+                |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingOnNowMaybe
                 |> FocusUpdate.cmdFocusSetId
             )

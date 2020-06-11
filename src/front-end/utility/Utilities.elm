@@ -128,10 +128,12 @@ cmdMsg2Cmd msg =
 
 attributeIdFromMaybe : IdMaybe -> List (Html.Attribute ElmCycle.Msg)
 attributeIdFromMaybe attributeIdMaybe =
-    attributeIdMaybe
-        |> maybeMapWithDefault
+    case attributeIdMaybe of
+        Nothing ->
             attributesEmpty
-            (\x -> [ Html.Attributes.id x ])
+
+        Just x ->
+            [ Html.Attributes.id x ]
 
 
 attributesEmpty : List (Html.Attribute ElmCycle.Msg)

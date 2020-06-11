@@ -40,7 +40,7 @@ import ViewType
 cmdFocusInputPossibly : Model -> Cmd ElmCycle.Msg
 cmdFocusInputPossibly model =
     --TODO: try '(always ElmCycle.Msg.none)'.
-    model.songCommentingMaybe
+    model.songCommentingOnNowMaybe
         |> maybeMapWithDefault
             Cmd.none
             (always (cmdFocusSetId "input"))

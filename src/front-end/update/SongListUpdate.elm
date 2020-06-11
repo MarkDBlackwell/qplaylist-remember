@@ -98,7 +98,7 @@ songForgetHand model songsRememberedIndex =
                     songsRememberedIndex
                         |> selectOneFromIndexMaybe model.songsRemembered
             in
-            if model.songCommentingMaybe == songsRememberedSelectOneMaybe then
+            if model.songCommentingOnNowMaybe == songsRememberedSelectOneMaybe then
                 ( { model
                     | alertMessageText = Alert.messageTextInit
                   }

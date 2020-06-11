@@ -78,7 +78,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
 
                 Like ->
                     { model
-                        | songLikingMaybe = SongInitialize.songLikingMaybeInit
+                        | songLikingNowMaybe = SongInitialize.songLikingNowMaybeInit
                     }
     in
     ( { modelNewSongLikingOrCommenting
@@ -147,22 +147,22 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
             case actionLikeOrComment of
                 Comment ->
                     { model
-                        | songCommentingMaybe = SongInitialize.songCommentingMaybeInit
+                        | songCommentingOnNowMaybe = SongInitialize.songCommentingOnNowMaybeInit
                     }
 
                 Like ->
                     { model
-                        | songLikingMaybe = SongInitialize.songLikingMaybeInit
+                        | songLikingNowMaybe = SongInitialize.songLikingNowMaybeInit
                     }
 
         songLikingOrCommentingMaybe : SongRememberedMaybe
         songLikingOrCommentingMaybe =
             case actionLikeOrComment of
                 Comment ->
-                    model.songCommentingMaybe
+                    model.songCommentingOnNowMaybe
 
                 Like ->
-                    model.songLikingMaybe
+                    model.songLikingNowMaybe
     in
     case LikeOrCommentResponseDecode.decodeLikeOrCommentResponse httpResponseText of
         Err alertMessageTextDecode ->

@@ -51,8 +51,8 @@ init flags =
         commentTextInit
         pageIsExpandedInit
         flags.showCommentButtons
-        SongInitialize.songCommentingMaybeInit
-        SongInitialize.songLikingMaybeInit
+        SongInitialize.songCommentingOnNowMaybeInit
+        SongInitialize.songLikingNowMaybeInit
         SongInitialize.songsRecentInit
         flags.songsRemembered
         UserIdentifier.userIdentifierInit

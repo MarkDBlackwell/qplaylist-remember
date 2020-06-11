@@ -168,7 +168,7 @@ view model =
                             |> buttonView Nothing "Cancel this comment"
                         ]
             in
-            model.songCommentingMaybe
+            model.songCommentingOnNowMaybe
                 |> maybeMapWithDefault
                     htmlNodeNull
                     (\x -> commentArea x)

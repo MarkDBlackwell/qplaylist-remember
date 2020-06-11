@@ -53,7 +53,6 @@ import Utilities
     exposing
         ( matchingIndexes
         , maybeMapWithDefault
-        , selectOneFromIndexMaybe
         )
 import ViewType
     exposing
@@ -66,7 +65,7 @@ import ViewType
 
 
 buttonIdReconstruct : SongsRemembered -> SongRememberedMaybe -> Id -> Id
-buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
+buttonIdReconstruct songsRemembered songCommentingOnNowMaybe idFragment =
     let
         songRememberedIndexMaybe : SongRemembered -> SongsRememberedIndexMaybe
         songRememberedIndexMaybe songCommenting =
@@ -89,7 +88,7 @@ buttonIdReconstruct songsRemembered songCommentingMaybe idFragment =
             ]
                 |> String.concat
     in
-    songCommentingMaybe
+    songCommentingOnNowMaybe
         |> Maybe.andThen songRememberedIndexMaybe
         |> Maybe.map create
         |> Maybe.withDefault "refresh"

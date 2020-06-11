@@ -64,15 +64,17 @@ actionLikeOrComment2String actionLikeOrComment =
 commentAreaStateVector : Model -> ( AwaitingServerResponse, CommentAreaOptional )
 commentAreaStateVector model =
     let
-        optional : CommentAreaOptional
-        optional =
-            model.songCommentingMaybe
-                |> maybeMapWithDefault
+        commentAreaOptional : CommentAreaOptional
+        commentAreaOptional =
+            case model.songCommentingOnNowMaybe of
+                Nothing ->
                     CommentAreaClosed
-                    (always CommentAreaOpen)
+
+                _ ->
+                    CommentAreaOpen
     in
     ( model.awaitingServerResponse
-    , optional
+    , commentAreaOptional
     )
 
 

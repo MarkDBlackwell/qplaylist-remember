@@ -8,8 +8,8 @@
 
 module SongInitialize exposing
     ( likeOrCommentCountInit
-    , songCommentingMaybeInit
-    , songLikingMaybeInit
+    , songCommentingOnNowMaybeInit
+    , songLikingNowMaybeInit
     , songLikingOrCommentingInit
     , songsRecentInit
     )
@@ -41,13 +41,13 @@ artistInit =
     ""
 
 
-songCommentingMaybeInit : SongRememberedMaybe
-songCommentingMaybeInit =
+songCommentingOnNowMaybeInit : SongRememberedMaybe
+songCommentingOnNowMaybeInit =
     Nothing
 
 
-songLikingMaybeInit : SongRememberedMaybe
-songLikingMaybeInit =
+songLikingNowMaybeInit : SongRememberedMaybe
+songLikingNowMaybeInit =
     Nothing
 
 

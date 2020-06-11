@@ -84,7 +84,7 @@ commentSendHand model =
                         model.commentText
                             |> UpdateHelper.likeOrCommentRequestUrlText
                                 model.userIdentifier
-                                model.songCommentingMaybe
+                                model.songCommentingOnNowMaybe
                                 commentCategory
                 in
                 ( { model
@@ -155,7 +155,7 @@ likeSendHand model songsRememberedIndex =
                     ( { model
                         | alertMessageText = Alert.messageTextInit
                         , awaitingServerResponse = True
-                        , songLikingMaybe = songsRememberedSelectOneMaybe
+                        , songLikingNowMaybe = songsRememberedSelectOneMaybe
                         , songsRemembered = songsRememberedNew
                       }
                     , Cmd.batch
