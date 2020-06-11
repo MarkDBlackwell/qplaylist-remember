@@ -41,10 +41,6 @@ import UserIdentifierType
     exposing
         ( UserIdentifier
         )
-import Utilities
-    exposing
-        ( maybeMapWithDefault
-        )
 
 
 
@@ -86,7 +82,7 @@ elmCycleDefault model =
 
 
 likeOrCommentRequestUrlText : UserIdentifier -> SongRememberedMaybe -> UrlText -> LikeOrCommentText -> UrlText
-likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCategory likeOrCommentText =
+likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingOnNowMaybe commentCategory likeOrCommentText =
     let
         path : List String
         path =
@@ -102,7 +98,7 @@ likeOrCommentRequestUrlText userIdentifier songLikingOrCommentingMaybe commentCa
 
                 songLikingOrCommenting : SongRemembered
                 songLikingOrCommenting =
-                    songLikingOrCommentingMaybe
+                    songLikingOrCommentingOnNowMaybe
                         |> Maybe.withDefault
                             SongInitialize.songLikingOrCommentingInit
             in

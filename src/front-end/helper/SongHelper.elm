@@ -52,7 +52,6 @@ import SongType
 import Utilities
     exposing
         ( matchingIndexes
-        , maybeMapWithDefault
         )
 import ViewType
     exposing
@@ -162,13 +161,15 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
 
 songsRememberedAppendOneUniqueFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
 songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMaybe =
-    songRecentMaybe
-        |> maybeMapWithDefault
+    case songRecentMaybe of
+        Nothing ->
             songsRemembered
-            (songsRecent
+
+        Just songRecent ->
+            songRecent
                 |> songsRememberedAppendOneUnique
                     songsRemembered
-            )
+                    songsRecent
 
 
 songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered

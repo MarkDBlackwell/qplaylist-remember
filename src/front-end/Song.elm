@@ -26,8 +26,7 @@ import SongType
         )
 import Utilities
     exposing
-        ( maybeMapWithDefault
-        , startingWithFromIndex
+        ( startingWithFromIndex
         , succ
         )
 
@@ -37,7 +36,7 @@ import Utilities
 
 
 likedOrCommentedShow : SongRememberedMaybe -> SongsRemembered -> SongsRemembered
-likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
+likedOrCommentedShow songLikingOrCommentingOnNowMaybe songsRemembered =
     let
         process : SongRemembered -> SongsRemembered
         process songLikingOrCommenting =
@@ -66,8 +65,10 @@ likedOrCommentedShow songLikingOrCommentingMaybe songsRemembered =
             songsRemembered
                 |> List.map tweakPossibly
     in
-    songLikingOrCommentingMaybe
-        |> maybeMapWithDefault songsRemembered process
+    songLikingOrCommentingOnNowMaybe
+        |> Maybe.map process
+        |> Maybe.withDefault
+            songsRemembered
 
 
 songsRememberedSwapOneRecentFromIndexMaybe : SongsRemembered -> SongsRecent -> SongRemembered -> SongsRememberedIndex -> SongRecent -> SongsRememberedMaybe

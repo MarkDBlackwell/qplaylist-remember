@@ -15,7 +15,6 @@ module Utilities exposing
     , htmlNodeNull
     , innerHtmlEmpty
     , matchingIndexes
-    , maybeMapWithDefault
     , pred
     , selectOneFromIndexMaybe
     , startingWithFromIndex
@@ -55,14 +54,6 @@ matchingIndexes listOfThings thing =
     listOfThings
         |> List.indexedMap matchWithIndexMaybe
         |> List.filterMap identity
-
-
-maybeMapWithDefault : a -> (b -> a) -> Maybe b -> a
-maybeMapWithDefault default function value =
-    value
-        |> Maybe.map function
-        |> Maybe.withDefault
-            default
 
 
 pred : Int -> Int

@@ -38,7 +38,6 @@ import Utilities
         ( attributeIdFromMaybe
         , htmlNodeNull
         , innerHtmlEmpty
-        , maybeMapWithDefault
         )
 import ViewType
     exposing
@@ -107,10 +106,12 @@ buttonCommentView buttonAttributeIdMaybe hoverText action showCommentButtons =
                             else
                                 default
                     in
-                    maybeMapWithDefault
-                        default
-                        nonePossibly
-                        buttonAttributeIdMaybe
+                    case buttonAttributeIdMaybe of
+                        Nothing ->
+                            default
+
+                        Just x ->
+                            nonePossibly x
             in
             [ Html.Attributes.style "display" displayValue
             , Html.Events.onClick action

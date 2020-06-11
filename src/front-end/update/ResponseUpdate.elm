@@ -70,8 +70,8 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
             httpError
                 |> Alert.messageTextRequestLikeOrComment
 
-        modelNewSongLikingOrCommenting : Model
-        modelNewSongLikingOrCommenting =
+        modelNewSongLikingOrCommentingOnNow : Model
+        modelNewSongLikingOrCommentingOnNow =
             case actionLikeOrComment of
                 Comment ->
                     model
@@ -81,7 +81,7 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
                         | songLikingNowMaybe = SongInitialize.songLikingNowMaybeInit
                     }
     in
-    ( { modelNewSongLikingOrCommenting
+    ( { modelNewSongLikingOrCommentingOnNow
         | alertMessageText =
             actionLikeOrComment
                 |> UpdateHelper.actionLikeOrComment2String
@@ -128,22 +128,22 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 |> UpdateHelper.actionLikeOrComment2String
                 |> SongHelper.buttonIdReconstruct
                     model.songsRemembered
-                    songLikingOrCommentingMaybe
+                    songLikingOrCommentingOnNowMaybe
                 |> FocusUpdate.cmdFocusSetId
 
         modelNewCommentText : Model
         modelNewCommentText =
             case actionLikeOrComment of
                 Comment ->
-                    { modelNewSongLikingOrCommenting
+                    { modelNewSongLikingOrCommentingOnNow
                         | commentText = ModelInitialize.commentTextInit
                     }
 
                 Like ->
-                    modelNewSongLikingOrCommenting
+                    modelNewSongLikingOrCommentingOnNow
 
-        modelNewSongLikingOrCommenting : Model
-        modelNewSongLikingOrCommenting =
+        modelNewSongLikingOrCommentingOnNow : Model
+        modelNewSongLikingOrCommentingOnNow =
             case actionLikeOrComment of
                 Comment ->
                     { model
@@ -155,8 +155,8 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                         | songLikingNowMaybe = SongInitialize.songLikingNowMaybeInit
                     }
 
-        songLikingOrCommentingMaybe : SongRememberedMaybe
-        songLikingOrCommentingMaybe =
+        songLikingOrCommentingOnNowMaybe : SongRememberedMaybe
+        songLikingOrCommentingOnNowMaybe =
             case actionLikeOrComment of
                 Comment ->
                     model.songCommentingOnNowMaybe
@@ -190,7 +190,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     "good" /= responseText
             in
             if serverSaysRequestWasBad then
-                ( { modelNewSongLikingOrCommenting
+                ( { modelNewSongLikingOrCommentingOnNow
                     | alertMessageText =
                         responseText
                             |> Alert.messageTextSend actionDescription
@@ -213,7 +213,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                     songsRememberedNew =
                         model.songsRemembered
                             |> Song.likedOrCommentedShow
-                                songLikingOrCommentingMaybe
+                                songLikingOrCommentingOnNowMaybe
                 in
                 ( { modelNewCommentText
                     | alertMessageText = Alert.messageTextInit

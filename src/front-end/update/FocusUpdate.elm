@@ -25,7 +25,6 @@ import Task
 import Utilities
     exposing
         ( cmdMsg2Cmd
-        , maybeMapWithDefault
         )
 import ViewType
     exposing
@@ -39,11 +38,13 @@ import ViewType
 
 cmdFocusInputPossibly : Model -> Cmd ElmCycle.Msg
 cmdFocusInputPossibly model =
-    --TODO: try '(always ElmCycle.Msg.none)'.
-    model.songCommentingOnNowMaybe
-        |> maybeMapWithDefault
+    --TODO: try 'ElmCycle.Msg.none'.
+    case model.songCommentingOnNowMaybe of
+        Nothing ->
             Cmd.none
-            (always (cmdFocusSetId "input"))
+
+        _ ->
+            cmdFocusSetId "input"
 
 
 cmdFocusSetId : Id -> Cmd ElmCycle.Msg

@@ -67,7 +67,6 @@ import Utilities
         ( attributesEmpty
         , htmlNodeNull
         , innerHtmlEmpty
-        , maybeMapWithDefault
         , selectOneFromIndexMaybe
         )
 import ViewType
@@ -168,10 +167,12 @@ view model =
                             |> buttonView Nothing "Cancel this comment"
                         ]
             in
-            model.songCommentingOnNowMaybe
-                |> maybeMapWithDefault
+            case model.songCommentingOnNowMaybe of
+                Nothing ->
                     htmlNodeNull
-                    (\x -> commentArea x)
+
+                Just x ->
+                    commentArea x
 
         songGroupAttributes : SongGroup -> List (Html.Attribute ElmCycle.Msg)
         songGroupAttributes songGroup =
