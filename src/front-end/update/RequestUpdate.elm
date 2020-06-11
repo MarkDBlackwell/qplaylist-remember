@@ -38,10 +38,6 @@ import SongType
         )
 import UpdateHelper
 import Url.Builder
-import Utilities
-    exposing
-        ( selectOneFromIndexMaybe
-        )
 
 
 
@@ -112,13 +108,15 @@ likeSendHand model songsRememberedIndex =
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
                     model.songsRemembered
-                        |> selectOneFromIndexMaybe songsRememberedIndex
+                        |> List.drop songsRememberedIndex
+                        |> List.head
                         |> SongHelper.songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
                     songsRememberedNew
-                        |> selectOneFromIndexMaybe songsRememberedIndex
+                        |> List.drop songsRememberedIndex
+                        |> List.head
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->

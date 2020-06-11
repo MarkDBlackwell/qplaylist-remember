@@ -40,8 +40,6 @@ import UpdateHelper
 import Utilities
     exposing
         ( cmdMsg2Cmd
-        , selectOneFromIndexMaybe
-        , withoutOneFromMaybe
         )
 
 
@@ -96,7 +94,8 @@ songForgetHand model songsRememberedIndex =
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
                     model.songsRemembered
-                        |> selectOneFromIndexMaybe songsRememberedIndex
+                        |> List.drop songsRememberedIndex
+                        |> List.head
             in
             if model.songCommentingOnNowMaybe == songsRememberedSelectOneMaybe then
                 ( { model
@@ -109,8 +108,13 @@ songForgetHand model songsRememberedIndex =
                 let
                     songsRememberedNew : SongsRemembered
                     songsRememberedNew =
-                        songsRememberedSelectOneMaybe
-                            |> withoutOneFromMaybe model.songsRemembered
+                        case songsRememberedSelectOneMaybe of
+                            Nothing ->
+                                model.songsRemembered
+
+                            Just theOne ->
+                                model.songsRemembered
+                                    |> List.filter ((/=) theOne)
                 in
                 ( { model
                     | alertMessageText = Alert.messageTextInit
@@ -140,7 +144,8 @@ songRememberHand model songsRecentIndex =
                         songsRecentSelectOneMaybe : SongRecentMaybe
                         songsRecentSelectOneMaybe =
                             model.songsRecent
-                                |> selectOneFromIndexMaybe songsRecentIndex
+                                |> List.drop songsRecentIndex
+                                |> List.head
 
                         songsRememberedAppended : SongsRemembered
                         songsRememberedAppended =

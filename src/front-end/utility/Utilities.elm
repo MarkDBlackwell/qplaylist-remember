@@ -16,9 +16,7 @@ module Utilities exposing
     , innerHtmlEmpty
     , matchingIndexes
     , pred
-    , selectOneFromIndexMaybe
     , succ
-    , withoutOneFromMaybe
     )
 
 import ElmCycle
@@ -61,32 +59,10 @@ pred x =
     x - 1
 
 
-selectOneFromIndexMaybe : Int -> List a -> Maybe a
-selectOneFromIndexMaybe index listA =
-    listA
-        |> List.drop index
-        |> List.head
-
-
 succ : Int -> Int
 succ x =
     --Successor
     x + 1
-
-
-withoutOneFromMaybe : List a -> Maybe a -> List a
-withoutOneFromMaybe listA xMaybe =
-    let
-        withoutOne : List b -> b -> List b
-        withoutOne listB x =
-            listB
-                |> List.filter ((/=) x)
-    in
-    listA
-        |> withoutOne
-        |> (\thing -> Maybe.map thing xMaybe)
-        |> Maybe.withDefault
-            listA
 
 
 

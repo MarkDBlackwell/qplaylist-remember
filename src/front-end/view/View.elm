@@ -67,7 +67,6 @@ import Utilities
         ( attributesEmpty
         , htmlNodeNull
         , innerHtmlEmpty
-        , selectOneFromIndexMaybe
         )
 import ViewType
     exposing
@@ -290,7 +289,8 @@ view model =
                                                         |> String.split " "
                                             in
                                             stampList
-                                                |> selectOneFromIndexMaybe index
+                                                |> List.drop index
+                                                |> List.head
                                                 |> Maybe.withDefault ""
                                     in
                                     [ select 0
