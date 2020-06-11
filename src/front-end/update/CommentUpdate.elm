@@ -78,14 +78,14 @@ commentAreaOpenHand model songsRememberedIndex =
             let
                 songsRememberedNew : SongsRemembered
                 songsRememberedNew =
-                    songsRememberedIndex
-                        |> selectOneFromIndexMaybe model.songsRemembered
+                    model.songsRemembered
+                        |> selectOneFromIndexMaybe songsRememberedIndex
                         |> SongHelper.songsRememberedNewFromMaybeWithUpdate model
 
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
-                    songsRememberedIndex
-                        |> selectOneFromIndexMaybe songsRememberedNew
+                    songsRememberedNew
+                        |> selectOneFromIndexMaybe songsRememberedIndex
             in
             case songsRememberedSelectOneMaybe of
                 Nothing ->

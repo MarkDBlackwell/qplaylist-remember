@@ -289,8 +289,8 @@ view model =
                                                     songRecentOrRemembered.timestamp
                                                         |> String.split " "
                                             in
-                                            index
-                                                |> selectOneFromIndexMaybe stampList
+                                            stampList
+                                                |> selectOneFromIndexMaybe index
                                                 |> Maybe.withDefault ""
                                     in
                                     [ select 0

@@ -61,8 +61,8 @@ pred x =
     x - 1
 
 
-selectOneFromIndexMaybe : List a -> Int -> Maybe a
-selectOneFromIndexMaybe listA index =
+selectOneFromIndexMaybe : Int -> List a -> Maybe a
+selectOneFromIndexMaybe index listA =
     listA
         |> List.drop index
         |> List.head

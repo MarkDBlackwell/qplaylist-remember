@@ -95,8 +95,8 @@ songForgetHand model songsRememberedIndex =
             let
                 songsRememberedSelectOneMaybe : SongRememberedMaybe
                 songsRememberedSelectOneMaybe =
-                    songsRememberedIndex
-                        |> selectOneFromIndexMaybe model.songsRemembered
+                    model.songsRemembered
+                        |> selectOneFromIndexMaybe songsRememberedIndex
             in
             if model.songCommentingOnNowMaybe == songsRememberedSelectOneMaybe then
                 ( { model
@@ -139,8 +139,8 @@ songRememberHand model songsRecentIndex =
                     let
                         songsRecentSelectOneMaybe : SongRecentMaybe
                         songsRecentSelectOneMaybe =
-                            songsRecentIndex
-                                |> selectOneFromIndexMaybe model.songsRecent
+                            model.songsRecent
+                                |> selectOneFromIndexMaybe songsRecentIndex
 
                         songsRememberedAppended : SongsRemembered
                         songsRememberedAppended =
