@@ -49,7 +49,7 @@ keyProcessH model =
         alertMessageTextNew : AlertMessageText
         alertMessageTextNew =
             let
-                entry : Char -> String -> String
+                entry : Char -> String -> Maybe String
                 entry letter string =
                     let
                         letterParenthesized : String
@@ -62,45 +62,36 @@ keyProcessH model =
                     , string
                     ]
                         |> String.join " "
+                        |> Just
 
-                likeComment : String
-                likeComment =
-                    let
-                        comment : String
-                        comment =
-                            "Comment on latest remembered"
-                                |> entry 'C'
-
-                        like : String
-                        like =
-                            "Like latest remembered"
-                                |> entry 'L'
-                    in
+                comment : Maybe String
+                comment =
                     if not model.showCommentButtons then
-                        like
+                        Nothing
 
                     else
-                        [ like
-                        , separator
-                        , comment
-                        ]
-                            |> String.concat
+                        "Comment on latest remembered"
+                            |> entry 'C'
 
                 separator : String
                 separator =
                     --The alert box compresses multiple blank characters.
                     "; "
             in
-            [ "reFresh"
+            --Keep alphabetized by entry letter:
+            [ comment
+            , "reFresh"
                 |> entry 'F'
-            , "Remember latest played"
-                |> entry 'R'
-            , likeComment
-            , "Morph"
-                |> entry 'M'
             , "this Help"
                 |> entry 'H'
+            , "Like latest remembered"
+                |> entry 'L'
+            , "Morph"
+                |> entry 'M'
+            , "Remember latest played"
+                |> entry 'R'
             ]
+                |> List.filterMap identity
                 |> String.join separator
     in
     ( { model
