@@ -26,8 +26,7 @@ import SongType
         )
 import Utilities
     exposing
-        ( startingWithFromIndex
-        , succ
+        ( succ
         )
 
 
@@ -81,9 +80,8 @@ songsRememberedSwapOneRecentFromIndexMaybe songsRemembered songsRecent songRemem
         Nothing
 
     else
-        songsRememberedIndex
-            |> succ
-            |> startingWithFromIndex songsRemembered
+        songsRemembered
+            |> List.drop (songsRememberedIndex |> succ)
             |> List.append
                 (songRecent
                     |> SongHelper.songRememberedUpdate songRemembered

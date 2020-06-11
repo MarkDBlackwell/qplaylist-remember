@@ -17,7 +17,6 @@ module Utilities exposing
     , matchingIndexes
     , pred
     , selectOneFromIndexMaybe
-    , startingWithFromIndex
     , succ
     , withoutOneFromMaybe
     )
@@ -64,17 +63,9 @@ pred x =
 
 selectOneFromIndexMaybe : List a -> Int -> Maybe a
 selectOneFromIndexMaybe listA index =
-    index
-        |> startingWithFromIndex
-            listA
-        |> List.head
-
-
-startingWithFromIndex : List a -> Int -> List a
-startingWithFromIndex listA index =
     listA
-        |> List.drop
-            index
+        |> List.drop index
+        |> List.head
 
 
 succ : Int -> Int
