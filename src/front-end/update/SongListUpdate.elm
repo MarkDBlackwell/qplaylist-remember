@@ -115,7 +115,8 @@ songForgetHand model songsRememberedIndex =
 
                             Just theOne ->
                                 model.songsRemembered
-                                    |> List.filter ((/=) theOne)
+                                    |> List.filter
+                                        ((/=) theOne)
                 in
                 ( { model
                     | alertMessageText = Alert.messageTextInit
@@ -158,7 +159,6 @@ songRememberHand model songsRecentIndex =
                     songsRecentSelectOneMaybe
                         |> songsRememberedUpdateTimestampFromMaybe
                             songsRememberedAppended
-                            model.songsRecent
             in
             ( { model
                 | alertMessageText = Alert.messageTextInit

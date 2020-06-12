@@ -139,11 +139,10 @@ buttonLike songGroup songsRememberedIndex =
 
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            Just
-                (songsRememberedIndex
-                    |> String.fromInt
-                    |> String.append "buttonLike"
-                )
+            songsRememberedIndex
+                |> String.fromInt
+                |> String.append "buttonLike"
+                |> Just
 
         hoverText : HoverText
         hoverText =

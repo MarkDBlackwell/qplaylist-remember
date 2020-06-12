@@ -41,7 +41,8 @@ caseLength : Int
 caseLength =
     Char.toCode 'A'
         |> pred
-        |> (-) (Char.toCode 'Z')
+        |> (-)
+            (Char.toCode 'Z')
 
 
 charCount : Int

@@ -100,4 +100,5 @@ styleCalc group songGroupLength songsRecentOrRememberedIndex =
         [ backgroundColorStyling
         , fontSizeStyling
         ]
-        |> List.map (\( property, value ) -> Html.Attributes.style property value)
+        |> List.map
+            (\( property, value ) -> Html.Attributes.style property value)

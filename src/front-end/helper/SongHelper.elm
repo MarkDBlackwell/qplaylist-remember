@@ -173,33 +173,47 @@ songsRememberedAppendOneUniqueFromMaybe songsRemembered songsRecent songRecentMa
                     songsRecent
 
 
-songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongsRecent -> SongRememberedMaybe -> SongsRemembered
-songsRememberedLikeOrCommentNewFromMaybe songsRemembered songsRecent songRememberedMaybe =
+songsRememberedLikeOrCommentNewFromMaybe : SongsRemembered -> SongRememberedMaybe -> SongsRemembered
+songsRememberedLikeOrCommentNewFromMaybe songsRemembered songRememberedMaybe =
     songRememberedMaybe
         |> Maybe.map song2SongRecent
         |> songsRememberedUpdateTimestampFromMaybe
             songsRemembered
-            songsRecent
 
 
 songsRememberedNewFromMaybeWithUpdate : Model -> SongRememberedMaybe -> SongsRemembered
 songsRememberedNewFromMaybeWithUpdate model songRememberedMaybe =
-    model.songsRecent
-        |> songsTimelessMatches
-        |> (\a -> Maybe.map a songRememberedMaybe)
-        |> Maybe.andThen List.head
+    let
+        firstMatchMaybe : SongRecentMaybe
+        firstMatchMaybe =
+            songRememberedMaybe
+                |> Maybe.map (songsTimelessMatches model.songsRecent)
+                |> Maybe.andThen List.head
+    in
+    firstMatchMaybe
         |> Maybe.map2 songRememberedUpdate songRememberedMaybe
         |> songsRememberedLikeOrCommentNewFromMaybe
             model.songsRemembered
-            model.songsRecent
 
 
-songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongsRecent -> SongRecentMaybe -> SongsRemembered
-songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMaybe =
+songsRememberedUpdateTimestampFromMaybe : SongsRemembered -> SongRecentMaybe -> SongsRemembered
+songsRememberedUpdateTimestampFromMaybe songsRemembered songRecentMaybe =
     let
         updateSometimes : SongRecent -> SongRemembered -> SongRemembered
         updateSometimes songRecent songRemembered =
-            if song2SongTimeless (song2SongRecent songRemembered) /= song2SongTimeless songRecent then
+            let
+                recent : SongTimeless
+                recent =
+                    songRecent
+                        |> song2SongTimeless
+
+                remembered : SongTimeless
+                remembered =
+                    songRemembered
+                        |> song2SongRecent
+                        |> song2SongTimeless
+            in
+            if remembered /= recent then
                 songRemembered
 
             else
@@ -208,25 +222,28 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songsRecent songRecentMa
                     , timestamp = songRecent.timestamp
                 }
     in
-    Maybe.map
-        (\x -> List.map (updateSometimes x) songsRemembered)
-        songRecentMaybe
-        |> Maybe.withDefault
+    case songRecentMaybe of
+        Just song ->
+            --Pattern matching variable isn't found by functions, above.
+            songsRemembered
+                |> List.map (updateSometimes song)
+
+        _ ->
             songsRemembered
 
 
 songsTimelessMatches : List (SongTimelessBase a) -> SongTimelessBase b -> List (SongTimelessBase a)
 songsTimelessMatches listA songB =
     let
-        compare : SongTimelessBase a -> Bool
-        compare songA =
+        compareSong : SongTimelessBase a -> Bool
+        compareSong songA =
             songA
                 |> songTimelessCompare
                     songB
     in
     listA
         |> List.filter
-            compare
+            compareSong
 
 
 
