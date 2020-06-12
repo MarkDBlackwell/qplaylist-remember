@@ -37,6 +37,8 @@ import Utilities
     exposing
         ( attributeIdFromMaybe
         , htmlNodeNull
+        , idMorphString
+        , idRefreshString
         , innerHtmlEmpty
         )
 import ViewType
@@ -163,7 +165,7 @@ buttonRecent =
     let
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            Just "refresh"
+            Just idRefreshString
 
         hoverText : HoverText
         hoverText =
@@ -220,7 +222,7 @@ buttonRemembered =
     let
         buttonAttributeIdMaybe : IdMaybe
         buttonAttributeIdMaybe =
-            Just "morph"
+            Just idMorphString
 
         hoverText : HoverText
         hoverText =

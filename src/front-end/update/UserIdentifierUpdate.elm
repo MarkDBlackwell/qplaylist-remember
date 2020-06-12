@@ -19,6 +19,10 @@ import UserIdentifierType
     exposing
         ( UserIdentifierNumberSpaceInt
         )
+import Utilities
+    exposing
+        ( idRefreshString
+        )
 
 
 
@@ -33,7 +37,7 @@ userIdentifierEstablish model randomInt =
                 |> UserIdentifier.userIdentifierCalc
       }
     , Cmd.batch
-        [ FocusUpdate.cmdFocusSetId "refresh"
+        [ FocusUpdate.cmdFocusSetId idRefreshString
         , FocusUpdate.cmdFocusInputPossibly model
         ]
     )

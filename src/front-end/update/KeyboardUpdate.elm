@@ -30,6 +30,8 @@ import UpdateHelper
 import Utilities
     exposing
         ( cmdMsg2Cmd
+        , idMorphString
+        , idRefreshString
         , pred
         )
 import ViewType
@@ -146,24 +148,24 @@ keystrokeHand model keyCharRaw =
             else if keyIs 'C' then
                 songsRememberedIndex
                     |> MsgCommentAreaOpenHand
-                    |> doMessage "refresh"
+                    |> doMessage idRefreshString
 
             else if keyIs 'F' then
                 MsgSongsRecentRefreshHand
-                    |> doMessage "refresh"
+                    |> doMessage idRefreshString
 
             else if keyIs 'L' then
                 songsRememberedIndex
                     |> MsgLikeSendHand
-                    |> doMessage "refresh"
+                    |> doMessage idRefreshString
 
             else if keyIs 'M' then
                 MsgPageMorphHand
-                    |> doMessage "morph"
+                    |> doMessage idMorphString
 
             else if keyIs 'R' then
                 MsgSongRememberHand 0
-                    |> doMessage "refresh"
+                    |> doMessage idRefreshString
 
             else
                 doNothing

@@ -40,6 +40,7 @@ import UpdateHelper
 import Utilities
     exposing
         ( cmdMsg2Cmd
+        , idRefreshString
         )
 
 
@@ -123,7 +124,7 @@ songForgetHand model songsRememberedIndex =
                 , Cmd.batch
                     [ MsgSongsRememberedStore
                         |> cmdMsg2Cmd
-                    , FocusUpdate.cmdFocusSetId "refresh"
+                    , FocusUpdate.cmdFocusSetId idRefreshString
                     , FocusUpdate.cmdFocusInputPossibly model
                     ]
                 )

@@ -13,6 +13,8 @@ module Utilities exposing
     , field2String
     , goldenRatio
     , htmlNodeNull
+    , idMorphString
+    , idRefreshString
     , innerHtmlEmpty
     , matchingIndexes
     , pred
@@ -26,7 +28,8 @@ import Json.Decode
 import Task
 import ViewType
     exposing
-        ( IdMaybe
+        ( Id
+        , IdMaybe
         )
 
 
@@ -109,6 +112,16 @@ goldenRatio =
 htmlNodeNull : Html.Html ElmCycle.Msg
 htmlNodeNull =
     Html.text ""
+
+
+idMorphString : Id
+idMorphString =
+    "morph"
+
+
+idRefreshString : Id
+idRefreshString =
+    "refresh"
 
 
 innerHtmlEmpty : List (Html.Html ElmCycle.Msg)

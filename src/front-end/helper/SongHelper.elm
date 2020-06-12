@@ -51,7 +51,8 @@ import SongType
         )
 import Utilities
     exposing
-        ( matchingIndexes
+        ( idRefreshString
+        , matchingIndexes
         )
 import ViewType
     exposing
@@ -63,18 +64,18 @@ import ViewType
 -- UPDATE
 
 
-buttonIdReconstruct : SongsRemembered -> SongRememberedMaybe -> Id -> Id
+buttonIdReconstruct : SongsRemembered -> SongRememberedMaybe -> String -> Id
 buttonIdReconstruct songsRemembered songCommentingOnNowMaybe idFragment =
     let
         songRememberedIndexMaybe : SongRemembered -> SongsRememberedIndexMaybe
-        songRememberedIndexMaybe songCommenting =
+        songRememberedIndexMaybe songCommentingOnNow =
             let
                 timeless : SongsTimeless
                 timeless =
                     songsRemembered
                         |> songs2SongsTimeless
             in
-            songCommenting
+            songCommentingOnNow
                 |> song2SongTimeless
                 |> matchingIndexes timeless
                 |> List.head
@@ -90,7 +91,7 @@ buttonIdReconstruct songsRemembered songCommentingOnNowMaybe idFragment =
     songCommentingOnNowMaybe
         |> Maybe.andThen songRememberedIndexMaybe
         |> Maybe.map create
-        |> Maybe.withDefault "refresh"
+        |> Maybe.withDefault idRefreshString
 
 
 song2SongRecent : SongRecentBase a -> SongRecent
