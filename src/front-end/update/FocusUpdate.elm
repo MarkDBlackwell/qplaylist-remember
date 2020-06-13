@@ -52,8 +52,7 @@ cmdFocusSetId id =
     --TODO: simplify this.
     --See Browser.Dom.focus.
     id
-        |> MsgFocusAttempt
-        |> cmdMsg2Cmd
+        |> (MsgFocusAttempt >> cmdMsg2Cmd)
 
 
 focusAttempt : Model -> Id -> ElmCycle.ElmCycle

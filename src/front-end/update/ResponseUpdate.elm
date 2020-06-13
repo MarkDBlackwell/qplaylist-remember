@@ -84,21 +84,17 @@ likeOrCommentResponseErr model httpError actionLikeOrComment =
     ( { modelNewSongLikingOrCommentingOnNow
         | alertMessageText =
             actionLikeOrComment
-                |> UpdateHelper.actionLikeOrComment2String
-                |> alertLikeOrComment
-                |> Just
+                |> (UpdateHelper.actionLikeOrComment2String >> alertLikeOrComment >> Just)
         , awaitingServerResponse = ModelInitialize.awaitingServerResponseInit
       }
     , Cmd.batch
         [ actionLikeOrComment
-            |> UpdateHelper.actionLikeOrComment2String
-            |> alertLikeOrComment
+            |> (UpdateHelper.actionLikeOrComment2String >> alertLikeOrComment)
             |> String.append
                 (httpError
                     |> alertLogging
                 )
-            |> Just
-            |> LogUpdate.cmdLogResponse
+            |> (Just >> LogUpdate.cmdLogResponse)
         , FocusUpdate.cmdFocusInputPossibly model
         ]
     )
@@ -176,8 +172,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
             , Cmd.batch
                 [ httpResponseText
                     |> String.append alertMessageTextDecode
-                    |> Just
-                    |> LogUpdate.cmdLogDecoding
+                    |> (Just >> LogUpdate.cmdLogDecoding)
                 , cmdButtonCommand
                 , FocusUpdate.cmdFocusInputPossibly model
                 ]
@@ -200,8 +195,7 @@ likeOrCommentResponseOk model httpResponseText actionLikeOrComment =
                 , Cmd.batch
                     [ httpResponseText
                         |> String.append responseText
-                        |> Just
-                        |> LogUpdate.cmdLogResponse
+                        |> (Just >> LogUpdate.cmdLogResponse)
                     , cmdButtonCommand
                     , FocusUpdate.cmdFocusInputPossibly model
                     ]
@@ -254,9 +248,7 @@ songsRecentResponseErr model httpError =
       }
     , Cmd.batch
         [ httpError
-            |> alertLogging
-            |> Just
-            |> LogUpdate.cmdLogResponse
+            |> (alertLogging >> Just >> LogUpdate.cmdLogResponse)
         , FocusUpdate.cmdFocusInputPossibly model
         ]
     )
@@ -276,8 +268,7 @@ songsRecentResponseOk model httpResponseText =
             , Cmd.batch
                 [ httpResponseText
                     |> String.append alertMessageTextDecode
-                    |> Just
-                    |> LogUpdate.cmdLogDecoding
+                    |> (Just >> LogUpdate.cmdLogDecoding)
                 , FocusUpdate.cmdFocusInputPossibly model
                 ]
             )

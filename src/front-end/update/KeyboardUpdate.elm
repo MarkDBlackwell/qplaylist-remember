@@ -139,8 +139,7 @@ keystrokeHand model keyCharRaw =
                 songsRememberedIndex : SongsRememberedIndex
                 songsRememberedIndex =
                     model.songsRemembered
-                        |> List.length
-                        |> pred
+                        |> (List.length >> pred)
             in
             if keyIs 'H' then
                 keyProcessH model

@@ -89,15 +89,13 @@ errorHttpText httpError =
 messageTextErrorHttpLogging : Http.Error -> AlertMessageText
 messageTextErrorHttpLogging httpError =
     httpError
-        |> errorHttpText
-        |> Tuple.first
+        |> (errorHttpText >> Tuple.first)
 
 
 messageTextErrorHttpScreen : Http.Error -> AlertMessageText
 messageTextErrorHttpScreen httpError =
     httpError
-        |> errorHttpText
-        |> Tuple.second
+        |> (errorHttpText >> Tuple.second)
 
 
 messageTextRequestLikeOrComment : Http.Error -> LikeOrCommentName -> AlertMessageText

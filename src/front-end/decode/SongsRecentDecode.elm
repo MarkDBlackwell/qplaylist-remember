@@ -76,8 +76,7 @@ decodeSongsRecentResponse jsonRawText =
     case asRecord of
         Err error ->
             error
-                |> Json.Decode.errorToString
-                |> Err
+                |> (Json.Decode.errorToString >> Err)
 
         Ok record ->
             Ok record.dummyTag

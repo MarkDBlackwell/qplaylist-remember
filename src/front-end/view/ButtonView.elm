@@ -198,8 +198,7 @@ buttonRememberForget songGroup songsRecentOrRememberedIndex =
             , songsRecentOrRememberedIndex
                 |> String.fromInt
             ]
-                |> String.concat
-                |> Just
+                |> (String.concat >> Just)
 
         hoverText : HoverText
         hoverText =

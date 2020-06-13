@@ -115,6 +115,8 @@ commentCancelHand model =
                 , songCommentingOnNowMaybe = SongInitialize.songCommentingOnNowMaybeInit
               }
             , "Comment"
-                |> SongHelper.buttonIdReconstruct model.songsRemembered model.songCommentingOnNowMaybe
+                |> SongHelper.buttonIdReconstruct
+                    model.songsRemembered
+                    model.songCommentingOnNowMaybe
                 |> FocusUpdate.cmdFocusSetId
             )

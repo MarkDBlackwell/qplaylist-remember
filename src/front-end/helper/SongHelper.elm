@@ -154,8 +154,7 @@ songsRememberedAppendOneUnique songsRemembered songsRecent songRecent =
 
     else
         songRecent
-            |> song2SongRemembered
-            |> List.singleton
+            |> (song2SongRemembered >> List.singleton)
             |> List.append
                 songsRemembered
 
@@ -210,8 +209,7 @@ songsRememberedUpdateTimestampFromMaybe songsRemembered songRecentMaybe =
                 remembered : SongTimeless
                 remembered =
                     songRemembered
-                        |> song2SongRecent
-                        |> song2SongTimeless
+                        |> (song2SongRecent >> song2SongTimeless)
             in
             if remembered /= recent then
                 songRemembered
