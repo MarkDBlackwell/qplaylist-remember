@@ -140,7 +140,7 @@ view model =
                                             howManyToTake
                             in
                             timestampFieldsSelected
-                                |> String.join "-"
+                                |> String.join "."
                     in
                     section
                         [ id "comment" ]
@@ -293,9 +293,9 @@ view model =
                                                 |> Maybe.withDefault ""
                                     in
                                     [ select 0
-                                    , " "
+                                    , "."
                                     , select 1
-                                    , "-"
+                                    , "."
                                     , select 2
                                     , " "
                                     ]
