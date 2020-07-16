@@ -19,6 +19,9 @@ DIRECTORY_TEMP=tmp
 (
 export PATH="node_modules/.bin:$PATH" && \
 
+echo "Checking elm-format version" && \
+elm-format | head -n 1 | diff - .elm-format-version && \
+
 echo "Formatting $DIRECTORY_SOURCE_ELM:" && \
 elm-format --yes $DIRECTORY_SOURCE_ELM && \
 
