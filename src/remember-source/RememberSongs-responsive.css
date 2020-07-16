@@ -143,7 +143,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     :root {
         font-size: 13.9px; /* basis for rem calculations */
     }
-    body > div#requirements {
+    div#requirements {
         font-size: 12px;
     }
 }
@@ -152,7 +152,7 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queri
     :root {
         font-size: 15px; /* basis for rem calculations */
     }
-    body > div#requirements {
+    div#requirements {
         font-size: 14px;
     }
 }
