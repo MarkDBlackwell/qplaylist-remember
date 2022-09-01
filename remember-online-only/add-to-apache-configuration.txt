@@ -1,0 +1,34 @@
+<Directory /var/www/html/remember>
+	Header set Cache-Control "no-cache, private"
+
+	# Disable http
+	RewriteCond %{HTTPS} off
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+	# 09-16-17 The PHP program is accessed (always) by requesting append.json.
+	# This eases development by allowing optional access through the local filesystem.
+	RewriteRule ^append\.json$ append.php [C]
+
+	# 08-28-22 Redirect to main server to handle PHP.
+	RewriteRule ^append\.php$ https://wtmd.org/remember/$0 [QSA,L]
+
+	# 11-03-17 Enable downloading of QPlaylist's precompressed JSON file which contains the latest few songs.
+	<Files LatestFew.json.gz>
+		# Serve correct encoding type.
+		Header append Content-Encoding gzip
+
+		# Force proxies to cache gzipped & non-gzipped QPlaylist files separately.
+		Header append Vary Accept-Encoding
+	</Files>
+
+	# If the client accepts gzip
+	# and the requested gzip-compressed QPlaylist file exists...
+	RewriteCond "%{HTTP:Accept-encoding}" gzip
+	RewriteCond "%{REQUEST_FILENAME}.gz" -s
+
+	# Append ".gz".
+	RewriteRule ^LatestFew\.json$ $0.gz [QSA]
+
+	# Serve the correct media type, and prevent mod_deflate double gzip.
+	RewriteRule ^LatestFew\.json\.gz$ - [T=application/json,E=no-gzip:1]
+</Directory>

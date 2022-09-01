@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "cssnano-cli": "^1.0.5",
+    "elm-format": "^0.8.5",
+    "html-minifier": "^4.0.0",
+    "npm": "^8.18.0",
+    "uglify-js": "^3.17.0"
+  }
+}

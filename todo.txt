@@ -1,0 +1,7 @@
+Possibly change to use Custom Types:
+
+LikeOrComment
+RecentOrRemembered
+SongRecent with SongRemembered
+
+Use a Maybe for the extra field in the list of remembered songs.

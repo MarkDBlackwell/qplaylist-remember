@@ -1,0 +1,11 @@
+# Copyright (C) 2022 Mark D. Blackwell.
+#   All rights reserved.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+RewriteEngine On
+
+<Files append.php>
+	Header set Access-Control-Allow-Origin https://wtmdradio.org
+</Files>
