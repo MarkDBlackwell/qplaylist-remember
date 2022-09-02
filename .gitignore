@@ -1,10 +1,12 @@
-/build/**
-/elm-stuff/**
-/node_modules/**
-/old/**
-/out/**
-/tests/elm-stuff/**
-/tmp/**
+/build/
+/develop-tmp/
+/elm-stuff/
+/node_modules/
+/old/
+/out/
+/tests/elm-stuff/
+/tmp/
+/var/
 
 /test/LatestFew.json
 /test/comments.txt

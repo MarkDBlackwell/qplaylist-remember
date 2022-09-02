@@ -59,7 +59,6 @@ var functionResetSongsDevelopmentOnly = function() {
             window.alert('e: ' + e);
         };
     };
-    return null;
 };
 functionResetSongsDevelopmentOnly();
 */
@@ -189,11 +188,10 @@ functionResetSongsDevelopmentOnly();
                     window.localStorage.setItem(functionKeyStorage(), stringified);
                 };
             });
-            return null;
         };
 
-        return functionStorageSubscribe(functionAttachNode());
+        functionStorageSubscribe(functionAttachNode());
     };
 
-    return functionDealWithElm();
+    functionDealWithElm();
 })();
