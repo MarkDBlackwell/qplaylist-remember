@@ -10,6 +10,8 @@
 script_directory="$( cd "$( dirname $0 )" && echo $PWD )"
 
 #-------------
-cd $script_directory
+cd $script_directory/..
 
-src/clean.sh
+if [ -d develop-tmp ]; then
+  rm -r develop-tmp
+fi

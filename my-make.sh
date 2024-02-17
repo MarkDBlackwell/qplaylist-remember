@@ -12,7 +12,7 @@
 #  elm-format 0.7.0-exp or 0.8.3
 #  uglify-js 3.1.7 or 3.9.1
 
-DIRECTORY_SOURCE_ELM=src/front-end
+DIRECTORY_SOURCE_ELM=src
 
 DIRECTORY_TEMP=tmp
 

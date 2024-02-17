@@ -12,7 +12,7 @@ script_directory="$( cd "$( dirname $0 )" && echo $PWD )"
 #-------------
 cd $script_directory/..
 
-src/clean.sh
+./clean.sh
 
 mkdir develop-tmp
 
@@ -25,7 +25,7 @@ cp --target-directory=develop-tmp \
   build/RememberSongs-windows-phone-8-viewport-fix-min.js \
   build/RememberSongs.html \
   build/SetUp-min.js \
-    src/install-qplaylist-remember.sh
+    script/install-qplaylist-remember.sh
 
 cd develop-tmp
 

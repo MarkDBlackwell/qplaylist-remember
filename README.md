@@ -14,7 +14,7 @@ which uses WideOrbit automation software.
 
 Download and install Elm version 0.19.1 from its [website](http://elm-lang.org/) (try [here](http://github.com/elm-lang/elm-platform/releases)).
 
-For versions of the other programs (and packages) known to work, see the following 'my-make*' files.
+For versions of the other programs (and packages) known to work, see the following 'my-make*.sh' files.
 
 Nevertheless, you should install the latest versions.
 
@@ -32,8 +32,8 @@ npm install elm-format
 npm install uglify-js
 npm install html-minifier
 npm install cssnano-cli
-./my-make
-./my-make-other
+./my-make.sh
+./my-make-other.sh
 ````
 Basically, ignore warnings.
 

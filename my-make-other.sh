@@ -26,7 +26,7 @@ cd build && \
 
 export PATH="../node_modules/.bin:$PATH" && \
 
-DIRECTORY_SOURCE=../src/remember-source && \
+DIRECTORY_SOURCE=../src-server && \
 
 echo "Searching for trailing blanks:" && \
 (grep -nrIE '[[:space:]]$' $DIRECTORY_SOURCE; status=$?; [ $status -ne 0 ]) && \
